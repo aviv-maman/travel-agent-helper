@@ -1,0 +1,635 @@
+{
+  "id": "0c44bc0b-3dfc-4469-b711-d5cefd7394e8",
+  "prevId": "00000000-0000-0000-0000-000000000000",
+  "version": "7",
+  "dialect": "postgresql",
+  "tables": {
+    "public.destinations": {
+      "name": "destinations",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "iata": {
+          "name": "iata",
+          "type": "varchar(3)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "country": {
+          "name": "country",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "country_code": {
+          "name": "country_code",
+          "type": "varchar(2)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "info": {
+          "name": "info",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "sort_order": {
+          "name": "sort_order",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 0
+        }
+      },
+      "indexes": {
+        "destinations_iata_key": {
+          "name": "destinations_iata_key",
+          "columns": [
+            {
+              "expression": "iata",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": true,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.hotel_distances": {
+      "name": "hotel_distances",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "hotel_id": {
+          "name": "hotel_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "landmark_id": {
+          "name": "landmark_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "meters": {
+          "name": "meters",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "walk_minutes": {
+          "name": "walk_minutes",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "ride_minutes": {
+          "name": "ride_minutes",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {
+        "hotel_distances_unique": {
+          "name": "hotel_distances_unique",
+          "columns": [
+            {
+              "expression": "hotel_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "landmark_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": true,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "hotel_distances_hotel_id_hotels_id_fk": {
+          "name": "hotel_distances_hotel_id_hotels_id_fk",
+          "tableFrom": "hotel_distances",
+          "tableTo": "hotels",
+          "columnsFrom": [
+            "hotel_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "hotel_distances_landmark_id_landmarks_id_fk": {
+          "name": "hotel_distances_landmark_id_landmarks_id_fk",
+          "tableFrom": "hotel_distances",
+          "tableTo": "landmarks",
+          "columnsFrom": [
+            "landmark_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.hotel_features": {
+      "name": "hotel_features",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "hotel_id": {
+          "name": "hotel_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "feature": {
+          "name": "feature",
+          "type": "hotel_feature",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {
+        "hotel_features_unique": {
+          "name": "hotel_features_unique",
+          "columns": [
+            {
+              "expression": "hotel_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "feature",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": true,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "hotel_features_hotel_id_hotels_id_fk": {
+          "name": "hotel_features_hotel_id_hotels_id_fk",
+          "tableFrom": "hotel_features",
+          "tableTo": "hotels",
+          "columnsFrom": [
+            "hotel_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.hotel_tags": {
+      "name": "hotel_tags",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "hotel_id": {
+          "name": "hotel_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "tag": {
+          "name": "tag",
+          "type": "hotel_tag",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {
+        "hotel_tags_unique": {
+          "name": "hotel_tags_unique",
+          "columns": [
+            {
+              "expression": "hotel_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "tag",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": true,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "hotel_tags_hotel_id_hotels_id_fk": {
+          "name": "hotel_tags_hotel_id_hotels_id_fk",
+          "tableFrom": "hotel_tags",
+          "tableTo": "hotels",
+          "columnsFrom": [
+            "hotel_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.hotels": {
+      "name": "hotels",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "destination_id": {
+          "name": "destination_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar(200)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "stars": {
+          "name": "stars",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "tier": {
+          "name": "tier",
+          "type": "hotel_tier",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "boards": {
+          "name": "boards",
+          "type": "board_code[]",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'{}'"
+        },
+        "booking_score": {
+          "name": "booking_score",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "google_maps_url": {
+          "name": "google_maps_url",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "booking_url": {
+          "name": "booking_url",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "rooms_note": {
+          "name": "rooms_note",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "sort_order": {
+          "name": "sort_order",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 0
+        }
+      },
+      "indexes": {
+        "hotels_destination_idx": {
+          "name": "hotels_destination_idx",
+          "columns": [
+            {
+              "expression": "destination_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "hotels_destination_id_destinations_id_fk": {
+          "name": "hotels_destination_id_destinations_id_fk",
+          "tableFrom": "hotels",
+          "tableTo": "destinations",
+          "columnsFrom": [
+            "destination_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.landmarks": {
+      "name": "landmarks",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "destination_id": {
+          "name": "destination_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "key": {
+          "name": "key",
+          "type": "varchar(40)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {
+        "landmarks_dest_key": {
+          "name": "landmarks_dest_key",
+          "columns": [
+            {
+              "expression": "destination_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "key",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": true,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "landmarks_destination_id_destinations_id_fk": {
+          "name": "landmarks_destination_id_destinations_id_fk",
+          "tableFrom": "landmarks",
+          "tableTo": "destinations",
+          "columnsFrom": [
+            "destination_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.rooms": {
+      "name": "rooms",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "hotel_id": {
+          "name": "hotel_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar(160)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "icon": {
+          "name": "icon",
+          "type": "varchar(16)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "size_sqm": {
+          "name": "size_sqm",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "occupancy": {
+          "name": "occupancy",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "sort_order": {
+          "name": "sort_order",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 0
+        }
+      },
+      "indexes": {
+        "rooms_hotel_idx": {
+          "name": "rooms_hotel_idx",
+          "columns": [
+            {
+              "expression": "hotel_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "rooms_hotel_id_hotels_id_fk": {
+          "name": "rooms_hotel_id_hotels_id_fk",
+          "tableFrom": "rooms",
+          "tableTo": "hotels",
+          "columnsFrom": [
+            "hotel_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    }
+  },
+  "enums": {
+    "public.board_code": {
+      "name": "board_code",
+      "schema": "public",
+      "values": [
+        "bb",
+        "hb",
+        "fb"
+      ]
+    },
+    "public.hotel_feature": {
+      "name": "hotel_feature",
+      "schema": "public",
+      "values": [
+        "pool-in",
+        "pool-out",
+        "casino",
+        "casino-near",
+        "waterpark",
+        "outside-center"
+      ]
+    },
+    "public.hotel_tag": {
+      "name": "hotel_tag",
+      "schema": "public",
+      "values": [
+        "resort",
+        "kosher"
+      ]
+    },
+    "public.hotel_tier": {
+      "name": "hotel_tier",
+      "schema": "public",
+      "values": [
+        "premium",
+        "good"
+      ]
+    }
+  },
+  "schemas": {},
+  "sequences": {},
+  "roles": {},
+  "policies": {},
+  "views": {},
+  "_meta": {
+    "columns": {},
+    "schemas": {},
+    "tables": {}
+  }
+}

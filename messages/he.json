@@ -1,0 +1,108 @@
+{
+  "app": {
+    "title": "מדריך ספקים",
+    "subtitle": "עמלות, כבודה והסעות"
+  },
+  "nav": {
+    "language": "שפה",
+    "hebrew": "עברית",
+    "english": "English"
+  },
+  "tabs": {
+    "commissions": "עמלות",
+    "transfers": "הסעות",
+    "baggage": "כבודה",
+    "cancellations": "ביטולים",
+    "hotels": "מלונות"
+  },
+  "hotels": {
+    "selectDestination": "בחר יעד מלונות",
+    "destinationPlaceholder": "הקלד או בחר יעד...",
+    "emptyTitle": "בחר יעד כדי להציג את רשימת המלונות",
+    "emptyHint": "אפשר להקליד שם יעד, מדינה או קוד שדה תעופה — למשל בטומי, אתונה, סופיה או BUH.",
+    "noResults": "לא נמצאו מלונות",
+    "ratingNote": "הכוכבים הם הדירוג הרשמי של המלון. הקטגוריה (מעולה / טוב / ריזורט / כשר) היא הדירוג שלנו לפי ניסיון.",
+    "sort": {
+      "label": "מיון:",
+      "default": "ברירת מחדל",
+      "starsDesc": "כוכבים 5→1",
+      "starsAsc": "כוכבים 1→5",
+      "bookingDesc": "דירוג גבוה→נמוך",
+      "bookingAsc": "דירוג נמוך→גבוה"
+    },
+    "groupBy": {
+      "label": "קיבוץ לפי:",
+      "quality": "רמת מלון",
+      "stars": "דירוג כוכבים",
+      "booking": "דירוג Booking"
+    },
+    "group": {
+      "stars": "{stars}★",
+      "starsNone": "ללא דירוג",
+      "booking9": "9+",
+      "booking8": "8–8.9",
+      "booking7": "7–7.9",
+      "bookingLt7": "מתחת ל-7",
+      "bookingNone": "ללא דירוג"
+    },
+    "filter": {
+      "label": "מתקנים:",
+      "qualityLabel": "רמת מלון:",
+      "tagsLabel": "תגיות:",
+      "boardLabel": "בסיס אירוח:",
+      "bookingLabel": "דירוג Booking:",
+      "poolIn": "בריכה פנימית",
+      "poolOut": "בריכה חיצונית",
+      "casino": "קזינו במלון",
+      "casinoNear": "צמוד לקזינו",
+      "waterpark": "פארק מים",
+      "kosher": "מלון כשר",
+      "outsideCenter": "מחוץ למרכז",
+      "clear": "נקה סינונים"
+    },
+    "pager": {
+      "count": "{total} מלונות",
+      "perPage": "בכל עמוד",
+      "page": "עמוד {page} מתוך {total}",
+      "prev": "העמוד הקודם",
+      "next": "העמוד הבא"
+    },
+    "tier": {
+      "premium": "מעולה",
+      "good": "טוב",
+      "resort": "ריזורט",
+      "kosher": "כשר"
+    },
+    "card": {
+      "maps": "מפות",
+      "booking": "Booking",
+      "copyLink": "העתק לינק",
+      "copied": "הקישור הועתק",
+      "bookingScore": "Booking",
+      "walk": "{minutes} דק' הליכה",
+      "ride": "{minutes} דק' נסיעה",
+      "details": "לחץ לפרטים"
+    },
+    "board": {
+      "bb": "ארוחת בוקר",
+      "hb": "חצי פנסיון",
+      "fb": "פנסיון מלא"
+    },
+    "modal": {
+      "rooms": "סוגי חדרים",
+      "size": "גודל",
+      "sizeUnknown": "לא ידוע — יש להשלים",
+      "noRooms": "אין מידע על סוגי חדרים כרגע",
+      "updateManually": "✏️ לעדכון פרטי חדר — יש להזין ידנית במערכת",
+      "close": "סגור"
+    },
+    "city": {
+      "title": "על העיר — מידע ותחבורה",
+      "about": "על העיר",
+      "currency": "מטבע מקומי",
+      "airport": "שדה התעופה",
+      "gettingAround": "תחבורה",
+      "landmarks": "נקודות ציון"
+    }
+  }
+}

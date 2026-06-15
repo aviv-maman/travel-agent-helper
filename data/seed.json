@@ -1,0 +1,6678 @@
+[
+  {
+    "code": "bus",
+    "iata": "BUS",
+    "name": {
+      "en": "Batumi",
+      "he": "בטומי"
+    },
+    "country": {
+      "en": "Georgia",
+      "he": "גיאורגיה"
+    },
+    "countryCode": "GE",
+    "info": {
+      "warnings": [
+        {
+          "he": "⚠️ הערה חשובה: בכניסה לגיאורגיה הנוסעים נדרשים להציג ביטוח רפואי באנגלית.",
+          "en": "⚠️ Important note: When entering Georgia, travelers are required to present medical insurance in English."
+        }
+      ],
+      "about": {
+        "he": "בטומי היא עיר נמל על חוף הים השחור בגאורגיה, בירת האג'ריה. העיר משלבת ארכיטקטורה סובייטית ומודרנית, קזינו, פרומנד ארוך לאורך החוף ואווירה ים-תיכונית.",
+        "en": "Batumi is a port city on Georgia's Black Sea coast, the capital of Adjara. The city blends Soviet and modern architecture, casinos, a long seaside promenade and a Mediterranean atmosphere."
+      },
+      "attractions": {
+        "he": "🏰 אתרים מרכזיים: בולבר הימי (Boulevard) · פיאצה (Piazza) · גשר האהבה · גן הצמחים · מגדל האלפבית הגאורגי",
+        "en": "🏰 Main sights: Seaside Boulevard · Piazza · Love Bridge · Botanical Garden · Georgian Alphabet Tower"
+      },
+      "currencyNote": {
+        "he": "המטבע המקומי: לארי גאורגי (GEL) · הערכת שער: 1 לארי ≈ ₪1.09",
+        "en": "Local currency: Georgian Lari (GEL) · Approx. rate: 1 Lari ≈ ₪1.09"
+      },
+      "airport": {
+        "title": {
+          "he": "✈ שדה התעופה — BUS (Aleksandre Kartveli)",
+          "en": "✈ Airport — BUS (Aleksandre Kartveli)"
+        },
+        "note": {
+          "he": "מרחק: ~2 ק\"מ ממרכז העיר · זמן נסיעה: 5–10 דקות",
+          "en": "Distance: ~2 km from the city center · Travel time: 5–10 minutes"
+        }
+      },
+      "transport": [
+        {
+          "icon": "🚌",
+          "mode": {
+            "he": "אוטובוס קו 10",
+            "en": "Bus line 10"
+          },
+          "detail": {
+            "he": "רחוב רוסטבלי · מחיר סמלי",
+            "en": "Rustaveli Street · Nominal fare"
+          },
+          "price": "~0.50₾"
+        },
+        {
+          "icon": "📱",
+          "mode": {
+            "he": "Bolt",
+            "en": "Bolt"
+          },
+          "detail": {
+            "he": "למרכז העיר",
+            "en": "To the city center"
+          },
+          "price": "~4–5$"
+        },
+        {
+          "icon": "🚕",
+          "mode": {
+            "he": "מונית / GoTrip.ge",
+            "en": "Taxi / GoTrip.ge"
+          },
+          "detail": {
+            "he": "מחיר קבוע מראש לרכב",
+            "en": "Fixed price per car, arranged in advance"
+          },
+          "price": "~30$"
+        }
+      ],
+      "landmarks": {
+        "he": "📍 נקודות ציון: 🏛 כיכר אירופה (Europe Square) — ציר העיר היסטורי, מוזיאון ואתרות תרבות ✡ בית חבד בטומי — נקודת ציון למבקרים ישראלים",
+        "en": "📍 Points of interest: 🏛 Europe Square — the historic city axis, museum and cultural sites ✡ Chabad House Batumi — a landmark for Israeli visitors"
+      }
+    },
+    "sortOrder": 1,
+    "landmarks": [
+      {
+        "key": "chabad",
+        "name": {
+          "en": "Chabad House",
+          "he": "בית חב\"ד"
+        }
+      },
+      {
+        "key": "europe",
+        "name": {
+          "en": "Europe Square",
+          "he": "כיכר אירופה"
+        }
+      }
+    ],
+    "hotels": [
+      {
+        "name": "Sheraton Batumi",
+        "stars": 5,
+        "tier": "premium",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 8.7,
+        "googleMapsUrl": "https://www.google.com/maps/search/Sheraton+Hotel+Batumi+Georgia",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Sheraton+Batumi",
+        "roomsNote": {
+          "he": "המידע לפי אתר Marriott הרשמי",
+          "en": "Info per the official Marriott site"
+        },
+        "sortOrder": 0,
+        "features": [
+          "pool-in",
+          "pool-out",
+          "casino"
+        ],
+        "distances": [
+          {
+            "landmarkKey": "chabad",
+            "meters": 400,
+            "walkMinutes": 5,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "europe",
+            "meters": 550,
+            "walkMinutes": 7,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": [
+          {
+            "name": "Deluxe Room",
+            "icon": "🛏",
+            "sizeSqm": 32,
+            "occupancy": {
+              "he": "זוגי — נוף לעיר או לים",
+              "en": "Double — city or sea view"
+            },
+            "sortOrder": 0
+          },
+          {
+            "name": "Club Deluxe Room",
+            "icon": "🛏",
+            "sizeSqm": 32,
+            "occupancy": {
+              "he": "זוגי — קומות גבוהות, כולל Club Lounge",
+              "en": "Double — high floors, includes Club Lounge"
+            },
+            "sortOrder": 1
+          },
+          {
+            "name": "Deluxe Triple Room",
+            "icon": "👨‍👩‍👧",
+            "sizeSqm": null,
+            "occupancy": {
+              "he": "שלישיה",
+              "en": "Triple"
+            },
+            "sortOrder": 2
+          }
+        ]
+      },
+      {
+        "name": "Hilton Batumi",
+        "stars": 5,
+        "tier": "premium",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 8.2,
+        "googleMapsUrl": "https://www.google.com/maps/search/Hilton+Hotel+Batumi+Georgia",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Hilton+Batumi",
+        "roomsNote": {
+          "he": "המידע לפי Booking ו-J2Ski",
+          "en": "Info per Booking and J2Ski"
+        },
+        "sortOrder": 1,
+        "features": [
+          "pool-in",
+          "casino"
+        ],
+        "distances": [
+          {
+            "landmarkKey": "chabad",
+            "meters": 950,
+            "walkMinutes": 12,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "europe",
+            "meters": 1100,
+            "walkMinutes": 15,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": [
+          {
+            "name": "King Guest Room",
+            "icon": "🛏",
+            "sizeSqm": 33,
+            "occupancy": {
+              "he": "זוגי — מיטת קינג",
+              "en": "Double — king bed"
+            },
+            "sortOrder": 0
+          },
+          {
+            "name": "Twin Guest Room",
+            "icon": "🛏",
+            "sizeSqm": 33,
+            "occupancy": {
+              "he": "זוגי — שתי מיטות נפרדות",
+              "en": "Double — two separate beds"
+            },
+            "sortOrder": 1
+          },
+          {
+            "name": "Family Room",
+            "icon": "👨‍👩‍👧",
+            "sizeSqm": null,
+            "occupancy": {
+              "he": "שלישיה — 3 מיטות",
+              "en": "Triple — 3 beds"
+            },
+            "sortOrder": 2
+          }
+        ]
+      },
+      {
+        "name": "Radisson Blu Batumi",
+        "stars": 5,
+        "tier": "premium",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 8.8,
+        "googleMapsUrl": "https://www.google.com/maps/search/Radisson+Blu+Hotel+Batumi+Georgia",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Radisson+Blu+Batumi",
+        "roomsNote": {
+          "he": "המידע לפי אתר Radisson הרשמי ו-locahotels",
+          "en": "Info per the official Radisson site and locahotels"
+        },
+        "sortOrder": 2,
+        "features": [
+          "pool-in",
+          "pool-out",
+          "casino"
+        ],
+        "distances": [
+          {
+            "landmarkKey": "chabad",
+            "meters": 650,
+            "walkMinutes": 9,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "europe",
+            "meters": 450,
+            "walkMinutes": 6,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": [
+          {
+            "name": "Standard Room",
+            "icon": "🛏",
+            "sizeSqm": 30,
+            "occupancy": {
+              "he": "זוגי",
+              "en": "Double"
+            },
+            "sortOrder": 0
+          },
+          {
+            "name": "Standard Room City View",
+            "icon": "🛏",
+            "sizeSqm": 28,
+            "occupancy": {
+              "he": "זוגי — נוף לעיר",
+              "en": "Double — city view"
+            },
+            "sortOrder": 1
+          },
+          {
+            "name": "Superior Room",
+            "icon": "🛏",
+            "sizeSqm": 35,
+            "occupancy": {
+              "he": "זוגי / שלישיה + ילד",
+              "en": "Double / triple + child"
+            },
+            "sortOrder": 2
+          },
+          {
+            "name": "Premium Room",
+            "icon": "🛏",
+            "sizeSqm": null,
+            "occupancy": {
+              "he": "זוגי — מרווח יותר מ-Superior",
+              "en": "Double — more spacious than Superior"
+            },
+            "sortOrder": 3
+          }
+        ]
+      },
+      {
+        "name": "Le Méridien Batumi",
+        "stars": 5,
+        "tier": "premium",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 8.9,
+        "googleMapsUrl": "https://www.google.com/maps/search/Le+Meridien+Hotel+Batumi+Georgia",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Le+Meridien+Batumi",
+        "roomsNote": {
+          "he": "המידע לפי Marriott, Holidify ו-Travelated (388–818 sq ft)",
+          "en": "Info per Marriott, Holidify and Travelated (388–818 sq ft)"
+        },
+        "sortOrder": 3,
+        "features": [
+          "pool-in",
+          "pool-out",
+          "casino"
+        ],
+        "distances": [
+          {
+            "landmarkKey": "chabad",
+            "meters": 850,
+            "walkMinutes": 11,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "europe",
+            "meters": 650,
+            "walkMinutes": 9,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": [
+          {
+            "name": "Classic Room King",
+            "icon": "🛏",
+            "sizeSqm": 36,
+            "occupancy": {
+              "he": "זוגי — City View",
+              "en": "Double — City View"
+            },
+            "sortOrder": 0
+          },
+          {
+            "name": "Deluxe Room King",
+            "icon": "🛏",
+            "sizeSqm": 36,
+            "occupancy": {
+              "he": "זוגי — City/Sea View + מרפסת",
+              "en": "Double — City/Sea View + balcony"
+            },
+            "sortOrder": 1
+          },
+          {
+            "name": "Superior Room",
+            "icon": "🛏",
+            "sizeSqm": 40,
+            "occupancy": {
+              "he": "זוגי / שלישיה — Sea View + מרפסת",
+              "en": "Double / triple — Sea View + balcony"
+            },
+            "sortOrder": 2
+          }
+        ]
+      },
+      {
+        "name": "Courtyard by Marriott Batumi",
+        "stars": 5,
+        "tier": "premium",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 8.2,
+        "googleMapsUrl": "https://www.google.com/maps/search/Courtyard+Marriott+Batumi+Georgia",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Courtyard+Marriott+Batumi",
+        "roomsNote": {
+          "he": "המידע לפי אתר Marriott ו-Booking",
+          "en": "Info per the Marriott site and Booking"
+        },
+        "sortOrder": 4,
+        "features": [
+          "pool-in",
+          "casino"
+        ],
+        "distances": [
+          {
+            "landmarkKey": "chabad",
+            "meters": 2400,
+            "walkMinutes": 31,
+            "rideMinutes": 5
+          },
+          {
+            "landmarkKey": "europe",
+            "meters": 2600,
+            "walkMinutes": 34,
+            "rideMinutes": 6
+          }
+        ],
+        "rooms": [
+          {
+            "name": "King Room",
+            "icon": "🛏",
+            "sizeSqm": null,
+            "occupancy": {
+              "he": "זוגי — מיטת קינג",
+              "en": "Double — king bed"
+            },
+            "sortOrder": 0
+          },
+          {
+            "name": "Twin Room",
+            "icon": "🛏",
+            "sizeSqm": null,
+            "occupancy": {
+              "he": "זוגי — שתי מיטות נפרדות",
+              "en": "Double — two separate beds"
+            },
+            "sortOrder": 1
+          },
+          {
+            "name": "Family Suite",
+            "icon": "👨‍👩‍👧",
+            "sizeSqm": null,
+            "occupancy": {
+              "he": "שלישיה/משפחה — נוף לים + מרפסת",
+              "en": "Triple/family — sea view + balcony"
+            },
+            "sortOrder": 2
+          }
+        ]
+      },
+      {
+        "name": "Ramada Plaza by Wyndham Batumi",
+        "stars": 5,
+        "tier": "premium",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 8.5,
+        "googleMapsUrl": "https://www.google.com/maps/search/Ramada+Plaza+Wyndham+Batumi+Georgia",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Ramada+Plaza+Wyndham+Batumi",
+        "roomsNote": {
+          "he": "המידע לפי J2Ski ו-Booking",
+          "en": "Info per J2Ski and Booking"
+        },
+        "sortOrder": 5,
+        "features": [
+          "pool-in",
+          "pool-out",
+          "casino"
+        ],
+        "distances": [
+          {
+            "landmarkKey": "chabad",
+            "meters": 2600,
+            "walkMinutes": 33,
+            "rideMinutes": 6
+          },
+          {
+            "landmarkKey": "europe",
+            "meters": 2800,
+            "walkMinutes": 36,
+            "rideMinutes": 7
+          }
+        ],
+        "rooms": [
+          {
+            "name": "Superior Double Room",
+            "icon": "🛏",
+            "sizeSqm": null,
+            "occupancy": {
+              "he": "זוגי — City View",
+              "en": "Double — City View"
+            },
+            "sortOrder": 0
+          },
+          {
+            "name": "Superior Twin Room",
+            "icon": "🛏",
+            "sizeSqm": null,
+            "occupancy": {
+              "he": "זוגי — שתי מיטות, City View",
+              "en": "Double — two beds, City View"
+            },
+            "sortOrder": 1
+          },
+          {
+            "name": "Deluxe Triple Room",
+            "icon": "👨‍👩‍👧",
+            "sizeSqm": null,
+            "occupancy": {
+              "he": "שלישיה",
+              "en": "Triple"
+            },
+            "sortOrder": 2
+          }
+        ]
+      },
+      {
+        "name": "JRW Welmond",
+        "stars": 5,
+        "tier": "premium",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 8.2,
+        "googleMapsUrl": "https://www.google.com/maps/search/JRW+Welmond+Hotel+Batumi+Georgia",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=JRW+Welmond+Batumi",
+        "roomsNote": {
+          "he": "המידע לפי J2Ski ו-Booking",
+          "en": "Info per J2Ski and Booking"
+        },
+        "sortOrder": 6,
+        "features": [
+          "pool-in",
+          "casino"
+        ],
+        "distances": [
+          {
+            "landmarkKey": "chabad",
+            "meters": 1500,
+            "walkMinutes": 20,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "europe",
+            "meters": 1300,
+            "walkMinutes": 17,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": [
+          {
+            "name": "Twin/Double Room",
+            "icon": "🛏",
+            "sizeSqm": null,
+            "occupancy": {
+              "he": "זוגי — כולל אח בחדר",
+              "en": "Double — includes a fireplace in the room"
+            },
+            "sortOrder": 0
+          },
+          {
+            "name": "Triple Room",
+            "icon": "👨‍👩‍👧",
+            "sizeSqm": null,
+            "occupancy": {
+              "he": "שלישיה",
+              "en": "Triple"
+            },
+            "sortOrder": 1
+          }
+        ]
+      },
+      {
+        "name": "Wyndham Batumi",
+        "stars": 5,
+        "tier": "premium",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 8.2,
+        "googleMapsUrl": "https://www.google.com/maps/search/Wyndham+Hotel+Batumi+Georgia",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Wyndham+Batumi",
+        "roomsNote": {
+          "he": "המידע לפי אתר Wyndham הרשמי",
+          "en": "Info per the official Wyndham site"
+        },
+        "sortOrder": 7,
+        "features": [
+          "pool-in",
+          "casino"
+        ],
+        "distances": [
+          {
+            "landmarkKey": "chabad",
+            "meters": 450,
+            "walkMinutes": 6,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "europe",
+            "meters": 150,
+            "walkMinutes": 2,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": [
+          {
+            "name": "Guest Room King",
+            "icon": "🛏",
+            "sizeSqm": 28,
+            "occupancy": {
+              "he": "זוגי — מיטת קינג",
+              "en": "Double — king bed"
+            },
+            "sortOrder": 0
+          },
+          {
+            "name": "Deluxe Room King",
+            "icon": "🛏",
+            "sizeSqm": 36,
+            "occupancy": {
+              "he": "זוגי — מרווח יותר",
+              "en": "Double — more spacious"
+            },
+            "sortOrder": 1
+          },
+          {
+            "name": "Deluxe Triple Room",
+            "icon": "👨‍👩‍👧",
+            "sizeSqm": 36,
+            "occupancy": {
+              "he": "שלישיה",
+              "en": "Triple"
+            },
+            "sortOrder": 2
+          }
+        ]
+      },
+      {
+        "name": "Euphoria",
+        "stars": 5,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb",
+          "hb"
+        ],
+        "bookingScore": 7.1,
+        "googleMapsUrl": "https://www.google.com/maps/search/Euphoria+Hotel+Casino+Batumi+Georgia",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Euphoria+Hotel+Batumi",
+        "roomsNote": {
+          "he": "המידע לפי Trip.com ו-Booking — חדרים מרווחים במיוחד",
+          "en": "Info per Trip.com and Booking — especially spacious rooms"
+        },
+        "sortOrder": 8,
+        "features": [
+          "pool-in",
+          "pool-out",
+          "casino"
+        ],
+        "distances": [
+          {
+            "landmarkKey": "chabad",
+            "meters": 5400,
+            "walkMinutes": null,
+            "rideMinutes": 12
+          },
+          {
+            "landmarkKey": "europe",
+            "meters": 5600,
+            "walkMinutes": null,
+            "rideMinutes": 13
+          }
+        ],
+        "rooms": [
+          {
+            "name": "Standard Double Room",
+            "icon": "🛏",
+            "sizeSqm": null,
+            "occupancy": {
+              "he": "זוגי",
+              "en": "Double"
+            },
+            "sortOrder": 0
+          },
+          {
+            "name": "Triple Room",
+            "icon": "👨‍👩‍👧",
+            "sizeSqm": null,
+            "occupancy": {
+              "he": "שלישיה",
+              "en": "Triple"
+            },
+            "sortOrder": 1
+          }
+        ]
+      },
+      {
+        "name": "Best Western Premier",
+        "stars": 4,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 8,
+        "googleMapsUrl": "https://www.google.com/maps/search/Best+Western+Premier+Hotel+Batumi",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Best+Western+Premier+Batumi",
+        "roomsNote": null,
+        "sortOrder": 9,
+        "features": [
+          "pool-in"
+        ],
+        "distances": [
+          {
+            "landmarkKey": "chabad",
+            "meters": 2100,
+            "walkMinutes": 28,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "europe",
+            "meters": 2300,
+            "walkMinutes": 31,
+            "rideMinutes": 5
+          }
+        ],
+        "rooms": [
+          {
+            "name": "Standard Double",
+            "icon": "🛏",
+            "sizeSqm": null,
+            "occupancy": {
+              "he": "זוגי",
+              "en": "Double"
+            },
+            "sortOrder": 0
+          },
+          {
+            "name": "Triple Room",
+            "icon": "👨‍👩‍👧",
+            "sizeSqm": null,
+            "occupancy": {
+              "he": "שלישיה",
+              "en": "Triple"
+            },
+            "sortOrder": 1
+          }
+        ]
+      },
+      {
+        "name": "Grand Bellagio",
+        "stars": 5,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 6.5,
+        "googleMapsUrl": "https://www.google.com/maps/search/Grand+Bellagio+Hotel+Batumi+Georgia",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Grand+Bellagio+Batumi",
+        "roomsNote": null,
+        "sortOrder": 10,
+        "features": [
+          "pool-in",
+          "pool-out",
+          "casino"
+        ],
+        "distances": [
+          {
+            "landmarkKey": "chabad",
+            "meters": 5700,
+            "walkMinutes": null,
+            "rideMinutes": 13
+          },
+          {
+            "landmarkKey": "europe",
+            "meters": 5500,
+            "walkMinutes": null,
+            "rideMinutes": 12
+          }
+        ],
+        "rooms": [
+          {
+            "name": "Standard Double",
+            "icon": "🛏",
+            "sizeSqm": null,
+            "occupancy": {
+              "he": "זוגי",
+              "en": "Double"
+            },
+            "sortOrder": 0
+          },
+          {
+            "name": "Triple Room",
+            "icon": "👨‍👩‍👧",
+            "sizeSqm": null,
+            "occupancy": {
+              "he": "שלישיה",
+              "en": "Triple"
+            },
+            "sortOrder": 1
+          }
+        ]
+      },
+      {
+        "name": "The Grandeur",
+        "stars": 5,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 8.5,
+        "googleMapsUrl": "https://www.google.com/maps/search/The+Grandeur+Hotel+Batumi+Georgia",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=The+Grandeur+Batumi",
+        "roomsNote": null,
+        "sortOrder": 11,
+        "features": [
+          "pool-out",
+          "casino-near"
+        ],
+        "distances": [
+          {
+            "landmarkKey": "chabad",
+            "meters": 4300,
+            "walkMinutes": null,
+            "rideMinutes": 9
+          },
+          {
+            "landmarkKey": "europe",
+            "meters": 4500,
+            "walkMinutes": null,
+            "rideMinutes": 10
+          }
+        ],
+        "rooms": [
+          {
+            "name": "Standard Double",
+            "icon": "🛏",
+            "sizeSqm": null,
+            "occupancy": {
+              "he": "זוגי",
+              "en": "Double"
+            },
+            "sortOrder": 0
+          },
+          {
+            "name": "Triple Room",
+            "icon": "👨‍👩‍👧",
+            "sizeSqm": null,
+            "occupancy": {
+              "he": "שלישיה",
+              "en": "Triple"
+            },
+            "sortOrder": 1
+          }
+        ]
+      },
+      {
+        "name": "Grand Gloria",
+        "stars": 5,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 7.7,
+        "googleMapsUrl": "https://www.google.com/maps/search/Grand+Gloria+Hotel+Batumi+Georgia",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Grand+Gloria+Batumi",
+        "roomsNote": null,
+        "sortOrder": 12,
+        "features": [
+          "pool-in",
+          "pool-out"
+        ],
+        "distances": [
+          {
+            "landmarkKey": "chabad",
+            "meters": 3900,
+            "walkMinutes": null,
+            "rideMinutes": 8
+          },
+          {
+            "landmarkKey": "europe",
+            "meters": 4100,
+            "walkMinutes": null,
+            "rideMinutes": 9
+          }
+        ],
+        "rooms": [
+          {
+            "name": "Standard Double",
+            "icon": "🛏",
+            "sizeSqm": null,
+            "occupancy": {
+              "he": "זוגי",
+              "en": "Double"
+            },
+            "sortOrder": 0
+          },
+          {
+            "name": "Triple Room",
+            "icon": "👨‍👩‍👧",
+            "sizeSqm": null,
+            "occupancy": {
+              "he": "שלישיה",
+              "en": "Triple"
+            },
+            "sortOrder": 1
+          }
+        ]
+      },
+      {
+        "name": "Paragraph Resort & Spa Shekvetili",
+        "stars": 5,
+        "tier": "premium",
+        "tags": [
+          "resort"
+        ],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 9.5,
+        "googleMapsUrl": "https://www.google.com/maps/search/Paragraph+Resort+Spa+Shekvetili+Georgia",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Paragraph+Resort+Shekvetili",
+        "roomsNote": null,
+        "sortOrder": 13,
+        "features": [
+          "pool-in",
+          "pool-out",
+          "waterpark",
+          "outside-center"
+        ],
+        "distances": [
+          {
+            "landmarkKey": "chabad",
+            "meters": 42000,
+            "walkMinutes": null,
+            "rideMinutes": 44
+          },
+          {
+            "landmarkKey": "europe",
+            "meters": 43000,
+            "walkMinutes": null,
+            "rideMinutes": 45
+          }
+        ],
+        "rooms": [
+          {
+            "name": "Standard Double",
+            "icon": "🛏",
+            "sizeSqm": null,
+            "occupancy": {
+              "he": "זוגי",
+              "en": "Double"
+            },
+            "sortOrder": 0
+          },
+          {
+            "name": "Triple Room",
+            "icon": "👨‍👩‍👧",
+            "sizeSqm": null,
+            "occupancy": {
+              "he": "שלישיה",
+              "en": "Triple"
+            },
+            "sortOrder": 1
+          }
+        ]
+      },
+      {
+        "name": "Dreamland Oasis",
+        "stars": 4,
+        "tier": "premium",
+        "tags": [
+          "resort"
+        ],
+        "boards": [
+          "bb",
+          "hb",
+          "fb"
+        ],
+        "bookingScore": 8,
+        "googleMapsUrl": "https://www.google.com/maps/search/Dreamland+Oasis+Hotel+Georgia",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Dreamland+Oasis+Hotel",
+        "roomsNote": null,
+        "sortOrder": 14,
+        "features": [
+          "pool-in",
+          "pool-out",
+          "waterpark",
+          "outside-center"
+        ],
+        "distances": [
+          {
+            "landmarkKey": "chabad",
+            "meters": 14000,
+            "walkMinutes": null,
+            "rideMinutes": 22
+          },
+          {
+            "landmarkKey": "europe",
+            "meters": 14000,
+            "walkMinutes": null,
+            "rideMinutes": 22
+          }
+        ],
+        "rooms": [
+          {
+            "name": "Standard Double",
+            "icon": "🛏",
+            "sizeSqm": null,
+            "occupancy": {
+              "he": "זוגי",
+              "en": "Double"
+            },
+            "sortOrder": 0
+          },
+          {
+            "name": "Triple Room",
+            "icon": "👨‍👩‍👧",
+            "sizeSqm": null,
+            "occupancy": {
+              "he": "שלישיה",
+              "en": "Triple"
+            },
+            "sortOrder": 1
+          }
+        ]
+      },
+      {
+        "name": "King Solomon",
+        "stars": 4,
+        "tier": "good",
+        "tags": [
+          "kosher"
+        ],
+        "boards": [
+          "bb",
+          "hb"
+        ],
+        "bookingScore": 8,
+        "googleMapsUrl": "https://www.google.com/maps/search/King+Solomon+Hotel+Batumi+Georgia",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=King+Solomon+Hotel+Batumi",
+        "roomsNote": null,
+        "sortOrder": 15,
+        "features": [],
+        "distances": [
+          {
+            "landmarkKey": "chabad",
+            "meters": 3100,
+            "walkMinutes": null,
+            "rideMinutes": 7
+          },
+          {
+            "landmarkKey": "europe",
+            "meters": 3300,
+            "walkMinutes": null,
+            "rideMinutes": 8
+          }
+        ],
+        "rooms": [
+          {
+            "name": "Standard Double",
+            "icon": "🛏",
+            "sizeSqm": null,
+            "occupancy": {
+              "he": "זוגי",
+              "en": "Double"
+            },
+            "sortOrder": 0
+          },
+          {
+            "name": "Triple Room",
+            "icon": "👨‍👩‍👧",
+            "sizeSqm": null,
+            "occupancy": {
+              "he": "שלישיה",
+              "en": "Triple"
+            },
+            "sortOrder": 1
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "code": "bud",
+    "iata": "BUD",
+    "name": {
+      "en": "Budapest",
+      "he": "בודפשט"
+    },
+    "country": {
+      "en": "Hungary",
+      "he": "הונגריה"
+    },
+    "countryCode": "HU",
+    "info": {
+      "about": {
+        "he": "בודפשט מחולקת לשתי ערים: בודה (הצד ההררי, המערבי — ארמון, מצודה, שכונות שקטות) ו-פשט (הצד השטוח, המזרחי — מסחר, חיי לילה, אטרקציות תיירותיות עיקריות). רוב המלונות למטיילים נמצאים בפשט.",
+        "en": "Budapest is divided into two cities: Buda (the hilly, western side — palace, citadel, quiet neighborhoods) and Pest (the flat, eastern side — commerce, nightlife, the main tourist attractions). Most hotels for travelers are in Pest."
+      },
+      "attractions": {
+        "he": "🏛 אתרים מרכזיים: הפרלמנט ההונגרי · גשר השרשרת · מצודת בודה · בית הכנסת דוהאני (הגדול באירופה) · בנייני הבארוק של Andrássy út · אמבטיאות הרחצה (Széchenyi, Gellért)",
+        "en": "🏛 Main sights: The Hungarian Parliament · Chain Bridge · Buda Castle · Dohány Street Synagogue (the largest in Europe) · the Baroque buildings of Andrássy út · the thermal baths (Széchenyi, Gellért)"
+      },
+      "currencyNote": {
+        "he": "המטבע המקומי: פורינט הונגרי (HUF) · הערכת שער: ₪1 ≈ 107 פורינט",
+        "en": "Local currency: Hungarian Forint (HUF) · Approx. rate: ₪1 ≈ 107 Forint"
+      },
+      "airport": {
+        "title": {
+          "he": "✈ שדה התעופה — BUD (Ferenc Liszt)",
+          "en": "✈ Airport — BUD (Ferenc Liszt)"
+        },
+        "note": {
+          "he": "מרחק: ~24 ק\"מ ממרכז העיר · זמן נסיעה: 30–45 דקות",
+          "en": "Distance: ~24 km from the city center · Travel time: 30–45 minutes"
+        }
+      },
+      "transport": [
+        {
+          "icon": "🚌",
+          "mode": {
+            "he": "קו 100E",
+            "en": "Line 100E"
+          },
+          "detail": {
+            "he": "לדאק פרנץ טר · ~40 דק'",
+            "en": "To Deák Ferenc tér · ~40 min"
+          },
+          "price": "~6€"
+        },
+        {
+          "icon": "🚕",
+          "mode": {
+            "he": "FőTaxi",
+            "en": "FőTaxi"
+          },
+          "detail": {
+            "he": "רשמית · ~30 דק' · כרטיס אשראי",
+            "en": "Official · ~30 min · credit card"
+          },
+          "price": "28–35€"
+        },
+        {
+          "icon": "📱",
+          "mode": {
+            "he": "Bolt / Uber",
+            "en": "Bolt / Uber"
+          },
+          "detail": {
+            "he": "~25–30 דק' · pickup מחוץ לשדה",
+            "en": "~25–30 min · pickup outside the airport"
+          },
+          "price": "25–32€"
+        }
+      ]
+    },
+    "sortOrder": 2,
+    "landmarks": [
+      {
+        "key": "kiraly",
+        "name": {
+          "en": "Király (Jewish Quarter)",
+          "he": "הרובע היהודי (Király)"
+        }
+      },
+      {
+        "key": "vaci",
+        "name": {
+          "en": "Váci utca",
+          "he": "Váci utca"
+        }
+      }
+    ],
+    "hotels": [
+      {
+        "name": "Alta Moda Hotel (Mellow Mood)",
+        "stars": 4,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 8.8,
+        "googleMapsUrl": "https://www.google.com/maps/search/Alta+Moda+Hotel+(Mellow+Mood)+Budapest",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Alta+Moda+Hotel+(Mellow+Mood)+Budapest",
+        "roomsNote": null,
+        "sortOrder": 0,
+        "features": [],
+        "distances": [
+          {
+            "landmarkKey": "kiraly",
+            "meters": 21,
+            "walkMinutes": null,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "vaci",
+            "meters": 1,
+            "walkMinutes": 1,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "7Seasons Apartments Budapest",
+        "stars": 4,
+        "tier": "good",
+        "tags": [],
+        "boards": [],
+        "bookingScore": 8.8,
+        "googleMapsUrl": "https://www.google.com/maps/search/7Seasons+Apartments+Budapest+Budapest",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=7Seasons+Apartments+Budapest+Budapest",
+        "roomsNote": null,
+        "sortOrder": 1,
+        "features": [],
+        "distances": [
+          {
+            "landmarkKey": "kiraly",
+            "meters": 1,
+            "walkMinutes": null,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "vaci",
+            "meters": 8,
+            "walkMinutes": 8,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "Barceló Budapest",
+        "stars": 4,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 9.1,
+        "googleMapsUrl": "https://www.google.com/maps/search/Barceló+Budapest+Budapest",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Barceló+Budapest+Budapest",
+        "roomsNote": null,
+        "sortOrder": 2,
+        "features": [],
+        "distances": [
+          {
+            "landmarkKey": "kiraly",
+            "meters": 3,
+            "walkMinutes": null,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "vaci",
+            "meters": 9,
+            "walkMinutes": 9,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "Bohem Art Hotel",
+        "stars": 4,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 8.9,
+        "googleMapsUrl": "https://www.google.com/maps/search/Bohem+Art+Hotel+Budapest",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Bohem+Art+Hotel+Budapest",
+        "roomsNote": null,
+        "sortOrder": 3,
+        "features": [],
+        "distances": [
+          {
+            "landmarkKey": "kiraly",
+            "meters": 18,
+            "walkMinutes": null,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "vaci",
+            "meters": 0,
+            "walkMinutes": null,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "Dorothea Hotel Autograph",
+        "stars": 5,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 9.2,
+        "googleMapsUrl": "https://www.google.com/maps/search/Dorothea+Hotel+Autograph+Budapest",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Dorothea+Hotel+Autograph+Budapest",
+        "roomsNote": null,
+        "sortOrder": 4,
+        "features": [
+          "casino",
+          "pool-in"
+        ],
+        "distances": [
+          {
+            "landmarkKey": "kiraly",
+            "meters": 9,
+            "walkMinutes": null,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "vaci",
+            "meters": 2,
+            "walkMinutes": 2,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "Emerald Downtown Luxury Suites",
+        "stars": 4,
+        "tier": "good",
+        "tags": [],
+        "boards": [],
+        "bookingScore": 9.6,
+        "googleMapsUrl": "https://www.google.com/maps/search/Emerald+Downtown+Luxury+Suites+Budapest",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Emerald+Downtown+Luxury+Suites+Budapest",
+        "roomsNote": null,
+        "sortOrder": 5,
+        "features": [],
+        "distances": [
+          {
+            "landmarkKey": "kiraly",
+            "meters": 7,
+            "walkMinutes": null,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "vaci",
+            "meters": 4,
+            "walkMinutes": 4,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "Estilo Hotel (Mellow Mood)",
+        "stars": 4,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 8.8,
+        "googleMapsUrl": "https://www.google.com/maps/search/Estilo+Hotel+(Mellow+Mood)+Budapest",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Estilo+Hotel+(Mellow+Mood)+Budapest",
+        "roomsNote": null,
+        "sortOrder": 6,
+        "features": [],
+        "distances": [
+          {
+            "landmarkKey": "kiraly",
+            "meters": 20,
+            "walkMinutes": null,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "vaci",
+            "meters": 0,
+            "walkMinutes": null,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "Eurostars Ambassador",
+        "stars": 4,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 9.1,
+        "googleMapsUrl": "https://www.google.com/maps/search/Eurostars+Ambassador+Budapest",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Eurostars+Ambassador+Budapest",
+        "roomsNote": null,
+        "sortOrder": 7,
+        "features": [],
+        "distances": [
+          {
+            "landmarkKey": "kiraly",
+            "meters": 9,
+            "walkMinutes": null,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "vaci",
+            "meters": 28,
+            "walkMinutes": 28,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "Eurostars Danube Budapest",
+        "stars": 4,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 8.7,
+        "googleMapsUrl": "https://www.google.com/maps/search/Eurostars+Danube+Budapest+Budapest",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Eurostars+Danube+Budapest+Budapest",
+        "roomsNote": null,
+        "sortOrder": 8,
+        "features": [],
+        "distances": [
+          {
+            "landmarkKey": "kiraly",
+            "meters": 2,
+            "walkMinutes": null,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "vaci",
+            "meters": 8,
+            "walkMinutes": 8,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "Exe Budapest Center",
+        "stars": 4,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 8.5,
+        "googleMapsUrl": "https://www.google.com/maps/search/Exe+Budapest+Center+Budapest",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Exe+Budapest+Center+Budapest",
+        "roomsNote": null,
+        "sortOrder": 9,
+        "features": [],
+        "distances": [
+          {
+            "landmarkKey": "kiraly",
+            "meters": 11,
+            "walkMinutes": null,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "vaci",
+            "meters": 7,
+            "walkMinutes": 7,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "Hampton by Hilton Budapest City",
+        "stars": 3,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 9.1,
+        "googleMapsUrl": "https://www.google.com/maps/search/Hampton+by+Hilton+Budapest+City+Budapest",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Hampton+by+Hilton+Budapest+City+Budapest",
+        "roomsNote": null,
+        "sortOrder": 10,
+        "features": [],
+        "distances": [
+          {
+            "landmarkKey": "kiraly",
+            "meters": 5,
+            "walkMinutes": null,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "vaci",
+            "meters": 15,
+            "walkMinutes": 15,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "Hotel Museum Budapest",
+        "stars": 4,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 8.5,
+        "googleMapsUrl": "https://www.google.com/maps/search/Hotel+Museum+Budapest+Budapest",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Hotel+Museum+Budapest+Budapest",
+        "roomsNote": null,
+        "sortOrder": 11,
+        "features": [],
+        "distances": [
+          {
+            "landmarkKey": "kiraly",
+            "meters": 15,
+            "walkMinutes": null,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "vaci",
+            "meters": 14,
+            "walkMinutes": 14,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "Hotel Rum Budapest",
+        "stars": 4,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 8.4,
+        "googleMapsUrl": "https://www.google.com/maps/search/Hotel+Rum+Budapest+Budapest",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Hotel+Rum+Budapest+Budapest",
+        "roomsNote": null,
+        "sortOrder": 12,
+        "features": [],
+        "distances": [
+          {
+            "landmarkKey": "kiraly",
+            "meters": 17,
+            "walkMinutes": null,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "vaci",
+            "meters": 6,
+            "walkMinutes": 6,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "Hotel Zenit Budapest Palace",
+        "stars": 4,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 8.8,
+        "googleMapsUrl": "https://www.google.com/maps/search/Hotel+Zenit+Budapest+Palace+Budapest",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Hotel+Zenit+Budapest+Palace+Budapest",
+        "roomsNote": null,
+        "sortOrder": 13,
+        "features": [],
+        "distances": [
+          {
+            "landmarkKey": "kiraly",
+            "meters": 10,
+            "walkMinutes": null,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "vaci",
+            "meters": 0,
+            "walkMinutes": null,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "Kempinski Hotel Corvinus",
+        "stars": 5,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 9.3,
+        "googleMapsUrl": "https://www.google.com/maps/search/Kempinski+Hotel+Corvinus+Budapest",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Kempinski+Hotel+Corvinus+Budapest",
+        "roomsNote": null,
+        "sortOrder": 14,
+        "features": [
+          "pool-in"
+        ],
+        "distances": [
+          {
+            "landmarkKey": "kiraly",
+            "meters": 6,
+            "walkMinutes": null,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "vaci",
+            "meters": 3,
+            "walkMinutes": 3,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "La Prima Fashion Hotel",
+        "stars": 4,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 8.6,
+        "googleMapsUrl": "https://www.google.com/maps/search/La+Prima+Fashion+Hotel+Budapest",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=La+Prima+Fashion+Hotel+Budapest",
+        "roomsNote": null,
+        "sortOrder": 15,
+        "features": [],
+        "distances": [
+          {
+            "landmarkKey": "kiraly",
+            "meters": 11,
+            "walkMinutes": null,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "vaci",
+            "meters": 0,
+            "walkMinutes": null,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "Leonardo Boutique M Square",
+        "stars": 4,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 8.8,
+        "googleMapsUrl": "https://www.google.com/maps/search/Leonardo+Boutique+M+Square+Budapest",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Leonardo+Boutique+M+Square+Budapest",
+        "roomsNote": null,
+        "sortOrder": 16,
+        "features": [],
+        "distances": [
+          {
+            "landmarkKey": "kiraly",
+            "meters": 1,
+            "walkMinutes": null,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "vaci",
+            "meters": 7,
+            "walkMinutes": 7,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "Mercure Budapest City Center",
+        "stars": 4,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 8.6,
+        "googleMapsUrl": "https://www.google.com/maps/search/Mercure+Budapest+City+Center+Budapest",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Mercure+Budapest+City+Center+Budapest",
+        "roomsNote": null,
+        "sortOrder": 17,
+        "features": [],
+        "distances": [
+          {
+            "landmarkKey": "kiraly",
+            "meters": 9,
+            "walkMinutes": null,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "vaci",
+            "meters": 0,
+            "walkMinutes": null,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "Mercure Budapest Korona",
+        "stars": 4,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 8.8,
+        "googleMapsUrl": "https://www.google.com/maps/search/Mercure+Budapest+Korona+Budapest",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Mercure+Budapest+Korona+Budapest",
+        "roomsNote": null,
+        "sortOrder": 18,
+        "features": [],
+        "distances": [
+          {
+            "landmarkKey": "kiraly",
+            "meters": 15,
+            "walkMinutes": null,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "vaci",
+            "meters": 5,
+            "walkMinutes": 5,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "12 Revay Hotel",
+        "stars": 3,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 8.9,
+        "googleMapsUrl": "https://www.google.com/maps/search/12+Revay+Hotel+Budapest",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=12+Revay+Hotel+Budapest",
+        "roomsNote": null,
+        "sortOrder": 19,
+        "features": [],
+        "distances": [
+          {
+            "landmarkKey": "kiraly",
+            "meters": 3,
+            "walkMinutes": null,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "vaci",
+            "meters": 12,
+            "walkMinutes": 12,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "Radisson Collection Basilica",
+        "stars": 5,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 9.1,
+        "googleMapsUrl": "https://www.google.com/maps/search/Radisson+Collection+Basilica+Budapest",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Radisson+Collection+Basilica+Budapest",
+        "roomsNote": null,
+        "sortOrder": 20,
+        "features": [],
+        "distances": [
+          {
+            "landmarkKey": "kiraly",
+            "meters": 5,
+            "walkMinutes": null,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "vaci",
+            "meters": 10,
+            "walkMinutes": 10,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "Three Corners Downtown Hotel",
+        "stars": 4,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 9.3,
+        "googleMapsUrl": "https://www.google.com/maps/search/Three+Corners+Downtown+Hotel+Budapest",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Three+Corners+Downtown+Hotel+Budapest",
+        "roomsNote": null,
+        "sortOrder": 21,
+        "features": [],
+        "distances": [
+          {
+            "landmarkKey": "kiraly",
+            "meters": 10,
+            "walkMinutes": null,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "vaci",
+            "meters": 9,
+            "walkMinutes": 9,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "Three Corners Hotel Anna",
+        "stars": 3,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 9.2,
+        "googleMapsUrl": "https://www.google.com/maps/search/Three+Corners+Hotel+Anna+Budapest",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Three+Corners+Hotel+Anna+Budapest",
+        "roomsNote": null,
+        "sortOrder": 22,
+        "features": [],
+        "distances": [
+          {
+            "landmarkKey": "kiraly",
+            "meters": 18,
+            "walkMinutes": null,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "vaci",
+            "meters": 21,
+            "walkMinutes": 21,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "Three Corners Hotel Art",
+        "stars": 3,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 9,
+        "googleMapsUrl": "https://www.google.com/maps/search/Three+Corners+Hotel+Art+Budapest",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Three+Corners+Hotel+Art+Budapest",
+        "roomsNote": null,
+        "sortOrder": 23,
+        "features": [],
+        "distances": [
+          {
+            "landmarkKey": "kiraly",
+            "meters": 17,
+            "walkMinutes": null,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "vaci",
+            "meters": 6,
+            "walkMinutes": 6,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "Three Corners Lifestyle Hotel",
+        "stars": 4,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 9.3,
+        "googleMapsUrl": "https://www.google.com/maps/search/Three+Corners+Lifestyle+Hotel+Budapest",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Three+Corners+Lifestyle+Hotel+Budapest",
+        "roomsNote": null,
+        "sortOrder": 24,
+        "features": [],
+        "distances": [
+          {
+            "landmarkKey": "kiraly",
+            "meters": 23,
+            "walkMinutes": null,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "vaci",
+            "meters": 10,
+            "walkMinutes": 10,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "K+K Hotel Opera",
+        "stars": 4,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 8.3,
+        "googleMapsUrl": "https://www.google.com/maps/search/K+K+Hotel+Opera+Budapest",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=K+K+Hotel+Opera+Budapest",
+        "roomsNote": null,
+        "sortOrder": 25,
+        "features": [],
+        "distances": [
+          {
+            "landmarkKey": "kiraly",
+            "meters": 450,
+            "walkMinutes": null,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "vaci",
+            "meters": 1200,
+            "walkMinutes": null,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "Aquaworld Resort Budapest",
+        "stars": 4,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 8.9,
+        "googleMapsUrl": "https://www.google.com/maps/search/Aquaworld+Resort+Budapest",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Aquaworld+Resort+Budapest",
+        "roomsNote": null,
+        "sortOrder": 26,
+        "features": [
+          "pool-in"
+        ],
+        "distances": [
+          {
+            "landmarkKey": "kiraly",
+            "meters": 10000,
+            "walkMinutes": null,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "vaci",
+            "meters": 12000,
+            "walkMinutes": null,
+            "rideMinutes": 35
+          }
+        ],
+        "rooms": []
+      }
+    ]
+  },
+  {
+    "code": "ath",
+    "iata": "ATH",
+    "name": {
+      "en": "Athens",
+      "he": "אתונה"
+    },
+    "country": {
+      "en": "Greece",
+      "he": "יוון"
+    },
+    "countryCode": "GR",
+    "info": {
+      "about": {
+        "he": "אתונה היא בירת יוון ואחת הערים ההיסטוריות החשובות באירופה. המרכז התיירותי נוח מאוד להליכה ומתרכז סביב סינטגמה, פלאקה, מונסטיראקי ורחוב ארמו — אזור של קניות, מסעדות, אתרים קלאסיים וחיי עיר.",
+        "en": "Athens is the capital of Greece and one of Europe's most important historic cities. The tourist center is very walkable and centers around Syntagma, Plaka, Monastiraki and Ermou Street — an area of shopping, restaurants, classical sites and city life."
+      },
+      "attractions": {
+        "he": "🏰 אתרים מרכזיים: האקרופוליס · פלאקה (Plaka) · רחוב ארמו (Ermou) · כיכר סינטגמה (Syntagma) · כיכר אומוניה (Omonia)",
+        "en": "🏰 Main sights: The Acropolis · Plaka · Ermou Street · Syntagma Square · Omonia Square"
+      },
+      "currencyNote": {
+        "he": "המטבע המקומי: אירו (EUR) · הערכת שער: 1 אירו ≈ ₪3.38",
+        "en": "Local currency: Euro (EUR) · Approx. rate: 1 Euro ≈ ₪3.38"
+      },
+      "airport": {
+        "title": {
+          "he": "✈ שדה התעופה — ATH (Eleftherios Venizelos)",
+          "en": "✈ Airport — ATH (Eleftherios Venizelos)"
+        },
+        "note": {
+          "he": "מרחק: ~35 ק״מ ממרכז העיר · זמן נסיעה: 35–50 דקות",
+          "en": "Distance: ~35 km from the city center · Travel time: 35–50 minutes"
+        }
+      },
+      "transport": [
+        {
+          "icon": "🚇",
+          "mode": {
+            "he": "מטרו / רכבת",
+            "en": "Metro / train"
+          },
+          "detail": {
+            "he": "לסינטגמה / מונסטיראקי",
+            "en": "To Syntagma / Monastiraki"
+          },
+          "price": "~9€"
+        },
+        {
+          "icon": "🚌",
+          "mode": {
+            "he": "אוטובוס X95",
+            "en": "Bus X95"
+          },
+          "detail": {
+            "he": "לכיכר סינטגמה · כ-50–60 דק׳",
+            "en": "To Syntagma Square · approx. 50–60 min"
+          },
+          "price": "~5–6€"
+        },
+        {
+          "icon": "🚕",
+          "mode": {
+            "he": "מונית / Uber",
+            "en": "Taxi / Uber"
+          },
+          "detail": {
+            "he": "למרכז העיר",
+            "en": "To the city center"
+          },
+          "price": "~40–55€"
+        }
+      ],
+      "landmarks": {
+        "he": "📍 נקודות ציון: 🏛 כיכר סינטגמה (Syntagma) — לב העיר, תחבורה, קניות ומלונות מרכזיים 🚶 רחוב ארמו (Ermou) — מדרחוב הקניות המרכזי 🏛️ פלאקה (Plaka) — האזור העתיק והציורי מתחת לאקרופוליס 📍 כיכר אומוניה (Omonia) — נקודת ייחוס צפונית למרכז",
+        "en": "📍 Points of interest: 🏛 Syntagma Square — the heart of the city: transport, shopping and central hotels 🚶 Ermou Street — the main pedestrian shopping street 🏛️ Plaka — the old, picturesque area below the Acropolis 📍 Omonia Square — a northern reference point to the center"
+      }
+    },
+    "sortOrder": 3,
+    "landmarks": [
+      {
+        "key": "ermou",
+        "name": {
+          "en": "Ermou Street",
+          "he": "רחוב ארמו"
+        }
+      },
+      {
+        "key": "omonia",
+        "name": {
+          "en": "Omonia Square",
+          "he": "כיכר אומוניה"
+        }
+      },
+      {
+        "key": "plaka",
+        "name": {
+          "en": "Plaka",
+          "he": "פלאקה"
+        }
+      },
+      {
+        "key": "syntagma",
+        "name": {
+          "en": "Syntagma Square",
+          "he": "כיכר סינטגמה"
+        }
+      }
+    ],
+    "hotels": [
+      {
+        "name": "The Stanley",
+        "stars": 4,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 8.3,
+        "googleMapsUrl": "https://www.google.com/maps/search/The+Stanley+Athens+Greece",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=The+Stanley+Athens+Greece",
+        "roomsNote": null,
+        "sortOrder": 0,
+        "features": [
+          "pool-out"
+        ],
+        "distances": [
+          {
+            "landmarkKey": "ermou",
+            "meters": 1500,
+            "walkMinutes": null,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "omonia",
+            "meters": 650,
+            "walkMinutes": 9,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "plaka",
+            "meters": 2000,
+            "walkMinutes": 26,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "syntagma",
+            "meters": 1700,
+            "walkMinutes": 23,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "Fresh Hotel Athens",
+        "stars": 4,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 9,
+        "googleMapsUrl": "https://www.google.com/maps/search/Fresh+Hotel+Athens+Athens+Greece",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Fresh+Hotel+Athens+Athens+Greece",
+        "roomsNote": null,
+        "sortOrder": 1,
+        "features": [
+          "pool-out"
+        ],
+        "distances": [
+          {
+            "landmarkKey": "ermou",
+            "meters": 650,
+            "walkMinutes": null,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "omonia",
+            "meters": 450,
+            "walkMinutes": 6,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "plaka",
+            "meters": 1000,
+            "walkMinutes": 13,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "syntagma",
+            "meters": 1100,
+            "walkMinutes": 15,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "Wyndham Grand Athens",
+        "stars": 5,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 8.3,
+        "googleMapsUrl": "https://www.google.com/maps/search/Wyndham+Grand+Athens+Athens+Greece",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Wyndham+Grand+Athens+Athens+Greece",
+        "roomsNote": null,
+        "sortOrder": 2,
+        "features": [
+          "pool-out"
+        ],
+        "distances": [
+          {
+            "landmarkKey": "ermou",
+            "meters": 1500,
+            "walkMinutes": null,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "omonia",
+            "meters": 750,
+            "walkMinutes": 10,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "plaka",
+            "meters": 2100,
+            "walkMinutes": 27,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "syntagma",
+            "meters": 1700,
+            "walkMinutes": 23,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "Wyndham Residence Athens",
+        "stars": 4,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 8.4,
+        "googleMapsUrl": "https://www.google.com/maps/search/Wyndham+Residence+Athens+Athens+Greece",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Wyndham+Residence+Athens+Athens+Greece",
+        "roomsNote": null,
+        "sortOrder": 3,
+        "features": [
+          "pool-out"
+        ],
+        "distances": [
+          {
+            "landmarkKey": "ermou",
+            "meters": 1600,
+            "walkMinutes": null,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "omonia",
+            "meters": 800,
+            "walkMinutes": 11,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "plaka",
+            "meters": 2200,
+            "walkMinutes": 28,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "syntagma",
+            "meters": 1800,
+            "walkMinutes": 24,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "Pure by Prime Hotels",
+        "stars": 4,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 8.9,
+        "googleMapsUrl": "https://www.google.com/maps/search/Pure+by+Prime+Hotels+Athens+Greece",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Pure+by+Prime+Hotels+Athens+Greece",
+        "roomsNote": null,
+        "sortOrder": 4,
+        "features": [],
+        "distances": [
+          {
+            "landmarkKey": "ermou",
+            "meters": 700,
+            "walkMinutes": null,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "omonia",
+            "meters": 650,
+            "walkMinutes": 9,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "plaka",
+            "meters": 950,
+            "walkMinutes": 12,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "syntagma",
+            "meters": 1300,
+            "walkMinutes": 17,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "Classic by Prime Hotels",
+        "stars": 4,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 8.7,
+        "googleMapsUrl": "https://www.google.com/maps/search/Classic+by+Prime+Hotels+Athens+Greece",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Classic+by+Prime+Hotels+Athens+Greece",
+        "roomsNote": null,
+        "sortOrder": 5,
+        "features": [],
+        "distances": [
+          {
+            "landmarkKey": "ermou",
+            "meters": 600,
+            "walkMinutes": null,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "omonia",
+            "meters": 600,
+            "walkMinutes": 8,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "plaka",
+            "meters": 900,
+            "walkMinutes": 11,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "syntagma",
+            "meters": 1200,
+            "walkMinutes": 16,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "NJV Plaza",
+        "stars": 5,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 8.6,
+        "googleMapsUrl": "https://www.google.com/maps/search/NJV+Plaza+Athens+Greece",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=NJV+Plaza+Athens+Greece",
+        "roomsNote": null,
+        "sortOrder": 6,
+        "features": [],
+        "distances": [
+          {
+            "landmarkKey": "ermou",
+            "meters": 50,
+            "walkMinutes": null,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "omonia",
+            "meters": 1100,
+            "walkMinutes": 14,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "plaka",
+            "meters": 400,
+            "walkMinutes": 5,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "syntagma",
+            "meters": 0,
+            "walkMinutes": null,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "NYX Athens",
+        "stars": 4,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 9,
+        "googleMapsUrl": "https://www.google.com/maps/search/NYX+Athens+Athens+Greece",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=NYX+Athens+Athens+Greece",
+        "roomsNote": null,
+        "sortOrder": 7,
+        "features": [
+          "pool-in",
+          "pool-out"
+        ],
+        "distances": [
+          {
+            "landmarkKey": "ermou",
+            "meters": 450,
+            "walkMinutes": null,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "omonia",
+            "meters": 500,
+            "walkMinutes": 7,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "plaka",
+            "meters": 900,
+            "walkMinutes": 12,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "syntagma",
+            "meters": 650,
+            "walkMinutes": 9,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "The Editor",
+        "stars": 4,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 9.2,
+        "googleMapsUrl": "https://www.google.com/maps/search/The+Editor+Athens+Greece",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=The+Editor+Athens+Greece",
+        "roomsNote": null,
+        "sortOrder": 8,
+        "features": [],
+        "distances": [
+          {
+            "landmarkKey": "ermou",
+            "meters": 150,
+            "walkMinutes": null,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "omonia",
+            "meters": 700,
+            "walkMinutes": 9,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "plaka",
+            "meters": 500,
+            "walkMinutes": 7,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "syntagma",
+            "meters": 750,
+            "walkMinutes": 10,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "Titania",
+        "stars": 4,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 8.3,
+        "googleMapsUrl": "https://www.google.com/maps/search/Titania+Athens+Greece",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Titania+Athens+Greece",
+        "roomsNote": null,
+        "sortOrder": 9,
+        "features": [],
+        "distances": [
+          {
+            "landmarkKey": "ermou",
+            "meters": 700,
+            "walkMinutes": null,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "omonia",
+            "meters": 350,
+            "walkMinutes": 5,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "plaka",
+            "meters": 1200,
+            "walkMinutes": 16,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "syntagma",
+            "meters": 950,
+            "walkMinutes": 13,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "Amalia Athens",
+        "stars": 4,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 8.8,
+        "googleMapsUrl": "https://www.google.com/maps/search/Amalia+Athens+Athens+Greece",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Amalia+Athens+Athens+Greece",
+        "roomsNote": null,
+        "sortOrder": 10,
+        "features": [],
+        "distances": [
+          {
+            "landmarkKey": "ermou",
+            "meters": 300,
+            "walkMinutes": null,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "omonia",
+            "meters": 1300,
+            "walkMinutes": 17,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "plaka",
+            "meters": 350,
+            "walkMinutes": 5,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "syntagma",
+            "meters": 150,
+            "walkMinutes": 2,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "360 Degrees Hotel",
+        "stars": 4,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 8.9,
+        "googleMapsUrl": "https://www.google.com/maps/search/360+Degrees+Hotel+Athens+Greece",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=360+Degrees+Hotel+Athens+Greece",
+        "roomsNote": null,
+        "sortOrder": 11,
+        "features": [],
+        "distances": [
+          {
+            "landmarkKey": "ermou",
+            "meters": 0,
+            "walkMinutes": null,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "omonia",
+            "meters": 800,
+            "walkMinutes": 11,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "plaka",
+            "meters": 300,
+            "walkMinutes": 4,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "syntagma",
+            "meters": 800,
+            "walkMinutes": 11,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "360 Pop Art Hotel",
+        "stars": 4,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 9,
+        "googleMapsUrl": "https://www.google.com/maps/search/360+Pop+Art+Hotel+Athens+Greece",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=360+Pop+Art+Hotel+Athens+Greece",
+        "roomsNote": null,
+        "sortOrder": 12,
+        "features": [],
+        "distances": [
+          {
+            "landmarkKey": "ermou",
+            "meters": 150,
+            "walkMinutes": null,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "omonia",
+            "meters": 750,
+            "walkMinutes": 10,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "plaka",
+            "meters": 550,
+            "walkMinutes": 7,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "syntagma",
+            "meters": 1000,
+            "walkMinutes": 14,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "Electra Rhythm",
+        "stars": 4,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 9.3,
+        "googleMapsUrl": "https://www.google.com/maps/search/Electra+Rhythm+Athens+Greece",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Electra+Rhythm+Athens+Greece",
+        "roomsNote": null,
+        "sortOrder": 13,
+        "features": [],
+        "distances": [
+          {
+            "landmarkKey": "ermou",
+            "meters": 0,
+            "walkMinutes": null,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "omonia",
+            "meters": 1000,
+            "walkMinutes": 13,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "plaka",
+            "meters": 400,
+            "walkMinutes": 5,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "syntagma",
+            "meters": 250,
+            "walkMinutes": 3,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "Electra Palace",
+        "stars": 5,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 9.2,
+        "googleMapsUrl": "https://www.google.com/maps/search/Electra+Palace+Athens+Greece",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Electra+Palace+Athens+Greece",
+        "roomsNote": null,
+        "sortOrder": 14,
+        "features": [
+          "pool-in",
+          "pool-out"
+        ],
+        "distances": [
+          {
+            "landmarkKey": "ermou",
+            "meters": 450,
+            "walkMinutes": null,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "omonia",
+            "meters": 1300,
+            "walkMinutes": 18,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "plaka",
+            "meters": 0,
+            "walkMinutes": null,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "syntagma",
+            "meters": 500,
+            "walkMinutes": 7,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "Electra Metropolis",
+        "stars": 5,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 9.2,
+        "googleMapsUrl": "https://www.google.com/maps/search/Electra+Metropolis+Athens+Greece",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Electra+Metropolis+Athens+Greece",
+        "roomsNote": null,
+        "sortOrder": 15,
+        "features": [
+          "pool-in",
+          "pool-out"
+        ],
+        "distances": [
+          {
+            "landmarkKey": "ermou",
+            "meters": 100,
+            "walkMinutes": null,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "omonia",
+            "meters": 1100,
+            "walkMinutes": 15,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "plaka",
+            "meters": 250,
+            "walkMinutes": 3,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "syntagma",
+            "meters": 300,
+            "walkMinutes": 4,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "Met34",
+        "stars": 4,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 9.4,
+        "googleMapsUrl": "https://www.google.com/maps/search/Met34+Athens+Greece",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Met34+Athens+Greece",
+        "roomsNote": null,
+        "sortOrder": 16,
+        "features": [],
+        "distances": [
+          {
+            "landmarkKey": "ermou",
+            "meters": 50,
+            "walkMinutes": null,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "omonia",
+            "meters": 1100,
+            "walkMinutes": 15,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "plaka",
+            "meters": 300,
+            "walkMinutes": 4,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "syntagma",
+            "meters": 350,
+            "walkMinutes": 5,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "Pan Hotel",
+        "stars": 4,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 8.4,
+        "googleMapsUrl": "https://www.google.com/maps/search/Pan+Hotel+Athens+Greece",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Pan+Hotel+Athens+Greece",
+        "roomsNote": null,
+        "sortOrder": 17,
+        "features": [],
+        "distances": [
+          {
+            "landmarkKey": "ermou",
+            "meters": 50,
+            "walkMinutes": null,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "omonia",
+            "meters": 1200,
+            "walkMinutes": 16,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "plaka",
+            "meters": 350,
+            "walkMinutes": 5,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "syntagma",
+            "meters": 200,
+            "walkMinutes": 3,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "The Marblous",
+        "stars": 4,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 9,
+        "googleMapsUrl": "https://www.google.com/maps/search/The+Marblous+Athens+Greece",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=The+Marblous+Athens+Greece",
+        "roomsNote": null,
+        "sortOrder": 18,
+        "features": [],
+        "distances": [
+          {
+            "landmarkKey": "ermou",
+            "meters": 50,
+            "walkMinutes": null,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "omonia",
+            "meters": 1200,
+            "walkMinutes": 16,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "plaka",
+            "meters": 300,
+            "walkMinutes": 4,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "syntagma",
+            "meters": 250,
+            "walkMinutes": 3,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "Astor",
+        "stars": 4,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 8.5,
+        "googleMapsUrl": "https://www.google.com/maps/search/Astor+Athens+Greece",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Astor+Athens+Greece",
+        "roomsNote": null,
+        "sortOrder": 19,
+        "features": [],
+        "distances": [
+          {
+            "landmarkKey": "ermou",
+            "meters": 100,
+            "walkMinutes": null,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "omonia",
+            "meters": 1000,
+            "walkMinutes": 13,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "plaka",
+            "meters": 450,
+            "walkMinutes": 6,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "syntagma",
+            "meters": 300,
+            "walkMinutes": 4,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "Amazon Athens",
+        "stars": 4,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 8.9,
+        "googleMapsUrl": "https://www.google.com/maps/search/Amazon+Athens+Athens+Greece",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Amazon+Athens+Athens+Greece",
+        "roomsNote": null,
+        "sortOrder": 20,
+        "features": [],
+        "distances": [
+          {
+            "landmarkKey": "ermou",
+            "meters": 100,
+            "walkMinutes": null,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "omonia",
+            "meters": 1200,
+            "walkMinutes": 16,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "plaka",
+            "meters": 250,
+            "walkMinutes": 3,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "syntagma",
+            "meters": 350,
+            "walkMinutes": 5,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "Athens Cypria",
+        "stars": 3,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 8.6,
+        "googleMapsUrl": "https://www.google.com/maps/search/Athens+Cypria+Athens+Greece",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Athens+Cypria+Athens+Greece",
+        "roomsNote": null,
+        "sortOrder": 21,
+        "features": [],
+        "distances": [
+          {
+            "landmarkKey": "ermou",
+            "meters": 50,
+            "walkMinutes": null,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "omonia",
+            "meters": 1100,
+            "walkMinutes": 15,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "plaka",
+            "meters": 400,
+            "walkMinutes": 5,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "syntagma",
+            "meters": 350,
+            "walkMinutes": 5,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "Elia Ermou",
+        "stars": 4,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 9.3,
+        "googleMapsUrl": "https://www.google.com/maps/search/Elia+Ermou+Athens+Greece",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Elia+Ermou+Athens+Greece",
+        "roomsNote": null,
+        "sortOrder": 22,
+        "features": [],
+        "distances": [
+          {
+            "landmarkKey": "ermou",
+            "meters": 0,
+            "walkMinutes": null,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "omonia",
+            "meters": 1200,
+            "walkMinutes": 16,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "plaka",
+            "meters": 350,
+            "walkMinutes": 5,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "syntagma",
+            "meters": 300,
+            "walkMinutes": 4,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "Plaka Hotel",
+        "stars": 4,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 8.9,
+        "googleMapsUrl": "https://www.google.com/maps/search/Plaka+Hotel+Athens+Greece",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Plaka+Hotel+Athens+Greece",
+        "roomsNote": null,
+        "sortOrder": 23,
+        "features": [],
+        "distances": [
+          {
+            "landmarkKey": "ermou",
+            "meters": 150,
+            "walkMinutes": null,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "omonia",
+            "meters": 950,
+            "walkMinutes": 13,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "plaka",
+            "meters": 0,
+            "walkMinutes": null,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "syntagma",
+            "meters": 750,
+            "walkMinutes": 10,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "Dave Red Athens",
+        "stars": 4,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 7.9,
+        "googleMapsUrl": "https://www.google.com/maps/search/Dave+Red+Athens+Athens+Greece",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Dave+Red+Athens+Athens+Greece",
+        "roomsNote": null,
+        "sortOrder": 24,
+        "features": [],
+        "distances": [
+          {
+            "landmarkKey": "ermou",
+            "meters": 1100,
+            "walkMinutes": null,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "omonia",
+            "meters": 150,
+            "walkMinutes": 2,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "plaka",
+            "meters": 1600,
+            "walkMinutes": 22,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "syntagma",
+            "meters": 1300,
+            "walkMinutes": 18,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "Play Theatrou Hotel",
+        "stars": 4,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 8.9,
+        "googleMapsUrl": "https://www.google.com/maps/search/Play+Theatrou+Hotel+Athens+Greece",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Play+Theatrou+Hotel+Athens+Greece",
+        "roomsNote": null,
+        "sortOrder": 25,
+        "features": [],
+        "distances": [
+          {
+            "landmarkKey": "ermou",
+            "meters": 50,
+            "walkMinutes": null,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "omonia",
+            "meters": 550,
+            "walkMinutes": 7,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "plaka",
+            "meters": 950,
+            "walkMinutes": 13,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "syntagma",
+            "meters": 1100,
+            "walkMinutes": 15,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "Athens 1890",
+        "stars": 4,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 8.2,
+        "googleMapsUrl": "https://www.google.com/maps/search/Athens+1890+Athens+Greece",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Athens+1890+Athens+Greece",
+        "roomsNote": null,
+        "sortOrder": 26,
+        "features": [
+          "pool-in"
+        ],
+        "distances": [
+          {
+            "landmarkKey": "ermou",
+            "meters": 50,
+            "walkMinutes": null,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "omonia",
+            "meters": 800,
+            "walkMinutes": 11,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "plaka",
+            "meters": 450,
+            "walkMinutes": 6,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "syntagma",
+            "meters": 750,
+            "walkMinutes": 10,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "Bob W Eolou",
+        "stars": 4,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 8.6,
+        "googleMapsUrl": "https://www.google.com/maps/search/Bob+W+Eolou+Athens+Greece",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Bob+W+Eolou+Athens+Greece",
+        "roomsNote": null,
+        "sortOrder": 27,
+        "features": [],
+        "distances": [
+          {
+            "landmarkKey": "ermou",
+            "meters": 200,
+            "walkMinutes": null,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "omonia",
+            "meters": 650,
+            "walkMinutes": 9,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "plaka",
+            "meters": 500,
+            "walkMinutes": 7,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "syntagma",
+            "meters": 800,
+            "walkMinutes": 11,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "St. George Lycabettus Hotel",
+        "stars": 5,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 8.5,
+        "googleMapsUrl": "https://www.google.com/maps/search/St.+George+Lycabettus+Hotel+Athens+Greece",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=St.+George+Lycabettus+Hotel+Athens+Greece",
+        "roomsNote": null,
+        "sortOrder": 28,
+        "features": [
+          "pool-out"
+        ],
+        "distances": [
+          {
+            "landmarkKey": "ermou",
+            "meters": 1300,
+            "walkMinutes": null,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "omonia",
+            "meters": 1500,
+            "walkMinutes": 21,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "plaka",
+            "meters": 1500,
+            "walkMinutes": 22,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "syntagma",
+            "meters": 1200,
+            "walkMinutes": 17,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "Adia Aluma Hotels",
+        "stars": 4,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 8.6,
+        "googleMapsUrl": "https://www.google.com/maps/search/Adia+Aluma+Hotels+Athens+Greece",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Adia+Aluma+Hotels+Athens+Greece",
+        "roomsNote": null,
+        "sortOrder": 29,
+        "features": [
+          "pool-out"
+        ],
+        "distances": [
+          {
+            "landmarkKey": "ermou",
+            "meters": 150,
+            "walkMinutes": null,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "omonia",
+            "meters": 750,
+            "walkMinutes": 10,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "plaka",
+            "meters": 500,
+            "walkMinutes": 7,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "syntagma",
+            "meters": 650,
+            "walkMinutes": 9,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "Anise Aluma Athens",
+        "stars": 4,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 8.9,
+        "googleMapsUrl": "https://www.google.com/maps/search/Anise+Aluma+Athens+Athens+Greece",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Anise+Aluma+Athens+Athens+Greece",
+        "roomsNote": null,
+        "sortOrder": 30,
+        "features": [
+          "pool-out"
+        ],
+        "distances": [
+          {
+            "landmarkKey": "ermou",
+            "meters": 350,
+            "walkMinutes": null,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "omonia",
+            "meters": 750,
+            "walkMinutes": 10,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "plaka",
+            "meters": 650,
+            "walkMinutes": 9,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "syntagma",
+            "meters": 1100,
+            "walkMinutes": 15,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "Trendy by Prime Hotels",
+        "stars": 4,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 8.4,
+        "googleMapsUrl": "https://www.google.com/maps/search/Trendy+by+Prime+Hotels+Athens+Greece",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Trendy+by+Prime+Hotels+Athens+Greece",
+        "roomsNote": null,
+        "sortOrder": 31,
+        "features": [],
+        "distances": [
+          {
+            "landmarkKey": "ermou",
+            "meters": 950,
+            "walkMinutes": null,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "omonia",
+            "meters": 300,
+            "walkMinutes": 4,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "plaka",
+            "meters": 1400,
+            "walkMinutes": 19,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "syntagma",
+            "meters": 1200,
+            "walkMinutes": 16,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "Skylark Athens",
+        "stars": 4,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 8.2,
+        "googleMapsUrl": "https://www.google.com/maps/search/Skylark+Athens+Athens+Greece",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Skylark+Athens+Athens+Greece",
+        "roomsNote": null,
+        "sortOrder": 32,
+        "features": [
+          "pool-out"
+        ],
+        "distances": [
+          {
+            "landmarkKey": "ermou",
+            "meters": 1000,
+            "walkMinutes": null,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "omonia",
+            "meters": 50,
+            "walkMinutes": null,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "plaka",
+            "meters": 1500,
+            "walkMinutes": 20,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "syntagma",
+            "meters": 1200,
+            "walkMinutes": 16,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "Brown Acropol",
+        "stars": 4,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 8.1,
+        "googleMapsUrl": "https://www.google.com/maps/search/Brown+Acropol+Athens+Greece",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Brown+Acropol+Athens+Greece",
+        "roomsNote": null,
+        "sortOrder": 33,
+        "features": [],
+        "distances": [
+          {
+            "landmarkKey": "ermou",
+            "meters": 1000,
+            "walkMinutes": null,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "omonia",
+            "meters": 50,
+            "walkMinutes": null,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "plaka",
+            "meters": 1500,
+            "walkMinutes": 20,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "syntagma",
+            "meters": 1200,
+            "walkMinutes": 16,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "Melia Athens",
+        "stars": 5,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 8.4,
+        "googleMapsUrl": "https://www.google.com/maps/search/Melia+Athens+Athens+Greece",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Melia+Athens+Athens+Greece",
+        "roomsNote": null,
+        "sortOrder": 34,
+        "features": [
+          "pool-out"
+        ],
+        "distances": [
+          {
+            "landmarkKey": "ermou",
+            "meters": 1200,
+            "walkMinutes": null,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "omonia",
+            "meters": 400,
+            "walkMinutes": 5,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "plaka",
+            "meters": 1700,
+            "walkMinutes": 23,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "syntagma",
+            "meters": 1400,
+            "walkMinutes": 19,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      }
+    ]
+  },
+  {
+    "code": "the",
+    "iata": "SKG",
+    "name": {
+      "en": "Thessaloniki",
+      "he": "סלוניקי"
+    },
+    "country": {
+      "en": "Greece",
+      "he": "יוון"
+    },
+    "countryCode": "GR",
+    "info": {
+      "about": {
+        "he": "סלוניקי היא עיר נמל מרכזית בצפון יוון, עם טיילת ארוכה, אוכל טוב, חיי לילה, היסטוריה יהודית ונקודות עניין במרחק הליכה נוח במרכז העיר.",
+        "en": "Thessaloniki is a major port city in northern Greece, with a long promenade, good food, nightlife, Jewish history and points of interest within easy walking distance in the city center."
+      },
+      "attractions": {
+        "he": "🏰 אתרים מרכזיים: כיכר אריסטוטלוס (Aristotelous) · רובע לדדיקא (Ladadika) · המגדל הלבן · הטיילת · שוק מודיאנו",
+        "en": "🏰 Main sights: Aristotelous Square · Ladadika district · the White Tower · the promenade · Modiano Market"
+      },
+      "currencyNote": {
+        "he": "המטבע המקומי: אירו (EUR) · הערכת שער: 1 אירו ≈ ₪3.38",
+        "en": "Local currency: Euro (EUR) · Approx. rate: 1 Euro ≈ ₪3.38"
+      },
+      "airport": {
+        "title": {
+          "he": "✈ שדה התעופה — SKG (Makedonia)",
+          "en": "✈ Airport — SKG (Makedonia)"
+        },
+        "note": {
+          "he": "מרחק: ~15–17 ק״מ ממרכז העיר · זמן נסיעה: 20–30 דקות",
+          "en": "Distance: ~15–17 km from the city center · Travel time: 20–30 minutes"
+        }
+      },
+      "transport": [
+        {
+          "icon": "🚌",
+          "mode": {
+            "he": "אוטובוס 01X/01N",
+            "en": "Bus 01X/01N"
+          },
+          "detail": {
+            "he": "למרכז העיר · כ-40–50 דק׳",
+            "en": "To the city center · approx. 40–50 min"
+          },
+          "price": "~2€"
+        },
+        {
+          "icon": "🚕",
+          "mode": {
+            "he": "מונית",
+            "en": "Taxi"
+          },
+          "detail": {
+            "he": "למרכז העיר",
+            "en": "To the city center"
+          },
+          "price": "~20–30€"
+        },
+        {
+          "icon": "📱",
+          "mode": {
+            "he": "Bolt / העברה פרטית",
+            "en": "Bolt / private transfer"
+          },
+          "detail": {
+            "he": "למרכז העיר",
+            "en": "To the city center"
+          },
+          "price": "~18–30€"
+        }
+      ],
+      "landmarks": {
+        "he": "📍 נקודות ציון: 🏛 כיכר אריסטוטלוס — לב המרכז התיירותי, על הציר הראשי של העיר 🏙 רובע לדדיקא — אזור בילויים, מסעדות וחיי לילה",
+        "en": "📍 Points of interest: 🏛 Aristotelous Square — the heart of the tourist center, on the city's main axis 🏙 Ladadika district — an area of entertainment, restaurants and nightlife"
+      }
+    },
+    "sortOrder": 4,
+    "landmarks": [
+      {
+        "key": "aristotelous",
+        "name": {
+          "en": "Aristotelous Square",
+          "he": "כיכר אריסטוטולוס"
+        }
+      },
+      {
+        "key": "ladadika",
+        "name": {
+          "en": "Ladadika District",
+          "he": "רובע לאדאדיקה"
+        }
+      }
+    ],
+    "hotels": [
+      {
+        "name": "Electra Palace Thessaloniki",
+        "stars": 5,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 9.2,
+        "googleMapsUrl": "https://www.google.com/maps/search/Electra+Palace+Thessaloniki+Thessaloniki+Greece",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Electra+Palace+Thessaloniki+Thessaloniki+Greece",
+        "roomsNote": null,
+        "sortOrder": 0,
+        "features": [
+          "pool-in",
+          "pool-out"
+        ],
+        "distances": [
+          {
+            "landmarkKey": "aristotelous",
+            "meters": 0,
+            "walkMinutes": null,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "ladadika",
+            "meters": 400,
+            "walkMinutes": 5,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "City Hotel Thessaloniki",
+        "stars": 4,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 8.7,
+        "googleMapsUrl": "https://www.google.com/maps/search/City+Hotel+Thessaloniki+Thessaloniki+Greece",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=City+Hotel+Thessaloniki+Thessaloniki+Greece",
+        "roomsNote": null,
+        "sortOrder": 1,
+        "features": [],
+        "distances": [
+          {
+            "landmarkKey": "aristotelous",
+            "meters": 130,
+            "walkMinutes": 2,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "ladadika",
+            "meters": 350,
+            "walkMinutes": 4,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "The Modernist Thessaloniki",
+        "stars": 5,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 9.5,
+        "googleMapsUrl": "https://www.google.com/maps/search/The+Modernist+Thessaloniki+Thessaloniki+Greece",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=The+Modernist+Thessaloniki+Thessaloniki+Greece",
+        "roomsNote": null,
+        "sortOrder": 2,
+        "features": [],
+        "distances": [
+          {
+            "landmarkKey": "aristotelous",
+            "meters": 160,
+            "walkMinutes": 2,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "ladadika",
+            "meters": 450,
+            "walkMinutes": 6,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "MonAsty Autograph Collection",
+        "stars": 5,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 9.4,
+        "googleMapsUrl": "https://www.google.com/maps/search/MonAsty+Autograph+Collection+Thessaloniki+Greece",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=MonAsty+Autograph+Collection+Thessaloniki+Greece",
+        "roomsNote": null,
+        "sortOrder": 3,
+        "features": [
+          "pool-out"
+        ],
+        "distances": [
+          {
+            "landmarkKey": "aristotelous",
+            "meters": 220,
+            "walkMinutes": 3,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "ladadika",
+            "meters": 550,
+            "walkMinutes": 7,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "The Excelsior",
+        "stars": 5,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 9.2,
+        "googleMapsUrl": "https://www.google.com/maps/search/The+Excelsior+Thessaloniki+Greece",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=The+Excelsior+Thessaloniki+Greece",
+        "roomsNote": null,
+        "sortOrder": 4,
+        "features": [],
+        "distances": [
+          {
+            "landmarkKey": "aristotelous",
+            "meters": 240,
+            "walkMinutes": 3,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "ladadika",
+            "meters": 300,
+            "walkMinutes": 4,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "Le Palace Hotel Thessaloniki",
+        "stars": 4,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 8.2,
+        "googleMapsUrl": "https://www.google.com/maps/search/Le+Palace+Hotel+Thessaloniki+Thessaloniki+Greece",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Le+Palace+Hotel+Thessaloniki+Thessaloniki+Greece",
+        "roomsNote": null,
+        "sortOrder": 5,
+        "features": [],
+        "distances": [
+          {
+            "landmarkKey": "aristotelous",
+            "meters": 250,
+            "walkMinutes": 3,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "ladadika",
+            "meters": 270,
+            "walkMinutes": 3,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "No 15 Ermou Hotel",
+        "stars": 4,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 9.1,
+        "googleMapsUrl": "https://www.google.com/maps/search/No+15+Ermou+Hotel+Thessaloniki+Greece",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=No+15+Ermou+Hotel+Thessaloniki+Greece",
+        "roomsNote": null,
+        "sortOrder": 6,
+        "features": [],
+        "distances": [
+          {
+            "landmarkKey": "aristotelous",
+            "meters": 270,
+            "walkMinutes": 3,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "ladadika",
+            "meters": 400,
+            "walkMinutes": 5,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "Colors Urban Hotel Thessaloniki",
+        "stars": 4,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 8.7,
+        "googleMapsUrl": "https://www.google.com/maps/search/Colors+Urban+Hotel+Thessaloniki+Thessaloniki+Greece",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Colors+Urban+Hotel+Thessaloniki+Thessaloniki+Greece",
+        "roomsNote": null,
+        "sortOrder": 7,
+        "features": [],
+        "distances": [
+          {
+            "landmarkKey": "aristotelous",
+            "meters": 350,
+            "walkMinutes": 4,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "ladadika",
+            "meters": 160,
+            "walkMinutes": 2,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "Capsis Bristol Boutique Hotel",
+        "stars": 4,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 8.8,
+        "googleMapsUrl": "https://www.google.com/maps/search/Capsis+Bristol+Boutique+Hotel+Thessaloniki+Greece",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Capsis+Bristol+Boutique+Hotel+Thessaloniki+Greece",
+        "roomsNote": null,
+        "sortOrder": 8,
+        "features": [],
+        "distances": [
+          {
+            "landmarkKey": "aristotelous",
+            "meters": 450,
+            "walkMinutes": 6,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "ladadika",
+            "meters": 0,
+            "walkMinutes": null,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "The Caravan",
+        "stars": 4,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 9.3,
+        "googleMapsUrl": "https://www.google.com/maps/search/The+Caravan+Thessaloniki+Greece",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=The+Caravan+Thessaloniki+Greece",
+        "roomsNote": null,
+        "sortOrder": 9,
+        "features": [],
+        "distances": [
+          {
+            "landmarkKey": "aristotelous",
+            "meters": 500,
+            "walkMinutes": 6,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "ladadika",
+            "meters": 650,
+            "walkMinutes": 8,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "Bahar Boutique Hotel",
+        "stars": 4,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 9.2,
+        "googleMapsUrl": "https://www.google.com/maps/search/Bahar+Boutique+Hotel+Thessaloniki+Greece",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Bahar+Boutique+Hotel+Thessaloniki+Greece",
+        "roomsNote": null,
+        "sortOrder": 10,
+        "features": [],
+        "distances": [
+          {
+            "landmarkKey": "aristotelous",
+            "meters": 550,
+            "walkMinutes": 7,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "ladadika",
+            "meters": 100,
+            "walkMinutes": null,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "Egnatia Palace Hotel & Spa",
+        "stars": 4,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 9,
+        "googleMapsUrl": "https://www.google.com/maps/search/Egnatia+Palace+Hotel+&+Spa+Thessaloniki+Greece",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Egnatia+Palace+Hotel+&+Spa+Thessaloniki+Greece",
+        "roomsNote": null,
+        "sortOrder": 11,
+        "features": [
+          "pool-in"
+        ],
+        "distances": [
+          {
+            "landmarkKey": "aristotelous",
+            "meters": 550,
+            "walkMinutes": 7,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "ladadika",
+            "meters": 800,
+            "walkMinutes": 10,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "Mediterranean Palace Hotel",
+        "stars": 5,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 9.3,
+        "googleMapsUrl": "https://www.google.com/maps/search/Mediterranean+Palace+Hotel+Thessaloniki+Greece",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Mediterranean+Palace+Hotel+Thessaloniki+Greece",
+        "roomsNote": null,
+        "sortOrder": 12,
+        "features": [
+          "pool-in"
+        ],
+        "distances": [
+          {
+            "landmarkKey": "aristotelous",
+            "meters": 650,
+            "walkMinutes": 8,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "ladadika",
+            "meters": 150,
+            "walkMinutes": 2,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "Imperial Palace Classical Hotel",
+        "stars": 5,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 8.4,
+        "googleMapsUrl": "https://www.google.com/maps/search/Imperial+Palace+Classical+Hotel+Thessaloniki+Greece",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Imperial+Palace+Classical+Hotel+Thessaloniki+Greece",
+        "roomsNote": null,
+        "sortOrder": 13,
+        "features": [],
+        "distances": [
+          {
+            "landmarkKey": "aristotelous",
+            "meters": 700,
+            "walkMinutes": 9,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "ladadika",
+            "meters": 650,
+            "walkMinutes": 8,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "Antigon Urban Chic Hotel",
+        "stars": 4,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 9.5,
+        "googleMapsUrl": "https://www.google.com/maps/search/Antigon+Urban+Chic+Hotel+Thessaloniki+Greece",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Antigon+Urban+Chic+Hotel+Thessaloniki+Greece",
+        "roomsNote": null,
+        "sortOrder": 14,
+        "features": [],
+        "distances": [
+          {
+            "landmarkKey": "aristotelous",
+            "meters": 750,
+            "walkMinutes": 10,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "ladadika",
+            "meters": 700,
+            "walkMinutes": 9,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "Daios Luxury Living",
+        "stars": 5,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 9.3,
+        "googleMapsUrl": "https://www.google.com/maps/search/Daios+Luxury+Living+Thessaloniki+Greece",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Daios+Luxury+Living+Thessaloniki+Greece",
+        "roomsNote": null,
+        "sortOrder": 15,
+        "features": [],
+        "distances": [
+          {
+            "landmarkKey": "aristotelous",
+            "meters": 800,
+            "walkMinutes": 10,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "ladadika",
+            "meters": 850,
+            "walkMinutes": 11,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "Vanoro Hotel",
+        "stars": 4,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 9.4,
+        "googleMapsUrl": "https://www.google.com/maps/search/Vanoro+Hotel+Thessaloniki+Greece",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Vanoro+Hotel+Thessaloniki+Greece",
+        "roomsNote": null,
+        "sortOrder": 16,
+        "features": [],
+        "distances": [
+          {
+            "landmarkKey": "aristotelous",
+            "meters": 850,
+            "walkMinutes": 11,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "ladadika",
+            "meters": 750,
+            "walkMinutes": 10,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "Anatolia Hotel Thessaloniki",
+        "stars": 4,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 8.6,
+        "googleMapsUrl": "https://www.google.com/maps/search/Anatolia+Hotel+Thessaloniki+Thessaloniki+Greece",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Anatolia+Hotel+Thessaloniki+Thessaloniki+Greece",
+        "roomsNote": null,
+        "sortOrder": 17,
+        "features": [],
+        "distances": [
+          {
+            "landmarkKey": "aristotelous",
+            "meters": 1200,
+            "walkMinutes": 15,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "ladadika",
+            "meters": 1100,
+            "walkMinutes": 14,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "Holiday Inn Thessaloniki",
+        "stars": 4,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 7.9,
+        "googleMapsUrl": "https://www.google.com/maps/search/Holiday+Inn+Thessaloniki+Thessaloniki+Greece",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Holiday+Inn+Thessaloniki+Thessaloniki+Greece",
+        "roomsNote": null,
+        "sortOrder": 18,
+        "features": [
+          "pool-in"
+        ],
+        "distances": [
+          {
+            "landmarkKey": "aristotelous",
+            "meters": 1200,
+            "walkMinutes": 15,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "ladadika",
+            "meters": 950,
+            "walkMinutes": 12,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "Capsis Hotel Thessaloniki",
+        "stars": 4,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 8,
+        "googleMapsUrl": "https://www.google.com/maps/search/Capsis+Hotel+Thessaloniki+Thessaloniki+Greece",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Capsis+Hotel+Thessaloniki+Thessaloniki+Greece",
+        "roomsNote": null,
+        "sortOrder": 19,
+        "features": [
+          "pool-out"
+        ],
+        "distances": [
+          {
+            "landmarkKey": "aristotelous",
+            "meters": 1400,
+            "walkMinutes": 18,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "ladadika",
+            "meters": 1200,
+            "walkMinutes": 15,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "The Met Hotel",
+        "stars": 5,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 8.8,
+        "googleMapsUrl": "https://www.google.com/maps/search/The+Met+Hotel+Thessaloniki+Greece",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=The+Met+Hotel+Thessaloniki+Greece",
+        "roomsNote": null,
+        "sortOrder": 20,
+        "features": [
+          "pool-in",
+          "pool-out"
+        ],
+        "distances": [
+          {
+            "landmarkKey": "aristotelous",
+            "meters": 2500,
+            "walkMinutes": 30,
+            "rideMinutes": 7
+          },
+          {
+            "landmarkKey": "ladadika",
+            "meters": 2100,
+            "walkMinutes": 25,
+            "rideMinutes": 5
+          }
+        ],
+        "rooms": []
+      }
+    ]
+  },
+  {
+    "code": "tbi",
+    "iata": "TBS",
+    "name": {
+      "en": "Tbilisi",
+      "he": "טביליסי"
+    },
+    "country": {
+      "en": "Georgia",
+      "he": "גאורגיה"
+    },
+    "countryCode": "GE",
+    "info": {
+      "warnings": [
+        {
+          "he": "⚠️ הערה חשובה: בכניסה לגיאורגיה הנוסעים נדרשים להציג ביטוח רפואי באנגלית.",
+          "en": "⚠️ Important note: When entering Georgia, travelers are required to present medical insurance in English."
+        }
+      ],
+      "about": {
+        "he": "טביליסי היא בירת גאורגיה והעיר המרכזית במדינה. העיר משלבת עיר עתיקה, מרחצאות גופרית, שדרות רחבות, בתי קפה, מסעדות ונקודות תצפית מעל נהר הקורה.",
+        "en": "Tbilisi is the capital of Georgia and the country's central city. It blends an old town, sulfur baths, wide boulevards, cafés, restaurants and lookout points above the Kura River."
+      },
+      "attractions": {
+        "he": "🏰 אתרים מרכזיים: כיכר החירות (Freedom Square) · כיכר מיידן · שדרות רוסטוולי · העיר העתיקה · מרחצאות הגופרית · מצודת נריקלה",
+        "en": "🏰 Main sights: Freedom Square · Meidan Square · Rustaveli Avenue · the Old Town · the sulfur baths · Narikala Fortress"
+      },
+      "currencyNote": {
+        "he": "המטבע המקומי: לארי גאורגי (GEL) · הערכת שער: 1 לארי ≈ ₪1.09",
+        "en": "Local currency: Georgian Lari (GEL) · Approx. rate: 1 Lari ≈ ₪1.09"
+      },
+      "airport": {
+        "title": {
+          "he": "✈ שדה התעופה — TBS (Shota Rustaveli)",
+          "en": "✈ Airport — TBS (Shota Rustaveli)"
+        },
+        "note": {
+          "he": "מרחק: ~17 ק״מ ממרכז העיר · זמן נסיעה: 20–30 דקות",
+          "en": "Distance: ~17 km from the city center · Travel time: 20–30 minutes"
+        }
+      },
+      "transport": [
+        {
+          "icon": "🚌",
+          "mode": {
+            "he": "אוטובוס עירוני",
+            "en": "City bus"
+          },
+          "detail": {
+            "he": "למרכז העיר · כ-45–60 דק׳",
+            "en": "To the city center · approx. 45–60 min"
+          },
+          "price": "~1₾"
+        },
+        {
+          "icon": "📱",
+          "mode": {
+            "he": "Bolt",
+            "en": "Bolt"
+          },
+          "detail": {
+            "he": "למרכז העיר",
+            "en": "To the city center"
+          },
+          "price": "~25–35₾"
+        },
+        {
+          "icon": "🚕",
+          "mode": {
+            "he": "מונית / GoTrip.ge",
+            "en": "Taxi / GoTrip.ge"
+          },
+          "detail": {
+            "he": "מחיר קבוע מראש לרכב",
+            "en": "Fixed price per car, arranged in advance"
+          },
+          "price": "~40–60₾"
+        }
+      ],
+      "landmarks": {
+        "he": "📍 נקודות ציון: 🏛 כיכר החירות (Freedom Square) — לב המרכז התיירותי והעסקי 📍 כיכר מיידן — שער העיר העתיקה ואזור הבילויים 🚶 שדרות רוסטוולי — שדרה מרכזית עם מוזיאונים, חנויות ומלונות ✡ בית חב״ד טביליסי — נקודת ציון למבקרים ישראלים",
+        "en": "📍 Points of interest: 🏛 Freedom Square — the heart of the tourist and business center 📍 Meidan Square — the gateway to the Old Town and the entertainment area 🚶 Rustaveli Avenue — a central avenue with museums, shops and hotels ✡ Chabad House Tbilisi — a landmark for Israeli visitors"
+      }
+    },
+    "sortOrder": 5,
+    "landmarks": [
+      {
+        "key": "chabad",
+        "name": {
+          "en": "Chabad House",
+          "he": "בית חב\"ד"
+        }
+      },
+      {
+        "key": "freedom",
+        "name": {
+          "en": "Freedom Square",
+          "he": "כיכר החירות"
+        }
+      },
+      {
+        "key": "meidan",
+        "name": {
+          "en": "Meidan Square",
+          "he": "כיכר מיידן"
+        }
+      },
+      {
+        "key": "rustaveli",
+        "name": {
+          "en": "Rustaveli Avenue",
+          "he": "שדרות רוסטוולי"
+        }
+      }
+    ],
+    "hotels": [
+      {
+        "name": "Courtyard by Marriott Tbilisi",
+        "stars": 5,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 8.3,
+        "googleMapsUrl": "https://www.google.com/maps/search/Courtyard+by+Marriott+Tbilisi+Tbilisi+Georgia",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Courtyard+by+Marriott+Tbilisi+Tbilisi+Georgia",
+        "roomsNote": null,
+        "sortOrder": 0,
+        "features": [
+          "pool-in"
+        ],
+        "distances": [
+          {
+            "landmarkKey": "chabad",
+            "meters": 600,
+            "walkMinutes": 8,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "freedom",
+            "meters": 0,
+            "walkMinutes": null,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "meidan",
+            "meters": 650,
+            "walkMinutes": 9,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "rustaveli",
+            "meters": 150,
+            "walkMinutes": 2,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "Badagoni Boutique Hotel Rustaveli",
+        "stars": 4,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 8.7,
+        "googleMapsUrl": "https://www.google.com/maps/search/Badagoni+Boutique+Hotel+Rustaveli+Tbilisi+Georgia",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Badagoni+Boutique+Hotel+Rustaveli+Tbilisi+Georgia",
+        "roomsNote": null,
+        "sortOrder": 1,
+        "features": [],
+        "distances": [
+          {
+            "landmarkKey": "chabad",
+            "meters": 850,
+            "walkMinutes": 12,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "freedom",
+            "meters": 250,
+            "walkMinutes": 4,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "meidan",
+            "meters": 900,
+            "walkMinutes": 13,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "rustaveli",
+            "meters": 0,
+            "walkMinutes": null,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "The Gate Hotel City Centre",
+        "stars": 4,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 8.8,
+        "googleMapsUrl": "https://www.google.com/maps/search/The+Gate+Hotel+City+Centre+Tbilisi+Georgia",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=The+Gate+Hotel+City+Centre+Tbilisi+Georgia",
+        "roomsNote": null,
+        "sortOrder": 2,
+        "features": [],
+        "distances": [
+          {
+            "landmarkKey": "chabad",
+            "meters": 650,
+            "walkMinutes": 9,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "freedom",
+            "meters": 30,
+            "walkMinutes": null,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "meidan",
+            "meters": 700,
+            "walkMinutes": 10,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "rustaveli",
+            "meters": 100,
+            "walkMinutes": 1,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "Ibis Styles Tbilisi Center",
+        "stars": 3,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 8.8,
+        "googleMapsUrl": "https://www.google.com/maps/search/Ibis+Styles+Tbilisi+Center+Tbilisi+Georgia",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Ibis+Styles+Tbilisi+Center+Tbilisi+Georgia",
+        "roomsNote": null,
+        "sortOrder": 3,
+        "features": [],
+        "distances": [
+          {
+            "landmarkKey": "chabad",
+            "meters": 450,
+            "walkMinutes": 6,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "freedom",
+            "meters": 350,
+            "walkMinutes": 5,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "meidan",
+            "meters": 650,
+            "walkMinutes": 9,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "rustaveli",
+            "meters": 500,
+            "walkMinutes": 7,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "Paragraph Freedom Square",
+        "stars": 5,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 9.6,
+        "googleMapsUrl": "https://www.google.com/maps/search/Paragraph+Freedom+Square+Tbilisi+Georgia",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Paragraph+Freedom+Square+Tbilisi+Georgia",
+        "roomsNote": null,
+        "sortOrder": 4,
+        "features": [
+          "pool-in",
+          "pool-out"
+        ],
+        "distances": [
+          {
+            "landmarkKey": "chabad",
+            "meters": 700,
+            "walkMinutes": 9,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "freedom",
+            "meters": 100,
+            "walkMinutes": 1,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "meidan",
+            "meters": 750,
+            "walkMinutes": 10,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "rustaveli",
+            "meters": 250,
+            "walkMinutes": 3,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "Iota Hotel Tbilisi",
+        "stars": 4,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 8.6,
+        "googleMapsUrl": "https://www.google.com/maps/search/Iota+Hotel+Tbilisi+Tbilisi+Georgia",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Iota+Hotel+Tbilisi+Tbilisi+Georgia",
+        "roomsNote": null,
+        "sortOrder": 5,
+        "features": [],
+        "distances": [
+          {
+            "landmarkKey": "chabad",
+            "meters": 400,
+            "walkMinutes": 5,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "freedom",
+            "meters": 300,
+            "walkMinutes": 4,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "meidan",
+            "meters": 600,
+            "walkMinutes": 8,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "rustaveli",
+            "meters": 450,
+            "walkMinutes": 6,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "Hotel Citrus",
+        "stars": 4,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 8.6,
+        "googleMapsUrl": "https://www.google.com/maps/search/Hotel+Citrus+Tbilisi+Georgia",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Hotel+Citrus+Tbilisi+Georgia",
+        "roomsNote": null,
+        "sortOrder": 6,
+        "features": [],
+        "distances": [
+          {
+            "landmarkKey": "chabad",
+            "meters": 950,
+            "walkMinutes": 13,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "freedom",
+            "meters": 350,
+            "walkMinutes": 5,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "meidan",
+            "meters": 1000,
+            "walkMinutes": 14,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "rustaveli",
+            "meters": 150,
+            "walkMinutes": 2,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "Wyndham Grand Tbilisi",
+        "stars": 5,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 8.8,
+        "googleMapsUrl": "https://www.google.com/maps/search/Wyndham+Grand+Tbilisi+Tbilisi+Georgia",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Wyndham+Grand+Tbilisi+Tbilisi+Georgia",
+        "roomsNote": null,
+        "sortOrder": 7,
+        "features": [
+          "pool-in"
+        ],
+        "distances": [
+          {
+            "landmarkKey": "chabad",
+            "meters": 700,
+            "walkMinutes": 9,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "freedom",
+            "meters": 80,
+            "walkMinutes": null,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "meidan",
+            "meters": 750,
+            "walkMinutes": 10,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "rustaveli",
+            "meters": 50,
+            "walkMinutes": 1,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "Ibis Styles Old Tbilisi",
+        "stars": 3,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 8.9,
+        "googleMapsUrl": "https://www.google.com/maps/search/Ibis+Styles+Old+Tbilisi+Tbilisi+Georgia",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Ibis+Styles+Old+Tbilisi+Tbilisi+Georgia",
+        "roomsNote": null,
+        "sortOrder": 8,
+        "features": [],
+        "distances": [
+          {
+            "landmarkKey": "chabad",
+            "meters": 180,
+            "walkMinutes": 2,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "freedom",
+            "meters": 750,
+            "walkMinutes": 10,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "meidan",
+            "meters": 260,
+            "walkMinutes": 4,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "rustaveli",
+            "meters": 900,
+            "walkMinutes": 13,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "Ambassadori Tbilisi Hotel",
+        "stars": 5,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 9,
+        "googleMapsUrl": "https://www.google.com/maps/search/Ambassadori+Tbilisi+Hotel+Tbilisi+Georgia",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Ambassadori+Tbilisi+Hotel+Tbilisi+Georgia",
+        "roomsNote": null,
+        "sortOrder": 9,
+        "features": [
+          "pool-in",
+          "casino"
+        ],
+        "distances": [
+          {
+            "landmarkKey": "chabad",
+            "meters": 450,
+            "walkMinutes": 6,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "freedom",
+            "meters": 700,
+            "walkMinutes": 9,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "meidan",
+            "meters": 550,
+            "walkMinutes": 7,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "rustaveli",
+            "meters": 800,
+            "walkMinutes": 11,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "Shota @ Rustaveli Boutique",
+        "stars": 4,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 9.2,
+        "googleMapsUrl": "https://www.google.com/maps/search/Shota+@+Rustaveli+Boutique+Tbilisi+Georgia",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Shota+@+Rustaveli+Boutique+Tbilisi+Georgia",
+        "roomsNote": null,
+        "sortOrder": 10,
+        "features": [
+          "pool-in"
+        ],
+        "distances": [
+          {
+            "landmarkKey": "chabad",
+            "meters": 1000,
+            "walkMinutes": 14,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "freedom",
+            "meters": 450,
+            "walkMinutes": 6,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "meidan",
+            "meters": 1100,
+            "walkMinutes": 15,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "rustaveli",
+            "meters": 150,
+            "walkMinutes": 2,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "Tbilisi Marriott Hotel",
+        "stars": 5,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 8.4,
+        "googleMapsUrl": "https://www.google.com/maps/search/Tbilisi+Marriott+Hotel+Tbilisi+Georgia",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Tbilisi+Marriott+Hotel+Tbilisi+Georgia",
+        "roomsNote": null,
+        "sortOrder": 11,
+        "features": [],
+        "distances": [
+          {
+            "landmarkKey": "chabad",
+            "meters": 1200,
+            "walkMinutes": 16,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "freedom",
+            "meters": 650,
+            "walkMinutes": 9,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "meidan",
+            "meters": 1300,
+            "walkMinutes": 18,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "rustaveli",
+            "meters": 0,
+            "walkMinutes": null,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "Museum Hotel Orbeliani",
+        "stars": 5,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 8.8,
+        "googleMapsUrl": "https://www.google.com/maps/search/Museum+Hotel+Orbeliani+Tbilisi+Georgia",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Museum+Hotel+Orbeliani+Tbilisi+Georgia",
+        "roomsNote": null,
+        "sortOrder": 12,
+        "features": [],
+        "distances": [
+          {
+            "landmarkKey": "chabad",
+            "meters": 900,
+            "walkMinutes": 12,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "freedom",
+            "meters": 600,
+            "walkMinutes": 8,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "meidan",
+            "meters": 1000,
+            "walkMinutes": 14,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "rustaveli",
+            "meters": 450,
+            "walkMinutes": 6,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "Swissôtel Tbilisi",
+        "stars": 5,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 9.5,
+        "googleMapsUrl": "https://www.google.com/maps/search/Swissôtel+Tbilisi+Tbilisi+Georgia",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Swissôtel+Tbilisi+Tbilisi+Georgia",
+        "roomsNote": null,
+        "sortOrder": 13,
+        "features": [
+          "pool-in"
+        ],
+        "distances": [
+          {
+            "landmarkKey": "chabad",
+            "meters": 1000,
+            "walkMinutes": 14,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "freedom",
+            "meters": 450,
+            "walkMinutes": 6,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "meidan",
+            "meters": 1100,
+            "walkMinutes": 15,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "rustaveli",
+            "meters": 250,
+            "walkMinutes": 3,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "Moxy Tbilisi",
+        "stars": 4,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 8.3,
+        "googleMapsUrl": "https://www.google.com/maps/search/Moxy+Tbilisi+Tbilisi+Georgia",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Moxy+Tbilisi+Tbilisi+Georgia",
+        "roomsNote": null,
+        "sortOrder": 14,
+        "features": [],
+        "distances": [
+          {
+            "landmarkKey": "chabad",
+            "meters": 1400,
+            "walkMinutes": 19,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "freedom",
+            "meters": 1200,
+            "walkMinutes": 16,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "meidan",
+            "meters": 1500,
+            "walkMinutes": 20,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "rustaveli",
+            "meters": 950,
+            "walkMinutes": 13,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "Mercure Tbilisi Old Town",
+        "stars": 4,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 8.8,
+        "googleMapsUrl": "https://www.google.com/maps/search/Mercure+Tbilisi+Old+Town+Tbilisi+Georgia",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Mercure+Tbilisi+Old+Town+Tbilisi+Georgia",
+        "roomsNote": null,
+        "sortOrder": 15,
+        "features": [],
+        "distances": [
+          {
+            "landmarkKey": "chabad",
+            "meters": 400,
+            "walkMinutes": 5,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "freedom",
+            "meters": 1200,
+            "walkMinutes": 16,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "meidan",
+            "meters": 220,
+            "walkMinutes": 3,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "rustaveli",
+            "meters": 1300,
+            "walkMinutes": 18,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "The Biltmore Hotel Tbilisi",
+        "stars": 5,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 8.6,
+        "googleMapsUrl": "https://www.google.com/maps/search/The+Biltmore+Hotel+Tbilisi+Tbilisi+Georgia",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=The+Biltmore+Hotel+Tbilisi+Tbilisi+Georgia",
+        "roomsNote": null,
+        "sortOrder": 16,
+        "features": [
+          "pool-in",
+          "casino"
+        ],
+        "distances": [
+          {
+            "landmarkKey": "chabad",
+            "meters": 1500,
+            "walkMinutes": 20,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "freedom",
+            "meters": 950,
+            "walkMinutes": 13,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "meidan",
+            "meters": 1600,
+            "walkMinutes": 22,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "rustaveli",
+            "meters": 0,
+            "walkMinutes": null,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "Radisson Red Tbilisi",
+        "stars": 4,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 8.9,
+        "googleMapsUrl": "https://www.google.com/maps/search/Radisson+Red+Tbilisi+Tbilisi+Georgia",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Radisson+Red+Tbilisi+Tbilisi+Georgia",
+        "roomsNote": null,
+        "sortOrder": 17,
+        "features": [],
+        "distances": [
+          {
+            "landmarkKey": "chabad",
+            "meters": 2100,
+            "walkMinutes": 28,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "freedom",
+            "meters": 1700,
+            "walkMinutes": 23,
+            "rideMinutes": 5
+          },
+          {
+            "landmarkKey": "meidan",
+            "meters": 2200,
+            "walkMinutes": 30,
+            "rideMinutes": 7
+          },
+          {
+            "landmarkKey": "rustaveli",
+            "meters": 1200,
+            "walkMinutes": 16,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "Radisson Blu Iveria",
+        "stars": 5,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 8.8,
+        "googleMapsUrl": "https://www.google.com/maps/search/Radisson+Blu+Iveria+Tbilisi+Georgia",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Radisson+Blu+Iveria+Tbilisi+Georgia",
+        "roomsNote": null,
+        "sortOrder": 18,
+        "features": [
+          "pool-in",
+          "pool-out",
+          "casino"
+        ],
+        "distances": [
+          {
+            "landmarkKey": "chabad",
+            "meters": 1700,
+            "walkMinutes": 23,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "freedom",
+            "meters": 1100,
+            "walkMinutes": 15,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "meidan",
+            "meters": 1800,
+            "walkMinutes": 25,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "rustaveli",
+            "meters": 100,
+            "walkMinutes": null,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "Holiday Inn Tbilisi",
+        "stars": 4,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 8.5,
+        "googleMapsUrl": "https://www.google.com/maps/search/Holiday+Inn+Tbilisi+Tbilisi+Georgia",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Holiday+Inn+Tbilisi+Tbilisi+Georgia",
+        "roomsNote": null,
+        "sortOrder": 19,
+        "features": [
+          "pool-out",
+          "casino"
+        ],
+        "distances": [
+          {
+            "landmarkKey": "chabad",
+            "meters": 4200,
+            "walkMinutes": null,
+            "rideMinutes": 11
+          },
+          {
+            "landmarkKey": "freedom",
+            "meters": 3800,
+            "walkMinutes": null,
+            "rideMinutes": 10
+          },
+          {
+            "landmarkKey": "meidan",
+            "meters": 4300,
+            "walkMinutes": null,
+            "rideMinutes": 12
+          },
+          {
+            "landmarkKey": "rustaveli",
+            "meters": 2700,
+            "walkMinutes": null,
+            "rideMinutes": 7
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "Genesis Kosher Hotel",
+        "stars": 3,
+        "tier": "good",
+        "tags": [
+          "kosher"
+        ],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 8.1,
+        "googleMapsUrl": "https://www.google.com/maps/search/Genesis+Kosher+Hotel+Tbilisi+Georgia",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Genesis+Kosher+Hotel+Tbilisi+Georgia",
+        "roomsNote": null,
+        "sortOrder": 20,
+        "features": [],
+        "distances": [
+          {
+            "landmarkKey": "chabad",
+            "meters": 1600,
+            "walkMinutes": 22,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "freedom",
+            "meters": 2200,
+            "walkMinutes": 30,
+            "rideMinutes": 6
+          },
+          {
+            "landmarkKey": "meidan",
+            "meters": 1700,
+            "walkMinutes": 23,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "rustaveli",
+            "meters": 2000,
+            "walkMinutes": 26,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "Cron Palace Kosher Hotel",
+        "stars": 3,
+        "tier": "good",
+        "tags": [
+          "kosher"
+        ],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 8.3,
+        "googleMapsUrl": "https://www.google.com/maps/search/Cron+Palace+Kosher+Hotel+Tbilisi+Georgia",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Cron+Palace+Kosher+Hotel+Tbilisi+Georgia",
+        "roomsNote": null,
+        "sortOrder": 21,
+        "features": [
+          "pool-in"
+        ],
+        "distances": [
+          {
+            "landmarkKey": "chabad",
+            "meters": 2200,
+            "walkMinutes": 28,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "freedom",
+            "meters": 3500,
+            "walkMinutes": null,
+            "rideMinutes": 9
+          },
+          {
+            "landmarkKey": "meidan",
+            "meters": 2300,
+            "walkMinutes": 30,
+            "rideMinutes": 5
+          },
+          {
+            "landmarkKey": "rustaveli",
+            "meters": 3600,
+            "walkMinutes": null,
+            "rideMinutes": 10
+          }
+        ],
+        "rooms": []
+      }
+    ]
+  },
+  {
+    "code": "sof",
+    "iata": "SOF",
+    "name": {
+      "en": "Sofia",
+      "he": "סופיה"
+    },
+    "country": {
+      "en": "Bulgaria",
+      "he": "בולגריה"
+    },
+    "countryCode": "BG",
+    "info": {
+      "about": {
+        "he": "סופיה היא בירת בולגריה והעיר המרכזית במדינה. העיר משלבת שדרות קניות, כיכרות היסטוריות, כנסיות וקתדרלות, בתי קפה, מסעדות ומלונות במרכז העיר.",
+        "en": "Sofia is the capital of Bulgaria and the country's central city. It blends shopping boulevards, historic squares, churches and cathedrals, cafés, restaurants and hotels in the city center."
+      },
+      "attractions": {
+        "he": "🏰 אתרים מרכזיים: שדרות ויטושה (Vitosha Blvd) · קתדרלת אלכסנדר נבסקי · אזור סרדיקה · בית הכנסת של סופיה · השוק המרכזי",
+        "en": "🏰 Main sights: Vitosha Blvd · Alexander Nevsky Cathedral · the Serdika area · the Sofia Synagogue · the Central Market"
+      },
+      "currencyNote": {
+        "he": "המטבע המקומי: לב בולגרי (BGN) · הערכת שער: 1 לב ≈ ₪1.72",
+        "en": "Local currency: Bulgarian Lev (BGN) · Approx. rate: 1 Lev ≈ ₪1.72"
+      },
+      "airport": {
+        "title": {
+          "he": "✈ שדה התעופה — SOF (Sofia Airport)",
+          "en": "✈ Airport — SOF (Sofia Airport)"
+        },
+        "note": {
+          "he": "מרחק: כ-10 ק״מ ממרכז העיר · זמן נסיעה: כ-20–30 דקות, בהתאם לעומס",
+          "en": "Distance: ~10 km from the city center · Travel time: ~20–30 minutes, depending on traffic"
+        }
+      },
+      "transport": [
+        {
+          "icon": "🚇",
+          "mode": {
+            "he": "מטרו",
+            "en": "Metro"
+          },
+          "detail": {
+            "he": "לכיוון מרכז העיר / Serdika",
+            "en": "Toward the city center / Serdika"
+          },
+          "price": "~1.60 BGN"
+        },
+        {
+          "icon": "📱",
+          "mode": {
+            "he": "אפליקציית מוניות",
+            "en": "Taxi app"
+          },
+          "detail": {
+            "he": "למרכז העיר",
+            "en": "To the city center"
+          },
+          "price": "~20–30 BGN"
+        },
+        {
+          "icon": "🚕",
+          "mode": {
+            "he": "מונית רשמית",
+            "en": "Official taxi"
+          },
+          "detail": {
+            "he": "מומלץ לוודא מחיר/מונה לפני נסיעה",
+            "en": "Recommended to confirm the price/meter before the ride"
+          },
+          "price": "~20–30 BGN"
+        }
+      ],
+      "landmarks": {
+        "he": "📍 נקודות ציון: 🚶 שדרות ויטושה (Vitosha Blvd) — אזור הקניות והבילוי המרכזי ✡ בית הכנסת / השוק — אזור מרכזי סמוך לסרדיקה והשוק המרכזי ⛪ קתדרלת אלכסנדר נבסקי — אחד הסמלים המרכזיים של סופיה",
+        "en": "📍 Points of interest: 🚶 Vitosha Blvd — the main shopping and entertainment area ✡ Synagogue / Market — a central area near Serdika and the Central Market ⛪ Alexander Nevsky Cathedral — one of Sofia's main landmarks"
+      }
+    },
+    "sortOrder": 6,
+    "landmarks": [
+      {
+        "key": "cathedral",
+        "name": {
+          "en": "Alexander Nevsky Cathedral",
+          "he": "קתדרלת אלכסנדר נבסקי"
+        }
+      },
+      {
+        "key": "synagogue",
+        "name": {
+          "en": "Synagogue / Market",
+          "he": "בית הכנסת / השוק"
+        }
+      },
+      {
+        "key": "vitosha",
+        "name": {
+          "en": "Vitosha Boulevard",
+          "he": "שדרות ויטושה"
+        }
+      }
+    ],
+    "hotels": [
+      {
+        "name": "Rosslyn Central Park Hotel",
+        "stars": 4,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 8.8,
+        "googleMapsUrl": "https://www.google.com/maps/search/Rosslyn+Central+Park+Hotel+Sofia+Bulgaria",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Rosslyn+Central+Park+Hotel+Sofia+Bulgaria",
+        "roomsNote": null,
+        "sortOrder": 0,
+        "features": [],
+        "distances": [
+          {
+            "landmarkKey": "cathedral",
+            "meters": 1600,
+            "walkMinutes": 20,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "synagogue",
+            "meters": 1800,
+            "walkMinutes": 22,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "vitosha",
+            "meters": 0,
+            "walkMinutes": null,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "Grand Hotel Millennium Sofia",
+        "stars": 5,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 9.2,
+        "googleMapsUrl": "https://www.google.com/maps/search/Grand+Hotel+Millennium+Sofia+Sofia+Bulgaria",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Grand+Hotel+Millennium+Sofia+Sofia+Bulgaria",
+        "roomsNote": null,
+        "sortOrder": 1,
+        "features": [
+          "pool-in"
+        ],
+        "distances": [
+          {
+            "landmarkKey": "cathedral",
+            "meters": 2500,
+            "walkMinutes": 30,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "synagogue",
+            "meters": 2800,
+            "walkMinutes": 35,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "vitosha",
+            "meters": 0,
+            "walkMinutes": null,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "Art'Otel",
+        "stars": 4,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 9,
+        "googleMapsUrl": "https://www.google.com/maps/search/Art%27Otel+Sofia+Bulgaria",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Art%27Otel+Sofia+Bulgaria",
+        "roomsNote": null,
+        "sortOrder": 2,
+        "features": [],
+        "distances": [
+          {
+            "landmarkKey": "cathedral",
+            "meters": 1400,
+            "walkMinutes": 18,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "synagogue",
+            "meters": 1600,
+            "walkMinutes": 20,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "vitosha",
+            "meters": 150,
+            "walkMinutes": 2,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "Rosslyn Thracia Hotel",
+        "stars": 4,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 8.7,
+        "googleMapsUrl": "https://www.google.com/maps/search/Rosslyn+Thracia+Hotel+Sofia+Bulgaria",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Rosslyn+Thracia+Hotel+Sofia+Bulgaria",
+        "roomsNote": null,
+        "sortOrder": 3,
+        "features": [],
+        "distances": [
+          {
+            "landmarkKey": "cathedral",
+            "meters": 1300,
+            "walkMinutes": 16,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "synagogue",
+            "meters": 1500,
+            "walkMinutes": 19,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "vitosha",
+            "meters": 200,
+            "walkMinutes": 3,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "Hotel Sofia Palace",
+        "stars": 4,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 8.1,
+        "googleMapsUrl": "https://www.google.com/maps/search/Hotel+Sofia+Palace+Sofia+Bulgaria",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Hotel+Sofia+Palace+Sofia+Bulgaria",
+        "roomsNote": null,
+        "sortOrder": 4,
+        "features": [],
+        "distances": [
+          {
+            "landmarkKey": "cathedral",
+            "meters": 1200,
+            "walkMinutes": 15,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "synagogue",
+            "meters": 1100,
+            "walkMinutes": 14,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "vitosha",
+            "meters": 300,
+            "walkMinutes": 4,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "Grand Hotel Sofia",
+        "stars": 5,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 8.9,
+        "googleMapsUrl": "https://www.google.com/maps/search/Grand+Hotel+Sofia+Sofia+Bulgaria",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Grand+Hotel+Sofia+Sofia+Bulgaria",
+        "roomsNote": null,
+        "sortOrder": 5,
+        "features": [],
+        "distances": [
+          {
+            "landmarkKey": "cathedral",
+            "meters": 800,
+            "walkMinutes": 10,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "synagogue",
+            "meters": 1300,
+            "walkMinutes": 16,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "vitosha",
+            "meters": 400,
+            "walkMinutes": 5,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "Sofia Balkan Palace",
+        "stars": 5,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 8.7,
+        "googleMapsUrl": "https://www.google.com/maps/search/Sofia+Balkan+Palace+Sofia+Bulgaria",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Sofia+Balkan+Palace+Sofia+Bulgaria",
+        "roomsNote": null,
+        "sortOrder": 6,
+        "features": [],
+        "distances": [
+          {
+            "landmarkKey": "cathedral",
+            "meters": 1200,
+            "walkMinutes": 15,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "synagogue",
+            "meters": 600,
+            "walkMinutes": 8,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "vitosha",
+            "meters": 50,
+            "walkMinutes": 1,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "Central Hotel Sofia",
+        "stars": 4,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 8.4,
+        "googleMapsUrl": "https://www.google.com/maps/search/Central+Hotel+Sofia+Sofia+Bulgaria",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Central+Hotel+Sofia+Sofia+Bulgaria",
+        "roomsNote": null,
+        "sortOrder": 7,
+        "features": [],
+        "distances": [
+          {
+            "landmarkKey": "cathedral",
+            "meters": 1800,
+            "walkMinutes": 22,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "synagogue",
+            "meters": 400,
+            "walkMinutes": 5,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "vitosha",
+            "meters": 800,
+            "walkMinutes": 10,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "Hotel Marinela Sofia",
+        "stars": 5,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 8.3,
+        "googleMapsUrl": "https://www.google.com/maps/search/Hotel+Marinela+Sofia+Sofia+Bulgaria",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Hotel+Marinela+Sofia+Sofia+Bulgaria",
+        "roomsNote": null,
+        "sortOrder": 8,
+        "features": [
+          "pool-in"
+        ],
+        "distances": [
+          {
+            "landmarkKey": "cathedral",
+            "meters": 4000,
+            "walkMinutes": 50,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "synagogue",
+            "meters": 4500,
+            "walkMinutes": 55,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "vitosha",
+            "meters": 2500,
+            "walkMinutes": 30,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "InterContinental Sofia",
+        "stars": 5,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 9,
+        "googleMapsUrl": "https://www.google.com/maps/search/InterContinental+Sofia+Sofia+Bulgaria",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=InterContinental+Sofia+Sofia+Bulgaria",
+        "roomsNote": null,
+        "sortOrder": 9,
+        "features": [],
+        "distances": [
+          {
+            "landmarkKey": "cathedral",
+            "meters": 300,
+            "walkMinutes": 4,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "synagogue",
+            "meters": 1800,
+            "walkMinutes": 22,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "vitosha",
+            "meters": 1200,
+            "walkMinutes": 15,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "Sense Hotel Sofia",
+        "stars": 5,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 8.8,
+        "googleMapsUrl": "https://www.google.com/maps/search/Sense+Hotel+Sofia+Sofia+Bulgaria",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Sense+Hotel+Sofia+Sofia+Bulgaria",
+        "roomsNote": null,
+        "sortOrder": 10,
+        "features": [
+          "pool-in"
+        ],
+        "distances": [
+          {
+            "landmarkKey": "cathedral",
+            "meters": 400,
+            "walkMinutes": 5,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "synagogue",
+            "meters": 1700,
+            "walkMinutes": 21,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "vitosha",
+            "meters": 1100,
+            "walkMinutes": 14,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "Hotel Anel",
+        "stars": 5,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 8.4,
+        "googleMapsUrl": "https://www.google.com/maps/search/Hotel+Anel+Sofia+Bulgaria",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Hotel+Anel+Sofia+Bulgaria",
+        "roomsNote": null,
+        "sortOrder": 11,
+        "features": [
+          "pool-in"
+        ],
+        "distances": [
+          {
+            "landmarkKey": "cathedral",
+            "meters": 1600,
+            "walkMinutes": 20,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "synagogue",
+            "meters": 500,
+            "walkMinutes": 6,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "vitosha",
+            "meters": 900,
+            "walkMinutes": 12,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "Crystal Palace Boutique Hotel",
+        "stars": 4,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 9.1,
+        "googleMapsUrl": "https://www.google.com/maps/search/Crystal+Palace+Boutique+Hotel+Sofia+Bulgaria",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Crystal+Palace+Boutique+Hotel+Sofia+Bulgaria",
+        "roomsNote": null,
+        "sortOrder": 12,
+        "features": [],
+        "distances": [
+          {
+            "landmarkKey": "cathedral",
+            "meters": 700,
+            "walkMinutes": 9,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "synagogue",
+            "meters": 2200,
+            "walkMinutes": 27,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "vitosha",
+            "meters": 1600,
+            "walkMinutes": 20,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "Hyatt Regency Sofia",
+        "stars": 5,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 9,
+        "googleMapsUrl": "https://www.google.com/maps/search/Hyatt+Regency+Sofia+Sofia+Bulgaria",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Hyatt+Regency+Sofia+Sofia+Bulgaria",
+        "roomsNote": null,
+        "sortOrder": 13,
+        "features": [
+          "pool-in"
+        ],
+        "distances": [
+          {
+            "landmarkKey": "cathedral",
+            "meters": 600,
+            "walkMinutes": 8,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "synagogue",
+            "meters": 2000,
+            "walkMinutes": 25,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "vitosha",
+            "meters": 1400,
+            "walkMinutes": 18,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "Ramada Sofia",
+        "stars": 4,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 7.5,
+        "googleMapsUrl": "https://www.google.com/maps/search/Ramada+Sofia+Sofia+Bulgaria",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Ramada+Sofia+Sofia+Bulgaria",
+        "roomsNote": null,
+        "sortOrder": 14,
+        "features": [
+          "pool-in"
+        ],
+        "distances": [
+          {
+            "landmarkKey": "cathedral",
+            "meters": 2500,
+            "walkMinutes": 30,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "synagogue",
+            "meters": 1200,
+            "walkMinutes": 15,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "vitosha",
+            "meters": 2100,
+            "walkMinutes": 25,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      }
+    ]
+  },
+  {
+    "code": "buc",
+    "iata": "BUH",
+    "name": {
+      "en": "Bucharest",
+      "he": "בוקרשט"
+    },
+    "country": {
+      "en": "Romania",
+      "he": "רומניה"
+    },
+    "countryCode": "RO",
+    "info": {
+      "about": {
+        "he": "בוקרשט היא בירת רומניה ואחת הערים המרכזיות במזרח אירופה. האזור התיירותי המרכזי נע בין שדרות הניצחון, העיר העתיקה, כיכר המהפכה, האתנאום הרומני ואזור ארמון הפרלמנט.",
+        "en": "Bucharest is the capital of Romania and one of the major cities of Eastern Europe. The main tourist area stretches between Victoriei Avenue, the Old Town, Revolution Square, the Romanian Athenaeum and the Palace of Parliament area."
+      },
+      "attractions": {
+        "he": "🏰 אתרים מרכזיים: שדרות הניצחון (Calea Victoriei) · העיר העתיקה (Old Town / Lipscani) · האתנאום הרומני · כיכר המהפכה · ארמון הפרלמנט",
+        "en": "🏰 Main sights: Calea Victoriei · the Old Town (Lipscani) · the Romanian Athenaeum · Revolution Square · the Palace of Parliament"
+      },
+      "currencyNote": {
+        "he": "המטבע המקומי: ליי רומני (RON) · הערכת שער: ₪1 ≈ 1.56 ליי",
+        "en": "Local currency: Romanian Leu (RON) · Approx. rate: ₪1 ≈ 1.56 Lei"
+      },
+      "airport": {
+        "title": {
+          "he": "✈ שדה התעופה — OTP (Henri Coandă)",
+          "en": "✈ Airport — OTP (Henri Coandă)"
+        },
+        "note": {
+          "he": "מרחק: כ-17 ק״מ ממרכז העיר · זמן נסיעה: לרוב כ-25–45 דקות, בהתאם לעומס ולמיקום המלון",
+          "en": "Distance: ~17 km from the city center · Travel time: usually ~25–45 minutes, depending on traffic and hotel location"
+        }
+      },
+      "transport": [
+        {
+          "icon": "🚆",
+          "mode": {
+            "he": "רכבת",
+            "en": "Train"
+          },
+          "detail": {
+            "he": "משדה התעופה לכיוון Gara de Nord ומשם המשך למרכז",
+            "en": "From the airport toward Gara de Nord, then continue to the center"
+          },
+          "price": "~6 RON"
+        },
+        {
+          "icon": "📱",
+          "mode": {
+            "he": "Uber / Bolt",
+            "en": "Uber / Bolt"
+          },
+          "detail": {
+            "he": "נוח למלונות במרכז העיר ובעיר העתיקה",
+            "en": "Convenient for hotels in the city center and the Old Town"
+          },
+          "price": "~75–120 RON"
+        },
+        {
+          "icon": "🚕",
+          "mode": {
+            "he": "מונית רשמית",
+            "en": "Official taxi"
+          },
+          "detail": {
+            "he": "מומלץ להזמין מהעמדה הרשמית או לוודא מחיר/מונה",
+            "en": "Recommended to book from the official stand or confirm the price/meter"
+          },
+          "price": "~75–125 RON"
+        }
+      ],
+      "landmarks": {
+        "he": "📍 נקודות ציון: 🚶 שדרות הניצחון (Calea Victoriei) — שדרת מלונות, קניות, תרבות ומבנים היסטוריים 🏛 העיר העתיקה (Old Town / Lipscani) — אזור בילוי, מסעדות, ברים וסמטאות היסטוריות",
+        "en": "📍 Points of interest: 🚶 Calea Victoriei — an avenue of hotels, shopping, culture and historic buildings 🏛 the Old Town (Lipscani) — an area of entertainment, restaurants, bars and historic alleys"
+      }
+    },
+    "sortOrder": 7,
+    "landmarks": [
+      {
+        "key": "oldtown",
+        "name": {
+          "en": "Old Town",
+          "he": "העיר העתיקה"
+        }
+      },
+      {
+        "key": "victoriei",
+        "name": {
+          "en": "Victoriei Avenue",
+          "he": "שדרות הניצחון"
+        }
+      }
+    ],
+    "hotels": [
+      {
+        "name": "Radisson Blu Bucharest",
+        "stars": 5,
+        "tier": "premium",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 8.9,
+        "googleMapsUrl": "https://www.google.com/maps/search/Radisson+Blu+Bucharest+Bucharest+Romania",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Radisson+Blu+Bucharest+Bucharest+Romania",
+        "roomsNote": null,
+        "sortOrder": 0,
+        "features": [
+          "pool-in",
+          "pool-out"
+        ],
+        "distances": [
+          {
+            "landmarkKey": "oldtown",
+            "meters": 1000,
+            "walkMinutes": 14,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "victoriei",
+            "meters": 0,
+            "walkMinutes": 0,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "JW Marriott Grand",
+        "stars": 5,
+        "tier": "premium",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 9.1,
+        "googleMapsUrl": "https://www.google.com/maps/search/JW+Marriott+Grand+Bucharest+Romania",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=JW+Marriott+Grand+Bucharest+Romania",
+        "roomsNote": null,
+        "sortOrder": 1,
+        "features": [
+          "pool-in"
+        ],
+        "distances": [
+          {
+            "landmarkKey": "oldtown",
+            "meters": 2400,
+            "walkMinutes": 30,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "victoriei",
+            "meters": 2600,
+            "walkMinutes": 35,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "InterContinental Athénée Palace Bucharest (by IHG)",
+        "stars": 5,
+        "tier": "premium",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 9.3,
+        "googleMapsUrl": "https://www.google.com/maps/search/InterContinental+Ath%C3%A9n%C3%A9e+Palace+Bucharest+%28by+IHG%29+Bucharest+Romania",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=InterContinental+Ath%C3%A9n%C3%A9e+Palace+Bucharest+%28by+IHG%29+Bucharest+Romania",
+        "roomsNote": null,
+        "sortOrder": 2,
+        "features": [
+          "pool-in"
+        ],
+        "distances": [
+          {
+            "landmarkKey": "oldtown",
+            "meters": 1100,
+            "walkMinutes": 15,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "victoriei",
+            "meters": 0,
+            "walkMinutes": 0,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "Capital Plaza Hotel",
+        "stars": 4,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 8.8,
+        "googleMapsUrl": "https://www.google.com/maps/search/Capital+Plaza+Hotel+Bucharest+Romania",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Capital+Plaza+Hotel+Bucharest+Romania",
+        "roomsNote": null,
+        "sortOrder": 3,
+        "features": [],
+        "distances": [
+          {
+            "landmarkKey": "oldtown",
+            "meters": 2200,
+            "walkMinutes": 28,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "victoriei",
+            "meters": 1100,
+            "walkMinutes": 15,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "Corinthia Grand Hotel Du Boulevard Bucharest",
+        "stars": 5,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 9.7,
+        "googleMapsUrl": "https://www.google.com/maps/search/Corinthia+Grand+Hotel+Du+Boulevard+Bucharest+Bucharest+Romania",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Corinthia+Grand+Hotel+Du+Boulevard+Bucharest+Bucharest+Romania",
+        "roomsNote": null,
+        "sortOrder": 4,
+        "features": [],
+        "distances": [
+          {
+            "landmarkKey": "oldtown",
+            "meters": 100,
+            "walkMinutes": 1,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "victoriei",
+            "meters": 0,
+            "walkMinutes": 0,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "Grand Hotel Bucharest",
+        "stars": 5,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 8.9,
+        "googleMapsUrl": "https://www.google.com/maps/search/Grand+Hotel+Bucharest+Bucharest+Romania",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Grand+Hotel+Bucharest+Bucharest+Romania",
+        "roomsNote": null,
+        "sortOrder": 5,
+        "features": [
+          "pool-in"
+        ],
+        "distances": [
+          {
+            "landmarkKey": "oldtown",
+            "meters": 450,
+            "walkMinutes": 6,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "victoriei",
+            "meters": 600,
+            "walkMinutes": 8,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "Grand Hotel Continental Bucuresti",
+        "stars": 5,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 9.1,
+        "googleMapsUrl": "https://www.google.com/maps/search/Grand+Hotel+Continental+Bucuresti+Bucharest+Romania",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Grand+Hotel+Continental+Bucuresti+Bucharest+Romania",
+        "roomsNote": null,
+        "sortOrder": 6,
+        "features": [],
+        "distances": [
+          {
+            "landmarkKey": "oldtown",
+            "meters": 400,
+            "walkMinutes": 6,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "victoriei",
+            "meters": 0,
+            "walkMinutes": 0,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "Hilton Garden Inn Bucharest Old Town",
+        "stars": 4,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 9,
+        "googleMapsUrl": "https://www.google.com/maps/search/Hilton+Garden+Inn+Bucharest+Old+Town+Bucharest+Romania",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Hilton+Garden+Inn+Bucharest+Old+Town+Bucharest+Romania",
+        "roomsNote": null,
+        "sortOrder": 7,
+        "features": [],
+        "distances": [
+          {
+            "landmarkKey": "oldtown",
+            "meters": 0,
+            "walkMinutes": 0,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "victoriei",
+            "meters": 450,
+            "walkMinutes": 6,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "Hotel Capitol",
+        "stars": 4,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 8.8,
+        "googleMapsUrl": "https://www.google.com/maps/search/Hotel+Capitol+Bucharest+Romania",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Hotel+Capitol+Bucharest+Romania",
+        "roomsNote": null,
+        "sortOrder": 8,
+        "features": [],
+        "distances": [
+          {
+            "landmarkKey": "oldtown",
+            "meters": 300,
+            "walkMinutes": 4,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "victoriei",
+            "meters": 0,
+            "walkMinutes": 0,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "Hotel Casa Capsa",
+        "stars": 5,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 8,
+        "googleMapsUrl": "https://www.google.com/maps/search/Hotel+Casa+Capsa+Bucharest+Romania",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Hotel+Casa+Capsa+Bucharest+Romania",
+        "roomsNote": null,
+        "sortOrder": 9,
+        "features": [],
+        "distances": [
+          {
+            "landmarkKey": "oldtown",
+            "meters": 250,
+            "walkMinutes": 3,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "victoriei",
+            "meters": 0,
+            "walkMinutes": 0,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "Lido by Phoenicia",
+        "stars": 4,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 8.8,
+        "googleMapsUrl": "https://www.google.com/maps/search/Lido+by+Phoenicia+Bucharest+Romania",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Lido+by+Phoenicia+Bucharest+Romania",
+        "roomsNote": null,
+        "sortOrder": 10,
+        "features": [],
+        "distances": [
+          {
+            "landmarkKey": "oldtown",
+            "meters": 1100,
+            "walkMinutes": 15,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "victoriei",
+            "meters": 0,
+            "walkMinutes": 0,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "Mercure Bucharest City Center",
+        "stars": 4,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 8.7,
+        "googleMapsUrl": "https://www.google.com/maps/search/Mercure+Bucharest+City+Center+Bucharest+Romania",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Mercure+Bucharest+City+Center+Bucharest+Romania",
+        "roomsNote": null,
+        "sortOrder": 11,
+        "features": [],
+        "distances": [
+          {
+            "landmarkKey": "oldtown",
+            "meters": 1200,
+            "walkMinutes": 16,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "victoriei",
+            "meters": 250,
+            "walkMinutes": 3,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "Novotel Bucharest City Centre",
+        "stars": 4,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 8.6,
+        "googleMapsUrl": "https://www.google.com/maps/search/Novotel+Bucharest+City+Centre+Bucharest+Romania",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Novotel+Bucharest+City+Centre+Bucharest+Romania",
+        "roomsNote": null,
+        "sortOrder": 12,
+        "features": [
+          "pool-in"
+        ],
+        "distances": [
+          {
+            "landmarkKey": "oldtown",
+            "meters": 350,
+            "walkMinutes": 5,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "victoriei",
+            "meters": 0,
+            "walkMinutes": 0,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "Park Inn by Radisson Bucharest Hotel & Residence",
+        "stars": 4,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 8.5,
+        "googleMapsUrl": "https://www.google.com/maps/search/Park+Inn+by+Radisson+Bucharest+Hotel+%26+Residence+Bucharest+Romania",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Park+Inn+by+Radisson+Bucharest+Hotel+%26+Residence+Bucharest+Romania",
+        "roomsNote": null,
+        "sortOrder": 13,
+        "features": [
+          "pool-in",
+          "pool-out"
+        ],
+        "distances": [
+          {
+            "landmarkKey": "oldtown",
+            "meters": 950,
+            "walkMinutes": 13,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "victoriei",
+            "meters": 0,
+            "walkMinutes": 0,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "The Mansion Boutique Hotel",
+        "stars": 4,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 9.1,
+        "googleMapsUrl": "https://www.google.com/maps/search/The+Mansion+Boutique+Hotel+Bucharest+Romania",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=The+Mansion+Boutique+Hotel+Bucharest+Romania",
+        "roomsNote": null,
+        "sortOrder": 14,
+        "features": [],
+        "distances": [
+          {
+            "landmarkKey": "oldtown",
+            "meters": 0,
+            "walkMinutes": 0,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "victoriei",
+            "meters": 400,
+            "walkMinutes": 5,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "The Marmorosch Bucharest, Autograph Collection",
+        "stars": 5,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 9.2,
+        "googleMapsUrl": "https://www.google.com/maps/search/The+Marmorosch+Bucharest%2C+Autograph+Collection+Bucharest+Romania",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=The+Marmorosch+Bucharest%2C+Autograph+Collection+Bucharest+Romania",
+        "roomsNote": null,
+        "sortOrder": 15,
+        "features": [
+          "pool-in"
+        ],
+        "distances": [
+          {
+            "landmarkKey": "oldtown",
+            "meters": 0,
+            "walkMinutes": 0,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "victoriei",
+            "meters": 50,
+            "walkMinutes": 1,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      }
+    ]
+  }
+]

@@ -1,0 +1,253 @@
+"use client";
+
+import { useTranslations } from "next-intl";
+import type {
+  HotelFeatureValue,
+  HotelTier,
+  HotelTagValue,
+  BoardCode,
+} from "@/db/schema";
+import type { ViewLandmark, SortMode, GroupBy } from "@/lib/hotels";
+import { Button } from "@/components/ui/button";
+import { Toggle } from "@/components/ui/toggle";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { useHotelParams } from "./use-hotel-params";
+
+const QUALITY: { value: HotelTier; emoji: string }[] = [
+  { value: "premium", emoji: "🏆" },
+  { value: "good", emoji: "👍" },
+];
+const TAGS: { value: HotelTagValue; emoji: string }[] = [
+  { value: "resort", emoji: "🎢" },
+  { value: "kosher", emoji: "✡" },
+];
+const BOARDS: BoardCode[] = ["bb", "hb", "fb"];
+const BOOKING_MINS = [9, 8.5, 8, 7];
+const AMENITIES: HotelFeatureValue[] = [
+  "pool-in",
+  "pool-out",
+  "casino",
+  "waterpark",
+];
+const AMENITY_KEY: Record<string, string> = {
+  "pool-in": "poolIn",
+  "pool-out": "poolOut",
+  casino: "casino",
+  waterpark: "waterpark",
+};
+const GROUP_BYS: GroupBy[] = ["quality", "stars", "booking"];
+const BASE_SORTS: { value: SortMode; key: string; icon?: string }[] = [
+  { value: "default", key: "default" },
+  { value: "stars-desc", key: "starsDesc", icon: "⭐" },
+  { value: "stars-asc", key: "starsAsc", icon: "⭐" },
+  { value: "booking-desc", key: "bookingDesc", icon: "📊" },
+  { value: "booking-asc", key: "bookingAsc", icon: "📊" },
+];
+
+const chipClass =
+  "h-7 rounded-full border border-border text-xs aria-pressed:border-brand aria-pressed:bg-brand aria-pressed:text-brand-foreground";
+
+export function HotelFilters({ landmarks }: { landmarks: ViewLandmark[] }) {
+  const t = useTranslations("hotels");
+  const {
+    quality,
+    tags,
+    boards,
+    features,
+    minBooking,
+    sort,
+    groupBy,
+    update,
+  } = useHotelParams();
+
+  const toggle = <T,>(list: T[], v: T) =>
+    list.includes(v) ? list.filter((x) => x !== v) : [...list, v];
+
+  const sortItems: Record<string, string> = {};
+  for (const s of BASE_SORTS) {
+    sortItems[s.value] = `${s.icon ? `${s.icon} ` : ""}${t(`sort.${s.key}`)}`;
+  }
+  for (const lm of landmarks) sortItems[`dist:${lm.key}`] = `📍 ${lm.name}`;
+
+  const groupItems: Record<string, string> = {};
+  for (const g of GROUP_BYS) groupItems[g] = t(`groupBy.${g}`);
+
+  const hasFilters =
+    quality.length > 0 ||
+    tags.length > 0 ||
+    boards.length > 0 ||
+    features.length > 0 ||
+    minBooking != null;
+
+  return (
+    <div className="flex flex-col gap-3">
+      {/* Group by + Sort */}
+      <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+        <div className="flex items-center gap-2">
+          <span className="text-xs font-bold text-muted-foreground">
+            {t("groupBy.label")}
+          </span>
+          <Select
+            items={groupItems}
+            value={groupBy}
+            onValueChange={(v) => update({ groupBy: v as GroupBy })}
+          >
+            <SelectTrigger size="sm" className="h-8 w-40 text-xs">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              {GROUP_BYS.map((g) => (
+                <SelectItem key={g} value={g}>
+                  {groupItems[g]}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+
+        <div className="flex items-center gap-2">
+          <span className="text-xs font-bold text-muted-foreground">
+            {t("sort.label")}
+          </span>
+          <Select
+            items={sortItems}
+            value={sort}
+            onValueChange={(v) => update({ sort: v as SortMode })}
+          >
+            <SelectTrigger size="sm" className="h-8 w-52 text-xs">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              {BASE_SORTS.map((s) => (
+                <SelectItem key={s.value} value={s.value}>
+                  {sortItems[s.value]}
+                </SelectItem>
+              ))}
+              {landmarks.map((lm) => (
+                <SelectItem key={lm.key} value={`dist:${lm.key}`}>
+                  📍 {lm.name}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+      </div>
+
+      {/* Hotel quality */}
+      <div className="flex flex-wrap items-center gap-2">
+        <span className="text-xs font-bold text-muted-foreground">
+          {t("filter.qualityLabel")}
+        </span>
+        {QUALITY.map((c) => (
+          <Toggle
+            key={c.value}
+            size="sm"
+            pressed={quality.includes(c.value)}
+            onPressedChange={() => update({ quality: toggle(quality, c.value) })}
+            className={chipClass}
+          >
+            {c.emoji} {t(`tier.${c.value}`)}
+          </Toggle>
+        ))}
+      </div>
+
+      {/* Tags */}
+      <div className="flex flex-wrap items-center gap-2">
+        <span className="text-xs font-bold text-muted-foreground">
+          {t("filter.tagsLabel")}
+        </span>
+        {TAGS.map((c) => (
+          <Toggle
+            key={c.value}
+            size="sm"
+            pressed={tags.includes(c.value)}
+            onPressedChange={() => update({ tags: toggle(tags, c.value) })}
+            className={chipClass}
+          >
+            {c.emoji} {t(`tier.${c.value}`)}
+          </Toggle>
+        ))}
+      </div>
+
+      {/* Board basis */}
+      <div className="flex flex-wrap items-center gap-2">
+        <span className="text-xs font-bold text-muted-foreground">
+          {t("filter.boardLabel")}
+        </span>
+        {BOARDS.map((b) => (
+          <Toggle
+            key={b}
+            size="sm"
+            pressed={boards.includes(b)}
+            onPressedChange={() => update({ boards: toggle(boards, b) })}
+            className={chipClass}
+          >
+            {t(`board.${b}`)}
+          </Toggle>
+        ))}
+      </div>
+
+      {/* Booking rating (minimum) */}
+      <div className="flex flex-wrap items-center gap-2">
+        <span className="text-xs font-bold text-muted-foreground">
+          {t("filter.bookingLabel")}
+        </span>
+        {BOOKING_MINS.map((n) => (
+          <Toggle
+            key={n}
+            size="sm"
+            pressed={minBooking === n}
+            onPressedChange={() =>
+              update({ minBooking: minBooking === n ? null : n })
+            }
+            className={chipClass}
+          >
+            {n.toFixed(1)}+
+          </Toggle>
+        ))}
+      </div>
+
+      {/* Amenities */}
+      <div className="flex flex-wrap items-center gap-2">
+        <span className="text-xs font-bold text-muted-foreground">
+          {t("filter.label")}
+        </span>
+        {AMENITIES.map((f) => (
+          <Toggle
+            key={f}
+            size="sm"
+            pressed={features.includes(f)}
+            onPressedChange={() => update({ features: toggle(features, f) })}
+            className={chipClass}
+          >
+            {t(`filter.${AMENITY_KEY[f]}`)}
+          </Toggle>
+        ))}
+        {hasFilters && (
+          <Button
+            size="sm"
+            variant="ghost"
+            className="h-7 text-xs"
+            onClick={() =>
+              update({
+                quality: [],
+                tags: [],
+                boards: [],
+                features: [],
+                minBooking: null,
+              })
+            }
+          >
+            {t("filter.clear")}
+          </Button>
+        )}
+      </div>
+    </div>
+  );
+}

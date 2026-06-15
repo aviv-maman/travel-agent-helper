@@ -1,0 +1,108 @@
+{
+  "app": {
+    "title": "Suppliers Guide",
+    "subtitle": "Commissions, baggage & transfers"
+  },
+  "nav": {
+    "language": "Language",
+    "hebrew": "עברית",
+    "english": "English"
+  },
+  "tabs": {
+    "commissions": "Commissions",
+    "transfers": "Transfers",
+    "baggage": "Baggage",
+    "cancellations": "Cancellations",
+    "hotels": "Hotels"
+  },
+  "hotels": {
+    "selectDestination": "Select a hotel destination",
+    "destinationPlaceholder": "Type or pick a destination...",
+    "emptyTitle": "Pick a destination to see its hotels",
+    "emptyHint": "Type a destination name, country or airport code — e.g. Batumi, Athens, Sofia or BUH.",
+    "noResults": "No hotels found",
+    "ratingNote": "Stars are the hotel's official rating. The category (Premium / Good / Resort / Kosher) is our own rating based on experience.",
+    "sort": {
+      "label": "Sort:",
+      "default": "Default",
+      "starsDesc": "Stars 5→1",
+      "starsAsc": "Stars 1→5",
+      "bookingDesc": "Rating high→low",
+      "bookingAsc": "Rating low→high"
+    },
+    "groupBy": {
+      "label": "Group by:",
+      "quality": "Hotel Quality",
+      "stars": "Star Rating",
+      "booking": "Booking Rating"
+    },
+    "group": {
+      "stars": "{stars}★",
+      "starsNone": "Unrated",
+      "booking9": "9+",
+      "booking8": "8–8.9",
+      "booking7": "7–7.9",
+      "bookingLt7": "Under 7",
+      "bookingNone": "No rating"
+    },
+    "filter": {
+      "label": "Amenities:",
+      "qualityLabel": "Hotel Quality:",
+      "tagsLabel": "Tags:",
+      "boardLabel": "Board Basis:",
+      "bookingLabel": "Booking Rating:",
+      "poolIn": "Indoor pool",
+      "poolOut": "Outdoor pool",
+      "casino": "Casino in hotel",
+      "casinoNear": "Close to casino",
+      "waterpark": "Water park",
+      "kosher": "Kosher hotel",
+      "outsideCenter": "Outside the center",
+      "clear": "Clear filters"
+    },
+    "pager": {
+      "count": "{total} hotels",
+      "perPage": "Per page",
+      "page": "Page {page} of {total}",
+      "prev": "Previous page",
+      "next": "Next page"
+    },
+    "tier": {
+      "premium": "Premium",
+      "good": "Good",
+      "resort": "Resort",
+      "kosher": "Kosher"
+    },
+    "card": {
+      "maps": "Maps",
+      "booking": "Booking",
+      "copyLink": "Copy link",
+      "copied": "Link copied",
+      "bookingScore": "Booking",
+      "walk": "{minutes} minutes walking",
+      "ride": "{minutes} minutes riding",
+      "details": "Click for details"
+    },
+    "board": {
+      "bb": "Breakfast",
+      "hb": "Half board",
+      "fb": "Full board"
+    },
+    "modal": {
+      "rooms": "Room types",
+      "size": "Size",
+      "sizeUnknown": "Unknown — to be completed",
+      "noRooms": "No room information yet",
+      "updateManually": "✏️ To update room details — enter them manually in the system",
+      "close": "Close"
+    },
+    "city": {
+      "title": "About the city — info & transport",
+      "about": "About",
+      "currency": "Local currency",
+      "airport": "Airport",
+      "gettingAround": "Getting around",
+      "landmarks": "Points of interest"
+    }
+  }
+}
