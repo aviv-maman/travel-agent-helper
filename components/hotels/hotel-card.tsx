@@ -140,7 +140,6 @@ export function HotelCard({
           <>
             <Button
               variant="outline"
-              size="sm"
               nativeButton={false}
               className="h-8 flex-1 text-brand"
               render={
@@ -156,7 +155,6 @@ export function HotelCard({
           <>
             <Button
               variant="outline"
-              size="sm"
               nativeButton={false}
               className="h-8 flex-1 text-success"
               render={

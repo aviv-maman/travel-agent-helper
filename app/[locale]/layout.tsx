@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { DirectionProvider } from "@base-ui/react/direction-provider";
+import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
 import { routing, localeDirection, type Locale } from "@/i18n/routing";
 import "../globals.css";
@@ -49,14 +50,17 @@ export default async function LocaleLayout({
     <html
       lang={locale}
       dir={dir}
-      className={`${heebo.variable} dark h-full antialiased`}
+      className={`${heebo.variable} h-full antialiased`}
+      suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col">
         <NextIntlClientProvider>
-          <DirectionProvider direction={dir}>
-            {children}
-            <Toaster />
-          </DirectionProvider>
+          <ThemeProvider defaultTheme="dark">
+            <DirectionProvider direction={dir}>
+              {children}
+              <Toaster />
+            </DirectionProvider>
+          </ThemeProvider>
         </NextIntlClientProvider>
       </body>
     </html>

@@ -10,9 +10,8 @@ export function CopyLinkButton({ url }: { url: string }) {
   return (
     <Button
       type="button"
-      variant="ghost"
+      variant="outline"
       size="icon"
-      className="size-7 text-muted-foreground"
       title={t("copyLink")}
       aria-label={t("copyLink")}
       onClick={async () => {
@@ -24,7 +23,7 @@ export function CopyLinkButton({ url }: { url: string }) {
         }
       }}
     >
-      <Copy className="size-3.5" />
+      <Copy />
     </Button>
   );
 }

@@ -42,16 +42,16 @@ const AMENITY_KEY: Record<string, string> = {
   waterpark: "waterpark",
 };
 const GROUP_BYS: GroupBy[] = ["quality", "stars", "booking"];
-const BASE_SORTS: { value: SortMode; key: string; icon?: string }[] = [
+const BASE_SORTS: { value: SortMode; key: string; emoji?: string }[] = [
   { value: "default", key: "default" },
-  { value: "stars-desc", key: "starsDesc", icon: "⭐" },
-  { value: "stars-asc", key: "starsAsc", icon: "⭐" },
-  { value: "booking-desc", key: "bookingDesc", icon: "📊" },
-  { value: "booking-asc", key: "bookingAsc", icon: "📊" },
+  { value: "stars-desc", key: "starsDesc", emoji: "⭐" },
+  { value: "stars-asc", key: "starsAsc", emoji: "⭐" },
+  { value: "booking-desc", key: "bookingDesc", emoji: "📊" },
+  { value: "booking-asc", key: "bookingAsc", emoji: "📊" },
 ];
 
 const chipClass =
-  "h-7 rounded-full border border-border text-xs aria-pressed:border-brand aria-pressed:bg-brand aria-pressed:text-brand-foreground";
+  "rounded-full border border-border aria-pressed:border-brand aria-pressed:bg-brand aria-pressed:text-brand-foreground";
 
 export function HotelFilters({ landmarks }: { landmarks: ViewLandmark[] }) {
   const t = useTranslations("hotels");
@@ -71,7 +71,7 @@ export function HotelFilters({ landmarks }: { landmarks: ViewLandmark[] }) {
 
   const sortItems: Record<string, string> = {};
   for (const s of BASE_SORTS) {
-    sortItems[s.value] = `${s.icon ? `${s.icon} ` : ""}${t(`sort.${s.key}`)}`;
+    sortItems[s.value] = `${s.emoji ? `${s.emoji} ` : ""}${t(`sort.${s.key}`)}`;
   }
   for (const lm of landmarks) sortItems[`dist:${lm.key}`] = `📍 ${lm.name}`;
 
@@ -98,7 +98,7 @@ export function HotelFilters({ landmarks }: { landmarks: ViewLandmark[] }) {
             value={groupBy}
             onValueChange={(v) => update({ groupBy: v as GroupBy })}
           >
-            <SelectTrigger size="sm" className="h-8 w-40 text-xs">
+            <SelectTrigger className="w-40">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
@@ -120,7 +120,7 @@ export function HotelFilters({ landmarks }: { landmarks: ViewLandmark[] }) {
             value={sort}
             onValueChange={(v) => update({ sort: v as SortMode })}
           >
-            <SelectTrigger size="sm" className="h-8 w-52 text-xs">
+            <SelectTrigger className="w-52">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
@@ -147,7 +147,6 @@ export function HotelFilters({ landmarks }: { landmarks: ViewLandmark[] }) {
         {QUALITY.map((c) => (
           <Toggle
             key={c.value}
-            size="sm"
             pressed={quality.includes(c.value)}
             onPressedChange={() => update({ quality: toggle(quality, c.value) })}
             className={chipClass}
@@ -165,7 +164,6 @@ export function HotelFilters({ landmarks }: { landmarks: ViewLandmark[] }) {
         {TAGS.map((c) => (
           <Toggle
             key={c.value}
-            size="sm"
             pressed={tags.includes(c.value)}
             onPressedChange={() => update({ tags: toggle(tags, c.value) })}
             className={chipClass}
@@ -183,7 +181,6 @@ export function HotelFilters({ landmarks }: { landmarks: ViewLandmark[] }) {
         {BOARDS.map((b) => (
           <Toggle
             key={b}
-            size="sm"
             pressed={boards.includes(b)}
             onPressedChange={() => update({ boards: toggle(boards, b) })}
             className={chipClass}
@@ -201,7 +198,6 @@ export function HotelFilters({ landmarks }: { landmarks: ViewLandmark[] }) {
         {BOOKING_MINS.map((n) => (
           <Toggle
             key={n}
-            size="sm"
             pressed={minBooking === n}
             onPressedChange={() =>
               update({ minBooking: minBooking === n ? null : n })
@@ -221,7 +217,6 @@ export function HotelFilters({ landmarks }: { landmarks: ViewLandmark[] }) {
         {AMENITIES.map((f) => (
           <Toggle
             key={f}
-            size="sm"
             pressed={features.includes(f)}
             onPressedChange={() => update({ features: toggle(features, f) })}
             className={chipClass}
@@ -231,9 +226,7 @@ export function HotelFilters({ landmarks }: { landmarks: ViewLandmark[] }) {
         ))}
         {hasFilters && (
           <Button
-            size="sm"
             variant="ghost"
-            className="h-7 text-xs"
             onClick={() =>
               update({
                 quality: [],

@@ -13,6 +13,7 @@ import {
 } from "@/lib/hotels";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { LanguageSwitcher } from "@/components/language-switcher";
+import { ThemeToggle } from "@/components/theme-toggle";
 import { DestinationCombobox } from "@/components/hotels/destination-combobox";
 import { HotelFilters } from "@/components/hotels/hotel-filters";
 import { HotelsResults } from "@/components/hotels/hotels-results";
@@ -75,7 +76,10 @@ export default async function HomePage({
           </h1>
           <p className="text-sm text-muted-foreground">{t("app.subtitle")}</p>
         </div>
-        <LanguageSwitcher />
+        <div className="flex items-center gap-2">
+          <ThemeToggle />
+          <LanguageSwitcher />
+        </div>
       </header>
 
       <Tabs defaultValue="hotels" className="w-full">
