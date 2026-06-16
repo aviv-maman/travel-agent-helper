@@ -43,7 +43,7 @@ export function HotelsPager({
             value={String(perPage)}
             onValueChange={(v) => update({ perPage: Number(v) })}
           >
-            <SelectTrigger size="sm" className="h-8 w-18 text-xs">
+            <SelectTrigger className="w-18">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
@@ -59,7 +59,7 @@ export function HotelsPager({
         {totalPages > 1 && (
           <div className="flex items-center gap-1">
             <Button
-              size="icon-sm"
+              size="icon"
               variant="outline"
               disabled={page <= 1}
               aria-label={t("pager.prev")}
@@ -71,7 +71,7 @@ export function HotelsPager({
               {t("pager.page", { page, total: totalPages })}
             </span>
             <Button
-              size="icon-sm"
+              size="icon"
               variant="outline"
               disabled={page >= totalPages}
               aria-label={t("pager.next")}

@@ -63,7 +63,9 @@ function SelectContent({
   sideOffset = 4,
   align = "center",
   alignOffset = 0,
-  alignItemWithTrigger = true,
+  // Standard dropdown behavior (popover below/above the trigger) instead of
+  // base-ui's native-select mode, which overlaps and resizes over the trigger.
+  alignItemWithTrigger = false,
   ...props
 }: SelectPrimitive.Popup.Props &
   Pick<

@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { Check, ChevronsUpDown, MapPin } from "lucide-react";
-import { type DestinationSummary, flagEmoji } from "@/lib/hotels";
+import { type DestinationSummary } from "@/lib/hotels";
 import { smartNormalize, smartScore } from "@/lib/search";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -20,6 +20,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { CountryFlag } from "@/components/country-flag";
 import { useHotelParams } from "./use-hotel-params";
 
 /** Group destinations by country, preserving first-appearance order. */
@@ -59,7 +60,7 @@ export function DestinationCombobox({
         render={
           <Button
             variant="outline"
-            className="h-12 w-full max-w-xl justify-between text-base"
+            className="w-full max-w-xl justify-between"
           />
         }
       >
@@ -67,7 +68,7 @@ export function DestinationCombobox({
           <MapPin className="size-4 text-brand" />
           {selected ? (
             <span className="flex items-center gap-1.5">
-              <span aria-hidden>{flagEmoji(selected.countryCode)}</span>
+              <CountryFlag code={selected.countryCode} />
               {selected.name}
               <span className="text-muted-foreground">· {selected.country}</span>
             </span>
@@ -92,7 +93,7 @@ export function DestinationCombobox({
                 key={group.countryCode}
                 heading={
                   <span className="flex items-center gap-1.5">
-                    <span aria-hidden>{flagEmoji(group.countryCode)}</span>
+                    <CountryFlag code={group.countryCode} />
                     {group.country}
                   </span>
                 }

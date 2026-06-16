@@ -12,8 +12,8 @@ export const localeDirection: Record<Locale, "rtl" | "ltr"> = {
   en: "ltr",
 };
 
-/** Flag shown in the language selector. */
-export const localeFlag: Record<Locale, string> = {
-  he: "🇮🇱",
-  en: "🇬🇧",
+/** ISO 3166-1 country whose flag represents each locale in the switcher. */
+export const localeCountry: Record<Locale, string> = {
+  he: "IL",
+  en: "GB",
 };

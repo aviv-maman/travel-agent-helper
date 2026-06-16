@@ -4,8 +4,9 @@ import { useLocale, useTranslations } from "next-intl";
 import { ChevronDown } from "lucide-react";
 import { usePathname, useRouter } from "@/i18n/navigation";
 import { routing } from "@/i18n/routing";
-import { localeFlag, type Locale } from "@/i18n/config";
+import { localeCountry, type Locale } from "@/i18n/config";
 import { Button } from "@/components/ui/button";
+import { CountryFlag } from "@/components/country-flag";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -28,10 +29,10 @@ export function LanguageSwitcher() {
     <DropdownMenu>
       <DropdownMenuTrigger
         render={
-          <Button variant="outline" size="sm" aria-label={t("language")} />
+          <Button variant="outline" aria-label={t("language")} />
         }
       >
-        <span aria-hidden>{localeFlag[locale]}</span>
+        <CountryFlag code={localeCountry[locale]} />
         {t(LABEL_KEY[locale])}
         <ChevronDown className="size-3.5 opacity-60" />
       </DropdownMenuTrigger>
@@ -42,7 +43,7 @@ export function LanguageSwitcher() {
             onClick={() => router.replace(pathname, { locale: l })}
             className="gap-2"
           >
-            <span aria-hidden>{localeFlag[l]}</span>
+            <CountryFlag code={localeCountry[l]} />
             {t(LABEL_KEY[l])}
           </DropdownMenuItem>
         ))}

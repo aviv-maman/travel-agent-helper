@@ -6,7 +6,11 @@
   "nav": {
     "language": "שפה",
     "hebrew": "עברית",
-    "english": "English"
+    "english": "English",
+    "theme": "החלף מצב תצוגה",
+    "light": "בהיר",
+    "dark": "כהה",
+    "system": "מערכת"
   },
   "tabs": {
     "commissions": "עמלות",

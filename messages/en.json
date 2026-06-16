@@ -6,7 +6,11 @@
   "nav": {
     "language": "Language",
     "hebrew": "עברית",
-    "english": "English"
+    "english": "English",
+    "theme": "Toggle theme",
+    "light": "Light",
+    "dark": "Dark",
+    "system": "System"
   },
   "tabs": {
     "commissions": "Commissions",
