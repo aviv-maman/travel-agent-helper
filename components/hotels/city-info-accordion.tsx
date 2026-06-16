@@ -29,20 +29,14 @@ export function CityInfoAccordion({ info }: { info: ViewInfo }) {
   return (
     <Accordion className="rounded-xl border border-border bg-surface">
       <AccordionItem value="about-city" className="border-none px-4">
-        <AccordionTrigger className="text-sm font-extrabold">
-          🏙 {t("title")}
-        </AccordionTrigger>
+        <AccordionTrigger className="text-sm font-extrabold">🏙 {t("title")}</AccordionTrigger>
         <AccordionContent className="flex flex-col gap-3 text-sm leading-relaxed">
           {info.about && <p className="text-foreground">{info.about}</p>}
-          {info.attractions && (
-            <p className="text-muted-foreground">{info.attractions}</p>
-          )}
+          {info.attractions && <p className="text-muted-foreground">{info.attractions}</p>}
 
           {info.currencyNote && (
             <div className="border-t border-border pt-2">
-              <div className="mb-1 text-xs font-bold text-foreground">
-                💱 {t("currency")}
-              </div>
+              <div className="mb-1 text-xs font-bold text-foreground">💱 {t("currency")}</div>
               <div className="text-muted-foreground">{info.currencyNote}</div>
             </div>
           )}
@@ -52,17 +46,13 @@ export function CityInfoAccordion({ info }: { info: ViewInfo }) {
               <div className="mb-1 text-xs font-bold text-foreground">
                 ✈ {airportTitle || t("airport")}
               </div>
-              {airportNote && (
-                <div className="text-muted-foreground">{airportNote}</div>
-              )}
+              {airportNote && <div className="text-muted-foreground">{airportNote}</div>}
             </div>
           )}
 
           {transport.length > 0 && (
             <div className="border-t border-border pt-2">
-              <div className="mb-1 text-xs font-bold text-foreground">
-                🚕 {t("gettingAround")}
-              </div>
+              <div className="mb-1 text-xs font-bold text-foreground">🚕 {t("gettingAround")}</div>
               <table className="w-full text-xs">
                 <tbody>
                   {transport.map((row, i) => (
