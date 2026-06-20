@@ -68,6 +68,12 @@ export default async function HomePage({
       })
     : null;
 
+  // Stack icon over label on mobile, fall back to the inline pill on sm+.
+  const triggerCls =
+    "h-auto flex-col gap-0.5 py-1.5 sm:h-[calc(100%-1px)] sm:flex-row sm:gap-1.5 sm:py-0.5";
+  const tabIconCls = "text-lg sm:text-base";
+  const tabTextCls = "text-[0.65rem] leading-tight sm:text-sm";
+
   return (
     <main className="mx-auto w-full max-w-5xl px-4 py-8">
       <header className="mb-6 flex items-center justify-between gap-4">
@@ -82,26 +88,56 @@ export default async function HomePage({
       </header>
 
       <Tabs defaultValue="hotels" className="w-full">
-        <TabsList className="grid w-full grid-cols-5">
-          <TabsTrigger value="commissions" title={t("tabs.commissions")}>
-            <span aria-hidden>💰</span>
-            <span className="sr-only sm:not-sr-only">{t("tabs.commissions")}</span>
+        <TabsList className="grid h-auto w-full grid-cols-5 group-data-horizontal/tabs:h-auto sm:group-data-horizontal/tabs:h-8">
+          <TabsTrigger
+            value="commissions"
+            title={t("tabs.commissions")}
+            className={triggerCls}
+          >
+            <span className={tabIconCls} aria-hidden>
+              💰
+            </span>
+            <span className={tabTextCls}>{t("tabs.commissions")}</span>
           </TabsTrigger>
-          <TabsTrigger value="transfers" title={t("tabs.transfers")}>
-            <span aria-hidden>🚌</span>
-            <span className="sr-only sm:not-sr-only">{t("tabs.transfers")}</span>
+          <TabsTrigger
+            value="transfers"
+            title={t("tabs.transfers")}
+            className={triggerCls}
+          >
+            <span className={tabIconCls} aria-hidden>
+              🚌
+            </span>
+            <span className={tabTextCls}>{t("tabs.transfers")}</span>
           </TabsTrigger>
-          <TabsTrigger value="baggage" title={t("tabs.baggage")}>
-            <span aria-hidden>🧳</span>
-            <span className="sr-only sm:not-sr-only">{t("tabs.baggage")}</span>
+          <TabsTrigger
+            value="baggage"
+            title={t("tabs.baggage")}
+            className={triggerCls}
+          >
+            <span className={tabIconCls} aria-hidden>
+              🧳
+            </span>
+            <span className={tabTextCls}>{t("tabs.baggage")}</span>
           </TabsTrigger>
-          <TabsTrigger value="cancellations" title={t("tabs.cancellations")}>
-            <span aria-hidden>❌</span>
-            <span className="sr-only sm:not-sr-only">{t("tabs.cancellations")}</span>
+          <TabsTrigger
+            value="cancellations"
+            title={t("tabs.cancellations")}
+            className={triggerCls}
+          >
+            <span className={tabIconCls} aria-hidden>
+              ❌
+            </span>
+            <span className={tabTextCls}>{t("tabs.cancellations")}</span>
           </TabsTrigger>
-          <TabsTrigger value="hotels" title={t("tabs.hotels")}>
-            <span aria-hidden>🏨</span>
-            <span className="sr-only sm:not-sr-only">{t("tabs.hotels")}</span>
+          <TabsTrigger
+            value="hotels"
+            title={t("tabs.hotels")}
+            className={triggerCls}
+          >
+            <span className={tabIconCls} aria-hidden>
+              🏨
+            </span>
+            <span className={tabTextCls}>{t("tabs.hotels")}</span>
           </TabsTrigger>
         </TabsList>
 
