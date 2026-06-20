@@ -49,7 +49,7 @@ export function DestinationCombobox({ destinations }: { destinations: Destinatio
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger
-        render={<Button variant="outline" className="w-full max-w-xl justify-between" />}>
+        render={<Button variant="outline" className="w-full max-w-xl justify-between" size="lg" />}>
         <span className="flex items-center gap-2">
           <MapPin className="size-4 text-brand" />
           {selected ? (
