@@ -15,11 +15,8 @@ import {
   CommandItem,
   CommandList,
 } from "@/components/ui/command";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Badge } from "@/components/ui/badge";
 import { CountryFlag } from "@/components/country-flag";
 import { useHotelParams } from "./use-hotel-params";
 
@@ -42,11 +39,7 @@ function groupByCountry(destinations: DestinationSummary[]) {
   return [...groups.values()];
 }
 
-export function DestinationCombobox({
-  destinations,
-}: {
-  destinations: DestinationSummary[];
-}) {
+export function DestinationCombobox({ destinations }: { destinations: DestinationSummary[] }) {
   const [open, setOpen] = useState(false);
   const t = useTranslations("hotels");
   const { dest, update } = useHotelParams();
@@ -57,13 +50,7 @@ export function DestinationCombobox({
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger
-        render={
-          <Button
-            variant="outline"
-            className="w-full max-w-xl justify-between"
-          />
-        }
-      >
+        render={<Button variant="outline" className="w-full max-w-xl justify-between" />}>
         <span className="flex items-center gap-2">
           <MapPin className="size-4 text-brand" />
           {selected ? (
@@ -83,21 +70,22 @@ export function DestinationCombobox({
           filter={(itemValue, search) => {
             const score = smartScore(search, smartNormalize(itemValue));
             return score < 0 ? 0 : score;
-          }}
-        >
+          }}>
           <CommandInput placeholder={t("destinationPlaceholder")} />
           <CommandList>
             <CommandEmpty>{t("noResults")}</CommandEmpty>
             {countries.map((group) => (
               <CommandGroup
                 key={group.countryCode}
+                className="**:[[cmdk-group-heading]]:py-2"
                 heading={
-                  <span className="flex items-center gap-1.5">
-                    <CountryFlag code={group.countryCode} />
+                  <span className="flex items-center gap-2">
+                    <span className="flex w-8 shrink-0 justify-center">
+                      <CountryFlag code={group.countryCode} />
+                    </span>
                     {group.country}
                   </span>
-                }
-              >
+                }>
                 {group.cities.map((d) => (
                   <CommandItem
                     key={d.iata}
@@ -105,11 +93,12 @@ export function DestinationCombobox({
                     onSelect={() => {
                       update({ dest: d.iata, features: [], sort: "default" });
                       setOpen(false);
-                    }}
-                  >
-                    <span className="w-5 shrink-0 text-[0.7rem] font-medium text-muted-foreground">
+                    }}>
+                    <Badge
+                      variant="outline"
+                      className="w-8 shrink-0 rounded-sm border-brand/35 bg-brand/10 px-0 text-[0.65rem] font-semibold tracking-wide text-brand">
                       {d.iata}
-                    </span>
+                    </Badge>
                     {d.name}
                     <Check
                       className={cn(
