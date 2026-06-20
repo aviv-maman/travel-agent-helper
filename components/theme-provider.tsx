@@ -1,52 +1,52 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { useServerInsertedHTML } from "next/navigation"
+import * as React from "react";
+import { useServerInsertedHTML } from "next/navigation";
 
-type Theme = "light" | "dark" | "system"
-type ResolvedTheme = "light" | "dark"
+type Theme = "light" | "dark" | "system";
+type ResolvedTheme = "light" | "dark";
 
 type ThemeContextValue = {
-  theme: Theme
-  resolvedTheme: ResolvedTheme
-  setTheme: (theme: Theme) => void
-}
+  theme: Theme;
+  resolvedTheme: ResolvedTheme;
+  setTheme: (theme: Theme) => void;
+};
 
-const STORAGE_KEY = "theme"
-const THEME_EVENT = "themechange"
+const STORAGE_KEY = "theme";
+const THEME_EVENT = "themechange";
 
-const ThemeContext = React.createContext<ThemeContextValue | undefined>(undefined)
+const ThemeContext = React.createContext<ThemeContextValue | undefined>(undefined);
 
 // --- persisted preference, modeled as an external store -------------------
 
 function subscribeTheme(callback: () => void) {
   // `storage` fires for changes from other tabs; the custom event covers
   // same-tab updates (storage events never fire in the tab that wrote them).
-  window.addEventListener("storage", callback)
-  window.addEventListener(THEME_EVENT, callback)
+  window.addEventListener("storage", callback);
+  window.addEventListener(THEME_EVENT, callback);
   return () => {
-    window.removeEventListener("storage", callback)
-    window.removeEventListener(THEME_EVENT, callback)
-  }
+    window.removeEventListener("storage", callback);
+    window.removeEventListener(THEME_EVENT, callback);
+  };
 }
 
 // --- system color-scheme preference, also an external store ---------------
 
 function subscribeSystem(callback: () => void) {
-  const media = window.matchMedia("(prefers-color-scheme: dark)")
-  media.addEventListener("change", callback)
-  return () => media.removeEventListener("change", callback)
+  const media = window.matchMedia("(prefers-color-scheme: dark)");
+  media.addEventListener("change", callback);
+  return () => media.removeEventListener("change", callback);
 }
 
 function getSystem(): ResolvedTheme {
-  return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"
+  return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
 }
 
 function applyTheme(resolved: ResolvedTheme) {
-  const root = document.documentElement
-  root.classList.remove("light", "dark")
-  root.classList.add(resolved)
-  root.style.colorScheme = resolved
+  const root = document.documentElement;
+  root.classList.remove("light", "dark");
+  root.classList.add(resolved);
+  root.style.colorScheme = resolved;
 }
 
 /**
@@ -56,70 +56,70 @@ function applyTheme(resolved: ResolvedTheme) {
  * warns about (and never executes) scripts rendered through components.
  */
 function noFlashScript(defaultTheme: Theme) {
-  return `(function(){try{var s=localStorage.getItem('${STORAGE_KEY}')||'${defaultTheme}';var t=s==='system'?(window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'):s;var r=document.documentElement;r.classList.remove('light','dark');r.classList.add(t);r.style.colorScheme=t;}catch(e){}})();`
+  return `(function(){try{var s=localStorage.getItem('${STORAGE_KEY}')||'${defaultTheme}';var t=s==='system'?(window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'):s;var r=document.documentElement;r.classList.remove('light','dark');r.classList.add(t);r.style.colorScheme=t;}catch(e){}})();`;
 }
 
 function ThemeProvider({
   children,
   defaultTheme = "system",
 }: {
-  children: React.ReactNode
-  defaultTheme?: Theme
+  children: React.ReactNode;
+  defaultTheme?: Theme;
 }) {
   useServerInsertedHTML(() => (
     <script dangerouslySetInnerHTML={{ __html: noFlashScript(defaultTheme) }} />
-  ))
+  ));
 
   const getTheme = React.useCallback((): Theme => {
     try {
-      return (localStorage.getItem(STORAGE_KEY) as Theme | null) ?? defaultTheme
+      return (localStorage.getItem(STORAGE_KEY) as Theme | null) ?? defaultTheme;
     } catch {
-      return defaultTheme
+      return defaultTheme;
     }
-  }, [defaultTheme])
+  }, [defaultTheme]);
 
-  const getServerTheme = React.useCallback(() => defaultTheme, [defaultTheme])
+  const getServerTheme = React.useCallback(() => defaultTheme, [defaultTheme]);
 
   // useSyncExternalStore reads the server snapshot during hydration and swaps
   // to the client value right after — no mounted flag, no hydration mismatch.
-  const theme = React.useSyncExternalStore(subscribeTheme, getTheme, getServerTheme)
+  const theme = React.useSyncExternalStore(subscribeTheme, getTheme, getServerTheme);
   const system = React.useSyncExternalStore(
     subscribeSystem,
     getSystem,
-    () => "dark" as ResolvedTheme
-  )
+    () => "dark" as ResolvedTheme,
+  );
 
-  const resolvedTheme: ResolvedTheme = theme === "system" ? system : theme
+  const resolvedTheme: ResolvedTheme = theme === "system" ? system : theme;
 
   // Mirror the resolved theme onto <html>. This syncs an external system (the
   // DOM) rather than React state, so it belongs in an effect.
   React.useEffect(() => {
-    applyTheme(resolvedTheme)
-  }, [resolvedTheme])
+    applyTheme(resolvedTheme);
+  }, [resolvedTheme]);
 
   const setTheme = React.useCallback((next: Theme) => {
     try {
-      localStorage.setItem(STORAGE_KEY, next)
+      localStorage.setItem(STORAGE_KEY, next);
     } catch {}
-    window.dispatchEvent(new Event(THEME_EVENT))
-  }, [])
+    window.dispatchEvent(new Event(THEME_EVENT));
+  }, []);
 
   const value = React.useMemo<ThemeContextValue>(
     () => ({ theme, resolvedTheme, setTheme }),
-    [theme, resolvedTheme, setTheme]
-  )
+    [theme, resolvedTheme, setTheme],
+  );
 
   return (
     <ThemeContext.Provider value={value}>
       <ThemeHotkey />
       {children}
     </ThemeContext.Provider>
-  )
+  );
 }
 
 function isTypingTarget(target: EventTarget | null) {
   if (!(target instanceof HTMLElement)) {
-    return false
+    return false;
   }
 
   return (
@@ -127,50 +127,50 @@ function isTypingTarget(target: EventTarget | null) {
     target.tagName === "INPUT" ||
     target.tagName === "TEXTAREA" ||
     target.tagName === "SELECT"
-  )
+  );
 }
 
 /** Press "d" to flip between light and dark (ignored while typing). */
 function ThemeHotkey() {
-  const { resolvedTheme, setTheme } = useTheme()
+  const { resolvedTheme, setTheme } = useTheme();
 
   React.useEffect(() => {
     function onKeyDown(event: KeyboardEvent) {
       if (event.defaultPrevented || event.repeat) {
-        return
+        return;
       }
 
       if (event.metaKey || event.ctrlKey || event.altKey) {
-        return
+        return;
       }
 
       if (event.key.toLowerCase() !== "d") {
-        return
+        return;
       }
 
       if (isTypingTarget(event.target)) {
-        return
+        return;
       }
 
-      setTheme(resolvedTheme === "dark" ? "light" : "dark")
+      setTheme(resolvedTheme === "dark" ? "light" : "dark");
     }
 
-    window.addEventListener("keydown", onKeyDown)
+    window.addEventListener("keydown", onKeyDown);
 
     return () => {
-      window.removeEventListener("keydown", onKeyDown)
-    }
-  }, [resolvedTheme, setTheme])
+      window.removeEventListener("keydown", onKeyDown);
+    };
+  }, [resolvedTheme, setTheme]);
 
-  return null
+  return null;
 }
 
 function useTheme(): ThemeContextValue {
-  const ctx = React.useContext(ThemeContext)
+  const ctx = React.useContext(ThemeContext);
   if (!ctx) {
-    return { theme: "system", resolvedTheme: "dark", setTheme: () => {} }
+    return { theme: "system", resolvedTheme: "dark", setTheme: () => undefined };
   }
-  return ctx
+  return ctx;
 }
 
-export { ThemeProvider, useTheme }
+export { ThemeProvider, useTheme };
