@@ -2,10 +2,9 @@
 
 import { useState } from "react";
 import { useTranslations } from "next-intl";
-import { Check, ChevronsUpDown, MapPin } from "lucide-react";
+import { ChevronsUpDown, MapPin } from "lucide-react";
 import { type DestinationSummary } from "@/lib/hotels";
 import { smartNormalize, smartScore } from "@/lib/search";
-import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import {
   Command,
@@ -90,6 +89,7 @@ export function DestinationCombobox({ destinations }: { destinations: Destinatio
                   <CommandItem
                     key={d.iata}
                     value={d.search}
+                    data-checked={dest === d.iata}
                     onSelect={() => {
                       update({ dest: d.iata, features: [], sort: "default" });
                       setOpen(false);
@@ -100,12 +100,6 @@ export function DestinationCombobox({ destinations }: { destinations: Destinatio
                       {d.iata}
                     </Badge>
                     {d.name}
-                    <Check
-                      className={cn(
-                        "ms-auto size-4",
-                        dest === d.iata ? "opacity-100" : "opacity-0",
-                      )}
-                    />
                   </CommandItem>
                 ))}
               </CommandGroup>
