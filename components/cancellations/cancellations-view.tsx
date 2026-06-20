@@ -50,8 +50,8 @@ export function CancellationsView({ suppliers }: { suppliers: ViewCancelSupplier
         </p>
       ) : (
         <div className="flex flex-col gap-3">
-          {filtered.map((s, i) => (
-            <CancelCard key={s.id} supplier={s} defaultOpen={i === 0} />
+          {filtered.map((s) => (
+            <CancelCard key={s.id} supplier={s} />
           ))}
         </div>
       )}
