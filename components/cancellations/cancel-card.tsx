@@ -1,9 +1,13 @@
 "use client";
 
-import { useState } from "react";
-import { ChevronDown } from "lucide-react";
 import type { FeeLevel, ProductKind, ViewBlock, ViewCancelSupplier } from "@/lib/cancellations";
 import type { CommColor } from "@/lib/commissions";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 import { CopyScript } from "./copy-script";
 
 const CHIP: Record<CommColor, string> = {
@@ -92,51 +96,40 @@ export function CancelCard({
   supplier: ViewCancelSupplier;
   defaultOpen?: boolean;
 }) {
-  const [open, setOpen] = useState(Boolean(defaultOpen));
-
   return (
-    <article className="overflow-hidden rounded-xl border border-border bg-surface">
-      <button
-        type="button"
-        onClick={() => setOpen((o) => !o)}
-        aria-expanded={open}
-        className="flex w-full items-center gap-2.5 px-4 py-3 text-start">
-        <span
-          className={`flex size-9 shrink-0 items-center justify-center rounded-lg text-lg ${CHIP[supplier.color]}`}
-          aria-hidden>
-          {supplier.emoji}
-        </span>
-        <div className="min-w-0 flex-1">
-          <div className="flex items-baseline gap-2">
-            <h3 className="text-base font-bold text-foreground">{supplier.name}</h3>
-            <span className="text-[0.7rem] font-normal text-muted-foreground">{supplier.code}</span>
+    <Accordion
+      defaultValue={defaultOpen ? ["cancel"] : undefined}
+      className="overflow-hidden rounded-xl border border-border bg-surface">
+      <AccordionItem value="cancel" className="border-none px-4">
+        <AccordionTrigger className="items-center gap-2.5 py-3 hover:no-underline">
+          <span
+            className={`flex size-9 shrink-0 items-center justify-center rounded-lg text-lg ${CHIP[supplier.color]}`}
+            aria-hidden>
+            {supplier.emoji}
+          </span>
+          <div className="min-w-0 flex-1 text-start">
+            <div className="flex items-baseline gap-2">
+              <h3 className="text-base font-bold text-foreground">{supplier.name}</h3>
+              <span className="text-[0.7rem] font-normal text-muted-foreground">{supplier.code}</span>
+            </div>
+            <p className="text-xs text-muted-foreground">{supplier.subtitle}</p>
+            <div className="mt-1.5 flex flex-wrap gap-1.5">
+              {supplier.products.map((p, i) => (
+                <span
+                  key={i}
+                  className={`rounded-xl px-2 py-0.5 text-[0.7rem] font-semibold ${PRODUCT[p.kind]}`}>
+                  {p.label}
+                </span>
+              ))}
+            </div>
           </div>
-          <p className="text-xs text-muted-foreground">{supplier.subtitle}</p>
-          <div className="mt-1.5 flex flex-wrap gap-1.5">
-            {supplier.products.map((p, i) => (
-              <span
-                key={i}
-                className={`rounded-xl px-2 py-0.5 text-[0.7rem] font-semibold ${PRODUCT[p.kind]}`}>
-                {p.label}
-              </span>
-            ))}
-          </div>
-        </div>
-        <ChevronDown
-          className={`size-5 shrink-0 text-muted-foreground transition-transform ${
-            open ? "rotate-180 text-brand" : ""
-          }`}
-          aria-hidden
-        />
-      </button>
-
-      {open && (
-        <div className="flex flex-col gap-4 border-t border-border px-4 py-4">
+        </AccordionTrigger>
+        <AccordionContent className="flex flex-col gap-4 border-t border-border pt-4 pb-4">
           {supplier.blocks.map((block, i) => (
             <Block key={i} block={block} />
           ))}
-        </div>
-      )}
-    </article>
+        </AccordionContent>
+      </AccordionItem>
+    </Accordion>
   );
 }
