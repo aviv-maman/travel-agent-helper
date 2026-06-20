@@ -107,16 +107,16 @@ export function DestinationCombobox({
                       setOpen(false);
                     }}
                   >
+                    <span className="w-5 shrink-0 text-[0.7rem] font-medium text-muted-foreground">
+                      {d.iata}
+                    </span>
+                    {d.name}
                     <Check
                       className={cn(
-                        "size-4",
+                        "ms-auto size-4",
                         dest === d.iata ? "opacity-100" : "opacity-0",
                       )}
                     />
-                    {d.name}
-                    <span className="ms-auto text-xs text-muted-foreground">
-                      {d.iata}
-                    </span>
                   </CommandItem>
                 ))}
               </CommandGroup>
