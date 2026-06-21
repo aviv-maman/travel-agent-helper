@@ -3,7 +3,6 @@
 import { useTranslations } from "next-intl";
 import type {
   HotelFeatureValue,
-  HotelTier,
   HotelTagValue,
   BoardCode,
 } from "@/db/schema";
@@ -19,16 +18,10 @@ import {
 } from "@/components/ui/select";
 import { useHotelParams } from "./use-hotel-params";
 
-const QUALITY: { value: HotelTier; emoji: string }[] = [
-  { value: "premium", emoji: "🏆" },
-  { value: "good", emoji: "👍" },
-];
 const TAGS: { value: HotelTagValue; emoji: string }[] = [
-  { value: "resort", emoji: "🎢" },
   { value: "kosher", emoji: "✡" },
 ];
 const BOARDS: BoardCode[] = ["bb", "hb", "fb"];
-const BOOKING_MINS = [9, 8.5, 8, 7];
 const AMENITIES: HotelFeatureValue[] = [
   "pool-in",
   "pool-out",
@@ -55,11 +48,9 @@ const chipClass =
 export function HotelFilters({ landmarks }: { landmarks: ViewLandmark[] }) {
   const t = useTranslations("hotels");
   const {
-    quality,
     tags,
     boards,
     features,
-    minBooking,
     sort,
     update,
   } = useHotelParams();
@@ -74,11 +65,9 @@ export function HotelFilters({ landmarks }: { landmarks: ViewLandmark[] }) {
   for (const lm of landmarks) sortItems[`dist:${lm.key}`] = `📍 ${lm.name}`;
 
   const hasFilters =
-    quality.length > 0 ||
     tags.length > 0 ||
     boards.length > 0 ||
-    features.length > 0 ||
-    minBooking != null;
+    features.length > 0;
 
   return (
     <div className="flex flex-col gap-3">
@@ -110,23 +99,6 @@ export function HotelFilters({ landmarks }: { landmarks: ViewLandmark[] }) {
             </SelectContent>
           </Select>
         </div>
-      </div>
-
-      {/* Hotel quality */}
-      <div className="flex flex-wrap items-center gap-2">
-        <span className="text-xs font-bold text-muted-foreground">
-          {t("filter.qualityLabel")}
-        </span>
-        {QUALITY.map((c) => (
-          <Toggle
-            key={c.value}
-            pressed={quality.includes(c.value)}
-            onPressedChange={() => update({ quality: toggle(quality, c.value) })}
-            className={chipClass}
-          >
-            {c.emoji} {t(`tier.${c.value}`)}
-          </Toggle>
-        ))}
       </div>
 
       {/* Tags */}
@@ -163,25 +135,6 @@ export function HotelFilters({ landmarks }: { landmarks: ViewLandmark[] }) {
         ))}
       </div>
 
-      {/* Booking rating (minimum) */}
-      <div className="flex flex-wrap items-center gap-2">
-        <span className="text-xs font-bold text-muted-foreground">
-          {t("filter.bookingLabel")}
-        </span>
-        {BOOKING_MINS.map((n) => (
-          <Toggle
-            key={n}
-            pressed={minBooking === n}
-            onPressedChange={() =>
-              update({ minBooking: minBooking === n ? null : n })
-            }
-            className={chipClass}
-          >
-            {n.toFixed(1)}+
-          </Toggle>
-        ))}
-      </div>
-
       {/* Amenities */}
       <div className="flex flex-wrap items-center gap-2">
         <span className="text-xs font-bold text-muted-foreground">
@@ -202,11 +155,9 @@ export function HotelFilters({ landmarks }: { landmarks: ViewLandmark[] }) {
             variant="ghost"
             onClick={() =>
               update({
-                quality: [],
                 tags: [],
                 boards: [],
                 features: [],
-                minBooking: null,
               })
             }
           >

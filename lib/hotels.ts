@@ -259,22 +259,18 @@ export async function getDestinationsList(
 export async function getDestinationView(
   iata: string,
   opts: {
-    quality?: HotelTier[];
     tags?: HotelTagValue[];
     boards?: BoardCode[];
     features?: HotelFeatureValue[];
-    minBooking?: number;
     sort?: SortMode;
     page?: number;
     perPage?: number;
     locale: string;
   },
 ): Promise<DestinationView | null> {
-  const quality = opts.quality ?? [];
   const tags = opts.tags ?? [];
   const boards = opts.boards ?? [];
   const features = opts.features ?? [];
-  const minBooking = opts.minBooking ?? null;
   const sort = opts.sort ?? "default";
   const perPage = opts.perPage && opts.perPage > 0 ? opts.perPage : DEFAULT_PER_PAGE;
   const locale = opts.locale;
@@ -282,15 +278,13 @@ export async function getDestinationView(
   const d = all.find((x) => x.iata === iata);
   if (!d) return null;
 
-  // amenities AND; quality / tags / boards each OR within themselves; min booking.
+  // amenities AND; tags / boards each OR within themselves.
   const filtered = sortHotels(
     d.hotels.filter(
       (h) =>
         features.every((f) => h.features.includes(f)) &&
-        (quality.length === 0 || quality.includes(h.tier)) &&
         (tags.length === 0 || tags.some((t) => h.tags.includes(t))) &&
-        (boards.length === 0 || boards.some((b) => h.boards.includes(b))) &&
-        (minBooking == null || (h.bookingScore ?? -1) >= minBooking),
+        (boards.length === 0 || boards.some((b) => h.boards.includes(b))),
     ),
     sort,
   );

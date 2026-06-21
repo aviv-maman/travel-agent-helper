@@ -1,5 +1,5 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import type { HotelFeatureValue, HotelTier, HotelTagValue, BoardCode } from "@/db/schema";
+import type { HotelFeatureValue, HotelTagValue, BoardCode } from "@/db/schema";
 import { getDestinationsList, getDestinationView, type SortMode } from "@/lib/hotels";
 import { DestinationCombobox } from "@/components/hotels/destination-combobox";
 import { HotelFilters } from "@/components/hotels/hotel-filters";
@@ -26,12 +26,9 @@ export default async function HotelsPage({
   const csv = (key: string) => (asString(sp[key]) ?? "").split(",").filter(Boolean);
 
   const dest = asString(sp.dest);
-  const quality = csv("quality") as HotelTier[];
   const tags = csv("tags") as HotelTagValue[];
   const boards = csv("boards") as BoardCode[];
   const features = csv("features") as HotelFeatureValue[];
-  const minBookingRaw = asString(sp.minBooking);
-  const minBooking = minBookingRaw ? Number(minBookingRaw) : undefined;
   const sort = (asString(sp.sort) ?? "default") as SortMode;
   const page = Math.max(1, Number(asString(sp.page) ?? "1") || 1);
   const perPage = Math.max(0, Number(asString(sp.perPage) ?? "0") || 0);
@@ -39,11 +36,9 @@ export default async function HotelsPage({
   const destinations = await getDestinationsList(locale);
   const view = dest
     ? await getDestinationView(dest, {
-        quality,
         tags,
         boards,
         features,
-        minBooking,
         sort,
         page,
         perPage,

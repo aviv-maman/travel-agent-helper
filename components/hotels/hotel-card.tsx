@@ -2,7 +2,7 @@
 
 import { useLocale, useTranslations } from "next-intl";
 import { MapPin, ExternalLink } from "lucide-react";
-import type { HotelFeatureValue, HotelTier, HotelTagValue } from "@/db/schema";
+import type { HotelFeatureValue, HotelTagValue } from "@/db/schema";
 import type { ViewHotel, ViewDistance } from "@/lib/hotels";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -17,7 +17,6 @@ const FEATURE_META: Record<HotelFeatureValue, { emoji: string; key: string }> = 
   "outside-center": { emoji: "📍", key: "outsideCenter" },
 };
 
-const TIER_EMOJI: Record<HotelTier, string> = { premium: "🏆", good: "👍" };
 const TAG_EMOJI: Record<HotelTagValue, string> = { resort: "🎢", kosher: "✡" };
 
 export function formatMeters(m: number | null, locale: string): string | null {
@@ -88,20 +87,18 @@ export function HotelCard({
         )}
       </div>
 
-      {/* Quality tier + tags */}
-      <div className="flex flex-wrap gap-1.5">
-        <Badge className="bg-brand/15 text-xs font-bold text-brand">
-          {TIER_EMOJI[hotel.tier]} {t(`tier.${hotel.tier}`)}
-        </Badge>
-        {hotel.tags.map((tag) => (
-          <Badge
-            key={tag}
-            className="bg-purple/15 text-xs font-bold text-purple"
-          >
-            {TAG_EMOJI[tag]} {t(`tier.${tag}`)}
-          </Badge>
-        ))}
-      </div>
+      {hotel.tags.length > 0 && (
+        <div className="flex flex-wrap gap-1.5">
+          {hotel.tags.map((tag) => (
+            <Badge
+              key={tag}
+              className="bg-purple/15 text-xs font-bold text-purple"
+            >
+              {TAG_EMOJI[tag]} {t(`tier.${tag}`)}
+            </Badge>
+          ))}
+        </div>
+      )}
 
       {hotel.boards.length > 0 && (
         <div className="flex flex-wrap gap-1.5">

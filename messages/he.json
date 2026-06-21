@@ -72,10 +72,8 @@
     },
     "filter": {
       "label": "מתקנים:",
-      "qualityLabel": "רמת מלון:",
       "tagsLabel": "תגיות:",
       "boardLabel": "בסיס אירוח:",
-      "bookingLabel": "דירוג Booking:",
       "poolIn": "בריכה פנימית",
       "poolOut": "בריכה חיצונית",
       "casino": "קזינו במלון",
@@ -93,8 +91,6 @@
       "next": "העמוד הבא"
     },
     "tier": {
-      "premium": "מעולה",
-      "good": "טוב",
       "resort": "ריזורט",
       "kosher": "כשר"
     },

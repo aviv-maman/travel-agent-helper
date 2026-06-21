@@ -44,9 +44,6 @@ export function HotelDetailModal({
                     {"★".repeat(hotel.stars)}
                   </span>
                 )}
-                <span className="font-semibold text-foreground">
-                  {t(`tier.${hotel.tier}`)}
-                </span>
                 {hotel.boards.map((b) => (
                   <Badge key={b} variant="secondary" className="text-xs">
                     {t(`board.${b}`)}
