@@ -72,10 +72,8 @@
     },
     "filter": {
       "label": "Amenities:",
-      "qualityLabel": "Hotel Quality:",
       "tagsLabel": "Tags:",
       "boardLabel": "Board Basis:",
-      "bookingLabel": "Booking Rating:",
       "poolIn": "Indoor pool",
       "poolOut": "Outdoor pool",
       "casino": "Casino in hotel",
@@ -93,8 +91,6 @@
       "next": "Next page"
     },
     "tier": {
-      "premium": "Premium",
-      "good": "Good",
       "resort": "Resort",
       "kosher": "Kosher"
     },
