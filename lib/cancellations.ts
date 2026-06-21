@@ -32,7 +32,6 @@ export type CancelSupplier = {
   color: CommColor;
   name: Localized;
   code: string;
-  subtitle: Localized;
   products: Product[];
   blocks: Block[];
 };
@@ -93,7 +92,6 @@ const SUPPLIERS: CancelSupplier[] = [
     color: "gold",
     name: t("שטיח מעופף", "Magic Carpet"),
     code: "FLYING",
-    subtitle: t("דמי ביטול — נטו ספק", "Cancellation fees — net supplier"),
     products: [P_FLIGHT(), P_PACKAGE("🏖 חבילות", "🏖 Packages"), P_ORGANIZED()],
     blocks: [
       {
@@ -147,7 +145,6 @@ const SUPPLIERS: CancelSupplier[] = [
     color: "brand",
     name: t("איסתא", "Issta"),
     code: "ISSTA",
-    subtitle: t("דמי ביטול — נטו ספק", "Cancellation fees — net supplier"),
     products: [
       P_FLIGHT(),
       P_PACKAGE("🏖 חבילות נופש", "🏖 Vacation packages"),
@@ -253,7 +250,6 @@ const SUPPLIERS: CancelSupplier[] = [
     color: "success",
     name: t("ישראייר", "Israir"),
     code: "ISRAIR",
-    subtitle: t("דמי ביטול ושינוי — נטו ספק", "Cancellation & change fees — net supplier"),
     products: [P_FLIGHT(), P_PACKAGE("🏖 חבילות", "🏖 Packages")],
     blocks: [
       {
@@ -400,7 +396,6 @@ const SUPPLIERS: CancelSupplier[] = [
     color: "warning",
     name: t("קשרי תעופה", "Kishrei Teufa"),
     code: "KISHREI",
-    subtitle: t("דמי ביטול — נטו ספק", "Cancellation fees — net supplier"),
     products: [
       P_FLIGHT("✈ טיסות שכר", "✈ Charter flights"),
       P_PACKAGE("🏖 חבילות נופש", "🏖 Vacation packages"),
@@ -630,7 +625,6 @@ const SUPPLIERS: CancelSupplier[] = [
     color: "destructive",
     name: t("קווי חופשה", "Kavei Hufsha"),
     code: "KAVEI",
-    subtitle: t("דמי ביטול — נטו ספק", "Cancellation fees — net supplier"),
     products: [
       P_FLIGHT(),
       P_PACKAGE("🏖 חבילות נופש", "🏖 Vacation packages"),
@@ -677,7 +671,6 @@ export type ViewCancelSupplier = {
   color: CommColor;
   name: string;
   code: string;
-  subtitle: string;
   products: ViewProduct[];
   blocks: ViewBlock[];
   /** Lowercased he + en + code, for client-side filtering across both locales. */
@@ -693,7 +686,6 @@ export function getCancellations(locale: string): ViewCancelSupplier[] {
     color: s.color,
     name: pick(s.name),
     code: s.code,
-    subtitle: pick(s.subtitle),
     products: s.products.map((p) => ({ kind: p.kind, label: pick(p.label) })),
     blocks: s.blocks.map((b): ViewBlock => {
       switch (b.kind) {
