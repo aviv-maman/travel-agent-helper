@@ -9,6 +9,21 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 
+/** Splits a "Heading: …" string into its heading (incl. emoji) and the rest. */
+function splitHeading(raw: string): { heading: string; body: string } {
+  const idx = raw.indexOf(":");
+  if (idx === -1) return { heading: "", body: raw.trim() };
+  return { heading: raw.slice(0, idx + 1).trim(), body: raw.slice(idx + 1).trim() };
+}
+
+/** Each point of interest begins with its own emoji — split on those boundaries. */
+function splitLandmarks(body: string): string[] {
+  return body
+    .split(/\s+(?=\p{Extended_Pictographic})/u)
+    .map((s) => s.trim())
+    .filter(Boolean);
+}
+
 export function CityInfoAccordion({ info }: { info: ViewInfo }) {
   const t = useTranslations("hotels.city");
 
@@ -32,7 +47,27 @@ export function CityInfoAccordion({ info }: { info: ViewInfo }) {
         <AccordionTrigger className="text-sm font-extrabold">🏙 {t("title")}</AccordionTrigger>
         <AccordionContent className="flex flex-col gap-3 text-sm leading-relaxed">
           {info.about && <p className="text-foreground">{info.about}</p>}
-          {info.attractions && <p className="text-muted-foreground">{info.attractions}</p>}
+
+          {info.attractions &&
+            (() => {
+              const { heading, body } = splitHeading(info.attractions);
+              const items = body
+                .split(/\s*·\s*/)
+                .map((s) => s.trim())
+                .filter(Boolean);
+              return (
+                <div className="text-muted-foreground">
+                  {heading && (
+                    <div className="mb-1 font-bold text-foreground">{heading}</div>
+                  )}
+                  <ul className="flex list-disc flex-col gap-0.5 ps-5">
+                    {items.map((it, i) => (
+                      <li key={i}>{it}</li>
+                    ))}
+                  </ul>
+                </div>
+              );
+            })()}
 
           {info.currencyNote && (
             <div className="border-t border-border pt-2">
@@ -72,11 +107,23 @@ export function CityInfoAccordion({ info }: { info: ViewInfo }) {
             </div>
           )}
 
-          {info.landmarks && (
-            <div className="border-t border-border pt-2 text-xs text-muted-foreground">
-              {info.landmarks}
-            </div>
-          )}
+          {info.landmarks &&
+            (() => {
+              const { heading, body } = splitHeading(info.landmarks);
+              const items = splitLandmarks(body);
+              return (
+                <div className="border-t border-border pt-2 text-xs text-muted-foreground">
+                  {heading && (
+                    <div className="mb-1 font-bold text-foreground">{heading}</div>
+                  )}
+                  <ul className="flex flex-col gap-1">
+                    {items.map((it, i) => (
+                      <li key={i}>{it}</li>
+                    ))}
+                  </ul>
+                </div>
+              );
+            })()}
         </AccordionContent>
       </AccordionItem>
     </Accordion>

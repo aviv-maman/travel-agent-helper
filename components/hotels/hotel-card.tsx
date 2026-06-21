@@ -1,5 +1,6 @@
 "use client";
 
+import { useMemo } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { MapPin, ExternalLink } from "lucide-react";
 import type { HotelFeatureValue, HotelTagValue } from "@/db/schema";
@@ -7,6 +8,7 @@ import type { ViewHotel, ViewDistance } from "@/lib/hotels";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { CopyLinkButton } from "./copy-link-button";
+import { useHotelParams } from "./use-hotel-params";
 
 const FEATURE_META: Record<HotelFeatureValue, { emoji: string; key: string }> = {
   "pool-in": { emoji: "🏊", key: "poolIn" },
@@ -33,6 +35,11 @@ export function useTimeLabel() {
     const parts: string[] = [];
     if (d.walkMinutes != null) parts.push(t("walk", { minutes: d.walkMinutes }));
     if (d.rideMinutes != null) parts.push(t("ride", { minutes: d.rideMinutes }));
+    // Always surface a walking time — even for very close (<100m) spots where the
+    // data has no explicit minutes — so the yellow column is never empty.
+    if (parts.length === 0 && d.meters != null) {
+      parts.push(t("walk", { minutes: Math.max(1, Math.round(d.meters / 80)) }));
+    }
     return parts.join(" · ");
   };
 }
@@ -41,6 +48,19 @@ export function HotelCard({ hotel, onOpen }: { hotel: ViewHotel; onOpen: () => v
   const locale = useLocale();
   const t = useTranslations("hotels");
   const timeLabel = useTimeLabel();
+  const { sort } = useHotelParams();
+
+  // When sorting by distance to a landmark, surface that landmark's row first
+  // and mark it as selected.
+  const activeKey = sort.startsWith("dist:") ? sort.slice(5) : null;
+  const distances = useMemo(() => {
+    if (!activeKey) return hotel.distances;
+    const i = hotel.distances.findIndex((d) => d.landmarkKey === activeKey);
+    if (i <= 0) return hotel.distances;
+    const copy = [...hotel.distances];
+    const [selected] = copy.splice(i, 1);
+    return [selected, ...copy];
+  }, [hotel.distances, activeKey]);
 
   // Open the modal on card click, but ignore clicks on inner links/buttons.
   function handleActivate(e: React.MouseEvent | React.KeyboardEvent) {
@@ -70,10 +90,10 @@ export function HotelCard({ hotel, onOpen }: { hotel: ViewHotel; onOpen: () => v
       <div className="flex items-center gap-1">
         {hotel.stars != null && (
           <>
-            <span className="text-xs font-bold text-muted-foreground">{hotel.stars}</span>
             <span className="text-xs" aria-hidden>
               {"⭐".repeat(hotel.stars)}
             </span>
+            <span className="text-xs font-bold text-muted-foreground">{hotel.stars} ★</span>
           </>
         )}
       </div>
@@ -149,20 +169,32 @@ export function HotelCard({ hotel, onOpen }: { hotel: ViewHotel; onOpen: () => v
         )}
       </div>
 
-      {hotel.distances.length > 0 && (
-        <table className="mt-1 w-full text-xs text-muted-foreground">
+      {distances.length > 0 && (
+        <table className="mt-1 w-full border-separate border-spacing-y-0.5 text-xs text-muted-foreground">
           <tbody>
-            {hotel.distances.map((d) => (
-              <tr key={d.landmarkKey}>
-                <td className="py-0.5 text-start text-foreground">{d.name}</td>
-                <td className="py-0.5 text-end font-bold whitespace-nowrap text-gold">
-                  {timeLabel(d)}
-                </td>
-                <td className="py-0.5 ps-2 text-end text-[0.68rem]">
-                  {formatMeters(d.meters, locale)}
-                </td>
-              </tr>
-            ))}
+            {distances.map((d) => {
+              const isSelected = d.landmarkKey === activeKey;
+              return (
+                <tr key={d.landmarkKey} className={isSelected ? "bg-brand/10" : undefined}>
+                  <td
+                    className={`py-0.5 ps-1.5 text-start ${
+                      isSelected ? "rounded-s-md font-bold text-brand" : "text-foreground"
+                    }`}>
+                    {isSelected && <span aria-hidden>📌 </span>}
+                    {d.name}
+                  </td>
+                  <td className="py-0.5 text-end font-bold whitespace-nowrap text-gold">
+                    {timeLabel(d)}
+                  </td>
+                  <td
+                    className={`py-0.5 ps-2 pe-1.5 text-end text-[0.68rem] ${
+                      isSelected ? "rounded-e-md" : ""
+                    }`}>
+                    {formatMeters(d.meters, locale)}
+                  </td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       )}
