@@ -45,6 +45,9 @@ const BASE_SORTS: { value: SortMode; key: string; emoji?: string }[] = [
 const chipClass =
   "rounded-full border border-border aria-pressed:border-brand aria-pressed:bg-brand aria-pressed:text-brand-foreground";
 
+const groupClass =
+  "flex flex-wrap items-center gap-2 rounded-lg border border-border bg-brand/5 px-3 py-2";
+
 export function HotelFilters({ landmarks }: { landmarks: ViewLandmark[] }) {
   const t = useTranslations("hotels");
   const {
@@ -62,7 +65,8 @@ export function HotelFilters({ landmarks }: { landmarks: ViewLandmark[] }) {
   for (const s of BASE_SORTS) {
     sortItems[s.value] = `${s.emoji ? `${s.emoji} ` : ""}${t(`sort.${s.key}`)}`;
   }
-  for (const lm of landmarks) sortItems[`dist:${lm.key}`] = `📍 ${lm.name}`;
+  for (const lm of landmarks)
+    sortItems[`dist:${lm.key}`] = `📍 ${t("sort.distanceFrom", { name: lm.name })}`;
 
   const hasFilters =
     tags.length > 0 ||
@@ -93,16 +97,26 @@ export function HotelFilters({ landmarks }: { landmarks: ViewLandmark[] }) {
               ))}
               {landmarks.map((lm) => (
                 <SelectItem key={lm.key} value={`dist:${lm.key}`}>
-                  📍 {lm.name}
+                  📍 {t("sort.distanceFrom", { name: lm.name })}
                 </SelectItem>
               ))}
             </SelectContent>
           </Select>
         </div>
+
+        {hasFilters && (
+          <Button
+            variant="destructive"
+            className="ms-auto"
+            onClick={() => update({ tags: [], boards: [], features: [] })}
+          >
+            ✕ {t("filter.clear")}
+          </Button>
+        )}
       </div>
 
       {/* Tags */}
-      <div className="flex flex-wrap items-center gap-2">
+      <div className={groupClass}>
         <span className="text-xs font-bold text-muted-foreground">
           {t("filter.tagsLabel")}
         </span>
@@ -119,7 +133,7 @@ export function HotelFilters({ landmarks }: { landmarks: ViewLandmark[] }) {
       </div>
 
       {/* Board basis */}
-      <div className="flex flex-wrap items-center gap-2">
+      <div className={groupClass}>
         <span className="text-xs font-bold text-muted-foreground">
           {t("filter.boardLabel")}
         </span>
@@ -136,7 +150,7 @@ export function HotelFilters({ landmarks }: { landmarks: ViewLandmark[] }) {
       </div>
 
       {/* Amenities */}
-      <div className="flex flex-wrap items-center gap-2">
+      <div className={groupClass}>
         <span className="text-xs font-bold text-muted-foreground">
           {t("filter.label")}
         </span>
@@ -150,20 +164,6 @@ export function HotelFilters({ landmarks }: { landmarks: ViewLandmark[] }) {
             {t(`filter.${AMENITY_KEY[f]}`)}
           </Toggle>
         ))}
-        {hasFilters && (
-          <Button
-            variant="ghost"
-            onClick={() =>
-              update({
-                tags: [],
-                boards: [],
-                features: [],
-              })
-            }
-          >
-            {t("filter.clear")}
-          </Button>
-        )}
       </div>
     </div>
   );
