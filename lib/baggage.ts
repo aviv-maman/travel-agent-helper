@@ -30,7 +30,7 @@ const TROLLEY10 = t('טרולי 10 ק"ג', "Trolley 10 kg");
 const DEPENDS = t("תלוי בכרטיס", "Depends on ticket");
 
 const AIRLINES: Airline[] = [
-  { iata: "IS", flag: "🇮🇱", name: t("ישראייר", "Israir"), kg: "23", note: TROLLEY10 },
+  { iata: "6H", flag: "🇮🇱", name: t("ישראייר", "Israir"), kg: "23", note: TROLLEY10 },
   { iata: "LY", flag: "🇮🇱", name: t("אל על", "El Al"), kg: "23" },
   { iata: "A3", flag: "🇬🇷", name: t("אג'יאן", "Aegean (A3)"), kg: "23" },
   { iata: "OS", flag: "🇦🇹", name: t("אוסטריאן איירליינס", "Austrian Airlines"), kg: "23" },

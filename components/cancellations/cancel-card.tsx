@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import type { FeeLevel, ProductKind, ViewBlock, ViewCancelSupplier } from "@/lib/cancellations";
 import type { CommColor } from "@/lib/commissions";
 import {
@@ -9,6 +10,19 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { CopyScript } from "./copy-script";
+
+/** The Consumer Protection Law banner — shown once at the top of each card. */
+function ConsumerLawBox() {
+  const t = useTranslations("cancellations");
+  return (
+    <div className="rounded-lg border border-purple/25 bg-purple/[0.07] px-3.5 py-2.5 text-sm leading-relaxed text-purple">
+      {t.rich("law", {
+        strong: (chunks) => <strong className="font-bold text-purple/90">{chunks}</strong>,
+        u: (chunks) => <u>{chunks}</u>,
+      })}
+    </div>
+  );
+}
 
 const CHIP: Record<CommColor, string> = {
   brand: "bg-brand/15 text-brand",
@@ -45,8 +59,8 @@ function Block({ block }: { block: ViewBlock }) {
       );
     case "table":
       return (
-        <div>
-          <p className="mb-2 flex items-center gap-1.5 text-xs font-bold tracking-wide text-muted-foreground uppercase">
+        <div className="rounded-xl border border-warning/30 bg-warning/6 p-3.5">
+          <p className="mb-2 flex items-center gap-1.5 text-sm font-extrabold text-foreground">
             {block.caption}
           </p>
           <table className="w-full border-collapse">
@@ -79,7 +93,7 @@ function Block({ block }: { block: ViewBlock }) {
       );
     case "copy":
       return (
-        <div className="flex flex-col gap-2.5">
+        <div className="flex flex-col gap-2.5 rounded-xl border border-destructive/30 bg-destructive/6 p-3.5">
           {block.heading && (
             <h4 className="text-base font-extrabold text-foreground">{block.heading}</h4>
           )}
@@ -110,9 +124,10 @@ export function CancelCard({
           <div className="min-w-0 flex-1 text-start">
             <div className="flex items-baseline gap-2">
               <h3 className="text-base font-bold text-foreground">{supplier.name}</h3>
-              <span className="text-[0.7rem] font-normal text-muted-foreground">{supplier.code}</span>
+              <span className="text-[0.7rem] font-normal text-muted-foreground">
+                {supplier.code}
+              </span>
             </div>
-            <p className="text-xs text-muted-foreground">{supplier.subtitle}</p>
             <div className="mt-1.5 flex flex-wrap gap-1.5">
               {supplier.products.map((p, i) => (
                 <span
@@ -125,6 +140,7 @@ export function CancelCard({
           </div>
         </AccordionTrigger>
         <AccordionContent className="flex flex-col gap-4 border-t border-border pt-4 pb-4">
+          <ConsumerLawBox />
           {supplier.blocks.map((block, i) => (
             <Block key={i} block={block} />
           ))}

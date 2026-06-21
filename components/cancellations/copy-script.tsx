@@ -23,18 +23,11 @@ export function CopyScript({ text }: { text: string }) {
 
   return (
     <div className="flex flex-col gap-2.5">
-      <p className="flex items-center gap-1.5 text-xs font-bold tracking-wide text-muted-foreground uppercase">
+      <p className="flex items-center gap-1.5 text-sm font-extrabold text-foreground">
         {t("copyTitle")}
       </p>
 
-      <div className="rounded-lg border border-purple/25 bg-purple/[0.07] px-3.5 py-2.5 text-sm leading-relaxed text-purple">
-        {t.rich("law", {
-          strong: (chunks) => <strong className="font-bold text-purple/90">{chunks}</strong>,
-          u: (chunks) => <u>{chunks}</u>,
-        })}
-      </div>
-
-      <div className="rounded-lg border border-border bg-surface-2 px-4 py-3 text-sm leading-relaxed whitespace-pre-line text-foreground">
+      <div className="px-4 py-3 text-sm leading-relaxed whitespace-pre-line text-foreground">
         {text}
       </div>
 
