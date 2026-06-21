@@ -10,14 +10,14 @@ import { CopyLinkButton } from "./copy-link-button";
 
 const FEATURE_META: Record<HotelFeatureValue, { emoji: string; key: string }> = {
   "pool-in": { emoji: "🏊", key: "poolIn" },
-  "pool-out": { emoji: "🌤", key: "poolOut" },
+  "pool-out": { emoji: "🌊", key: "poolOut" },
   casino: { emoji: "🎰", key: "casino" },
   "casino-near": { emoji: "🎰", key: "casinoNear" },
   waterpark: { emoji: "🎢", key: "waterpark" },
   "outside-center": { emoji: "📍", key: "outsideCenter" },
 };
 
-const TAG_EMOJI: Record<HotelTagValue, string> = { resort: "🎢", kosher: "✡" };
+const TAG_EMOJI: Record<HotelTagValue, string> = { resort: "🎢", kosher: "✡️" };
 
 export function formatMeters(m: number | null, locale: string): string | null {
   if (m == null) return null;
@@ -37,13 +37,7 @@ export function useTimeLabel() {
   };
 }
 
-export function HotelCard({
-  hotel,
-  onOpen,
-}: {
-  hotel: ViewHotel;
-  onOpen: () => void;
-}) {
+export function HotelCard({ hotel, onOpen }: { hotel: ViewHotel; onOpen: () => void }) {
   const locale = useLocale();
   const t = useTranslations("hotels");
   const timeLabel = useTimeLabel();
@@ -65,8 +59,7 @@ export function HotelCard({
           handleActivate(e);
         }
       }}
-      className="flex cursor-pointer flex-col gap-2 rounded-xl border border-border bg-surface p-4 shadow-sm transition-colors hover:border-brand/50"
-    >
+      className="flex cursor-pointer flex-col gap-2 rounded-xl border border-border bg-surface p-4 shadow-sm transition-colors hover:border-brand/50">
       <div className="flex items-start justify-between gap-2">
         <h3 className="text-base font-bold text-foreground">{hotel.name}</h3>
         <span className="text-xl" aria-hidden>
@@ -74,14 +67,12 @@ export function HotelCard({
         </span>
       </div>
 
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-1">
         {hotel.stars != null && (
           <>
-            <span className="text-gold" aria-hidden>
-              {"★".repeat(hotel.stars)}
-            </span>
-            <span className="text-xs font-bold text-muted-foreground">
-              {hotel.stars}★
+            <span className="text-xs font-bold text-muted-foreground">{hotel.stars}</span>
+            <span className="text-xs" aria-hidden>
+              {"⭐".repeat(hotel.stars)}
             </span>
           </>
         )}
@@ -92,8 +83,7 @@ export function HotelCard({
           {hotel.tags.map((tag) => (
             <Badge
               key={tag}
-              className="bg-purple/15 text-xs font-bold text-purple"
-            >
+              className="border-border bg-amber-50 text-amber-700 dark:bg-amber-950 dark:text-amber-300">
               {TAG_EMOJI[tag]} {t(`tier.${tag}`)}
             </Badge>
           ))}
@@ -103,8 +93,11 @@ export function HotelCard({
       {hotel.boards.length > 0 && (
         <div className="flex flex-wrap gap-1.5">
           {hotel.boards.map((b) => (
-            <Badge key={b} variant="secondary" className="text-xs">
-              {t(`board.${b}`)}
+            <Badge
+              key={b}
+              variant="secondary"
+              className="border-border bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300">
+              {"🍴"} {t(`board.${b}`)}
             </Badge>
           ))}
         </div>
@@ -116,20 +109,17 @@ export function HotelCard({
             <Badge
               key={f}
               variant="outline"
-              className="border-border text-xs font-semibold"
-            >
-              <span aria-hidden>{FEATURE_META[f].emoji}</span>{" "}
-              {t(`filter.${FEATURE_META[f].key}`)}
+              className="border-border bg-purple-50 text-purple-700 dark:bg-purple-950 dark:text-purple-300">
+              {FEATURE_META[f].emoji} {t(`filter.${FEATURE_META[f].key}`)}
             </Badge>
           ))}
         </div>
       )}
 
       {hotel.bookingScore != null && (
-        <div className="flex items-center gap-1.5 text-sm font-bold text-success">
-          <span className="inline-block size-2 rounded-full bg-success" aria-hidden />
-          {t("card.bookingScore")} {hotel.bookingScore}
-        </div>
+        <Badge className="border-border bg-green-50 text-green-700 dark:bg-green-950 dark:text-green-300">
+          {"🏨"} {t("card.bookingScore")} {hotel.bookingScore}
+        </Badge>
       )}
 
       <div className="mt-1 flex items-center gap-2">
@@ -139,10 +129,7 @@ export function HotelCard({
               variant="outline"
               nativeButton={false}
               className="h-8 flex-1 text-brand"
-              render={
-                <a href={hotel.googleMapsUrl} target="_blank" rel="noreferrer" />
-              }
-            >
+              render={<a href={hotel.googleMapsUrl} target="_blank" rel="noreferrer" />}>
               <MapPin className="size-3.5" /> {t("card.maps")}
             </Button>
             <CopyLinkButton url={hotel.googleMapsUrl} />
@@ -154,10 +141,7 @@ export function HotelCard({
               variant="outline"
               nativeButton={false}
               className="h-8 flex-1 text-success"
-              render={
-                <a href={hotel.bookingUrl} target="_blank" rel="noreferrer" />
-              }
-            >
+              render={<a href={hotel.bookingUrl} target="_blank" rel="noreferrer" />}>
               <ExternalLink className="size-3.5" /> {t("card.booking")}
             </Button>
             <CopyLinkButton url={hotel.bookingUrl} />
@@ -170,13 +154,11 @@ export function HotelCard({
           <tbody>
             {hotel.distances.map((d) => (
               <tr key={d.landmarkKey}>
-                <td className="py-0.5 text-start text-foreground">
-                  {d.name}
-                </td>
-                <td className="py-0.5 text-end font-bold text-gold whitespace-nowrap">
+                <td className="py-0.5 text-start text-foreground">{d.name}</td>
+                <td className="py-0.5 text-end font-bold whitespace-nowrap text-gold">
                   {timeLabel(d)}
                 </td>
-                <td className="py-0.5 text-end ps-2 text-[0.68rem]">
+                <td className="py-0.5 ps-2 text-end text-[0.68rem]">
                   {formatMeters(d.meters, locale)}
                 </td>
               </tr>
