@@ -6674,5 +6674,705 @@
         "rooms": []
       }
     ]
+  },
+  {
+    "code": "war",
+    "iata": "WAW",
+    "name": {
+      "en": "Warsaw",
+      "he": "ורשה"
+    },
+    "country": {
+      "en": "Poland",
+      "he": "פולין"
+    },
+    "countryCode": "PL",
+    "info": {
+      "about": {
+        "he": "ורשה היא בירת פולין ואחת הערים הגדולות במזרח אירופה. העיר העתיקה (Stare Miasto) שוחזרה לאחר מלחמת העולם השנייה ונרשמה כאתר מורשת עולמית של אונסק\"ו — והיא לב התיירות. אזורי הבילוי המרכזיים מתרכזים סביב ארמון התרבות והמדע (PKiN), מתחם המרכז עם תחנת הרכבת המרכזית והקניות, ורחוב נובי שוויאט (Nowy Świat) על המסעדות ובתי הקפה שלו.",
+        "en": "Warsaw is the capital of Poland and one of the major cities of Central Europe. The Old Town (Stare Miasto) was rebuilt after World War II and is a UNESCO World Heritage Site — the heart of tourism. The main areas are around the Palace of Culture and Science (PKiN), the central station and shopping complex, and Nowy Świat street with its restaurants and cafés."
+      },
+      "attractions": {
+        "he": "🏰 אתרים מרכזיים: העיר העתיקה (Stare Miasto) · הכיכר המרכזית · רחוב Krakowskie Przedmieście · ארמון התרבות והמדע (PKiN) · נובי שוויאט · מוזיאון POLIN",
+        "en": "🏰 Main sights: the Old Town (Stare Miasto) · the Market Square · Krakowskie Przedmieście · the Palace of Culture and Science (PKiN) · Nowy Świat · the POLIN Museum"
+      },
+      "currencyNote": {
+        "he": "המטבע המקומי: זלוטי פולני (PLN) · הערכת שער: ₪1 ≈ 1.1 PLN",
+        "en": "Local currency: Polish Złoty (PLN) · Approx. rate: ₪1 ≈ 1.1 PLN"
+      },
+      "airport": {
+        "title": {
+          "he": "✈ שדה התעופה — WAW (Chopin)",
+          "en": "✈ Airport — WAW (Chopin)"
+        },
+        "note": {
+          "he": "מרחק: ~10 ק\"מ ממרכז העיר · זמן נסיעה: 20–35 דקות",
+          "en": "Distance: ~10 km from the city center · Travel time: 20–35 minutes"
+        }
+      },
+      "transport": [
+        {
+          "icon": "🚌",
+          "mode": {
+            "he": "קו 175",
+            "en": "Bus 175"
+          },
+          "detail": {
+            "he": "אל מרכז העיר והעיר העתיקה · ~25–35 דקות",
+            "en": "To the city center and Old Town · ~25–35 minutes"
+          },
+          "price": "~1.5 PLN"
+        },
+        {
+          "icon": "🚆",
+          "mode": {
+            "he": "רכבת SKM / KM",
+            "en": "SKM / KM train"
+          },
+          "detail": {
+            "he": "מהשדה אל התחנה המרכזית · ~20 דקות",
+            "en": "From the airport to the central station · ~20 minutes"
+          },
+          "price": "~5 PLN"
+        },
+        {
+          "icon": "📱",
+          "mode": {
+            "he": "Bolt / Uber",
+            "en": "Bolt / Uber"
+          },
+          "detail": {
+            "he": "~20 דקות · איסוף מהיציאה",
+            "en": "~20 minutes · pickup at the exit"
+          },
+          "price": "50–80 PLN"
+        }
+      ],
+      "landmarks": {
+        "he": "📍 נקודות ציון: 🏰 העיר העתיקה (Stare Miasto) — מבנים היסטוריים וכיכר השוק 🏛 מתחם המרכז / ארמון התרבות — קניות, רכבות ותחנה מרכזית 🌳 נובי שוויאט (Nowy Świat) — רחוב בילוי, מסעדות, בתי קפה וחיי ערב",
+        "en": "📍 Points of interest: 🏰 the Old Town (Stare Miasto) — historic buildings and the Market Square 🏛 the central complex / Palace of Culture — shopping, trains and the main station 🌳 Nowy Świat — an entertainment street of restaurants, cafés and nightlife"
+      }
+    },
+    "sortOrder": 8,
+    "landmarks": [
+      {
+        "key": "oldtown",
+        "name": {
+          "en": "Old Town",
+          "he": "העיר העתיקה"
+        }
+      },
+      {
+        "key": "centrum",
+        "name": {
+          "en": "Centrum",
+          "he": "מתחם ברנס"
+        }
+      },
+      {
+        "key": "nowy",
+        "name": {
+          "en": "Nowy Świat",
+          "he": "נובי שוויאט"
+        }
+      }
+    ],
+    "hotels": [
+      {
+        "name": "Hotel Bristol, a Luxury Collection Hotel, Warsaw",
+        "stars": 5,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 9.2,
+        "googleMapsUrl": "https://www.google.com/maps/search/Hotel+Bristol,+a+Luxury+Collection+Hotel,+Warsaw+Warsaw",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Hotel+Bristol,+a+Luxury+Collection+Hotel,+Warsaw+Warsaw",
+        "roomsNote": null,
+        "sortOrder": 0,
+        "features": [
+          "pool-in"
+        ],
+        "distances": [
+          {
+            "landmarkKey": "oldtown",
+            "meters": 400,
+            "walkMinutes": 5,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "centrum",
+            "meters": 1600,
+            "walkMinutes": null,
+            "rideMinutes": 14
+          },
+          {
+            "landmarkKey": "nowy",
+            "meters": 700,
+            "walkMinutes": 9,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "Mamaison Le Regina Boutique Hotel",
+        "stars": 5,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 9.1,
+        "googleMapsUrl": "https://www.google.com/maps/search/Mamaison+Le+Regina+Boutique+Hotel+Warsaw",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Mamaison+Le+Regina+Boutique+Hotel+Warsaw",
+        "roomsNote": null,
+        "sortOrder": 1,
+        "features": [
+          "pool-in"
+        ],
+        "distances": [
+          {
+            "landmarkKey": "oldtown",
+            "meters": 500,
+            "walkMinutes": 6,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "centrum",
+            "meters": 2500,
+            "walkMinutes": null,
+            "rideMinutes": 10
+          },
+          {
+            "landmarkKey": "nowy",
+            "meters": 1800,
+            "walkMinutes": null,
+            "rideMinutes": 15
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "InterContinental Warszawa by IHG",
+        "stars": 5,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 9.1,
+        "googleMapsUrl": "https://www.google.com/maps/search/InterContinental+Warszawa+by+IHG+Warsaw",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=InterContinental+Warszawa+by+IHG+Warsaw",
+        "roomsNote": null,
+        "sortOrder": 2,
+        "features": [
+          "pool-in",
+          "casino-near"
+        ],
+        "distances": [
+          {
+            "landmarkKey": "oldtown",
+            "meters": 1800,
+            "walkMinutes": null,
+            "rideMinutes": 12
+          },
+          {
+            "landmarkKey": "centrum",
+            "meters": 150,
+            "walkMinutes": 2,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "nowy",
+            "meters": 1300,
+            "walkMinutes": 15,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "H15 Boutique Hotel, Warsaw (Design Hotels)",
+        "stars": 5,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 8.9,
+        "googleMapsUrl": "https://www.google.com/maps/search/H15+Boutique+Hotel,+Warsaw+(Design+Hotels)+Warsaw",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=H15+Boutique+Hotel,+Warsaw+(Design+Hotels)+Warsaw",
+        "roomsNote": null,
+        "sortOrder": 3,
+        "features": [],
+        "distances": [
+          {
+            "landmarkKey": "oldtown",
+            "meters": 2400,
+            "walkMinutes": null,
+            "rideMinutes": 18
+          },
+          {
+            "landmarkKey": "centrum",
+            "meters": 950,
+            "walkMinutes": 12,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "nowy",
+            "meters": 1100,
+            "walkMinutes": 14,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "Novotel Warszawa Centrum",
+        "stars": 4,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 8.8,
+        "googleMapsUrl": "https://www.google.com/maps/search/Novotel+Warszawa+Centrum+Warsaw",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Novotel+Warszawa+Centrum+Warsaw",
+        "roomsNote": null,
+        "sortOrder": 4,
+        "features": [
+          "casino-near"
+        ],
+        "distances": [
+          {
+            "landmarkKey": "oldtown",
+            "meters": 2100,
+            "walkMinutes": null,
+            "rideMinutes": 12
+          },
+          {
+            "landmarkKey": "centrum",
+            "meters": 400,
+            "walkMinutes": 5,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "nowy",
+            "meters": 850,
+            "walkMinutes": 10,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "Hotel Polonia Palace",
+        "stars": 4,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 8.5,
+        "googleMapsUrl": "https://www.google.com/maps/search/Hotel+Polonia+Palace+Warsaw",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Hotel+Polonia+Palace+Warsaw",
+        "roomsNote": null,
+        "sortOrder": 5,
+        "features": [],
+        "distances": [
+          {
+            "landmarkKey": "oldtown",
+            "meters": 2100,
+            "walkMinutes": null,
+            "rideMinutes": 14
+          },
+          {
+            "landmarkKey": "centrum",
+            "meters": 300,
+            "walkMinutes": 4,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "nowy",
+            "meters": 1000,
+            "walkMinutes": 12,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "Leonardo Royal Hotel Warsaw",
+        "stars": 4,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 8.5,
+        "googleMapsUrl": "https://www.google.com/maps/search/Leonardo+Royal+Hotel+Warsaw+Warsaw",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Leonardo+Royal+Hotel+Warsaw+Warsaw",
+        "roomsNote": null,
+        "sortOrder": 6,
+        "features": [],
+        "distances": [
+          {
+            "landmarkKey": "oldtown",
+            "meters": 2300,
+            "walkMinutes": null,
+            "rideMinutes": 14
+          },
+          {
+            "landmarkKey": "centrum",
+            "meters": 900,
+            "walkMinutes": 11,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "nowy",
+            "meters": 1900,
+            "walkMinutes": 16,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "Mercure Warszawa Centrum",
+        "stars": 4,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 8.4,
+        "googleMapsUrl": "https://www.google.com/maps/search/Mercure+Warszawa+Centrum+Warsaw",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Mercure+Warszawa+Centrum+Warsaw",
+        "roomsNote": null,
+        "sortOrder": 7,
+        "features": [],
+        "distances": [
+          {
+            "landmarkKey": "oldtown",
+            "meters": 2000,
+            "walkMinutes": null,
+            "rideMinutes": 15
+          },
+          {
+            "landmarkKey": "centrum",
+            "meters": 50,
+            "walkMinutes": 1,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "nowy",
+            "meters": 1500,
+            "walkMinutes": 18,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "Holiday Inn Warsaw City Centre by IHG",
+        "stars": 4,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 8.3,
+        "googleMapsUrl": "https://www.google.com/maps/search/Holiday+Inn+Warsaw+City+Centre+by+IHG+Warsaw",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Holiday+Inn+Warsaw+City+Centre+by+IHG+Warsaw",
+        "roomsNote": null,
+        "sortOrder": 8,
+        "features": [],
+        "distances": [
+          {
+            "landmarkKey": "oldtown",
+            "meters": 2200,
+            "walkMinutes": null,
+            "rideMinutes": 15
+          },
+          {
+            "landmarkKey": "centrum",
+            "meters": 450,
+            "walkMinutes": 5,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "nowy",
+            "meters": 1500,
+            "walkMinutes": 18,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "NYX Hotel Warsaw by Leonardo Hotels",
+        "stars": 4,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 8.7,
+        "googleMapsUrl": "https://www.google.com/maps/search/NYX+Hotel+Warsaw+by+Leonardo+Hotels+Warsaw",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=NYX+Hotel+Warsaw+by+Leonardo+Hotels+Warsaw",
+        "roomsNote": null,
+        "sortOrder": 9,
+        "features": [],
+        "distances": [
+          {
+            "landmarkKey": "oldtown",
+            "meters": 2400,
+            "walkMinutes": null,
+            "rideMinutes": 18
+          },
+          {
+            "landmarkKey": "centrum",
+            "meters": 200,
+            "walkMinutes": 3,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "nowy",
+            "meters": 1800,
+            "walkMinutes": 14,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "PURO Warszawa Centrum",
+        "stars": 4,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 9.0,
+        "googleMapsUrl": "https://www.google.com/maps/search/PURO+Warszawa+Centrum+Warsaw",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=PURO+Warszawa+Centrum+Warsaw",
+        "roomsNote": null,
+        "sortOrder": 10,
+        "features": [],
+        "distances": [
+          {
+            "landmarkKey": "oldtown",
+            "meters": 2000,
+            "walkMinutes": null,
+            "rideMinutes": 15
+          },
+          {
+            "landmarkKey": "centrum",
+            "meters": 650,
+            "walkMinutes": 8,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "nowy",
+            "meters": 500,
+            "walkMinutes": 6,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "Radisson Collection Hotel, Warsaw",
+        "stars": 5,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 9.2,
+        "googleMapsUrl": "https://www.google.com/maps/search/Radisson+Collection+Hotel,+Warsaw+Warsaw",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Radisson+Collection+Hotel,+Warsaw+Warsaw",
+        "roomsNote": null,
+        "sortOrder": 11,
+        "features": [
+          "pool-in"
+        ],
+        "distances": [
+          {
+            "landmarkKey": "oldtown",
+            "meters": 1600,
+            "walkMinutes": 15,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "centrum",
+            "meters": 900,
+            "walkMinutes": 11,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "nowy",
+            "meters": 1500,
+            "walkMinutes": 18,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "Raffles Europejski Warsaw",
+        "stars": 5,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 9.6,
+        "googleMapsUrl": "https://www.google.com/maps/search/Raffles+Europejski+Warsaw+Warsaw",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Raffles+Europejski+Warsaw+Warsaw",
+        "roomsNote": null,
+        "sortOrder": 12,
+        "features": [
+          "pool-in"
+        ],
+        "distances": [
+          {
+            "landmarkKey": "oldtown",
+            "meters": 650,
+            "walkMinutes": 8,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "centrum",
+            "meters": 1300,
+            "walkMinutes": null,
+            "rideMinutes": 12
+          },
+          {
+            "landmarkKey": "nowy",
+            "meters": 450,
+            "walkMinutes": 6,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "Sofitel Warsaw Victoria",
+        "stars": 5,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 9.0,
+        "googleMapsUrl": "https://www.google.com/maps/search/Sofitel+Warsaw+Victoria+Warsaw",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Sofitel+Warsaw+Victoria+Warsaw",
+        "roomsNote": null,
+        "sortOrder": 13,
+        "features": [
+          "pool-in",
+          "casino"
+        ],
+        "distances": [
+          {
+            "landmarkKey": "oldtown",
+            "meters": 800,
+            "walkMinutes": 10,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "centrum",
+            "meters": 1000,
+            "walkMinutes": 12,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "nowy",
+            "meters": 750,
+            "walkMinutes": 10,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "The Westin Warsaw",
+        "stars": 5,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 9.2,
+        "googleMapsUrl": "https://www.google.com/maps/search/The+Westin+Warsaw+Warsaw",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=The+Westin+Warsaw+Warsaw",
+        "roomsNote": null,
+        "sortOrder": 14,
+        "features": [],
+        "distances": [
+          {
+            "landmarkKey": "oldtown",
+            "meters": 1700,
+            "walkMinutes": null,
+            "rideMinutes": 12
+          },
+          {
+            "landmarkKey": "centrum",
+            "meters": 500,
+            "walkMinutes": 6,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "nowy",
+            "meters": 1400,
+            "walkMinutes": 16,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "Warsaw Presidential Hotel",
+        "stars": 5,
+        "tier": "good",
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 9.0,
+        "googleMapsUrl": "https://www.google.com/maps/search/Warsaw+Presidential+Hotel+Warsaw",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Warsaw+Presidential+Hotel+Warsaw",
+        "roomsNote": null,
+        "sortOrder": 15,
+        "features": [
+          "pool-in",
+          "casino"
+        ],
+        "distances": [
+          {
+            "landmarkKey": "oldtown",
+            "meters": 2200,
+            "walkMinutes": null,
+            "rideMinutes": 14
+          },
+          {
+            "landmarkKey": "centrum",
+            "meters": 50,
+            "walkMinutes": 1,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "nowy",
+            "meters": 1200,
+            "walkMinutes": 14,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      }
+    ]
   }
 ]
