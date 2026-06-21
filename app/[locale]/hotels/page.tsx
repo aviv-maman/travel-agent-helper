@@ -1,6 +1,6 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import type { HotelFeatureValue, HotelTier, HotelTagValue, BoardCode } from "@/db/schema";
-import { getDestinationsList, getDestinationView, type SortMode, type GroupBy } from "@/lib/hotels";
+import { getDestinationsList, getDestinationView, type SortMode } from "@/lib/hotels";
 import { DestinationCombobox } from "@/components/hotels/destination-combobox";
 import { HotelFilters } from "@/components/hotels/hotel-filters";
 import { HotelsResults } from "@/components/hotels/hotels-results";
@@ -33,7 +33,6 @@ export default async function HotelsPage({
   const minBookingRaw = asString(sp.minBooking);
   const minBooking = minBookingRaw ? Number(minBookingRaw) : undefined;
   const sort = (asString(sp.sort) ?? "default") as SortMode;
-  const groupBy = (asString(sp.groupBy) ?? "quality") as GroupBy;
   const page = Math.max(1, Number(asString(sp.page) ?? "1") || 1);
   const perPage = Math.max(0, Number(asString(sp.perPage) ?? "0") || 0);
 
@@ -46,7 +45,6 @@ export default async function HotelsPage({
         features,
         minBooking,
         sort,
-        groupBy,
         page,
         perPage,
         locale,
@@ -82,7 +80,7 @@ export default async function HotelsPage({
 
           <HotelFilters landmarks={view.landmarks} />
 
-          <HotelsResults groups={view.groups} groupBy={view.groupBy} />
+          <HotelsResults hotels={view.hotels} />
 
           <HotelsPager
             total={view.total}

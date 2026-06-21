@@ -7,7 +7,7 @@ import type {
   HotelTagValue,
   BoardCode,
 } from "@/db/schema";
-import type { ViewLandmark, SortMode, GroupBy } from "@/lib/hotels";
+import type { ViewLandmark, SortMode } from "@/lib/hotels";
 import { Button } from "@/components/ui/button";
 import { Toggle } from "@/components/ui/toggle";
 import {
@@ -41,7 +41,6 @@ const AMENITY_KEY: Record<string, string> = {
   casino: "casino",
   waterpark: "waterpark",
 };
-const GROUP_BYS: GroupBy[] = ["quality", "stars", "booking"];
 const BASE_SORTS: { value: SortMode; key: string; emoji?: string }[] = [
   { value: "default", key: "default" },
   { value: "stars-desc", key: "starsDesc", emoji: "⭐" },
@@ -62,7 +61,6 @@ export function HotelFilters({ landmarks }: { landmarks: ViewLandmark[] }) {
     features,
     minBooking,
     sort,
-    groupBy,
     update,
   } = useHotelParams();
 
@@ -75,9 +73,6 @@ export function HotelFilters({ landmarks }: { landmarks: ViewLandmark[] }) {
   }
   for (const lm of landmarks) sortItems[`dist:${lm.key}`] = `📍 ${lm.name}`;
 
-  const groupItems: Record<string, string> = {};
-  for (const g of GROUP_BYS) groupItems[g] = t(`groupBy.${g}`);
-
   const hasFilters =
     quality.length > 0 ||
     tags.length > 0 ||
@@ -87,30 +82,8 @@ export function HotelFilters({ landmarks }: { landmarks: ViewLandmark[] }) {
 
   return (
     <div className="flex flex-col gap-3">
-      {/* Group by + Sort */}
+      {/* Sort */}
       <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
-        <div className="flex items-center gap-2">
-          <span className="text-xs font-bold text-muted-foreground">
-            {t("groupBy.label")}
-          </span>
-          <Select
-            items={groupItems}
-            value={groupBy}
-            onValueChange={(v) => update({ groupBy: v as GroupBy })}
-          >
-            <SelectTrigger className="w-40">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              {GROUP_BYS.map((g) => (
-                <SelectItem key={g} value={g}>
-                  {groupItems[g]}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
-
         <div className="flex items-center gap-2">
           <span className="text-xs font-bold text-muted-foreground">
             {t("sort.label")}

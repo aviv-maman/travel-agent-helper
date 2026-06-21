@@ -3,7 +3,7 @@
 import { useSearchParams } from "next/navigation";
 import { useRouter, usePathname } from "@/i18n/navigation";
 import type { HotelFeatureValue, HotelTier, HotelTagValue, BoardCode } from "@/db/schema";
-import type { SortMode, GroupBy } from "@/lib/hotels";
+import type { SortMode } from "@/lib/hotels";
 
 type Update = {
   dest?: string | null;
@@ -13,7 +13,6 @@ type Update = {
   features?: HotelFeatureValue[];
   minBooking?: number | null;
   sort?: SortMode;
-  groupBy?: GroupBy;
   page?: number;
   perPage?: number;
 };
@@ -39,7 +38,6 @@ export function useHotelParams() {
   const minBookingRaw = sp.get("minBooking");
   const minBooking = minBookingRaw ? Number(minBookingRaw) : null;
   const sort = (sp.get("sort") ?? "default") as SortMode;
-  const groupBy = (sp.get("groupBy") ?? "quality") as GroupBy;
   const page = Math.max(1, Number(sp.get("page") ?? "1") || 1);
   const perPage = Math.max(1, Number(sp.get("perPage") ?? "0") || 0);
 
@@ -62,7 +60,6 @@ export function useHotelParams() {
     if ("minBooking" in next)
       setVal("minBooking", next.minBooking ? String(next.minBooking) : null);
     if ("sort" in next) setVal("sort", next.sort, "default");
-    if ("groupBy" in next) setVal("groupBy", next.groupBy, "quality");
     if ("perPage" in next)
       setVal("perPage", next.perPage ? String(next.perPage) : null);
 
@@ -82,7 +79,6 @@ export function useHotelParams() {
     features,
     minBooking,
     sort,
-    groupBy,
     page,
     perPage,
     update,
