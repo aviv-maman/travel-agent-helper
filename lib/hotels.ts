@@ -80,38 +80,7 @@ export type SortMode =
   | "booking-asc"
   | `dist:${string}`;
 
-/** How the result list is grouped into sections. */
-export type GroupBy = "quality" | "stars" | "booking";
-
-export const TIER_ORDER: Record<HotelTier, number> = { premium: 0, good: 1 };
-
 const DEFAULT_PER_PAGE = 24;
-
-/** Booking-score bucket id for the "Booking Rating" grouping. */
-function bookingBucket(score: number | null): string {
-  if (score == null) return "none";
-  if (score >= 9) return "9";
-  if (score >= 8) return "8";
-  if (score >= 7) return "7";
-  return "lt7";
-}
-
-/** A hotel's group key + sort order for the chosen grouping. */
-function groupOf(h: UIHotel, groupBy: GroupBy): { key: string; order: number } {
-  switch (groupBy) {
-    case "stars": {
-      const s = h.stars ?? 0;
-      return { key: h.stars == null ? "none" : String(h.stars), order: -s };
-    }
-    case "booking": {
-      const key = bookingBucket(h.bookingScore);
-      const order = { "9": 0, "8": 1, "7": 2, lt7: 3, none: 4 }[key] ?? 99;
-      return { key, order };
-    }
-    default:
-      return { key: h.tier, order: TIER_ORDER[h.tier] };
-  }
-}
 
 /*
  * Locale-resolved view types. The server resolves every Localized value to the
@@ -163,11 +132,7 @@ export type ViewInfo = {
   landmarks?: string;
 };
 
-/** A section of hotels. `key` is interpreted per the active groupBy (the client
- * maps it to a label): tier value, star count, or booking bucket id. */
-export type HotelGroup = { key: string; hotels: ViewHotel[] };
-
-/** A single destination: filtered + sorted + paginated + grouped (server-computed). */
+/** A single destination: filtered + sorted + paginated (server-computed). */
 export type DestinationView = {
   iata: string;
   name: string;
@@ -175,9 +140,7 @@ export type DestinationView = {
   countryCode: string;
   info: ViewInfo | null;
   landmarks: ViewLandmark[];
-  groupBy: GroupBy;
-  groups: HotelGroup[];
-  /** Pagination over the flat filtered list (before grouping). */
+  hotels: ViewHotel[];
   total: number;
   page: number;
   perPage: number;
@@ -302,7 +265,6 @@ export async function getDestinationView(
     features?: HotelFeatureValue[];
     minBooking?: number;
     sort?: SortMode;
-    groupBy?: GroupBy;
     page?: number;
     perPage?: number;
     locale: string;
@@ -314,7 +276,6 @@ export async function getDestinationView(
   const features = opts.features ?? [];
   const minBooking = opts.minBooking ?? null;
   const sort = opts.sort ?? "default";
-  const groupBy = opts.groupBy ?? "quality";
   const perPage = opts.perPage && opts.perPage > 0 ? opts.perPage : DEFAULT_PER_PAGE;
   const locale = opts.locale;
   const all = await getHotelData();
@@ -334,22 +295,10 @@ export async function getDestinationView(
     sort,
   );
 
-  // Paginate the flat list, then group the current page per `groupBy`.
   const total = filtered.length;
   const totalPages = Math.max(1, Math.ceil(total / perPage));
   const page = Math.min(Math.max(1, opts.page ?? 1), totalPages);
   const pageHotels = filtered.slice((page - 1) * perPage, page * perPage);
-
-  const buckets = new Map<string, { order: number; hotels: ViewHotel[] }>();
-  for (const h of pageHotels) {
-    const { key, order } = groupOf(h, groupBy);
-    const b = buckets.get(key) ?? { order, hotels: [] };
-    b.hotels.push(resolveHotel(h, locale));
-    buckets.set(key, b);
-  }
-  const groups: HotelGroup[] = [...buckets.entries()]
-    .sort((a, b) => a[1].order - b[1].order)
-    .map(([key, b]) => ({ key, hotels: b.hotels }));
 
   return {
     iata: d.iata,
@@ -361,8 +310,7 @@ export async function getDestinationView(
       key: l.key,
       name: localized(l.name, locale),
     })),
-    groupBy,
-    groups,
+    hotels: pageHotels.map((h) => resolveHotel(h, locale)),
     total,
     page,
     perPage,

@@ -70,21 +70,6 @@
       "bookingDesc": "Rating high→low",
       "bookingAsc": "Rating low→high"
     },
-    "groupBy": {
-      "label": "Group by:",
-      "quality": "Hotel Quality",
-      "stars": "Star Rating",
-      "booking": "Booking Rating"
-    },
-    "group": {
-      "stars": "{stars}★",
-      "starsNone": "Unrated",
-      "booking9": "9+",
-      "booking8": "8–8.9",
-      "booking7": "7–7.9",
-      "bookingLt7": "Under 7",
-      "bookingNone": "No rating"
-    },
     "filter": {
       "label": "Amenities:",
       "qualityLabel": "Hotel Quality:",
