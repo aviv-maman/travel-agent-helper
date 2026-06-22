@@ -66,7 +66,7 @@ export function HotelFilters({ landmarks }: { landmarks: ViewLandmark[] }) {
             items={sortItems}
             value={sort}
             onValueChange={(v) => update({ sort: v as SortMode })}>
-            <SelectTrigger className="w-64">
+            <SelectTrigger className="w-56 sm:w-64">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
@@ -87,7 +87,6 @@ export function HotelFilters({ landmarks }: { landmarks: ViewLandmark[] }) {
         {hasFilters && (
           <Button
             variant="destructive"
-            className="ms-auto"
             onClick={() => update({ tags: [], boards: [], features: [] })}>
             ✕ {t("filter.clear")}
           </Button>
