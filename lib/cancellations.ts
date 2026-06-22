@@ -90,7 +90,7 @@ const SUPPLIERS: CancelSupplier[] = [
     id: "flying",
     emoji: "🪄",
     color: "gold",
-    name: t("שטיח מעופף", "Magic Carpet"),
+    name: t("שטיח מעופף", "Flying Carpet"),
     code: "FLYING",
     products: [P_FLIGHT(), P_PACKAGE("🏖 חבילות", "🏖 Packages"), P_ORGANIZED()],
     blocks: [

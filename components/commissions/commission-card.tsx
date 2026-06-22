@@ -34,10 +34,7 @@ export function CommissionCard({ supplier }: { supplier: ViewSupplier }) {
   const t = useTranslations("commissions");
 
   return (
-    <article
-      className={`flex flex-col overflow-hidden rounded-xl border bg-surface shadow-sm ${
-        supplier.flagged ? "border-destructive/30" : "border-border"
-      }`}>
+    <article className="flex flex-col overflow-hidden rounded-xl border border-border bg-surface shadow-sm">
       <header className="flex items-center gap-2.5 border-b border-border px-4 py-3">
         <span
           className={`flex size-9 shrink-0 items-center justify-center rounded-lg text-lg ${CHIP[supplier.color]}`}
