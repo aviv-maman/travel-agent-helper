@@ -45,7 +45,8 @@
     "colNotes": "Notes"
   },
   "cancellations": {
-    "intro": "ℹ️ <strong>Note:</strong> Supplier cancellation fees are <strong>net</strong> (supplier cost only). The \"client\" section keeps a 10% gross margin on the booking + the Consumer Protection Law.",
+    "introTitle": "Note",
+    "intro": "Supplier cancellation fees are <strong>net</strong> (supplier cost only). The \"client\" section keeps a 10% gross margin on the booking + the Consumer Protection Law.",
     "searchPlaceholder": "Search a supplier...",
     "clear": "Clear search",
     "noResults": "😕 No matching supplier found",
@@ -58,9 +59,10 @@
   "hotels": {
     "selectDestination": "Select a hotel destination",
     "destinationPlaceholder": "Type or pick a destination...",
-    "emptyTitle": "Pick a destination to see its hotels",
-    "emptyHint": "Type a destination name, country or airport code — e.g. Batumi, Athens, Sofia or BUH.",
+    "emptyTitle": "Destination selection",
+    "emptyHint": "Pick a destination to see its hotels. Type a destination name, country or airport code — e.g. Batumi, Athens, Sofia or BUH.",
     "noResults": "No hotels found",
+    "warningTitle": "Important note",
     "ratingNoteTitle": "About ratings",
     "ratingNote": "Stars are the hotel's official rating. The category (Premium / Good / Resort / Kosher) is our own rating based on experience.",
     "sort": {

@@ -53,27 +53,27 @@ export default async function HotelsPage({
       <Alert className="border-brand/35 bg-brand/10 text-brand">
         <InfoIcon />
         <AlertTitle>{t("hotels.ratingNoteTitle")}</AlertTitle>
-        <AlertDescription className="text-brand/90">{t("hotels.ratingNote")}</AlertDescription>
+        <AlertDescription className="text-brand">{t("hotels.ratingNote")}</AlertDescription>
       </Alert>
 
       <DestinationCombobox destinations={destinations} />
 
       {!view && (
-        <Alert className="border-warning/35 bg-warning/10 text-warning">
-          <TriangleAlertIcon />
+        <Alert>
+          <InfoIcon />
           <AlertTitle>{t("hotels.emptyTitle")}</AlertTitle>
-          <AlertDescription className="text-warning/90">{t("hotels.emptyHint")}</AlertDescription>
+          <AlertDescription>{t("hotels.emptyHint")}</AlertDescription>
         </Alert>
       )}
 
       {view && (
         <>
           {view.info?.warnings.map((w, i) => (
-            <div
-              key={i}
-              className="rounded-xl border border-gold/35 bg-gold/10 px-4 py-3 text-sm leading-relaxed font-bold text-gold">
-              {w}
-            </div>
+            <Alert key={i} className="border-gold/35 bg-gold/10 text-gold">
+              <TriangleAlertIcon />
+              <AlertTitle>{t("hotels.warningTitle")}</AlertTitle>
+              <AlertDescription className="text-gold">{w}</AlertDescription>
+            </Alert>
           ))}
 
           {view.info && <CityInfoAccordion info={view.info} />}
