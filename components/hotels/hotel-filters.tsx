@@ -1,11 +1,7 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import type {
-  HotelFeatureValue,
-  HotelTagValue,
-  BoardCode,
-} from "@/db/schema";
+import type { HotelFeatureValue, HotelTagValue, BoardCode } from "@/db/schema";
 import type { ViewLandmark, SortMode } from "@/lib/hotels";
 import { Button } from "@/components/ui/button";
 import { Toggle } from "@/components/ui/toggle";
@@ -18,9 +14,7 @@ import {
 } from "@/components/ui/select";
 import { useHotelParams } from "./use-hotel-params";
 
-const TAGS: { value: HotelTagValue; emoji: string }[] = [
-  { value: "kosher", emoji: "✡️" },
-];
+const TAGS: { value: HotelTagValue; emoji: string }[] = [{ value: "kosher", emoji: "✡️" }];
 const BOARDS: { value: BoardCode; emoji: string }[] = [
   { value: "bb", emoji: "🍳" },
   { value: "hb", emoji: "🍴" },
@@ -32,12 +26,12 @@ const AMENITIES: { value: HotelFeatureValue; key: string; emoji: string }[] = [
   { value: "casino", key: "casino", emoji: "🎰" },
   { value: "waterpark", key: "waterpark", emoji: "🛝" },
 ];
-const BASE_SORTS: { value: SortMode; key: string; emoji?: string }[] = [
-  { value: "default", key: "default" },
-  { value: "stars-desc", key: "starsDesc", emoji: "⭐" },
-  { value: "stars-asc", key: "starsAsc", emoji: "⭐" },
-  { value: "booking-desc", key: "bookingDesc", emoji: "📊" },
-  { value: "booking-asc", key: "bookingAsc", emoji: "📊" },
+const BASE_SORTS: { value: SortMode; key: string; emoji: string }[] = [
+  { value: "default", key: "default", emoji: "💠" },
+  { value: "stars-desc", key: "starsDesc", emoji: "🌟" },
+  { value: "stars-asc", key: "starsAsc", emoji: "🌟" },
+  { value: "booking-desc", key: "bookingDesc", emoji: "📉" },
+  { value: "booking-asc", key: "bookingAsc", emoji: "📈" },
 ];
 
 const chipClass =
@@ -48,13 +42,7 @@ const groupClass =
 
 export function HotelFilters({ landmarks }: { landmarks: ViewLandmark[] }) {
   const t = useTranslations("hotels");
-  const {
-    tags,
-    boards,
-    features,
-    sort,
-    update,
-  } = useHotelParams();
+  const { tags, boards, features, sort, update } = useHotelParams();
 
   const toggle = <T,>(list: T[], v: T) =>
     list.includes(v) ? list.filter((x) => x !== v) : [...list, v];
@@ -66,25 +54,19 @@ export function HotelFilters({ landmarks }: { landmarks: ViewLandmark[] }) {
   for (const lm of landmarks)
     sortItems[`dist:${lm.key}`] = `📍 ${t("sort.distanceFrom", { name: lm.name })}`;
 
-  const hasFilters =
-    tags.length > 0 ||
-    boards.length > 0 ||
-    features.length > 0;
+  const hasFilters = tags.length > 0 || boards.length > 0 || features.length > 0;
 
   return (
     <div className="flex flex-col gap-3">
       {/* Sort */}
       <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
         <div className="flex items-center gap-2">
-          <span className="text-xs font-bold text-muted-foreground">
-            {t("sort.label")}
-          </span>
+          <span className="text-xs font-bold text-muted-foreground">{t("sort.label")}</span>
           <Select
             items={sortItems}
             value={sort}
-            onValueChange={(v) => update({ sort: v as SortMode })}
-          >
-            <SelectTrigger className="w-52">
+            onValueChange={(v) => update({ sort: v as SortMode })}>
+            <SelectTrigger className="w-64">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
@@ -106,8 +88,7 @@ export function HotelFilters({ landmarks }: { landmarks: ViewLandmark[] }) {
           <Button
             variant="destructive"
             className="ms-auto"
-            onClick={() => update({ tags: [], boards: [], features: [] })}
-          >
+            onClick={() => update({ tags: [], boards: [], features: [] })}>
             ✕ {t("filter.clear")}
           </Button>
         )}
@@ -115,16 +96,13 @@ export function HotelFilters({ landmarks }: { landmarks: ViewLandmark[] }) {
 
       {/* Tags */}
       <div className={groupClass}>
-        <span className="text-xs font-bold text-muted-foreground">
-          {t("filter.tagsLabel")}
-        </span>
+        <span className="text-xs font-bold text-muted-foreground">{t("filter.tagsLabel")}</span>
         {TAGS.map((c) => (
           <Toggle
             key={c.value}
             pressed={tags.includes(c.value)}
             onPressedChange={() => update({ tags: toggle(tags, c.value) })}
-            className={chipClass}
-          >
+            className={chipClass}>
             {c.emoji} {t(`tier.${c.value}`)}
           </Toggle>
         ))}
@@ -132,16 +110,13 @@ export function HotelFilters({ landmarks }: { landmarks: ViewLandmark[] }) {
 
       {/* Board basis */}
       <div className={groupClass}>
-        <span className="text-xs font-bold text-muted-foreground">
-          {t("filter.boardLabel")}
-        </span>
+        <span className="text-xs font-bold text-muted-foreground">{t("filter.boardLabel")}</span>
         {BOARDS.map((b) => (
           <Toggle
             key={b.value}
             pressed={boards.includes(b.value)}
             onPressedChange={() => update({ boards: toggle(boards, b.value) })}
-            className={chipClass}
-          >
+            className={chipClass}>
             {b.emoji} {t(`board.${b.value}`)}
           </Toggle>
         ))}
@@ -149,16 +124,13 @@ export function HotelFilters({ landmarks }: { landmarks: ViewLandmark[] }) {
 
       {/* Amenities */}
       <div className={groupClass}>
-        <span className="text-xs font-bold text-muted-foreground">
-          {t("filter.label")}
-        </span>
+        <span className="text-xs font-bold text-muted-foreground">{t("filter.label")}</span>
         {AMENITIES.map((f) => (
           <Toggle
             key={f.value}
             pressed={features.includes(f.value)}
             onPressedChange={() => update({ features: toggle(features, f.value) })}
-            className={chipClass}
-          >
+            className={chipClass}>
             {f.emoji} {t(`filter.${f.key}`)}
           </Toggle>
         ))}
