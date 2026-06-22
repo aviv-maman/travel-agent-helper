@@ -19,21 +19,19 @@ import {
 import { useHotelParams } from "./use-hotel-params";
 
 const TAGS: { value: HotelTagValue; emoji: string }[] = [
-  { value: "kosher", emoji: "✡" },
+  { value: "kosher", emoji: "✡️" },
 ];
-const BOARDS: BoardCode[] = ["bb", "hb", "fb"];
-const AMENITIES: HotelFeatureValue[] = [
-  "pool-in",
-  "pool-out",
-  "casino",
-  "waterpark",
+const BOARDS: { value: BoardCode; emoji: string }[] = [
+  { value: "bb", emoji: "🍳" },
+  { value: "hb", emoji: "🍴" },
+  { value: "fb", emoji: "🍽️" },
 ];
-const AMENITY_KEY: Record<string, string> = {
-  "pool-in": "poolIn",
-  "pool-out": "poolOut",
-  casino: "casino",
-  waterpark: "waterpark",
-};
+const AMENITIES: { value: HotelFeatureValue; key: string; emoji: string }[] = [
+  { value: "pool-in", key: "poolIn", emoji: "🏊" },
+  { value: "pool-out", key: "poolOut", emoji: "🌊" },
+  { value: "casino", key: "casino", emoji: "🎰" },
+  { value: "waterpark", key: "waterpark", emoji: "🛝" },
+];
 const BASE_SORTS: { value: SortMode; key: string; emoji?: string }[] = [
   { value: "default", key: "default" },
   { value: "stars-desc", key: "starsDesc", emoji: "⭐" },
@@ -139,12 +137,12 @@ export function HotelFilters({ landmarks }: { landmarks: ViewLandmark[] }) {
         </span>
         {BOARDS.map((b) => (
           <Toggle
-            key={b}
-            pressed={boards.includes(b)}
-            onPressedChange={() => update({ boards: toggle(boards, b) })}
+            key={b.value}
+            pressed={boards.includes(b.value)}
+            onPressedChange={() => update({ boards: toggle(boards, b.value) })}
             className={chipClass}
           >
-            {t(`board.${b}`)}
+            {b.emoji} {t(`board.${b.value}`)}
           </Toggle>
         ))}
       </div>
@@ -156,12 +154,12 @@ export function HotelFilters({ landmarks }: { landmarks: ViewLandmark[] }) {
         </span>
         {AMENITIES.map((f) => (
           <Toggle
-            key={f}
-            pressed={features.includes(f)}
-            onPressedChange={() => update({ features: toggle(features, f) })}
+            key={f.value}
+            pressed={features.includes(f.value)}
+            onPressedChange={() => update({ features: toggle(features, f.value) })}
             className={chipClass}
           >
-            {t(`filter.${AMENITY_KEY[f]}`)}
+            {f.emoji} {t(`filter.${f.key}`)}
           </Toggle>
         ))}
       </div>
