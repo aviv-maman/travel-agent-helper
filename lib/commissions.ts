@@ -50,8 +50,6 @@ export type Supplier = {
   color: CommColor;
   name: Localized;
   alias?: Localized;
-  /** Red accent (border + alias dot) for sub-suppliers flagged in the guide. */
-  flagged?: boolean;
   rates: CommissionRate[];
   baggage: BaggageRow[];
   note?: Localized;
@@ -159,7 +157,7 @@ const SUPPLIERS: Supplier[] = [
     id: "flying",
     emoji: "🪄",
     color: "gold",
-    name: t("שטיח מעופף — Flying", "Magic Carpet — Flying"),
+    name: t("שטיח מעופף — Flying", "Flying Carpet — Flying"),
     alias: t("ספק ראשי", "Primary supplier"),
     rates: [
       { label: t("✈️ טיסות", "✈️ Flights"), value: t("5%", "5%"), level: "low" },
@@ -197,9 +195,8 @@ const SUPPLIERS: Supplier[] = [
     id: "flying-sp",
     emoji: "🪄",
     color: "destructive",
-    flagged: true,
-    name: t("שטיח מעופף — FlyingSP", "Magic Carpet — FlyingSP"),
-    alias: t("ספק משנה · ● מסומן באדום", "Sub-supplier · ● flagged in red"),
+    name: t("שטיח מעופף — FlyingSP", "Flying Carpet — FlyingSP"),
+    alias: t("ספק משנה", "Sub-supplier"),
     rates: [
       { label: t("✈️ טיסות", "✈️ Flights"), value: t("5%", "5%"), level: "low" },
       { label: t("🏖️ חבילות", "🏖️ Packages"), value: t("7%", "7%"), level: "mid" },
@@ -560,7 +557,6 @@ export type ViewSupplier = {
   color: CommColor;
   name: string;
   alias: string | null;
-  flagged: boolean;
   rates: ViewRate[];
   baggage: ViewBaggageRow[];
   note: string | null;
@@ -576,7 +572,6 @@ export function getCommissions(locale: string): ViewSupplier[] {
     color: s.color,
     name: pick(s.name),
     alias: s.alias ? pick(s.alias) : null,
-    flagged: Boolean(s.flagged),
     rates: s.rates.map((r) => ({ label: pick(r.label), value: pick(r.value), level: r.level })),
     baggage: s.baggage.map((b) => ({ icon: b.icon, text: pick(b.text) })),
     note: s.note ? pick(s.note) : null,
