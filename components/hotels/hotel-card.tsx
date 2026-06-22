@@ -10,7 +10,9 @@ import { Button } from "@/components/ui/button";
 import { CopyLinkButton } from "./copy-link-button";
 import { useHotelParams } from "./use-hotel-params";
 
-const FEATURE_META: Record<HotelFeatureValue, { emoji: string; key: string }> = {
+type FilterKey = keyof (typeof import("@/messages/en.json"))["hotels"]["filter"];
+
+const FEATURE_META: Record<HotelFeatureValue, { emoji: string; key: FilterKey }> = {
   "pool-in": { emoji: "🏊", key: "poolIn" },
   "pool-out": { emoji: "🌊", key: "poolOut" },
   casino: { emoji: "🎰", key: "casino" },

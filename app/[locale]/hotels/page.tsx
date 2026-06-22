@@ -1,4 +1,6 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
+import { InfoIcon, TriangleAlertIcon } from "lucide-react";
+import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 import type { HotelFeatureValue, HotelTagValue, BoardCode } from "@/db/schema";
 import { getDestinationsList, getDestinationView, type SortMode } from "@/lib/hotels";
 import { DestinationCombobox } from "@/components/hotels/destination-combobox";
@@ -48,27 +50,30 @@ export default async function HotelsPage({
 
   return (
     <div className="flex flex-col gap-5">
-      <p className="rounded-lg border border-border bg-surface px-4 py-3 text-sm text-muted-foreground">
-        ℹ️ {t("hotels.ratingNote")}
-      </p>
+      <Alert className="border-brand/35 bg-brand/10 text-brand">
+        <InfoIcon />
+        <AlertTitle>{t("hotels.ratingNoteTitle")}</AlertTitle>
+        <AlertDescription className="text-brand">{t("hotels.ratingNote")}</AlertDescription>
+      </Alert>
 
       <DestinationCombobox destinations={destinations} />
 
       {!view && (
-        <div className="rounded-xl border border-dashed border-border bg-surface/50 px-5 py-10 text-center">
-          <p className="text-base font-bold text-foreground">{t("hotels.emptyTitle")}</p>
-          <p className="mt-1 text-sm text-muted-foreground">{t("hotels.emptyHint")}</p>
-        </div>
+        <Alert>
+          <InfoIcon />
+          <AlertTitle>{t("hotels.emptyTitle")}</AlertTitle>
+          <AlertDescription>{t("hotels.emptyHint")}</AlertDescription>
+        </Alert>
       )}
 
       {view && (
         <>
           {view.info?.warnings.map((w, i) => (
-            <div
-              key={i}
-              className="rounded-xl border border-gold/35 bg-gold/10 px-4 py-3 text-sm leading-relaxed font-bold text-gold">
-              {w}
-            </div>
+            <Alert key={i} className="border-gold/35 bg-gold/10 text-gold">
+              <TriangleAlertIcon />
+              <AlertTitle>{t("hotels.warningTitle")}</AlertTitle>
+              <AlertDescription className="text-gold">{w}</AlertDescription>
+            </Alert>
           ))}
 
           {view.info && <CityInfoAccordion info={view.info} />}

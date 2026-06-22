@@ -2,9 +2,10 @@
 
 import { useState } from "react";
 import { useTranslations } from "next-intl";
-import { Search, X } from "lucide-react";
+import { InfoIcon, Search, X } from "lucide-react";
 import type { ViewCancelSupplier } from "@/lib/cancellations";
 import { Input } from "@/components/ui/input";
+import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 import { CancelCard } from "./cancel-card";
 
 export function CancellationsView({ suppliers }: { suppliers: ViewCancelSupplier[] }) {
@@ -38,11 +39,17 @@ export function CancellationsView({ suppliers }: { suppliers: ViewCancelSupplier
         )}
       </div>
 
-      <div className="rounded-xl border border-brand/25 bg-brand/[0.07] px-4 py-3 text-sm leading-relaxed text-brand">
-        {t.rich("intro", {
-          strong: (chunks) => <strong className="font-bold">{chunks}</strong>,
-        })}
-      </div>
+      <Alert className="border-gold/35 bg-gold/10 text-gold">
+        <InfoIcon />
+        <AlertTitle>{t("introTitle")}</AlertTitle>
+        <AlertDescription className="text-gold">
+          <p>
+            {t.rich("intro", {
+              strong: (chunks) => <strong className="font-bold">{chunks}</strong>,
+            })}
+          </p>
+        </AlertDescription>
+      </Alert>
 
       {filtered.length === 0 ? (
         <p className="rounded-xl border border-dashed border-border bg-surface/50 px-5 py-8 text-center text-sm text-muted-foreground">

@@ -20,13 +20,15 @@ const BOARDS: { value: BoardCode; emoji: string }[] = [
   { value: "hb", emoji: "🍴" },
   { value: "fb", emoji: "🍽️" },
 ];
-const AMENITIES: { value: HotelFeatureValue; key: string; emoji: string }[] = [
+type HotelMessages = (typeof import("@/messages/en.json"))["hotels"];
+
+const AMENITIES: { value: HotelFeatureValue; key: keyof HotelMessages["filter"]; emoji: string }[] = [
   { value: "pool-in", key: "poolIn", emoji: "🏊" },
   { value: "pool-out", key: "poolOut", emoji: "🌊" },
   { value: "casino", key: "casino", emoji: "🎰" },
   { value: "waterpark", key: "waterpark", emoji: "🛝" },
 ];
-const BASE_SORTS: { value: SortMode; key: string; emoji: string }[] = [
+const BASE_SORTS: { value: SortMode; key: keyof HotelMessages["sort"]; emoji: string }[] = [
   { value: "default", key: "default", emoji: "💠" },
   { value: "stars-desc", key: "starsDesc", emoji: "🌟" },
   { value: "stars-asc", key: "starsAsc", emoji: "🌟" },
@@ -66,7 +68,7 @@ export function HotelFilters({ landmarks }: { landmarks: ViewLandmark[] }) {
             items={sortItems}
             value={sort}
             onValueChange={(v) => update({ sort: v as SortMode })}>
-            <SelectTrigger className="w-64">
+            <SelectTrigger className="w-56 sm:w-64">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
@@ -87,7 +89,6 @@ export function HotelFilters({ landmarks }: { landmarks: ViewLandmark[] }) {
         {hasFilters && (
           <Button
             variant="destructive"
-            className="ms-auto"
             onClick={() => update({ tags: [], boards: [], features: [] })}>
             ✕ {t("filter.clear")}
           </Button>
