@@ -24,7 +24,7 @@ export function PageNav() {
   const segment = useSelectedLayoutSegment() ?? "hotels";
 
   return (
-    <div className="sticky top-0 z-50 border-b border-border bg-background/80 backdrop-blur-md">
+    <div className="sticky top-0 z-50 border-b border-border bg-background/60 backdrop-blur-xs">
       <div className="mx-auto w-full max-w-5xl px-2 py-2 sm:px-4 sm:py-2.5">
         <NavigationMenu className="w-full max-w-full">
           <NavigationMenuList className="w-full justify-between gap-0 sm:w-auto sm:justify-start sm:gap-1">

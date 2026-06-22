@@ -32,7 +32,7 @@ const DEPENDS = t("תלוי בכרטיס", "Depends on ticket");
 const AIRLINES: Airline[] = [
   { iata: "6H", flag: "🇮🇱", name: t("ישראייר", "Israir"), kg: "23", note: TROLLEY10 },
   { iata: "LY", flag: "🇮🇱", name: t("אל על", "El Al"), kg: "23" },
-  { iata: "A3", flag: "🇬🇷", name: t("אג'יאן", "Aegean (A3)"), kg: "23" },
+  { iata: "A3", flag: "🇬🇷", name: t("אג'יאן איירליינס", "Aegean Airlines"), kg: "23" },
   { iata: "OS", flag: "🇦🇹", name: t("אוסטריאן איירליינס", "Austrian Airlines"), kg: "23" },
   { iata: "LX", flag: "🇨🇭", name: t("סוויס", "Swiss"), kg: "23" },
   { iata: "LH", flag: "🇩🇪", name: t("לופטהנזה", "Lufthansa"), kg: "23" },
@@ -57,7 +57,7 @@ const AIRLINES: Airline[] = [
   { iata: "BA", flag: "🇬🇧", name: t("בריטיש איירווייס", "British Airways"), kg: "23" },
   { iata: "VS", flag: "🇬🇧", name: t("וירג'ין אטלנטיק", "Virgin Atlantic"), kg: "23" },
   { iata: "FB", flag: "🇧🇬", name: t("בולגריה אייר", "Bulgaria Air"), kg: "23" },
-  { iata: "LO", flag: "🇵🇱", name: t("LOT פולית", "LOT Polish"), kg: "23" },
+  { iata: "LO", flag: "🇵🇱", name: t("לוט פוליש איירליינס", "LOT Polish Airlines"), kg: "23" },
   {
     iata: "GQ",
     flag: "🇬🇷",
@@ -93,11 +93,11 @@ const AIRLINES: Airline[] = [
     noteTone: "gold",
   },
   { iata: "IZ", flag: "🇮🇱", name: t("ארקיע", "Arkia"), kg: "20" },
-  { iata: "3E", flag: "🇬🇷", name: t("אלקטרה אייר", "Electra Air (3E)"), kg: "20" },
+  { iata: "3E", flag: "🇬🇷", name: t("אלקטרה איירווייז", "Electra Airways"), kg: "20" },
   {
     iata: "XC / 4D",
-    flag: "🇬🇷",
-    name: t("קורנדון איירליינס", "Corendon Airlines (4D)"),
+    flag: "🇹🇷",
+    name: t("קורנדון איירליינס", "Corendon Airlines"),
     kg: "20",
   },
   { iata: "BZ", flag: "🇬🇷", name: t("בלו בירד", "Blue Bird"), kg: "20" },

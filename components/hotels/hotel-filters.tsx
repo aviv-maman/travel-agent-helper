@@ -26,12 +26,12 @@ const AMENITIES: { value: HotelFeatureValue; key: string; emoji: string }[] = [
   { value: "casino", key: "casino", emoji: "🎰" },
   { value: "waterpark", key: "waterpark", emoji: "🛝" },
 ];
-const BASE_SORTS: { value: SortMode; key: string; emoji?: string }[] = [
-  { value: "default", key: "default" },
-  { value: "stars-desc", key: "starsDesc", emoji: "⭐" },
-  { value: "stars-asc", key: "starsAsc", emoji: "⭐" },
-  { value: "booking-desc", key: "bookingDesc", emoji: "📊" },
-  { value: "booking-asc", key: "bookingAsc", emoji: "📊" },
+const BASE_SORTS: { value: SortMode; key: string; emoji: string }[] = [
+  { value: "default", key: "default", emoji: "💠" },
+  { value: "stars-desc", key: "starsDesc", emoji: "🌟" },
+  { value: "stars-asc", key: "starsAsc", emoji: "🌟" },
+  { value: "booking-desc", key: "bookingDesc", emoji: "📉" },
+  { value: "booking-asc", key: "bookingAsc", emoji: "📈" },
 ];
 
 const chipClass =
