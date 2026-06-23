@@ -26,6 +26,28 @@
       "mid": "Medium 7–9.5%",
       "low": "Low 5–6%",
       "net": "Net / no commission"
+    },
+    "contact": {
+      "button": "Contact",
+      "title": "Contact — {name}",
+      "subtitle": "Supplier contact details",
+      "supplierEmail": "Supplier email",
+      "supplierPhone": "Supplier phone",
+      "name": "Name",
+      "phone": "Phone",
+      "email": "Email",
+      "sales": "Sales rep",
+      "agent": "Agent / contact",
+      "extraChannel": "Extra channel",
+      "extraLabel": "Label (e.g. support)",
+      "extraValue": "Address / number",
+      "addExtra": "Extra channel",
+      "empty": "No contact details yet — click \"Edit\" to add.",
+      "edit": "Edit details",
+      "close": "Close",
+      "save": "Save",
+      "cancel": "Cancel",
+      "remove": "Remove"
     }
   },
   "transfers": {
