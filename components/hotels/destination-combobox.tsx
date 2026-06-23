@@ -76,12 +76,10 @@ export function DestinationCombobox({ destinations }: { destinations: Destinatio
             {countries.map((group) => (
               <CommandGroup
                 key={group.countryCode}
-                className="**:[[cmdk-group-heading]]:py-2"
+                className="mb-1 **:[[cmdk-group-heading]]:sticky **:[[cmdk-group-heading]]:top-0 **:[[cmdk-group-heading]]:z-10 **:[[cmdk-group-heading]]:mb-1 **:[[cmdk-group-heading]]:bg-popover **:[[cmdk-group-heading]]:px-2 **:[[cmdk-group-heading]]:py-1.5"
                 heading={
-                  <span className="flex items-center gap-2">
-                    <span className="flex w-8 shrink-0 justify-center">
-                      <CountryFlag code={group.countryCode} />
-                    </span>
+                  <span className="flex items-center gap-1.5 text-[0.68rem] leading-none font-bold tracking-wide text-muted-foreground uppercase">
+                    <CountryFlag code={group.countryCode} className="h-3 w-4 shrink-0" />
                     {group.country}
                   </span>
                 }>
@@ -90,6 +88,7 @@ export function DestinationCombobox({ destinations }: { destinations: Destinatio
                     key={d.iata}
                     value={d.search}
                     data-checked={dest === d.iata}
+                    className="ps-4"
                     onSelect={() => {
                       update({ dest: d.iata, features: [], sort: "default" });
                       setOpen(false);

@@ -45,7 +45,7 @@ export function CityInfoAccordion({ info }: { info: ViewInfo }) {
   return (
     <Accordion className="rounded-xl border border-border bg-surface">
       <AccordionItem value="about-city" className="border-none px-4">
-        <AccordionTrigger className="text-sm font-extrabold">🏙 {t("title")}</AccordionTrigger>
+        <AccordionTrigger className="text-sm font-extrabold">{t("title")}</AccordionTrigger>
         <AccordionContent className="flex flex-col gap-3 text-sm leading-relaxed">
           {info.about && <p className="text-foreground">{info.about}</p>}
 
@@ -58,9 +58,7 @@ export function CityInfoAccordion({ info }: { info: ViewInfo }) {
                 .filter(Boolean);
               return (
                 <div className="text-muted-foreground">
-                  {heading && (
-                    <div className="mb-1 font-bold text-foreground">{heading}</div>
-                  )}
+                  {heading && <div className="mb-1 font-bold text-foreground">{heading}</div>}
                   <ul className="flex list-disc flex-col gap-0.5 ps-5">
                     {items.map((it, i) => (
                       <li key={i}>{it}</li>
@@ -121,9 +119,7 @@ export function CityInfoAccordion({ info }: { info: ViewInfo }) {
               const items = splitLandmarks(body);
               return (
                 <div className="border-t border-border pt-2 text-xs text-muted-foreground">
-                  {heading && (
-                    <div className="mb-1 font-bold text-foreground">{heading}</div>
-                  )}
+                  {heading && <div className="mb-1 font-bold text-foreground">{heading}</div>}
                   <ul className="flex flex-col gap-1">
                     {items.map((it, i) => (
                       <li key={i}>{it}</li>

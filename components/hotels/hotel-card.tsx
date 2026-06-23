@@ -7,6 +7,7 @@ import type { HotelFeatureValue, HotelTagValue, BoardCode } from "@/db/schema";
 import type { ViewHotel, ViewDistance } from "@/lib/hotels";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { ButtonGroup } from "@/components/ui/button-group";
 import { Card } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { CopyLinkButton } from "./copy-link-button";
@@ -143,7 +144,7 @@ export function HotelCard({
   const actions = (hotel.googleMapsUrl || hotel.bookingUrl) && (
     <div className="flex flex-col gap-2">
       {hotel.googleMapsUrl && (
-        <div className="flex items-center gap-2">
+        <ButtonGroup className="w-full">
           <Button
             variant="outline"
             size="sm"
@@ -153,10 +154,10 @@ export function HotelCard({
             <MapPin className="size-3.5" /> {t("card.maps")}
           </Button>
           <CopyLinkButton url={hotel.googleMapsUrl} className="size-8 shrink-0" />
-        </div>
+        </ButtonGroup>
       )}
       {hotel.bookingUrl && (
-        <div className="flex items-center gap-2">
+        <ButtonGroup className="w-full">
           <Button
             variant="outline"
             size="sm"
@@ -166,7 +167,7 @@ export function HotelCard({
             <ExternalLink className="size-3.5" /> {t("card.booking")}
           </Button>
           <CopyLinkButton url={hotel.bookingUrl} className="size-8 shrink-0" />
-        </div>
+        </ButtonGroup>
       )}
     </div>
   );
@@ -202,6 +203,37 @@ export function HotelCard({
   );
 
   if (layout === "list") {
+    const listActions = (hotel.googleMapsUrl || hotel.bookingUrl) && (
+      <div className="flex shrink-0 flex-wrap items-center gap-2">
+        {hotel.googleMapsUrl && (
+          <ButtonGroup>
+            <Button
+              variant="outline"
+              size="sm"
+              nativeButton={false}
+              className="h-8 text-brand"
+              render={<a href={hotel.googleMapsUrl} target="_blank" rel="noreferrer" />}>
+              <MapPin className="size-3.5" /> {t("card.maps")}
+            </Button>
+            <CopyLinkButton url={hotel.googleMapsUrl} className="size-8 shrink-0" />
+          </ButtonGroup>
+        )}
+        {hotel.bookingUrl && (
+          <ButtonGroup>
+            <Button
+              variant="outline"
+              size="sm"
+              nativeButton={false}
+              className="h-8 text-success"
+              render={<a href={hotel.bookingUrl} target="_blank" rel="noreferrer" />}>
+              <ExternalLink className="size-3.5" /> {t("card.booking")}
+            </Button>
+            <CopyLinkButton url={hotel.bookingUrl} className="size-8 shrink-0" />
+          </ButtonGroup>
+        )}
+      </div>
+    );
+
     return (
       <Card {...rootProps}>
         <div className="flex flex-col gap-3 p-4 sm:flex-row sm:items-start sm:gap-5">
@@ -214,8 +246,11 @@ export function HotelCard({
             </div>
             {badges}
             {distanceTable && <div className="pt-0.5">{distanceTable}</div>}
+            {/* Compact, non-stretched action buttons — mobile only. */}
+            {listActions && <div className="sm:hidden">{listActions}</div>}
           </div>
-          {actions && <div className="shrink-0 sm:w-48">{actions}</div>}
+          {/* Desktop: original action column. */}
+          {actions && <div className="hidden shrink-0 sm:block sm:w-48">{actions}</div>}
         </div>
       </Card>
     );
