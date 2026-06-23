@@ -1199,13 +1199,13 @@
         "distances": [
           {
             "landmarkKey": "kiraly",
-            "meters": 21,
-            "walkMinutes": null,
+            "meters": 1600,
+            "walkMinutes": 21,
             "rideMinutes": null
           },
           {
             "landmarkKey": "vaci",
-            "meters": 1,
+            "meters": 80,
             "walkMinutes": 1,
             "rideMinutes": null
           }
@@ -1227,13 +1227,13 @@
         "distances": [
           {
             "landmarkKey": "kiraly",
-            "meters": 1,
-            "walkMinutes": null,
+            "meters": 100,
+            "walkMinutes": 1,
             "rideMinutes": null
           },
           {
             "landmarkKey": "vaci",
-            "meters": 8,
+            "meters": 600,
             "walkMinutes": 8,
             "rideMinutes": null
           }
@@ -1257,13 +1257,13 @@
         "distances": [
           {
             "landmarkKey": "kiraly",
-            "meters": 3,
-            "walkMinutes": null,
+            "meters": 200,
+            "walkMinutes": 3,
             "rideMinutes": null
           },
           {
             "landmarkKey": "vaci",
-            "meters": 9,
+            "meters": 700,
             "walkMinutes": 9,
             "rideMinutes": null
           }
@@ -1287,14 +1287,14 @@
         "distances": [
           {
             "landmarkKey": "kiraly",
-            "meters": 18,
-            "walkMinutes": null,
+            "meters": 1400,
+            "walkMinutes": 18,
             "rideMinutes": null
           },
           {
             "landmarkKey": "vaci",
             "meters": 0,
-            "walkMinutes": null,
+            "walkMinutes": 0,
             "rideMinutes": null
           }
         ],
@@ -1320,13 +1320,13 @@
         "distances": [
           {
             "landmarkKey": "kiraly",
-            "meters": 9,
-            "walkMinutes": null,
+            "meters": 650,
+            "walkMinutes": 9,
             "rideMinutes": null
           },
           {
             "landmarkKey": "vaci",
-            "meters": 2,
+            "meters": 150,
             "walkMinutes": 2,
             "rideMinutes": null
           }
@@ -1348,13 +1348,13 @@
         "distances": [
           {
             "landmarkKey": "kiraly",
-            "meters": 7,
-            "walkMinutes": null,
+            "meters": 550,
+            "walkMinutes": 7,
             "rideMinutes": null
           },
           {
             "landmarkKey": "vaci",
-            "meters": 4,
+            "meters": 300,
             "walkMinutes": 4,
             "rideMinutes": null
           }
@@ -1378,14 +1378,14 @@
         "distances": [
           {
             "landmarkKey": "kiraly",
-            "meters": 20,
-            "walkMinutes": null,
+            "meters": 1500,
+            "walkMinutes": 20,
             "rideMinutes": null
           },
           {
             "landmarkKey": "vaci",
             "meters": 0,
-            "walkMinutes": null,
+            "walkMinutes": 0,
             "rideMinutes": null
           }
         ],
@@ -1408,13 +1408,13 @@
         "distances": [
           {
             "landmarkKey": "kiraly",
-            "meters": 9,
-            "walkMinutes": null,
+            "meters": 650,
+            "walkMinutes": 9,
             "rideMinutes": null
           },
           {
             "landmarkKey": "vaci",
-            "meters": 28,
+            "meters": 2100,
             "walkMinutes": 28,
             "rideMinutes": null
           }
@@ -1438,13 +1438,13 @@
         "distances": [
           {
             "landmarkKey": "kiraly",
-            "meters": 2,
-            "walkMinutes": null,
+            "meters": 150,
+            "walkMinutes": 2,
             "rideMinutes": null
           },
           {
             "landmarkKey": "vaci",
-            "meters": 8,
+            "meters": 600,
             "walkMinutes": 8,
             "rideMinutes": null
           }
@@ -1468,13 +1468,13 @@
         "distances": [
           {
             "landmarkKey": "kiraly",
-            "meters": 11,
-            "walkMinutes": null,
+            "meters": 800,
+            "walkMinutes": 11,
             "rideMinutes": null
           },
           {
             "landmarkKey": "vaci",
-            "meters": 7,
+            "meters": 500,
             "walkMinutes": 7,
             "rideMinutes": null
           }
@@ -1498,13 +1498,13 @@
         "distances": [
           {
             "landmarkKey": "kiraly",
-            "meters": 5,
-            "walkMinutes": null,
+            "meters": 350,
+            "walkMinutes": 5,
             "rideMinutes": null
           },
           {
             "landmarkKey": "vaci",
-            "meters": 15,
+            "meters": 1100,
             "walkMinutes": 15,
             "rideMinutes": null
           }
@@ -1528,13 +1528,13 @@
         "distances": [
           {
             "landmarkKey": "kiraly",
-            "meters": 15,
-            "walkMinutes": null,
+            "meters": 1100,
+            "walkMinutes": 15,
             "rideMinutes": null
           },
           {
             "landmarkKey": "vaci",
-            "meters": 14,
+            "meters": 1000,
             "walkMinutes": 14,
             "rideMinutes": null
           }
@@ -1558,13 +1558,13 @@
         "distances": [
           {
             "landmarkKey": "kiraly",
-            "meters": 17,
-            "walkMinutes": null,
+            "meters": 1300,
+            "walkMinutes": 17,
             "rideMinutes": null
           },
           {
             "landmarkKey": "vaci",
-            "meters": 6,
+            "meters": 450,
             "walkMinutes": 6,
             "rideMinutes": null
           }
@@ -1588,14 +1588,14 @@
         "distances": [
           {
             "landmarkKey": "kiraly",
-            "meters": 10,
-            "walkMinutes": null,
+            "meters": 750,
+            "walkMinutes": 10,
             "rideMinutes": null
           },
           {
             "landmarkKey": "vaci",
             "meters": 0,
-            "walkMinutes": null,
+            "walkMinutes": 0,
             "rideMinutes": null
           }
         ],
@@ -1620,13 +1620,13 @@
         "distances": [
           {
             "landmarkKey": "kiraly",
-            "meters": 6,
-            "walkMinutes": null,
+            "meters": 450,
+            "walkMinutes": 6,
             "rideMinutes": null
           },
           {
             "landmarkKey": "vaci",
-            "meters": 3,
+            "meters": 250,
             "walkMinutes": 3,
             "rideMinutes": null
           }
@@ -1650,14 +1650,14 @@
         "distances": [
           {
             "landmarkKey": "kiraly",
-            "meters": 11,
-            "walkMinutes": null,
+            "meters": 850,
+            "walkMinutes": 11,
             "rideMinutes": null
           },
           {
             "landmarkKey": "vaci",
             "meters": 0,
-            "walkMinutes": null,
+            "walkMinutes": 0,
             "rideMinutes": null
           }
         ],
@@ -1680,13 +1680,13 @@
         "distances": [
           {
             "landmarkKey": "kiraly",
-            "meters": 1,
-            "walkMinutes": null,
+            "meters": 90,
+            "walkMinutes": 1,
             "rideMinutes": null
           },
           {
             "landmarkKey": "vaci",
-            "meters": 7,
+            "meters": 550,
             "walkMinutes": 7,
             "rideMinutes": null
           }
@@ -1710,14 +1710,14 @@
         "distances": [
           {
             "landmarkKey": "kiraly",
-            "meters": 9,
-            "walkMinutes": null,
+            "meters": 650,
+            "walkMinutes": 9,
             "rideMinutes": null
           },
           {
             "landmarkKey": "vaci",
             "meters": 0,
-            "walkMinutes": null,
+            "walkMinutes": 0,
             "rideMinutes": null
           }
         ],
@@ -1740,13 +1740,13 @@
         "distances": [
           {
             "landmarkKey": "kiraly",
-            "meters": 15,
-            "walkMinutes": null,
+            "meters": 1100,
+            "walkMinutes": 15,
             "rideMinutes": null
           },
           {
             "landmarkKey": "vaci",
-            "meters": 5,
+            "meters": 350,
             "walkMinutes": 5,
             "rideMinutes": null
           }
@@ -1770,13 +1770,13 @@
         "distances": [
           {
             "landmarkKey": "kiraly",
-            "meters": 3,
-            "walkMinutes": null,
+            "meters": 250,
+            "walkMinutes": 3,
             "rideMinutes": null
           },
           {
             "landmarkKey": "vaci",
-            "meters": 12,
+            "meters": 850,
             "walkMinutes": 12,
             "rideMinutes": null
           }
@@ -1800,13 +1800,13 @@
         "distances": [
           {
             "landmarkKey": "kiraly",
-            "meters": 5,
-            "walkMinutes": null,
+            "meters": 400,
+            "walkMinutes": 5,
             "rideMinutes": null
           },
           {
             "landmarkKey": "vaci",
-            "meters": 10,
+            "meters": 750,
             "walkMinutes": 10,
             "rideMinutes": null
           }
@@ -1830,13 +1830,13 @@
         "distances": [
           {
             "landmarkKey": "kiraly",
-            "meters": 10,
-            "walkMinutes": null,
+            "meters": 750,
+            "walkMinutes": 10,
             "rideMinutes": null
           },
           {
             "landmarkKey": "vaci",
-            "meters": 9,
+            "meters": 650,
             "walkMinutes": 9,
             "rideMinutes": null
           }
@@ -1860,13 +1860,13 @@
         "distances": [
           {
             "landmarkKey": "kiraly",
-            "meters": 18,
-            "walkMinutes": null,
+            "meters": 1400,
+            "walkMinutes": 18,
             "rideMinutes": null
           },
           {
             "landmarkKey": "vaci",
-            "meters": 21,
+            "meters": 1600,
             "walkMinutes": 21,
             "rideMinutes": null
           }
@@ -1890,13 +1890,13 @@
         "distances": [
           {
             "landmarkKey": "kiraly",
-            "meters": 17,
-            "walkMinutes": null,
+            "meters": 1300,
+            "walkMinutes": 17,
             "rideMinutes": null
           },
           {
             "landmarkKey": "vaci",
-            "meters": 6,
+            "meters": 400,
             "walkMinutes": 6,
             "rideMinutes": null
           }
@@ -1920,13 +1920,13 @@
         "distances": [
           {
             "landmarkKey": "kiraly",
-            "meters": 23,
-            "walkMinutes": null,
+            "meters": 1700,
+            "walkMinutes": 23,
             "rideMinutes": null
           },
           {
             "landmarkKey": "vaci",
-            "meters": 10,
+            "meters": 750,
             "walkMinutes": 10,
             "rideMinutes": null
           }
@@ -1951,13 +1951,13 @@
           {
             "landmarkKey": "kiraly",
             "meters": 450,
-            "walkMinutes": null,
+            "walkMinutes": 6,
             "rideMinutes": null
           },
           {
             "landmarkKey": "vaci",
             "meters": 1200,
-            "walkMinutes": null,
+            "walkMinutes": 15,
             "rideMinutes": null
           }
         ],
@@ -1984,7 +1984,7 @@
             "landmarkKey": "kiraly",
             "meters": 10000,
             "walkMinutes": null,
-            "rideMinutes": null
+            "rideMinutes": 30
           },
           {
             "landmarkKey": "vaci",
@@ -7155,7 +7155,7 @@
         "boards": [
           "bb"
         ],
-        "bookingScore": 9.0,
+        "bookingScore": 9,
         "googleMapsUrl": "https://www.google.com/maps/search/PURO+Warszawa+Centrum+Warsaw",
         "bookingUrl": "https://www.booking.com/searchresults.html?ss=PURO+Warszawa+Centrum+Warsaw",
         "roomsNote": null,
@@ -7267,7 +7267,7 @@
         "boards": [
           "bb"
         ],
-        "bookingScore": 9.0,
+        "bookingScore": 9,
         "googleMapsUrl": "https://www.google.com/maps/search/Sofitel+Warsaw+Victoria+Warsaw",
         "bookingUrl": "https://www.booking.com/searchresults.html?ss=Sofitel+Warsaw+Victoria+Warsaw",
         "roomsNote": null,
@@ -7342,7 +7342,7 @@
         "boards": [
           "bb"
         ],
-        "bookingScore": 9.0,
+        "bookingScore": 9,
         "googleMapsUrl": "https://www.google.com/maps/search/Warsaw+Presidential+Hotel+Warsaw",
         "bookingUrl": "https://www.booking.com/searchresults.html?ss=Warsaw+Presidential+Hotel+Warsaw",
         "roomsNote": null,
