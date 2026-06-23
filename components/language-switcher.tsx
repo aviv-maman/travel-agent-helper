@@ -2,7 +2,6 @@
 
 import { useEffect, useTransition } from "react";
 import { useLocale, useTranslations } from "next-intl";
-import { useSearchParams } from "next/navigation";
 import { usePathname, useRouter } from "@/i18n/navigation";
 import { routing } from "@/i18n/routing";
 import { localeCountry, type Locale } from "@/i18n/config";
@@ -44,10 +43,8 @@ export function LanguageSwitcher() {
   const locale = useLocale() as Locale;
   const t = useTranslations("nav");
   const pathname = usePathname();
-  const searchParams = useSearchParams();
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
-  const query = Object.fromEntries(searchParams.entries());
 
   // Once the navigation settles, wait one painted frame (so the rtl↔ltr reflow
   // has happened with transitions off) before allowing transitions again.
@@ -76,6 +73,12 @@ export function LanguageSwitcher() {
                 key={l}
                 onClick={() => {
                   suppressTransitions();
+                  // Read the query imperatively (not via useSearchParams) so the
+                  // switcher doesn't force a CSR bailout / Suspense boundary on
+                  // every page during static prerendering.
+                  const query = Object.fromEntries(
+                    new URLSearchParams(window.location.search),
+                  );
                   startTransition(() =>
                     router.replace({ pathname, query }, { locale: l }),
                   );
