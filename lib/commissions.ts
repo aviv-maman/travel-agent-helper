@@ -58,6 +58,11 @@ export type Supplier = {
 
 const t = (he: string, en: string): Localized => ({ he, en });
 
+// Shared rate-category labels — written once, reused across suppliers.
+const FLIGHTS_ONLY = t("✈️ טיסות בלבד", "✈️ Flights Only");
+const PACKAGES = t("🏖️ חבילות", "🏖️ Packages");
+const ORGANIZED_TOURS = t("🧳 טיולים מאורגנים", "🧳 Organized Tours");
+
 // Shared baggage lines reused across many suppliers.
 const BACKPACK = (): BaggageRow => ({
   icon: "bag",
@@ -79,9 +84,9 @@ const SUPPLIERS: Supplier[] = [
     name: t("Israir", "Israir"),
     alias: t("ידוע גם כ: Unital (טיולים מאורגנים)", "Also known as: Unital (organized tours)"),
     rates: [
-      { label: t("✈️ טיסה בלבד", "✈️ Flight only"), value: t("7.5%", "7.5%"), level: "mid" },
-      { label: t("🏖️ חבילת נופש", "🏖️ Vacation package"), value: t("9.5%", "9.5%"), level: "high" },
-      { label: t("🧳 טיול מאורגן", "🧳 Organized tour"), value: t("7.5%", "7.5%"), level: "mid" },
+      { label: FLIGHTS_ONLY, value: t("7.5%", "7.5%"), level: "mid" },
+      { label: PACKAGES, value: t("9.5%", "9.5%"), level: "high" },
+      { label: ORGANIZED_TOURS, value: t("7.5%", "7.5%"), level: "mid" },
     ],
     baggage: [
       BACKPACK(),
@@ -116,17 +121,17 @@ const SUPPLIERS: Supplier[] = [
     alias: t("מחיר נטו — ללא עמלה", "Net price — no commission"),
     rates: [
       {
-        label: t("✈️ טיסה בלבד", "✈️ Flight only"),
+        label: FLIGHTS_ONLY,
         value: t("מחיר נטו", "Net price"),
         level: "net",
       },
       {
-        label: t("🏖️ חבילת נופש", "🏖️ Vacation package"),
+        label: PACKAGES,
         value: t("מחיר נטו", "Net price"),
         level: "net",
       },
       {
-        label: t("🧳 טיול מאורגן", "🧳 Organized tour"),
+        label: ORGANIZED_TOURS,
         value: t("מחיר נטו", "Net price"),
         level: "net",
       },
@@ -160,9 +165,9 @@ const SUPPLIERS: Supplier[] = [
     name: t("שטיח מעופף — Flying", "Flying Carpet — Flying"),
     alias: t("ספק ראשי", "Primary supplier"),
     rates: [
-      { label: t("✈️ טיסות", "✈️ Flights"), value: t("5%", "5%"), level: "low" },
-      { label: t("🏖️ חבילות", "🏖️ Packages"), value: t("11%", "11%"), level: "high" },
-      { label: t("🧳 מאורגנים", "🧳 Organized tours"), value: t("9%", "9%"), level: "high" },
+      { label: FLIGHTS_ONLY, value: t("5%", "5%"), level: "low" },
+      { label: PACKAGES, value: t("11%", "11%"), level: "high" },
+      { label: ORGANIZED_TOURS, value: t("9%", "9%"), level: "high" },
     ],
     baggage: [
       BACKPACK(),
@@ -198,8 +203,8 @@ const SUPPLIERS: Supplier[] = [
     name: t("שטיח מעופף — FlyingSP", "Flying Carpet — FlyingSP"),
     alias: t("ספק משנה", "Sub-supplier"),
     rates: [
-      { label: t("✈️ טיסות", "✈️ Flights"), value: t("5%", "5%"), level: "low" },
-      { label: t("🏖️ חבילות", "🏖️ Packages"), value: t("7%", "7%"), level: "mid" },
+      { label: FLIGHTS_ONLY, value: t("5%", "5%"), level: "low" },
+      { label: PACKAGES, value: t("7%", "7%"), level: "mid" },
     ],
     baggage: [
       BACKPACK(),
@@ -239,15 +244,15 @@ const SUPPLIERS: Supplier[] = [
       "Special commission for Dubai · organized tours vary",
     ),
     rates: [
-      { label: t("✈️ טיסה בלבד", "✈️ Flight only"), value: t("7%", "7%"), level: "mid" },
+      { label: FLIGHTS_ONLY, value: t("7%", "7%"), level: "mid" },
       {
         label: t("✈️ טיסה בלבד — דובאי", "✈️ Flight only — Dubai"),
         value: t("10%", "10%"),
         level: "high",
       },
-      { label: t("🏖️ חבילת נופש", "🏖️ Vacation package"), value: t("10%", "10%"), level: "high" },
+      { label: PACKAGES, value: t("10%", "10%"), level: "high" },
       {
-        label: t("🧳 טיול מאורגן", "🧳 Organized tour"),
+        label: ORGANIZED_TOURS,
         value: t("7–10%", "7–10%"),
         level: "range",
       },
@@ -281,9 +286,9 @@ const SUPPLIERS: Supplier[] = [
     color: "success",
     name: t("אשת טורס", "Eshet Tours"),
     rates: [
-      { label: t("✈️ טיסות", "✈️ Flights"), value: t("5%", "5%"), level: "low" },
-      { label: t("🏖️ חבילות", "🏖️ Packages"), value: t("10%", "10%"), level: "high" },
-      { label: t("🧳 מאורגנים", "🧳 Organized tours"), value: t("7%", "7%"), level: "mid" },
+      { label: FLIGHTS_ONLY, value: t("5%", "5%"), level: "low" },
+      { label: PACKAGES, value: t("10%", "10%"), level: "high" },
+      { label: ORGANIZED_TOURS, value: t("7%", "7%"), level: "mid" },
     ],
     baggage: [
       BACKPACK(),
@@ -317,13 +322,13 @@ const SUPPLIERS: Supplier[] = [
     name: t("ארקיע", "Arkia"),
     alias: t("עמלה מיוחדת לבנגקוק ו-New York", "Special commission for Bangkok & New York"),
     rates: [
-      { label: t("✈️ טיסות", "✈️ Flights"), value: t("6%", "6%"), level: "low" },
+      { label: FLIGHTS_ONLY, value: t("6%", "6%"), level: "low" },
       {
         label: t("✈️ בנגקוק / ניו יורק", "✈️ Bangkok / New York"),
         value: t("7%", "7%"),
         level: "mid",
       },
-      { label: t("🏖️ חבילות", "🏖️ Packages"), value: t("10%", "10%"), level: "high" },
+      { label: PACKAGES, value: t("10%", "10%"), level: "high" },
     ],
     baggage: [
       { icon: "bag", text: t('תיק גב עד 4 ק"ג — כלול', "Backpack up to 4 kg — included") },
@@ -363,8 +368,8 @@ const SUPPLIERS: Supplier[] = [
     color: "success",
     name: t("מונה טורס", "Mona Tours"),
     rates: [
-      { label: t("✈️ טיסות", "✈️ Flights"), value: t("5%", "5%"), level: "low" },
-      { label: t("🏖️ חבילות", "🏖️ Packages"), value: t("10%", "10%"), level: "high" },
+      { label: FLIGHTS_ONLY, value: t("5%", "5%"), level: "low" },
+      { label: PACKAGES, value: t("10%", "10%"), level: "high" },
     ],
     baggage: [
       BACKPACK(),
@@ -392,9 +397,9 @@ const SUPPLIERS: Supplier[] = [
     name: t("איסתא (Issta)", "Issta"),
     alias: t("לפעמים עמלה מיוחדת במאורגנים", "Sometimes a special commission on organized tours"),
     rates: [
-      { label: t("✈️ טיסות", "✈️ Flights"), value: t("7%", "7%"), level: "mid" },
-      { label: t("🏖️ חבילות", "🏖️ Packages"), value: t("9.5%", "9.5%"), level: "high" },
-      { label: t("🧳 מאורגנים", "🧳 Organized tours"), value: t("7%", "7%"), level: "mid" },
+      { label: FLIGHTS_ONLY, value: t("7%", "7%"), level: "mid" },
+      { label: PACKAGES, value: t("9.5%", "9.5%"), level: "high" },
+      { label: ORGANIZED_TOURS, value: t("7%", "7%"), level: "mid" },
     ],
     baggage: [
       { icon: "bag", text: t('תיק גב עד 4 ק"ג — כלול', "Backpack up to 4 kg — included") },
@@ -428,8 +433,8 @@ const SUPPLIERS: Supplier[] = [
     color: "brand",
     name: t("WTC", "WTC"),
     rates: [
-      { label: t("✈️ טיסות", "✈️ Flights"), value: t("5%", "5%"), level: "low" },
-      { label: t("🏖️ חבילות", "🏖️ Packages"), value: t("8%", "8%"), level: "mid" },
+      { label: FLIGHTS_ONLY, value: t("5%", "5%"), level: "low" },
+      { label: PACKAGES, value: t("8%", "8%"), level: "mid" },
     ],
     baggage: [
       BACKPACK(),
@@ -462,8 +467,8 @@ const SUPPLIERS: Supplier[] = [
     color: "purple",
     name: t("Ayala — איילה", "Ayala"),
     rates: [
-      { label: t("✈️ טיסות", "✈️ Flights"), value: t("5%", "5%"), level: "low" },
-      { label: t("🏖️ חבילות", "🏖️ Packages"), value: t("7%", "7%"), level: "mid" },
+      { label: FLIGHTS_ONLY, value: t("5%", "5%"), level: "low" },
+      { label: PACKAGES, value: t("7%", "7%"), level: "mid" },
     ],
     baggage: [
       BACKPACK(),
@@ -490,8 +495,8 @@ const SUPPLIERS: Supplier[] = [
     name: t("Disenhause — דיזנהאוז", "Diesenhaus"),
     alias: t("לבדוק שלא השתנה", "Check that it hasn't changed"),
     rates: [
-      { label: t("✈️ טיסות", "✈️ Flights"), value: t("7%", "7%"), level: "mid" },
-      { label: t("🏖️ חבילות", "🏖️ Packages"), value: t("7%", "7%"), level: "mid" },
+      { label: FLIGHTS_ONLY, value: t("7%", "7%"), level: "mid" },
+      { label: PACKAGES, value: t("7%", "7%"), level: "mid" },
     ],
     baggage: [
       BACKPACK(),
