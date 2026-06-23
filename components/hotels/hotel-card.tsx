@@ -7,6 +7,7 @@ import type { HotelFeatureValue, HotelTagValue, BoardCode } from "@/db/schema";
 import type { ViewHotel, ViewDistance } from "@/lib/hotels";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { ButtonGroup } from "@/components/ui/button-group";
 import { Card } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { CopyLinkButton } from "./copy-link-button";
@@ -143,7 +144,7 @@ export function HotelCard({
   const actions = (hotel.googleMapsUrl || hotel.bookingUrl) && (
     <div className="flex flex-col gap-2">
       {hotel.googleMapsUrl && (
-        <div className="flex items-center gap-2">
+        <ButtonGroup className="w-full">
           <Button
             variant="outline"
             size="sm"
@@ -153,10 +154,10 @@ export function HotelCard({
             <MapPin className="size-3.5" /> {t("card.maps")}
           </Button>
           <CopyLinkButton url={hotel.googleMapsUrl} className="size-8 shrink-0" />
-        </div>
+        </ButtonGroup>
       )}
       {hotel.bookingUrl && (
-        <div className="flex items-center gap-2">
+        <ButtonGroup className="w-full">
           <Button
             variant="outline"
             size="sm"
@@ -166,7 +167,7 @@ export function HotelCard({
             <ExternalLink className="size-3.5" /> {t("card.booking")}
           </Button>
           <CopyLinkButton url={hotel.bookingUrl} className="size-8 shrink-0" />
-        </div>
+        </ButtonGroup>
       )}
     </div>
   );
@@ -203,9 +204,9 @@ export function HotelCard({
 
   if (layout === "list") {
     const listActions = (hotel.googleMapsUrl || hotel.bookingUrl) && (
-      <div className="flex shrink-0 flex-wrap items-center gap-1.5">
+      <div className="flex shrink-0 flex-wrap items-center gap-2">
         {hotel.googleMapsUrl && (
-          <>
+          <ButtonGroup>
             <Button
               variant="outline"
               size="sm"
@@ -215,10 +216,10 @@ export function HotelCard({
               <MapPin className="size-3.5" /> {t("card.maps")}
             </Button>
             <CopyLinkButton url={hotel.googleMapsUrl} className="size-8 shrink-0" />
-          </>
+          </ButtonGroup>
         )}
         {hotel.bookingUrl && (
-          <>
+          <ButtonGroup>
             <Button
               variant="outline"
               size="sm"
@@ -228,7 +229,7 @@ export function HotelCard({
               <ExternalLink className="size-3.5" /> {t("card.booking")}
             </Button>
             <CopyLinkButton url={hotel.bookingUrl} className="size-8 shrink-0" />
-          </>
+          </ButtonGroup>
         )}
       </div>
     );
