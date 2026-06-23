@@ -88,7 +88,7 @@
     "ratingNoteTitle": "About ratings",
     "ratingNote": "Stars are the hotel's official rating. The category (Premium / Good / Resort / Kosher) is our own rating based on experience.",
     "sort": {
-      "label": "Sort:",
+      "label": "Sort",
       "default": "Default",
       "starsDesc": "Stars 5→1",
       "starsAsc": "Stars 1→5",
@@ -97,6 +97,7 @@
       "distanceFrom": "Distance from {name}"
     },
     "filter": {
+      "filtersLabel": "Filters",
       "label": "Amenities:",
       "tagsLabel": "Tags:",
       "boardLabel": "Board Basis:",

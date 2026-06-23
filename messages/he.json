@@ -88,7 +88,7 @@
     "ratingNoteTitle": "אודות דירוגים",
     "ratingNote": "הכוכבים הם הדירוג הרשמי של המלון. הקטגוריה (מעולה / טוב / ריזורט / כשר) היא הדירוג שלנו לפי ניסיון.",
     "sort": {
-      "label": "מיון:",
+      "label": "מיון",
       "default": "ברירת מחדל",
       "starsDesc": "כוכבים 5→1",
       "starsAsc": "כוכבים 1→5",
@@ -97,6 +97,7 @@
       "distanceFrom": "מרחק מ{name}"
     },
     "filter": {
+      "filtersLabel": "סינונים",
       "label": "מתקנים:",
       "tagsLabel": "תגיות:",
       "boardLabel": "בסיס אירוח:",
