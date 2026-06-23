@@ -47,7 +47,7 @@ export function HotelFilters({ landmarks }: { landmarks: ViewLandmark[] }) {
       {/* Sort */}
       <div className="flex flex-col gap-3 rounded-lg border border-border bg-brand/5 px-3 py-3">
         <span className="text-sm font-bold">{t("sort.label")}</span>
-        <div className="flex flex-wrap items-center gap-2">
+        <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
           {BASE_SORTS.map((s) => (
             <Toggle
               key={s.value}
@@ -88,7 +88,7 @@ export function HotelFilters({ landmarks }: { landmarks: ViewLandmark[] }) {
         </div>
 
         {/* Tags */}
-        <div className="flex flex-wrap items-center gap-2">
+        <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
           <span className="text-xs font-bold text-muted-foreground">{t("filter.tagsLabel")}</span>
           {TAGS.map((c) => (
             <Toggle
@@ -103,7 +103,7 @@ export function HotelFilters({ landmarks }: { landmarks: ViewLandmark[] }) {
         </div>
 
         {/* Board basis */}
-        <div className="flex flex-wrap items-center gap-2">
+        <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
           <span className="text-xs font-bold text-muted-foreground">{t("filter.boardLabel")}</span>
           {BOARDS.map((b) => (
             <Toggle
@@ -118,7 +118,7 @@ export function HotelFilters({ landmarks }: { landmarks: ViewLandmark[] }) {
         </div>
 
         {/* Amenities */}
-        <div className="flex flex-wrap items-center gap-2">
+        <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
           <span className="text-xs font-bold text-muted-foreground">{t("filter.label")}</span>
           {AMENITIES.map((f) => (
             <Toggle
