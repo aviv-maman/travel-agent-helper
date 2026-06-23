@@ -235,22 +235,21 @@ export function HotelCard({
 
     return (
       <Card {...rootProps}>
-        <div className="flex flex-col gap-3 p-3.5 md:flex-row md:items-center md:gap-4">
-          <div className="flex min-w-0 flex-1 flex-col gap-2">
+        <div className="flex flex-col gap-3 p-4 sm:flex-row sm:items-start sm:gap-5">
+          <div className="flex min-w-0 flex-1 flex-col gap-2.5">
             <div className="flex flex-wrap items-center gap-x-2 gap-y-1.5">
-              <h3 className="text-[0.95rem] font-bold text-foreground transition-colors group-hover/hotel:text-brand">
+              <h3 className="text-base font-bold text-foreground transition-colors group-hover/hotel:text-brand">
                 {hotel.name}
               </h3>
               {ratings}
             </div>
             {badges}
+            {distanceTable && <div className="pt-0.5">{distanceTable}</div>}
+            {/* Compact, non-stretched action buttons — mobile only. */}
+            {listActions && <div className="sm:hidden">{listActions}</div>}
           </div>
-          {distanceTable && (
-            <div className="border-t border-border/60 pt-2 md:w-60 md:shrink-0 md:border-t-0 md:pt-0">
-              {distanceTable}
-            </div>
-          )}
-          {listActions}
+          {/* Desktop: original action column. */}
+          {actions && <div className="hidden shrink-0 sm:block sm:w-48">{actions}</div>}
         </div>
       </Card>
     );
