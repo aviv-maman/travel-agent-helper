@@ -21,6 +21,9 @@
   },
   "commissions": {
     "baggage": "כבודה",
+    "searchPlaceholder": "חפש ספק... (עברית או אנגלית)",
+    "clear": "נקה חיפוש",
+    "noResults": "😕 לא נמצא ספק תואם",
     "legend": {
       "high": "גבוה 10%+",
       "mid": "בינוני 7–9.5%",
@@ -54,7 +57,8 @@
     "intro": "<strong>הסעות לבית המלון ובחזרה</strong> — כלולות <strong>בחבילות נופש בלבד</strong>. בטיסות בלבד ובמאורגנים — ההסעות לא רלוונטיות לטבלה זו.",
     "searchPlaceholder": "חפש יעד או מדינה... (עברית או אנגלית)",
     "clear": "נקה חיפוש",
-    "noResults": "😕 לא נמצאו יעדים"
+    "noResults": "😕 לא נמצאו יעדים",
+    "verifyTooltip": "לבדוק מול הספק"
   },
   "baggage": {
     "intro": "🎒 <strong>תיק גב:</strong> כל החברות — עד 4 ק\"ג<br></br>🧳 <strong>טרולי:</strong> כל החברות — 8 ק\"ג (ישראייר ו-Cyprus Airways: 10 ק\"ג)",

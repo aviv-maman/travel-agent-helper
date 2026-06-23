@@ -1,11 +1,18 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useState, type ReactNode } from "react";
 import { useTranslations } from "next-intl";
 import { Search, X } from "lucide-react";
 import type { PillVariant, ViewCountryGroup } from "@/lib/transfers";
 import { Input } from "@/components/ui/input";
+import { Badge } from "@/components/ui/badge";
 import { CountryFlag } from "@/components/country-flag";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 const PILL: Record<PillVariant, { symbol: string; className: string }> = {
   yes: {
@@ -21,6 +28,34 @@ const PILL: Record<PillVariant, { symbol: string; className: string }> = {
     className: "border-gold/25 bg-gold/[0.1] text-gold",
   },
 };
+
+/** Matches an IATA/airport code in parentheses, e.g. "(SOF)" or "(ECN/GEC)". */
+const CODE_RE = /\(([A-Z][A-Z/]+)\)/g;
+
+/**
+ * Render a city name, turning any parenthesized airport codes into blue badges
+ * (same look as the hotels destination combobox).
+ */
+function renderName(name: string): ReactNode[] {
+  const parts: ReactNode[] = [];
+  let last = 0;
+  let key = 0;
+  for (const m of name.matchAll(CODE_RE)) {
+    const i = m.index ?? 0;
+    if (i > last) parts.push(name.slice(last, i));
+    parts.push(
+      <Badge
+        key={key++}
+        variant="outline"
+        className="mx-0.5 rounded-sm border-brand/35 bg-brand/10 px-1.5 text-[0.65rem] font-semibold tracking-wide text-brand">
+        {m[1]}
+      </Badge>,
+    );
+    last = i + m[0].length;
+  }
+  if (last < name.length) parts.push(name.slice(last));
+  return parts;
+}
 
 export function TransfersView({ groups }: { groups: ViewCountryGroup[] }) {
   const t = useTranslations("transfers");
@@ -42,7 +77,8 @@ export function TransfersView({ groups }: { groups: ViewCountryGroup[] }) {
   const hasResults = filtered.length > 0;
 
   return (
-    <div className="flex flex-col gap-5">
+    <TooltipProvider>
+      <div className="flex flex-col gap-5">
       <p className="rounded-xl border border-border bg-surface px-4 py-3 text-sm leading-relaxed text-muted-foreground">
         {t.rich("intro", {
           strong: (chunks) => <strong className="font-bold text-foreground">{chunks}</strong>,
@@ -87,28 +123,41 @@ export function TransfersView({ groups }: { groups: ViewCountryGroup[] }) {
             )}
             {grp.country}
           </h2>
-          <div className="flex flex-col gap-2.5">
-            {grp.cities.map((city) => (
-              <article
-                key={city.id}
-                className="rounded-xl border border-border bg-surface px-4 py-3">
-                <h3 className="mb-2 text-sm font-bold text-foreground">{city.name}</h3>
-                <div className="flex flex-wrap gap-1.5">
-                  {city.pills.map((pill, i) => (
-                    <span
-                      key={i}
-                      className={`inline-flex items-center gap-1 rounded-full border px-2.5 py-0.5 text-xs font-semibold ${PILL[pill.variant].className}`}>
-                      {pill.flag && <span aria-hidden>{pill.flag}</span>}
-                      <span aria-hidden>{PILL[pill.variant].symbol}</span>
-                      {pill.label}
-                    </span>
-                  ))}
+          <div className="overflow-hidden rounded-xl border border-border bg-surface">
+            {grp.cities.flatMap((city) =>
+              city.name.split("·").map((segment, si) => (
+                <div
+                  key={`${city.id}-${si}`}
+                  className="flex flex-wrap items-center gap-x-2 gap-y-1.5 border-t border-border px-3 py-2 first:border-t-0">
+                  <span className="me-1 text-sm font-bold text-foreground">
+                    {renderName(segment.trim())}
+                  </span>
+                  {city.pills.map((pill, i) => {
+                    const content = (
+                      <span
+                        className={`inline-flex items-center gap-1 rounded-full border px-2.5 py-0.5 text-xs font-semibold ${PILL[pill.variant].className}`}>
+                        {pill.flag && <span aria-hidden>{pill.flag}</span>}
+                        <span aria-hidden>{PILL[pill.variant].symbol}</span>
+                        {pill.label}
+                      </span>
+                    );
+                    const tip = pill.tooltip ?? (pill.variant === "warn" ? t("verifyTooltip") : null);
+                    return tip ? (
+                      <Tooltip key={i}>
+                        <TooltipTrigger render={<button type="button" />}>{content}</TooltipTrigger>
+                        <TooltipContent>{tip}</TooltipContent>
+                      </Tooltip>
+                    ) : (
+                      <span key={i}>{content}</span>
+                    );
+                  })}
                 </div>
-              </article>
-            ))}
+              )),
+            )}
           </div>
         </section>
       ))}
-    </div>
+      </div>
+    </TooltipProvider>
   );
 }
