@@ -202,20 +202,55 @@ export function HotelCard({
   );
 
   if (layout === "list") {
+    const listActions = (hotel.googleMapsUrl || hotel.bookingUrl) && (
+      <div className="flex shrink-0 flex-wrap items-center gap-1.5">
+        {hotel.googleMapsUrl && (
+          <>
+            <Button
+              variant="outline"
+              size="sm"
+              nativeButton={false}
+              className="h-8 text-brand"
+              render={<a href={hotel.googleMapsUrl} target="_blank" rel="noreferrer" />}>
+              <MapPin className="size-3.5" /> {t("card.maps")}
+            </Button>
+            <CopyLinkButton url={hotel.googleMapsUrl} className="size-8 shrink-0" />
+          </>
+        )}
+        {hotel.bookingUrl && (
+          <>
+            <Button
+              variant="outline"
+              size="sm"
+              nativeButton={false}
+              className="h-8 text-success"
+              render={<a href={hotel.bookingUrl} target="_blank" rel="noreferrer" />}>
+              <ExternalLink className="size-3.5" /> {t("card.booking")}
+            </Button>
+            <CopyLinkButton url={hotel.bookingUrl} className="size-8 shrink-0" />
+          </>
+        )}
+      </div>
+    );
+
     return (
       <Card {...rootProps}>
-        <div className="flex flex-col gap-3 p-4 sm:flex-row sm:items-start sm:gap-5">
-          <div className="flex min-w-0 flex-1 flex-col gap-2.5">
+        <div className="flex flex-col gap-3 p-3.5 md:flex-row md:items-center md:gap-4">
+          <div className="flex min-w-0 flex-1 flex-col gap-2">
             <div className="flex flex-wrap items-center gap-x-2 gap-y-1.5">
-              <h3 className="text-base font-bold text-foreground transition-colors group-hover/hotel:text-brand">
+              <h3 className="text-[0.95rem] font-bold text-foreground transition-colors group-hover/hotel:text-brand">
                 {hotel.name}
               </h3>
               {ratings}
             </div>
             {badges}
-            {distanceTable && <div className="pt-0.5">{distanceTable}</div>}
           </div>
-          {actions && <div className="shrink-0 sm:w-48">{actions}</div>}
+          {distanceTable && (
+            <div className="border-t border-border/60 pt-2 md:w-60 md:shrink-0 md:border-t-0 md:pt-0">
+              {distanceTable}
+            </div>
+          )}
+          {listActions}
         </div>
       </Card>
     );
