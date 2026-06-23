@@ -90,6 +90,7 @@ export function DestinationCombobox({ destinations }: { destinations: Destinatio
                     key={d.iata}
                     value={d.search}
                     data-checked={dest === d.iata}
+                    className="ps-4"
                     onSelect={() => {
                       update({ dest: d.iata, features: [], sort: "default" });
                       setOpen(false);
