@@ -561,6 +561,8 @@ export type ViewSupplier = {
   baggage: ViewBaggageRow[];
   note: string | null;
   noteVariant: "default" | "red";
+  /** Lowercased he + en name + alias, for client-side filtering across locales. */
+  search: string;
 };
 
 /** All suppliers, resolved to `locale`, in guide order. */
@@ -576,5 +578,8 @@ export function getCommissions(locale: string): ViewSupplier[] {
     baggage: s.baggage.map((b) => ({ icon: b.icon, text: pick(b.text) })),
     note: s.note ? pick(s.note) : null,
     noteVariant: s.noteVariant ?? "default",
+    search: `${s.name.he ?? ""} ${s.name.en ?? ""} ${s.alias?.he ?? ""} ${s.alias?.en ?? ""}`
+      .toLowerCase()
+      .trim(),
   }));
 }

@@ -21,6 +21,9 @@
   },
   "commissions": {
     "baggage": "Baggage",
+    "searchPlaceholder": "Search a supplier... (Hebrew or English)",
+    "clear": "Clear search",
+    "noResults": "😕 No matching supplier found",
     "legend": {
       "high": "High 10%+",
       "mid": "Medium 7–9.5%",
@@ -54,7 +57,8 @@
     "intro": "<strong>Hotel transfers (both ways)</strong> are included in <strong>vacation packages only</strong>. For flight-only bookings and organized tours, transfers are not relevant to this table.",
     "searchPlaceholder": "Search a destination or country... (Hebrew or English)",
     "clear": "Clear search",
-    "noResults": "😕 No destinations found"
+    "noResults": "😕 No destinations found",
+    "verifyTooltip": "Verify with the supplier"
   },
   "baggage": {
     "intro": "🎒 <strong>Backpack:</strong> all airlines — up to 4 kg<br></br>🧳 <strong>Trolley:</strong> all airlines — 8 kg (Israir & Cyprus Airways: 10 kg)",
@@ -64,7 +68,8 @@
     "noResults": "😕 No matching airline found",
     "colAirline": "Airline",
     "colSuitcase": "Suitcase",
-    "colNotes": "Notes"
+    "colNotes": "Notes",
+    "colContact": "Contact"
   },
   "cancellations": {
     "introTitle": "Note",

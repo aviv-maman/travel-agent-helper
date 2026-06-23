@@ -45,7 +45,9 @@ export function CommissionCard({ supplier }: { supplier: ViewSupplier }) {
         <div className="min-w-0">
           <h3 className="truncate text-base font-bold text-foreground">{supplier.name}</h3>
           {supplier.alias && <p className="text-xs text-muted-foreground">{supplier.alias}</p>}
-          <SupplierContact supplierId={supplier.id} supplierName={supplier.name} />
+          <div className="mt-1.5">
+            <SupplierContact supplierId={supplier.id} supplierName={supplier.name} />
+          </div>
         </div>
       </header>
 

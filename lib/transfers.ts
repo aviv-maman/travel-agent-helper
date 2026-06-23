@@ -16,6 +16,8 @@ export type Pill = {
   /** Optional leading flag/glyph (🇮🇱 for Israeli suppliers, 🌐 for WTC). */
   flag?: string;
   label: Localized;
+  /** Optional note shown only on hover (keeps the pill label short). */
+  tooltip?: Localized;
 };
 
 export type CityRow = {
@@ -39,25 +41,24 @@ const t = (he: string, en: string): Localized => ({ he, en });
 
 /** Supplier display names + their default flag. */
 const SUP: Record<string, { name: Localized; flag: string }> = {
-  israir: { name: t("ישראייר", "Israir"), flag: "🇮🇱" },
-  flying: { name: t("שטיח מעופף", "Flying"), flag: "🇮🇱" },
-  issta: { name: t("איסתא", "Issta"), flag: "🇮🇱" },
-  kesher: { name: t("קשרי תעופה", "Kesher Teufa"), flag: "🇮🇱" },
-  eshet: { name: t("אשת טורס", "Eshet Tours"), flag: "🇮🇱" },
-  arkia: { name: t("ארקיע", "Arkia"), flag: "🇮🇱" },
-  disenhause: { name: t("דיזנהאוז", "Disenhause"), flag: "🇮🇱" },
-  mona: { name: t("מונה טורס", "Mona Tours"), flag: "🇮🇱" },
-  ofir: { name: t("אופיר טורס", "Ofir Tours"), flag: "🇮🇱" },
-  kavei: { name: t("קוי חופשה", "Kavei Hufsha"), flag: "🇮🇱" },
-  ayala: { name: t("איילה", "Ayala"), flag: "🇮🇱" },
-  wtc: { name: t("WTC", "WTC"), flag: "🌐" },
+  israir: { name: t("ישראייר", "Israir"), flag: "" },
+  flying: { name: t("שטיח מעופף", "Flying"), flag: "" },
+  issta: { name: t("איסתא", "Issta"), flag: "" },
+  kesher: { name: t("קשרי תעופה", "Kesher Teufa"), flag: "" },
+  eshet: { name: t("אשת טורס", "Eshet Tours"), flag: "" },
+  arkia: { name: t("ארקיע", "Arkia"), flag: "" },
+  disenhause: { name: t("דיזנהאוז", "Disenhause"), flag: "" },
+  mona: { name: t("מונה טורס", "Mona Tours"), flag: "" },
+  ofir: { name: t("אופיר טורס", "Ofir Tours"), flag: "" },
+  kavei: { name: t("קוי חופשה", "Kavei Hufsha"), flag: "" },
+  ayala: { name: t("איילה", "Ayala"), flag: "" },
+  wtc: { name: t("WTC", "WTC"), flag: "" },
 };
 
-/** Supplier pill; `suffix` appends a localized note like "— not included". */
-function p(variant: PillVariant, supId: string, suffix?: Localized): Pill {
+/** Supplier pill; `tooltip` adds a localized hover note (keeps the label short). */
+function p(variant: PillVariant, supId: string, tooltip?: Localized): Pill {
   const s = SUP[supId];
-  const label = suffix ? t(`${s.name.he} ${suffix.he}`, `${s.name.en} ${suffix.en}`) : s.name;
-  return { variant, flag: s.flag, label };
+  return { variant, flag: s.flag, label: s.name, tooltip };
 }
 
 /** Generic (non-supplier) pill, e.g. "all suppliers". */
@@ -85,7 +86,7 @@ const COUNTRIES: CountryGroup[] = [
         name: t("סופיה (SOF)", "Sofia (SOF)"),
         search: "סופיה sofia sof",
         pills: [
-          p("warn", "ofir", t("— כולל, לוודא", "— included, verify")),
+          p("warn", "ofir"),
           p("no", "kavei"),
           p("no", "mona"),
           p("no", "israir"),
@@ -119,7 +120,7 @@ const COUNTRIES: CountryGroup[] = [
           p("no", "kesher"),
           p("no", "arkia"),
           p("no", "kavei"),
-          g("warn", "שאר הספקים — לאמת", "Other suppliers — verify"),
+          g("warn", "שאר הספקים", "Other suppliers"),
         ],
       },
       {
@@ -127,11 +128,11 @@ const COUNTRIES: CountryGroup[] = [
         name: t("סנטוריני (JTR)", "Santorini (JTR)"),
         search: "סנטוריני santorini jtr",
         pills: [
-          p("yes", "wtc", t("— העברה פרטית בחינם", "— free private transfer")),
+          p("yes", "wtc", t("העברה פרטית בחינם", "Free private transfer")),
           p("yes", "issta"),
           p("no", "eshet"),
           p("no", "kesher"),
-          g("warn", "שאר הספקים — לאמת", "Other suppliers — verify"),
+          g("warn", "שאר הספקים", "Other suppliers"),
         ],
       },
       {
@@ -139,7 +140,7 @@ const COUNTRIES: CountryGroup[] = [
         name: t("חאניה (CHQ)", "Chania (CHQ)"),
         search: "חאניה chania chq כרתים crete",
         pills: [
-          g("no", "לא כלול — אין העברות בשום ספק", "Not included — no transfers with any supplier"),
+          g("no", "כל הספקים", "All suppliers"),
         ],
       },
       {
@@ -164,15 +165,15 @@ const COUNTRIES: CountryGroup[] = [
       {
         id: "greek-cyprus",
         name: t(
-          "קפריסין היוונית — לימסול (LCA) · לרנקה (LCA) · איה נאפה · פאפוס (PFO) · פרוטאראס",
-          "Greek Cyprus — Limassol (LCA) · Larnaca (LCA) · Ayia Napa · Paphos (PFO) · Protaras",
+          "קפריסין היוונית — לימסול (LCA) · לרנקה (LCA) · איה נאפה (AYA) · פאפוס (PFO) · פרוטאראס (PRT)",
+          "Greek Cyprus — Limassol (LCA) · Larnaca (LCA) · Ayia Napa (AYA) · Paphos (PFO) · Protaras (PRT)",
         ),
         search:
-          "lca pfo לימסול limassol לרנקה larnaca פאפוס paphos פרוטאראס protaras איה נאפה ayia napa",
+          "lca pfo aya prt לימסול limassol לרנקה larnaca פאפוס paphos פרוטאראס protaras איה נאפה ayia napa",
         pills: [
           p("yes", "flying"),
           p("yes", "issta"),
-          p("no", "ayala", t("— לא כלול", "— not included")),
+          p("no", "ayala"),
           g("no", "כל שאר הספקים", "All other suppliers"),
         ],
       },
@@ -307,7 +308,7 @@ const COUNTRIES: CountryGroup[] = [
         pills: [
           p("no", "mona"),
           p("no", "arkia"),
-          g("warn", "שאר הספקים — לאמת", "Other suppliers — verify"),
+          g("warn", "שאר הספקים", "Other suppliers"),
         ],
       },
     ],
@@ -464,14 +465,19 @@ const COUNTRIES: CountryGroup[] = [
         id: "other",
         name: t("כל יעד אחר שאינו מופיע מעלה", "Any other destination not listed above"),
         search: "אחר other",
-        pills: [g("no", "כל הספקים — לא כלול", "All suppliers — not included")],
+        pills: [g("no", "כל הספקים", "All suppliers")],
       },
     ],
   },
 ];
 
 // ── Locale-resolved view types ───────────────────────────────────────────────
-export type ViewPill = { variant: PillVariant; flag: string | null; label: string };
+export type ViewPill = {
+  variant: PillVariant;
+  flag: string | null;
+  label: string;
+  tooltip: string | null;
+};
 export type ViewCityRow = {
   id: string;
   name: string;
@@ -502,6 +508,7 @@ export function getTransfers(locale: string): ViewCountryGroup[] {
         variant: pl.variant,
         flag: pl.flag ?? null,
         label: pick(pl.label),
+        tooltip: pl.tooltip ? pick(pl.tooltip) : null,
       })),
     })),
   }));
