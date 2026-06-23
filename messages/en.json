@@ -115,6 +115,10 @@
       "outsideCenter": "Outside the center",
       "clear": "Clear filters"
     },
+    "view": {
+      "list": "List view",
+      "grid": "Grid view"
+    },
     "pager": {
       "count": "{total} hotels",
       "perPage": "Per page",

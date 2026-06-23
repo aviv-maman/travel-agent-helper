@@ -115,6 +115,10 @@
       "outsideCenter": "מחוץ למרכז",
       "clear": "נקה סינונים"
     },
+    "view": {
+      "list": "תצוגת רשימה",
+      "grid": "תצוגת רשת"
+    },
     "pager": {
       "count": "{total} מלונות",
       "perPage": "בכל עמוד",

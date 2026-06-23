@@ -2,12 +2,15 @@
 
 import { useMemo } from "react";
 import { useLocale, useTranslations } from "next-intl";
-import { MapPin, ExternalLink } from "lucide-react";
-import type { HotelFeatureValue, HotelTagValue } from "@/db/schema";
+import { MapPin, ExternalLink, Star } from "lucide-react";
+import type { HotelFeatureValue, HotelTagValue, BoardCode } from "@/db/schema";
 import type { ViewHotel, ViewDistance } from "@/lib/hotels";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
 import { CopyLinkButton } from "./copy-link-button";
+import type { ViewMode } from "./use-view-mode";
 import { useHotelParams } from "./use-hotel-params";
 
 type FilterKey = keyof (typeof import("@/messages/en.json"))["hotels"]["filter"];
@@ -22,6 +25,14 @@ const FEATURE_META: Record<HotelFeatureValue, { emoji: string; key: FilterKey }>
 };
 
 const TAG_EMOJI: Record<HotelTagValue, string> = { resort: "🎢", kosher: "✡️" };
+const BOARD_EMOJI: Record<BoardCode, string> = { bb: "🍳", hb: "🍴", fb: "🍽️" };
+
+const BADGE_TINT = {
+  tag: "border-transparent bg-amber-100 text-amber-800 dark:bg-amber-900/40 dark:text-amber-300",
+  board: "border-transparent bg-sky-100 text-sky-800 dark:bg-sky-900/40 dark:text-sky-300",
+  feature:
+    "border-transparent bg-violet-100 text-violet-800 dark:bg-violet-900/40 dark:text-violet-300",
+} as const;
 
 export function formatMeters(m: number | null, locale: string): string | null {
   if (m == null) return null;
@@ -46,7 +57,15 @@ export function useTimeLabel() {
   };
 }
 
-export function HotelCard({ hotel, onOpen }: { hotel: ViewHotel; onOpen: () => void }) {
+export function HotelCard({
+  hotel,
+  layout = "grid",
+  onOpen,
+}: {
+  hotel: ViewHotel;
+  layout?: ViewMode;
+  onOpen: () => void;
+}) {
   const locale = useLocale();
   const t = useTranslations("hotels");
   const timeLabel = useTimeLabel();
@@ -70,136 +89,154 @@ export function HotelCard({ hotel, onOpen }: { hotel: ViewHotel; onOpen: () => v
     onOpen();
   }
 
-  return (
-    <article
-      role="button"
-      tabIndex={0}
-      onClick={handleActivate}
-      onKeyDown={(e) => {
-        if (e.key === "Enter" || e.key === " ") {
-          e.preventDefault();
-          handleActivate(e);
-        }
-      }}
-      className="flex cursor-pointer flex-col gap-2 rounded-xl border border-border bg-surface p-4 shadow-sm transition-colors hover:border-brand/50">
-      <div className="flex items-start justify-between gap-2">
-        <h3 className="text-base font-bold text-foreground">{hotel.name}</h3>
-        <span className="text-xl" aria-hidden>
-          🏨
+  const rootProps = {
+    role: "button" as const,
+    tabIndex: 0,
+    onClick: handleActivate,
+    onKeyDown: (e: React.KeyboardEvent) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        handleActivate(e);
+      }
+    },
+    className:
+      "group/hotel cursor-pointer gap-0 py-0 ring-foreground/10 transition-all duration-200 ease-out hover:-translate-y-0.5 hover:bg-brand/[0.04] hover:shadow-lg hover:shadow-brand/10 hover:ring-2 hover:ring-brand/50 focus-visible:-translate-y-0.5 focus-visible:bg-brand/[0.04] focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:outline-none",
+  };
+
+  const ratings = (
+    <div className="flex shrink-0 items-center gap-1.5">
+      {hotel.stars != null && (
+        <span className="inline-flex items-center gap-0.5 rounded-md bg-gold/10 px-1.5 py-0.5 text-xs font-bold text-gold">
+          <Star className="size-3 fill-current" />
+          {hotel.stars}
         </span>
-      </div>
-
-      <div className="flex items-center gap-1">
-        {hotel.stars != null && (
-          <>
-            <span className="text-xs" aria-hidden>
-              {"⭐".repeat(hotel.stars)}
-            </span>
-            <span className="text-xs font-bold text-muted-foreground">{hotel.stars} ★</span>
-          </>
-        )}
-      </div>
-
-      {hotel.tags.length > 0 && (
-        <div className="flex flex-wrap gap-1.5">
-          {hotel.tags.map((tag) => (
-            <Badge
-              key={tag}
-              className="border-border bg-amber-50 text-amber-700 dark:bg-amber-950 dark:text-amber-300">
-              {TAG_EMOJI[tag]} {t(`tier.${tag}`)}
-            </Badge>
-          ))}
-        </div>
       )}
-
-      {hotel.boards.length > 0 && (
-        <div className="flex flex-wrap gap-1.5">
-          {hotel.boards.map((b) => (
-            <Badge
-              key={b}
-              variant="secondary"
-              className="border-border bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300">
-              {"🍴"} {t(`board.${b}`)}
-            </Badge>
-          ))}
-        </div>
-      )}
-
-      {hotel.features.length > 0 && (
-        <div className="flex flex-wrap gap-1.5">
-          {hotel.features.map((f) => (
-            <Badge
-              key={f}
-              variant="outline"
-              className="border-border bg-purple-50 text-purple-700 dark:bg-purple-950 dark:text-purple-300">
-              {FEATURE_META[f].emoji} {t(`filter.${FEATURE_META[f].key}`)}
-            </Badge>
-          ))}
-        </div>
-      )}
-
       {hotel.bookingScore != null && (
-        <Badge className="border-border bg-green-50 text-green-700 dark:bg-green-950 dark:text-green-300">
-          {"🏨"} {t("card.bookingScore")} {hotel.bookingScore}
+        <span className="inline-flex items-center gap-1 rounded-md bg-success/10 px-1.5 py-0.5 text-xs font-bold text-success">
+          {t("card.bookingScore")} {hotel.bookingScore}
+        </span>
+      )}
+    </div>
+  );
+
+  const hasBadges = hotel.tags.length > 0 || hotel.boards.length > 0 || hotel.features.length > 0;
+  const badges = hasBadges && (
+    <div className="flex flex-wrap gap-1.5">
+      {hotel.tags.map((tag) => (
+        <Badge key={tag} className={BADGE_TINT.tag}>
+          {TAG_EMOJI[tag]} {t(`tier.${tag}`)}
         </Badge>
-      )}
+      ))}
+      {hotel.boards.map((b) => (
+        <Badge key={b} className={BADGE_TINT.board}>
+          {BOARD_EMOJI[b]} {t(`board.${b}`)}
+        </Badge>
+      ))}
+      {hotel.features.map((f) => (
+        <Badge key={f} className={BADGE_TINT.feature}>
+          {FEATURE_META[f].emoji} {t(`filter.${FEATURE_META[f].key}`)}
+        </Badge>
+      ))}
+    </div>
+  );
 
-      <div className="mt-1 flex items-center gap-2">
-        {hotel.googleMapsUrl && (
-          <>
-            <Button
-              variant="outline"
-              nativeButton={false}
-              className="h-8 flex-1 text-brand"
-              render={<a href={hotel.googleMapsUrl} target="_blank" rel="noreferrer" />}>
-              <MapPin className="size-3.5" /> {t("card.maps")}
-            </Button>
-            <CopyLinkButton url={hotel.googleMapsUrl} />
-          </>
-        )}
-        {hotel.bookingUrl && (
-          <>
-            <Button
-              variant="outline"
-              nativeButton={false}
-              className="h-8 flex-1 text-success"
-              render={<a href={hotel.bookingUrl} target="_blank" rel="noreferrer" />}>
-              <ExternalLink className="size-3.5" /> {t("card.booking")}
-            </Button>
-            <CopyLinkButton url={hotel.bookingUrl} />
-          </>
-        )}
+  const actions = (hotel.googleMapsUrl || hotel.bookingUrl) && (
+    <div className="flex flex-col gap-2">
+      {hotel.googleMapsUrl && (
+        <div className="flex items-center gap-2">
+          <Button
+            variant="outline"
+            size="sm"
+            nativeButton={false}
+            className="h-8 flex-1 text-brand"
+            render={<a href={hotel.googleMapsUrl} target="_blank" rel="noreferrer" />}>
+            <MapPin className="size-3.5" /> {t("card.maps")}
+          </Button>
+          <CopyLinkButton url={hotel.googleMapsUrl} className="size-8 shrink-0" />
+        </div>
+      )}
+      {hotel.bookingUrl && (
+        <div className="flex items-center gap-2">
+          <Button
+            variant="outline"
+            size="sm"
+            nativeButton={false}
+            className="h-8 flex-1 text-success"
+            render={<a href={hotel.bookingUrl} target="_blank" rel="noreferrer" />}>
+            <ExternalLink className="size-3.5" /> {t("card.booking")}
+          </Button>
+          <CopyLinkButton url={hotel.bookingUrl} className="size-8 shrink-0" />
+        </div>
+      )}
+    </div>
+  );
+
+  const distanceTable = distances.length > 0 && (
+    <table className="w-full border-separate border-spacing-y-0.5 text-xs text-muted-foreground">
+      <tbody>
+        {distances.map((d) => {
+          const isSelected = d.landmarkKey === activeKey;
+          return (
+            <tr key={d.landmarkKey} className={isSelected ? "bg-brand/10" : undefined}>
+              <td
+                className={`py-0.5 ps-1.5 text-start ${
+                  isSelected ? "rounded-s-md font-bold text-brand" : "text-foreground"
+                }`}>
+                {isSelected && <span aria-hidden>📌 </span>}
+                {d.name}
+              </td>
+              <td className="py-0.5 text-end font-bold whitespace-nowrap text-gold">
+                {timeLabel(d)}
+              </td>
+              <td
+                className={`py-0.5 ps-2 pe-1.5 text-end text-[0.68rem] ${
+                  isSelected ? "rounded-e-md" : ""
+                }`}>
+                {formatMeters(d.meters, locale)}
+              </td>
+            </tr>
+          );
+        })}
+      </tbody>
+    </table>
+  );
+
+  if (layout === "list") {
+    return (
+      <Card {...rootProps}>
+        <div className="flex flex-col gap-3 p-4 sm:flex-row sm:items-start sm:gap-5">
+          <div className="flex min-w-0 flex-1 flex-col gap-2.5">
+            <div className="flex flex-wrap items-center gap-x-2 gap-y-1.5">
+              <h3 className="text-base font-bold text-foreground transition-colors group-hover/hotel:text-brand">
+                {hotel.name}
+              </h3>
+              {ratings}
+            </div>
+            {badges}
+            {distanceTable && <div className="pt-0.5">{distanceTable}</div>}
+          </div>
+          {actions && <div className="shrink-0 sm:w-48">{actions}</div>}
+        </div>
+      </Card>
+    );
+  }
+
+  return (
+    <Card {...rootProps} className={`${rootProps.className} h-full`}>
+      <div className="flex flex-1 flex-col gap-3 p-4">
+        <h3 className="text-base leading-snug font-bold text-foreground transition-colors group-hover/hotel:text-brand">
+          {hotel.name}
+        </h3>
+        {ratings}
+        {badges}
+        {distanceTable}
       </div>
-
-      {distances.length > 0 && (
-        <table className="mt-1 w-full border-separate border-spacing-y-0.5 text-xs text-muted-foreground">
-          <tbody>
-            {distances.map((d) => {
-              const isSelected = d.landmarkKey === activeKey;
-              return (
-                <tr key={d.landmarkKey} className={isSelected ? "bg-brand/10" : undefined}>
-                  <td
-                    className={`py-0.5 ps-1.5 text-start ${
-                      isSelected ? "rounded-s-md font-bold text-brand" : "text-foreground"
-                    }`}>
-                    {isSelected && <span aria-hidden>📌 </span>}
-                    {d.name}
-                  </td>
-                  <td className="py-0.5 text-end font-bold whitespace-nowrap text-gold">
-                    {timeLabel(d)}
-                  </td>
-                  <td
-                    className={`py-0.5 ps-2 pe-1.5 text-end text-[0.68rem] ${
-                      isSelected ? "rounded-e-md" : ""
-                    }`}>
-                    {formatMeters(d.meters, locale)}
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
+      {actions && (
+        <>
+          <Separator />
+          <div className="bg-muted/30 p-3">{actions}</div>
+        </>
       )}
-    </article>
+    </Card>
   );
 }
