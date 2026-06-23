@@ -3,8 +3,9 @@
 import { useMemo, useState } from "react";
 import { useTranslations } from "next-intl";
 import { Search, X } from "lucide-react";
-import type { PillVariant, ViewTransferGroup } from "@/lib/transfers";
+import type { PillVariant, ViewCountryGroup } from "@/lib/transfers";
 import { Input } from "@/components/ui/input";
+import { CountryFlag } from "@/components/country-flag";
 
 const PILL: Record<PillVariant, { symbol: string; className: string }> = {
   yes: {
@@ -21,7 +22,7 @@ const PILL: Record<PillVariant, { symbol: string; className: string }> = {
   },
 };
 
-export function TransfersView({ groups }: { groups: ViewTransferGroup[] }) {
+export function TransfersView({ groups }: { groups: ViewCountryGroup[] }) {
   const t = useTranslations("transfers");
   const [query, setQuery] = useState("");
 
@@ -32,9 +33,9 @@ export function TransfersView({ groups }: { groups: ViewTransferGroup[] }) {
     return groups
       .map((grp) => ({
         ...grp,
-        cards: grp.cards.filter((c) => tokens.every((tok) => c.search.includes(tok))),
+        cities: grp.cities.filter((c) => tokens.every((tok) => c.search.includes(tok))),
       }))
-      .filter((grp) => grp.cards.length > 0);
+      .filter((grp) => grp.cities.length > 0);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [groups, query]);
 
@@ -78,17 +79,22 @@ export function TransfersView({ groups }: { groups: ViewTransferGroup[] }) {
 
       {filtered.map((grp) => (
         <section key={grp.id}>
-          <h2 className="mb-2.5 border-b border-border pb-1.5 text-xs font-bold tracking-wide text-muted-foreground uppercase">
-            {grp.title}
+          <h2 className="mb-2.5 flex items-center gap-2 border-b border-border pb-1.5 text-sm font-bold text-foreground">
+            {grp.code ? (
+              <CountryFlag code={grp.code} className="h-4 w-6" />
+            ) : (
+              <span aria-hidden>🌍</span>
+            )}
+            {grp.country}
           </h2>
           <div className="flex flex-col gap-2.5">
-            {grp.cards.map((card) => (
+            {grp.cities.map((city) => (
               <article
-                key={card.id}
+                key={city.id}
                 className="rounded-xl border border-border bg-surface px-4 py-3">
-                <h3 className="mb-2 text-sm font-bold text-foreground">{card.name}</h3>
+                <h3 className="mb-2 text-sm font-bold text-foreground">{city.name}</h3>
                 <div className="flex flex-wrap gap-1.5">
-                  {card.pills.map((pill, i) => (
+                  {city.pills.map((pill, i) => (
                     <span
                       key={i}
                       className={`inline-flex items-center gap-1 rounded-full border px-2.5 py-0.5 text-xs font-semibold ${PILL[pill.variant].className}`}>
