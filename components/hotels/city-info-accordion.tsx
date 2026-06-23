@@ -99,14 +99,18 @@ export function CityInfoAccordion({ info }: { info: ViewInfo }) {
                       </td>
                       <td className="py-1 text-muted-foreground">{row.detail}</td>
                       <td className="py-1 ps-2 text-end whitespace-nowrap">
-                        {row.priceIls ? (
-                          <>
-                            <span className="font-bold text-gold">{row.priceIls}</span>{" "}
-                            <span className="text-brand">({stripApprox(row.price ?? "")})</span>
-                          </>
-                        ) : (
-                          <span className="font-bold text-gold">{row.price}</span>
-                        )}
+                        {/* Prices are Latin/numeric — isolate them as LTR so the
+                            bidi algorithm doesn't reorder the parts in RTL. */}
+                        <span dir="ltr" className="inline-block">
+                          {row.priceIls ? (
+                            <>
+                              <span className="font-bold text-gold">{row.priceIls}</span>{" "}
+                              <span className="text-brand">({stripApprox(row.price ?? "")})</span>
+                            </>
+                          ) : (
+                            <span className="font-bold text-gold">{row.price}</span>
+                          )}
+                        </span>
                       </td>
                     </tr>
                   ))}
