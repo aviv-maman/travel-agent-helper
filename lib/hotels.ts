@@ -7,6 +7,7 @@ import type {
   Localized,
 } from "@/db/schema";
 import type { Locale } from "@/i18n/config";
+import { getIlsRates, toIls, type IlsRates } from "./money";
 
 /**
  * Pick a translatable value for the active locale. No cross-language fallback:
@@ -121,6 +122,8 @@ export type ViewTransport = {
   mode?: string;
   detail?: string;
   price?: string;
+  /** `price` converted to shekels for display, e.g. "~95–135 ILS". */
+  priceIls?: string;
 };
 export type ViewInfo = {
   warnings: string[];
@@ -159,6 +162,7 @@ export type DestinationSummary = {
 function resolveInfo(
   info: DestinationInfo | null,
   locale: string,
+  rates: IlsRates,
 ): ViewInfo | null {
   if (!info) return null;
   const pick = (v: Localized | null | undefined) => localized(v, locale) || undefined;
@@ -168,6 +172,7 @@ function resolveInfo(
       mode: localized(r.mode, locale),
       detail: localized(r.detail, locale),
       price: r.price,
+      priceIls: r.price ? toIls(r.price, rates) : undefined,
     }))
     .filter((r) => r.mode || r.detail);
   return {
@@ -277,6 +282,7 @@ export async function getDestinationView(
   const all = await getHotelData();
   const d = all.find((x) => x.iata === iata);
   if (!d) return null;
+  const rates = await getIlsRates();
 
   // amenities AND; tags / boards each OR within themselves.
   const filtered = sortHotels(
@@ -299,7 +305,7 @@ export async function getDestinationView(
     name: localized(d.name, locale),
     country: localized(d.country, locale),
     countryCode: d.countryCode,
-    info: resolveInfo(d.info, locale),
+    info: resolveInfo(d.info, locale, rates),
     landmarks: d.landmarks.map((l) => ({
       key: l.key,
       name: localized(l.name, locale),
