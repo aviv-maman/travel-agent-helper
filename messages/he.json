@@ -64,7 +64,8 @@
     "noResults": "😕 לא נמצאה חברת תעופה תואמת",
     "colAirline": "חברת תעופה",
     "colSuitcase": "מזוודה",
-    "colNotes": "הערות"
+    "colNotes": "הערות",
+    "colContact": "יצירת קשר"
   },
   "cancellations": {
     "introTitle": "הערה",

@@ -139,7 +139,7 @@ export function SupplierContact({
             type="button"
             variant="outline"
             size="sm"
-            className="mt-1.5 gap-1.5 border-success/35 bg-success/10 text-success hover:bg-success/20"
+            className="gap-1.5 border-success/35 bg-success/10 text-success hover:bg-success/20"
           />
         }>
         📞 {t("button")}

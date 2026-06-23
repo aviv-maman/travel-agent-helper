@@ -5,6 +5,8 @@ import { useTranslations } from "next-intl";
 import { Search, X } from "lucide-react";
 import type { WeightTier, ViewAirline } from "@/lib/baggage";
 import { Input } from "@/components/ui/input";
+import { CountryFlag } from "@/components/country-flag";
+import { SupplierContact } from "@/components/commissions/supplier-contact";
 
 const TIER: Record<WeightTier, string> = {
   kg23: "bg-success/[0.12] text-success",
@@ -67,6 +69,9 @@ export function BaggageView({ airlines }: { airlines: ViewAirline[] }) {
                 <th className="px-3 py-2 text-start text-xs font-bold tracking-wide text-muted-foreground uppercase">
                   {t("colNotes")}
                 </th>
+                <th className="px-3 py-2 text-start text-xs font-bold tracking-wide text-muted-foreground uppercase">
+                  {t("colContact")}
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -85,11 +90,7 @@ export function BaggageView({ airlines }: { airlines: ViewAirline[] }) {
                     <span className={a.highlight ? "text-muted-foreground" : "text-foreground"}>
                       {a.name}
                     </span>
-                    {a.flag && (
-                      <span className="ms-1" aria-hidden>
-                        {a.flag}
-                      </span>
-                    )}
+                    {a.code && <CountryFlag code={a.code} className="ms-1.5 align-middle" />}
                   </td>
                   <td className="px-3 py-1.5 align-middle">
                     <span
@@ -102,6 +103,9 @@ export function BaggageView({ airlines }: { airlines: ViewAirline[] }) {
                       a.noteTone === "gold" ? "text-gold" : "text-muted-foreground"
                     }`}>
                     {a.note}
+                  </td>
+                  <td className="px-3 py-1.5 align-middle">
+                    <SupplierContact supplierId={a.id} supplierName={a.name} />
                   </td>
                 </tr>
               ))}

@@ -110,10 +110,25 @@ const AIRLINES: Airline[] = [
   },
 ];
 
+/**
+ * Convert a regional-indicator flag emoji (🇬🇪) to its ISO-3166 alpha-2 code
+ * ("ge"), so we can render a real SVG flag via <CountryFlag>. Windows / Edge
+ * don't ship flag glyphs, so the emoji alone would show as "GE" text there.
+ */
+function flagToCode(flag?: string): string | null {
+  if (!flag) return null;
+  const cps = [...flag].map((ch) => ch.codePointAt(0) ?? 0);
+  if (cps.length !== 2 || cps.some((cp) => cp < 0x1f1e6 || cp > 0x1f1ff)) return null;
+  return cps.map((cp) => String.fromCharCode(cp - 0x1f1e6 + 97)).join("");
+}
+
 // ── Locale-resolved view types ───────────────────────────────────────────────
 export type ViewAirline = {
+  /** Stable id for per-airline contact details (shared contacts store). */
+  id: string;
   iata: string | null;
-  flag: string | null;
+  /** ISO-3166 alpha-2 country code for the SVG flag, or null. */
+  code: string | null;
   name: string;
   weight: string;
   tier: WeightTier;
@@ -130,8 +145,9 @@ export function getBaggage(locale: string): ViewAirline[] {
   const pick = (v: Localized) => localized(v, lc);
   const unit = lc === "he" ? 'ק"ג' : "kg";
   return AIRLINES.map((a) => ({
+    id: `air:${(a.iata ?? a.name.en ?? "").toLowerCase().replace(/[^a-z0-9]+/g, "-")}`,
     iata: a.iata ?? null,
-    flag: a.flag ?? null,
+    code: flagToCode(a.flag),
     name: pick(a.name),
     weight: `${a.kg} ${unit}`,
     tier: a.kg === "20" ? "kg20" : "kg23",
