@@ -2,6 +2,7 @@
 
 import { useTranslations } from "next-intl";
 import type { ViewInfo } from "@/lib/hotels";
+import { stripApprox } from "@/lib/money";
 import {
   Accordion,
   AccordionContent,
@@ -97,8 +98,15 @@ export function CityInfoAccordion({ info }: { info: ViewInfo }) {
                         {row.mode}
                       </td>
                       <td className="py-1 text-muted-foreground">{row.detail}</td>
-                      <td className="py-1 ps-2 text-end font-bold whitespace-nowrap text-gold">
-                        {row.price}
+                      <td className="py-1 ps-2 text-end whitespace-nowrap">
+                        {row.priceIls ? (
+                          <>
+                            <span className="font-bold text-gold">{row.priceIls}</span>{" "}
+                            <span className="text-brand">({stripApprox(row.price ?? "")})</span>
+                          </>
+                        ) : (
+                          <span className="font-bold text-gold">{row.price}</span>
+                        )}
                       </td>
                     </tr>
                   ))}

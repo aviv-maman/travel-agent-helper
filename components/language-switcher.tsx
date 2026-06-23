@@ -1,6 +1,8 @@
 "use client";
 
+import { useEffect, useTransition } from "react";
 import { useLocale, useTranslations } from "next-intl";
+import { useSearchParams } from "next/navigation";
 import { usePathname, useRouter } from "@/i18n/navigation";
 import { routing } from "@/i18n/routing";
 import { localeCountry, type Locale } from "@/i18n/config";
@@ -19,11 +21,41 @@ const LABEL_KEY: Record<Locale, "english" | "hebrew"> = {
   he: "hebrew",
 };
 
+// Switching locale flips the page direction (rtl↔ltr), which re-resolves every
+// logical margin/padding to the opposite side. Any element with a CSS
+// transition animates that jump, so the whole page appears to flicker. We
+// suppress transitions for the single frame the swap lands on, then restore.
+const NO_TRANSITION_ID = "locale-switch-no-transition";
+
+function suppressTransitions() {
+  if (typeof document === "undefined" || document.getElementById(NO_TRANSITION_ID)) return;
+  const style = document.createElement("style");
+  style.id = NO_TRANSITION_ID;
+  style.textContent = "*,*::before,*::after{transition:none!important;animation:none!important}";
+  document.head.appendChild(style);
+}
+
+function restoreTransitions() {
+  if (typeof document === "undefined") return;
+  document.getElementById(NO_TRANSITION_ID)?.remove();
+}
+
 export function LanguageSwitcher() {
   const locale = useLocale() as Locale;
   const t = useTranslations("nav");
   const pathname = usePathname();
+  const searchParams = useSearchParams();
   const router = useRouter();
+  const [isPending, startTransition] = useTransition();
+  const query = Object.fromEntries(searchParams.entries());
+
+  // Once the navigation settles, wait one painted frame (so the rtl↔ltr reflow
+  // has happened with transitions off) before allowing transitions again.
+  useEffect(() => {
+    if (isPending) return;
+    const id = requestAnimationFrame(restoreTransitions);
+    return () => cancelAnimationFrame(id);
+  }, [isPending]);
   return (
     <TooltipProvider>
       <Tooltip>
@@ -42,7 +74,12 @@ export function LanguageSwitcher() {
             {routing.locales.map((l) => (
               <DropdownMenuItem
                 key={l}
-                onClick={() => router.replace(pathname, { locale: l })}
+                onClick={() => {
+                  suppressTransitions();
+                  startTransition(() =>
+                    router.replace({ pathname, query }, { locale: l }),
+                  );
+                }}
                 className="gap-2">
                 <CountryFlag code={localeCountry[l]} />
                 {t(LABEL_KEY[l])}

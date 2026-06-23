@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/navigation-menu";
 
 const PAGES = [
-  { segment: "commissions", emoji: "💰" },
+  { segment: "suppliers", emoji: "💰" },
   { segment: "transfers", emoji: "🚌" },
   { segment: "baggage", emoji: "🧳" },
   { segment: "cancellations", emoji: "❌" },
