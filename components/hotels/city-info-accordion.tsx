@@ -98,12 +98,14 @@ export function CityInfoAccordion({ info }: { info: ViewInfo }) {
                       <td className="py-1 text-muted-foreground">{row.detail}</td>
                       <td className="py-1 ps-2 text-end whitespace-nowrap">
                         {row.priceIls ? (
-                          <>
-                            <span className="font-bold text-gold">{row.priceIls}</span>{" "}
+                          <span dir="ltr" className="inline-flex gap-1">
+                            <span className="font-bold text-gold">{row.priceIls}</span>
                             <span className="text-brand">({stripApprox(row.price ?? "")})</span>
-                          </>
+                          </span>
                         ) : (
-                          <span className="font-bold text-gold">{row.price}</span>
+                          <span dir="ltr" className="inline-block font-bold text-gold">
+                            {row.price}
+                          </span>
                         )}
                       </td>
                     </tr>
