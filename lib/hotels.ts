@@ -122,7 +122,7 @@ export type ViewTransport = {
   mode?: string;
   detail?: string;
   price?: string;
-  /** `price` converted to shekels for display, e.g. "~95–135 ILS". */
+  /** `price` converted to shekels for display, e.g. "~95–135 ₪". */
   priceIls?: string;
 };
 export type ViewInfo = {

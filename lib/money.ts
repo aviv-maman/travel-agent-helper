@@ -63,7 +63,7 @@ function nice(v: number): string {
 
 /**
  * Converts a local-currency price string to an ILS string, e.g.
- * "~25–35₾" → "~95–135 ILS". Returns undefined for unrecognized currencies.
+ * "~25–35₾" → "~95–135 ₪". Returns undefined for unrecognized currencies.
  */
 export function toIls(price: string, rates: IlsRates): string | undefined {
   const code = CODE_BY_TOKEN.find((c) => c.test.test(price))?.code;
@@ -75,7 +75,7 @@ export function toIls(price: string, rates: IlsRates): string | undefined {
 
   const approx = /~/.test(price);
   const ils = nums.map((n) => nice(parseFloat(n) * rate)).join("–");
-  return `${approx ? "~" : ""}${ils} ILS`;
+  return `${approx ? "~" : ""}${ils} ₪`;
 }
 
 /** Strips a leading "~" so the original can sit cleanly inside parentheses. */
