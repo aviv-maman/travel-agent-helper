@@ -15,12 +15,13 @@ const BOARDS: { value: BoardCode; emoji: string }[] = [
 ];
 type HotelMessages = (typeof import("@/messages/en.json"))["hotels"];
 
-const AMENITIES: { value: HotelFeatureValue; key: keyof HotelMessages["filter"]; emoji: string }[] = [
-  { value: "pool-in", key: "poolIn", emoji: "🏊" },
-  { value: "pool-out", key: "poolOut", emoji: "🌊" },
-  { value: "casino", key: "casino", emoji: "🎰" },
-  { value: "waterpark", key: "waterpark", emoji: "🛝" },
-];
+const AMENITIES: { value: HotelFeatureValue; key: keyof HotelMessages["filter"]; emoji: string }[] =
+  [
+    { value: "pool-in", key: "poolIn", emoji: "🏊" },
+    { value: "pool-out", key: "poolOut", emoji: "🌊" },
+    { value: "casino", key: "casino", emoji: "🎰" },
+    { value: "waterpark", key: "waterpark", emoji: "🛝" },
+  ];
 const BASE_SORTS: { value: SortMode; key: keyof HotelMessages["sort"]; emoji: string }[] = [
   { value: "default", key: "default", emoji: "💠" },
   { value: "stars-desc", key: "starsDesc", emoji: "🌟" },
@@ -52,6 +53,7 @@ export function HotelFilters({ landmarks }: { landmarks: ViewLandmark[] }) {
               key={s.value}
               pressed={sort === s.value}
               onPressedChange={() => update({ sort: s.value })}
+              size="sm"
               className={chipClass}>
               {s.emoji} {t(`sort.${s.key}`)}
             </Toggle>
@@ -63,6 +65,7 @@ export function HotelFilters({ landmarks }: { landmarks: ViewLandmark[] }) {
                 key={lm.key}
                 pressed={sort === value}
                 onPressedChange={() => update({ sort: value })}
+                size="sm"
                 className={chipClass}>
                 📍 {t("sort.distanceFrom", { name: lm.name })}
               </Toggle>
@@ -92,6 +95,7 @@ export function HotelFilters({ landmarks }: { landmarks: ViewLandmark[] }) {
               key={c.value}
               pressed={tags.includes(c.value)}
               onPressedChange={() => update({ tags: toggle(tags, c.value) })}
+              size="sm"
               className={chipClass}>
               {c.emoji} {t(`tier.${c.value}`)}
             </Toggle>
@@ -106,6 +110,7 @@ export function HotelFilters({ landmarks }: { landmarks: ViewLandmark[] }) {
               key={b.value}
               pressed={boards.includes(b.value)}
               onPressedChange={() => update({ boards: toggle(boards, b.value) })}
+              size="sm"
               className={chipClass}>
               {b.emoji} {t(`board.${b.value}`)}
             </Toggle>
@@ -120,6 +125,7 @@ export function HotelFilters({ landmarks }: { landmarks: ViewLandmark[] }) {
               key={f.value}
               pressed={features.includes(f.value)}
               onPressedChange={() => update({ features: toggle(features, f.value) })}
+              size="sm"
               className={chipClass}>
               {f.emoji} {t(`filter.${f.key}`)}
             </Toggle>
