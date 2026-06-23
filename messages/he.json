@@ -26,6 +26,28 @@
       "mid": "בינוני 7–9.5%",
       "low": "נמוך 5–6%",
       "net": "נטו / ללא עמלה"
+    },
+    "contact": {
+      "button": "יצירת קשר",
+      "title": "יצירת קשר — {name}",
+      "subtitle": "פרטי התקשרות עם הספק",
+      "supplierEmail": "מייל ספק",
+      "supplierPhone": "טלפון ספק",
+      "name": "שם",
+      "phone": "טלפון",
+      "email": "מייל",
+      "sales": "מקדם מכירות",
+      "agent": "סוכן / איש קשר",
+      "extraChannel": "ערוץ נוסף",
+      "extraLabel": "תווית (לדוגמה: support)",
+      "extraValue": "כתובת / מספר",
+      "addExtra": "ערוץ נוסף",
+      "empty": "אין עדיין פרטי קשר — לחץ \"ערוך\" כדי להוסיף.",
+      "edit": "ערוך פרטים",
+      "close": "סגור",
+      "save": "שמור",
+      "cancel": "ביטול",
+      "remove": "הסר"
     }
   },
   "transfers": {
