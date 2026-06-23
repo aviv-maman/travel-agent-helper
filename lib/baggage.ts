@@ -26,7 +26,7 @@ export type Airline = {
 };
 
 const t = (he: string, en: string): Localized => ({ he, en });
-const TROLLEY10 = t('טרולי 10 ק"ג', "Trolley 10 kg");
+const TROLLEY10 = t('10 ק"ג', "10 kg");
 const DEPENDS = t("תלוי בכרטיס", "Depends on ticket");
 
 const AIRLINES: Airline[] = [

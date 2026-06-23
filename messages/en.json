@@ -67,8 +67,8 @@
     "clear": "Clear search",
     "noResults": "😕 No matching airline found",
     "colAirline": "Airline",
-    "colSuitcase": "Suitcase",
-    "colNotes": "Notes",
+    "colSuitcase": "Luggage",
+    "colTrolley": "Trolley",
     "colContact": "Contact"
   },
   "cancellations": {

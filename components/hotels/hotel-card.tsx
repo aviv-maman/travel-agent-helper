@@ -107,8 +107,12 @@ export function HotelCard({
   const ratings = (
     <div className="flex shrink-0 items-center gap-1.5">
       {hotel.stars != null && (
-        <span className="inline-flex items-center gap-0.5 rounded-md bg-gold/10 px-1.5 py-0.5 text-xs font-bold text-gold">
-          <Star className="size-3 fill-current" />
+        <span
+          aria-label={`${hotel.stars} stars`}
+          className="inline-flex items-center gap-0.5 rounded-md bg-gold/10 px-1.5 py-0.5 text-xs font-bold text-gold">
+          {Array.from({ length: hotel.stars }).map((_, i) => (
+            <Star key={i} className="size-3 fill-current" />
+          ))}
           {hotel.stars}
         </span>
       )}
