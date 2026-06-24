@@ -15,11 +15,8 @@ import {
   integer,
   timestamp,
   boolean,
-  decimal,
   json,
   index,
-  unique,
-  foreignKey,
 } from 'drizzle-orm/pg-core';
 import { relations } from 'drizzle-orm';
 
