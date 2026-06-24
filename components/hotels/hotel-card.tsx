@@ -148,7 +148,7 @@ export function HotelCard({
   );
 
   const actions = (hotel.googleMapsUrl || hotel.bookingUrl) && (
-    <div className="flex w-fit flex-col gap-2">
+    <div className="flex w-full flex-col gap-2 sm:w-fit">
       {hotel.googleMapsUrl && (
         <ButtonGroup className="w-full">
           <Button
@@ -208,14 +208,14 @@ export function HotelCard({
 
   if (layout === "list") {
     const listActions = (hotel.googleMapsUrl || hotel.bookingUrl) && (
-      <div className="flex shrink-0 flex-wrap items-center gap-2">
+      <div className="flex w-full items-center gap-2">
         {hotel.googleMapsUrl && (
-          <ButtonGroup>
+          <ButtonGroup className="flex-1 sm:flex-none">
             <Button
               variant="outline"
               size="sm"
               nativeButton={false}
-              className="h-8 text-red-600 dark:text-red-500"
+              className="h-8 flex-1 text-red-600 sm:flex-none dark:text-red-500"
               render={<a href={hotel.googleMapsUrl} target="_blank" rel="noreferrer" />}>
               <GoogleMapsIcon className="size-3.5" /> {t("card.maps")}
             </Button>
@@ -223,12 +223,12 @@ export function HotelCard({
           </ButtonGroup>
         )}
         {hotel.bookingUrl && (
-          <ButtonGroup>
+          <ButtonGroup className="flex-1 sm:flex-none">
             <Button
               variant="outline"
               size="sm"
               nativeButton={false}
-              className="h-8 text-blue-600 dark:text-blue-500"
+              className="h-8 flex-1 text-blue-600 sm:flex-none dark:text-blue-500"
               render={<a href={hotel.bookingUrl} target="_blank" rel="noreferrer" />}>
               <BookingIcon className="size-3.5" /> {t("card.booking")}
             </Button>
