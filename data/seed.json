@@ -659,7 +659,6 @@
         "sortOrder": 8,
         "features": [
           "pool-in",
-          "pool-out",
           "casino"
         ],
         "distances": [
@@ -767,7 +766,6 @@
         "sortOrder": 10,
         "features": [
           "pool-in",
-          "pool-out",
           "casino"
         ],
         "distances": [
