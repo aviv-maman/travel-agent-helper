@@ -133,11 +133,10 @@
       "kosher": "Kosher"
     },
     "card": {
-      "maps": "Maps",
+      "maps": "Google Maps",
       "booking": "Booking",
       "copyLink": "Copy link",
       "copied": "Link copied",
-      "bookingScore": "Booking",
       "walk": "{minutes} minutes walking",
       "ride": "{minutes} minutes riding",
       "details": "Click for details"

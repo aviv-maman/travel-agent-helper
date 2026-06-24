@@ -118,7 +118,7 @@ export function HotelCard({
       )}
       {hotel.bookingScore != null && (
         <span className="inline-flex items-center gap-1 rounded-md bg-success/10 px-1.5 py-0.5 text-xs font-bold text-success">
-          {t("card.bookingScore")} {hotel.bookingScore}
+          {t("card.booking")} {hotel.bookingScore}
         </span>
       )}
     </div>

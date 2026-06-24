@@ -51,7 +51,7 @@ export function HotelDetailModal({
                 ))}
                 {hotel.bookingScore != null && (
                   <span className="font-bold text-success">
-                    {t("card.bookingScore")} {hotel.bookingScore}
+                    {t("card.booking")} {hotel.bookingScore}
                   </span>
                 )}
               </DialogDescription>
