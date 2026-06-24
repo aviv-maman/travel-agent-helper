@@ -76,10 +76,6 @@ export function CancellationsView({ suppliers }: { suppliers: ViewCancelSupplier
           ))}
         </div>
       )}
-
-      <p className="rounded-xl border border-gold/25 bg-gold/[0.07] px-4 py-3 text-xs leading-relaxed text-gold">
-        {t("footerNote")}
-      </p>
     </div>
   );
 }

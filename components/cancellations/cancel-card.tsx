@@ -1,6 +1,7 @@
 "use client";
 
-import type { FeeLevel, ProductKind, ViewBlock, ViewCancelSupplier } from "@/lib/cancellations";
+import { Fragment } from "react";
+import type { ProductKind, ViewBlock, ViewCancelSupplier } from "@/lib/cancellations";
 import type { CommColor } from "@/lib/commissions";
 import {
   Accordion,
@@ -8,6 +9,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { FeeTable } from "./fee-table";
 import { CopyScript } from "./copy-script";
 
 const CHIP: Record<CommColor, string> = {
@@ -26,12 +28,9 @@ const PRODUCT: Record<ProductKind, string> = {
   organized: "bg-purple/[0.13] text-purple",
 };
 
-const FEE: Record<FeeLevel, string> = {
-  low: "text-brand",
-  net: "text-gold",
-  gross: "text-warning",
-  full: "text-destructive",
-};
+/** Shared style for the small section labels above each table / client copy. */
+const SECTION_LABEL =
+  "flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wide";
 
 function Block({ block }: { block: ViewBlock }) {
   switch (block.kind) {
@@ -45,45 +44,18 @@ function Block({ block }: { block: ViewBlock }) {
       );
     case "table":
       return (
-        <div className="rounded-xl border border-warning/30 bg-warning/6 p-3.5">
-          <p className="mb-2 flex items-center gap-1.5 text-sm font-extrabold text-foreground">
-            {block.caption}
-          </p>
-          <table className="w-full border-collapse">
-            {block.headers && (
-              <thead>
-                <tr>
-                  <th className="border-b border-border px-2 py-1.5 text-start text-xs font-bold text-muted-foreground">
-                    {block.headers[0]}
-                  </th>
-                  <th className="border-b border-border px-2 py-1.5 text-start text-xs font-bold text-muted-foreground">
-                    {block.headers[1]}
-                  </th>
-                </tr>
-              </thead>
-            )}
-            <tbody>
-              {block.rows.map((r, i) => (
-                <tr key={i} className="border-b border-border/50 last:border-b-0">
-                  <td className="px-2 py-1.5 align-middle text-sm text-foreground">
-                    {r.timeframe}
-                  </td>
-                  <td className={`px-2 py-1.5 align-middle text-sm font-bold ${FEE[r.level]}`}>
-                    {r.fee}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+        <div className="rounded-lg bg-muted/70 p-3 dark:bg-muted/30">
+          <p className={`mb-2 ${SECTION_LABEL} text-destructive underline`}>{block.caption}</p>
+          <FeeTable headers={block.headers} rows={block.rows} />
         </div>
       );
     case "copy":
       return (
-        <div className="flex flex-col gap-2.5 rounded-xl border border-destructive/30 bg-destructive/6 p-3.5">
+        <div className="flex flex-col gap-2 rounded-lg bg-muted/70 p-3 dark:bg-muted/30">
           {block.heading && (
-            <h4 className="text-base font-extrabold text-foreground">{block.heading}</h4>
+            <h4 className={`${SECTION_LABEL} text-brand`}>{block.heading}</h4>
           )}
-          <CopyScript text={block.text} />
+          <CopyScript text={block.text} levels={block.levels} />
         </div>
       );
   }
@@ -127,7 +99,12 @@ export function CancelCard({
         </AccordionTrigger>
         <AccordionContent className="flex flex-col gap-4 border-t border-border pt-4 pb-4">
           {supplier.blocks.map((block, i) => (
-            <Block key={i} block={block} />
+            <Fragment key={i}>
+              {i > 0 && (block.kind === "heading" || block.kind === "copy") && (
+                <div className="h-px bg-border/60" />
+              )}
+              <Block block={block} />
+            </Fragment>
           ))}
         </AccordionContent>
       </AccordionItem>
