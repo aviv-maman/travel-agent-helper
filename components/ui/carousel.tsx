@@ -16,7 +16,7 @@ type CarouselProps = {
   opts?: CarouselOptions;
   plugins?: CarouselPlugin;
   orientation?: "horizontal" | "vertical";
-  setApi?: (api: CarouselApi) => void;
+  setApi?: (_api: CarouselApi) => void;
 };
 
 type CarouselContextProps = {
@@ -56,14 +56,32 @@ function Carousel({
     },
     plugins,
   );
-  const [canScrollPrev, setCanScrollPrev] = React.useState(false);
-  const [canScrollNext, setCanScrollNext] = React.useState(false);
+  // The embla api is an external store; subscribe to its events and read the
+  // scroll flags via useSyncExternalStore instead of mirroring them into state
+  // from an effect.
+  const subscribeApi = React.useCallback(
+    (callback: () => void) => {
+      if (!api) return () => {};
+      api.on("reInit", callback);
+      api.on("select", callback);
+      return () => {
+        api.off("reInit", callback);
+        api.off("select", callback);
+      };
+    },
+    [api],
+  );
 
-  const onSelect = React.useCallback((api: CarouselApi) => {
-    if (!api) return;
-    setCanScrollPrev(api.canScrollPrev());
-    setCanScrollNext(api.canScrollNext());
-  }, []);
+  const canScrollPrev = React.useSyncExternalStore(
+    subscribeApi,
+    () => api?.canScrollPrev() ?? false,
+    () => false,
+  );
+  const canScrollNext = React.useSyncExternalStore(
+    subscribeApi,
+    () => api?.canScrollNext() ?? false,
+    () => false,
+  );
 
   const scrollPrev = React.useCallback(() => {
     api?.scrollPrev();
@@ -90,17 +108,6 @@ function Carousel({
     if (!api || !setApi) return;
     setApi(api);
   }, [api, setApi]);
-
-  React.useEffect(() => {
-    if (!api) return;
-    onSelect(api);
-    api.on("reInit", onSelect);
-    api.on("select", onSelect);
-
-    return () => {
-      api?.off("select", onSelect);
-    };
-  }, [api, onSelect]);
 
   return (
     <CarouselContext.Provider

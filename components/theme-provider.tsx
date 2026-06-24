@@ -9,7 +9,7 @@ type ResolvedTheme = "light" | "dark";
 type ThemeContextValue = {
   theme: Theme;
   resolvedTheme: ResolvedTheme;
-  setTheme: (theme: Theme) => void;
+  setTheme: (_theme: Theme) => void;
 };
 
 const STORAGE_KEY = "theme";

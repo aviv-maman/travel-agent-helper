@@ -7,12 +7,16 @@ const eslintConfig = defineConfig([
   ...nextTs,
   {
     rules: {
+      "no-console": "warn",
       "no-empty-pattern": "warn",
-      "@typescript-eslint/no-unused-vars": [
-        "error",
-        { argsIgnorePattern: "^_", varsIgnorePattern: "^_" },
-      ],
+      "no-unused-vars": ["error", { argsIgnorePattern: "^_", varsIgnorePattern: "^_" }],
+      "prefer-const": "warn",
+      "no-empty-function": "warn",
       "@typescript-eslint/no-empty-function": "warn",
+      "@typescript-eslint/no-empty-interface": "warn",
+      "@typescript-eslint/no-empty-object-type": "warn",
+      "@typescript-eslint/no-explicit-any": "error",
+      "@typescript-eslint/consistent-type-imports": "warn",
     },
   },
   globalIgnores([

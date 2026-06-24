@@ -301,10 +301,10 @@ function ContactEdit({
 }: {
   draft: SupplierContact;
   setDraft: React.Dispatch<React.SetStateAction<SupplierContact>>;
-  setGroup: (which: "sales" | "agent", patch: Partial<ContactGroup>) => void;
-  setExtra: (i: number, patch: Partial<ContactExtra>) => void;
+  setGroup: (_which: "sales" | "agent", _patch: Partial<ContactGroup>) => void;
+  setExtra: (_i: number, _patch: Partial<ContactExtra>) => void;
   addExtra: () => void;
-  removeExtra: (i: number) => void;
+  removeExtra: (_i: number) => void;
   t: T;
 }) {
   return (
@@ -420,7 +420,7 @@ function GroupEdit({
   group: ContactGroup;
   color: RowColor;
   tag: string;
-  setGroup: (which: "sales" | "agent", patch: Partial<ContactGroup>) => void;
+  setGroup: (_which: "sales" | "agent", _patch: Partial<ContactGroup>) => void;
   t: T;
 }) {
   if (!group.active) return null;

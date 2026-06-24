@@ -55,7 +55,7 @@ export function smartScore(query: string, haystack: string): number {
 export function rankBySearch<T>(
   items: T[],
   query: string,
-  getHaystacks: (item: T) => string[],
+  getHaystacks: (_item: T) => string[],
 ): T[] {
   const q = smartNormalize(query);
   if (!q) return items;
