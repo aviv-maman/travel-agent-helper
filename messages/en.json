@@ -62,14 +62,14 @@
   },
   "baggage": {
     "intro": "🎒 <strong>Backpack:</strong> all airlines — up to 4 kg<br></br>🧳 <strong>Trolley:</strong> all airlines — 8 kg (Israir & Cyprus Airways: 10 kg)",
-    "tip": "💡 <strong>Tip:</strong> Emirates & Etihad — the exact weight is printed on the ticket itself (23 or 30 kg).",
     "searchPlaceholder": "Search an airline... (Hebrew or English)",
     "clear": "Clear search",
     "noResults": "😕 No matching airline found",
     "colAirline": "Airline",
     "colSuitcase": "Luggage",
     "colTrolley": "Trolley",
-    "colContact": "Contact"
+    "colContact": "Details",
+    "website": "Website"
   },
   "cancellations": {
     "introTitle": "Note",

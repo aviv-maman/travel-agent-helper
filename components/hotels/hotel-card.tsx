@@ -23,7 +23,7 @@ const FEATURE_META: Record<HotelFeatureValue, { emoji: string; key: FilterKey }>
   "pool-out": { emoji: "🌊", key: "poolOut" },
   casino: { emoji: "🎰", key: "casino" },
   "casino-near": { emoji: "🎰", key: "casinoNear" },
-  waterpark: { emoji: "🎢", key: "waterpark" },
+  waterpark: { emoji: "🛝", key: "waterpark" },
   "outside-center": { emoji: "📍", key: "outsideCenter" },
 };
 
@@ -33,9 +33,14 @@ const BOARD_EMOJI: Record<BoardCode, string> = { bb: "🍳", hb: "🍴", fb: "�
 const BADGE_TINT = {
   tag: "border-transparent bg-amber-100 text-amber-800 dark:bg-amber-900/40 dark:text-amber-300",
   board: "border-transparent bg-sky-100 text-sky-800 dark:bg-sky-900/40 dark:text-sky-300",
-  feature:
-    "border-transparent bg-violet-100 text-violet-800 dark:bg-violet-900/40 dark:text-violet-300",
+  feature: "border-transparent bg-rose-100 text-rose-800 dark:bg-rose-900/40 dark:text-rose-300",
 } as const;
+
+// Most tags share the amber tint; kosher gets purple to match its ✡️ emoji.
+const TAG_TINT: Partial<Record<HotelTagValue, string>> = {
+  kosher:
+    "border-transparent bg-purple-100 text-purple-800 dark:bg-purple-900/40 dark:text-purple-300",
+};
 
 export function formatMeters(m: number | null, locale: string): string | null {
   if (m == null) return null;
@@ -130,7 +135,7 @@ export function HotelCard({
   const badges = hasBadges && (
     <div className="flex flex-wrap gap-1.5">
       {hotel.tags.map((tag) => (
-        <Badge key={tag} className={BADGE_TINT.tag}>
+        <Badge key={tag} className={TAG_TINT[tag] ?? BADGE_TINT.tag}>
           {TAG_EMOJI[tag]} {t(`tier.${tag}`)}
         </Badge>
       ))}
@@ -197,7 +202,7 @@ export function HotelCard({
               className="min-w-3 flex-1 translate-y-[-0.2em] border-b border-dotted border-muted-foreground/30"
             />
             <span className="font-bold whitespace-nowrap text-gold">{timeLabel(d)}</span>
-            <span className="whitespace-nowrap text-[0.68rem] tabular-nums">
+            <span className="text-[0.68rem] whitespace-nowrap tabular-nums">
               {formatMeters(d.meters, locale)}
             </span>
           </li>
@@ -254,9 +259,7 @@ export function HotelCard({
             {listActions && <div className="sm:hidden">{listActions}</div>}
           </div>
           {/* Desktop: original action column. */}
-          {actions && (
-            <div className="hidden shrink-0 sm:flex sm:justify-end">{actions}</div>
-          )}
+          {actions && <div className="hidden shrink-0 sm:flex sm:justify-end">{actions}</div>}
         </div>
       </Card>
     );

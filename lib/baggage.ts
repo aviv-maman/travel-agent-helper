@@ -17,10 +17,12 @@ export type Airline = {
   iata?: string;
   flag?: string;
   name: Localized;
-  /** Raw weight figure: "23", "20", "15–23", "23–30". */
+  /** Raw weight figure: "23", "20", "15/23", "23/30". */
   kg: string;
   note?: Localized;
   noteTone?: "muted" | "gold";
+  /** Free-text note shown in the dedicated "Note" column. */
+  info?: Localized;
   /** Subtly highlighted catch-all row ("all other airlines"). */
   highlight?: boolean;
 };
@@ -28,6 +30,14 @@ export type Airline = {
 const t = (he: string, en: string): Localized => ({ he, en });
 const TROLLEY10 = t('10 ק"ג', "10 kg");
 const DEPENDS = t("תלוי בכרטיס", "Depends on ticket");
+const TICKET_WEIGHT = t(
+  'המשקל המדויק מופיע על הכרטיס עצמו (23 או 30 ק"ג)',
+  "The exact weight is printed on the ticket itself (23 or 30 kg)",
+);
+const TICKET_WEIGHT_15_23 = t(
+  'המשקל המדויק מופיע על הכרטיס עצמו (15 או 23 ק"ג)',
+  "The exact weight is printed on the ticket itself (15 or 23 kg)",
+);
 
 const AIRLINES: Airline[] = [
   { iata: "6H", flag: "🇮🇱", name: t("ישראייר", "Israir"), kg: "23", note: TROLLEY10 },
@@ -62,9 +72,10 @@ const AIRLINES: Airline[] = [
     iata: "GQ",
     flag: "🇬🇷",
     name: t("סקיי אקספרס", "Sky Express"),
-    kg: "15–23",
+    kg: "15/23",
     note: DEPENDS,
     noteTone: "gold",
+    info: TICKET_WEIGHT_15_23,
   },
   {
     iata: "CY",
@@ -79,18 +90,20 @@ const AIRLINES: Airline[] = [
     iata: "EK",
     flag: "🇦🇪",
     name: t("אמירייטס", "Emirates"),
-    kg: "23–30",
+    kg: "23/30",
     note: DEPENDS,
     noteTone: "gold",
+    info: TICKET_WEIGHT,
   },
   { iata: "FZ", flag: "🇦🇪", name: t("פלאי דובאי", "Fly Dubai"), kg: "23" },
   {
     iata: "EY",
     flag: "🇦🇪",
     name: t("אתיחאד", "Etihad"),
-    kg: "23–30",
+    kg: "23/30",
     note: DEPENDS,
     noteTone: "gold",
+    info: TICKET_WEIGHT,
   },
   { iata: "IZ", flag: "🇮🇱", name: t("ארקיע", "Arkia"), kg: "20" },
   { iata: "3E", flag: "🇬🇷", name: t("אלקטרה איירווייז", "Electra Airways"), kg: "20" },
@@ -134,6 +147,7 @@ export type ViewAirline = {
   tier: WeightTier;
   note: string | null;
   noteTone: "muted" | "gold";
+  info: string | null;
   highlight: boolean;
   /** Lowercased he + en + iata, for client-side filtering across both locales. */
   search: string;
@@ -153,6 +167,7 @@ export function getBaggage(locale: string): ViewAirline[] {
     tier: a.kg === "20" ? "kg20" : "kg23",
     note: a.note ? pick(a.note) : null,
     noteTone: a.noteTone ?? "muted",
+    info: a.info ? pick(a.info) : null,
     highlight: Boolean(a.highlight),
     search: `${a.iata ?? ""} ${a.name.he ?? ""} ${a.name.en ?? ""}`.toLowerCase(),
   }));
