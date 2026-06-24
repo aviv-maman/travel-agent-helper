@@ -2,7 +2,9 @@
 
 import { useMemo } from "react";
 import { useLocale, useTranslations } from "next-intl";
-import { MapPin, ExternalLink, Star } from "lucide-react";
+import { Star } from "lucide-react";
+import { GoogleMapsIcon } from "@/components/icons/google-maps-icon";
+import { BookingIcon } from "@/components/icons/booking-icon";
 import type { HotelFeatureValue, HotelTagValue, BoardCode } from "@/db/schema";
 import type { ViewHotel, ViewDistance } from "@/lib/hotels";
 import { Badge } from "@/components/ui/badge";
@@ -118,7 +120,7 @@ export function HotelCard({
       )}
       {hotel.bookingScore != null && (
         <span className="inline-flex items-center gap-1 rounded-md bg-success/10 px-1.5 py-0.5 text-xs font-bold text-success">
-          {t("card.bookingScore")} {hotel.bookingScore}
+          {t("card.booking")} {hotel.bookingScore}
         </span>
       )}
     </div>
@@ -146,16 +148,16 @@ export function HotelCard({
   );
 
   const actions = (hotel.googleMapsUrl || hotel.bookingUrl) && (
-    <div className="flex flex-col gap-2">
+    <div className="flex w-fit flex-col gap-2">
       {hotel.googleMapsUrl && (
         <ButtonGroup className="w-full">
           <Button
             variant="outline"
             size="sm"
             nativeButton={false}
-            className="h-8 flex-1 text-brand"
+            className="h-8 flex-1 text-red-600 dark:text-red-500"
             render={<a href={hotel.googleMapsUrl} target="_blank" rel="noreferrer" />}>
-            <MapPin className="size-3.5" /> {t("card.maps")}
+            <GoogleMapsIcon className="size-3.5" /> {t("card.maps")}
           </Button>
           <CopyLinkButton url={hotel.googleMapsUrl} className="size-8 shrink-0" />
         </ButtonGroup>
@@ -166,9 +168,9 @@ export function HotelCard({
             variant="outline"
             size="sm"
             nativeButton={false}
-            className="h-8 flex-1 text-success"
+            className="h-8 flex-1 text-blue-600 dark:text-blue-500"
             render={<a href={hotel.bookingUrl} target="_blank" rel="noreferrer" />}>
-            <ExternalLink className="size-3.5" /> {t("card.booking")}
+            <BookingIcon className="size-3.5" /> {t("card.booking")}
           </Button>
           <CopyLinkButton url={hotel.bookingUrl} className="size-8 shrink-0" />
         </ButtonGroup>
@@ -177,33 +179,31 @@ export function HotelCard({
   );
 
   const distanceTable = distances.length > 0 && (
-    <table className="w-full border-separate border-spacing-y-0.5 text-xs text-muted-foreground">
-      <tbody>
-        {distances.map((d) => {
-          const isSelected = d.landmarkKey === activeKey;
-          return (
-            <tr key={d.landmarkKey} className={isSelected ? "bg-brand/10" : undefined}>
-              <td
-                className={`py-0.5 ps-1.5 text-start ${
-                  isSelected ? "rounded-s-md font-bold text-brand" : "text-foreground"
-                }`}>
-                {isSelected && <span aria-hidden>📌 </span>}
-                {d.name}
-              </td>
-              <td className="py-0.5 text-end font-bold whitespace-nowrap text-gold">
-                {timeLabel(d)}
-              </td>
-              <td
-                className={`py-0.5 ps-2 pe-1.5 text-end text-[0.68rem] ${
-                  isSelected ? "rounded-e-md" : ""
-                }`}>
-                {formatMeters(d.meters, locale)}
-              </td>
-            </tr>
-          );
-        })}
-      </tbody>
-    </table>
+    <ul className="flex flex-col gap-0.5 text-xs text-muted-foreground">
+      {distances.map((d) => {
+        const isSelected = d.landmarkKey === activeKey;
+        return (
+          <li
+            key={d.landmarkKey}
+            className={`flex items-baseline gap-2 rounded-md px-1.5 py-0.5 ${
+              isSelected ? "bg-brand/10 font-bold text-brand" : ""
+            }`}>
+            <span className={isSelected ? undefined : "text-foreground"}>
+              {isSelected && <span aria-hidden>📌 </span>}
+              {d.name}
+            </span>
+            <span
+              aria-hidden
+              className="min-w-3 flex-1 translate-y-[-0.2em] border-b border-dotted border-muted-foreground/30"
+            />
+            <span className="font-bold whitespace-nowrap text-gold">{timeLabel(d)}</span>
+            <span className="whitespace-nowrap text-[0.68rem] tabular-nums">
+              {formatMeters(d.meters, locale)}
+            </span>
+          </li>
+        );
+      })}
+    </ul>
   );
 
   if (layout === "list") {
@@ -215,9 +215,9 @@ export function HotelCard({
               variant="outline"
               size="sm"
               nativeButton={false}
-              className="h-8 text-brand"
+              className="h-8 text-red-600 dark:text-red-500"
               render={<a href={hotel.googleMapsUrl} target="_blank" rel="noreferrer" />}>
-              <MapPin className="size-3.5" /> {t("card.maps")}
+              <GoogleMapsIcon className="size-3.5" /> {t("card.maps")}
             </Button>
             <CopyLinkButton url={hotel.googleMapsUrl} className="size-8 shrink-0" />
           </ButtonGroup>
@@ -228,9 +228,9 @@ export function HotelCard({
               variant="outline"
               size="sm"
               nativeButton={false}
-              className="h-8 text-success"
+              className="h-8 text-blue-600 dark:text-blue-500"
               render={<a href={hotel.bookingUrl} target="_blank" rel="noreferrer" />}>
-              <ExternalLink className="size-3.5" /> {t("card.booking")}
+              <BookingIcon className="size-3.5" /> {t("card.booking")}
             </Button>
             <CopyLinkButton url={hotel.bookingUrl} className="size-8 shrink-0" />
           </ButtonGroup>
@@ -249,12 +249,14 @@ export function HotelCard({
               {ratings}
             </div>
             {badges}
-            {distanceTable && <div className="pt-0.5">{distanceTable}</div>}
+            {distanceTable && <div className="max-w-md pt-0.5">{distanceTable}</div>}
             {/* Compact, non-stretched action buttons — mobile only. */}
             {listActions && <div className="sm:hidden">{listActions}</div>}
           </div>
           {/* Desktop: original action column. */}
-          {actions && <div className="hidden shrink-0 sm:block sm:w-48">{actions}</div>}
+          {actions && (
+            <div className="hidden shrink-0 sm:flex sm:justify-end">{actions}</div>
+          )}
         </div>
       </Card>
     );

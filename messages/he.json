@@ -133,11 +133,10 @@
       "kosher": "כשר"
     },
     "card": {
-      "maps": "מפות",
-      "booking": "Booking",
+      "maps": "גוגל מפות",
+      "booking": "בוקינג",
       "copyLink": "העתק לינק",
       "copied": "הקישור הועתק",
-      "bookingScore": "Booking",
       "walk": "{minutes} דק' הליכה",
       "ride": "{minutes} דק' נסיעה",
       "details": "לחץ לפרטים"
