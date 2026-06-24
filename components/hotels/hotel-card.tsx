@@ -2,7 +2,9 @@
 
 import { useMemo } from "react";
 import { useLocale, useTranslations } from "next-intl";
-import { MapPin, ExternalLink, Star } from "lucide-react";
+import { Star } from "lucide-react";
+import { GoogleMapsIcon } from "@/components/icons/google-maps-icon";
+import { BookingIcon } from "@/components/icons/booking-icon";
 import type { HotelFeatureValue, HotelTagValue, BoardCode } from "@/db/schema";
 import type { ViewHotel, ViewDistance } from "@/lib/hotels";
 import { Badge } from "@/components/ui/badge";
@@ -153,9 +155,9 @@ export function HotelCard({
             variant="outline"
             size="sm"
             nativeButton={false}
-            className="h-8 flex-1 text-brand"
+            className="h-8 flex-1 text-red-600 dark:text-red-500"
             render={<a href={hotel.googleMapsUrl} target="_blank" rel="noreferrer" />}>
-            <MapPin className="size-3.5" /> {t("card.maps")}
+            <GoogleMapsIcon className="size-3.5" /> {t("card.maps")}
           </Button>
           <CopyLinkButton url={hotel.googleMapsUrl} className="size-8 shrink-0" />
         </ButtonGroup>
@@ -166,9 +168,9 @@ export function HotelCard({
             variant="outline"
             size="sm"
             nativeButton={false}
-            className="h-8 flex-1 text-success"
+            className="h-8 flex-1 text-blue-600 dark:text-blue-500"
             render={<a href={hotel.bookingUrl} target="_blank" rel="noreferrer" />}>
-            <ExternalLink className="size-3.5" /> {t("card.booking")}
+            <BookingIcon className="size-3.5" /> {t("card.booking")}
           </Button>
           <CopyLinkButton url={hotel.bookingUrl} className="size-8 shrink-0" />
         </ButtonGroup>
@@ -215,9 +217,9 @@ export function HotelCard({
               variant="outline"
               size="sm"
               nativeButton={false}
-              className="h-8 text-brand"
+              className="h-8 text-red-600 dark:text-red-500"
               render={<a href={hotel.googleMapsUrl} target="_blank" rel="noreferrer" />}>
-              <MapPin className="size-3.5" /> {t("card.maps")}
+              <GoogleMapsIcon className="size-3.5" /> {t("card.maps")}
             </Button>
             <CopyLinkButton url={hotel.googleMapsUrl} className="size-8 shrink-0" />
           </ButtonGroup>
@@ -228,9 +230,9 @@ export function HotelCard({
               variant="outline"
               size="sm"
               nativeButton={false}
-              className="h-8 text-success"
+              className="h-8 text-blue-600 dark:text-blue-500"
               render={<a href={hotel.bookingUrl} target="_blank" rel="noreferrer" />}>
-              <ExternalLink className="size-3.5" /> {t("card.booking")}
+              <BookingIcon className="size-3.5" /> {t("card.booking")}
             </Button>
             <CopyLinkButton url={hotel.bookingUrl} className="size-8 shrink-0" />
           </ButtonGroup>
