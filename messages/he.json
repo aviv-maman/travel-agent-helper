@@ -62,14 +62,14 @@
   },
   "baggage": {
     "intro": "🎒 <strong>תיק גב:</strong> כל החברות — עד 4 ק\"ג<br></br>🧳 <strong>טרולי:</strong> כל החברות — 8 ק\"ג (ישראייר ו-Cyprus Airways: 10 ק\"ג)",
-    "tip": "💡 <strong>טיפ:</strong> Emirates ו-Etihad — המשקל המדויק מופיע על הכרטיס עצמו (23 או 30 ק\"ג).",
     "searchPlaceholder": "חפש חברת תעופה... (עברית או אנגלית)",
     "clear": "נקה חיפוש",
     "noResults": "😕 לא נמצאה חברת תעופה תואמת",
     "colAirline": "חברת תעופה",
     "colSuitcase": "מזוודה",
     "colTrolley": "טרולי",
-    "colContact": "יצירת קשר"
+    "colContact": "פרטים",
+    "website": "אתר"
   },
   "cancellations": {
     "introTitle": "הערה",

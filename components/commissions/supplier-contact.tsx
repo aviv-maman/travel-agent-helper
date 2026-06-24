@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useTranslations } from "next-intl";
+import { Phone } from "lucide-react";
 import {
   Dialog,
   DialogTrigger,
@@ -13,6 +14,12 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import {
   type ContactExtra,
   type ContactGroup,
@@ -133,17 +140,27 @@ export function SupplierContact({
         setOpen(o);
         if (o) load();
       }}>
-      <DialogTrigger
-        render={
-          <Button
-            type="button"
-            variant="outline"
-            size="sm"
-            className="gap-1.5 border-success/35 bg-success/10 text-success hover:bg-success/20"
-          />
-        }>
-        📞 {t("button")}
-      </DialogTrigger>
+      <TooltipProvider>
+        <Tooltip>
+          <DialogTrigger
+            render={
+              <TooltipTrigger
+                render={
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="icon-sm"
+                    aria-label={t("button")}
+                    className="text-muted-foreground"
+                  />
+                }
+              />
+            }>
+            <Phone className="size-4" />
+          </DialogTrigger>
+          <TooltipContent>{t("button")}</TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
 
       <DialogContent className="max-h-[85vh] overflow-y-auto sm:max-w-md">
         <DialogHeader>
