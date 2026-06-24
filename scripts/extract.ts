@@ -95,7 +95,7 @@ const LANDMARK_META: Record<string, { he: string; en: string }> = {
   cathedral: { he: "קתדרלת אלכסנדר נבסקי", en: "Alexander Nevsky Cathedral" },
   victoriei: { he: "שדרות הניצחון", en: "Victoriei Avenue" },
   oldtown: { he: "העיר העתיקה", en: "Old Town" },
-  vaci: { he: "Váci utca", en: "Váci utca" },
+  vaci: { he: "רחוב ואצי (Váci utca)", en: "Váci utca" },
   kiraly: { he: "הרובע היהודי (Király)", en: "Király (Jewish Quarter)" },
 };
 
