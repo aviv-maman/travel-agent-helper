@@ -148,7 +148,7 @@ export function HotelCard({
   );
 
   const actions = (hotel.googleMapsUrl || hotel.bookingUrl) && (
-    <div className="flex flex-col gap-2">
+    <div className="flex w-fit flex-col gap-2">
       {hotel.googleMapsUrl && (
         <ButtonGroup className="w-full">
           <Button
@@ -179,33 +179,31 @@ export function HotelCard({
   );
 
   const distanceTable = distances.length > 0 && (
-    <table className="w-full border-separate border-spacing-y-0.5 text-xs text-muted-foreground">
-      <tbody>
-        {distances.map((d) => {
-          const isSelected = d.landmarkKey === activeKey;
-          return (
-            <tr key={d.landmarkKey} className={isSelected ? "bg-brand/10" : undefined}>
-              <td
-                className={`py-0.5 ps-1.5 text-start ${
-                  isSelected ? "rounded-s-md font-bold text-brand" : "text-foreground"
-                }`}>
-                {isSelected && <span aria-hidden>📌 </span>}
-                {d.name}
-              </td>
-              <td className="py-0.5 text-end font-bold whitespace-nowrap text-gold">
-                {timeLabel(d)}
-              </td>
-              <td
-                className={`py-0.5 ps-2 pe-1.5 text-end text-[0.68rem] ${
-                  isSelected ? "rounded-e-md" : ""
-                }`}>
-                {formatMeters(d.meters, locale)}
-              </td>
-            </tr>
-          );
-        })}
-      </tbody>
-    </table>
+    <ul className="flex flex-col gap-0.5 text-xs text-muted-foreground">
+      {distances.map((d) => {
+        const isSelected = d.landmarkKey === activeKey;
+        return (
+          <li
+            key={d.landmarkKey}
+            className={`flex items-baseline gap-2 rounded-md px-1.5 py-0.5 ${
+              isSelected ? "bg-brand/10 font-bold text-brand" : ""
+            }`}>
+            <span className={isSelected ? undefined : "text-foreground"}>
+              {isSelected && <span aria-hidden>📌 </span>}
+              {d.name}
+            </span>
+            <span
+              aria-hidden
+              className="min-w-3 flex-1 translate-y-[-0.2em] border-b border-dotted border-muted-foreground/30"
+            />
+            <span className="font-bold whitespace-nowrap text-gold">{timeLabel(d)}</span>
+            <span className="whitespace-nowrap text-[0.68rem] tabular-nums">
+              {formatMeters(d.meters, locale)}
+            </span>
+          </li>
+        );
+      })}
+    </ul>
   );
 
   if (layout === "list") {
@@ -251,12 +249,14 @@ export function HotelCard({
               {ratings}
             </div>
             {badges}
-            {distanceTable && <div className="pt-0.5">{distanceTable}</div>}
+            {distanceTable && <div className="max-w-md pt-0.5">{distanceTable}</div>}
             {/* Compact, non-stretched action buttons — mobile only. */}
             {listActions && <div className="sm:hidden">{listActions}</div>}
           </div>
           {/* Desktop: original action column. */}
-          {actions && <div className="hidden shrink-0 sm:block sm:w-48">{actions}</div>}
+          {actions && (
+            <div className="hidden shrink-0 sm:flex sm:justify-end">{actions}</div>
+          )}
         </div>
       </Card>
     );
