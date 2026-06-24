@@ -1,6 +1,5 @@
 "use client";
 
-import { useTranslations } from "next-intl";
 import type { FeeLevel, ProductKind, ViewBlock, ViewCancelSupplier } from "@/lib/cancellations";
 import type { CommColor } from "@/lib/commissions";
 import {
@@ -10,19 +9,6 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { CopyScript } from "./copy-script";
-
-/** The Consumer Protection Law banner — shown once at the top of each card. */
-function ConsumerLawBox() {
-  const t = useTranslations("cancellations");
-  return (
-    <div className="rounded-lg border border-purple/25 bg-purple/[0.07] px-3.5 py-2.5 text-sm leading-relaxed text-purple">
-      {t.rich("law", {
-        strong: (chunks) => <strong className="font-bold text-purple/90">{chunks}</strong>,
-        u: (chunks) => <u>{chunks}</u>,
-      })}
-    </div>
-  );
-}
 
 const CHIP: Record<CommColor, string> = {
   brand: "bg-brand/15 text-brand",
@@ -140,7 +126,6 @@ export function CancelCard({
           </div>
         </AccordionTrigger>
         <AccordionContent className="flex flex-col gap-4 border-t border-border pt-4 pb-4">
-          <ConsumerLawBox />
           {supplier.blocks.map((block, i) => (
             <Block key={i} block={block} />
           ))}

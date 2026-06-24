@@ -78,7 +78,8 @@
     "clear": "Clear search",
     "noResults": "😕 No matching supplier found",
     "copyTitle": "📤 Client copy · keeps 10% gross margin + Consumer Protection Law",
-    "law": "⚖️ <strong>Consumer Protection Law:</strong> up to 14 calendar days from booking, <u>provided</u> there are at least 7 business days before departure — a cancellation fee of <strong>₪100 per person or 5% of the transaction price — whichever is lower</strong>.",
+    "lawTitle": "Consumer Protection Law",
+    "law": "Up to 14 calendar days from booking, <u>provided</u> there are at least 7 business days before departure — a cancellation fee of <strong>₪100 per person or 5% of the transaction price — whichever is lower</strong>.",
     "copy": "Copy",
     "copied": "Copied",
     "footerNote": "✏️ More suppliers can be added to this tab later · internal use only"
