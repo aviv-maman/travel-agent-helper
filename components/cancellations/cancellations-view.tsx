@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useTranslations } from "next-intl";
-import { InfoIcon, Search, X } from "lucide-react";
+import { InfoIcon, TriangleAlertIcon, Search, X } from "lucide-react";
 import type { ViewCancelSupplier } from "@/lib/cancellations";
 import { Input } from "@/components/ui/input";
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
@@ -39,13 +39,27 @@ export function CancellationsView({ suppliers }: { suppliers: ViewCancelSupplier
         )}
       </div>
 
+      {/* Generic alerts — shown once for the whole list. */}
       <Alert className="border-gold/35 bg-gold/10 text-gold">
-        <InfoIcon />
+        <TriangleAlertIcon />
         <AlertTitle>{t("introTitle")}</AlertTitle>
         <AlertDescription className="text-gold">
           <p>
             {t.rich("intro", {
               strong: (chunks) => <strong className="font-bold">{chunks}</strong>,
+            })}
+          </p>
+        </AlertDescription>
+      </Alert>
+
+      <Alert variant="info">
+        <InfoIcon />
+        <AlertTitle>{t("lawTitle")}</AlertTitle>
+        <AlertDescription>
+          <p className="leading-relaxed">
+            {t.rich("law", {
+              strong: (chunks) => <strong className="font-bold">{chunks}</strong>,
+              u: (chunks) => <u>{chunks}</u>,
             })}
           </p>
         </AlertDescription>
@@ -62,10 +76,6 @@ export function CancellationsView({ suppliers }: { suppliers: ViewCancelSupplier
           ))}
         </div>
       )}
-
-      <p className="rounded-xl border border-gold/25 bg-gold/[0.07] px-4 py-3 text-xs leading-relaxed text-gold">
-        {t("footerNote")}
-      </p>
     </div>
   );
 }

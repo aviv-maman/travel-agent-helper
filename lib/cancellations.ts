@@ -22,7 +22,7 @@ export type Block =
   | { kind: "heading"; text: Localized }
   | { kind: "subheading"; text: Localized; tone: "accent" | "gold" }
   | { kind: "table"; caption: Localized; headers?: [Localized, Localized]; rows: FeeRow[] }
-  | { kind: "copy"; heading?: Localized; text: Localized };
+  | { kind: "copy"; heading?: Localized; text: Localized; levels?: FeeLevel[] };
 
 export type Product = { kind: ProductKind; label: Localized };
 
@@ -67,8 +67,8 @@ const H_FEE_PAX_NET = t("דמי ביטול לנוסע (נטו ספק)", "Cancell
 const H_CHANGE_PAX = t("עלות שינוי לנוסע", "Change cost / traveler");
 
 const CAP_INTERNAL = t(
-  "📋 לוח דמי ביטול — נטו ספק (לשימוש פנימי)",
-  "📋 Cancellation fee schedule — net supplier (internal use)",
+  "דמי ביטול לספק (לשימוש פנימי)",
+  "Cancellation Fee for Supplier (Internal Use)",
 );
 const CAP_INTERNAL_SHORT = t("📋 נטו ספק (לשימוש פנימי)", "📋 Net supplier (internal use)");
 
@@ -136,6 +136,7 @@ const SUPPLIERS: CancelSupplier[] = [
           "לאחר מכן ועד 21 ימי עסקים לפני הטיסה — 185$ לאדם.\n\nמ-21 ימי עסקים לפני הטיסה ועד 15 ימי עסקים לפניה — 40% מעלות החבילה לאדם.\n\nמ-14 ימי עסקים ועד 8 ימי עסקים לפני הטיסה — 70% מעלות החבילה לאדם.\n\n7 ימי עסקים לפני הטיסה ומטה — 100% מעלות החבילה, ללא כל החזר.",
           "Thereafter and up to 21 business days before the flight — $185 per person.\n\nFrom 21 to 15 business days before the flight — 40% of the package cost per person.\n\nFrom 14 to 8 business days before the flight — 70% of the package cost per person.\n\n7 business days before the flight or fewer — 100% of the package cost, no refund.",
         ),
+        levels: ["low", "net", "gross", "full"],
       },
     ],
   },
@@ -200,6 +201,7 @@ const SUPPLIERS: CancelSupplier[] = [
           "לאחר מכן ועד 28 ימי עסקים לפני היציאה — 35% מעלות החבילה לנוסע.\n\n27–15 ימי עסקים לפני היציאה — 60% מעלות החבילה לנוסע.\n\n14–7 ימי עסקים לפני היציאה — 85% מעלות החבילה לנוסע.\n\nפחות מ-7 ימי עסקים לפני היציאה — 100% מעלות החבילה, ללא כל החזר.",
           "Thereafter and up to 28 business days before departure — 35% of the package cost per traveler.\n\n27–15 business days before departure — 60% of the package cost per traveler.\n\n14–7 business days before departure — 85% of the package cost per traveler.\n\nFewer than 7 business days before departure — 100% of the package cost, no refund.",
         ),
+        levels: ["net", "gross", "gross", "full"],
       },
       { kind: "heading", text: t("🌺 סיישל / זנזיבר", "🌺 Seychelles / Zanzibar") },
       {
@@ -241,6 +243,7 @@ const SUPPLIERS: CancelSupplier[] = [
           "לאחר מכן ועד 28 ימי עסקים לפני היציאה — 35% מעלות החבילה לנוסע.\n\n27–15 ימי עסקים לפני היציאה — 85% מעלות החבילה לנוסע.\n\nפחות מ-15 ימי עסקים לפני היציאה — 100% מעלות החבילה, ללא כל החזר.",
           "Thereafter and up to 28 business days before departure — 35% of the package cost per traveler.\n\n27–15 business days before departure — 85% of the package cost per traveler.\n\nFewer than 15 business days before departure — 100% of the package cost, no refund.",
         ),
+        levels: ["net", "full", "full"],
       },
     ],
   },
@@ -387,6 +390,7 @@ const SUPPLIERS: CancelSupplier[] = [
           "לאחר מכן ועד 21 ימי עסקים טרם הטיסה — 45% לנוסע.\n\n14–21 ימי עסקים טרם הטיסה — 60% לנוסע.\n\n7–14 ימי עסקים טרם הטיסה — 85% לנוסע.\n\nפחות מ-7 ימי עסקים טרם הטיסה — 100% לנוסע, ללא כל החזר (למעט מיסי נמל).",
           "Thereafter and up to 21 business days before the flight — 45% per traveler.\n\n14–21 business days before the flight — 60% per traveler.\n\n7–14 business days before the flight — 85% per traveler.\n\nFewer than 7 business days before the flight — 100% per traveler, no refund (except airport taxes).",
         ),
+        levels: ["net", "gross", "gross", "full"],
       },
     ],
   },
@@ -442,6 +446,7 @@ const SUPPLIERS: CancelSupplier[] = [
           "לאחר מכן ועד 30 ימים לפני היציאה — 185$ לאדם.\n\n29–14 ימים לפני היציאה — 60% לאדם.\n\n13–7 ימים לפני היציאה — 90% לאדם.\n\n6 ימים ועד יום היציאה — 100% לאדם, ללא כל החזר.",
           "Thereafter and up to 30 days before departure — $185 per person.\n\n29–14 days before departure — 60% per person.\n\n13–7 days before departure — 90% per person.\n\n6 days until departure day — 100% per person, no refund.",
         ),
+        levels: ["low", "net", "gross", "full"],
       },
       { kind: "heading", text: t("🚌 טיולים מאורגנים", "🚌 Organized tours") },
       { kind: "subheading", tone: "accent", text: t("✈ טיסות סדירות", "✈ Scheduled flights") },
@@ -504,6 +509,7 @@ const SUPPLIERS: CancelSupplier[] = [
           "לאחר מכן ועד 45 ימים לפני היציאה — 185$ לאדם.\n\n44–30 ימים לפני היציאה — 35% לאדם.\n\n29–14 ימים לפני היציאה — 60% לאדם.\n\n13–7 ימים לפני היציאה — 90% לאדם.\n\n6 ימים ועד יום היציאה — 100% לאדם, ללא כל החזר.",
           "Thereafter and up to 45 days before departure — $185 per person.\n\n44–30 days before departure — 35% per person.\n\n29–14 days before departure — 60% per person.\n\n13–7 days before departure — 90% per person.\n\n6 days until departure day — 100% per person, no refund.",
         ),
+        levels: ["low", "net", "net", "gross", "full"],
       },
       {
         kind: "copy",
@@ -516,6 +522,7 @@ const SUPPLIERS: CancelSupplier[] = [
           "לאחר מכן ועד 30 ימים לפני היציאה — 185$ לאדם.\n\n29–14 ימים לפני היציאה — 60% לאדם.\n\n13–7 ימים לפני היציאה — 90% לאדם.\n\n6 ימים ועד יום היציאה — 100% לאדם, ללא כל החזר.",
           "Thereafter and up to 30 days before departure — $185 per person.\n\n29–14 days before departure — 60% per person.\n\n13–7 days before departure — 90% per person.\n\n6 days until departure day — 100% per person, no refund.",
         ),
+        levels: ["low", "net", "gross", "full"],
       },
       { kind: "heading", text: t("⛷ חבילות סקי", "⛷ Ski packages") },
       {
@@ -548,6 +555,7 @@ const SUPPLIERS: CancelSupplier[] = [
           "לאחר מכן ועד 30 ימים לפני היציאה — 60% מעלות החבילה לאדם.\n\n29–14 ימים לפני היציאה — 90% מעלות החבילה לאדם.\n\n13 ימים ועד יום היציאה — 100% מעלות החבילה, ללא כל החזר.",
           "Thereafter and up to 30 days before departure — 60% of the package cost per person.\n\n29–14 days before departure — 90% of the package cost per person.\n\n13 days until departure day — 100% of the package cost, no refund.",
         ),
+        levels: ["net", "gross", "full"],
       },
       { kind: "heading", text: t("🎄 לפלנד", "🎄 Lapland") },
       {
@@ -593,6 +601,7 @@ const SUPPLIERS: CancelSupplier[] = [
           "לאחר מכן ועד 60 ימים לפני היציאה — 600€ לאדם.\n\n59–30 ימים לפני היציאה — 1,100€ לאדם.\n\n29–22 ימים לפני היציאה — 1,600€ לאדם.\n\n21 ימים ועד יום היציאה — 100% מעלות החבילה, ללא כל החזר.",
           "Thereafter and up to 60 days before departure — €600 per person.\n\n59–30 days before departure — €1,100 per person.\n\n29–22 days before departure — €1,600 per person.\n\n21 days until departure day — 100% of the package cost, no refund.",
         ),
+        levels: ["low", "net", "gross", "full"],
       },
       { kind: "heading", text: t("🏟 חבילות ספורט / הופעות", "🏟 Sports / concert packages") },
       {
@@ -616,6 +625,7 @@ const SUPPLIERS: CancelSupplier[] = [
           "לאחר מכן — 100% מעלות החבילה, ללא כל החזר.",
           "Thereafter — 100% of the package cost, no refund.",
         ),
+        levels: ["full"],
       },
     ],
   },
@@ -652,6 +662,7 @@ const SUPPLIERS: CancelSupplier[] = [
           "לאחר מכן — 100% מהסכום, ללא כל החזר (Non-Refundable).",
           "Thereafter — 100% of the amount, no refund (non-refundable).",
         ),
+        levels: ["full"],
       },
     ],
   },
@@ -663,7 +674,7 @@ export type ViewBlock =
   | { kind: "heading"; text: string }
   | { kind: "subheading"; text: string; tone: "accent" | "gold" }
   | { kind: "table"; caption: string; headers: [string, string] | null; rows: ViewFeeRow[] }
-  | { kind: "copy"; heading: string | null; text: string };
+  | { kind: "copy"; heading: string | null; text: string; levels: FeeLevel[] };
 export type ViewProduct = { kind: ProductKind; label: string };
 export type ViewCancelSupplier = {
   id: string;
@@ -705,7 +716,12 @@ export function getCancellations(locale: string): ViewCancelSupplier[] {
             })),
           };
         case "copy":
-          return { kind: "copy", heading: b.heading ? pick(b.heading) : null, text: pick(b.text) };
+          return {
+            kind: "copy",
+            heading: b.heading ? pick(b.heading) : null,
+            text: pick(b.text),
+            levels: b.levels ?? [],
+          };
       }
     }),
     search: `${s.name.he ?? ""} ${s.name.en ?? ""} ${s.code}`.toLowerCase(),

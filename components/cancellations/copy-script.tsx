@@ -4,11 +4,37 @@ import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { Check, Copy } from "lucide-react";
 import { toast } from "sonner";
+import type { FeeLevel } from "@/lib/cancellations";
+import { FeeTable, type FeeTableRow } from "./fee-table";
 
-/** The ready-to-send client script: consumer-law banner + copy box + button. */
-export function CopyScript({ text }: { text: string }) {
+/**
+ * The client script is stored as plain text (it's copied verbatim to the
+ * customer): an opening Consumer Protection Law clause, then one `timeframe — fee`
+ * tier per paragraph. We parse the tiers into table rows for display (coloring
+ * each by the supplied severity level) while the copy button still sends the
+ * original full text.
+ */
+function parseTiers(text: string, levels: FeeLevel[]): FeeTableRow[] {
+  return text
+    .split(/\n\n+/)
+    .map((line) => line.trim())
+    .filter(Boolean)
+    .slice(1) // drop the opening law clause (shown once at the top of the page)
+    .map((line, i) => {
+      const dash = line.indexOf(" — ");
+      const row =
+        dash === -1
+          ? { timeframe: line, fee: "" }
+          : { timeframe: line.slice(0, dash).trim(), fee: line.slice(dash + 3).trim() };
+      return { ...row, level: levels[i] };
+    });
+}
+
+/** The ready-to-send client script: title + fee table + copy button. */
+export function CopyScript({ text, levels = [] }: { text: string; levels?: FeeLevel[] }) {
   const t = useTranslations("cancellations");
   const [copied, setCopied] = useState(false);
+  const rows = parseTiers(text, levels);
 
   async function handleCopy() {
     try {
@@ -22,14 +48,12 @@ export function CopyScript({ text }: { text: string }) {
   }
 
   return (
-    <div className="flex flex-col gap-2.5">
-      <p className="flex items-center gap-1.5 text-sm font-extrabold text-foreground">
+    <div className="flex flex-col gap-2">
+      <p className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wide text-destructive underline">
         {t("copyTitle")}
       </p>
 
-      <div className="px-4 py-3 text-sm leading-relaxed whitespace-pre-line text-foreground">
-        {text}
-      </div>
+      <FeeTable headers={[t("copyTimeHeader"), t("copyFeeHeader")]} rows={rows} />
 
       <div className="flex justify-end">
         <button

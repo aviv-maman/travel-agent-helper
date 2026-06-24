@@ -1,7 +1,10 @@
 {
   "permissions": {
     "allow": [
-      "Bash(echo \"exit code: $?\")"
+      "Bash(echo \"exit code: $?\")",
+      "PowerShell(if \\($?\\) { \"TS OK\" })",
+      "PowerShell(npx --no-install tsc -p tsconfig.json --noEmit)",
+      "Bash(node_modules/.bin/tsc.exe --noEmit)"
     ]
   }
 }
