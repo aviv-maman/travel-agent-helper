@@ -45,7 +45,9 @@ export function CityInfoAccordion({ info }: { info: ViewInfo }) {
   return (
     <Accordion className="rounded-xl border border-border bg-surface">
       <AccordionItem value="about-city" className="border-none px-4">
-        <AccordionTrigger className="text-sm font-extrabold">{t("title")}</AccordionTrigger>
+        <AccordionTrigger className="text-sm font-extrabold hover:no-underline">
+          {t("title")}
+        </AccordionTrigger>
         <AccordionContent className="flex flex-col gap-3 text-sm leading-relaxed">
           {info.about && <p className="text-foreground">{info.about}</p>}
 

@@ -50,38 +50,32 @@ export default async function HotelsPage({
 
   return (
     <div className="flex flex-col gap-5">
-      <Alert className="border-brand/35 bg-brand/10 text-brand">
-        <InfoIcon />
-        <AlertTitle>{t("hotels.ratingNoteTitle")}</AlertTitle>
-        <AlertDescription className="text-brand">{t("hotels.ratingNote")}</AlertDescription>
-      </Alert>
-
       <DestinationCombobox destinations={destinations} />
-
-      {!view && (
+      {view?.info && <CityInfoAccordion info={view.info} />}
+      {!view ? (
         <Alert>
           <InfoIcon />
           <AlertTitle>{t("hotels.emptyTitle")}</AlertTitle>
           <AlertDescription>{t("hotels.emptyHint")}</AlertDescription>
         </Alert>
+      ) : (
+        view.info?.warnings.map((w, i) => (
+          <Alert key={i} className="border-gold/35 bg-gold/10 text-gold">
+            <TriangleAlertIcon />
+            <AlertTitle>{t("hotels.warningTitle")}</AlertTitle>
+            <AlertDescription className="text-gold">{w}</AlertDescription>
+          </Alert>
+        ))
       )}
-
       {view && (
         <>
-          {view.info?.warnings.map((w, i) => (
-            <Alert key={i} className="border-gold/35 bg-gold/10 text-gold">
-              <TriangleAlertIcon />
-              <AlertTitle>{t("hotels.warningTitle")}</AlertTitle>
-              <AlertDescription className="text-gold">{w}</AlertDescription>
-            </Alert>
-          ))}
-
-          {view.info && <CityInfoAccordion info={view.info} />}
-
+          <Alert className="border-brand/35 bg-brand/10 text-brand">
+            <InfoIcon />
+            <AlertTitle>{t("hotels.ratingNoteTitle")}</AlertTitle>
+            <AlertDescription className="text-brand">{t("hotels.ratingNote")}</AlertDescription>
+          </Alert>
           <HotelFilters landmarks={view.landmarks} />
-
           <HotelsResults hotels={view.hotels} />
-
           <HotelsPager
             total={view.total}
             page={view.page}
