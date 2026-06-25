@@ -56,7 +56,7 @@ export function LanguageSwitcher() {
   return (
     <TooltipProvider>
       <Tooltip>
-        <DropdownMenu>
+        <DropdownMenu modal={false}>
           <DropdownMenuTrigger
             render={
               <TooltipTrigger
