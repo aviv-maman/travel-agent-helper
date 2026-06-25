@@ -4,10 +4,12 @@
     "subtitle": "עמלות, כבודה והסעות"
   },
   "nav": {
+    "menu": "תפריט",
     "language": "שפה",
     "hebrew": "עברית",
     "english": "English",
     "theme": "החלף מצב תצוגה",
+    "themeLabel": "ערכת נושא",
     "light": "בהיר",
     "dark": "כהה",
     "system": "מערכת"

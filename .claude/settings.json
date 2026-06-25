@@ -6,7 +6,9 @@
       "PowerShell(npx --no-install tsc -p tsconfig.json --noEmit)",
       "Bash(node_modules/.bin/tsc.exe --noEmit)",
       "PowerShell(npx -p typescript tsc --noEmit 2>&1)",
-      "PowerShell(npx prettier --write components/baggage/baggage-view.tsx 2>&1)"
+      "PowerShell(npx prettier --write components/baggage/baggage-view.tsx 2>&1)",
+      "PowerShell(npx eslint components/page-nav.tsx \"app/[[]locale]/layout.tsx\")",
+      "Bash(echo \"exit:$?\")"
     ]
   }
 }

@@ -49,7 +49,7 @@ export function CopyScript({ text, levels = [] }: { text: string; levels?: FeeLe
 
   return (
     <div className="flex flex-col gap-2">
-      <p className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wide text-destructive underline">
+      <p className="flex items-center gap-1.5 text-xs font-semibold tracking-wide text-destructive uppercase">
         {t("copyTitle")}
       </p>
 
