@@ -29,8 +29,7 @@ const PRODUCT: Record<ProductKind, string> = {
 };
 
 /** Shared style for the small section labels above each table / client copy. */
-const SECTION_LABEL =
-  "flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wide";
+const SECTION_LABEL = "flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wide";
 
 function Block({ block }: { block: ViewBlock }) {
   switch (block.kind) {
@@ -45,16 +44,14 @@ function Block({ block }: { block: ViewBlock }) {
     case "table":
       return (
         <div className="rounded-lg bg-muted/70 p-3 dark:bg-muted/30">
-          <p className={`mb-2 ${SECTION_LABEL} text-destructive underline`}>{block.caption}</p>
+          <p className={`mb-2 ${SECTION_LABEL} text-destructive`}>{block.caption}</p>
           <FeeTable headers={block.headers} rows={block.rows} />
         </div>
       );
     case "copy":
       return (
         <div className="flex flex-col gap-2 rounded-lg bg-muted/70 p-3 dark:bg-muted/30">
-          {block.heading && (
-            <h4 className={`${SECTION_LABEL} text-brand`}>{block.heading}</h4>
-          )}
+          {block.heading && <h4 className={`${SECTION_LABEL} text-brand`}>{block.heading}</h4>}
           <CopyScript text={block.text} levels={block.levels} />
         </div>
       );
