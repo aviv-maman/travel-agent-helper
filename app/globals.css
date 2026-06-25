@@ -176,6 +176,13 @@
   }
   html {
     @apply font-sans;
+    /* Base UI portals popups (menus, etc.) onto <body> with absolute
+       positioning. In RTL this can stretch the document and surface a
+       horizontal scrollbar on the inline-start side (shadcn-ui/ui#9233). The
+       viewport scrollbar follows the root <html> element's overflow, so the
+       clip must live here (not on <body>). Use `clip` (not `hidden`) so it
+       doesn't create a scroll container that would break the sticky page nav. */
+    overflow-x: clip;
   }
   button:not(:disabled),
   [role="button"]:not(:disabled) {
