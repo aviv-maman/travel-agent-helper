@@ -25,7 +25,7 @@ export function ThemeToggle() {
   return (
     <TooltipProvider>
       <Tooltip>
-        <DropdownMenu open={open} onOpenChange={setOpen}>
+        <DropdownMenu open={open} onOpenChange={setOpen} modal={false}>
           <DropdownMenuTrigger
             render={
               <TooltipTrigger
