@@ -1,14 +1,29 @@
 "use client";
 
+import { useState } from "react";
 import { useSelectedLayoutSegment } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";
 import Link from "next/link";
+import { Menu } from "lucide-react";
 import { cn } from "@/lib/utils";
 import {
   NavigationMenu,
   NavigationMenuItem,
   NavigationMenuList,
 } from "@/components/ui/navigation-menu";
+import {
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
+import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
+import { useDirection } from "@/components/ui/direction";
+import { ThemeToggle } from "@/components/theme-toggle";
+import { LanguageSwitcher } from "@/components/language-switcher";
 
 const PAGES = [
   { segment: "suppliers", emoji: "💰" },
@@ -20,36 +35,116 @@ const PAGES = [
 
 export function PageNav() {
   const t = useTranslations("tabs");
+  const tNav = useTranslations("nav");
+  const tApp = useTranslations("app");
   const locale = useLocale();
+  const direction = useDirection();
   const segment = useSelectedLayoutSegment() ?? "hotels";
+  const [open, setOpen] = useState(false);
+
+  const active = PAGES.find((p) => p.segment === segment) ?? PAGES[PAGES.length - 1];
 
   return (
     <div className="sticky top-0 z-50 border-b border-border bg-background/60 backdrop-blur-xs">
-      <div className="mx-auto w-full max-w-5xl px-2 py-2 sm:px-4 sm:py-2.5">
-        <NavigationMenu className="w-full max-w-full">
-          <NavigationMenuList className="w-full justify-between gap-0 sm:w-auto sm:justify-start sm:gap-1">
+      <div className="mx-auto flex w-full max-w-5xl items-center gap-2 px-3 py-2 sm:gap-4 sm:px-4 sm:py-2.5">
+        {/* Mobile: hamburger + current page */}
+        <Sheet open={open} onOpenChange={setOpen}>
+          <SheetTrigger
+            render={
+              <Button
+                variant="outline"
+                size="icon"
+                className="sm:hidden"
+                aria-label={tNav("menu")}
+              />
+            }>
+            <Menu className="size-4" />
+          </SheetTrigger>
+          <SheetContent
+            side={direction === "rtl" ? "right" : "left"}
+            className="w-72 max-w-[80vw] gap-0 p-0">
+            <SheetHeader className="p-4">
+              <SheetTitle>{tApp("title")}</SheetTitle>
+            </SheetHeader>
+            <Separator />
+            <nav className="flex flex-col gap-1 p-2">
+              {PAGES.map(({ segment: value, emoji }) => {
+                const isActive = segment === value;
+                return (
+                  <SheetClose
+                    key={value}
+                    nativeButton={false}
+                    render={
+                      <Link
+                        href={`/${locale}/${value}`}
+                        className={cn(
+                          "flex items-center gap-3 rounded-md px-3 py-2.5 text-sm font-medium transition-colors",
+                          isActive
+                            ? "bg-foreground/10 text-foreground"
+                            : "text-muted-foreground hover:bg-muted hover:text-foreground",
+                        )}
+                      />
+                    }>
+                    <span className="text-lg" aria-hidden>
+                      {emoji}
+                    </span>
+                    {t(value)}
+                  </SheetClose>
+                );
+              })}
+            </nav>
+            <Separator />
+            <div className="flex flex-col gap-3 p-4">
+              <div className="flex items-center justify-between gap-2">
+                <span className="text-sm text-muted-foreground">{tNav("themeLabel")}</span>
+                <ThemeToggle />
+              </div>
+              <div className="flex items-center justify-between gap-2">
+                <span className="text-sm text-muted-foreground">{tNav("language")}</span>
+                <LanguageSwitcher />
+              </div>
+            </div>
+          </SheetContent>
+        </Sheet>
+
+        <span className="flex items-center gap-2 font-medium text-foreground sm:hidden">
+          <span className="text-lg" aria-hidden>
+            {active.emoji}
+          </span>
+          {t(active.segment)}
+        </span>
+
+        {/* Desktop: horizontal page links */}
+        <NavigationMenu className="hidden max-w-full flex-none sm:flex">
+          <NavigationMenuList className="justify-start gap-1">
             {PAGES.map(({ segment: value, emoji }) => {
-              const active = segment === value;
+              const isActive = segment === value;
               return (
                 <NavigationMenuItem key={value}>
                   <Link
                     href={`/${locale}/${value}`}
                     className={cn(
-                      "flex flex-col items-center gap-0.5 rounded-md px-2.5 py-1.5 text-center font-medium transition-colors sm:flex-row sm:gap-2 sm:px-3 sm:text-left",
-                      active
+                      "flex items-center gap-2 rounded-md px-3 py-1.5 text-sm font-medium transition-colors",
+                      isActive
                         ? "bg-foreground/10 text-foreground"
                         : "text-muted-foreground hover:text-foreground",
                     )}>
-                    <span className="text-lg sm:text-base" aria-hidden>
+                    <span className="text-base" aria-hidden>
                       {emoji}
                     </span>
-                    <span className="text-[0.65rem] leading-tight sm:text-sm">{t(value)}</span>
+                    {t(value)}
                   </Link>
                 </NavigationMenuItem>
               );
             })}
           </NavigationMenuList>
         </NavigationMenu>
+
+        {/* Desktop controls cluster — login will join here later. */}
+        <div className="ms-auto hidden shrink-0 items-center gap-2 sm:flex">
+          <ThemeToggle />
+          <LanguageSwitcher />
+        </div>
       </div>
     </div>
   );

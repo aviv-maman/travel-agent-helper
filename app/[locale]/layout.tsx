@@ -7,8 +7,6 @@ import { DirectionProvider } from "@base-ui/react/direction-provider";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
 import { PageNav } from "@/components/page-nav";
-import { ThemeToggle } from "@/components/theme-toggle";
-import { LanguageSwitcher } from "@/components/language-switcher";
 import { routing, localeDirection, type Locale } from "@/i18n/routing";
 import "../globals.css";
 
@@ -62,15 +60,9 @@ export default async function LocaleLayout({
             <DirectionProvider direction={dir}>
               <PageNav />
               <main className="mx-auto w-full max-w-5xl px-4 py-8">
-                <header className="mb-8 flex items-center justify-between gap-4">
-                  <div>
-                    <h1 className="text-2xl font-extrabold text-foreground">{t("title")}</h1>
-                    <p className="text-sm text-muted-foreground">{t("subtitle")}</p>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <ThemeToggle />
-                    <LanguageSwitcher />
-                  </div>
+                <header className="mb-8">
+                  <h1 className="text-2xl font-extrabold text-foreground">{t("title")}</h1>
+                  <p className="text-sm text-muted-foreground">{t("subtitle")}</p>
                 </header>
                 {children}
               </main>

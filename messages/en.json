@@ -4,10 +4,12 @@
     "subtitle": "Commissions, baggage & transfers"
   },
   "nav": {
+    "menu": "Menu",
     "language": "Language",
     "hebrew": "עברית",
     "english": "English",
     "theme": "Toggle theme",
+    "themeLabel": "Theme",
     "light": "Light",
     "dark": "Dark",
     "system": "System"
