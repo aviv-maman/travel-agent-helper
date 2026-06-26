@@ -59,7 +59,7 @@ export default async function LocaleLayout({
           <ThemeProvider defaultTheme="dark">
             <DirectionProvider direction={dir}>
               <PageNav />
-              <main className="mx-auto w-full max-w-5xl px-4 py-8">
+              <main className="mx-auto w-full max-w-5xl p-4">
                 <header className="mb-8">
                   <h1 className="text-2xl font-extrabold text-foreground">{t("title")}</h1>
                   <p className="text-sm text-muted-foreground">{t("subtitle")}</p>

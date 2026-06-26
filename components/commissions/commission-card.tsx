@@ -1,5 +1,7 @@
 import { useTranslations } from "next-intl";
+import { Luggage, TriangleAlert, OctagonAlert } from "lucide-react";
 import type { CommColor, CommLevel, BaggageIcon, ViewSupplier } from "@/lib/commissions";
+import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 import { RichText } from "./rich-text";
 import { SupplierContact } from "./supplier-contact";
 
@@ -25,10 +27,12 @@ const LEVEL: Record<CommLevel, string> = {
 
 /** Leading glyph + color for each baggage row type. */
 const BAG_ICON: Record<BaggageIcon, { glyph: string; className: string }> = {
-  bag: { glyph: "🎒", className: "" },
-  money: { glyph: "$", className: "text-brand font-bold" },
+  bag: { glyph: "", className: "" },
   ok: { glyph: "✓", className: "text-success" },
   warn: { glyph: "⚠", className: "text-gold" },
+  flight: { glyph: "✈️", className: "" },
+  package: { glyph: "🏖️", className: "" },
+  tour: { glyph: "🧳", className: "" },
 };
 
 export function CommissionCard({ supplier }: { supplier: ViewSupplier }) {
@@ -36,19 +40,21 @@ export function CommissionCard({ supplier }: { supplier: ViewSupplier }) {
 
   return (
     <article className="flex flex-col overflow-hidden rounded-xl border border-border bg-surface shadow-sm">
-      <header className="flex items-center gap-2.5 border-b border-border px-4 py-3">
+      <header className="flex items-center gap-3 border-b border-border bg-surface-2/40 px-4 py-3">
         <span
-          className={`flex size-9 shrink-0 items-center justify-center rounded-lg text-lg ${CHIP[supplier.color]}`}
+          className={`flex size-10 shrink-0 items-center justify-center rounded-xl text-xl shadow-sm ring-1 ring-border/50 ${CHIP[supplier.color]}`}
           aria-hidden>
           {supplier.emoji}
         </span>
-        <div className="min-w-0">
-          <h3 className="truncate text-base font-bold text-foreground">{supplier.name}</h3>
-          {supplier.alias && <p className="text-xs text-muted-foreground">{supplier.alias}</p>}
-          <div className="mt-1.5">
-            <SupplierContact supplierId={supplier.id} supplierName={supplier.name} />
-          </div>
+        <div className="min-w-0 flex-1">
+          <h3 className="truncate text-base leading-tight font-bold text-foreground">
+            {supplier.name}
+          </h3>
+          {supplier.alias && (
+            <p className="truncate text-xs leading-snug text-muted-foreground">{supplier.alias}</p>
+          )}
         </div>
+        <SupplierContact supplierId={supplier.id} supplierName={supplier.name} />
       </header>
 
       <div className="flex flex-col px-4 py-3">
@@ -66,37 +72,52 @@ export function CommissionCard({ supplier }: { supplier: ViewSupplier }) {
           </div>
         ))}
 
-        <div className="mt-2.5 rounded-lg bg-surface-2 px-3 py-2.5">
-          <p className="mb-2 text-xs font-bold tracking-wide text-muted-foreground uppercase">
-            {t("baggage")}
-          </p>
-          <ul className="flex flex-col gap-1.5">
-            {supplier.baggage.map((row, i) => {
-              const icon = BAG_ICON[row.icon];
-              return (
-                <li key={i} className="flex items-start gap-2 text-sm leading-snug">
-                  <span className={`shrink-0 ${icon.className}`} aria-hidden>
-                    {icon.glyph}
-                  </span>
-                  <span className="text-foreground">
-                    <RichText text={row.text} />
-                  </span>
-                </li>
-              );
-            })}
-          </ul>
-        </div>
+        <Alert variant="info" className="mt-2.5">
+          <Luggage />
+          <AlertTitle>{t("baggage")}</AlertTitle>
+          <AlertDescription className="col-start-1 col-span-2">
+            <ul className="flex flex-col gap-1.5">
+              {supplier.baggage.map((row, i) => {
+                const icon = BAG_ICON[row.icon];
+                return (
+                  <li key={i} className="flex items-start gap-2 leading-snug">
+                    {icon.glyph && (
+                      <span className={`shrink-0 ${icon.className}`} aria-hidden>
+                        {icon.glyph}
+                      </span>
+                    )}
+                    <span className="text-foreground">
+                      <RichText text={row.text} />
+                    </span>
+                  </li>
+                );
+              })}
+            </ul>
+          </AlertDescription>
+        </Alert>
 
-        {supplier.note && (
-          <div
-            className={`mt-2.5 rounded-lg border px-3 py-2 text-xs leading-relaxed ${
-              supplier.noteVariant === "red"
-                ? "border-destructive/25 bg-destructive/[0.07] text-destructive"
-                : "border-gold/25 bg-gold/[0.07] text-gold"
-            }`}>
-            <RichText text={supplier.note} />
-          </div>
-        )}
+        {supplier.note &&
+          (supplier.noteVariant === "red" ? (
+            <Alert variant="destructive" className="mt-2.5">
+              <OctagonAlert />
+              <AlertTitle>{t("noteError")}</AlertTitle>
+              <AlertDescription className="col-start-1 col-span-2 text-xs leading-relaxed">
+                <p>
+                  <RichText text={supplier.note} />
+                </p>
+              </AlertDescription>
+            </Alert>
+          ) : (
+            <Alert variant="warning" className="mt-2.5">
+              <TriangleAlert />
+              <AlertTitle>{t("noteWarning")}</AlertTitle>
+              <AlertDescription className="col-start-1 col-span-2 text-xs leading-relaxed">
+                <p>
+                  <RichText text={supplier.note} />
+                </p>
+              </AlertDescription>
+            </Alert>
+          ))}
       </div>
     </article>
   );

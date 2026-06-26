@@ -28,7 +28,7 @@ export type CommColor =
 export type CommLevel = "high" | "mid" | "low" | "range" | "net";
 
 /** Which glyph leads a baggage row (and its color). */
-export type BaggageIcon = "bag" | "money" | "ok" | "warn";
+export type BaggageIcon = "bag" | "ok" | "warn" | "flight" | "package" | "tour";
 
 export type CommissionRate = {
   label: Localized;
@@ -91,23 +91,23 @@ const SUPPLIERS: Supplier[] = [
     baggage: [
       BACKPACK(),
       {
-        icon: "money",
+        icon: "flight",
         text: t(
-          "טיסות — מזוודה וטרולי לא כלולים, תוספת: מזוודה: **130$ ברוטו** · טרולי: **60$ ברוטו**",
-          "Flights — suitcase & trolley not included, add: suitcase **$130 gross** · trolley **$60 gross**",
+          "טיסות בלבד: מזוודה וטרולי לא כלולים, תוספת: מזוודה: **130$ ברוטו** · טרולי: **60$ ברוטו**",
+          "Flights only: suitcase & trolley not included, add: suitcase **$130 gross** · trolley **$60 gross**",
         ),
       },
       {
-        icon: "money",
+        icon: "package",
         text: t(
-          "חבילות — מזוודה וטרולי לא כלולים, תוספת: מזוודה: **130$ ברוטו** · טרולי: **60$ ברוטו**",
-          "Packages — suitcase & trolley not included, add: suitcase **$130 gross** · trolley **$60 gross**",
+          "חבילות נופש: מזוודה וטרולי לא כלולים, תוספת: מזוודה: **130$ ברוטו** · טרולי: **60$ ברוטו**",
+          "Vacation packages: suitcase & trolley not included, add: suitcase **$130 gross** · trolley **$60 gross**",
         ),
       },
       {
-        icon: "ok",
+        icon: "tour",
         text: t(
-          "מאורגנים: מזוודה גדולה + טרולי כלולים",
+          "טיולים מאורגנים: מזוודה גדולה + טרולי כלולים",
           "Organized tours: large suitcase + trolley included",
         ),
       },
@@ -139,17 +139,17 @@ const SUPPLIERS: Supplier[] = [
     baggage: [
       BACKPACK(),
       {
-        icon: "money",
+        icon: "flight",
         text: t(
-          "טיסות — מזוודה וטרולי לא כלולים, תוספת: מזוודה: **92$ נטו** · טרולי: **42$ נטו**",
-          "Flights — suitcase & trolley not included, add: suitcase **$92 net** · trolley **$42 net**",
+          "טיסות בלבד: מזוודה וטרולי לא כלולים, תוספת: מזוודה: **92$ נטו** · טרולי: **42$ נטו**",
+          "Flights only: suitcase & trolley not included, add: suitcase **$92 net** · trolley **$42 net**",
         ),
       },
       {
-        icon: "money",
+        icon: "package",
         text: t(
-          "חבילות — מזוודה וטרולי לא כלולים, תוספת: מזוודה: **92$ נטו** · טרולי: **42$ נטו**",
-          "Packages — suitcase & trolley not included, add: suitcase **$92 net** · trolley **$42 net**",
+          "חבילות נופש: מזוודה וטרולי לא כלולים, תוספת: מזוודה: **92$ נטו** · טרולי: **42$ נטו**",
+          "Vacation packages: suitcase & trolley not included, add: suitcase **$92 net** · trolley **$42 net**",
         ),
       },
       {
@@ -172,14 +172,17 @@ const SUPPLIERS: Supplier[] = [
     baggage: [
       BACKPACK(),
       {
-        icon: "ok",
-        text: t("טיסות: מזוודה גדולה + טרולי כלולים", "Flights: large suitcase + trolley included"),
+        icon: "flight",
+        text: t(
+          "טיסות בלבד: מזוודה גדולה + טרולי כלולים",
+          "Flights only: large suitcase + trolley included",
+        ),
       },
       {
-        icon: "ok",
+        icon: "package",
         text: t(
-          "חבילות: מזוודה גדולה + טרולי כלולים",
-          "Packages: large suitcase + trolley included",
+          "חבילות נופש: מזוודה גדולה + טרולי כלולים",
+          "Vacation packages: large suitcase + trolley included",
         ),
       },
       ARKIA_TROLLEY(60),
@@ -192,8 +195,8 @@ const SUPPLIERS: Supplier[] = [
       },
     ],
     note: t(
-      "**🏖️ חבילות נופש בלבד**\n📅 ינואר–יוני + ספטמבר–דצמבר: להוריד **20$ לאדם** ממחיר Market\n☀️ יולי–אוגוסט: להוריד **25$ לאדם** ממחיר Market\n\n**✈️ טיסות בלבד**\nלהוריד **10$ לאדם** ממחיר Market",
-      "**🏖️ Vacation packages only**\n📅 Jan–Jun + Sep–Dec: subtract **$20 per person** off the Market price\n☀️ Jul–Aug: subtract **$25 per person** off the Market price\n\n**✈️ Flights only**\nSubtract **$10 per person** off the Market price",
+      "**🏖️ חבילות נופש**\n• ינואר–יוני + ספטמבר–דצמבר: להוריד **20$ לאדם** ממחיר Market\n• יולי–אוגוסט: להוריד **25$ לאדם** ממחיר Market\n\n**✈️ טיסות בלבד**\nלהוריד **10$ לאדם** ממחיר Market",
+      "**🏖️ Vacation packages**\n• Jan–Jun + Sep–Dec: subtract **$20 per person** off the Market price\n• Jul–Aug: subtract **$25 per person** off the Market price\n\n**✈️ Flights only**\nSubtract **$10 per person** off the Market price",
     ),
   },
   {
@@ -209,14 +212,17 @@ const SUPPLIERS: Supplier[] = [
     baggage: [
       BACKPACK(),
       {
-        icon: "ok",
-        text: t("טיסות: מזוודה גדולה + טרולי כלולים", "Flights: large suitcase + trolley included"),
+        icon: "flight",
+        text: t(
+          "טיסות בלבד: מזוודה גדולה + טרולי כלולים",
+          "Flights only: large suitcase + trolley included",
+        ),
       },
       {
-        icon: "ok",
+        icon: "package",
         text: t(
-          "חבילות: מזוודה גדולה + טרולי כלולים",
-          "Packages: large suitcase + trolley included",
+          "חבילות נופש: מזוודה גדולה + טרולי כלולים",
+          "Vacation packages: large suitcase + trolley included",
         ),
       },
       ARKIA_TROLLEY(60),
@@ -229,8 +235,8 @@ const SUPPLIERS: Supplier[] = [
       },
     ],
     note: t(
-      "⚠️ עמלת חבילות נמוכה ב-4% מהספק הראשי Flying",
-      "⚠️ Package commission is 4% lower than the primary supplier Flying",
+      "עמלת חבילות נמוכה ב-4% מהספק הראשי Flying",
+      "Package commission is 4% lower than the primary supplier Flying",
     ),
     noteVariant: "red",
   },
@@ -260,23 +266,23 @@ const SUPPLIERS: Supplier[] = [
     baggage: [
       BACKPACK(),
       {
-        icon: "ok",
+        icon: "flight",
         text: t(
           "טיסות בלבד: מזוודה גדולה + טרולי כלולים",
           "Flight only: large suitcase + trolley included",
         ),
       },
       {
-        icon: "ok",
+        icon: "package",
         text: t(
-          "חבילות: מזוודה גדולה + טרולי כלולים",
-          "Packages: large suitcase + trolley included",
+          "חבילות נופש: מזוודה גדולה + טרולי כלולים",
+          "Vacation packages: large suitcase + trolley included",
         ),
       },
       ARKIA_TROLLEY(60),
     ],
     note: t(
-      "מאורגנים: יש לוודא עמלה ספציפית לכל טיול",
+      "טיולים מאורגנים: יש לוודא עמלה ספציפית לכל טיול",
       "Organized tours: confirm the specific commission for each trip",
     ),
   },
@@ -293,17 +299,17 @@ const SUPPLIERS: Supplier[] = [
     baggage: [
       BACKPACK(),
       {
-        icon: "ok",
+        icon: "flight",
         text: t(
           "טיסות בלבד: מזוודה גדולה + טרולי כלולים",
           "Flight only: large suitcase + trolley included",
         ),
       },
       {
-        icon: "ok",
+        icon: "package",
         text: t(
-          "חבילות: מזוודה גדולה + טרולי כלולים",
-          "Packages: large suitcase + trolley included",
+          "חבילות נופש: מזוודה גדולה + טרולי כלולים",
+          "Vacation packages: large suitcase + trolley included",
         ),
       },
       {
@@ -320,7 +326,7 @@ const SUPPLIERS: Supplier[] = [
     emoji: "🛫",
     color: "destructive",
     name: t("ארקיע", "Arkia"),
-    alias: t("עמלה מיוחדת לבנגקוק ו-New York", "Special commission for Bangkok & New York"),
+    alias: t("עמלה מיוחדת לבנגקוק וניו יורק", "Special commission for Bangkok & New York"),
     rates: [
       { label: FLIGHTS_ONLY, value: t("6%", "6%"), level: "low" },
       {
@@ -333,30 +339,30 @@ const SUPPLIERS: Supplier[] = [
     baggage: [
       { icon: "bag", text: t('תיק גב עד 4 ק"ג — כלול', "Backpack up to 4 kg — included") },
       {
-        icon: "money",
+        icon: "flight",
         text: t(
-          "טיסות — מזוודה וטרולי לא כלולים, תוספת: מזוודה: **100$ נטו** · טרולי: **50$ נטו**",
-          "Flights — suitcase & trolley not included, add: suitcase **$100 net** · trolley **$50 net**",
+          "טיסות בלבד: מזוודה וטרולי לא כלולים, תוספת: מזוודה: **100$ נטו** · טרולי: **50$ נטו**",
+          "Flights only: suitcase & trolley not included, add: suitcase **$100 net** · trolley **$50 net**",
         ),
       },
       {
-        icon: "money",
+        icon: "package",
         text: t(
-          "חבילות — מזוודה וטרולי לא כלולים, תוספת: מזוודה: **100$ נטו** · טרולי: **50$ נטו**",
-          "Packages — suitcase & trolley not included, add: suitcase **$100 net** · trolley **$50 net**",
+          "חבילות נופש: מזוודה וטרולי לא כלולים, תוספת: מזוודה: **100$ נטו** · טרולי: **50$ נטו**",
+          "Vacation packages: suitcase & trolley not included, add: suitcase **$100 net** · trolley **$50 net**",
         ),
       },
       {
-        icon: "ok",
+        icon: "tour",
         text: t(
-          "מאורגנים: מזוודה גדולה + טרולי כלולים",
+          "טיולים מאורגנים: מזוודה גדולה + טרולי כלולים",
           "Organized tours: large suitcase + trolley included",
         ),
       },
       {
         icon: "ok",
         text: t(
-          "בנגקוק ו-New York: מזוודה גדולה + טרולי כלולים",
+          "בנגקוק וניו יורק: מזוודה גדולה + טרולי כלולים",
           "Bangkok & New York: large suitcase + trolley included",
         ),
       },
@@ -374,17 +380,17 @@ const SUPPLIERS: Supplier[] = [
     baggage: [
       BACKPACK(),
       {
-        icon: "ok",
+        icon: "flight",
         text: t(
           "טיסות בלבד: מזוודה גדולה + טרולי כלולים",
           "Flight only: large suitcase + trolley included",
         ),
       },
       {
-        icon: "ok",
+        icon: "package",
         text: t(
-          "חבילות: מזוודה גדולה + טרולי כלולים",
-          "Packages: large suitcase + trolley included",
+          "חבילות נופש: מזוודה גדולה + טרולי כלולים",
+          "Vacation packages: large suitcase + trolley included",
         ),
       },
       ARKIA_TROLLEY(60),
@@ -404,21 +410,21 @@ const SUPPLIERS: Supplier[] = [
     baggage: [
       { icon: "bag", text: t('תיק גב עד 4 ק"ג — כלול', "Backpack up to 4 kg — included") },
       {
-        icon: "money",
+        icon: "flight",
         text: t(
-          "טיסות — מזוודה וטרולי לא כלולים, תוספת: מזוודה: **120$ ברוטו** · טרולי: **60$ ברוטו**",
-          "Flights — suitcase & trolley not included, add: suitcase **$120 gross** · trolley **$60 gross**",
+          "טיסות בלבד: מזוודה וטרולי לא כלולים, תוספת: מזוודה: **120$ ברוטו** · טרולי: **60$ ברוטו**",
+          "Flights only: suitcase & trolley not included, add: suitcase **$120 gross** · trolley **$60 gross**",
         ),
       },
       {
-        icon: "ok",
+        icon: "package",
         text: t("חבילות נופש: טרולי כלול בחינם", "Vacation packages: trolley included free"),
       },
       {
-        icon: "money",
+        icon: "package",
         text: t(
-          "חבילות: מזוודה גדולה לא כלולה — תוספת: **100$ ברוטו**",
-          "Packages: large suitcase not included — add: **$100 gross**",
+          "חבילות נופש: מזוודה גדולה לא כלולה — תוספת: **100$ ברוטו**",
+          "Vacation packages: large suitcase not included — add: **$100 gross**",
         ),
       },
     ],
@@ -439,17 +445,17 @@ const SUPPLIERS: Supplier[] = [
     baggage: [
       BACKPACK(),
       {
-        icon: "ok",
+        icon: "flight",
         text: t(
           "טיסות בלבד: מזוודה גדולה + טרולי כלולים",
           "Flight only: large suitcase + trolley included",
         ),
       },
       {
-        icon: "ok",
+        icon: "package",
         text: t(
-          "חבילות: מזוודה גדולה + טרולי כלולים",
-          "Packages: large suitcase + trolley included",
+          "חבילות נופש: מזוודה גדולה + טרולי כלולים",
+          "Vacation packages: large suitcase + trolley included",
         ),
       },
       {
@@ -473,17 +479,17 @@ const SUPPLIERS: Supplier[] = [
     baggage: [
       BACKPACK(),
       {
-        icon: "ok",
+        icon: "flight",
         text: t(
           "טיסות בלבד: מזוודה גדולה + טרולי כלולים",
           "Flight only: large suitcase + trolley included",
         ),
       },
       {
-        icon: "ok",
+        icon: "package",
         text: t(
-          "חבילות: מזוודה גדולה + טרולי כלולים",
-          "Packages: large suitcase + trolley included",
+          "חבילות נופש: מזוודה גדולה + טרולי כלולים",
+          "Vacation packages: large suitcase + trolley included",
         ),
       },
     ],
@@ -501,17 +507,17 @@ const SUPPLIERS: Supplier[] = [
     baggage: [
       BACKPACK(),
       {
-        icon: "ok",
+        icon: "flight",
         text: t(
           "טיסות בלבד: מזוודה גדולה + טרולי כלולים",
           "Flight only: large suitcase + trolley included",
         ),
       },
       {
-        icon: "ok",
+        icon: "package",
         text: t(
-          "חבילות: מזוודה גדולה + טרולי כלולים",
-          "Packages: large suitcase + trolley included",
+          "חבילות נופש: מזוודה גדולה + טרולי כלולים",
+          "Vacation packages: large suitcase + trolley included",
         ),
       },
       ARKIA_TROLLEY(60),
@@ -539,9 +545,9 @@ const SUPPLIERS: Supplier[] = [
     baggage: [
       BACKPACK(),
       {
-        icon: "ok",
+        icon: "tour",
         text: t(
-          "מאורגנים: מזוודה גדולה + טרולי כלולים",
+          "טיולים מאורגנים: מזוודה גדולה + טרולי כלולים",
           "Organized tours: large suitcase + trolley included",
         ),
       },
