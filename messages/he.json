@@ -23,6 +23,8 @@
   },
   "commissions": {
     "baggage": "כבודה",
+    "noteWarning": "הערה חשובה",
+    "noteError": "מידע חשוב",
     "searchPlaceholder": "חפש ספק... (עברית או אנגלית)",
     "clear": "נקה חיפוש",
     "noResults": "😕 לא נמצא ספק תואם",

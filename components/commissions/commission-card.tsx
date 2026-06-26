@@ -1,5 +1,7 @@
 import { useTranslations } from "next-intl";
+import { Luggage, TriangleAlert, OctagonAlert } from "lucide-react";
 import type { CommColor, CommLevel, BaggageIcon, ViewSupplier } from "@/lib/commissions";
+import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 import { RichText } from "./rich-text";
 import { SupplierContact } from "./supplier-contact";
 
@@ -25,10 +27,12 @@ const LEVEL: Record<CommLevel, string> = {
 
 /** Leading glyph + color for each baggage row type. */
 const BAG_ICON: Record<BaggageIcon, { glyph: string; className: string }> = {
-  bag: { glyph: "🎒", className: "" },
-  money: { glyph: "$", className: "text-brand font-bold" },
+  bag: { glyph: "", className: "" },
   ok: { glyph: "✓", className: "text-success" },
   warn: { glyph: "⚠", className: "text-gold" },
+  flight: { glyph: "✈️", className: "" },
+  package: { glyph: "🏖️", className: "" },
+  tour: { glyph: "🧳", className: "" },
 };
 
 export function CommissionCard({ supplier }: { supplier: ViewSupplier }) {
@@ -68,37 +72,52 @@ export function CommissionCard({ supplier }: { supplier: ViewSupplier }) {
           </div>
         ))}
 
-        <div className="mt-2.5 rounded-lg bg-surface-2 px-3 py-2.5">
-          <p className="mb-2 text-xs font-bold tracking-wide text-muted-foreground uppercase">
-            {t("baggage")}
-          </p>
-          <ul className="flex flex-col gap-1.5">
-            {supplier.baggage.map((row, i) => {
-              const icon = BAG_ICON[row.icon];
-              return (
-                <li key={i} className="flex items-start gap-2 text-sm leading-snug">
-                  <span className={`shrink-0 ${icon.className}`} aria-hidden>
-                    {icon.glyph}
-                  </span>
-                  <span className="text-foreground">
-                    <RichText text={row.text} />
-                  </span>
-                </li>
-              );
-            })}
-          </ul>
-        </div>
+        <Alert variant="info" className="mt-2.5">
+          <Luggage />
+          <AlertTitle>{t("baggage")}</AlertTitle>
+          <AlertDescription className="col-start-1 col-span-2">
+            <ul className="flex flex-col gap-1.5">
+              {supplier.baggage.map((row, i) => {
+                const icon = BAG_ICON[row.icon];
+                return (
+                  <li key={i} className="flex items-start gap-2 leading-snug">
+                    {icon.glyph && (
+                      <span className={`shrink-0 ${icon.className}`} aria-hidden>
+                        {icon.glyph}
+                      </span>
+                    )}
+                    <span className="text-foreground">
+                      <RichText text={row.text} />
+                    </span>
+                  </li>
+                );
+              })}
+            </ul>
+          </AlertDescription>
+        </Alert>
 
-        {supplier.note && (
-          <div
-            className={`mt-2.5 rounded-lg border px-3 py-2 text-xs leading-relaxed ${
-              supplier.noteVariant === "red"
-                ? "border-destructive/25 bg-destructive/[0.07] text-destructive"
-                : "border-gold/25 bg-gold/[0.07] text-gold"
-            }`}>
-            <RichText text={supplier.note} />
-          </div>
-        )}
+        {supplier.note &&
+          (supplier.noteVariant === "red" ? (
+            <Alert variant="destructive" className="mt-2.5">
+              <OctagonAlert />
+              <AlertTitle>{t("noteError")}</AlertTitle>
+              <AlertDescription className="col-start-1 col-span-2 text-xs leading-relaxed">
+                <p>
+                  <RichText text={supplier.note} />
+                </p>
+              </AlertDescription>
+            </Alert>
+          ) : (
+            <Alert variant="warning" className="mt-2.5">
+              <TriangleAlert />
+              <AlertTitle>{t("noteWarning")}</AlertTitle>
+              <AlertDescription className="col-start-1 col-span-2 text-xs leading-relaxed">
+                <p>
+                  <RichText text={supplier.note} />
+                </p>
+              </AlertDescription>
+            </Alert>
+          ))}
       </div>
     </article>
   );

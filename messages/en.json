@@ -23,6 +23,8 @@
   },
   "commissions": {
     "baggage": "Baggage",
+    "noteWarning": "Important note",
+    "noteError": "Important info",
     "searchPlaceholder": "Search a supplier... (Hebrew or English)",
     "clear": "Clear search",
     "noResults": "😕 No matching supplier found",
