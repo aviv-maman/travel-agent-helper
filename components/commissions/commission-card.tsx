@@ -36,19 +36,21 @@ export function CommissionCard({ supplier }: { supplier: ViewSupplier }) {
 
   return (
     <article className="flex flex-col overflow-hidden rounded-xl border border-border bg-surface shadow-sm">
-      <header className="flex items-center gap-2.5 border-b border-border px-4 py-3">
+      <header className="flex items-center gap-3 border-b border-border bg-surface-2/40 px-4 py-3">
         <span
-          className={`flex size-9 shrink-0 items-center justify-center rounded-lg text-lg ${CHIP[supplier.color]}`}
+          className={`flex size-10 shrink-0 items-center justify-center rounded-xl text-xl shadow-sm ring-1 ring-border/50 ${CHIP[supplier.color]}`}
           aria-hidden>
           {supplier.emoji}
         </span>
-        <div className="min-w-0">
-          <h3 className="truncate text-base font-bold text-foreground">{supplier.name}</h3>
-          {supplier.alias && <p className="text-xs text-muted-foreground">{supplier.alias}</p>}
-          <div className="mt-1.5">
-            <SupplierContact supplierId={supplier.id} supplierName={supplier.name} />
-          </div>
+        <div className="min-w-0 flex-1">
+          <h3 className="truncate text-base leading-tight font-bold text-foreground">
+            {supplier.name}
+          </h3>
+          {supplier.alias && (
+            <p className="truncate text-xs leading-snug text-muted-foreground">{supplier.alias}</p>
+          )}
         </div>
+        <SupplierContact supplierId={supplier.id} supplierName={supplier.name} />
       </header>
 
       <div className="flex flex-col px-4 py-3">
