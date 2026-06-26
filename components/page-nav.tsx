@@ -46,7 +46,7 @@ export function PageNav() {
 
   return (
     <div className="sticky top-0 z-50 border-b border-border bg-background/60 backdrop-blur-xs">
-      <div className="mx-auto flex w-full max-w-5xl items-center gap-2 px-3 py-2 sm:gap-4 sm:px-4 sm:py-2.5">
+      <div className="mx-auto flex w-full max-w-5xl items-center gap-2 px-3 py-2.5 sm:gap-4 sm:px-4 sm:py-2.5">
         {/* Mobile: hamburger + current page */}
         <Sheet open={open} onOpenChange={setOpen}>
           <SheetTrigger
