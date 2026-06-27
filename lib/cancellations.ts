@@ -1,7 +1,6 @@
 import type { Localized } from "@/db/schema";
 import type { Locale } from "@/i18n/config";
 import { localized } from "@/lib/hotels";
-import type { CommColor } from "@/lib/commissions";
 
 /**
  * Cancellation-fee guide per supplier. Each card holds the internal NET fee
@@ -28,8 +27,8 @@ export type Product = { kind: ProductKind; label: Localized };
 
 export type CancelSupplier = {
   id: string;
-  emoji: string;
-  color: CommColor;
+  /** Path to the supplier's logo image (under /public). */
+  logo?: string;
   name: Localized;
   code: string;
   products: Product[];
@@ -88,8 +87,6 @@ function copyText(when: "flight" | "departure", he: string, en: string): Localiz
 const SUPPLIERS: CancelSupplier[] = [
   {
     id: "flying",
-    emoji: "🪄",
-    color: "gold",
     name: t("שטיח מעופף", "Flying Carpet"),
     code: "FLYING",
     products: [P_FLIGHT(), P_PACKAGE("🏖 חבילות", "🏖 Packages"), P_ORGANIZED()],
@@ -142,8 +139,6 @@ const SUPPLIERS: CancelSupplier[] = [
   },
   {
     id: "issta",
-    emoji: "✈",
-    color: "brand",
     name: t("איסתא", "Issta"),
     code: "ISSTA",
     products: [
@@ -249,8 +244,6 @@ const SUPPLIERS: CancelSupplier[] = [
   },
   {
     id: "israir",
-    emoji: "🛫",
-    color: "success",
     name: t("ישראייר", "Israir"),
     code: "ISRAIR",
     products: [P_FLIGHT(), P_PACKAGE("🏖 חבילות", "🏖 Packages")],
@@ -396,8 +389,6 @@ const SUPPLIERS: CancelSupplier[] = [
   },
   {
     id: "kishrei",
-    emoji: "🔗",
-    color: "warning",
     name: t("קשרי תעופה", "Kishrei Teufa"),
     code: "KISHREI",
     products: [
@@ -631,8 +622,6 @@ const SUPPLIERS: CancelSupplier[] = [
   },
   {
     id: "kavei",
-    emoji: "🏖",
-    color: "destructive",
     name: t("קווי חופשה", "Kavei Hufsha"),
     code: "KAVEI",
     products: [
@@ -678,8 +667,7 @@ export type ViewBlock =
 export type ViewProduct = { kind: ProductKind; label: string };
 export type ViewCancelSupplier = {
   id: string;
-  emoji: string;
-  color: CommColor;
+  logo: string | null;
   name: string;
   code: string;
   products: ViewProduct[];
@@ -693,8 +681,7 @@ export function getCancellations(locale: string): ViewCancelSupplier[] {
   const pick = (v: Localized) => localized(v, locale as Locale);
   return SUPPLIERS.map((s) => ({
     id: s.id,
-    emoji: s.emoji,
-    color: s.color,
+    logo: s.logo ?? null,
     name: pick(s.name),
     code: s.code,
     products: s.products.map((p) => ({ kind: p.kind, label: pick(p.label) })),

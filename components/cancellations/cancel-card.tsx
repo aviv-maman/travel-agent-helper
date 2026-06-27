@@ -1,8 +1,8 @@
 "use client";
 
 import { Fragment } from "react";
+import Image from "next/image";
 import type { ProductKind, ViewBlock, ViewCancelSupplier } from "@/lib/cancellations";
-import type { CommColor } from "@/lib/commissions";
 import {
   Accordion,
   AccordionContent,
@@ -12,15 +12,8 @@ import {
 import { FeeTable } from "./fee-table";
 import { CopyScript } from "./copy-script";
 
-const CHIP: Record<CommColor, string> = {
-  brand: "bg-brand/15 text-brand",
-  success: "bg-success/15 text-success",
-  gold: "bg-gold/15 text-gold",
-  warning: "bg-warning/15 text-warning",
-  purple: "bg-purple/15 text-purple",
-  destructive: "bg-destructive/15 text-destructive",
-  muted: "bg-muted text-muted-foreground",
-};
+/** Fallback logo shown until a supplier's own logo file is added. */
+const PLACEHOLDER_LOGO = "/suppliers/placeholder-logo.svg";
 
 const PRODUCT: Record<ProductKind, string> = {
   flight: "bg-brand/[0.13] text-brand",
@@ -72,9 +65,15 @@ export function CancelCard({
       <AccordionItem value="cancel" className="border-none px-4">
         <AccordionTrigger className="items-center gap-2.5 py-3 hover:no-underline">
           <span
-            className={`flex size-9 shrink-0 items-center justify-center rounded-lg text-lg ${CHIP[supplier.color]}`}
+            className="flex size-9 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-surface-2"
             aria-hidden>
-            {supplier.emoji}
+            <Image
+              src={supplier.logo ?? PLACEHOLDER_LOGO}
+              alt=""
+              width={36}
+              height={36}
+              className="size-full object-contain"
+            />
           </span>
           <div className="min-w-0 flex-1 text-start">
             <div className="flex items-baseline gap-2">
