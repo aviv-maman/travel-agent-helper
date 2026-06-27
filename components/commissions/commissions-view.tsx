@@ -11,7 +11,7 @@ const LEGEND: { dot: string; key: "high" | "mid" | "low" | "net" }[] = [
   { dot: "bg-success", key: "high" },
   { dot: "bg-brand", key: "mid" },
   { dot: "bg-warning", key: "low" },
-  { dot: "bg-muted-foreground", key: "net" },
+  { dot: "bg-destructive", key: "net" },
 ];
 
 export function CommissionsView({ suppliers }: { suppliers: ViewSupplier[] }) {
@@ -59,7 +59,7 @@ export function CommissionsView({ suppliers }: { suppliers: ViewSupplier[] }) {
           {t("noResults")}
         </p>
       ) : (
-        <div className="grid grid-cols-[repeat(auto-fill,minmax(min(100%,20rem),1fr))] gap-3.5">
+        <div className="grid grid-cols-1 gap-3.5 md:grid-cols-2">
           {filtered.map((s) => (
             <CommissionCard key={s.id} supplier={s} />
           ))}
