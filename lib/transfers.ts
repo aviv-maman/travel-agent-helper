@@ -158,15 +158,26 @@ const COUNTRIES: CountryGroup[] = [
       {
         id: "greek-cyprus",
         name: t(
-          "קפריסין היוונית — לימסול (LCA) · לרנקה (LCA) · איה נאפה (AYA) · פאפוס (PFO) · פרוטאראס (PRT)",
-          "Greek Cyprus — Limassol (LCA) · Larnaca (LCA) · Ayia Napa (AYA) · Paphos (PFO) · Protaras (PRT)",
+          "קפריסין היוונית — לימסול (LCA) · לרנקה (LCA) · איה נאפה (AYA) · פאפוס (PFO)",
+          "Greek Cyprus — Limassol (LCA) · Larnaca (LCA) · Ayia Napa (AYA) · Paphos (PFO)",
         ),
         search:
-          "lca pfo aya prt לימסול limassol לרנקה larnaca פאפוס paphos פרוטאראס protaras איה נאפה ayia napa",
+          "lca pfo aya לימסול limassol לרנקה larnaca פאפוס paphos איה נאפה ayia napa",
         pills: [
           p("yes", "flying"),
           p("yes", "issta"),
           p("no", "ayala"),
+          g("no", "כל שאר הספקים", "All other suppliers"),
+        ],
+      },
+      {
+        id: "protaras",
+        name: t("פרוטאראס (PRT)", "Protaras (PRT)"),
+        search: "פרוטאראס protaras prt",
+        pills: [
+          p("yes", "flying"),
+          p("yes", "issta"),
+          p("yes", "ayala"),
           g("no", "כל שאר הספקים", "All other suppliers"),
         ],
       },
