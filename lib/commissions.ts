@@ -277,6 +277,13 @@ const SUPPLIERS: Supplier[] = [
     packages: c("10%", "10%", "high"),
     organizedTours: c("7–10%", "7–10%", "range"),
     customCommission1: cc("✈️ טיסות בלבד: דובאי", "✈️ Flight only — Dubai", "10%", "10%", "high"),
+    customCommission2: cc(
+      "🏖️ חבילות נופש: בטומי",
+      "🏖️ Vacation packages — Batumi",
+      "8%",
+      "8%",
+      "mid",
+    ),
     baggage: [
       BACKPACK(),
       {
