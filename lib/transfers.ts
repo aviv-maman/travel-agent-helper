@@ -69,6 +69,14 @@ function g(variant: PillVariant, he: string, en: string): Pill {
 /** Shorthand "✗ all suppliers" pill used by the not-included countries. */
 const NONE: Pill = g("no", "כל הספקים", "All suppliers");
 
+/** Greek Cyprus inclusion rule — shared by all of its cities. */
+const GREEK_CYPRUS: Pill[] = [
+  p("yes", "flying"),
+  p("yes", "issta"),
+  p("no", "ayala"),
+  g("no", "כל שאר הספקים", "All other suppliers"),
+];
+
 const COUNTRIES: CountryGroup[] = [
   {
     id: "bulgaria",
@@ -76,9 +84,15 @@ const COUNTRIES: CountryGroup[] = [
     code: "BG",
     cities: [
       {
-        id: "bulgaria-coast",
-        name: t("בורגס (BOJ) · וורנה (VAR)", "Burgas (BOJ) · Varna (VAR)"),
-        search: "בורגס burgas boj וורנה varna var",
+        id: "burgas",
+        name: t("בורגס (BOJ)", "Burgas (BOJ)"),
+        search: "בורגס burgas boj",
+        pills: [g("yes", "כל הספקים", "all suppliers")],
+      },
+      {
+        id: "varna",
+        name: t("וורנה (VAR)", "Varna (VAR)"),
+        search: "וורנה varna var",
         pills: [g("yes", "כל הספקים", "all suppliers")],
       },
       {
@@ -100,9 +114,21 @@ const COUNTRIES: CountryGroup[] = [
     code: "GR",
     cities: [
       {
-        id: "greece-islands",
-        name: t("כרתים (HER) · רודוס (RHO) · קוס (KGS)", "Crete (HER) · Rhodes (RHO) · Kos (KGS)"),
-        search: "כרתים crete her רודוס rhodes rho קוס kos kgs",
+        id: "crete",
+        name: t("כרתים (HER)", "Crete (HER)"),
+        search: "כרתים crete her",
+        pills: [g("yes", "כל הספקים", "all suppliers")],
+      },
+      {
+        id: "rhodes",
+        name: t("רודוס (RHO)", "Rhodes (RHO)"),
+        search: "רודוס rhodes rho",
+        pills: [g("yes", "כל הספקים", "all suppliers")],
+      },
+      {
+        id: "kos",
+        name: t("קוס (KGS)", "Kos (KGS)"),
+        search: "קוס kos kgs",
         pills: [g("yes", "כל הספקים", "all suppliers")],
       },
       {
@@ -144,9 +170,15 @@ const COUNTRIES: CountryGroup[] = [
         ],
       },
       {
-        id: "athens-thess",
-        name: t("אתונה (ATH) · סלוניקי (SKG)", "Athens (ATH) · Thessaloniki (SKG)"),
-        search: "אתונה athens ath סלוניקי thessaloniki skg",
+        id: "athens",
+        name: t("אתונה (ATH)", "Athens (ATH)"),
+        search: "אתונה athens ath",
+        pills: [NONE],
+      },
+      {
+        id: "thessaloniki",
+        name: t("סלוניקי (SKG)", "Thessaloniki (SKG)"),
+        search: "סלוניקי thessaloniki skg",
         pills: [NONE],
       },
     ],
@@ -163,19 +195,34 @@ const COUNTRIES: CountryGroup[] = [
         pills: [g("yes", "כל הספקים", "all suppliers")],
       },
       {
-        id: "greek-cyprus",
-        name: t(
-          "קפריסין היוונית — לימסול (LCA) · לרנקה (LCA) · איה נאפה (AYA) · פאפוס (PFO) · פרוטאראס (PRT)",
-          "Greek Cyprus — Limassol (LCA) · Larnaca (LCA) · Ayia Napa (AYA) · Paphos (PFO) · Protaras (PRT)",
-        ),
-        search:
-          "lca pfo aya prt לימסול limassol לרנקה larnaca פאפוס paphos פרוטאראס protaras איה נאפה ayia napa",
-        pills: [
-          p("yes", "flying"),
-          p("yes", "issta"),
-          p("no", "ayala"),
-          g("no", "כל שאר הספקים", "All other suppliers"),
-        ],
+        id: "limassol",
+        name: t("לימסול (LCA)", "Limassol (LCA)"),
+        search: "לימסול limassol lca",
+        pills: GREEK_CYPRUS,
+      },
+      {
+        id: "larnaca",
+        name: t("לרנקה (LCA)", "Larnaca (LCA)"),
+        search: "לרנקה larnaca lca",
+        pills: GREEK_CYPRUS,
+      },
+      {
+        id: "ayia-napa",
+        name: t("איה נאפה (AYA)", "Ayia Napa (AYA)"),
+        search: "איה נאפה ayia napa aya",
+        pills: GREEK_CYPRUS,
+      },
+      {
+        id: "paphos",
+        name: t("פאפוס (PFO)", "Paphos (PFO)"),
+        search: "פאפוס paphos pfo",
+        pills: GREEK_CYPRUS,
+      },
+      {
+        id: "protaras",
+        name: t("פרוטאראס (PRT)", "Protaras (PRT)"),
+        search: "פרוטאראס protaras prt",
+        pills: GREEK_CYPRUS,
       },
     ],
   },
@@ -319,9 +366,15 @@ const COUNTRIES: CountryGroup[] = [
     code: "IT",
     cities: [
       {
-        id: "italy-cities",
-        name: t("רומא (FCO) · מילאנו (MIL)", "Rome (FCO) · Milan (MIL)"),
-        search: "רומא rome fco מילאנו milan mil",
+        id: "rome",
+        name: t("רומא (FCO)", "Rome (FCO)"),
+        search: "רומא rome fco",
+        pills: [NONE],
+      },
+      {
+        id: "milan",
+        name: t("מילאנו (MIL)", "Milan (MIL)"),
+        search: "מילאנו milan mil",
         pills: [NONE],
       },
     ],
@@ -371,9 +424,15 @@ const COUNTRIES: CountryGroup[] = [
     code: "PL",
     cities: [
       {
-        id: "poland-cities",
-        name: t("וורשה (WAW) · קרקוב (KRK)", "Warsaw (WAW) · Krakow (KRK)"),
-        search: "וורשה warsaw waw קרקוב krakow krk",
+        id: "warsaw",
+        name: t("וורשה (WAW)", "Warsaw (WAW)"),
+        search: "וורשה warsaw waw",
+        pills: [NONE],
+      },
+      {
+        id: "krakow",
+        name: t("קרקוב (KRK)", "Krakow (KRK)"),
+        search: "קרקוב krakow krk",
         pills: [NONE],
       },
     ],
@@ -436,9 +495,15 @@ const COUNTRIES: CountryGroup[] = [
     code: "ES",
     cities: [
       {
-        id: "spain-cities",
-        name: t("מדריד (MAD) · ברצלונה (BCN)", "Madrid (MAD) · Barcelona (BCN)"),
-        search: "מדריד madrid mad ברצלונה barcelona bcn",
+        id: "madrid",
+        name: t("מדריד (MAD)", "Madrid (MAD)"),
+        search: "מדריד madrid mad",
+        pills: [NONE],
+      },
+      {
+        id: "barcelona",
+        name: t("ברצלונה (BCN)", "Barcelona (BCN)"),
+        search: "ברצלונה barcelona bcn",
         pills: [NONE],
       },
     ],
