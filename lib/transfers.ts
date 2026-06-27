@@ -50,7 +50,7 @@ const SUP: Record<string, { name: Localized; flag: string }> = {
   disenhause: { name: t("דיזנהאוז", "Disenhause"), flag: "" },
   mona: { name: t("מונה טורס", "Mona Tours"), flag: "" },
   ofir: { name: t("אופיר טורס", "Ofir Tours"), flag: "" },
-  kavei: { name: t("קוי חופשה", "Kavei Hufsha"), flag: "" },
+  kavei: { name: t("קווי חופשה", "Kavei Hufsha"), flag: "" },
   ayala: { name: t("איילה", "Ayala"), flag: "" },
   wtc: { name: t("WTC", "WTC"), flag: "" },
 };
@@ -85,12 +85,7 @@ const COUNTRIES: CountryGroup[] = [
         id: "sofia",
         name: t("סופיה (SOF)", "Sofia (SOF)"),
         search: "סופיה sofia sof",
-        pills: [
-          p("warn", "ofir"),
-          p("no", "kavei"),
-          p("no", "mona"),
-          p("no", "israir"),
-        ],
+        pills: [p("warn", "ofir"), p("no", "kavei"), p("no", "mona"), p("no", "israir")],
       },
     ],
   },
@@ -139,9 +134,7 @@ const COUNTRIES: CountryGroup[] = [
         id: "chania",
         name: t("חאניה (CHQ)", "Chania (CHQ)"),
         search: "חאניה chania chq כרתים crete",
-        pills: [
-          g("no", "כל הספקים", "All suppliers"),
-        ],
+        pills: [g("no", "כל הספקים", "All suppliers")],
       },
       {
         id: "athens-thess",
@@ -305,11 +298,7 @@ const COUNTRIES: CountryGroup[] = [
         id: "belgrade",
         name: t("בלגרד (BEG)", "Belgrade (BEG)"),
         search: "בלגרד belgrade beg",
-        pills: [
-          p("no", "mona"),
-          p("no", "arkia"),
-          g("warn", "שאר הספקים", "Other suppliers"),
-        ],
+        pills: [p("no", "mona"), p("no", "arkia"), g("warn", "שאר הספקים", "Other suppliers")],
       },
     ],
   },

@@ -22,6 +22,10 @@
 .DS_Store
 *.pem
 
+# macOS archive artifacts
+__MACOSX/
+._*
+
 # debug
 npm-debug.log*
 yarn-debug.log*

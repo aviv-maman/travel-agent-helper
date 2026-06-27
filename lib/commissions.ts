@@ -10,16 +10,6 @@ import { localized } from "@/lib/hotels";
  * client only ever receives the language it displays.
  */
 
-/** Semantic color token for a supplier's icon chip. */
-export type CommColor =
-  | "brand"
-  | "success"
-  | "gold"
-  | "warning"
-  | "purple"
-  | "destructive"
-  | "muted";
-
 /**
  * Commission level → drives the percentage color (matches the legend):
  * high = green (10%+), mid = blue (7–9.5%), low = orange (5–6%),
@@ -30,9 +20,16 @@ export type CommLevel = "high" | "mid" | "low" | "range" | "net";
 /** Which glyph leads a baggage row (and its color). */
 export type BaggageIcon = "bag" | "ok" | "warn" | "flight" | "package" | "tour";
 
-export type CommissionRate = {
-  label: Localized;
+/** A commission percentage for one of the three default categories. */
+export type CommissionValue = {
   /** Display value, e.g. "7.5%" / "7–10%" or a localized phrase like "net price". */
+  value: Localized;
+  level: CommLevel;
+};
+
+/** A special/extra commission line carrying its own label (e.g. a per-route deal). */
+export type CustomCommission = {
+  label: Localized;
   value: Localized;
   level: CommLevel;
 };
@@ -43,25 +40,60 @@ export type BaggageRow = {
   text: Localized;
 };
 
+/** A commission-related note shown below the commission table. */
+export type SupplierNote = {
+  /** May contain `**bold**` spans and `\n` line breaks. */
+  text: Localized;
+  /** `info` → grey alert; `warning` → amber alert. */
+  variant: "info" | "warning";
+  /** Whether to show the variant title (e.g. "הערה חשובה"). Defaults true. */
+  showTitle?: boolean;
+};
+
 export type Supplier = {
   id: string;
-  /** Leading emoji shown in the icon chip. */
-  emoji: string;
-  color: CommColor;
   name: Localized;
+  /** Alternate name shown as the card subtitle and indexed for search (e.g. Israir ↔ Unital). */
   alias?: Localized;
-  rates: CommissionRate[];
+  /** Supplier website URL (placeholder for now; wired up elsewhere later). */
+  website?: string;
+  /** Path to the supplier's logo image (under /public). */
+  logo?: string;
+  /**
+   * The three default commission categories — these mirror the baggage table
+   * rows. Any omitted category renders as an empty row.
+   */
+  flightsOnly?: CommissionValue;
+  packages?: CommissionValue;
+  organizedTours?: CommissionValue;
+  /**
+   * Extra/special commission lines, rendered in order if present. Modeled as
+   * discrete numbered fields so they map cleanly to future DB columns.
+   */
+  customCommission1?: CustomCommission;
+  customCommission2?: CustomCommission;
+  customCommission3?: CustomCommission;
   baggage: BaggageRow[];
-  note?: Localized;
-  noteVariant?: "default" | "red";
+  /** Commission-related notes, rendered in order below the commission table. */
+  notes?: SupplierNote[];
 };
 
 const t = (he: string, en: string): Localized => ({ he, en });
 
-// Shared rate-category labels — written once, reused across suppliers.
-const FLIGHTS_ONLY = t("✈️ טיסות בלבד", "✈️ Flights Only");
-const PACKAGES = t("🏖️ חבילות", "🏖️ Packages");
-const ORGANIZED_TOURS = t("🧳 טיולים מאורגנים", "🧳 Organized Tours");
+/** Compact builder for a default-category commission value. */
+const c = (he: string, en: string, level: CommLevel): CommissionValue => ({
+  value: t(he, en),
+  level,
+});
+
+/** Compact builder for a special/extra commission line. */
+const cc = (
+  labelHe: string,
+  labelEn: string,
+  he: string,
+  en: string,
+  level: CommLevel,
+): CustomCommission => ({ label: t(labelHe, labelEn), value: t(he, en), level });
 
 // Shared baggage lines reused across many suppliers.
 const BACKPACK = (): BaggageRow => ({
@@ -79,14 +111,18 @@ const ARKIA_TROLLEY = (price = 60): BaggageRow => ({
 const SUPPLIERS: Supplier[] = [
   {
     id: "israir",
-    emoji: "✈",
-    color: "brand",
-    name: t("Israir", "Israir"),
-    alias: t("ידוע גם כ: Unital (טיולים מאורגנים)", "Also known as: Unital (organized tours)"),
-    rates: [
-      { label: FLIGHTS_ONLY, value: t("7.5%", "7.5%"), level: "mid" },
-      { label: PACKAGES, value: t("9.5%", "9.5%"), level: "high" },
-      { label: ORGANIZED_TOURS, value: t("7.5%", "7.5%"), level: "mid" },
+    website: "https://www.example.com",
+    name: t("ישראייר", "Israir"),
+    alias: t("יוניטל", "Unital"),
+    flightsOnly: c("7.5%", "7.5%", "mid"),
+    packages: c("9.5%", "9.5%", "high"),
+    organizedTours: c("7.5%", "7.5%", "mid"),
+    notes: [
+      {
+        text: t("ידוע גם כיוניטל בטיולים מאורגנים", "Also known as Unital for organized tours"),
+        variant: "info",
+        showTitle: false,
+      },
     ],
     baggage: [
       BACKPACK(),
@@ -115,27 +151,11 @@ const SUPPLIERS: Supplier[] = [
   },
   {
     id: "kavei-hofesha",
-    emoji: "⛔",
-    color: "muted",
-    name: t("קוי חופשה", "Kavei Hofesha"),
-    alias: t("מחיר נטו — ללא עמלה", "Net price — no commission"),
-    rates: [
-      {
-        label: FLIGHTS_ONLY,
-        value: t("מחיר נטו", "Net price"),
-        level: "net",
-      },
-      {
-        label: PACKAGES,
-        value: t("מחיר נטו", "Net price"),
-        level: "net",
-      },
-      {
-        label: ORGANIZED_TOURS,
-        value: t("מחיר נטו", "Net price"),
-        level: "net",
-      },
-    ],
+    website: "https://www.example.com",
+    name: t("קווי חופשה", "Kavei Hofesha"),
+    flightsOnly: c("מחיר נטו", "Net price", "net"),
+    packages: c("מחיר נטו", "Net price", "net"),
+    organizedTours: c("מחיר נטו", "Net price", "net"),
     baggage: [
       BACKPACK(),
       {
@@ -160,15 +180,11 @@ const SUPPLIERS: Supplier[] = [
   },
   {
     id: "flying",
-    emoji: "🪄",
-    color: "gold",
+    website: "https://www.example.com",
     name: t("שטיח מעופף — Flying", "Flying Carpet — Flying"),
-    alias: t("ספק ראשי", "Primary supplier"),
-    rates: [
-      { label: FLIGHTS_ONLY, value: t("5%", "5%"), level: "low" },
-      { label: PACKAGES, value: t("11%", "11%"), level: "high" },
-      { label: ORGANIZED_TOURS, value: t("9%", "9%"), level: "high" },
-    ],
+    flightsOnly: c("5%", "5%", "low"),
+    packages: c("11%", "11%", "high"),
+    organizedTours: c("9%", "9%", "high"),
     baggage: [
       BACKPACK(),
       {
@@ -194,21 +210,29 @@ const SUPPLIERS: Supplier[] = [
         ),
       },
     ],
-    note: t(
-      "**🏖️ חבילות נופש**\n• ינואר–יוני + ספטמבר–דצמבר: להוריד **20$ לאדם** ממחיר Market\n• יולי–אוגוסט: להוריד **25$ לאדם** ממחיר Market\n\n**✈️ טיסות בלבד**\nלהוריד **10$ לאדם** ממחיר Market",
-      "**🏖️ Vacation packages**\n• Jan–Jun + Sep–Dec: subtract **$20 per person** off the Market price\n• Jul–Aug: subtract **$25 per person** off the Market price\n\n**✈️ Flights only**\nSubtract **$10 per person** off the Market price",
-    ),
+    notes: [
+      {
+        text: t(
+          "**חבילות נופש**\n• ינואר–יוני + ספטמבר–דצמבר: להוריד **20$ לאדם** ממחיר Market\n• יולי–אוגוסט: להוריד **25$ לאדם** ממחיר Market",
+          "**Vacation packages**\n• Jan–Jun + Sep–Dec: subtract **$20 per person** off the Market price\n• Jul–Aug: subtract **$25 per person** off the Market price",
+        ),
+        variant: "warning",
+      },
+      {
+        text: t(
+          "**טיסות בלבד**: להוריד **10$ לאדם** ממחיר Market",
+          "**Flights only**: subtract **$10 per person** off the Market price",
+        ),
+        variant: "warning",
+      },
+    ],
   },
   {
     id: "flying-sp",
-    emoji: "🪄",
-    color: "destructive",
+    website: "https://www.example.com",
     name: t("שטיח מעופף — FlyingSP", "Flying Carpet — FlyingSP"),
-    alias: t("ספק משנה", "Sub-supplier"),
-    rates: [
-      { label: FLIGHTS_ONLY, value: t("5%", "5%"), level: "low" },
-      { label: PACKAGES, value: t("7%", "7%"), level: "mid" },
-    ],
+    flightsOnly: c("5%", "5%", "low"),
+    packages: c("7%", "7%", "mid"),
     baggage: [
       BACKPACK(),
       {
@@ -234,35 +258,25 @@ const SUPPLIERS: Supplier[] = [
         ),
       },
     ],
-    note: t(
-      "עמלת חבילות נמוכה ב-4% מהספק הראשי Flying",
-      "Package commission is 4% lower than the primary supplier Flying",
-    ),
-    noteVariant: "red",
+    notes: [
+      {
+        text: t(
+          "עמלת חבילות נמוכה ב-4% מהספק הראשי Flying",
+          "Package commission is 4% lower than the primary supplier Flying",
+        ),
+        variant: "info",
+        showTitle: false,
+      },
+    ],
   },
   {
     id: "kishrei-teufa",
-    emoji: "🌍",
-    color: "gold",
+    website: "https://www.example.com",
     name: t("קשרי תעופה", "Kishrei Teufa"),
-    alias: t(
-      "עמלה מיוחדת לדובאי · מאורגנים משתנה",
-      "Special commission for Dubai · organized tours vary",
-    ),
-    rates: [
-      { label: FLIGHTS_ONLY, value: t("7%", "7%"), level: "mid" },
-      {
-        label: t("✈️ טיסה בלבד — דובאי", "✈️ Flight only — Dubai"),
-        value: t("10%", "10%"),
-        level: "high",
-      },
-      { label: PACKAGES, value: t("10%", "10%"), level: "high" },
-      {
-        label: ORGANIZED_TOURS,
-        value: t("7–10%", "7–10%"),
-        level: "range",
-      },
-    ],
+    flightsOnly: c("7%", "7%", "mid"),
+    packages: c("10%", "10%", "high"),
+    organizedTours: c("7–10%", "7–10%", "range"),
+    customCommission1: cc("✈️ טיסות בלבד: דובאי", "✈️ Flight only — Dubai", "10%", "10%", "high"),
     baggage: [
       BACKPACK(),
       {
@@ -281,21 +295,23 @@ const SUPPLIERS: Supplier[] = [
       },
       ARKIA_TROLLEY(60),
     ],
-    note: t(
-      "טיולים מאורגנים: יש לוודא עמלה ספציפית לכל טיול",
-      "Organized tours: confirm the specific commission for each trip",
-    ),
+    notes: [
+      {
+        text: t(
+          "טיולים מאורגנים: יש לוודא עמלה ספציפית לכל טיול",
+          "Organized tours: confirm the specific commission for each trip",
+        ),
+        variant: "warning",
+      },
+    ],
   },
   {
     id: "eshet-tours",
-    emoji: "🌺",
-    color: "success",
+    website: "https://www.example.com",
     name: t("אשת טורס", "Eshet Tours"),
-    rates: [
-      { label: FLIGHTS_ONLY, value: t("5%", "5%"), level: "low" },
-      { label: PACKAGES, value: t("10%", "10%"), level: "high" },
-      { label: ORGANIZED_TOURS, value: t("7%", "7%"), level: "mid" },
-    ],
+    flightsOnly: c("5%", "5%", "low"),
+    packages: c("10%", "10%", "high"),
+    organizedTours: c("7%", "7%", "mid"),
     baggage: [
       BACKPACK(),
       {
@@ -323,19 +339,17 @@ const SUPPLIERS: Supplier[] = [
   },
   {
     id: "arkia",
-    emoji: "🛫",
-    color: "destructive",
+    website: "https://www.example.com",
     name: t("ארקיע", "Arkia"),
-    alias: t("עמלה מיוחדת לבנגקוק וניו יורק", "Special commission for Bangkok & New York"),
-    rates: [
-      { label: FLIGHTS_ONLY, value: t("6%", "6%"), level: "low" },
-      {
-        label: t("✈️ בנגקוק / ניו יורק", "✈️ Bangkok / New York"),
-        value: t("7%", "7%"),
-        level: "mid",
-      },
-      { label: PACKAGES, value: t("10%", "10%"), level: "high" },
-    ],
+    flightsOnly: c("6%", "6%", "low"),
+    packages: c("10%", "10%", "high"),
+    customCommission1: cc(
+      "✈️ טיסות בלבד: בנגקוק / ניו יורק",
+      "✈️ Bangkok / New York",
+      "7%",
+      "7%",
+      "mid",
+    ),
     baggage: [
       { icon: "bag", text: t('תיק גב עד 4 ק"ג — כלול', "Backpack up to 4 kg — included") },
       {
@@ -370,13 +384,10 @@ const SUPPLIERS: Supplier[] = [
   },
   {
     id: "mona-tours",
-    emoji: "🌴",
-    color: "success",
+    website: "https://www.example.com",
     name: t("מונה טורס", "Mona Tours"),
-    rates: [
-      { label: FLIGHTS_ONLY, value: t("5%", "5%"), level: "low" },
-      { label: PACKAGES, value: t("10%", "10%"), level: "high" },
-    ],
+    flightsOnly: c("5%", "5%", "low"),
+    packages: c("10%", "10%", "high"),
     baggage: [
       BACKPACK(),
       {
@@ -398,15 +409,11 @@ const SUPPLIERS: Supplier[] = [
   },
   {
     id: "issta",
-    emoji: "🏢",
-    color: "brand",
-    name: t("איסתא (Issta)", "Issta"),
-    alias: t("לפעמים עמלה מיוחדת במאורגנים", "Sometimes a special commission on organized tours"),
-    rates: [
-      { label: FLIGHTS_ONLY, value: t("7%", "7%"), level: "mid" },
-      { label: PACKAGES, value: t("9.5%", "9.5%"), level: "high" },
-      { label: ORGANIZED_TOURS, value: t("7%", "7%"), level: "mid" },
-    ],
+    website: "https://www.example.com",
+    name: t("איסתא", "Issta"),
+    flightsOnly: c("7%", "7%", "mid"),
+    packages: c("9.5%", "9.5%", "high"),
+    organizedTours: c("7%", "7%", "mid"),
     baggage: [
       { icon: "bag", text: t('תיק גב עד 4 ק"ג — כלול', "Backpack up to 4 kg — included") },
       {
@@ -428,20 +435,22 @@ const SUPPLIERS: Supplier[] = [
         ),
       },
     ],
-    note: t(
-      "מאורגנים מסוימים — עמלה מיוחדת של 10%",
-      "Certain organized tours — a special 10% commission",
-    ),
+    notes: [
+      {
+        text: t(
+          "מאורגנים מסוימים — עמלה מיוחדת של 10%",
+          "Certain organized tours — a special 10% commission",
+        ),
+        variant: "warning",
+      },
+    ],
   },
   {
     id: "wtc",
-    emoji: "🌐",
-    color: "brand",
+    website: "https://www.example.com",
     name: t("WTC", "WTC"),
-    rates: [
-      { label: FLIGHTS_ONLY, value: t("5%", "5%"), level: "low" },
-      { label: PACKAGES, value: t("8%", "8%"), level: "mid" },
-    ],
+    flightsOnly: c("5%", "5%", "low"),
+    packages: c("8%", "8%", "mid"),
     baggage: [
       BACKPACK(),
       {
@@ -469,13 +478,10 @@ const SUPPLIERS: Supplier[] = [
   },
   {
     id: "ayala",
-    emoji: "💎",
-    color: "purple",
-    name: t("Ayala — איילה", "Ayala"),
-    rates: [
-      { label: FLIGHTS_ONLY, value: t("5%", "5%"), level: "low" },
-      { label: PACKAGES, value: t("7%", "7%"), level: "mid" },
-    ],
+    website: "https://www.example.com",
+    name: t("איילה", "Ayala"),
+    flightsOnly: c("5%", "5%", "low"),
+    packages: c("7%", "7%", "mid"),
     baggage: [
       BACKPACK(),
       {
@@ -496,14 +502,10 @@ const SUPPLIERS: Supplier[] = [
   },
   {
     id: "disenhause",
-    emoji: "🏛",
-    color: "success",
-    name: t("Disenhause — דיזנהאוז", "Diesenhaus"),
-    alias: t("לבדוק שלא השתנה", "Check that it hasn't changed"),
-    rates: [
-      { label: FLIGHTS_ONLY, value: t("7%", "7%"), level: "mid" },
-      { label: PACKAGES, value: t("7%", "7%"), level: "mid" },
-    ],
+    website: "https://www.example.com",
+    name: t("דיזנהאוז", "Diesenhaus"),
+    flightsOnly: c("7%", "7%", "mid"),
+    packages: c("7%", "7%", "mid"),
     baggage: [
       BACKPACK(),
       {
@@ -522,26 +524,31 @@ const SUPPLIERS: Supplier[] = [
       },
       ARKIA_TROLLEY(60),
     ],
-    note: t("לבדוק תקופתית — תנאים עשויים להשתנות", "Check periodically — terms may change"),
+    notes: [
+      {
+        text: t("לבדוק תקופתית — תנאים עשויים להשתנות", "Check periodically — terms may change"),
+        variant: "warning",
+      },
+    ],
   },
   {
     id: "rimon",
-    emoji: "🍎",
-    color: "warning",
+    website: "https://www.example.com",
     name: t("רימון", "Rimon"),
-    alias: t("מאורגנים בלבד", "Organized tours only"),
-    rates: [
-      {
-        label: t("🧳 מאורגנים עד $3,000 לאדם", "🧳 Organized tours up to $3,000 pp"),
-        value: t("10%", "10%"),
-        level: "high",
-      },
-      {
-        label: t("🧳 מאורגנים מעל $3,000 לאדם", "🧳 Organized tours over $3,000 pp"),
-        value: t("משתנה", "Varies"),
-        level: "range",
-      },
-    ],
+    customCommission1: cc(
+      "🧳 טיולים מאורגנים עד $3,000 לאדם",
+      "🧳 Organized tours up to $3,000 pp",
+      "10%",
+      "10%",
+      "high",
+    ),
+    customCommission2: cc(
+      "🧳 טיולים מאורגנים מעל $3,000 לאדם",
+      "🧳 Organized tours over $3,000 pp",
+      "משתנה",
+      "Varies",
+      "range",
+    ),
     baggage: [
       BACKPACK(),
       {
@@ -552,26 +559,36 @@ const SUPPLIERS: Supplier[] = [
         ),
       },
     ],
-    note: t(
-      "מעל $3,000 לאדם — לברר עמלה ספציפית לכל טיול",
-      "Over $3,000 per person — confirm the specific commission per trip",
-    ),
+    notes: [
+      {
+        text: t(
+          "מעל $3,000 לאדם — לברר עמלה ספציפית לכל טיול",
+          "Over $3,000 per person — confirm the specific commission per trip",
+        ),
+        variant: "warning",
+      },
+    ],
   },
 ];
 
 // ── Locale-resolved view types (what the client receives) ────────────────────
-export type ViewRate = { label: string; value: string; level: CommLevel };
+export type ViewCommissionValue = { value: string; level: CommLevel } | null;
+export type ViewCustomCommission = { label: string; value: string; level: CommLevel };
+export type ViewNote = { text: string; variant: "info" | "warning"; showTitle: boolean };
 export type ViewBaggageRow = { icon: BaggageIcon; text: string };
 export type ViewSupplier = {
   id: string;
-  emoji: string;
-  color: CommColor;
   name: string;
   alias: string | null;
-  rates: ViewRate[];
+  website: string | null;
+  logo: string | null;
+  flightsOnly: ViewCommissionValue;
+  packages: ViewCommissionValue;
+  organizedTours: ViewCommissionValue;
+  /** Special lines (customCommission1..n), resolved and compacted in order. */
+  customCommissions: ViewCustomCommission[];
   baggage: ViewBaggageRow[];
-  note: string | null;
-  noteVariant: "default" | "red";
+  notes: ViewNote[];
   /** Lowercased he + en name + alias, for client-side filtering across locales. */
   search: string;
 };
@@ -579,16 +596,26 @@ export type ViewSupplier = {
 /** All suppliers, resolved to `locale`, in guide order. */
 export function getCommissions(locale: string): ViewSupplier[] {
   const pick = (v: Localized) => localized(v, locale as Locale);
+  const cv = (v?: CommissionValue): ViewCommissionValue =>
+    v ? { value: pick(v.value), level: v.level } : null;
   return SUPPLIERS.map((s) => ({
     id: s.id,
-    emoji: s.emoji,
-    color: s.color,
     name: pick(s.name),
     alias: s.alias ? pick(s.alias) : null,
-    rates: s.rates.map((r) => ({ label: pick(r.label), value: pick(r.value), level: r.level })),
+    website: s.website ?? null,
+    logo: s.logo ?? null,
+    flightsOnly: cv(s.flightsOnly),
+    packages: cv(s.packages),
+    organizedTours: cv(s.organizedTours),
+    customCommissions: [s.customCommission1, s.customCommission2, s.customCommission3]
+      .filter((cm): cm is CustomCommission => Boolean(cm))
+      .map((cm) => ({ label: pick(cm.label), value: pick(cm.value), level: cm.level })),
     baggage: s.baggage.map((b) => ({ icon: b.icon, text: pick(b.text) })),
-    note: s.note ? pick(s.note) : null,
-    noteVariant: s.noteVariant ?? "default",
+    notes: (s.notes ?? []).map((n) => ({
+      text: pick(n.text),
+      variant: n.variant,
+      showTitle: n.showTitle ?? true,
+    })),
     search: `${s.name.he ?? ""} ${s.name.en ?? ""} ${s.alias?.he ?? ""} ${s.alias?.en ?? ""}`
       .toLowerCase()
       .trim(),
