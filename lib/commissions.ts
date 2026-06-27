@@ -111,7 +111,7 @@ const ARKIA_TROLLEY = (price = 60): BaggageRow => ({
 const SUPPLIERS: Supplier[] = [
   {
     id: "israir",
-    website: "https://www.example.com",
+    website: "https://www.israir.co.il/",
     name: t("ישראייר — Israir", "Israir"),
     alias: t("יוניטל", "Unital"),
     flightsOnly: c("7.5%", "7.5%", "mid"),
@@ -151,7 +151,7 @@ const SUPPLIERS: Supplier[] = [
   },
   {
     id: "kavei-hofesha",
-    website: "https://www.example.com",
+    website: "https://www.kavei.co.il/",
     name: t("קווי חופשה — Kavei", "Kavei Hufsha"),
     flightsOnly: c("נטו", "Net", "net"),
     packages: c("נטו", "Net", "net"),
@@ -180,7 +180,7 @@ const SUPPLIERS: Supplier[] = [
   },
   {
     id: "flying",
-    website: "https://www.example.com",
+    website: "https://www.flyingcarpet.co.il/",
     name: t("שטיח מעופף — Flying", "Flying Carpet — Flying"),
     flightsOnly: c("5%", "5%", "low"),
     packages: c("11%", "11%", "high"),
@@ -229,7 +229,7 @@ const SUPPLIERS: Supplier[] = [
   },
   {
     id: "flying-sp",
-    website: "https://www.example.com",
+    website: "https://www.flyingcarpet.co.il/",
     name: t("שטיח מעופף — FlyingSP", "Flying Carpet — FlyingSP"),
     flightsOnly: c("5%", "5%", "low"),
     packages: c("7%", "7%", "mid"),
@@ -271,7 +271,7 @@ const SUPPLIERS: Supplier[] = [
   },
   {
     id: "kishrei-teufa",
-    website: "https://www.example.com",
+    website: "https://www.kishrey-teufa.co.il/",
     name: t("קשרי תעופה — Kishre", "Kishrei Teufa"),
     flightsOnly: c("7%", "7%", "mid"),
     packages: c("10%", "10%", "high"),
@@ -307,7 +307,7 @@ const SUPPLIERS: Supplier[] = [
   },
   {
     id: "eshet-tours",
-    website: "https://www.example.com",
+    website: "https://www.eshet.com/",
     name: t("אשת טורס — Eshet", "Eshet Tours"),
     flightsOnly: c("5%", "5%", "low"),
     packages: c("10%", "10%", "high"),
@@ -339,7 +339,7 @@ const SUPPLIERS: Supplier[] = [
   },
   {
     id: "arkia",
-    website: "https://www.example.com",
+    website: "https://www.arkia.co.il/",
     name: t("ארקיע — Arkia", "Arkia"),
     flightsOnly: c("6%", "6%", "low"),
     packages: c("10%", "10%", "high"),
@@ -384,7 +384,7 @@ const SUPPLIERS: Supplier[] = [
   },
   {
     id: "mona-tours",
-    website: "https://www.example.com",
+    website: "https://www.monatours.co.il/",
     name: t("מונה טורס — Mona", "Mona Tours"),
     flightsOnly: c("5%", "5%", "low"),
     packages: c("10%", "10%", "high"),
@@ -409,7 +409,7 @@ const SUPPLIERS: Supplier[] = [
   },
   {
     id: "issta",
-    website: "https://www.example.com",
+    website: "https://www.issta.co.il/",
     name: t("איסתא — Issta", "Issta"),
     flightsOnly: c("7%", "7%", "mid"),
     packages: c("9.5%", "9.5%", "high"),
@@ -447,7 +447,7 @@ const SUPPLIERS: Supplier[] = [
   },
   {
     id: "wtc",
-    website: "https://www.example.com",
+    website: "https://wtc.co.il/",
     name: t("WTC", "WTC"),
     flightsOnly: c("5%", "5%", "low"),
     packages: c("8%", "8%", "mid"),
@@ -478,7 +478,7 @@ const SUPPLIERS: Supplier[] = [
   },
   {
     id: "ayala",
-    website: "https://www.example.com",
+    website: "https://www.ayala.co.il/",
     name: t("איילה — Ayala", "Ayala"),
     flightsOnly: c("5%", "5%", "low"),
     packages: c("7%", "7%", "mid"),
@@ -502,7 +502,7 @@ const SUPPLIERS: Supplier[] = [
   },
   {
     id: "disenhause",
-    website: "https://www.example.com",
+    website: "https://www.deasy.co.il/",
     name: t("דיזנהאוז — Disenhaus", "Diesenhaus"),
     flightsOnly: c("7%", "7%", "mid"),
     packages: c("7%", "7%", "mid"),
@@ -533,7 +533,7 @@ const SUPPLIERS: Supplier[] = [
   },
   {
     id: "rimon",
-    website: "https://www.example.com",
+    website: "https://rimon-tours.co.il",
     name: t("רימון — Rimon", "Rimon"),
     customCommission1: cc(
       "🧳 טיולים מאורגנים עד $3,000 לאדם",

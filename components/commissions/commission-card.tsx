@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { useTranslations } from "next-intl";
-import { Luggage, TriangleAlert, Info, Percent } from "lucide-react";
+import { Luggage, TriangleAlert, Info, Percent, Globe } from "lucide-react";
 import type { CommLevel, BaggageIcon, ViewSupplier } from "@/lib/commissions";
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
@@ -117,8 +117,10 @@ export function CommissionCard({ supplier }: { supplier: ViewSupplier }) {
             <a
               href={supplier.website}
               target="_blank"
-              className="inline-block max-w-full truncate align-top text-xs leading-snug text-brand hover:underline">
-              {t("website")}
+              rel="noopener noreferrer"
+              className="mt-1.5 inline-flex max-w-full items-center gap-1.5 text-sm font-semibold text-brand hover:underline">
+              <Globe className="size-4 shrink-0" aria-hidden />
+              <span className="truncate">{t("website")}</span>
             </a>
           )}
         </div>
