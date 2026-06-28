@@ -45,16 +45,30 @@ const row = (
   feeEn: string,
 ): FeeRow => ({ timeframe: t(timeHe, timeEn), fee: t(feeHe, feeEn), level });
 
-// Shared product tags.
-const P_FLIGHT = (he = "✈ טיסות", en = "✈ Flights"): Product => ({
-  kind: "flight",
-  label: t(he, en),
-});
-const P_PACKAGE = (he: string, en: string): Product => ({ kind: "package", label: t(he, en) });
-const P_ORGANIZED = (he = "🚌 טיולים מאורגנים", en = "🚌 Organized tours"): Product => ({
+// Unified product tags — every card draws from this canonical set so the same
+// product always shows the same label.
+const P_FLIGHT: Product = { kind: "flight", label: t("✈ טיסות בלבד", "✈ Flights only") };
+const P_PACKAGE: Product = { kind: "package", label: t("🏖 חבילות נופש", "🏖 Vacation packages") };
+const P_ORGANIZED: Product = {
   kind: "organized",
-  label: t(he, en),
-});
+  label: t("🚌 טיולים מאורגנים", "🚌 Organized tours"),
+};
+const P_VILLAGE: Product = { kind: "package", label: t("🌴 כפרי נופש", "🌴 Holiday villages") };
+const P_SKI: Product = { kind: "package", label: t("⛷ חבילות סקי", "⛷ Ski packages") };
+const P_SPORTS: Product = {
+  kind: "package",
+  label: t("🏟 חבילות ספורט/הופעות", "🏟 Sports / concerts"),
+};
+
+// Canonical render order for product tags — core categories first, then extras.
+const PRODUCT_ORDER: Product[] = [
+  P_FLIGHT,
+  P_PACKAGE,
+  P_ORGANIZED,
+  P_SPORTS,
+  P_SKI,
+  P_VILLAGE,
+];
 
 // Table header presets.
 const H_TIME_CANCEL = t("מועד ביטול", "Cancellation timing");
@@ -84,7 +98,7 @@ const SUPPLIERS: CancelSupplier[] = [
     logo: "/suppliers/flying.png",
     name: t("שטיח מעופף", "Flying Carpet"),
     code: "FLYING",
-    products: [P_FLIGHT(), P_PACKAGE("🏖 חבילות", "🏖 Packages"), P_ORGANIZED()],
+    products: [P_FLIGHT, P_PACKAGE, P_ORGANIZED],
     blocks: [
       {
         kind: "table",
@@ -137,13 +151,7 @@ const SUPPLIERS: CancelSupplier[] = [
     logo: "/suppliers/issta.png",
     name: t("איסתא", "Issta"),
     code: "ISSTA",
-    products: [
-      P_FLIGHT(),
-      P_PACKAGE("🏖 חבילות נופש", "🏖 Vacation packages"),
-      P_PACKAGE("🏙 חבילות עיר", "🏙 City breaks"),
-      P_PACKAGE("🌴 כפרי נופש", "🌴 Holiday villages"),
-      P_ORGANIZED(),
-    ],
+    products: [P_FLIGHT, P_PACKAGE, P_VILLAGE, P_ORGANIZED],
     blocks: [
       {
         kind: "heading",
@@ -244,7 +252,7 @@ const SUPPLIERS: CancelSupplier[] = [
     logo: "/suppliers/israir.png",
     name: t("ישראייר", "Israir"),
     code: "ISRAIR",
-    products: [P_FLIGHT(), P_PACKAGE("🏖 חבילות", "🏖 Packages")],
+    products: [P_FLIGHT, P_PACKAGE],
     blocks: [
       {
         kind: "table",
@@ -390,13 +398,7 @@ const SUPPLIERS: CancelSupplier[] = [
     logo: "/suppliers/kishrei.png",
     name: t("קשרי תעופה", "Kishrei Teufa"),
     code: "KISHREI",
-    products: [
-      P_FLIGHT("✈ טיסות שכר", "✈ Charter flights"),
-      P_PACKAGE("🏖 חבילות נופש", "🏖 Vacation packages"),
-      P_ORGANIZED(),
-      P_PACKAGE("⛷ חבילות סקי", "⛷ Ski packages"),
-      P_PACKAGE("🏟 ספורט/הופעות", "🏟 Sports / concerts"),
-    ],
+    products: [P_FLIGHT, P_PACKAGE, P_ORGANIZED, P_SKI, P_SPORTS],
     blocks: [
       {
         kind: "heading",
@@ -609,11 +611,7 @@ const SUPPLIERS: CancelSupplier[] = [
     logo: "/suppliers/kavei.png",
     name: t("קווי חופשה", "Kavei Hufsha"),
     code: "KAVEI",
-    products: [
-      P_FLIGHT(),
-      P_PACKAGE("🏖 חבילות נופש", "🏖 Vacation packages"),
-      P_ORGANIZED("🚌 מאורגנים", "🚌 Organized tours"),
-    ],
+    products: [P_FLIGHT, P_PACKAGE, P_ORGANIZED],
     blocks: [
       {
         kind: "table",
@@ -669,7 +667,9 @@ export function getCancellations(locale: string): ViewCancelSupplier[] {
     logo: s.logo ?? null,
     name: pick(s.name),
     code: s.code,
-    products: s.products.map((p) => ({ kind: p.kind, label: pick(p.label) })),
+    products: [...s.products]
+      .sort((a, b) => PRODUCT_ORDER.indexOf(a) - PRODUCT_ORDER.indexOf(b))
+      .map((p) => ({ kind: p.kind, label: pick(p.label) })),
     blocks: s.blocks.map((b): ViewBlock => {
       switch (b.kind) {
         case "heading":
