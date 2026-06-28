@@ -3,7 +3,7 @@
 import Image from "next/image";
 import type { ColumnDef } from "@tanstack/react-table";
 import { Info } from "lucide-react";
-import type { useTranslations } from "next-intl";
+import { useLocale, type useTranslations } from "next-intl";
 import type { WeightTier, ViewAirline } from "@/lib/baggage";
 import { CountryFlag } from "@/components/country-flag";
 import { DataTableColumnHeader } from "@/components/ui/data-table";
@@ -21,6 +21,30 @@ const TIER: Record<WeightTier, string> = {
 const TROLLEY_CHIP = "bg-gold/[0.12] text-gold";
 
 type T = ReturnType<typeof useTranslations<"baggage">>;
+
+/** Airline name followed by its country flag, with the country name on hover. */
+function AirlineNameCell({ airline }: { airline: ViewAirline }) {
+  const locale = useLocale();
+  const country = airline.code
+    ? new Intl.DisplayNames([locale], { type: "region" }).of(airline.code.toUpperCase())
+    : null;
+  return (
+    <span className="flex items-center gap-1.5">
+      <span className="text-sm font-medium text-foreground">{airline.name}</span>
+      {airline.code &&
+        (country ? (
+          <Tooltip>
+            <TooltipTrigger className="inline-flex cursor-help">
+              <CountryFlag code={airline.code} />
+            </TooltipTrigger>
+            <TooltipContent>{country}</TooltipContent>
+          </Tooltip>
+        ) : (
+          <CountryFlag code={airline.code} />
+        ))}
+    </span>
+  );
+}
 
 /** Build the airline DataTable columns, resolved against the active locale. */
 export function airlineColumns(t: T): ColumnDef<ViewAirline>[] {
@@ -48,14 +72,7 @@ export function airlineColumns(t: T): ColumnDef<ViewAirline>[] {
       accessorFn: (a) => a.name,
       header: ({ column }) => <DataTableColumnHeader column={column} title={t("colAirline")} />,
       meta: { label: t("colAirline") },
-      cell: ({ row }) => (
-        <span
-          className={`text-sm font-medium ${
-            row.original.highlight ? "text-muted-foreground" : "text-foreground"
-          }`}>
-          {row.original.name}
-        </span>
-      ),
+      cell: ({ row }) => <AirlineNameCell airline={row.original} />,
     },
     {
       id: "iata",
@@ -68,13 +85,6 @@ export function airlineColumns(t: T): ColumnDef<ViewAirline>[] {
             {row.original.iata}
           </span>
         ) : null,
-    },
-    {
-      id: "country",
-      accessorFn: (a) => a.code ?? "",
-      header: ({ column }) => <DataTableColumnHeader column={column} title={t("colCountry")} />,
-      meta: { label: t("colCountry") },
-      cell: ({ row }) => (row.original.code ? <CountryFlag code={row.original.code} /> : null),
     },
     {
       id: "luggage",
