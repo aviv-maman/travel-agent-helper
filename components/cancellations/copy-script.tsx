@@ -31,7 +31,15 @@ function parseTiers(text: string, levels: FeeLevel[]): FeeTableRow[] {
 }
 
 /** The ready-to-send client script: title + fee table + copy button. */
-export function CopyScript({ text, levels = [] }: { text: string; levels?: FeeLevel[] }) {
+export function CopyScript({
+  text,
+  levels = [],
+  title,
+}: {
+  text: string;
+  levels?: FeeLevel[];
+  title?: string | null;
+}) {
   const t = useTranslations("cancellations");
   const [copied, setCopied] = useState(false);
   const rows = parseTiers(text, levels);
@@ -51,7 +59,7 @@ export function CopyScript({ text, levels = [] }: { text: string; levels?: FeeLe
     <div className="flex flex-col gap-2">
       <div className="flex flex-col gap-0.5">
         <p className="mb-0! flex items-center gap-1.5 text-xs font-semibold tracking-wide text-destructive uppercase">
-          {t("copyTitle")}
+          {title ?? t("copyTitle")}
         </p>
         <p className="mb-0! text-xs font-bold text-brand">{t("copyLabel")}</p>
       </div>
