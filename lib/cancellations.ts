@@ -47,17 +47,17 @@ const row = (
 
 // Unified product tags — every card draws from this canonical set so the same
 // product always shows the same label.
-const P_FLIGHT: Product = { kind: "flight", label: t("✈ טיסות בלבד", "✈ Flights only") };
-const P_PACKAGE: Product = { kind: "package", label: t("🏖 חבילות נופש", "🏖 Vacation packages") };
+const P_FLIGHT: Product = { kind: "flight", label: t("✈️ טיסות בלבד", "✈️ Flights only") };
+const P_PACKAGE: Product = { kind: "package", label: t("🏖️ חבילות נופש", "🏖️ Vacation packages") };
 const P_ORGANIZED: Product = {
   kind: "organized",
   label: t("🚌 טיולים מאורגנים", "🚌 Organized tours"),
 };
 const P_VILLAGE: Product = { kind: "package", label: t("🌴 כפרי נופש", "🌴 Holiday villages") };
-const P_SKI: Product = { kind: "package", label: t("⛷ חבילות סקי", "⛷ Ski packages") };
+const P_SKI: Product = { kind: "package", label: t("⛷️ חבילות סקי", "⛷️ Ski packages") };
 const P_SPORTS: Product = {
   kind: "package",
-  label: t("🏟 חבילות ספורט/הופעות", "🏟 Sports / concerts"),
+  label: t("🏟️ חבילות ספורט/הופעות", "🏟️ Sports / concerts"),
 };
 
 // Canonical render order for product tags — core categories first, then extras.
