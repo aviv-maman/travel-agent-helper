@@ -49,9 +49,12 @@ export function CopyScript({ text, levels = [] }: { text: string; levels?: FeeLe
 
   return (
     <div className="flex flex-col gap-2">
-      <p className="flex items-center gap-1.5 text-xs font-semibold tracking-wide text-destructive uppercase">
-        {t("copyTitle")}
-      </p>
+      <div className="flex flex-col gap-0.5">
+        <p className="mb-0! flex items-center gap-1.5 text-xs font-semibold tracking-wide text-destructive uppercase">
+          {t("copyTitle")}
+        </p>
+        <p className="mb-0! text-xs font-bold text-brand">{t("copyLabel")}</p>
+      </div>
 
       <FeeTable headers={[t("copyTimeHeader"), t("copyFeeHeader")]} rows={rows} />
 

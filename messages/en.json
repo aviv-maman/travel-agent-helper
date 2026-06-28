@@ -87,6 +87,7 @@
     "clear": "Clear search",
     "noResults": "😕 No matching supplier found",
     "copyTitle": "Cancellation Fee for Client (Keep of 10% Gross Margin + Consumer Protection Law)",
+    "copyLabel": "Client copy",
     "copyTimeHeader": "Cancellation timing",
     "copyFeeHeader": "Client cancellation fee",
     "lawTitle": "Consumer Protection Law",
