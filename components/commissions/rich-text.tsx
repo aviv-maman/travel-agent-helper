@@ -27,7 +27,7 @@ export function RichText({ text, colorPrices = false }: { text: string; colorPri
             part.startsWith("**") && part.endsWith("**") ? (
               <strong
                 key={j}
-                className={`font-bold ${colorPrices ? priceColor(part.slice(2, -2)) : ""}`}>
+                className={`font-bold ${colorPrices ? `whitespace-nowrap ${priceColor(part.slice(2, -2))}` : ""}`}>
                 {part.slice(2, -2)}
               </strong>
             ) : (
