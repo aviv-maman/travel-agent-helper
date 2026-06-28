@@ -82,22 +82,32 @@ export function SupplierContact({
   supplierId,
   supplierName,
   size = "icon-sm",
+  open: openProp,
+  onOpenChange,
+  hideTrigger = false,
 }: {
   supplierId: string;
   supplierName: string;
   /** Trigger button size. Defaults to `icon-sm` (28px); `icon` is 32px. */
   size?: React.ComponentProps<typeof Button>["size"];
+  /** Controlled open state. When provided, the component is fully controlled. */
+  open?: boolean;
+  onOpenChange?: (_open: boolean) => void;
+  /** Hide the built-in trigger button (e.g. when opened from a menu). */
+  hideTrigger?: boolean;
 }) {
   const t = useTranslations("commissions.contact");
-  const [open, setOpen] = useState(false);
+  const controlled = openProp !== undefined;
+  const [openState, setOpenState] = useState(false);
+  const open = controlled ? openProp : openState;
   const [editing, setEditing] = useState(false);
-  const [contact, setContactState] = useState<SupplierContact>(emptyContact);
   const [draft, setDraft] = useState<SupplierContact>(emptyContact);
 
-  function load() {
-    const c = getContact(supplierId);
-    setContactState(c);
-    setEditing(false);
+  function handleOpenChange(o: boolean) {
+    if (!controlled) setOpenState(o);
+    onOpenChange?.(o);
+    // Reset to the read-only view so reopening never lands in edit mode.
+    if (!o) setEditing(false);
   }
 
   function startEdit() {
@@ -119,7 +129,6 @@ export function SupplierContact({
       extras: draft.extras.filter((e) => e.value.trim()),
     };
     setContact(supplierId, next);
-    setContactState(next);
     setEditing(false);
   }
 
@@ -137,33 +146,30 @@ export function SupplierContact({
     setDraft((d) => ({ ...d, extras: d.extras.filter((_, idx) => idx !== i) }));
 
   return (
-    <Dialog
-      open={open}
-      onOpenChange={(o) => {
-        setOpen(o);
-        if (o) load();
-      }}>
-      <TooltipProvider>
-        <Tooltip>
-          <DialogTrigger
-            render={
-              <TooltipTrigger
-                render={
-                  <Button
-                    type="button"
-                    variant="outline"
-                    size={size}
-                    aria-label={t("button")}
-                    className="text-muted-foreground"
-                  />
-                }
-              />
-            }>
-            <Phone className="size-4" />
-          </DialogTrigger>
-          <TooltipContent>{t("button")}</TooltipContent>
-        </Tooltip>
-      </TooltipProvider>
+    <Dialog open={open} onOpenChange={handleOpenChange}>
+      {!hideTrigger && (
+        <TooltipProvider>
+          <Tooltip>
+            <DialogTrigger
+              render={
+                <TooltipTrigger
+                  render={
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size={size}
+                      aria-label={t("button")}
+                      className="text-muted-foreground"
+                    />
+                  }
+                />
+              }>
+              <Phone className="size-4" />
+            </DialogTrigger>
+            <TooltipContent>{t("button")}</TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+      )}
 
       <DialogContent className="max-h-[85vh] overflow-y-auto sm:max-w-md">
         <DialogHeader>
@@ -174,7 +180,7 @@ export function SupplierContact({
         </DialogHeader>
 
         {!editing ? (
-          <ContactView contact={contact} t={t} />
+          <ContactView supplierId={supplierId} t={t} />
         ) : (
           <ContactEdit
             draft={draft}
@@ -193,7 +199,7 @@ export function SupplierContact({
               <Button type="button" onClick={startEdit} className="flex-1">
                 ✏️ {t("edit")}
               </Button>
-              <Button type="button" variant="outline" onClick={() => setOpen(false)}>
+              <Button type="button" variant="outline" onClick={() => handleOpenChange(false)}>
                 {t("close")}
               </Button>
             </>
@@ -215,8 +221,9 @@ export function SupplierContact({
 
 type T = ReturnType<typeof useTranslations<"commissions.contact">>;
 
-/** Read-only contact details. */
-function ContactView({ contact, t }: { contact: SupplierContact; t: T }) {
+/** Read-only contact details. Reads the latest stored contact on render. */
+function ContactView({ supplierId, t }: { supplierId: string; t: T }) {
+  const contact = getContact(supplierId);
   if (!hasAnyContact(contact)) {
     return (
       <p className="rounded-lg bg-surface-2 px-3 py-6 text-center text-sm text-muted-foreground">

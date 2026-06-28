@@ -70,14 +70,23 @@
     "verifyTooltip": "לבדוק מול הספק"
   },
   "baggage": {
-    "intro": "🎒 <strong>תיק גב:</strong> כל החברות — עד 4 ק\"ג<br></br>🧳 <strong>טרולי:</strong> כל החברות — 8 ק\"ג (ישראייר ו-Cyprus Airways: 10 ק\"ג)",
+    "introTitle": "מידע כבודה",
+    "intro": "🎒 <strong>תיק גב:</strong> כל החברות עד 4 ק\"ג<br></br>💼 <strong>טרולי:</strong> כל החברות עד 8 ק\"ג למעט ישראייר וסייפרוס איירווייס עד 10 ק\"ג<br></br>🧳 <strong>מזוודה:</strong> חברות שאינן מופיעות ברשימה עד 20 ק\"ג",
     "searchPlaceholder": "חפש חברת תעופה... (עברית או אנגלית)",
     "clear": "נקה חיפוש",
     "noResults": "😕 לא נמצאה חברת תעופה תואמת",
+    "colLogo": "לוגו",
     "colAirline": "חברת תעופה",
+    "colIata": "קוד IATA",
+    "colCountry": "מדינה",
     "colSuitcase": "מזוודה",
     "colTrolley": "טרולי",
-    "colContact": "פרטים",
+    "colActions": "פעולות",
+    "columns": "עמודות",
+    "perPage": "בכל עמוד",
+    "page": "עמוד {page} מתוך {total}",
+    "prev": "העמוד הקודם",
+    "next": "העמוד הבא",
     "website": "אתר"
   },
   "cancellations": {
