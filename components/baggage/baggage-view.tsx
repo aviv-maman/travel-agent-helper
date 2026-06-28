@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { Globe, Info, Search, X } from "lucide-react";
 import type { WeightTier, ViewAirline } from "@/lib/baggage";
+import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
@@ -47,12 +48,18 @@ export function BaggageView({ airlines }: { airlines: ViewAirline[] }) {
   return (
     <TooltipProvider>
       <div className="flex flex-col gap-4">
-        <div className="rounded-xl border border-brand/25 bg-brand/[0.07] px-4 py-3 text-sm leading-relaxed text-brand">
-          {t.rich("intro", {
-            strong: (chunks) => <strong className="font-bold">{chunks}</strong>,
-            br: () => <br />,
-          })}
-        </div>
+        <Alert variant="info">
+          <Info />
+          <AlertTitle>{t("introTitle")}</AlertTitle>
+          <AlertDescription>
+            <p className="leading-relaxed">
+              {t.rich("intro", {
+                strong: (chunks) => <strong className="font-bold">{chunks}</strong>,
+                br: () => <br />,
+              })}
+            </p>
+          </AlertDescription>
+        </Alert>
 
         <div className="relative">
           <Search
