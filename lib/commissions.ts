@@ -163,15 +163,15 @@ const SUPPLIERS: Supplier[] = [
       {
         icon: "flight",
         text: t(
-          "טיסות בלבד: מזוודה וטרולי לא כלולים, תוספת: מזוודה: **92$ נטו** · טרולי: **42$ נטו**",
-          "Flights only: suitcase & trolley not included, add: suitcase **$92 net** · trolley **$42 net**",
+          "טיסות בלבד: מזוודה וטרולי לא כלולים, תוספת: מזוודה: **120$ נטו** · טרולי: **58$ נטו**",
+          "Flights only: suitcase & trolley not included, add: suitcase **$120 net** · trolley **$58 net**",
         ),
       },
       {
         icon: "package",
         text: t(
-          "חבילות נופש: מזוודה וטרולי לא כלולים, תוספת: מזוודה: **92$ נטו** · טרולי: **42$ נטו**",
-          "Vacation packages: suitcase & trolley not included, add: suitcase **$92 net** · trolley **$42 net**",
+          "חבילות נופש: מזוודה וטרולי לא כלולים, תוספת: מזוודה: **120$ נטו** · טרולי: **58$ נטו**",
+          "Vacation packages: suitcase & trolley not included, add: suitcase **$120 net** · trolley **$58 net**",
         ),
       },
       {
