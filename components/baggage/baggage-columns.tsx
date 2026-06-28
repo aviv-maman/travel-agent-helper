@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import Image from "next/image";
 import type { ColumnDef } from "@tanstack/react-table";
 import { Info } from "lucide-react";
@@ -11,6 +12,23 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip
 import { AirlineActions } from "./airline-actions";
 
 const AIRLINE_PLACEHOLDER_LOGO = "/airlines/placeholder-logo.svg";
+
+/** Airline logo with a placeholder fallback if the file is missing (load error). */
+function AirlineLogo({ src }: { src: string }) {
+  const [failed, setFailed] = useState(false);
+  return (
+    <span className="flex size-8 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-surface-2 ring-1 ring-border/50">
+      <Image
+        src={failed ? AIRLINE_PLACEHOLDER_LOGO : src}
+        alt=""
+        width={32}
+        height={32}
+        className="size-full object-contain"
+        onError={() => setFailed(true)}
+      />
+    </span>
+  );
+}
 
 const TIER: Record<WeightTier, string> = {
   kg23: "bg-success/[0.12] text-success",
@@ -60,17 +78,7 @@ export function airlineColumns(t: T): ColumnDef<ViewAirline>[] {
       enableSorting: false,
       enableHiding: false,
       meta: { headerClassName: "w-px", cellClassName: "w-px" },
-      cell: ({ row }) => (
-        <span className="flex size-8 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-surface-2 ring-1 ring-border/50">
-          <Image
-            src={row.original.logo ?? AIRLINE_PLACEHOLDER_LOGO}
-            alt=""
-            width={32}
-            height={32}
-            className="size-full object-contain"
-          />
-        </span>
-      ),
+      cell: ({ row }) => <AirlineLogo src={row.original.logo} />,
     },
     {
       id: "name",
