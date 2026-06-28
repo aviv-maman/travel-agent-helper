@@ -204,7 +204,7 @@ export function CommissionCard({ supplier }: { supplier: ViewSupplier }) {
                           <div className="flex flex-col gap-1">
                             {row.details.map((d, j) => (
                               <span key={j} className="block">
-                                <RichText text={d} />
+                                <RichText text={d} colorPrices />
                                 {hasWarn && j === row.details.length - 1 && (
                                   <span className="font-bold text-warning"> *</span>
                                 )}
