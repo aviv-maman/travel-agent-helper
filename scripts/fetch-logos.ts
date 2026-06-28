@@ -1,16 +1,22 @@
 /**
- * Downloads supplier logos / favicons into public/suppliers/{id}.png.
+ * Downloads supplier / airline logos (favicons) into public/{suppliers,airlines}/{id}.png.
  *
- * The supplier list (id + website) is read straight from lib/commissions.ts, so
- * it always matches the data. Each supplier's card renders `logo ?? placeholder`,
- * so dropping a file at public/suppliers/{id}.png "upgrades" that supplier.
+ * The id + website lists are read straight from the data files (lib/commissions.ts
+ * for suppliers, lib/baggage.ts for airlines), so they always match the data.
+ * Each card renders `logo ?? placeholder`, so dropping a file at
+ * public/<dir>/{id}.png "upgrades" that supplier/airline.
  *
  * Usage:
- *   bun run logos                 # all suppliers, favicon mode
- *   bun run logos israir          # one supplier
- *   bun run logos -- --mode logo  # all suppliers, brand-logo mode (logo.dev)
- *   bun run logos israir --mode logo
- *   bun run logos --list          # list known supplier ids
+ *   bun run logos                        # all suppliers, favicon mode
+ *   bun run logos israir                 # one supplier
+ *   bun run logos --type airline         # all airlines
+ *   bun run logos --type airline israir  # one airline
+ *   bun run logos -- --mode logo         # all suppliers, brand-logo mode (logo.dev)
+ *   bun run logos --list                 # list known supplier ids
+ *   bun run logos --type airline --list  # list known airline ids
+ *
+ * Airlines default to the placeholder website (https://www.example.com); those
+ * are skipped until a real URL is filled in per airline in lib/baggage.ts.
  *
  * Modes:
  *   favicon (default) — best favicon across the page's <link> icons,
@@ -26,19 +32,44 @@ import { join } from "node:path";
 import { spawnSync } from "node:child_process";
 
 const ROOT = process.cwd();
-const OUT = join(ROOT, "public/suppliers");
 const UA =
   "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124 Safari/537.36";
 
-type Supplier = { id: string; website: string };
+type EntityType = "supplier" | "airline";
+type Entity = { id: string; website: string };
 
 /** Read id + website pairs from the commissions data (single source of truth). */
-function readSuppliers(): Supplier[] {
+function readSuppliers(): Entity[] {
   const src = readFileSync(join(ROOT, "lib/commissions.ts"), "utf8");
-  const out: Supplier[] = [];
+  const out: Entity[] = [];
   const re = /id:\s*"([a-z-]+)",\s*\r?\n\s*website:\s*"([^"]+)"/g;
   let m: RegExpExecArray | null;
   while ((m = re.exec(src))) out.push({ id: m[1], website: m[2] });
+  return out;
+}
+
+/**
+ * Read id + website pairs from the baggage data. Airline objects have no nested
+ * braces, so each `{ ... }` in the AIRLINES array is one airline. Websites given
+ * as the shared `EX` placeholder constant are resolved to its value.
+ */
+function readAirlines(): Entity[] {
+  const src = readFileSync(join(ROOT, "lib/baggage.ts"), "utf8");
+  const exVal = src.match(/const EX\s*=\s*"([^"]+)"/)?.[1] ?? "";
+  const start = src.indexOf("const AIRLINES");
+  const end = src.indexOf("\n];", start);
+  if (start < 0 || end < 0) return [];
+  const body = src.slice(start, end);
+  const out: Entity[] = [];
+  for (const m of body.matchAll(/\{[^{}]*\}/g)) {
+    const obj = m[0];
+    const id = obj.match(/id:\s*"([^"]+)"/)?.[1];
+    if (!id) continue;
+    const literal = obj.match(/website:\s*"([^"]+)"/)?.[1];
+    const usesEx = /website:\s*EX\b/.test(obj);
+    const website = literal ?? (usesEx ? exVal : "");
+    if (website) out.push({ id, website });
+  }
   return out;
 }
 
@@ -107,8 +138,12 @@ function toPng(path: string): string {
   return path; // sips missing — keep original
 }
 
-async function fetchOne(s: Supplier, mode: "favicon" | "logo"): Promise<void> {
+async function fetchOne(s: Entity, mode: "favicon" | "logo", outDir: string): Promise<void> {
   const host = new URL(s.website).hostname.replace(/^www\./, "");
+  if (host === "example.com" || host.endsWith(".example.com")) {
+    console.log(`⊘ ${s.id} — placeholder website, skipping`);
+    return;
+  }
   const token = process.env.LOGODEV_TOKEN;
   const logoUrls =
     mode === "logo" && token
@@ -122,7 +157,7 @@ async function fetchOne(s: Supplier, mode: "favicon" | "logo"): Promise<void> {
     return;
   }
   const ext = pngArea(best.buf) > 0 ? "png" : best.src.split(".").pop()!.split("?")[0] || "ico";
-  let file = join(OUT, `${s.id}.${ext}`);
+  let file = join(outDir, `${s.id}.${ext}`);
   writeFileSync(file, best.buf);
   file = toPng(file);
   const dim =
@@ -135,26 +170,42 @@ async function main() {
   const mode = (args.includes("--mode") ? args[args.indexOf("--mode") + 1] : "favicon") as
     | "favicon"
     | "logo";
-  const suppliers = readSuppliers();
+  const type = (args.includes("--type") ? args[args.indexOf("--type") + 1] : "supplier") as
+    | EntityType
+    | string;
+  if (type !== "supplier" && type !== "airline") {
+    console.error(`Unknown --type "${type}". Use "supplier" or "airline".`);
+    process.exit(1);
+  }
+
+  const isAirline = type === "airline";
+  const dirName = isAirline ? "airlines" : "suppliers";
+  const outDir = join(ROOT, `public/${dirName}`);
+  const entities = isAirline ? readAirlines() : readSuppliers();
 
   if (args.includes("--list")) {
-    console.log(suppliers.map((s) => `${s.id}  ${s.website}`).join("\n"));
+    console.log(entities.map((s) => `${s.id}  ${s.website}`).join("\n"));
     return;
   }
 
-  const target = args.find((a) => !a.startsWith("-") && a !== mode);
-  const todo = target ? suppliers.filter((s) => s.id === target) : suppliers;
+  // Positional target id (anything that isn't a flag or a flag's value).
+  const target = args.find((a) => !a.startsWith("-") && a !== mode && a !== type);
+  const todo = target ? entities.filter((s) => s.id === target) : entities;
   if (todo.length === 0) {
-    console.error(`No supplier "${target}". Run with --list to see ids.`);
+    console.error(
+      target
+        ? `No ${type} "${target}". Run with --list to see ids.`
+        : `No ${type} websites to fetch (all placeholders?). Run with --list to check.`,
+    );
     process.exit(1);
   }
 
   if (mode === "logo" && !process.env.LOGODEV_TOKEN) {
     console.warn("⚠ logo mode needs LOGODEV_TOKEN (https://logo.dev); falling back to favicons.\n");
   }
-  mkdirSync(OUT, { recursive: true });
-  console.log(`Fetching ${todo.length} logo(s) in "${mode}" mode → public/suppliers/`);
-  for (const s of todo) await fetchOne(s, mode);
+  mkdirSync(outDir, { recursive: true });
+  console.log(`Fetching ${todo.length} logo(s) in "${mode}" mode → public/${dirName}/`);
+  for (const s of todo) await fetchOne(s, mode, outDir);
 }
 
 main();

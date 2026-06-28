@@ -15,7 +15,8 @@
       "Bash(node -e ' *)",
       "PowerShell(npx tsc --noEmit -p tsconfig.json)",
       "PowerShell(if \\(Test-Path package.json\\) { \\(Get-Content package.json -Raw | ConvertFrom-Json\\).scripts })",
-      "Bash(git mv *)"
+      "Bash(git mv *)",
+      "PowerShell(npx eslint components/ui/data-table.tsx components/baggage/baggage-columns.tsx components/baggage/airline-actions.tsx components/baggage/baggage-view.tsx components/commissions/supplier-contact.tsx lib/baggage.ts 2>&1)"
     ]
   }
 }
