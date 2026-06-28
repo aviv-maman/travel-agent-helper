@@ -81,9 +81,12 @@ function ContactRow({
 export function SupplierContact({
   supplierId,
   supplierName,
+  size = "icon-sm",
 }: {
   supplierId: string;
   supplierName: string;
+  /** Trigger button size. Defaults to `icon-sm` (28px); `icon` is 32px. */
+  size?: React.ComponentProps<typeof Button>["size"];
 }) {
   const t = useTranslations("commissions.contact");
   const [open, setOpen] = useState(false);
@@ -149,7 +152,7 @@ export function SupplierContact({
                   <Button
                     type="button"
                     variant="outline"
-                    size="icon-sm"
+                    size={size}
                     aria-label={t("button")}
                     className="text-muted-foreground"
                   />

@@ -16,7 +16,8 @@
     "db:studio": "drizzle-kit studio",
     "build:translations": "bun scripts/build-translations.ts",
     "parse": "bun scripts/parse-html.ts",
-    "seed": "bun scripts/seed.ts"
+    "seed": "bun scripts/seed.ts",
+    "logos": "bun scripts/fetch-logos.ts"
   },
   "dependencies": {
     "@base-ui/react": "^1.6.0",
