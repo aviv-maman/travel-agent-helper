@@ -30,6 +30,11 @@ function AirlineNameCell({ airline }: { airline: ViewAirline }) {
     : null;
   return (
     <span className="flex items-center gap-1.5">
+      {airline.iata && (
+        <span className="inline-block shrink-0 rounded border border-brand/25 bg-brand/10 px-1.5 font-mono text-[0.68rem] font-extrabold tracking-wide text-brand">
+          {airline.iata}
+        </span>
+      )}
       <span className="text-sm font-medium text-foreground">{airline.name}</span>
       {airline.code &&
         (country ? (
@@ -73,18 +78,6 @@ export function airlineColumns(t: T): ColumnDef<ViewAirline>[] {
       header: ({ column }) => <DataTableColumnHeader column={column} title={t("colAirline")} />,
       meta: { label: t("colAirline") },
       cell: ({ row }) => <AirlineNameCell airline={row.original} />,
-    },
-    {
-      id: "iata",
-      accessorFn: (a) => a.iata ?? "",
-      header: ({ column }) => <DataTableColumnHeader column={column} title={t("colIata")} />,
-      meta: { label: t("colIata") },
-      cell: ({ row }) =>
-        row.original.iata ? (
-          <span className="inline-block rounded border border-brand/25 bg-brand/10 px-1.5 font-mono text-[0.68rem] font-extrabold tracking-wide text-brand">
-            {row.original.iata}
-          </span>
-        ) : null,
     },
     {
       id: "luggage",

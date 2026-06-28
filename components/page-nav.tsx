@@ -28,7 +28,7 @@ import { LanguageSwitcher } from "@/components/language-switcher";
 const PAGES = [
   { segment: "suppliers", emoji: "💰" },
   { segment: "transfers", emoji: "🚌" },
-  { segment: "baggage", emoji: "🧳" },
+  { segment: "airlines", emoji: "✈️" },
   { segment: "cancellation-fees", emoji: "❌" },
   { segment: "hotels", emoji: "🏨" },
 ] as const;
