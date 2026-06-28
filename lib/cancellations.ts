@@ -81,7 +81,6 @@ function copyText(when: "flight" | "departure", he: string, en: string): Localiz
 const SUPPLIERS: CancelSupplier[] = [
   {
     id: "flying",
-    logo: "/suppliers/flying.png",
     name: t("שטיח מעופף", "Flying Carpet"),
     code: "FLYING",
     products: [P_FLIGHT(), P_PACKAGE("🏖 חבילות", "🏖 Packages"), P_ORGANIZED()],
@@ -134,7 +133,6 @@ const SUPPLIERS: CancelSupplier[] = [
   },
   {
     id: "issta",
-    logo: "/suppliers/issta.png",
     name: t("איסתא", "Issta"),
     code: "ISSTA",
     products: [
@@ -241,7 +239,6 @@ const SUPPLIERS: CancelSupplier[] = [
   },
   {
     id: "israir",
-    logo: "/suppliers/israir.png",
     name: t("ישראייר", "Israir"),
     code: "ISRAIR",
     products: [P_FLIGHT(), P_PACKAGE("🏖 חבילות", "🏖 Packages")],
@@ -387,7 +384,6 @@ const SUPPLIERS: CancelSupplier[] = [
   },
   {
     id: "kishrei",
-    logo: "/suppliers/kishrei.png",
     name: t("קשרי תעופה", "Kishrei Teufa"),
     code: "KISHREI",
     products: [
@@ -606,7 +602,6 @@ const SUPPLIERS: CancelSupplier[] = [
   },
   {
     id: "kavei",
-    logo: "/suppliers/kavei.png",
     name: t("קווי חופשה", "Kavei Hufsha"),
     code: "KAVEI",
     products: [
