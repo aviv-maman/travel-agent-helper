@@ -64,36 +64,34 @@ export function CommissionCard({ supplier }: { supplier: ViewSupplier }) {
   // now; flip to true to bring the "מידע" title back.
   const showBaggageInfoTitle = false;
 
-  // Commission table: the same three default categories (empty when absent),
-  // followed by any special lines (customCommission1..n). Custom labels carry
-  // their own emoji, so they render without a leading glyph.
-  const commissionRows: { glyph: string; label: string; value: string | null; level: CommLevel }[] =
-    [
-      {
-        glyph: "✈️",
-        label: t("flightsOnly"),
-        value: supplier.flightsOnly?.value ?? null,
-        level: supplier.flightsOnly?.level ?? "mid",
-      },
-      {
-        glyph: "🏖️",
-        label: t("packages"),
-        value: supplier.packages?.value ?? null,
-        level: supplier.packages?.level ?? "mid",
-      },
-      {
-        glyph: "🧳",
-        label: t("organizedTours"),
-        value: supplier.organizedTours?.value ?? null,
-        level: supplier.organizedTours?.level ?? "mid",
-      },
-      ...supplier.customCommissions.map((cm) => ({
-        glyph: "",
-        label: cm.label,
-        value: cm.value,
-        level: cm.level,
-      })),
-    ];
+  // Commission table: the three default categories, each followed by any custom
+  // lines of the same type (matched by the emoji their label starts with), so
+  // e.g. "✈️ Flights only" is immediately followed by "✈️ Flights only: Dubai".
+  type CommRow = { glyph: string; label: string; value: string; level: CommLevel };
+  const commissionRows: CommRow[] = [];
+  const usedCustoms = new Set<number>();
+  const categories = [
+    { glyph: "✈️", label: t("flightsOnly"), value: supplier.flightsOnly },
+    { glyph: "🏖️", label: t("packages"), value: supplier.packages },
+    { glyph: "🧳", label: t("organizedTours"), value: supplier.organizedTours },
+  ];
+  for (const cat of categories) {
+    if (cat.value) {
+      commissionRows.push({ glyph: cat.glyph, label: cat.label, ...cat.value });
+    }
+    supplier.customCommissions.forEach((cm, i) => {
+      if (cm.label.startsWith(cat.glyph)) {
+        commissionRows.push({ glyph: "", label: cm.label, value: cm.value, level: cm.level });
+        usedCustoms.add(i);
+      }
+    });
+  }
+  // Custom lines whose emoji doesn't match any default category go last.
+  supplier.customCommissions.forEach((cm, i) => {
+    if (!usedCustoms.has(i)) {
+      commissionRows.push({ glyph: "", label: cm.label, value: cm.value, level: cm.level });
+    }
+  });
 
   return (
     <article className="flex flex-col overflow-hidden rounded-xl border border-border bg-surface shadow-sm">
@@ -117,9 +115,8 @@ export function CommissionCard({ supplier }: { supplier: ViewSupplier }) {
             <a
               href={supplier.website}
               target="_blank"
-              rel="noopener noreferrer"
-              className="mt-1.5 inline-flex max-w-full items-center gap-1.5 text-sm font-semibold text-brand hover:underline">
-              <Globe className="size-4 shrink-0" aria-hidden />
+              className="mt-1.5 inline-flex max-w-full items-center gap-1 align-top text-sm font-medium leading-snug text-brand hover:underline">
+              <Globe className="size-3.5 shrink-0" aria-hidden />
               <span className="truncate">{t("website")}</span>
             </a>
           )}
@@ -135,10 +132,8 @@ export function CommissionCard({ supplier }: { supplier: ViewSupplier }) {
           </div>
           <Table>
             <TableBody>
-              {commissionRows
-                .filter((row) => row.value)
-                .map((row, i) => (
-                  <TableRow key={i} className="hover:bg-muted/30">
+              {commissionRows.map((row, i) => (
+                <TableRow key={i} className="hover:bg-muted/30">
                     <TableCell className="px-3 py-2 align-top text-sm font-medium whitespace-normal text-foreground">
                       <span className="flex items-center gap-1.5">
                         {row.glyph && (
