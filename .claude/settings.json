@@ -11,7 +11,8 @@
       "Bash(echo \"exit:$?\")",
       "Bash(node -e \"const m=require\\('./messages/en.json'\\); console.log\\(JSON.stringify\\(m.commissions,null,1\\)\\)\")",
       "Bash(node -e \"const m=require\\('./messages/he.json'\\); const c={...m.commissions}; delete c.contact; delete c.legend; console.log\\(JSON.stringify\\(c,null,1\\)\\)\")",
-      "Bash(node -e ' *)"
+      "Bash(node -e ' *)",
+      "WebFetch(domain:github.com)"
     ]
   }
 }
