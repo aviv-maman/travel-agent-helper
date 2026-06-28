@@ -15,9 +15,6 @@
  *   bun run logos --list                 # list known supplier ids
  *   bun run logos --type airline --list  # list known airline ids
  *
- * Airlines default to the placeholder website (https://www.example.com); those
- * are skipped until a real URL is filled in per airline in lib/baggage.ts.
- *
  * Modes:
  *   favicon (default) — best favicon across the page's <link> icons,
  *                       /apple-touch-icon.png, Google (sz=256) and DuckDuckGo.
@@ -50,12 +47,10 @@ function readSuppliers(): Entity[] {
 
 /**
  * Read id + website pairs from the baggage data. Airline objects have no nested
- * braces, so each `{ ... }` in the AIRLINES array is one airline. Websites given
- * as the shared `EX` placeholder constant are resolved to its value.
+ * braces, so each `{ ... }` in the AIRLINES array is one airline.
  */
 function readAirlines(): Entity[] {
   const src = readFileSync(join(ROOT, "lib/baggage.ts"), "utf8");
-  const exVal = src.match(/const EX\s*=\s*"([^"]+)"/)?.[1] ?? "";
   const start = src.indexOf("const AIRLINES");
   const end = src.indexOf("\n];", start);
   if (start < 0 || end < 0) return [];
@@ -64,11 +59,8 @@ function readAirlines(): Entity[] {
   for (const m of body.matchAll(/\{[^{}]*\}/g)) {
     const obj = m[0];
     const id = obj.match(/id:\s*"([^"]+)"/)?.[1];
-    if (!id) continue;
-    const literal = obj.match(/website:\s*"([^"]+)"/)?.[1];
-    const usesEx = /website:\s*EX\b/.test(obj);
-    const website = literal ?? (usesEx ? exVal : "");
-    if (website) out.push({ id, website });
+    const website = obj.match(/website:\s*"([^"]+)"/)?.[1];
+    if (id && website) out.push({ id, website });
   }
   return out;
 }
@@ -140,10 +132,6 @@ function toPng(path: string): string {
 
 async function fetchOne(s: Entity, mode: "favicon" | "logo", outDir: string): Promise<void> {
   const host = new URL(s.website).hostname.replace(/^www\./, "");
-  if (host === "example.com" || host.endsWith(".example.com")) {
-    console.log(`⊘ ${s.id} — placeholder website, skipping`);
-    return;
-  }
   const token = process.env.LOGODEV_TOKEN;
   const logoUrls =
     mode === "logo" && token

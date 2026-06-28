@@ -26,8 +26,8 @@ export type Airline = {
   noteTone?: "muted" | "gold";
   /** Free-text note shown in the dedicated "Note" column. */
   info?: Localized;
-  /** Airline website (placeholder for now; wired up later per airline). */
-  website?: string;
+  /** Airline website. */
+  website: string;
   /** Path to the airline's logo image (under /public); falls back to placeholder. */
   logo?: string;
   /** Subtly highlighted catch-all row ("all other airlines"). */
@@ -37,8 +37,6 @@ export type Airline = {
 const t = (he: string, en: string): Localized => ({ he, en });
 const TROLLEY10 = t('10 ק"ג', "10 kg");
 const TROLLEY8 = t('8 ק"ג', "8 kg");
-/** Placeholder website applied to every airline until real URLs are filled in. */
-const EX = "https://www.example.com";
 const DEPENDS = t("תלוי בכרטיס", "Depends on ticket");
 const TICKET_WEIGHT = t(
   'המשקל המדויק מופיע על הכרטיס עצמו (23 או 30 ק"ג)',
@@ -50,34 +48,34 @@ const TICKET_WEIGHT_15_23 = t(
 );
 
 const AIRLINES: Airline[] = [
-  { id: "israir", iata: "6H", flag: "🇮🇱", name: t("ישראייר", "Israir"), kg: "23", note: TROLLEY10, website: EX },
-  { id: "el-al", iata: "LY", flag: "🇮🇱", name: t("אל על", "El Al"), kg: "23", note: TROLLEY8, website: EX },
-  { id: "aegean", iata: "A3", flag: "🇬🇷", name: t("אג'יאן איירליינס", "Aegean Airlines"), kg: "23", note: TROLLEY8, website: EX },
-  { id: "austrian", iata: "OS", flag: "🇦🇹", name: t("אוסטריאן איירליינס", "Austrian Airlines"), kg: "23", note: TROLLEY8, website: EX },
-  { id: "swiss", iata: "LX", flag: "🇨🇭", name: t("סוויס", "Swiss"), kg: "23", note: TROLLEY8, website: EX },
-  { id: "lufthansa", iata: "LH", flag: "🇩🇪", name: t("לופטהנזה", "Lufthansa"), kg: "23", note: TROLLEY8, website: EX },
-  { id: "eurowings", iata: "EW", flag: "🇩🇪", name: t("יורוווינגס", "Eurowings"), kg: "23", note: TROLLEY8, website: EX },
-  { id: "brussels", iata: "SN", flag: "🇧🇪", name: t("בראסלס איירליינס", "Brussels Airlines"), kg: "23", note: TROLLEY8, website: EX },
-  { id: "smartwings", iata: "QS", flag: "🇨🇿", name: t("סמארטווינגס", "Smartwings"), kg: "23", note: TROLLEY8, website: EX },
-  { id: "ita-airways", iata: "AZ", flag: "🇮🇹", name: t("ITA איירווייס", "ITA Airways"), kg: "23", note: TROLLEY8, website: EX },
-  { id: "iberia", iata: "IB", flag: "🇪🇸", name: t("איבריה", "Iberia"), kg: "23", note: TROLLEY8, website: EX },
-  { id: "latam", iata: "LA", flag: "🇧🇷", name: t("לאטאם", "LATAM"), kg: "23", note: TROLLEY8, website: EX },
-  { id: "tap-portugal", iata: "TP", flag: "🇵🇹", name: t("TAP פורטוגל", "TAP Portugal"), kg: "23", note: TROLLEY8, website: EX },
-  { id: "sas", iata: "SK", flag: "🇸🇪", name: t("SAS סקנדינביאן", "SAS Scandinavian"), kg: "23", note: TROLLEY8, website: EX },
-  { id: "korean-air", iata: "KE", flag: "🇰🇷", name: t("קוריאן אייר", "Korean Air"), kg: "23", note: TROLLEY8, website: EX },
-  { id: "hainan", iata: "HU", flag: "🇨🇳", name: t("היינאן איירליינס", "Hainan Airlines"), kg: "23", note: TROLLEY8, website: EX },
-  { id: "ethiopian", iata: "ET", flag: "🇪🇹", name: t("אתיופיאן איירליינס", "Ethiopian Airlines"), kg: "23", note: TROLLEY8, website: EX },
-  { id: "neos", iata: "NO", flag: "🇬🇷", name: t("ניאוס", "Neos"), kg: "23", note: TROLLEY8, website: EX },
-  { id: "united", iata: "UA", flag: "🇺🇸", name: t("יונייטד איירליינס", "United Airlines"), kg: "23", note: TROLLEY8, website: EX },
-  { id: "delta", iata: "DL", flag: "🇺🇸", name: t("דלתא", "Delta"), kg: "23", note: TROLLEY8, website: EX },
-  { id: "american", iata: "AA", flag: "🇺🇸", name: t("אמריקן איירליינס", "American Airlines"), kg: "23", note: TROLLEY8, website: EX },
-  { id: "air-france", iata: "AF", flag: "🇫🇷", name: t("אייר פראנס", "Air France"), kg: "23", note: TROLLEY8, website: EX },
-  { id: "air-seychelles", iata: "HM", flag: "🇸🇨", name: t("אייר סיישל", "Air Seychelles"), kg: "23", note: TROLLEY8, website: EX },
-  { id: "klm", iata: "KL", flag: "🇳🇱", name: t("KLM", "KLM"), kg: "23", note: TROLLEY8, website: EX },
-  { id: "british-airways", iata: "BA", flag: "🇬🇧", name: t("בריטיש איירווייס", "British Airways"), kg: "23", note: TROLLEY8, website: EX },
-  { id: "virgin-atlantic", iata: "VS", flag: "🇬🇧", name: t("וירג'ין אטלנטיק", "Virgin Atlantic"), kg: "23", note: TROLLEY8, website: EX },
-  { id: "bulgaria-air", iata: "FB", flag: "🇧🇬", name: t("בולגריה אייר", "Bulgaria Air"), kg: "23", note: TROLLEY8, website: EX },
-  { id: "lot", iata: "LO", flag: "🇵🇱", name: t("לוט פוליש איירליינס", "LOT Polish Airlines"), kg: "23", note: TROLLEY8, website: EX },
+  { id: "israir", iata: "6H", flag: "🇮🇱", name: t("ישראייר", "Israir"), kg: "23", note: TROLLEY10, website: "https://www.israir.co.il/" },
+  { id: "el-al", iata: "LY", flag: "🇮🇱", name: t("אל על", "El Al"), kg: "23", note: TROLLEY8, website: "https://www.elal.com/" },
+  { id: "aegean", iata: "A3", flag: "🇬🇷", name: t("אג'יאן איירליינס", "Aegean Airlines"), kg: "23", note: TROLLEY8, website: "https://www.aegeanair.com/" },
+  { id: "austrian", iata: "OS", flag: "🇦🇹", name: t("אוסטריאן איירליינס", "Austrian Airlines"), kg: "23", note: TROLLEY8, website: "https://www.austrian.com/" },
+  { id: "swiss", iata: "LX", flag: "🇨🇭", name: t("סוויס", "Swiss"), kg: "23", note: TROLLEY8, website: "https://www.swiss.com/" },
+  { id: "lufthansa", iata: "LH", flag: "🇩🇪", name: t("לופטהנזה", "Lufthansa"), kg: "23", note: TROLLEY8, website: "https://www.lufthansa.com/" },
+  { id: "eurowings", iata: "EW", flag: "🇩🇪", name: t("יורוווינגס", "Eurowings"), kg: "23", note: TROLLEY8, website: "https://www.eurowings.com/" },
+  { id: "brussels", iata: "SN", flag: "🇧🇪", name: t("בראסלס איירליינס", "Brussels Airlines"), kg: "23", note: TROLLEY8, website: "https://www.brusselsairlines.com/" },
+  { id: "smartwings", iata: "QS", flag: "🇨🇿", name: t("סמארטווינגס", "Smartwings"), kg: "23", note: TROLLEY8, website: "https://www.smartwings.com/en/" },
+  { id: "ita-airways", iata: "AZ", flag: "🇮🇹", name: t("ITA איירווייס", "ITA Airways"), kg: "23", note: TROLLEY8, website: "https://www.ita-airways.com/" },
+  { id: "iberia", iata: "IB", flag: "🇪🇸", name: t("איבריה", "Iberia"), kg: "23", note: TROLLEY8, website: "https://www.iberia.com/" },
+  { id: "latam", iata: "LA", flag: "🇧🇷", name: t("לאטאם", "LATAM"), kg: "23", note: TROLLEY8, website: "https://www.latamairlines.com/us/en" },
+  { id: "tap-portugal", iata: "TP", flag: "🇵🇹", name: t("TAP פורטוגל", "TAP Portugal"), kg: "23", note: TROLLEY8, website: "https://www.flytap.com/en-us" },
+  { id: "sas", iata: "SK", flag: "🇸🇪", name: t("SAS סקנדינביאן", "SAS Scandinavian"), kg: "23", note: TROLLEY8, website: "https://www.flysas.com/en" },
+  { id: "korean-air", iata: "KE", flag: "🇰🇷", name: t("קוריאן אייר", "Korean Air"), kg: "23", note: TROLLEY8, website: "https://www.koreanair.com/" },
+  { id: "hainan", iata: "HU", flag: "🇨🇳", name: t("היינאן איירליינס", "Hainan Airlines"), kg: "23", note: TROLLEY8, website: "https://www.hainanairlines.com/" },
+  { id: "ethiopian", iata: "ET", flag: "🇪🇹", name: t("אתיופיאן איירליינס", "Ethiopian Airlines"), kg: "23", note: TROLLEY8, website: "https://www.ethiopianairlines.com/" },
+  { id: "neos", iata: "NO", flag: "🇬🇷", name: t("ניאוס", "Neos"), kg: "23", note: TROLLEY8, website: "https://www.neosair.com/us/en" },
+  { id: "united", iata: "UA", flag: "🇺🇸", name: t("יונייטד איירליינס", "United Airlines"), kg: "23", note: TROLLEY8, website: "https://www.united.com/" },
+  { id: "delta", iata: "DL", flag: "🇺🇸", name: t("דלתא", "Delta"), kg: "23", note: TROLLEY8, website: "https://www.delta.com/" },
+  { id: "american", iata: "AA", flag: "🇺🇸", name: t("אמריקן איירליינס", "American Airlines"), kg: "23", note: TROLLEY8, website: "https://www.aa.com/" },
+  { id: "air-france", iata: "AF", flag: "🇫🇷", name: t("אייר פראנס", "Air France"), kg: "23", note: TROLLEY8, website: "https://www.airfrance.com/" },
+  { id: "air-seychelles", iata: "HM", flag: "🇸🇨", name: t("אייר סיישל", "Air Seychelles"), kg: "23", note: TROLLEY8, website: "https://www.airseychelles.com/" },
+  { id: "klm", iata: "KL", flag: "🇳🇱", name: t("KLM", "KLM"), kg: "23", note: TROLLEY8, website: "https://www.klm.com/" },
+  { id: "british-airways", iata: "BA", flag: "🇬🇧", name: t("בריטיש איירווייס", "British Airways"), kg: "23", note: TROLLEY8, website: "https://www.britishairways.com/" },
+  { id: "virgin-atlantic", iata: "VS", flag: "🇬🇧", name: t("וירג'ין אטלנטיק", "Virgin Atlantic"), kg: "23", note: TROLLEY8, website: "https://www.virginatlantic.com/" },
+  { id: "bulgaria-air", iata: "FB", flag: "🇧🇬", name: t("בולגריה אייר", "Bulgaria Air"), kg: "23", note: TROLLEY8, website: "https://www.air.bg/en" },
+  { id: "lot", iata: "LO", flag: "🇵🇱", name: t("לוט פוליש איירליינס", "LOT Polish Airlines"), kg: "23", note: TROLLEY8, website: "https://www.lot.com/" },
   {
     id: "sky-express",
     iata: "GQ",
@@ -87,7 +85,7 @@ const AIRLINES: Airline[] = [
     note: DEPENDS,
     noteTone: "gold",
     info: TICKET_WEIGHT_15_23,
-    website: EX,
+    website: "https://www.skyexpress.gr/en",
   },
   {
     id: "cyprus-airways",
@@ -96,10 +94,10 @@ const AIRLINES: Airline[] = [
     name: t("סייפרוס איירווייס", "Cyprus Airways"),
     kg: "23",
     note: TROLLEY10,
-    website: EX,
+    website: "https://www.cyprusairways.com/",
   },
-  { id: "georgian", iata: "A9", flag: "🇬🇪", name: t("ג'ורג'יאן איירווייס", "Georgian Airways"), kg: "23", note: TROLLEY8, website: EX },
-  { id: "tarom", iata: "RO", flag: "🇷🇴", name: t("טארום", "TAROM"), kg: "23", note: TROLLEY8, website: EX },
+  { id: "georgian", iata: "A9", flag: "🇬🇪", name: t("ג'ורג'יאן איירווייס", "Georgian Airways"), kg: "23", note: TROLLEY8, website: "https://www.georgian-airways.com/en" },
+  { id: "tarom", iata: "RO", flag: "🇷🇴", name: t("טארום", "TAROM"), kg: "23", note: TROLLEY8, website: "https://www.tarom.ro/en/" },
   {
     id: "emirates",
     iata: "EK",
@@ -109,9 +107,9 @@ const AIRLINES: Airline[] = [
     note: DEPENDS,
     noteTone: "gold",
     info: TICKET_WEIGHT,
-    website: EX,
+    website: "https://www.emirates.com/",
   },
-  { id: "fly-dubai", iata: "FZ", flag: "🇦🇪", name: t("פלאי דובאי", "Fly Dubai"), kg: "23", note: TROLLEY8, website: EX },
+  { id: "fly-dubai", iata: "FZ", flag: "🇦🇪", name: t("פלאי דובאי", "Fly Dubai"), kg: "23", note: TROLLEY8, website: "https://www.flydubai.com/" },
   {
     id: "etihad",
     iata: "EY",
@@ -121,10 +119,10 @@ const AIRLINES: Airline[] = [
     note: DEPENDS,
     noteTone: "gold",
     info: TICKET_WEIGHT,
-    website: EX,
+    website: "https://www.etihad.com/",
   },
-  { id: "arkia", iata: "IZ", flag: "🇮🇱", name: t("ארקיע", "Arkia"), kg: "20", note: TROLLEY8, website: EX },
-  { id: "electra", iata: "3E", flag: "🇬🇷", name: t("אלקטרה איירווייז", "Electra Airways"), kg: "20", note: TROLLEY8, website: EX },
+  { id: "arkia", iata: "IZ", flag: "🇮🇱", name: t("ארקיע", "Arkia"), kg: "20", note: TROLLEY8, website: "https://www.arkia.co.il/" },
+  { id: "electra", iata: "3E", flag: "🇬🇷", name: t("אלקטרה איירווייז", "Electra Airways"), kg: "20", note: TROLLEY8, website: "https://www.electra-airways.com/" },
   {
     id: "corendon",
     iata: "XC / 4D",
@@ -132,10 +130,10 @@ const AIRLINES: Airline[] = [
     name: t("קורנדון איירליינס", "Corendon Airlines"),
     kg: "20",
     note: TROLLEY8,
-    website: EX,
+    website: "https://www.corendonairlines.com/",
   },
-  { id: "blue-bird", iata: "BZ", flag: "🇬🇷", name: t("בלו בירד", "Blue Bird"), kg: "20", note: TROLLEY8, website: EX },
-  { id: "tus", iata: "U8", flag: "🇨🇾", name: t("TUS איירווייס", "TUS Airways"), kg: "20", note: TROLLEY8, website: EX },
+  { id: "blue-bird", iata: "BZ", flag: "🇬🇷", name: t("בלו בירד", "Blue Bird"), kg: "20", note: TROLLEY8, website: "https://www.bluebirdair.com/" },
+  { id: "tus", iata: "U8", flag: "🇨🇾", name: t("TUS איירווייס", "TUS Airways"), kg: "20", note: TROLLEY8, website: "https://www.tusairways.com/" },
 ];
 
 /**
@@ -167,8 +165,8 @@ export type ViewAirline = {
   /** Numeric trolley weight used for sorting (NaN-safe; 0 when not a number). */
   trolleySort: number;
   info: string | null;
-  /** Airline website, or null. */
-  website: string | null;
+  /** Airline website. */
+  website: string;
   /** Logo path under /public, or null (renders the placeholder). */
   logo: string | null;
   highlight: boolean;
@@ -201,7 +199,7 @@ export function getBaggage(locale: string): ViewAirline[] {
       noteTone: a.noteTone ?? "muted",
       trolleySort: note ? maxNum(note) : 0,
       info: a.info ? pick(a.info) : null,
-      website: a.website ?? null,
+      website: a.website,
       logo: a.logo ?? null,
       highlight: Boolean(a.highlight),
       search: `${a.iata ?? ""} ${a.name.he ?? ""} ${a.name.en ?? ""}`.toLowerCase(),

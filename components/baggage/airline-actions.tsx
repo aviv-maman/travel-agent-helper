@@ -24,7 +24,7 @@ export function AirlineActions({
 }: {
   id: string;
   name: string;
-  website: string | null;
+  website: string;
 }) {
   const t = useTranslations("baggage");
   const tc = useTranslations("commissions.contact");
@@ -50,13 +50,11 @@ export function AirlineActions({
             <Phone className="size-4" />
             {tc("button")}
           </DropdownMenuItem>
-          {website && (
-            <DropdownMenuItem
-              render={<a href={website} target="_blank" rel="noopener noreferrer" />}>
-              <Globe className="size-4" />
-              {t("website")}
-            </DropdownMenuItem>
-          )}
+          <DropdownMenuItem
+            render={<a href={website} target="_blank" rel="noopener noreferrer" />}>
+            <Globe className="size-4" />
+            {t("website")}
+          </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
 
