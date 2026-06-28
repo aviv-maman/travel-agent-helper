@@ -6,28 +6,24 @@
  * Each card renders `logo ?? placeholder`, so dropping a file at
  * public/<dir>/{id}.png "upgrades" that supplier/airline.
  *
- * Usage:
- *   bun run logos                        # all suppliers, favicon mode
- *   bun run logos israir                 # one supplier
- *   bun run logos --type airline         # all airlines
- *   bun run logos --type airline israir  # one airline
- *   bun run logos -- --mode logo         # all suppliers, brand-logo mode (logo.dev)
- *   bun run logos --list                 # list known supplier ids
- *   bun run logos --type airline --list  # list known airline ids
+ * Usage (--type is required: "supplier" or "airline"):
+ *   bun run logos --type supplier          # all suppliers
+ *   bun run logos --type supplier israir   # one supplier
+ *   bun run logos --type supplier --list   # list known supplier ids
+ *   bun run logos --type airline           # all airlines
+ *   bun run logos --type airline israir    # one airline
+ *   bun run logos --type airline --list    # list known airline ids
  *
- * Airlines default to the placeholder website (https://www.example.com); those
- * are skipped until a real URL is filled in per airline in lib/baggage.ts.
+ * If some targets already have an icon, you're asked once whether to re-fetch
+ * them (default: skip the existing ones).
  *
- * Modes:
- *   favicon (default) — best favicon across the page's <link> icons,
- *                       /apple-touch-icon.png, Google (sz=256) and DuckDuckGo.
- *   logo              — try the logo.dev brand logo first (bigger, transparent),
- *                       then fall back to the favicon strategy. Needs a token:
- *                       set LOGODEV_TOKEN (free key at https://logo.dev). Without
- *                       it, logo mode just behaves like favicon mode.
- *                       (Clearbit's old free logo API has been shut down.)
+ * Source strategy: when LOGODEV_TOKEN is set (free key at https://logo.dev), the
+ * logo.dev brand logo is tried first (bigger, transparent), then it falls back to
+ * favicons — the page's <link> icons, /apple-touch-icon.png, Google (sz=256) and
+ * DuckDuckGo — picking the largest. Without a token, only favicons are used.
+ * (Clearbit's old free logo API has been shut down.)
  */
-import { mkdirSync, writeFileSync, readFileSync, rmSync } from "node:fs";
+import { mkdirSync, writeFileSync, readFileSync, readdirSync, rmSync } from "node:fs";
 import { join } from "node:path";
 import { spawnSync } from "node:child_process";
 
@@ -50,12 +46,10 @@ function readSuppliers(): Entity[] {
 
 /**
  * Read id + website pairs from the baggage data. Airline objects have no nested
- * braces, so each `{ ... }` in the AIRLINES array is one airline. Websites given
- * as the shared `EX` placeholder constant are resolved to its value.
+ * braces, so each `{ ... }` in the AIRLINES array is one airline.
  */
 function readAirlines(): Entity[] {
   const src = readFileSync(join(ROOT, "lib/baggage.ts"), "utf8");
-  const exVal = src.match(/const EX\s*=\s*"([^"]+)"/)?.[1] ?? "";
   const start = src.indexOf("const AIRLINES");
   const end = src.indexOf("\n];", start);
   if (start < 0 || end < 0) return [];
@@ -64,13 +58,19 @@ function readAirlines(): Entity[] {
   for (const m of body.matchAll(/\{[^{}]*\}/g)) {
     const obj = m[0];
     const id = obj.match(/id:\s*"([^"]+)"/)?.[1];
-    if (!id) continue;
-    const literal = obj.match(/website:\s*"([^"]+)"/)?.[1];
-    const usesEx = /website:\s*EX\b/.test(obj);
-    const website = literal ?? (usesEx ? exVal : "");
-    if (website) out.push({ id, website });
+    const website = obj.match(/website:\s*"([^"]+)"/)?.[1];
+    if (id && website) out.push({ id, website });
   }
   return out;
+}
+
+/** Ids that already have a downloaded icon in `dir` (any extension). */
+function existingIcons(dir: string): Set<string> {
+  try {
+    return new Set(readdirSync(dir).map((f) => f.replace(/\.[^.]+$/, "")));
+  } catch {
+    return new Set();
+  }
 }
 
 /** PNG dimensions area from the IHDR chunk; 0 if the buffer isn't a PNG. */
@@ -138,22 +138,22 @@ function toPng(path: string): string {
   return path; // sips missing — keep original
 }
 
-async function fetchOne(s: Entity, mode: "favicon" | "logo", outDir: string): Promise<void> {
+async function fetchOne(s: Entity, outDir: string): Promise<void> {
   const host = new URL(s.website).hostname.replace(/^www\./, "");
-  if (host === "example.com" || host.endsWith(".example.com")) {
-    console.log(`⊘ ${s.id} — placeholder website, skipping`);
-    return;
-  }
   const token = process.env.LOGODEV_TOKEN;
-  const logoUrls =
-    mode === "logo" && token
-      ? [`https://img.logo.dev/${host}?token=${token}&size=256&format=png&retina=true`]
-      : [];
+  // logo.dev first (when a token is set), then fall back to favicons.
+  const logoUrls: string[] = [];
+  if (token) {
+    console.log("  · trying logo.dev brand logo…");
+    logoUrls.push(`https://img.logo.dev/${host}?token=${token}&size=256&format=png&retina=true`);
+  }
+  console.log(`  · scanning ${host} for favicons…`);
   const urls = [...logoUrls, ...(await faviconCandidates(s.website))];
 
+  console.log(`  · checking ${urls.length} candidate(s), picking the largest…`);
   const best = await pickBest(urls);
   if (!best) {
-    console.log(`✗ ${s.id} — nothing found`);
+    console.log(`  ✗ ${s.id} — nothing found`);
     return;
   }
   const ext = pngArea(best.buf) > 0 ? "png" : best.src.split(".").pop()!.split("?")[0] || "ico";
@@ -162,19 +162,17 @@ async function fetchOne(s: Entity, mode: "favicon" | "logo", outDir: string): Pr
   file = toPng(file);
   const dim =
     pngArea(best.buf) > 0 ? `~${Math.round(Math.sqrt(pngArea(best.buf)))}px` : "(converted)";
-  console.log(`✓ ${s.id}  ${dim}  ← ${best.src}`);
+  console.log(`  ✓ ${s.id}  ${dim}  ← ${best.src}`);
 }
 
 async function main() {
   const args = process.argv.slice(2);
-  const mode = (args.includes("--mode") ? args[args.indexOf("--mode") + 1] : "favicon") as
-    | "favicon"
-    | "logo";
-  const type = (args.includes("--type") ? args[args.indexOf("--type") + 1] : "supplier") as
+  const type = (args.includes("--type") ? args[args.indexOf("--type") + 1] : undefined) as
     | EntityType
-    | string;
+    | string
+    | undefined;
   if (type !== "supplier" && type !== "airline") {
-    console.error(`Unknown --type "${type}". Use "supplier" or "airline".`);
+    console.error('--type is required. Use --type supplier or --type airline.');
     process.exit(1);
   }
 
@@ -189,23 +187,41 @@ async function main() {
   }
 
   // Positional target id (anything that isn't a flag or a flag's value).
-  const target = args.find((a) => !a.startsWith("-") && a !== mode && a !== type);
-  const todo = target ? entities.filter((s) => s.id === target) : entities;
+  const target = args.find((a) => !a.startsWith("-") && a !== type);
+  let todo = target ? entities.filter((s) => s.id === target) : entities;
   if (todo.length === 0) {
-    console.error(
-      target
-        ? `No ${type} "${target}". Run with --list to see ids.`
-        : `No ${type} websites to fetch (all placeholders?). Run with --list to check.`,
-    );
+    console.error(`No ${type} "${target}". Run with --list to see ids.`);
     process.exit(1);
   }
 
-  if (mode === "logo" && !process.env.LOGODEV_TOKEN) {
-    console.warn("⚠ logo mode needs LOGODEV_TOKEN (https://logo.dev); falling back to favicons.\n");
+  // If some already have an icon, ask whether to re-fetch them (default: skip).
+  const existing = existingIcons(outDir);
+  const haveIcon = todo.filter((s) => existing.has(s.id));
+  if (haveIcon.length) {
+    const ans = prompt(
+      `${haveIcon.length}/${todo.length} already have an icon. Re-fetch existing ones too? (y/N)`,
+    );
+    if (!/^y(es)?$/i.test(ans?.trim() ?? "")) {
+      todo = todo.filter((s) => !existing.has(s.id));
+      console.log(`Skipping ${haveIcon.length} existing; fetching ${todo.length}.`);
+    }
+  }
+  if (todo.length === 0) {
+    console.log("Nothing to fetch.");
+    return;
+  }
+
+  if (!process.env.LOGODEV_TOKEN) {
+    console.warn("⚠ LOGODEV_TOKEN not set (https://logo.dev); using favicons only.\n");
   }
   mkdirSync(outDir, { recursive: true });
-  console.log(`Fetching ${todo.length} logo(s) in "${mode}" mode → public/${dirName}/`);
-  for (const s of todo) await fetchOne(s, mode, outDir);
+  console.log(`Fetching ${todo.length} logo(s) → public/${dirName}/\n`);
+  let done = 0;
+  for (const s of todo) {
+    console.log(`[${++done}/${todo.length}] ${s.id}  (${s.website})`);
+    await fetchOne(s, outDir);
+  }
+  console.log(`\nDone — ${todo.length} processed → public/${dirName}/`);
 }
 
 main();

@@ -700,7 +700,7 @@
       },
       {
         "name": "Best Western Premier",
-        "stars": 4,
+        "stars": 5,
         "tier": "good",
         "tags": [],
         "boards": [
@@ -2837,7 +2837,7 @@
       },
       {
         "name": "Pan Hotel",
-        "stars": 4,
+        "stars": 3,
         "tier": "good",
         "tags": [],
         "boards": [
@@ -2963,7 +2963,7 @@
       },
       {
         "name": "Amazon Athens",
-        "stars": 4,
+        "stars": 3,
         "tier": "good",
         "tags": [],
         "boards": [
@@ -3005,7 +3005,7 @@
       },
       {
         "name": "Athens Cypria",
-        "stars": 3,
+        "stars": 4,
         "tier": "good",
         "tags": [],
         "boards": [
@@ -3089,7 +3089,7 @@
       },
       {
         "name": "Plaka Hotel",
-        "stars": 4,
+        "stars": 3,
         "tier": "good",
         "tags": [],
         "boards": [
@@ -3130,8 +3130,8 @@
         "rooms": []
       },
       {
-        "name": "Dave Red Athens",
-        "stars": 4,
+        "name": "Max Brown Hotel Downtown (Ex. Dave Red Athens)",
+        "stars": 3,
         "tier": "good",
         "tags": [],
         "boards": [
@@ -3561,7 +3561,7 @@
       },
       {
         "name": "Melia Athens",
-        "stars": 5,
+        "stars": 4,
         "tier": "good",
         "tags": [],
         "boards": [
@@ -3766,7 +3766,7 @@
       },
       {
         "name": "The Modernist Thessaloniki",
-        "stars": 5,
+        "stars": 4,
         "tier": "good",
         "tags": [],
         "boards": [
@@ -3858,7 +3858,7 @@
       },
       {
         "name": "Le Palace Hotel Thessaloniki",
-        "stars": 4,
+        "stars": 3,
         "tier": "good",
         "tags": [],
         "boards": [
@@ -3948,7 +3948,7 @@
       },
       {
         "name": "Capsis Bristol Boutique Hotel",
-        "stars": 4,
+        "stars": 5,
         "tier": "good",
         "tags": [],
         "boards": [
@@ -4102,7 +4102,7 @@
       },
       {
         "name": "Imperial Palace Classical Hotel",
-        "stars": 5,
+        "stars": 4,
         "tier": "good",
         "tags": [],
         "boards": [
@@ -4132,7 +4132,7 @@
       },
       {
         "name": "Antigon Urban Chic Hotel",
-        "stars": 4,
+        "stars": 5,
         "tier": "good",
         "tags": [],
         "boards": [
@@ -4192,7 +4192,7 @@
       },
       {
         "name": "Vanoro Hotel",
-        "stars": 4,
+        "stars": 5,
         "tier": "good",
         "tags": [],
         "boards": [
@@ -4252,7 +4252,7 @@
       },
       {
         "name": "Holiday Inn Thessaloniki",
-        "stars": 4,
+        "stars": 5,
         "tier": "good",
         "tags": [],
         "boards": [
@@ -4467,7 +4467,7 @@
     "hotels": [
       {
         "name": "Courtyard by Marriott Tbilisi",
-        "stars": 5,
+        "stars": 4,
         "tier": "good",
         "tags": [],
         "boards": [
@@ -4595,7 +4595,7 @@
       },
       {
         "name": "Ibis Styles Tbilisi Center",
-        "stars": 3,
+        "stars": 4,
         "tier": "good",
         "tags": [],
         "boards": [
@@ -4682,7 +4682,7 @@
       },
       {
         "name": "Iota Hotel Tbilisi",
-        "stars": 4,
+        "stars": 5,
         "tier": "good",
         "tags": [],
         "boards": [
@@ -4983,7 +4983,7 @@
       },
       {
         "name": "Museum Hotel Orbeliani",
-        "stars": 5,
+        "stars": 4,
         "tier": "good",
         "tags": [],
         "boards": [
@@ -5331,7 +5331,7 @@
       },
       {
         "name": "Genesis Kosher Hotel",
-        "stars": 3,
+        "stars": 4,
         "tier": "good",
         "tags": [
           "kosher"
@@ -5375,7 +5375,7 @@
       },
       {
         "name": "Cron Palace Kosher Hotel",
-        "stars": 3,
+        "stars": 4,
         "tier": "good",
         "tags": [
           "kosher"
