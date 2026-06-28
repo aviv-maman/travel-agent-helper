@@ -1,7 +1,6 @@
 import type { Localized } from "@/db/schema";
 import type { Locale } from "@/i18n/config";
 import { localized } from "@/lib/hotels";
-import type { CommColor } from "@/lib/commissions";
 
 /**
  * Cancellation-fee guide per supplier. Each card holds the internal NET fee
@@ -22,14 +21,14 @@ export type Block =
   | { kind: "heading"; text: Localized }
   | { kind: "subheading"; text: Localized; tone: "accent" | "gold" }
   | { kind: "table"; caption: Localized; headers?: [Localized, Localized]; rows: FeeRow[] }
-  | { kind: "copy"; heading?: Localized; text: Localized; levels?: FeeLevel[] };
+  | { kind: "copy"; text: Localized; levels?: FeeLevel[] };
 
 export type Product = { kind: ProductKind; label: Localized };
 
 export type CancelSupplier = {
   id: string;
-  emoji: string;
-  color: CommColor;
+  /** Path to the supplier's logo image (under /public). */
+  logo?: string;
   name: Localized;
   code: string;
   products: Product[];
@@ -60,17 +59,11 @@ const P_ORGANIZED = (he = "🚌 טיולים מאורגנים", en = "🚌 Organ
 // Table header presets.
 const H_TIME_CANCEL = t("מועד ביטול", "Cancellation timing");
 const H_TIME_CHANGE = t("מועד שינוי", "Change timing");
-const H_FEE_PERSON = t("דמי ביטול לאדם", "Cancellation fee / person");
-const H_FEE_PAX = t("דמי ביטול לנוסע", "Cancellation fee / traveler");
-const H_FEE_PERSON_NET = t("דמי ביטול לאדם (נטו ספק)", "Cancellation fee / person (net)");
 const H_FEE_PAX_NET = t("דמי ביטול לנוסע (נטו ספק)", "Cancellation fee / traveler (net)");
 const H_CHANGE_PAX = t("עלות שינוי לנוסע", "Change cost / traveler");
 
-const CAP_INTERNAL = t(
-  "דמי ביטול לספק (לשימוש פנימי)",
-  "Cancellation Fee for Supplier (Internal Use)",
-);
-const CAP_INTERNAL_SHORT = t("📋 נטו ספק (לשימוש פנימי)", "📋 Net supplier (internal use)");
+const CAP_INTERNAL = t("דמי ביטול לאדם (נטו ספק)", "Cancellation fee / person (net)");
+const CAP_INTERNAL_SHORT = t("דמי ביטול לאדם (נטו ספק)", "Cancellation fee / person (net)");
 
 /**
  * Builds a client-copy script. Every script opens with the Consumer Protection
@@ -88,8 +81,7 @@ function copyText(when: "flight" | "departure", he: string, en: string): Localiz
 const SUPPLIERS: CancelSupplier[] = [
   {
     id: "flying",
-    emoji: "🪄",
-    color: "gold",
+    logo: "/suppliers/flying.png",
     name: t("שטיח מעופף", "Flying Carpet"),
     code: "FLYING",
     products: [P_FLIGHT(), P_PACKAGE("🏖 חבילות", "🏖 Packages"), P_ORGANIZED()],
@@ -97,7 +89,7 @@ const SUPPLIERS: CancelSupplier[] = [
       {
         kind: "table",
         caption: CAP_INTERNAL,
-        headers: [H_TIME_CANCEL, H_FEE_PERSON_NET],
+        headers: [H_TIME_CANCEL, H_FEE_PAX_NET],
         rows: [
           row(
             "low",
@@ -142,8 +134,7 @@ const SUPPLIERS: CancelSupplier[] = [
   },
   {
     id: "issta",
-    emoji: "✈",
-    color: "brand",
+    logo: "/suppliers/issta.png",
     name: t("איסתא", "Issta"),
     code: "ISSTA",
     products: [
@@ -154,13 +145,16 @@ const SUPPLIERS: CancelSupplier[] = [
       P_ORGANIZED(),
     ],
     blocks: [
-      { kind: "heading", text: t("🌍 שאר היעדים", "🌍 All other destinations") },
+      {
+        kind: "heading",
+        text: t(
+          "🌍 כל היעדים פרט לסיישל וזנזיבר",
+          "🌍 All destinations except Seychelles and Zanzibar",
+        ),
+      },
       {
         kind: "table",
-        caption: t(
-          "📋 לוח דמי ביטול — נטו ספק (לשימוש פנימי) · טיסות, חבילות, כפרי נופש, מאורגנים",
-          "📋 Cancellation fee schedule — net (internal) · flights, packages, villages, tours",
-        ),
+        caption: CAP_INTERNAL,
         headers: [H_TIME_CANCEL, H_FEE_PAX_NET],
         rows: [
           row(
@@ -195,7 +189,6 @@ const SUPPLIERS: CancelSupplier[] = [
       },
       {
         kind: "copy",
-        heading: t("🌍 שאר היעדים — נוסח ללקוח", "🌍 All other destinations — client copy"),
         text: copyText(
           "departure",
           "לאחר מכן ועד 28 ימי עסקים לפני היציאה — 35% מעלות החבילה לנוסע.\n\n27–15 ימי עסקים לפני היציאה — 60% מעלות החבילה לנוסע.\n\n14–7 ימי עסקים לפני היציאה — 85% מעלות החבילה לנוסע.\n\nפחות מ-7 ימי עסקים לפני היציאה — 100% מעלות החבילה, ללא כל החזר.",
@@ -237,7 +230,6 @@ const SUPPLIERS: CancelSupplier[] = [
       },
       {
         kind: "copy",
-        heading: t("🌺 סיישל / זנזיבר — נוסח ללקוח", "🌺 Seychelles / Zanzibar — client copy"),
         text: copyText(
           "departure",
           "לאחר מכן ועד 28 ימי עסקים לפני היציאה — 35% מעלות החבילה לנוסע.\n\n27–15 ימי עסקים לפני היציאה — 85% מעלות החבילה לנוסע.\n\nפחות מ-15 ימי עסקים לפני היציאה — 100% מעלות החבילה, ללא כל החזר.",
@@ -249,8 +241,7 @@ const SUPPLIERS: CancelSupplier[] = [
   },
   {
     id: "israir",
-    emoji: "🛫",
-    color: "success",
+    logo: "/suppliers/israir.png",
     name: t("ישראייר", "Israir"),
     code: "ISRAIR",
     products: [P_FLIGHT(), P_PACKAGE("🏖 חבילות", "🏖 Packages")],
@@ -261,7 +252,7 @@ const SUPPLIERS: CancelSupplier[] = [
           "📋 דמי ביטול — נטו ספק (טיסות + חבילות)",
           "📋 Cancellation fees — net supplier (flights + packages)",
         ),
-        headers: [H_TIME_CANCEL, H_FEE_PAX],
+        headers: [H_TIME_CANCEL, H_FEE_PAX_NET],
         rows: [
           row(
             "net",
@@ -396,8 +387,7 @@ const SUPPLIERS: CancelSupplier[] = [
   },
   {
     id: "kishrei",
-    emoji: "🔗",
-    color: "warning",
+    logo: "/suppliers/kishrei.png",
     name: t("קשרי תעופה", "Kishrei Teufa"),
     code: "KISHREI",
     products: [
@@ -415,7 +405,7 @@ const SUPPLIERS: CancelSupplier[] = [
       {
         kind: "table",
         caption: CAP_INTERNAL_SHORT,
-        headers: [H_TIME_CANCEL, H_FEE_PERSON],
+        headers: [H_TIME_CANCEL, H_FEE_PAX_NET],
         rows: [
           row(
             "low",
@@ -437,10 +427,6 @@ const SUPPLIERS: CancelSupplier[] = [
       },
       {
         kind: "copy",
-        heading: t(
-          "🏖 חבילות נופש + טיסות שכר — נוסח ללקוח",
-          "🏖 Vacation packages + charter — client copy",
-        ),
         text: copyText(
           "departure",
           "לאחר מכן ועד 30 ימים לפני היציאה — 185$ לאדם.\n\n29–14 ימים לפני היציאה — 60% לאדם.\n\n13–7 ימים לפני היציאה — 90% לאדם.\n\n6 ימים ועד יום היציאה — 100% לאדם, ללא כל החזר.",
@@ -453,7 +439,7 @@ const SUPPLIERS: CancelSupplier[] = [
       {
         kind: "table",
         caption: CAP_INTERNAL_SHORT,
-        headers: [H_TIME_CANCEL, H_FEE_PERSON],
+        headers: [H_TIME_CANCEL, H_FEE_PAX_NET],
         rows: [
           row(
             "low",
@@ -478,7 +464,7 @@ const SUPPLIERS: CancelSupplier[] = [
       {
         kind: "table",
         caption: CAP_INTERNAL_SHORT,
-        headers: [H_TIME_CANCEL, H_FEE_PERSON],
+        headers: [H_TIME_CANCEL, H_FEE_PAX_NET],
         rows: [
           row(
             "low",
@@ -500,10 +486,6 @@ const SUPPLIERS: CancelSupplier[] = [
       },
       {
         kind: "copy",
-        heading: t(
-          "🚌 מאורגנים — נוסח ללקוח (טיסות סדירות)",
-          "🚌 Organized tours — client copy (scheduled flights)",
-        ),
         text: copyText(
           "departure",
           "לאחר מכן ועד 45 ימים לפני היציאה — 185$ לאדם.\n\n44–30 ימים לפני היציאה — 35% לאדם.\n\n29–14 ימים לפני היציאה — 60% לאדם.\n\n13–7 ימים לפני היציאה — 90% לאדם.\n\n6 ימים ועד יום היציאה — 100% לאדם, ללא כל החזר.",
@@ -513,10 +495,6 @@ const SUPPLIERS: CancelSupplier[] = [
       },
       {
         kind: "copy",
-        heading: t(
-          "🚌 מאורגנים — נוסח ללקוח (טיסות שכר)",
-          "🚌 Organized tours — client copy (charter flights)",
-        ),
         text: copyText(
           "departure",
           "לאחר מכן ועד 30 ימים לפני היציאה — 185$ לאדם.\n\n29–14 ימים לפני היציאה — 60% לאדם.\n\n13–7 ימים לפני היציאה — 90% לאדם.\n\n6 ימים ועד יום היציאה — 100% לאדם, ללא כל החזר.",
@@ -528,7 +506,7 @@ const SUPPLIERS: CancelSupplier[] = [
       {
         kind: "table",
         caption: CAP_INTERNAL_SHORT,
-        headers: [H_TIME_CANCEL, H_FEE_PERSON],
+        headers: [H_TIME_CANCEL, H_FEE_PAX_NET],
         rows: [
           row(
             "net",
@@ -549,7 +527,6 @@ const SUPPLIERS: CancelSupplier[] = [
       },
       {
         kind: "copy",
-        heading: t("⛷ חבילות סקי — נוסח ללקוח", "⛷ Ski packages — client copy"),
         text: copyText(
           "departure",
           "לאחר מכן ועד 30 ימים לפני היציאה — 60% מעלות החבילה לאדם.\n\n29–14 ימים לפני היציאה — 90% מעלות החבילה לאדם.\n\n13 ימים ועד יום היציאה — 100% מעלות החבילה, ללא כל החזר.",
@@ -561,7 +538,7 @@ const SUPPLIERS: CancelSupplier[] = [
       {
         kind: "table",
         caption: CAP_INTERNAL_SHORT,
-        headers: [H_TIME_CANCEL, H_FEE_PAX],
+        headers: [H_TIME_CANCEL, H_FEE_PAX_NET],
         rows: [
           row(
             "low",
@@ -595,7 +572,6 @@ const SUPPLIERS: CancelSupplier[] = [
       },
       {
         kind: "copy",
-        heading: t("🎄 לפלנד — נוסח ללקוח", "🎄 Lapland — client copy"),
         text: copyText(
           "departure",
           "לאחר מכן ועד 60 ימים לפני היציאה — 600€ לאדם.\n\n59–30 ימים לפני היציאה — 1,100€ לאדם.\n\n29–22 ימים לפני היציאה — 1,600€ לאדם.\n\n21 ימים ועד יום היציאה — 100% מעלות החבילה, ללא כל החזר.",
@@ -619,7 +595,6 @@ const SUPPLIERS: CancelSupplier[] = [
       },
       {
         kind: "copy",
-        heading: t("🏟 ספורט / הופעות — נוסח ללקוח", "🏟 Sports / concerts — client copy"),
         text: copyText(
           "departure",
           "לאחר מכן — 100% מעלות החבילה, ללא כל החזר.",
@@ -631,8 +606,7 @@ const SUPPLIERS: CancelSupplier[] = [
   },
   {
     id: "kavei",
-    emoji: "🏖",
-    color: "destructive",
+    logo: "/suppliers/kavei.png",
     name: t("קווי חופשה", "Kavei Hufsha"),
     code: "KAVEI",
     products: [
@@ -644,7 +618,7 @@ const SUPPLIERS: CancelSupplier[] = [
       {
         kind: "table",
         caption: CAP_INTERNAL,
-        headers: [H_TIME_CANCEL, H_FEE_PAX],
+        headers: [H_TIME_CANCEL, H_FEE_PAX_NET],
         rows: [
           row(
             "full",
@@ -674,12 +648,11 @@ export type ViewBlock =
   | { kind: "heading"; text: string }
   | { kind: "subheading"; text: string; tone: "accent" | "gold" }
   | { kind: "table"; caption: string; headers: [string, string] | null; rows: ViewFeeRow[] }
-  | { kind: "copy"; heading: string | null; text: string; levels: FeeLevel[] };
+  | { kind: "copy"; text: string; levels: FeeLevel[] };
 export type ViewProduct = { kind: ProductKind; label: string };
 export type ViewCancelSupplier = {
   id: string;
-  emoji: string;
-  color: CommColor;
+  logo: string | null;
   name: string;
   code: string;
   products: ViewProduct[];
@@ -693,8 +666,7 @@ export function getCancellations(locale: string): ViewCancelSupplier[] {
   const pick = (v: Localized) => localized(v, locale as Locale);
   return SUPPLIERS.map((s) => ({
     id: s.id,
-    emoji: s.emoji,
-    color: s.color,
+    logo: s.logo ?? null,
     name: pick(s.name),
     code: s.code,
     products: s.products.map((p) => ({ kind: p.kind, label: pick(p.label) })),
@@ -718,7 +690,6 @@ export function getCancellations(locale: string): ViewCancelSupplier[] {
         case "copy":
           return {
             kind: "copy",
-            heading: b.heading ? pick(b.heading) : null,
             text: pick(b.text),
             levels: b.levels ?? [],
           };

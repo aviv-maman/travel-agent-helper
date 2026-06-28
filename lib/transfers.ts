@@ -50,7 +50,7 @@ const SUP: Record<string, { name: Localized; flag: string }> = {
   disenhause: { name: t("דיזנהאוז", "Disenhause"), flag: "" },
   mona: { name: t("מונה טורס", "Mona Tours"), flag: "" },
   ofir: { name: t("אופיר טורס", "Ofir Tours"), flag: "" },
-  kavei: { name: t("קוי חופשה", "Kavei Hufsha"), flag: "" },
+  kavei: { name: t("קווי חופשה", "Kavei Hufsha"), flag: "" },
   ayala: { name: t("איילה", "Ayala"), flag: "" },
   wtc: { name: t("WTC", "WTC"), flag: "" },
 };
@@ -85,12 +85,7 @@ const COUNTRIES: CountryGroup[] = [
         id: "sofia",
         name: t("סופיה (SOF)", "Sofia (SOF)"),
         search: "סופיה sofia sof",
-        pills: [
-          p("warn", "ofir"),
-          p("no", "kavei"),
-          p("no", "mona"),
-          p("no", "israir"),
-        ],
+        pills: [p("warn", "ofir"), p("no", "kavei"), p("no", "mona"), p("no", "israir")],
       },
     ],
   },
@@ -139,9 +134,7 @@ const COUNTRIES: CountryGroup[] = [
         id: "chania",
         name: t("חאניה (CHQ)", "Chania (CHQ)"),
         search: "חאניה chania chq כרתים crete",
-        pills: [
-          g("no", "כל הספקים", "All suppliers"),
-        ],
+        pills: [g("no", "כל הספקים", "All suppliers")],
       },
       {
         id: "athens-thess",
@@ -165,15 +158,26 @@ const COUNTRIES: CountryGroup[] = [
       {
         id: "greek-cyprus",
         name: t(
-          "קפריסין היוונית — לימסול (LCA) · לרנקה (LCA) · איה נאפה (AYA) · פאפוס (PFO) · פרוטאראס (PRT)",
-          "Greek Cyprus — Limassol (LCA) · Larnaca (LCA) · Ayia Napa (AYA) · Paphos (PFO) · Protaras (PRT)",
+          "קפריסין היוונית — לימסול (LCA) · לרנקה (LCA) · איה נאפה (AYA) · פאפוס (PFO)",
+          "Greek Cyprus — Limassol (LCA) · Larnaca (LCA) · Ayia Napa (AYA) · Paphos (PFO)",
         ),
         search:
-          "lca pfo aya prt לימסול limassol לרנקה larnaca פאפוס paphos פרוטאראס protaras איה נאפה ayia napa",
+          "lca pfo aya לימסול limassol לרנקה larnaca פאפוס paphos איה נאפה ayia napa",
         pills: [
           p("yes", "flying"),
           p("yes", "issta"),
           p("no", "ayala"),
+          g("no", "כל שאר הספקים", "All other suppliers"),
+        ],
+      },
+      {
+        id: "protaras",
+        name: t("פרוטאראס (PRT)", "Protaras (PRT)"),
+        search: "פרוטאראס protaras prt",
+        pills: [
+          p("yes", "flying"),
+          p("yes", "issta"),
+          p("yes", "ayala"),
           g("no", "כל שאר הספקים", "All other suppliers"),
         ],
       },
@@ -305,11 +309,7 @@ const COUNTRIES: CountryGroup[] = [
         id: "belgrade",
         name: t("בלגרד (BEG)", "Belgrade (BEG)"),
         search: "בלגרד belgrade beg",
-        pills: [
-          p("no", "mona"),
-          p("no", "arkia"),
-          g("warn", "שאר הספקים", "Other suppliers"),
-        ],
+        pills: [p("no", "mona"), p("no", "arkia"), g("warn", "שאר הספקים", "Other suppliers")],
       },
     ],
   },
