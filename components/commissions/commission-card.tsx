@@ -189,17 +189,17 @@ export function CommissionCard({ supplier }: { supplier: ViewSupplier }) {
                   const icon = BAG_ICON[row.icon];
                   return (
                     <TableRow key={i} className="hover:bg-muted/30">
-                      <TableCell className="w-px px-3 py-2 align-top text-sm font-medium whitespace-nowrap text-foreground">
+                      <TableCell className="w-px px-2 py-2 align-top text-xs font-medium whitespace-nowrap text-foreground sm:px-3 sm:text-sm">
                         <span className="flex items-center gap-1.5">
                           {icon.glyph && (
-                            <span className={`shrink-0 text-base ${icon.className}`} aria-hidden>
+                            <span className={`shrink-0 text-sm sm:text-base ${icon.className}`} aria-hidden>
                               {icon.glyph}
                             </span>
                           )}
                           {row.label}
                         </span>
                       </TableCell>
-                      <TableCell className="px-3 py-2 align-top text-sm leading-snug whitespace-normal text-muted-foreground">
+                      <TableCell className="px-2 py-2 align-top text-xs leading-snug whitespace-normal text-muted-foreground sm:px-3 sm:text-sm">
                         {row.details.length > 0 && (
                           <div className="flex flex-col gap-1">
                             {row.details.map((d, j) => (
