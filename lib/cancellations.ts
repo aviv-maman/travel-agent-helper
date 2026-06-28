@@ -140,7 +140,6 @@ const SUPPLIERS: CancelSupplier[] = [
     products: [
       P_FLIGHT(),
       P_PACKAGE("🏖 חבילות נופש", "🏖 Vacation packages"),
-      P_PACKAGE("🏙 חבילות עיר", "🏙 City breaks"),
       P_PACKAGE("🌴 כפרי נופש", "🌴 Holiday villages"),
       P_ORGANIZED(),
     ],
