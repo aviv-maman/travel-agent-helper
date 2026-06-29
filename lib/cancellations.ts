@@ -61,14 +61,7 @@ const P_SPORTS: Product = {
 };
 
 // Canonical render order for product tags — core categories first, then extras.
-const PRODUCT_ORDER: Product[] = [
-  P_FLIGHT,
-  P_PACKAGE,
-  P_ORGANIZED,
-  P_SPORTS,
-  P_SKI,
-  P_VILLAGE,
-];
+const PRODUCT_ORDER: Product[] = [P_FLIGHT, P_PACKAGE, P_ORGANIZED, P_SPORTS, P_SKI, P_VILLAGE];
 
 // Table header presets.
 const H_TIME_CANCEL = t("מועד ביטול", "Cancellation timing");
@@ -399,7 +392,10 @@ const SUPPLIERS: CancelSupplier[] = [
         ),
         levels: ["net", "gross", "full"],
       },
-      { kind: "heading", text: t('👤 שינוי שם בהזמנה לחו"ל', "👤 Name change on an overseas booking") },
+      {
+        kind: "heading",
+        text: t('👤 שינוי שם בהזמנה לחו"ל', "👤 Name change on an overseas booking"),
+      },
       {
         kind: "table",
         caption: t("עלות שינוי שם (נטו ספק)", "Name-change cost (net)"),
@@ -424,8 +420,8 @@ const SUPPLIERS: CancelSupplier[] = [
         kind: "copy",
         title: t('שינוי שם ללקוח — חו"ל', "Name change for client — overseas"),
         text: t(
-          "עד 24 שעות לפני הטיסה הלוך — 150$ לנוסע (בכפוף לתנאי הכרטיס).\n\nפחות מ-24 שעות לפני הטיסה הלוך — נחשב כביטול + הזמנה חדשה.",
-          "Up to 24 hours before the outbound flight — $150 per traveler (subject to ticket terms).\n\nFewer than 24 hours before the outbound flight — treated as cancellation + new booking.",
+          "עלות שינוי שם לנוסע:\n\nעד 24 שעות לפני הטיסה הלוך — 195$ לנוסע (בכפוף לתנאי הכרטיס)\n\nפחות מ-24 שעות לפני הטיסה הלוך — נחשב כביטול + הזמנה חדשה",
+          "Name-change cost per traveler:\n\nUp to 24 hours before the outbound flight — $195 per traveler (subject to ticket terms).\n\nFewer than 24 hours before the outbound flight — treated as cancellation + new booking.",
         ),
         levels: ["net", "full"],
       },
