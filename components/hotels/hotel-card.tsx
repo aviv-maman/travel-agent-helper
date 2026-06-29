@@ -27,7 +27,7 @@ const FEATURE_META: Record<HotelFeatureValue, { emoji: string; key: FilterKey }>
   "outside-center": { emoji: "📍", key: "outsideCenter" },
 };
 
-const TAG_EMOJI: Record<HotelTagValue, string> = { resort: "🎢", kosher: "✡️" };
+const TAG_EMOJI: Record<HotelTagValue, string> = { resort: "🎢", kosher: "✡️", aparthotel: "🏢" };
 const BOARD_EMOJI: Record<BoardCode, string> = { bb: "🍳", hb: "🍴", fb: "🍽️" };
 
 const BADGE_TINT = {

@@ -7,7 +7,10 @@ import { Button } from "@/components/ui/button";
 import { Toggle } from "@/components/ui/toggle";
 import { useHotelParams } from "./use-hotel-params";
 
-const TAGS: { value: HotelTagValue; emoji: string }[] = [{ value: "kosher", emoji: "✡️" }];
+const TAGS: { value: HotelTagValue; emoji: string }[] = [
+  { value: "kosher", emoji: "✡️" },
+  { value: "aparthotel", emoji: "🏢" },
+];
 const BOARDS: { value: BoardCode; emoji: string }[] = [
   { value: "bb", emoji: "🍳" },
   { value: "hb", emoji: "🍴" },

@@ -1213,7 +1213,9 @@
         "name": "7Seasons Apartments Budapest",
         "stars": 4,
         "tier": "good",
-        "tags": [],
+        "tags": [
+          "aparthotel"
+        ],
         "boards": ["bb"],
         "bookingScore": 8.8,
         "googleMapsUrl": "https://www.google.com/maps/search/7Seasons+Apartments+Budapest+Budapest",
@@ -6579,7 +6581,7 @@
         "name": "Park Inn by Radisson Bucharest Hotel & Residence",
         "stars": 4,
         "tier": "good",
-        "tags": [],
+        "tags": ["aparthotel"],
         "boards": [
           "bb"
         ],

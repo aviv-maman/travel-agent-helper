@@ -25,7 +25,7 @@ export type Localized = Partial<Record<Locale, string>>;
 export const hotelTier = pgEnum("hotel_tier", ["premium", "good"]);
 
 /** Curated tags, independent of quality (a hotel may have several). */
-export const hotelTag = pgEnum("hotel_tag", ["resort", "kosher"]);
+export const hotelTag = pgEnum("hotel_tag", ["resort", "kosher", "aparthotel"]);
 
 /** Board basis: breakfast / half board / full board. A hotel may offer several. */
 export const boardCode = pgEnum("board_code", ["bb", "hb", "fb"]);
