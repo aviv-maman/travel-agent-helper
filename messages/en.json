@@ -83,6 +83,7 @@
     "colTrolley": "Trolley",
     "colActions": "Actions",
     "columns": "Columns",
+    "count": "{total} airlines",
     "perPage": "Per page",
     "page": "Page {page} of {total}",
     "prev": "Previous page",

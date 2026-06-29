@@ -47,6 +47,7 @@ export function BaggageView({ airlines }: { airlines: ViewAirline[] }) {
             clear: t("clear"),
             noResults: t("noResults"),
             columns: t("columns"),
+            total: (count) => t("count", { total: count }),
             perPage: t("perPage"),
             page: (page, total) => t("page", { page, total }),
             prev: t("prev"),
