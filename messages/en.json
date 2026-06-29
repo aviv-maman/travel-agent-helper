@@ -108,6 +108,7 @@
   "hotels": {
     "selectDestination": "Select a hotel destination",
     "destinationPlaceholder": "Type or pick a destination...",
+    "clearDestination": "Clear destination",
     "emptyTitle": "Destination selection",
     "emptyHint": "Pick a destination to see its hotels. Type a destination name, country or airport code — e.g. Batumi, Athens, Sofia or BUH.",
     "noResults": "No hotels found",
