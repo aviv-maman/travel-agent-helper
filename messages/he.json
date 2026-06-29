@@ -83,6 +83,7 @@
     "colTrolley": "טרולי",
     "colActions": "פעולות",
     "columns": "עמודות",
+    "count": "{total} חברות תעופה",
     "perPage": "בכל עמוד",
     "page": "עמוד {page} מתוך {total}",
     "prev": "העמוד הקודם",
@@ -107,6 +108,7 @@
   "hotels": {
     "selectDestination": "בחר יעד מלונות",
     "destinationPlaceholder": "הקלד או בחר יעד...",
+    "clearDestination": "נקה יעד",
     "emptyTitle": "בחירת יעד",
     "emptyHint": "בחר יעד כדי להציג את רשימת המלונות. הקלד שם יעד, מדינה או קוד שדה תעופה — למשל בטומי, אתונה, סופיה או BUH.",
     "noResults": "לא נמצאו מלונות",

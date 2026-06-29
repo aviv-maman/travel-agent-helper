@@ -2,20 +2,21 @@
 
 import { useState } from "react";
 import { useTranslations } from "next-intl";
-import { Globe, MoreHorizontal, Phone } from "lucide-react";
+import { Globe, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { SupplierContact } from "@/components/commissions/supplier-contact";
 
 /**
- * Row actions for an airline — an ellipsis menu with "Contact" (opens the shared
- * contact dialog) and "Website" (opens the airline site). The contact dialog is
- * controlled here so a menu item can open it.
+ * Row actions for an airline — a "Contact" icon button (opens the shared contact
+ * dialog) and a "Website" icon link styled as a button (opens the airline site),
+ * each with a tooltip. The contact dialog is controlled here so the button can
+ * open it.
  */
 export function AirlineActions({
   id,
@@ -32,31 +33,41 @@ export function AirlineActions({
 
   return (
     <>
-      <DropdownMenu>
-        <DropdownMenuTrigger
-          render={
-            <Button
-              type="button"
-              variant="ghost"
-              size="icon-sm"
-              aria-label={t("colActions")}
-              className="text-muted-foreground"
-            />
-          }>
-          <MoreHorizontal className="size-4" />
-        </DropdownMenuTrigger>
-        <DropdownMenuContent align="end" className="w-40">
-          <DropdownMenuItem onClick={() => setContactOpen(true)}>
-            <Phone className="size-4" />
-            {tc("button")}
-          </DropdownMenuItem>
-          <DropdownMenuItem
-            render={<a href={website} target="_blank" rel="noopener noreferrer" />}>
-            <Globe className="size-4" />
-            {t("website")}
-          </DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
+      <TooltipProvider>
+        <div className="flex items-center justify-end gap-1.5">
+          <Tooltip>
+            <TooltipTrigger
+              render={
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="icon-sm"
+                  aria-label={tc("button")}
+                  onClick={() => setContactOpen(true)}
+                />
+              }>
+              <Phone className="size-4" />
+            </TooltipTrigger>
+            <TooltipContent>{tc("button")}</TooltipContent>
+          </Tooltip>
+
+          <Tooltip>
+            <TooltipTrigger
+              render={
+                <Button
+                  variant="outline"
+                  size="icon-sm"
+                  nativeButton={false}
+                  aria-label={t("website")}
+                  render={<a href={website} target="_blank" rel="noopener noreferrer" />}
+                />
+              }>
+              <Globe className="size-4" />
+            </TooltipTrigger>
+            <TooltipContent>{t("website")}</TooltipContent>
+          </Tooltip>
+        </div>
+      </TooltipProvider>
 
       <SupplierContact
         supplierId={id}

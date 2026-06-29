@@ -70,6 +70,8 @@ export type DataTableLabels = {
   noResults: string;
   /** Column-visibility button + menu heading. */
   columns: string;
+  /** Total filtered-row count; hidden when omitted. */
+  total?: (_count: number) => string;
   perPage: string;
   page: (_page: number, _total: number) => string;
   prev: string;
@@ -156,6 +158,7 @@ export function DataTable<TData, TValue>({
   const hideableColumns = table.getAllColumns().filter((c) => c.getCanHide());
   const pageCount = table.getPageCount();
   const pageIndex = table.getState().pagination.pageIndex;
+  const filteredCount = table.getFilteredRowModel().rows.length;
 
   return (
     <div className="flex flex-col gap-3">
@@ -255,49 +258,55 @@ export function DataTable<TData, TValue>({
 
       {/* Pagination */}
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <div className="flex items-center gap-1.5">
-          <span className="text-xs text-muted-foreground">{labels.perPage}</span>
-          <Select
-            value={String(table.getState().pagination.pageSize)}
-            onValueChange={(v) => table.setPageSize(Number(v))}>
-            <SelectTrigger className="w-18">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              {pageSizeOptions.map((n) => (
-                <SelectItem key={n} value={String(n)}>
-                  {n}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
-
-        {pageCount > 1 && (
-          <div className="flex items-center gap-1">
-            <Button
-              type="button"
-              size="icon"
-              variant="outline"
-              disabled={!table.getCanPreviousPage()}
-              aria-label={labels.prev}
-              onClick={() => table.previousPage()}>
-              <ChevronLeft className="size-4 rtl:rotate-180" />
-            </Button>
-            <span className="px-1 text-xs whitespace-nowrap text-muted-foreground">
-              {labels.page(pageIndex + 1, pageCount)}
-            </span>
-            <Button
-              type="button"
-              size="icon"
-              variant="outline"
-              disabled={!table.getCanNextPage()}
-              aria-label={labels.next}
-              onClick={() => table.nextPage()}>
-              <ChevronRight className="size-4 rtl:rotate-180" />
-            </Button>
-          </div>
+        {labels.total && (
+          <span className="text-xs text-muted-foreground">{labels.total(filteredCount)}</span>
         )}
+
+        <div className="flex items-center gap-3 ms-auto">
+          <div className="flex items-center gap-1.5">
+            <span className="text-xs text-muted-foreground">{labels.perPage}</span>
+            <Select
+              value={String(table.getState().pagination.pageSize)}
+              onValueChange={(v) => table.setPageSize(Number(v))}>
+              <SelectTrigger className="w-18">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                {pageSizeOptions.map((n) => (
+                  <SelectItem key={n} value={String(n)}>
+                    {n}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+
+          {pageCount > 1 && (
+            <div className="flex items-center gap-1">
+              <Button
+                type="button"
+                size="icon"
+                variant="outline"
+                disabled={!table.getCanPreviousPage()}
+                aria-label={labels.prev}
+                onClick={() => table.previousPage()}>
+                <ChevronLeft className="size-4 rtl:rotate-180" />
+              </Button>
+              <span className="px-1 text-xs whitespace-nowrap text-muted-foreground">
+                {labels.page(pageIndex + 1, pageCount)}
+              </span>
+              <Button
+                type="button"
+                size="icon"
+                variant="outline"
+                disabled={!table.getCanNextPage()}
+                aria-label={labels.next}
+                onClick={() => table.nextPage()}>
+                <ChevronRight className="size-4 rtl:rotate-180" />
+              </Button>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

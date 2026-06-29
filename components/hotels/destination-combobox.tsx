@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useTranslations } from "next-intl";
-import { ChevronsUpDown, MapPin } from "lucide-react";
+import { ChevronsUpDown, MapPin, X } from "lucide-react";
 import { type DestinationSummary } from "@/lib/hotels";
 import { smartNormalize, smartScore } from "@/lib/search";
 import { Button } from "@/components/ui/button";
@@ -48,22 +48,43 @@ export function DestinationCombobox({ destinations }: { destinations: Destinatio
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
-      <PopoverTrigger
-        render={<Button variant="outline" className="w-full max-w-xl justify-between" size="lg" />}>
-        <span className="flex items-center gap-2">
-          <MapPin className="size-4 text-brand" />
-          {selected ? (
-            <span className="flex items-center gap-1.5">
-              <CountryFlag code={selected.countryCode} />
-              {selected.name}
-              <span className="text-muted-foreground">· {selected.country}</span>
-            </span>
-          ) : (
-            t("destinationPlaceholder")
-          )}
-        </span>
-        <ChevronsUpDown className="size-4 opacity-50" />
-      </PopoverTrigger>
+      <div className="relative w-full max-w-xl">
+        <PopoverTrigger
+          render={
+            <Button
+              variant="outline"
+              className={`w-full justify-between ${selected ? "pe-8" : "pe-1"}`}
+              size="lg"
+            />
+          }>
+          <span className="flex items-center gap-2">
+            <MapPin className="size-4 text-brand" />
+            {selected ? (
+              <span className="flex items-center gap-1.5">
+                <CountryFlag code={selected.countryCode} />
+                {selected.name}
+                <span className="text-muted-foreground">· {selected.country}</span>
+              </span>
+            ) : (
+              t("destinationPlaceholder")
+            )}
+          </span>
+          <span className="rounded-lg p-6">
+            <ChevronsUpDown className="size-4 opacity-50" />
+          </span>
+        </PopoverTrigger>
+        {selected && (
+          <Button
+            type="button"
+            variant="ghost"
+            size="icon-sm"
+            aria-label={t("clearDestination")}
+            className="absolute top-1 left-1 text-muted-foreground hover:text-red-600"
+            onClick={() => update({ dest: null, features: [], sort: "default" })}>
+            <X className="size-4" />
+          </Button>
+        )}
+      </div>
       <PopoverContent className="w-(--anchor-width) p-0" align="start">
         <Command
           filter={(itemValue, search) => {
