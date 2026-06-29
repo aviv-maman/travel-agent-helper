@@ -53,7 +53,7 @@ export function DestinationCombobox({ destinations }: { destinations: Destinatio
           render={
             <Button
               variant="outline"
-              className={`w-full justify-between ${selected ? "pe-16" : ""}`}
+              className={`w-full justify-between ${selected ? "pe-8" : "pe-1"}`}
               size="lg"
             />
           }>
@@ -69,7 +69,9 @@ export function DestinationCombobox({ destinations }: { destinations: Destinatio
               t("destinationPlaceholder")
             )}
           </span>
-          <ChevronsUpDown className="size-4 opacity-50" />
+          <span className="rounded-lg p-6">
+            <ChevronsUpDown className="size-4 opacity-50" />
+          </span>
         </PopoverTrigger>
         {selected && (
           <Button
@@ -77,7 +79,7 @@ export function DestinationCombobox({ destinations }: { destinations: Destinatio
             variant="ghost"
             size="icon-sm"
             aria-label={t("clearDestination")}
-            className="absolute inset-e-8 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-red-600"
+            className="absolute top-1 left-1 text-muted-foreground hover:text-red-600"
             onClick={() => update({ dest: null, features: [], sort: "default" })}>
             <X className="size-4" />
           </Button>
