@@ -111,8 +111,6 @@
     "emptyHint": "Pick a destination to see its hotels. Type a destination name, country or airport code — e.g. Batumi, Athens, Sofia or BUH.",
     "noResults": "No hotels found",
     "warningTitle": "Important note",
-    "ratingNoteTitle": "About ratings",
-    "ratingNote": "Stars are the hotel's official rating. The category (Premium / Good / Resort / Kosher) is our own rating based on experience.",
     "sort": {
       "label": "Sort",
       "default": "Default",
