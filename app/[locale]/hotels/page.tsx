@@ -69,11 +69,6 @@ export default async function HotelsPage({
       )}
       {view && (
         <>
-          <Alert className="border-brand/35 bg-brand/10 text-brand">
-            <InfoIcon />
-            <AlertTitle>{t("hotels.ratingNoteTitle")}</AlertTitle>
-            <AlertDescription className="text-brand">{t("hotels.ratingNote")}</AlertDescription>
-          </Alert>
           <HotelFilters landmarks={view.landmarks} />
           <HotelsResults hotels={view.hotels} />
           <HotelsPager
