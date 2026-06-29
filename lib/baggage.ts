@@ -395,10 +395,10 @@ const AIRLINES: Airline[] = [
     website: "https://www.corendonairlines.com/",
   },
   {
-    id: "blue-bird",
+    id: "bluebird",
     iata: "BZ",
     flag: "🇬🇷",
-    name: t("בלו בירד", "Blue Bird"),
+    name: t("בלו בירד איירווייז", "Bluebird Airways"),
     kg: "20",
     note: TROLLEY8,
     website: "https://www.bluebirdair.com/",
