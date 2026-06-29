@@ -428,8 +428,8 @@ const SUPPLIERS: CancelSupplier[] = [
     ],
   },
   {
-    id: "kishrei",
-    logo: "/suppliers/kishrei.png",
+    id: "kishrei-teufa",
+    logo: "/suppliers/kishrei-teufa.png",
     name: t("קשרי תעופה", "Kishrei Teufa"),
     code: "KISHREI",
     products: [P_FLIGHT, P_PACKAGE, P_ORGANIZED, P_SKI, P_SPORTS],
@@ -641,8 +641,8 @@ const SUPPLIERS: CancelSupplier[] = [
     ],
   },
   {
-    id: "kavei",
-    logo: "/suppliers/kavei.png",
+    id: "kavei-hufsha",
+    logo: "/suppliers/kavei-hufsha.png",
     name: t("קווי חופשה", "Kavei Hufsha"),
     code: "KAVEI",
     products: [P_FLIGHT, P_PACKAGE, P_ORGANIZED],
