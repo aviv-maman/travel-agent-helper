@@ -151,9 +151,9 @@ const SUPPLIERS: Supplier[] = [
     ],
   },
   {
-    id: "kavei-hofesha",
+    id: "kavei-hufsha",
     website: "https://www.kavei.co.il/",
-    logo: "/suppliers/kavei-hofesha.png",
+    logo: "/suppliers/kavei-hufsha.png",
     name: t("קווי חופשה — Kavei", "Kavei Hufsha"),
     flightsOnly: c("נטו", "Net", "net"),
     packages: c("נטו", "Net", "net"),
@@ -192,10 +192,7 @@ const SUPPLIERS: Supplier[] = [
       BACKPACK(),
       {
         icon: "flight",
-        text: t(
-          "טיסות בלבד: מזוודה וטרולי כלולים",
-          "Flights only: suitcase & trolley included",
-        ),
+        text: t("טיסות בלבד: מזוודה וטרולי כלולים", "Flights only: suitcase & trolley included"),
       },
       {
         icon: "package",
@@ -241,10 +238,7 @@ const SUPPLIERS: Supplier[] = [
       BACKPACK(),
       {
         icon: "flight",
-        text: t(
-          "טיסות בלבד: מזוודה וטרולי כלולים",
-          "Flights only: suitcase & trolley included",
-        ),
+        text: t("טיסות בלבד: מזוודה וטרולי כלולים", "Flights only: suitcase & trolley included"),
       },
       {
         icon: "package",
@@ -293,10 +287,7 @@ const SUPPLIERS: Supplier[] = [
       BACKPACK(),
       {
         icon: "flight",
-        text: t(
-          "טיסות בלבד: מזוודה וטרולי כלולים",
-          "Flight only: suitcase & trolley included",
-        ),
+        text: t("טיסות בלבד: מזוודה וטרולי כלולים", "Flight only: suitcase & trolley included"),
       },
       {
         icon: "package",
@@ -329,10 +320,7 @@ const SUPPLIERS: Supplier[] = [
       BACKPACK(),
       {
         icon: "flight",
-        text: t(
-          "טיסות בלבד: מזוודה וטרולי כלולים",
-          "Flight only: suitcase & trolley included",
-        ),
+        text: t("טיסות בלבד: מזוודה וטרולי כלולים", "Flight only: suitcase & trolley included"),
       },
       {
         icon: "package",
@@ -407,10 +395,7 @@ const SUPPLIERS: Supplier[] = [
       BACKPACK(),
       {
         icon: "flight",
-        text: t(
-          "טיסות בלבד: מזוודה וטרולי כלולים",
-          "Flight only: suitcase & trolley included",
-        ),
+        text: t("טיסות בלבד: מזוודה וטרולי כלולים", "Flight only: suitcase & trolley included"),
       },
       {
         icon: "package",
@@ -468,10 +453,7 @@ const SUPPLIERS: Supplier[] = [
       BACKPACK(),
       {
         icon: "flight",
-        text: t(
-          "טיסות בלבד: מזוודה וטרולי כלולים",
-          "Flight only: suitcase & trolley included",
-        ),
+        text: t("טיסות בלבד: מזוודה וטרולי כלולים", "Flight only: suitcase & trolley included"),
       },
       {
         icon: "package",
@@ -500,10 +482,7 @@ const SUPPLIERS: Supplier[] = [
       BACKPACK(),
       {
         icon: "flight",
-        text: t(
-          "טיסות בלבד: מזוודה וטרולי כלולים",
-          "Flight only: suitcase & trolley included",
-        ),
+        text: t("טיסות בלבד: מזוודה וטרולי כלולים", "Flight only: suitcase & trolley included"),
       },
       {
         icon: "package",
@@ -525,10 +504,7 @@ const SUPPLIERS: Supplier[] = [
       BACKPACK(),
       {
         icon: "flight",
-        text: t(
-          "טיסות בלבד: מזוודה וטרולי כלולים",
-          "Flight only: suitcase & trolley included",
-        ),
+        text: t("טיסות בלבד: מזוודה וטרולי כלולים", "Flight only: suitcase & trolley included"),
       },
       {
         icon: "package",
