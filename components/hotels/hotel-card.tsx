@@ -202,7 +202,7 @@ export function HotelCard({
               className="min-w-3 flex-1 translate-y-[-0.2em] border-b border-dotted border-muted-foreground/30"
             />
             <span className="font-bold whitespace-nowrap text-gold">{timeLabel(d)}</span>
-            <span className="text-[0.68rem] whitespace-nowrap tabular-nums">
+            <span className="w-7 text-[0.68rem] whitespace-nowrap tabular-nums">
               {formatMeters(d.meters, locale)}
             </span>
           </li>

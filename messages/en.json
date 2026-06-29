@@ -1,7 +1,7 @@
 {
   "app": {
-    "title": "Suppliers Guide",
-    "subtitle": "Commissions, baggage & transfers"
+    "title": "Travel Agent Helper",
+    "subtitle": "Search suppliers, cancellation fees, transfers, baggage and hotels"
   },
   "nav": {
     "menu": "Menu",
