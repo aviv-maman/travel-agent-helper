@@ -71,7 +71,7 @@
   },
   "baggage": {
     "introTitle": "Luggage Information",
-    "intro": "🎒 <strong>Backpack:</strong> all airlines up to 4 kg<br></br>💼 <strong>Trolley:</strong> all airlines up to 8 kg, except Israir & Cyprus Airways up to 10 kg<br></br>🧳 <strong>Luggage:</strong> not listed airlines up to 20 kg",
+    "intro": "🎒 <strong>Backpack:</strong> All airlines up to 4 kg<br></br>💼 <strong>Trolley:</strong> Most airlines up to 8 kg<br></br>🧳 <strong>Luggage:</strong> Unlisted airlines up to 20 kg",
     "searchPlaceholder": "Search an airline... (Hebrew or English)",
     "clear": "Clear search",
     "noResults": "😕 No matching airline found",
