@@ -147,7 +147,8 @@
     },
     "tier": {
       "resort": "Resort",
-      "kosher": "Kosher"
+      "kosher": "Kosher",
+      "aparthotel": "Apartment Hotel"
     },
     "card": {
       "maps": "Google Maps",

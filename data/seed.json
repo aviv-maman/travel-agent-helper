@@ -1213,8 +1213,10 @@
         "name": "7Seasons Apartments Budapest",
         "stars": 4,
         "tier": "good",
-        "tags": [],
-        "boards": [],
+        "tags": [
+          "aparthotel"
+        ],
+        "boards": ["bb"],
         "bookingScore": 8.8,
         "googleMapsUrl": "https://www.google.com/maps/search/7Seasons+Apartments+Budapest+Budapest",
         "bookingUrl": "https://www.booking.com/searchresults.html?ss=7Seasons+Apartments+Budapest+Budapest",
@@ -1335,7 +1337,7 @@
         "stars": 4,
         "tier": "good",
         "tags": [],
-        "boards": [],
+        "boards": ["bb"],
         "bookingScore": 9.6,
         "googleMapsUrl": "https://www.google.com/maps/search/Emerald+Downtown+Luxury+Suites+Budapest",
         "bookingUrl": "https://www.booking.com/searchresults.html?ss=Emerald+Downtown+Luxury+Suites+Budapest",
@@ -1966,7 +1968,7 @@
         "tier": "good",
         "tags": [],
         "boards": [
-          "bb"
+          "bb", "hb", "fb"
         ],
         "bookingScore": 8.9,
         "googleMapsUrl": "https://www.google.com/maps/search/Aquaworld+Resort+Budapest",
@@ -1974,7 +1976,7 @@
         "roomsNote": null,
         "sortOrder": 26,
         "features": [
-          "pool-in"
+          "pool-in", "waterpark"
         ],
         "distances": [
           {
@@ -6579,7 +6581,7 @@
         "name": "Park Inn by Radisson Bucharest Hotel & Residence",
         "stars": 4,
         "tier": "good",
-        "tags": [],
+        "tags": ["aparthotel"],
         "boards": [
           "bb"
         ],

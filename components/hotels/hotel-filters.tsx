@@ -7,7 +7,10 @@ import { Button } from "@/components/ui/button";
 import { Toggle } from "@/components/ui/toggle";
 import { useHotelParams } from "./use-hotel-params";
 
-const TAGS: { value: HotelTagValue; emoji: string }[] = [{ value: "kosher", emoji: "✡️" }];
+const TAGS: { value: HotelTagValue; emoji: string }[] = [
+  { value: "kosher", emoji: "✡️" },
+  { value: "aparthotel", emoji: "🏢" },
+];
 const BOARDS: { value: BoardCode; emoji: string }[] = [
   { value: "bb", emoji: "🍳" },
   { value: "hb", emoji: "🍴" },
@@ -78,13 +81,14 @@ export function HotelFilters({ landmarks }: { landmarks: ViewLandmark[] }) {
       <div className="flex flex-col gap-3 rounded-lg border border-border bg-brand/5 px-3 py-3">
         <div className="flex flex-wrap items-center justify-between gap-2">
           <span className="text-sm font-bold">{t("filter.filtersLabel")}</span>
-          {hasFilters && (
-            <Button
-              variant="destructive"
-              onClick={() => update({ tags: [], boards: [], features: [] })}>
-              ✕ {t("filter.clear")}
-            </Button>
-          )}
+          <Button
+            variant="destructive"
+            onClick={() => update({ tags: [], boards: [], features: [] })}
+            aria-hidden={!hasFilters}
+            tabIndex={hasFilters ? undefined : -1}
+            className={hasFilters ? undefined : "invisible"}>
+            ✕ {t("filter.clear")}
+          </Button>
         </div>
 
         {/* Tags */}
