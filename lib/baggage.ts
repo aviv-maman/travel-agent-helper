@@ -412,6 +412,15 @@ const AIRLINES: Airline[] = [
     note: TROLLEY8,
     website: "https://www.tusairways.com/",
   },
+  {
+    id: "azerbaijan-airlines",
+    iata: "J2",
+    flag: "🇦🇿",
+    name: t("אזרבייג'ן איירליינס", "Azerbaijan Airlines"),
+    kg: "23",
+    note: TROLLEY10,
+    website: "https://www.azal.az/en/",
+  },
 ];
 
 /**
