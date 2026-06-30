@@ -79,7 +79,7 @@ export function DestinationCombobox({ destinations }: { destinations: Destinatio
             variant="ghost"
             size="icon-sm"
             aria-label={t("clearDestination")}
-            className="absolute top-1 left-1 text-muted-foreground hover:text-red-600"
+            className="absolute top-1 inset-e-1 text-muted-foreground hover:text-red-600"
             onClick={() => update({ dest: null, features: [], sort: "default" })}>
             <X className="size-4" />
           </Button>
