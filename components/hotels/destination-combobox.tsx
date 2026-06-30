@@ -69,7 +69,7 @@ export function DestinationCombobox({ destinations }: { destinations: Destinatio
               t("destinationPlaceholder")
             )}
           </span>
-          <span className="rounded-lg p-6">
+          <span className="rounded-lg p-1.5">
             <ChevronsUpDown className="size-4 opacity-50" />
           </span>
         </PopoverTrigger>
@@ -79,7 +79,7 @@ export function DestinationCombobox({ destinations }: { destinations: Destinatio
             variant="ghost"
             size="icon-sm"
             aria-label={t("clearDestination")}
-            className="absolute top-1 inset-e-1 text-muted-foreground hover:text-red-600"
+            className="absolute inset-e-1 top-1 text-muted-foreground hover:text-red-600"
             onClick={() => update({ dest: null, features: [], sort: "default" })}>
             <X className="size-4" />
           </Button>
