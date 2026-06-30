@@ -50,13 +50,7 @@ export function DestinationCombobox({ destinations }: { destinations: Destinatio
     <Popover open={open} onOpenChange={setOpen}>
       <div className="relative w-full max-w-xl">
         <PopoverTrigger
-          render={
-            <Button
-              variant="outline"
-              className={`w-full justify-between ${selected ? "pe-8" : "pe-1"}`}
-              size="lg"
-            />
-          }>
+          render={<Button variant="outline" className="w-full justify-between pe-1" size="lg" />}>
           <span className="flex items-center gap-2">
             <MapPin className="size-4 text-brand" />
             {selected ? (
@@ -79,7 +73,7 @@ export function DestinationCombobox({ destinations }: { destinations: Destinatio
             variant="ghost"
             size="icon-sm"
             aria-label={t("clearDestination")}
-            className="absolute inset-e-1 top-1 text-muted-foreground hover:text-red-600"
+            className="absolute inset-e-8 top-1 text-muted-foreground hover:text-red-600"
             onClick={() => update({ dest: null, features: [], sort: "default" })}>
             <X className="size-4" />
           </Button>
