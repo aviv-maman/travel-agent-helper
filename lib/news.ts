@@ -39,6 +39,12 @@ type NewsSource = {
   parse: (_body: string, _src: NewsSource) => NewsArticle[];
   /** RSS only: keep items whose link contains this path fragment. */
   filterPath?: string;
+  /**
+   * Fetch each article page to pull its `og:image` when the listing/feed exposes
+   * no thumbnail (israelhayom). Costs one extra request per image-less article,
+   * so enable it only for small feeds.
+   */
+  hydrateImages?: boolean;
 };
 
 const MAX_PER_SOURCE = 12;
@@ -172,7 +178,11 @@ function rssImage(itemXml: string): string | null {
     itemXml.match(/<media:(?:thumbnail|content)[^>]*\surl="([^"]+)"/i) ??
     itemXml.match(/<enclosure[^>]*\surl="([^"]+)"/i);
   if (media) return media[1];
-  const img = itemXml.match(/<img[^>]*\ssrc="([^"]+)"/i);
+  // Some feeds put the thumbnail in a per-item <image> tag (mako).
+  const tag = itemXml.match(/<image>\s*(https?:\/\/[^<\s]+)\s*<\/image>/i);
+  if (tag) return tag[1];
+  // Others embed an <img> in the (CDATA) description; the quotes may be single (ynet).
+  const img = itemXml.match(/<img[^>]*\ssrc=['"]([^'"]+)['"]/i);
   return img ? img[1] : null;
 }
 
@@ -401,44 +411,6 @@ function anchorScraper(selector: string, opts: { skipPrefix?: string; minLen?: n
   };
 }
 
-/**
- * i24NEWS tourism: each card is an <a href=".../artc-…"> whose headline lives in
- * the `aria-label` ("קרא \"<title>\" כתבה") rather than the link text.
- */
-function scrapeI24(body: string, src: NewsSource): NewsArticle[] {
-  const $ = cheerio.load(body);
-  const out: NewsArticle[] = [];
-  const seen = new Set<string>();
-  $('a[href*="/artc-"]').each((_, el) => {
-    const $a = $(el);
-    const href = $a.attr("href");
-    if (!href) return;
-    const url = absolute(href, src.base);
-    if (!url || seen.has(url)) return;
-    const title = ($a.attr("aria-label") ?? "")
-      .replace(/^\s*קרא\s*/, "")
-      .replace(/\s*כתבה\s*$/, "")
-      .replace(/^["'״“”‟«»]+|["'״“”‟«»]+$/g, "")
-      .trim();
-    if (title.length < 10) return;
-    seen.add(url);
-    const img =
-      $a.find("img").first().attr("src") ??
-      $a.find("source").first().attr("srcset")?.split(" ")[0] ??
-      null;
-    out.push({
-      url,
-      title,
-      excerpt: "",
-      image: img,
-      publishedAt: null,
-      sourceId: src.id,
-      sourceName: src.name,
-    });
-  });
-  return out;
-}
-
 /** Parse ynet's "HH:MM | MM.DD.YY" date label into an ISO string. */
 function ynetDate(text: string): string | null {
   const d = text.match(/(\d{2})\.(\d{2})\.(\d{2})/);
@@ -506,6 +478,7 @@ const SOURCES: Record<Locale, NewsSource[]> = {
       base: "https://www.israelhayom.co.il",
       parse: parseRss,
       filterPath: "/travel",
+      hydrateImages: true, // feed exposes no thumbnails; pull og:image per article
     },
     {
       id: "c14",
@@ -549,13 +522,6 @@ const SOURCES: Record<Locale, NewsSource[]> = {
       base: "https://www.maariv.co.il",
       parse: anchorScraper('a[href^="/lifestyle/travel/article-"]'),
     },
-    {
-      id: "i24",
-      name: "i24NEWS",
-      url: "https://www.i24news.tv/he/news/tourism",
-      base: "https://www.i24news.tv",
-      parse: scrapeI24,
-    },
   ],
   en: [
     {
@@ -588,6 +554,25 @@ export function getNewsSources(locale: string): { id: string; name: string }[] {
   return sources.map(({ id, name }) => ({ id, name }));
 }
 
+/** Fetch a single article page and return its og:image (absolute), or null. */
+async function fetchOgImage(url: string): Promise<string | null> {
+  try {
+    const res = await fetch(url, {
+      headers: BROWSER_HEADERS,
+      signal: AbortSignal.timeout(FETCH_TIMEOUT_MS),
+      next: { revalidate: REVALIDATE_SECONDS },
+    });
+    if (!res.ok) return null;
+    const $ = cheerio.load(await res.text());
+    const og =
+      $('meta[property="og:image"]').attr("content") ??
+      $('meta[name="twitter:image"]').attr("content");
+    return og ? absolute(og, url) : null;
+  } catch {
+    return null;
+  }
+}
+
 async function fetchSource(src: NewsSource): Promise<NewsArticle[]> {
   try {
     const res = await fetch(src.url, {
@@ -597,7 +582,16 @@ async function fetchSource(src: NewsSource): Promise<NewsArticle[]> {
     });
     if (!res.ok) return [];
     const body = await res.text();
-    return src.parse(body, src).slice(0, MAX_PER_SOURCE);
+    const articles = src.parse(body, src).slice(0, MAX_PER_SOURCE);
+    if (src.hydrateImages) {
+      // Backfill missing thumbnails from each article's og:image, in parallel.
+      await Promise.all(
+        articles.map(async (a) => {
+          if (!a.image) a.image = await fetchOgImage(a.url);
+        }),
+      );
+    }
+    return articles;
   } catch {
     // Timeout, 403/bot-block, network error or a selector that stopped matching —
     // drop this source and let the others render.
