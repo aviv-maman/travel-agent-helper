@@ -31,7 +31,7 @@ const ROOT = process.cwd();
 const UA =
   "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124 Safari/537.36";
 
-type EntityType = "supplier" | "airline";
+type EntityType = "supplier" | "airline" | "news";
 type Entity = { id: string; website: string };
 
 /** Read id + website pairs from the commissions data (single source of truth). */
@@ -60,6 +60,31 @@ function readAirlines(): Entity[] {
     const id = obj.match(/id:\s*"([^"]+)"/)?.[1];
     const website = obj.match(/website:\s*"([^"]+)"/)?.[1];
     if (id && website) out.push({ id, website });
+  }
+  return out;
+}
+
+/**
+ * Read id + homepage pairs from the news `SOURCES` registry. Each source object
+ * has no nested braces, so `{ ... }` matches one source; we key the logo off the
+ * source `base` (origin). Ids are unique across locales, so we de-dupe by id.
+ */
+function readNews(): Entity[] {
+  const src = readFileSync(join(ROOT, "lib/news.ts"), "utf8");
+  const start = src.indexOf("const SOURCES");
+  const end = src.indexOf("\n};", start);
+  if (start < 0 || end < 0) return [];
+  const body = src.slice(start, end);
+  const out: Entity[] = [];
+  const seen = new Set<string>();
+  for (const m of body.matchAll(/\{[^{}]*\}/g)) {
+    const obj = m[0];
+    const id = obj.match(/id:\s*"([^"]+)"/)?.[1];
+    const website = obj.match(/base:\s*"([^"]+)"/)?.[1];
+    if (id && website && !seen.has(id)) {
+      seen.add(id);
+      out.push({ id, website });
+    }
   }
   return out;
 }
@@ -171,15 +196,15 @@ async function main() {
     | EntityType
     | string
     | undefined;
-  if (type !== "supplier" && type !== "airline") {
-    console.error('--type is required. Use --type supplier or --type airline.');
+  if (type !== "supplier" && type !== "airline" && type !== "news") {
+    console.error('--type is required. Use --type supplier, --type airline or --type news.');
     process.exit(1);
   }
 
-  const isAirline = type === "airline";
-  const dirName = isAirline ? "airlines" : "suppliers";
+  const dirName = { supplier: "suppliers", airline: "airlines", news: "news" }[type];
   const outDir = join(ROOT, `public/${dirName}`);
-  const entities = isAirline ? readAirlines() : readSuppliers();
+  const entities =
+    type === "airline" ? readAirlines() : type === "news" ? readNews() : readSuppliers();
 
   if (args.includes("--list")) {
     console.log(entities.map((s) => `${s.id}  ${s.website}`).join("\n"));

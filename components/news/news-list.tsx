@@ -18,6 +18,22 @@ function formatDate(iso: string | null, locale: string): string | null {
   }).format(d);
 }
 
+/** Source favicon from public/news/{id}.png; renders nothing if the file is missing. */
+function SourceLogo({ id, className }: { id: string; className?: string }) {
+  const [failed, setFailed] = useState(false);
+  if (failed) return null;
+  return (
+    // eslint-disable-next-line @next/next/no-img-element
+    <img
+      src={`/news/${id}.png`}
+      alt=""
+      aria-hidden
+      className={cn("size-3.5 shrink-0 rounded-[3px] object-contain", className)}
+      onError={() => setFailed(true)}
+    />
+  );
+}
+
 export function NewsList({
   articles,
   sources,
@@ -59,11 +75,12 @@ export function NewsList({
               type="button"
               onClick={() => setActive(chip.id)}
               className={cn(
-                "rounded-full border px-3 py-1 text-xs font-semibold transition-colors",
+                "inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-xs font-semibold transition-colors",
                 isActive
                   ? "border-brand/40 bg-brand/15 text-brand"
                   : "border-border text-muted-foreground hover:text-foreground",
               )}>
+              {chip.id !== "all" && <SourceLogo id={chip.id} />}
               {chip.name}
             </button>
           );
@@ -93,7 +110,8 @@ export function NewsList({
                 <div className="flex items-center justify-between gap-2">
                   <Badge
                     variant="outline"
-                    className="border-brand/35 bg-brand/10 text-[0.65rem] font-semibold text-brand">
+                    className="gap-1 border-brand/35 bg-brand/10 text-[0.65rem] font-semibold text-brand">
+                    <SourceLogo id={article.sourceId} className="size-3" />
                     {article.sourceName}
                   </Badge>
                   {date && <span className="text-xs text-muted-foreground">{date}</span>}
