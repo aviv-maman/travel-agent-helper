@@ -19,7 +19,14 @@
     "transfers": "Transfers",
     "airlines": "Airlines",
     "cancellation-fees": "Cancellation Fees",
-    "hotels": "Hotels"
+    "hotels": "Hotels",
+    "news": "News"
+  },
+  "news": {
+    "intro": "Tourism articles from external news sites. Headlines link to the source — click to read the full story on the publisher's website.",
+    "allSources": "All",
+    "readMore": "Read more",
+    "empty": "😕 No articles right now. Please try again later."
   },
   "commissions": {
     "baggage": "Baggage",
