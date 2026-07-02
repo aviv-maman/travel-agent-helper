@@ -103,6 +103,7 @@ export function NewsList({
                   src={article.image}
                   alt=""
                   loading="lazy"
+                  referrerPolicy="no-referrer"
                   className="aspect-video w-full object-cover"
                 />
               )}
