@@ -31,6 +31,7 @@ const PAGES = [
   { segment: "airlines", emoji: "✈️" },
   { segment: "cancellation-fees", emoji: "❌" },
   { segment: "hotels", emoji: "🏨" },
+  { segment: "news", emoji: "📰" },
 ] as const;
 
 export function PageNav() {
