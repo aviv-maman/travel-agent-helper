@@ -45,7 +45,16 @@ type NewsSource = {
    * so enable it only for small feeds.
    */
   hydrateImages?: boolean;
+  /**
+   * The listing page is larger than the fetch data-cache's 2MB limit
+   * (israelhayom's is ~2MB of scripts around a small article list). We fetch it
+   * uncached to avoid the cache error; it still refreshes with the page.
+   */
+  heavy?: boolean;
 };
+
+/** Cache tag for every news fetch — pass to `revalidateTag()` to force a refresh. */
+export const NEWS_TAG = "news";
 
 const MAX_PER_SOURCE = 12;
 const FETCH_TIMEOUT_MS = 15_000;
@@ -354,7 +363,12 @@ function scrapeC14(body: string, src: NewsSource): NewsArticle[] {
       url,
       title,
       excerpt: toExcerpt(excerpt),
-      image: normalizeImage(img.attr("src"), src.base),
+      // c14's resize proxy serves the src at 3840px wide — far too heavy for a
+      // card (and large enough that iOS Safari can drop it). Ask for 1080px.
+      image: normalizeImage(
+        img.attr("src")?.replace(/\/images\/\d+\//, "/images/1080/"),
+        src.base,
+      ),
       publishedAt: (path && dates.get(path)) || null,
       sourceId: src.id,
       sourceName: src.name,
@@ -467,6 +481,40 @@ function scrapeYnetnews(body: string, src: NewsSource): NewsArticle[] {
   return out;
 }
 
+/**
+ * israelhayom travel-news section. Its site-wide RSS only *intermittently*
+ * carries travel items (rolling window of all sections), so we scrape the
+ * dedicated section instead: each card is an <article class="post"> with a
+ * `.post-title` headline/link and a `.post-meta time[datetime]`. Thumbnails are
+ * lazy-loaded (absent from the server HTML), so images come from the per-article
+ * og:image via hydrateImages.
+ */
+function scrapeIsraelHayom(body: string, src: NewsSource): NewsArticle[] {
+  const $ = cheerio.load(body);
+  const out: NewsArticle[] = [];
+  const seen = new Set<string>();
+  $("article.post").each((_, el) => {
+    const $p = $(el);
+    const href = $p.find(".post-title a").first().attr("href");
+    if (!href) return;
+    const url = absolute(href, src.base);
+    if (!url || seen.has(url)) return;
+    const title = $p.find(".post-title .titleText").first().text().trim();
+    if (title.length < 8) return;
+    seen.add(url);
+    out.push({
+      url,
+      title,
+      excerpt: "",
+      image: null,
+      publishedAt: toIso($p.find("time[datetime]").first().attr("datetime")),
+      sourceId: src.id,
+      sourceName: src.name,
+    });
+  });
+  return out;
+}
+
 // ── Source registry ──────────────────────────────────────────────────────────
 
 const SOURCES: Record<Locale, NewsSource[]> = {
@@ -474,11 +522,11 @@ const SOURCES: Record<Locale, NewsSource[]> = {
     {
       id: "israelhayom",
       name: "ישראל היום",
-      url: "https://www.israelhayom.co.il/rss",
+      url: "https://www.israelhayom.co.il/travel/tourism-news",
       base: "https://www.israelhayom.co.il",
-      parse: parseRss,
-      filterPath: "/travel",
-      hydrateImages: true, // feed exposes no thumbnails; pull og:image per article
+      parse: scrapeIsraelHayom,
+      hydrateImages: true, // thumbnails are lazy-loaded; pull og:image per article
+      heavy: true, // ~2MB page (mostly scripts) — too big for the fetch data cache
     },
     {
       id: "c14",
@@ -560,7 +608,7 @@ async function fetchOgImage(url: string): Promise<string | null> {
     const res = await fetch(url, {
       headers: BROWSER_HEADERS,
       signal: AbortSignal.timeout(FETCH_TIMEOUT_MS),
-      next: { revalidate: REVALIDATE_SECONDS },
+      next: { revalidate: REVALIDATE_SECONDS, tags: [NEWS_TAG] },
     });
     if (!res.ok) return null;
     const $ = cheerio.load(await res.text());
@@ -578,7 +626,9 @@ async function fetchSource(src: NewsSource): Promise<NewsArticle[]> {
     const res = await fetch(src.url, {
       headers: BROWSER_HEADERS,
       signal: AbortSignal.timeout(FETCH_TIMEOUT_MS),
-      next: { revalidate: REVALIDATE_SECONDS },
+      // Heavy pages (>2MB) can't go in the data cache, so fetch them uncached;
+      // everything else is cached and tagged so revalidateTag() can refresh it.
+      next: src.heavy ? undefined : { revalidate: REVALIDATE_SECONDS, tags: [NEWS_TAG] },
     });
     if (!res.ok) return [];
     const body = await res.text();
@@ -600,9 +650,9 @@ async function fetchSource(src: NewsSource): Promise<NewsArticle[]> {
 }
 
 /**
- * Fetch and merge tourism news for `locale`. Sources are fetched in parallel;
- * results are de-duped by URL and sorted newest-first (undated items — common
- * for scraped sources — keep their source order after the dated ones).
+ * Fetch, merge, de-dupe and sort (newest-first) all sources for a locale. The
+ * source fetches are individually cached and tagged with `NEWS_TAG`, so the
+ * whole feed refreshes on a `revalidateTag(NEWS_TAG)` call (or every 30 min).
  */
 export async function getNews(locale: string): Promise<NewsArticle[]> {
   const sources = SOURCES[locale as Locale] ?? [];
