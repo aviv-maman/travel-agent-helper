@@ -5,7 +5,7 @@ import { useTranslations } from "next-intl";
 import type { FilterFn } from "@tanstack/react-table";
 import { Info } from "lucide-react";
 import type { ViewAirline } from "@/lib/baggage";
-import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { DataTable } from "@/components/ui/data-table";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { airlineColumns } from "./baggage-columns";
@@ -31,6 +31,13 @@ export function BaggageView({ airlines }: { airlines: ViewAirline[] }) {
                 br: () => <br />,
               })}
             </p>
+          </AlertDescription>
+        </Alert>
+
+        <Alert variant="warning">
+          <Info />
+          <AlertDescription>
+            <p className="leading-relaxed">{t("commissionNote")}</p>
           </AlertDescription>
         </Alert>
 
