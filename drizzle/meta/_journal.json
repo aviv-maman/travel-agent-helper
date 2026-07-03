@@ -43,6 +43,13 @@
       "when": 1783073727659,
       "tag": "0005_rare_hydra",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1783101413295,
+      "tag": "0006_flawless_bushwacker",
+      "breakpoints": true
     }
   ]
 }

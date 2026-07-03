@@ -2,6 +2,7 @@ import { setRequestLocale, getTranslations } from "next-intl/server";
 import { redirect } from "next/navigation";
 import { getCurrentUser } from "@/lib/auth";
 import { RegisterForm } from "@/components/auth/register-form";
+import { OAuthButtons } from "@/components/auth/oauth-buttons";
 import { Link } from "@/i18n/navigation";
 import {
   Card,
@@ -36,8 +37,9 @@ export default async function RegisterPage({
           <CardTitle>{t("registerTitle")}</CardTitle>
           <CardDescription>{t("registerSubtitle")}</CardDescription>
         </CardHeader>
-        <CardContent>
+        <CardContent className="flex flex-col gap-4">
           <RegisterForm locale={locale} defaultCode={code} />
+          <OAuthButtons locale={locale} mode="register" code={code || undefined} />
         </CardContent>
         <CardFooter>
           <p className="text-sm text-muted-foreground">
