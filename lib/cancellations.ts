@@ -72,6 +72,10 @@ const H_CHANGE_PAX = t("עלות שינוי לנוסע", "Change cost / traveler
 const CAP_INTERNAL = t("דמי ביטול לנוסע (נטו ספק)", "Cancellation fee / traveler (net)");
 const CAP_INTERNAL_SHORT = t("דמי ביטול לנוסע (נטו ספק)", "Cancellation fee / traveler (net)");
 const CAP_CHANGE = t("עלות שינוי לנוסע (נטו ספק)", "Change cost / traveler (net)");
+const CAP_CANCEL_CHANGE = t(
+  "דמי ביטול/שינוי לנוסע (נטו ספק)",
+  "Cancellation / change fee / traveler (net)",
+);
 
 /**
  * Builds a client-copy script. Every script opens with the Consumer Protection
@@ -254,7 +258,11 @@ const SUPPLIERS: CancelSupplier[] = [
     logo: "/suppliers/israir.png",
     name: t("ישראייר", "Israir"),
     code: "ISRAIR",
-    products: [P_FLIGHT, P_PACKAGE],
+    products: [
+      P_FLIGHT,
+      P_PACKAGE,
+      { kind: "organized", label: t("🚌 טיולים מאורגנים (נתור)", "🚌 Organized tours (Natour)") },
+    ],
     blocks: [
       { kind: "heading", text: t("✈️ טיסות + חבילות", "✈️ Flights + packages") },
       {
@@ -427,6 +435,156 @@ const SUPPLIERS: CancelSupplier[] = [
           "Name-change cost per traveler:\n\nUp to 24 hours before the outbound flight — $195 per traveler (subject to ticket terms).\n\nFewer than 24 hours before the outbound flight — treated as cancellation + new booking.",
         ),
         levels: ["net", "full"],
+      },
+      {
+        kind: "heading",
+        text: t("🚌 טיולים מאורגנים (נתור)", "🚌 Organized tours (Natour)"),
+      },
+      {
+        kind: "subheading",
+        tone: "accent",
+        text: t(
+          "🌍 כל היעדים פרט ללפלנד, המזרח הרחוק, דרום ומרכז אמריקה",
+          "🌍 All destinations except Lapland, Far East, South & Central America",
+        ),
+      },
+      {
+        kind: "table",
+        caption: CAP_CANCEL_CHANGE,
+        headers: [H_TIME_CANCEL, H_FEE_PAX_NET],
+        rows: [
+          row(
+            "low",
+            "עד 21 ימי עסקים לפני יציאת הטיול",
+            "Up to 21 business days before tour departure",
+            "100$ / 100€",
+            "$100 / €100",
+          ),
+          row(
+            "gross",
+            "21–15 ימי עסקים לפני היציאה",
+            "21–15 business days before departure",
+            "50% מהעלות",
+            "50% of cost",
+          ),
+          row(
+            "gross",
+            "15–5 ימי עסקים לפני היציאה",
+            "15–5 business days before departure",
+            "75% מהעלות",
+            "75% of cost",
+          ),
+          row(
+            "full",
+            "פחות מ-5 ימי עסקים לפני היציאה",
+            "Fewer than 5 business days before departure",
+            "100% — ללא החזר",
+            "100% — no refund",
+          ),
+        ],
+      },
+      {
+        kind: "copy",
+        text: copyText(
+          "departure",
+          "לאחר מכן ועד 21 ימי עסקים לפני היציאה — 195$ / 195€ לנוסע.\n\n21–15 ימי עסקים לפני היציאה — 60% מהעלות לנוסע.\n\n15–5 ימי עסקים לפני היציאה — 85% מהעלות לנוסע.\n\nפחות מ-5 ימי עסקים לפני היציאה — 100% מהעלות, ללא כל החזר.",
+          "Thereafter and up to 21 business days before departure — $195 / €195 per traveler.\n\n21–15 business days before departure — 60% of the cost per traveler.\n\n15–5 business days before departure — 85% of the cost per traveler.\n\nFewer than 5 business days before departure — 100% of the cost, no refund.",
+        ),
+        levels: ["low", "gross", "gross", "full"],
+      },
+      { kind: "subheading", tone: "gold", text: t("❄️ לפלנד", "❄️ Lapland") },
+      {
+        kind: "table",
+        caption: CAP_CANCEL_CHANGE,
+        headers: [H_TIME_CANCEL, H_FEE_PAX_NET],
+        rows: [
+          row(
+            "low",
+            "מרגע הרישום עד 60 ימי עסקים לפני היציאה",
+            "From registration until 60 business days before departure",
+            "50$",
+            "$50",
+          ),
+          row(
+            "net",
+            "59–30 ימי עסקים לפני היציאה",
+            "59–30 business days before departure",
+            "35% מהעלות",
+            "35% of cost",
+          ),
+          row(
+            "gross",
+            "29–15 ימי עסקים לפני היציאה",
+            "29–15 business days before departure",
+            "75% מהעלות",
+            "75% of cost",
+          ),
+          row(
+            "full",
+            "14 ימי עסקים ומטה לפני היציאה",
+            "14 business days or fewer before departure",
+            "100% — ללא החזר",
+            "100% — no refund",
+          ),
+        ],
+      },
+      {
+        kind: "copy",
+        text: copyText(
+          "departure",
+          "לאחר מכן ועד 60 ימי עסקים לפני היציאה — 145$ לנוסע.\n\n59–30 ימי עסקים לפני היציאה — 45% מהעלות לנוסע.\n\n29–15 ימי עסקים לפני היציאה — 85% מהעלות לנוסע.\n\n14 ימי עסקים ומטה לפני היציאה — 100% מהעלות, ללא כל החזר.",
+          "Thereafter and up to 60 business days before departure — $145 per traveler.\n\n59–30 business days before departure — 45% of the cost per traveler.\n\n29–15 business days before departure — 85% of the cost per traveler.\n\n14 business days or fewer before departure — 100% of the cost, no refund.",
+        ),
+        levels: ["low", "net", "gross", "full"],
+      },
+      {
+        kind: "subheading",
+        tone: "accent",
+        text: t("🌏 המזרח הרחוק, דרום ומרכז אמריקה", "🌏 Far East, South & Central America"),
+      },
+      {
+        kind: "table",
+        caption: CAP_CANCEL_CHANGE,
+        headers: [H_TIME_CANCEL, H_FEE_PAX_NET],
+        rows: [
+          row(
+            "low",
+            "עד 60 ימי עסקים לפני היציאה",
+            "Up to 60 business days before departure",
+            "350$",
+            "$350",
+          ),
+          row(
+            "net",
+            "59–45 ימי עסקים לפני היציאה",
+            "59–45 business days before departure",
+            "25% מהעלות",
+            "25% of cost",
+          ),
+          row(
+            "gross",
+            "44–21 ימי עסקים לפני היציאה",
+            "44–21 business days before departure",
+            "50% מהעלות",
+            "50% of cost",
+          ),
+          row(
+            "full",
+            "21 ימי עסקים ומטה לפני היציאה",
+            "21 business days or fewer before departure",
+            "100% — ללא החזר",
+            "100% — no refund",
+          ),
+        ],
+      },
+      {
+        kind: "copy",
+        text: copyText(
+          "departure",
+          "לאחר מכן ועד 60 ימי עסקים לפני היציאה — 445$ לנוסע.\n\n59–45 ימי עסקים לפני היציאה — 35% מהעלות לנוסע.\n\n44–21 ימי עסקים לפני היציאה — 60% מהעלות לנוסע.\n\n21 ימי עסקים ומטה לפני היציאה — 100% מהעלות, ללא כל החזר.",
+          "Thereafter and up to 60 business days before departure — $445 per traveler.\n\n59–45 business days before departure — 35% of the cost per traveler.\n\n44–21 business days before departure — 60% of the cost per traveler.\n\n21 business days or fewer before departure — 100% of the cost, no refund.",
+        ),
+        levels: ["low", "net", "gross", "full"],
       },
     ],
   },
@@ -774,6 +932,443 @@ const SUPPLIERS: CancelSupplier[] = [
       },
     ],
   },
+  {
+    id: "wtc",
+    logo: "/suppliers/wtc.png",
+    name: t("WTC", "WTC"),
+    code: "WTC",
+    products: [P_FLIGHT, P_PACKAGE],
+    blocks: [
+      {
+        kind: "heading",
+        text: t(
+          "🗓️ כל התאריכים פרט ליולי–אוגוסט וחגים",
+          "🗓️ All dates except July–August & holidays",
+        ),
+      },
+      {
+        kind: "table",
+        caption: CAP_INTERNAL,
+        headers: [H_TIME_CANCEL, H_FEE_PAX_NET],
+        rows: [
+          row(
+            "low",
+            "מרגע ביצוע ההזמנה עד 31 ימי עסקים לפני הטיסה",
+            "From booking until 31 business days before the flight",
+            "100$",
+            "$100",
+          ),
+          row(
+            "net",
+            "30–15 ימי עסקים לפני הטיסה",
+            "30–15 business days before the flight",
+            "40% מהעלות",
+            "40% of cost",
+          ),
+          row(
+            "gross",
+            "14–8 ימי עסקים לפני הטיסה",
+            "14–8 business days before the flight",
+            "75% מהעלות",
+            "75% of cost",
+          ),
+          row(
+            "full",
+            "7 ימי עסקים ומטה לפני הטיסה",
+            "7 business days or fewer before the flight",
+            "100% — ללא החזר",
+            "100% — no refund",
+          ),
+        ],
+      },
+      {
+        kind: "copy",
+        text: copyText(
+          "flight",
+          "לאחר מכן ועד 31 ימי עסקים לפני הטיסה — 195$ לנוסע.\n\n30–15 ימי עסקים לפני הטיסה — 50% מהעלות לנוסע.\n\n14–8 ימי עסקים לפני הטיסה — 85% מהעלות לנוסע.\n\n7 ימי עסקים ומטה לפני הטיסה — 100% מהעלות, ללא כל החזר.",
+          "Thereafter and up to 31 business days before the flight — $195 per traveler.\n\n30–15 business days before the flight — 50% of the cost per traveler.\n\n14–8 business days before the flight — 85% of the cost per traveler.\n\n7 business days or fewer before the flight — 100% of the cost, no refund.",
+        ),
+        levels: ["low", "net", "gross", "full"],
+      },
+      {
+        kind: "heading",
+        text: t(
+          "☀️ יולי–אוגוסט וחגים (פסח, שבועות, ראש השנה, סוכות)",
+          "☀️ July–August & holidays (Passover, Shavuot, Rosh Hashanah, Sukkot)",
+        ),
+      },
+      {
+        kind: "table",
+        caption: CAP_INTERNAL,
+        headers: [H_TIME_CANCEL, H_FEE_PAX_NET],
+        rows: [
+          row(
+            "low",
+            "מרגע ביצוע ההזמנה עד 61 ימים לפני הטיסה",
+            "From booking until 61 days before the flight",
+            "100$",
+            "$100",
+          ),
+          row(
+            "net",
+            "60–45 ימי עסקים לפני הטיסה",
+            "60–45 business days before the flight",
+            "25% מהעלות",
+            "25% of cost",
+          ),
+          row(
+            "gross",
+            "44–31 ימי עסקים לפני הטיסה",
+            "44–31 business days before the flight",
+            "50% מהעלות",
+            "50% of cost",
+          ),
+          row(
+            "full",
+            "30 ימי עסקים ומטה לפני הטיסה",
+            "30 business days or fewer before the flight",
+            "100% — ללא החזר",
+            "100% — no refund",
+          ),
+        ],
+      },
+      {
+        kind: "copy",
+        text: copyText(
+          "flight",
+          "לאחר מכן ועד 61 ימים לפני הטיסה — 195$ לנוסע.\n\n60–45 ימי עסקים לפני הטיסה — 35% מהעלות לנוסע.\n\n44–31 ימי עסקים לפני הטיסה — 60% מהעלות לנוסע.\n\n30 ימי עסקים ומטה לפני הטיסה — 100% מהעלות, ללא כל החזר.",
+          "Thereafter and up to 61 days before the flight — $195 per traveler.\n\n60–45 business days before the flight — 35% of the cost per traveler.\n\n44–31 business days before the flight — 60% of the cost per traveler.\n\n30 business days or fewer before the flight — 100% of the cost, no refund.",
+        ),
+        levels: ["low", "net", "gross", "full"],
+      },
+    ],
+  },
+  {
+    id: "mona-tours",
+    logo: "/suppliers/mona-tours.png",
+    name: t("מונה טורס — Mona", "Mona Tours"),
+    code: "MONA",
+    products: [P_FLIGHT, P_PACKAGE],
+    blocks: [
+      {
+        kind: "table",
+        caption: CAP_INTERNAL,
+        headers: [H_TIME_CANCEL, H_FEE_PAX_NET],
+        rows: [
+          row(
+            "full",
+            "מתום תקופת חוק הגנת הצרכן ואילך",
+            "After the Consumer Protection Law window",
+            "100% — ללא החזר",
+            "100% — no refund",
+          ),
+        ],
+      },
+      {
+        kind: "copy",
+        text: copyText(
+          "flight",
+          "לאחר מכן — 100% מהעלות, ללא כל החזר.",
+          "Thereafter — 100% of the cost, no refund.",
+        ),
+        levels: ["full"],
+      },
+    ],
+  },
+  {
+    id: "ayala",
+    logo: "/suppliers/ayala.png",
+    name: t("איילה — Ayala", "Ayala"),
+    code: "AYALA",
+    products: [P_FLIGHT, P_PACKAGE],
+    blocks: [
+      {
+        kind: "table",
+        caption: CAP_INTERNAL,
+        headers: [H_TIME_CANCEL, H_FEE_PAX_NET],
+        rows: [
+          row(
+            "full",
+            "מתום תקופת חוק הגנת הצרכן ואילך",
+            "After the Consumer Protection Law window",
+            "100% — ללא החזר",
+            "100% — no refund",
+          ),
+        ],
+      },
+      {
+        kind: "copy",
+        text: copyText(
+          "flight",
+          "לאחר מכן — 100% מהעלות, ללא כל החזר.",
+          "Thereafter — 100% of the cost, no refund.",
+        ),
+        levels: ["full"],
+      },
+    ],
+  },
+  {
+    id: "disenhause",
+    logo: "/suppliers/disenhause.png",
+    name: t("דיזנהאוז — Disenhaus", "Diesenhaus"),
+    code: "DEASY",
+    products: [P_FLIGHT, P_PACKAGE],
+    blocks: [
+      {
+        kind: "table",
+        caption: CAP_INTERNAL,
+        headers: [H_TIME_CANCEL, H_FEE_PAX_NET],
+        rows: [
+          row(
+            "full",
+            "מתום תקופת חוק הגנת הצרכן ואילך",
+            "After the Consumer Protection Law window",
+            "100% — ללא החזר",
+            "100% — no refund",
+          ),
+        ],
+      },
+      {
+        kind: "copy",
+        text: copyText(
+          "flight",
+          "לאחר מכן — 100% מהעלות, ללא כל החזר.",
+          "Thereafter — 100% of the cost, no refund.",
+        ),
+        levels: ["full"],
+      },
+    ],
+  },
+  {
+    id: "arkia",
+    logo: "/suppliers/arkia.png",
+    name: t("ארקיע — Arkia", "Arkia"),
+    code: "ARKIA",
+    products: [P_FLIGHT, P_PACKAGE],
+    blocks: [
+      {
+        kind: "heading",
+        text: t(
+          '✈️ טיסות סדירות — ארה"ב, תאילנד, ויאטנאם, יפן',
+          "✈️ Scheduled flights — USA, Thailand, Vietnam, Japan",
+        ),
+      },
+      {
+        kind: "table",
+        caption: CAP_INTERNAL,
+        headers: [H_TIME_CANCEL, H_FEE_PAX_NET],
+        rows: [
+          row(
+            "net",
+            "עד 24 שעות לפני הטיסה",
+            "Up to 24 hours before the flight",
+            "270$ לכיוון",
+            "$270 per direction",
+          ),
+          row(
+            "full",
+            "24 שעות ומטה לפני הטיסה",
+            "24 hours or fewer before the flight",
+            "100% — ללא החזר",
+            "100% — no refund",
+          ),
+        ],
+      },
+      {
+        kind: "copy",
+        text: copyText(
+          "flight",
+          "לאחר מכן ועד 24 שעות לפני הטיסה — 365$ לכיוון לנוסע.\n\n24 שעות ומטה לפני הטיסה — 100% מהעלות, ללא כל החזר.",
+          "Thereafter and up to 24 hours before the flight — $365 per direction, per traveler.\n\n24 hours or fewer before the flight — 100% of the cost, no refund.",
+        ),
+        levels: ["net", "full"],
+      },
+      {
+        kind: "heading",
+        text: t("🌍 שאר היעדים + חבילות נופש", "🌍 All other destinations + vacation packages"),
+      },
+      { kind: "subheading", tone: "accent", text: t("🗓️ 1.10–16.6", "🗓️ Oct 1 – Jun 16") },
+      {
+        kind: "table",
+        caption: CAP_INTERNAL,
+        headers: [H_TIME_CANCEL, H_FEE_PAX_NET],
+        rows: [
+          row(
+            "net",
+            "מיום ביצוע ההזמנה עד 22 ימים לפני הטיסה",
+            "From booking until 22 days before the flight",
+            "25% מהעלות",
+            "25% of cost",
+          ),
+          row(
+            "gross",
+            "21–15 ימים לפני הטיסה",
+            "21–15 days before the flight",
+            "50% מהעלות",
+            "50% of cost",
+          ),
+          row(
+            "gross",
+            "14–4 ימים לפני הטיסה",
+            "14–4 days before the flight",
+            "75% מהעלות",
+            "75% of cost",
+          ),
+          row(
+            "full",
+            "3 ימים ומטה לפני הטיסה",
+            "3 days or fewer before the flight",
+            "100% — ללא החזר",
+            "100% — no refund",
+          ),
+        ],
+      },
+      {
+        kind: "copy",
+        text: copyText(
+          "flight",
+          "לאחר מכן ועד 22 ימים לפני הטיסה — 35% מהעלות לנוסע.\n\n21–15 ימים לפני הטיסה — 60% מהעלות לנוסע.\n\n14–4 ימים לפני הטיסה — 85% מהעלות לנוסע.\n\n3 ימים ומטה לפני הטיסה — 100% מהעלות, ללא כל החזר.",
+          "Thereafter and up to 22 days before the flight — 35% of the cost per traveler.\n\n21–15 days before the flight — 60% of the cost per traveler.\n\n14–4 days before the flight — 85% of the cost per traveler.\n\n3 days or fewer before the flight — 100% of the cost, no refund.",
+        ),
+        levels: ["net", "gross", "gross", "full"],
+      },
+      {
+        kind: "subheading",
+        tone: "gold",
+        text: t("☀️ 17.6–30.9 (עונת שיא)", "☀️ Jun 17 – Sep 30 (peak season)"),
+      },
+      {
+        kind: "table",
+        caption: CAP_INTERNAL,
+        headers: [H_TIME_CANCEL, H_FEE_PAX_NET],
+        rows: [
+          row(
+            "gross",
+            "מיום ביצוע ההזמנה עד 22 ימים לפני הטיסה",
+            "From booking until 22 days before the flight",
+            "50% מהעלות",
+            "50% of cost",
+          ),
+          row(
+            "gross",
+            "21–8 ימים לפני הטיסה",
+            "21–8 days before the flight",
+            "75% מהעלות",
+            "75% of cost",
+          ),
+          row(
+            "full",
+            "7 ימים ומטה לפני הטיסה",
+            "7 days or fewer before the flight",
+            "100% — ללא החזר",
+            "100% — no refund",
+          ),
+        ],
+      },
+      {
+        kind: "copy",
+        text: copyText(
+          "flight",
+          "לאחר מכן ועד 22 ימים לפני הטיסה — 60% מהעלות לנוסע.\n\n21–8 ימים לפני הטיסה — 85% מהעלות לנוסע.\n\n7 ימים ומטה לפני הטיסה — 100% מהעלות, ללא כל החזר.",
+          "Thereafter and up to 22 days before the flight — 60% of the cost per traveler.\n\n21–8 days before the flight — 85% of the cost per traveler.\n\n7 days or fewer before the flight — 100% of the cost, no refund.",
+        ),
+        levels: ["gross", "gross", "full"],
+      },
+      { kind: "heading", text: t("🔄 דמי שינוי", "🔄 Change fees") },
+      {
+        kind: "subheading",
+        tone: "accent",
+        text: t(
+          '✈️ טיסות סדירות — ארה"ב, תאילנד, ויאטנאם, יפן',
+          "✈️ Scheduled flights — USA, Thailand, Vietnam, Japan",
+        ),
+      },
+      {
+        kind: "table",
+        caption: CAP_CHANGE,
+        headers: [H_TIME_CHANGE, H_CHANGE_PAX],
+        rows: [
+          row(
+            "low",
+            "מרגע ההזמנה עד 24 שעות טרם הטיסה",
+            "From booking until 24 hours before the flight",
+            "170$ לכיוון + הפרשי מחיר",
+            "$170 per direction + fare difference",
+          ),
+          row(
+            "full",
+            "24 שעות ומטה טרם הטיסה",
+            "24 hours or fewer before the flight",
+            "לא ניתן לבצע שינוי",
+            "Change not permitted",
+          ),
+        ],
+      },
+      {
+        kind: "copy",
+        title: t("דמי שינוי ללקוח", "Change fee for client"),
+        variant: "change",
+        text: changeCopy(
+          "מרגע ההזמנה עד 24 שעות טרם הטיסה — 265$ לכיוון + הפרשי מחיר.\n\n24 שעות ומטה טרם הטיסה — לא ניתן לבצע שינוי.",
+          "From booking until 24 hours before the flight — $265 per direction + fare difference.\n\n24 hours or fewer before the flight — change not permitted.",
+        ),
+        levels: ["low", "full"],
+      },
+    ],
+  },
+  {
+    id: "rimon",
+    logo: "/suppliers/rimon.png",
+    name: t("רימון — Rimon", "Rimon"),
+    code: "RIMON",
+    products: [P_ORGANIZED],
+    blocks: [
+      {
+        kind: "table",
+        caption: CAP_INTERNAL,
+        headers: [H_TIME_CANCEL, H_FEE_PAX_NET],
+        rows: [
+          row(
+            "low",
+            "מרגע ההרשמה עד 60 ימי עסקים לפני היציאה",
+            "From registration until 60 business days before departure",
+            "50$",
+            "$50",
+          ),
+          row(
+            "net",
+            "פחות מ-60 עד 45 ימי עסקים לפני היציאה",
+            "Under 60 to 45 business days before departure",
+            "35% מהעלות",
+            "35% of cost",
+          ),
+          row(
+            "gross",
+            "פחות מ-45 עד 14 ימי עסקים לפני היציאה",
+            "Under 45 to 14 business days before departure",
+            "55% מהעלות",
+            "55% of cost",
+          ),
+          row(
+            "full",
+            "פחות מ-14 ימי עסקים עד היציאה",
+            "Under 14 business days until departure",
+            "100% — ללא החזר",
+            "100% — no refund",
+          ),
+        ],
+      },
+      {
+        kind: "copy",
+        text: copyText(
+          "departure",
+          "לאחר מכן ועד 60 ימי עסקים לפני היציאה — 145$ לנוסע.\n\nפחות מ-60 עד 45 ימי עסקים לפני היציאה — 45% מהעלות לנוסע.\n\nפחות מ-45 עד 14 ימי עסקים לפני היציאה — 65% מהעלות לנוסע.\n\nפחות מ-14 ימי עסקים עד היציאה — 100% מהעלות, ללא כל החזר.",
+          "Thereafter and up to 60 business days before departure — $145 per traveler.\n\nUnder 60 to 45 business days before departure — 45% of the cost per traveler.\n\nUnder 45 to 14 business days before departure — 65% of the cost per traveler.\n\nUnder 14 business days until departure — 100% of the cost, no refund.",
+        ),
+        levels: ["low", "net", "gross", "full"],
+      },
+    ],
+  },
 ];
 
 // ── Locale-resolved view types ───────────────────────────────────────────────
@@ -782,7 +1377,13 @@ export type ViewBlock =
   | { kind: "heading"; text: string }
   | { kind: "subheading"; text: string; tone: "accent" | "gold" }
   | { kind: "table"; caption: string; headers: [string, string] | null; rows: ViewFeeRow[] }
-  | { kind: "copy"; text: string; levels: FeeLevel[]; title: string | null; variant: "change" | null };
+  | {
+      kind: "copy";
+      text: string;
+      levels: FeeLevel[];
+      title: string | null;
+      variant: "change" | null;
+    };
 export type ViewProduct = { kind: ProductKind; label: string };
 export type ViewCancelSupplier = {
   id: string;
