@@ -38,6 +38,12 @@ const TIER: Record<WeightTier, string> = {
 // Trolley badge — same chip style as the suitcase weight, in a non-green tone.
 const TROLLEY_CHIP = "bg-gold/[0.12] text-gold";
 
+// Commission badge — same chip style; red when 0% (no commission), blue otherwise.
+const COMMISSION_CHIP: Record<"zero" | "some", string> = {
+  zero: "bg-destructive/[0.12] text-destructive",
+  some: "bg-brand/[0.12] text-brand",
+};
+
 type T = ReturnType<typeof useTranslations<"baggage">>;
 
 /** Airline name followed by its country flag, with the country name on hover. */
@@ -132,6 +138,18 @@ export function airlineColumns(t: T): ColumnDef<ViewAirline>[] {
           </span>
         );
       },
+    },
+    {
+      id: "commission",
+      accessorFn: (a) => a.commissionSort,
+      header: ({ column }) => <DataTableColumnHeader column={column} title={t("colCommission")} />,
+      meta: { label: t("colCommission") },
+      cell: ({ row }) => (
+        <span
+          className={`inline-flex h-5 items-center rounded-md px-1.5 align-middle text-xs font-bold ${COMMISSION_CHIP[row.original.commissionTier]}`}>
+          {row.original.commission}
+        </span>
+      ),
     },
     {
       id: "actions",

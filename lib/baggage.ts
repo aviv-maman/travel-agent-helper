@@ -30,6 +30,8 @@ export type Airline = {
   website: string;
   /** Subtly highlighted catch-all row ("all other airlines"). */
   highlight?: boolean;
+  /** Base-fare commission chip, e.g. "0%", "7%", "0%/5%". Defaults to "0%". */
+  commission?: string;
 };
 
 const t = (he: string, en: string): Localized => ({ he, en });
@@ -54,6 +56,7 @@ const AIRLINES: Airline[] = [
     kg: "23",
     note: TROLLEY10,
     website: "https://www.israir.co.il/",
+    commission: "7%",
   },
   {
     id: "el-al",
@@ -63,6 +66,7 @@ const AIRLINES: Airline[] = [
     kg: "23",
     note: TROLLEY8,
     website: "https://www.elal.com/",
+    commission: "3%/5%",
   },
   {
     id: "aegean",
@@ -216,6 +220,7 @@ const AIRLINES: Airline[] = [
     kg: "23",
     note: TROLLEY8,
     website: "https://www.united.com/",
+    commission: "0%/5%",
   },
   {
     id: "delta",
@@ -225,6 +230,7 @@ const AIRLINES: Airline[] = [
     kg: "23",
     note: TROLLEY8,
     website: "https://www.delta.com/",
+    commission: "0%/5%",
   },
   {
     id: "american",
@@ -234,6 +240,7 @@ const AIRLINES: Airline[] = [
     kg: "23",
     note: TROLLEY8,
     website: "https://www.aa.com/",
+    commission: "0%/5%",
   },
   {
     id: "air-france",
@@ -288,6 +295,7 @@ const AIRLINES: Airline[] = [
     kg: "23",
     note: TROLLEY8,
     website: "https://www.air.bg/en",
+    commission: "7%",
   },
   {
     id: "lot",
@@ -326,6 +334,7 @@ const AIRLINES: Airline[] = [
     kg: "23",
     note: TROLLEY8,
     website: "https://www.georgian-airways.com/en",
+    commission: "1%",
   },
   {
     id: "tarom",
@@ -335,6 +344,7 @@ const AIRLINES: Airline[] = [
     kg: "23",
     note: TROLLEY8,
     website: "https://www.tarom.ro/en/",
+    commission: "0%/5%",
   },
   {
     id: "emirates",
@@ -375,6 +385,7 @@ const AIRLINES: Airline[] = [
     kg: "20",
     note: TROLLEY8,
     website: "https://www.arkia.co.il/",
+    commission: "7%",
   },
   {
     id: "electra",
@@ -439,6 +450,79 @@ const AIRLINES: Airline[] = [
     note: TROLLEY8,
     website: "https://qanotsharq.com/en/",
   },
+  {
+    id: "air-europa",
+    iata: "UX",
+    flag: "🇪🇸",
+    name: t("אייר אירופה", "Air Europa"),
+    kg: "23",
+    note: TROLLEY8,
+    website: "https://www.aireuropa.com/",
+  },
+  {
+    id: "air-canada",
+    iata: "AC",
+    flag: "🇨🇦",
+    name: t("אייר קנדה", "Air Canada"),
+    kg: "23",
+    note: TROLLEY8,
+    website: "https://www.aircanada.com/",
+    commission: "0%/1%",
+  },
+  {
+    id: "anima-wings",
+    iata: "A2",
+    flag: "🇷🇴",
+    name: t("אנימה ווינגס", "Anima Wings"),
+    kg: "23",
+    note: TROLLEY8,
+    website: "https://www.animawings.com/",
+  },
+  {
+    id: "hisky",
+    iata: "H4",
+    flag: "🇷🇴",
+    name: t("הייסקיי יורופ", "HiSky Europe"),
+    kg: "23",
+    note: TROLLEY8,
+    website: "https://www.hisky.aero/",
+  },
+  {
+    id: "air-baltic",
+    iata: "BT",
+    flag: "🇱🇻",
+    name: t("אייר בלטיק", "airBaltic"),
+    kg: "23",
+    note: TROLLEY8,
+    website: "https://www.airbaltic.com/",
+  },
+  {
+    id: "condor",
+    iata: "DE",
+    flag: "🇩🇪",
+    name: t("קונדור", "Condor"),
+    kg: "23",
+    note: TROLLEY8,
+    website: "https://www.condor.com/",
+  },
+  {
+    id: "cathay-pacific",
+    iata: "CX",
+    flag: "🇭🇰",
+    name: t("קתאי פסיפיק", "Cathay Pacific"),
+    kg: "23",
+    note: TROLLEY8,
+    website: "https://www.cathaypacific.com/",
+  },
+  {
+    id: "croatia-airlines",
+    iata: "OU",
+    flag: "🇭🇷",
+    name: t("קרואטיה איירליינס", "Croatia Airlines"),
+    kg: "23",
+    note: TROLLEY8,
+    website: "https://www.croatiaairlines.com/",
+  },
 ];
 
 /**
@@ -475,6 +559,12 @@ export type ViewAirline = {
   /** Logo path under /public; falls back to the placeholder if the file is missing. */
   logo: string;
   highlight: boolean;
+  /** Base-fare commission chip text, e.g. "0%", "7%", "0%/5%". */
+  commission: string;
+  /** "zero" → red chip (0% / no commission), "some" → blue chip. */
+  commissionTier: "zero" | "some";
+  /** Numeric commission used for sorting (largest figure in the range). */
+  commissionSort: number;
   /** Lowercased he + en + iata, for client-side filtering across both locales. */
   search: string;
 };
@@ -492,6 +582,8 @@ export function getBaggage(locale: string): ViewAirline[] {
   const unit = lc === "he" ? 'ק"ג' : "kg";
   return AIRLINES.map((a) => {
     const note = a.note ? pick(a.note) : null;
+    const commission = a.commission ?? "0%";
+    const commissionSort = maxNum(commission);
     return {
       id: `air:${a.id}`,
       iata: a.iata ?? null,
@@ -507,6 +599,9 @@ export function getBaggage(locale: string): ViewAirline[] {
       website: a.website,
       logo: `/airlines/${a.id}.png`,
       highlight: Boolean(a.highlight),
+      commission,
+      commissionTier: commissionSort === 0 ? "zero" : "some",
+      commissionSort,
       search: `${a.iata ?? ""} ${a.name.he ?? ""} ${a.name.en ?? ""}`.toLowerCase(),
     };
   });
