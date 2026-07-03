@@ -10,6 +10,7 @@ import {
   invalidateSession,
   invalidateOtherSessions,
   invalidateUserSessions,
+  deleteAllUserSessions,
   currentSessionId,
 } from "./session";
 import { can, getCurrentUser } from ".";
@@ -231,4 +232,15 @@ export async function deleteUser(userId: number): Promise<void> {
   const me = await getCurrentUser();
   if (!me || me.id === userId) return;
   await db.delete(users).where(eq(users.id, userId));
+}
+
+/**
+ * Admin-only: force-log-out a user by dropping all their sessions. Their
+ * next request fails validation. (Their non-httpOnly nav mirror cookie lives on
+ * their own device, so their header may show a stale name until they reload —
+ * harmless, the server denies them.)
+ */
+export async function forceLogoutUser(userId: number): Promise<void> {
+  if (!(await can("users:manage"))) return;
+  await deleteAllUserSessions(userId);
 }

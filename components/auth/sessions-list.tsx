@@ -52,7 +52,7 @@ export async function SessionsList({
                 )}
               </p>
               <p className="text-xs text-muted-foreground">
-                {t("signedInOn", { date: fmt.format(session.createdAt) })}
+                {t("lastActive", { date: fmt.format(session.lastSeenAt) })}
               </p>
             </div>
             {!isCurrent && (
