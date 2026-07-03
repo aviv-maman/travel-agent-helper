@@ -27,6 +27,8 @@
     "intro": "Tourism articles from external news sites. Headlines link to the source — click to read the full story on the publisher's website.",
     "allSources": "All",
     "readMore": "Read more",
+    "refresh": "Refresh",
+    "refreshing": "Refreshing…",
     "empty": "😕 No articles right now. Please try again later."
   },
   "auth": {
@@ -51,6 +53,13 @@
     "registering": "Creating…",
     "code": "Invite code",
     "manageInvites": "Manage invites",
+    "manageUsers": "Manage users",
+    "usersTitle": "Users",
+    "usersSubtitle": "Change roles or remove users. You can't change your own role.",
+    "colUser": "User",
+    "save": "Save",
+    "delete": "Delete",
+    "you": "you",
     "errMissing": "Enter a username and password.",
     "errInvalid": "Invalid username or password.",
     "errCodeMissing": "Enter your invite code.",

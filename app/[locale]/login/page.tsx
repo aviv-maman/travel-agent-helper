@@ -39,11 +39,18 @@ export default async function LoginPage({
               <div className="flex flex-wrap items-center gap-3">
                 <LogoutButton locale={locale} />
                 {user.role === "admin" && (
-                  <Link
-                    href="/admin/invites"
-                    className="text-sm font-medium text-brand hover:underline">
-                    {t("manageInvites")}
-                  </Link>
+                  <>
+                    <Link
+                      href="/admin/invites"
+                      className="text-sm font-medium text-brand hover:underline">
+                      {t("manageInvites")}
+                    </Link>
+                    <Link
+                      href="/admin/users"
+                      className="text-sm font-medium text-brand hover:underline">
+                      {t("manageUsers")}
+                    </Link>
+                  </>
                 )}
               </div>
             </div>
