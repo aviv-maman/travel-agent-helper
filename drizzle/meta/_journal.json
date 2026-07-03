@@ -22,6 +22,13 @@
       "when": 1783067009840,
       "tag": "0002_clever_jack_power",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1783070674131,
+      "tag": "0003_modern_gorilla_man",
+      "breakpoints": true
     }
   ]
 }

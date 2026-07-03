@@ -1,6 +1,5 @@
 import { setRequestLocale, getTranslations } from "next-intl/server";
-import { redirect } from "next/navigation";
-import { can } from "@/lib/auth";
+import { requirePermission } from "@/lib/auth";
 import { listInvites } from "@/lib/auth/invites";
 import { CreateInviteForm } from "@/components/auth/create-invite-form";
 import { InvitesTable } from "@/components/auth/invites-table";
@@ -22,7 +21,7 @@ export default async function AdminInvitesPage({
   setRequestLocale(locale);
 
   // Security boundary: only invite-managers may see or use this page.
-  if (!(await can("invites:manage"))) redirect(`/${locale}/login`);
+  await requirePermission("invites:manage", locale);
 
   const t = await getTranslations({ locale, namespace: "auth" });
   const invites = await listInvites();

@@ -13,6 +13,7 @@ import {
 } from "./session";
 import { can, getCurrentUser } from ".";
 import { generateInviteCode, inviteStatus } from "./invites";
+import { isLocked, recordFailure, clearAttempts } from "./rate-limit";
 
 export type AuthState = { error?: string; ok?: boolean };
 
@@ -37,14 +38,19 @@ export async function login(
   if (!username || !password) {
     return { error: "missing" };
   }
+  if (await isLocked(username)) {
+    return { error: "locked" };
+  }
 
   const [user] = await db.select().from(users).where(eq(users.username, username)).limit(1);
   const ok = await verifyPassword(password, user?.passwordHash ?? DUMMY_HASH);
   if (!user || !ok) {
+    await recordFailure(username);
     return { error: "invalid" };
   }
 
-  await createSession(user.id);
+  await clearAttempts(username);
+  await createSession(user);
   redirect(`/${locale}`);
 }
 
@@ -148,7 +154,7 @@ export async function register(
     return { error: "codeInvalid" };
   }
 
-  await createSession(userId);
+  await createSession({ id: userId, username, role: invite.role });
   redirect(`/${locale}`);
 }
 

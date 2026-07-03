@@ -7,6 +7,7 @@ import { DirectionProvider } from "@base-ui/react/direction-provider";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
 import { PageNav } from "@/components/page-nav";
+import { SessionProvider } from "@/components/auth/session-provider";
 import { routing, localeDirection, type Locale } from "@/i18n/routing";
 import "../globals.css";
 
@@ -58,15 +59,17 @@ export default async function LocaleLayout({
         <NextIntlClientProvider>
           <ThemeProvider defaultTheme="dark">
             <DirectionProvider direction={dir}>
-              <PageNav />
-              <main className="mx-auto w-full max-w-5xl p-4">
-                <header className="mb-8">
-                  <h1 className="text-2xl font-extrabold text-foreground">{t("title")}</h1>
-                  <p className="text-sm text-muted-foreground">{t("subtitle")}</p>
-                </header>
-                {children}
-              </main>
-              <Toaster />
+              <SessionProvider>
+                <PageNav />
+                <main className="mx-auto w-full max-w-5xl p-4">
+                  <header className="mb-8">
+                    <h1 className="text-2xl font-extrabold text-foreground">{t("title")}</h1>
+                    <p className="text-sm text-muted-foreground">{t("subtitle")}</p>
+                  </header>
+                  {children}
+                </main>
+                <Toaster />
+              </SessionProvider>
             </DirectionProvider>
           </ThemeProvider>
         </NextIntlClientProvider>

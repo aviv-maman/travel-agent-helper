@@ -1,6 +1,5 @@
 import { setRequestLocale, getTranslations } from "next-intl/server";
-import { redirect } from "next/navigation";
-import { can, getCurrentUser } from "@/lib/auth";
+import { requirePermission } from "@/lib/auth";
 import { listUsers } from "@/lib/auth/users";
 import { UsersTable } from "@/components/auth/users-table";
 import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
@@ -14,8 +13,7 @@ export default async function AdminUsersPage({
   const { locale } = await params;
   setRequestLocale(locale);
 
-  const me = await getCurrentUser();
-  if (!me || !(await can("users:manage"))) redirect(`/${locale}/login`);
+  const me = await requirePermission("users:manage", locale);
 
   const t = await getTranslations({ locale, namespace: "auth" });
   const users = await listUsers();
