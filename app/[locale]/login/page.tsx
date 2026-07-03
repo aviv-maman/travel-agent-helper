@@ -2,6 +2,7 @@ import { setRequestLocale, getTranslations } from "next-intl/server";
 import { redirect } from "next/navigation";
 import { getCurrentUser } from "@/lib/auth";
 import { LoginForm } from "@/components/auth/login-form";
+import { OAuthButtons } from "@/components/auth/oauth-buttons";
 import { Link } from "@/i18n/navigation";
 import {
   Card,
@@ -30,8 +31,9 @@ export default async function LoginPage({
           <CardTitle>{t("title")}</CardTitle>
           <CardDescription>{t("subtitle")}</CardDescription>
         </CardHeader>
-        <CardContent>
+        <CardContent className="flex flex-col gap-4">
           <LoginForm locale={locale} />
+          <OAuthButtons locale={locale} mode="login" />
         </CardContent>
         <CardFooter>
           <p className="text-sm text-muted-foreground">

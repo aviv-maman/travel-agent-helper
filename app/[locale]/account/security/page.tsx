@@ -4,7 +4,14 @@ import { listSessions, currentSessionId } from "@/lib/auth/session";
 import { ChangePasswordForm } from "@/components/auth/change-password-form";
 import { SessionsList } from "@/components/auth/sessions-list";
 import { LogoutEverywhereButton } from "@/components/auth/logout-everywhere-button";
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import { ConnectedAccounts } from "@/components/auth/connected-accounts";
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardContent,
+} from "@/components/ui/card";
 
 export default async function SecurityPage({
   params,
@@ -26,6 +33,19 @@ export default async function SecurityPage({
         </CardHeader>
         <CardContent className="max-w-sm">
           <ChangePasswordForm locale={locale} />
+        </CardContent>
+      </Card>
+      <Card>
+        <CardHeader>
+          <CardTitle>{t("connectedAccounts")}</CardTitle>
+          <CardDescription>{t("connectedHint")}</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <ConnectedAccounts
+            userId={user.id}
+            hasPassword={user.passwordHash !== null}
+            locale={locale}
+          />
         </CardContent>
       </Card>
       <Card>

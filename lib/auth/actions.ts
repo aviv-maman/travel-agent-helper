@@ -4,7 +4,14 @@ import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { and, eq, gt, isNull, or } from "drizzle-orm";
 import { db } from "@/db";
-import { invitations, sessions, users, type UserRole } from "@/db/schema";
+import {
+  accounts,
+  invitations,
+  sessions,
+  users,
+  type UserRole,
+  type AuthProviderName,
+} from "@/db/schema";
 import { hashPassword, verifyPassword } from "./password";
 import {
   createSession,
@@ -78,7 +85,10 @@ export async function changePassword(
 
   if (next.length < 8) return { error: "passwordShort" };
   if (next !== confirm) return { error: "passwordMismatch" };
-  if (!(await verifyPassword(current, user.passwordHash))) return { error: "wrongPassword" };
+  // Null hash = OAuth-only user with no password to verify (they'd use "set password").
+  if (!user.passwordHash || !(await verifyPassword(current, user.passwordHash))) {
+    return { error: "wrongPassword" };
+  }
 
   await db.update(users).set({ passwordHash: await hashPassword(next) }).where(eq(users.id, user.id));
   await invalidateOtherSessions(user.id); // other devices must re-login with the new password
@@ -250,4 +260,25 @@ export async function forceLogoutUser(userId: number): Promise<void> {
   if (!(await can("users:manage"))) return;
   await deleteAllUserSessions(userId);
   revalidatePath("/[locale]/account/admin/users", "page");
+}
+
+/**
+ * Unlink an OAuth provider from your own account. Refuses to remove your **only**
+ * sign-in method (you must keep a password or at least one other provider), so
+ * you can't lock yourself out.
+ */
+export async function unlinkAccount(provider: AuthProviderName): Promise<void> {
+  const user = await getCurrentUser();
+  if (!user) return;
+  const linked = await db
+    .select({ provider: accounts.provider })
+    .from(accounts)
+    .where(eq(accounts.userId, user.id));
+  const remaining =
+    (user.passwordHash ? 1 : 0) + linked.filter((a) => a.provider !== provider).length;
+  if (remaining < 1) return;
+  await db
+    .delete(accounts)
+    .where(and(eq(accounts.userId, user.id), eq(accounts.provider, provider)));
+  revalidatePath("/[locale]/account/security", "page");
 }

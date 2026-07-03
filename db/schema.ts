@@ -250,12 +250,21 @@ export const users = pgTable(
     id: serial("id").primaryKey(),
     /** Stored lower-cased; the unique index enforces case-insensitive uniqueness. */
     username: varchar("username", { length: 40 }).notNull(),
-    /** scrypt digest, "scrypt:<salt>:<hash>" — never the raw password (lib/auth/password). */
-    passwordHash: text("password_hash").notNull(),
+    /** Primary email (from a linked provider or set manually). Null when unknown. */
+    email: varchar("email", { length: 255 }),
+    /**
+     * scrypt digest, "scrypt:<salt>:<hash>". **Null** for OAuth-only users — they
+     * have no password and sign in via a linked provider (see `accounts`).
+     */
+    passwordHash: text("password_hash"),
     role: userRole("role").notNull().default("agent"),
     createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
   },
-  (t) => [uniqueIndex("users_username_key").on(t.username)],
+  (t) => [
+    uniqueIndex("users_username_key").on(t.username),
+    // Postgres treats NULLs as distinct, so any number of email-less users is fine.
+    uniqueIndex("users_email_key").on(t.email),
+  ],
 );
 
 /**
@@ -280,12 +289,43 @@ export const sessions = pgTable(
   (t) => [index("sessions_user_idx").on(t.userId)],
 );
 
+/** External identity providers a user can link and sign in with. */
+export const authProvider = pgEnum("auth_provider", ["google", "microsoft"]);
+
+/**
+ * OAuth identities linked to a user. `providerAccountId` is the provider's stable
+ * subject id (OIDC `sub`), which maps an external login to our user. Written by
+ * the auth backend; sign-in is invite-gated (see docs/auth-backend-contract.md).
+ */
+export const accounts = pgTable(
+  "accounts",
+  {
+    id: serial("id").primaryKey(),
+    userId: integer("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    provider: authProvider("provider").notNull(),
+    providerAccountId: text("provider_account_id").notNull(),
+    email: text("email"),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (t) => [
+    uniqueIndex("accounts_provider_account_key").on(t.provider, t.providerAccountId),
+    uniqueIndex("accounts_user_provider_key").on(t.userId, t.provider),
+  ],
+);
+
 export const usersRelations = relations(users, ({ many }) => ({
   sessions: many(sessions),
+  accounts: many(accounts),
 }));
 
 export const sessionsRelations = relations(sessions, ({ one }) => ({
   user: one(users, { fields: [sessions.userId], references: [users.id] }),
+}));
+
+export const accountsRelations = relations(accounts, ({ one }) => ({
+  user: one(users, { fields: [accounts.userId], references: [users.id] }),
 }));
 
 /**
@@ -328,3 +368,5 @@ export type User = typeof users.$inferSelect;
 export type Session = typeof sessions.$inferSelect;
 export type Invitation = typeof invitations.$inferSelect;
 export type UserRole = (typeof userRole.enumValues)[number];
+export type Account = typeof accounts.$inferSelect;
+export type AuthProviderName = (typeof authProvider.enumValues)[number];
