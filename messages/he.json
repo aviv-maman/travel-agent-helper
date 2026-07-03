@@ -12,7 +12,8 @@
     "themeLabel": "ערכת נושא",
     "light": "בהיר",
     "dark": "כהה",
-    "system": "מערכת"
+    "system": "מערכת",
+    "account": "חשבון"
   },
   "tabs": {
     "suppliers": "ספקים",
@@ -27,6 +28,21 @@
     "allSources": "הכול",
     "readMore": "קרא עוד",
     "empty": "😕 לא נמצאו כתבות כרגע. נסה שוב מאוחר יותר."
+  },
+  "auth": {
+    "title": "התחברות",
+    "subtitle": "הכנס את שם המשתמש והסיסמה שלך.",
+    "accountTitle": "חשבון",
+    "accountSubtitle": "אתה מחובר.",
+    "username": "שם משתמש",
+    "password": "סיסמה",
+    "signIn": "התחבר",
+    "signingIn": "מתחבר…",
+    "signOut": "התנתק",
+    "signedInAs": "מחובר כ-{username} ({role}).",
+    "errMissing": "הכנס שם משתמש וסיסמה.",
+    "errInvalid": "שם משתמש או סיסמה שגויים.",
+    "roles": { "admin": "מנהל", "editor": "עורך", "agent": "סוכן" }
   },
   "commissions": {
     "baggage": "כבודה",

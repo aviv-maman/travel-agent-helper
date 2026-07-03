@@ -17,7 +17,8 @@
     "build:translations": "bun scripts/build-translations.ts",
     "parse": "bun scripts/parse-html.ts",
     "seed": "bun scripts/seed.ts",
-    "logos": "bun scripts/fetch-logos.ts"
+    "logos": "bun scripts/fetch-logos.ts",
+    "create-admin": "bun scripts/create-admin.ts"
   },
   "dependencies": {
     "@base-ui/react": "^1.6.0",

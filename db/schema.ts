@@ -7,6 +7,7 @@ import {
   text,
   real,
   jsonb,
+  timestamp,
   uniqueIndex,
   index,
 } from "drizzle-orm/pg-core";
@@ -237,3 +238,51 @@ export type HotelTier = (typeof hotelTier.enumValues)[number];
 export type HotelTagValue = (typeof hotelTag.enumValues)[number];
 export type HotelFeatureValue = (typeof hotelFeature.enumValues)[number];
 export type BoardCode = (typeof boardCode.enumValues)[number];
+
+// ── Auth ──────────────────────────────────────────────────────────────────────
+
+/** Access tiers. Permissions per role are mapped in code (lib/auth). */
+export const userRole = pgEnum("user_role", ["admin", "editor", "agent"]);
+
+export const users = pgTable(
+  "users",
+  {
+    id: serial("id").primaryKey(),
+    /** Stored lower-cased; the unique index enforces case-insensitive uniqueness. */
+    username: varchar("username", { length: 40 }).notNull(),
+    /** scrypt digest, "scrypt:<salt>:<hash>" — never the raw password (lib/auth/password). */
+    passwordHash: text("password_hash").notNull(),
+    role: userRole("role").notNull().default("agent"),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (t) => [uniqueIndex("users_username_key").on(t.username)],
+);
+
+/**
+ * Server-side sessions. `id` is the SHA-256 hash of the opaque token we put in
+ * the cookie — so the raw token never touches the database (a DB leak can't be
+ * replayed as a login). Deleting the row (or its user) revokes the session.
+ */
+export const sessions = pgTable(
+  "sessions",
+  {
+    id: text("id").primaryKey(),
+    userId: integer("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    expiresAt: timestamp("expires_at", { withTimezone: true }).notNull(),
+  },
+  (t) => [index("sessions_user_idx").on(t.userId)],
+);
+
+export const usersRelations = relations(users, ({ many }) => ({
+  sessions: many(sessions),
+}));
+
+export const sessionsRelations = relations(sessions, ({ one }) => ({
+  user: one(users, { fields: [sessions.userId], references: [users.id] }),
+}));
+
+export type User = typeof users.$inferSelect;
+export type Session = typeof sessions.$inferSelect;
+export type UserRole = (typeof userRole.enumValues)[number];
