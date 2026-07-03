@@ -301,7 +301,12 @@
       "copied": "הקישור הועתק",
       "walk": "{minutes} דק' הליכה",
       "ride": "{minutes} דק' נסיעה",
-      "details": "לחץ לפרטים"
+      "details": "לחץ לפרטים",
+      "editScore": "עריכת דירוג Booking",
+      "scorePlaceholder": "0–10 (ריק = ללא)",
+      "save": "שמור",
+      "saving": "שומר…",
+      "cancel": "ביטול"
     },
     "board": {
       "bb": "ארוחת בוקר",
