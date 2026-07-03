@@ -44,7 +44,12 @@ function Block({ block }: { block: ViewBlock }) {
     case "copy":
       return (
         <div className="flex flex-col gap-2 rounded-lg bg-muted/70 p-3 dark:bg-muted/30">
-          <CopyScript text={block.text} levels={block.levels} title={block.title} />
+          <CopyScript
+            text={block.text}
+            levels={block.levels}
+            title={block.title}
+            variant={block.variant}
+          />
         </div>
       );
   }

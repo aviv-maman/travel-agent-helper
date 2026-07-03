@@ -35,14 +35,18 @@ export function CopyScript({
   text,
   levels = [],
   title,
+  variant,
 }: {
   text: string;
   levels?: FeeLevel[];
   title?: string | null;
+  variant?: "change" | null;
 }) {
   const t = useTranslations("cancellations");
   const [copied, setCopied] = useState(false);
   const rows = parseTiers(text, levels);
+  const timeHeader = variant === "change" ? t("copyTimeHeaderChange") : t("copyTimeHeader");
+  const feeHeader = variant === "change" ? t("copyFeeHeaderChange") : t("copyFeeHeader");
 
   async function handleCopy() {
     try {
@@ -64,7 +68,7 @@ export function CopyScript({
         <p className="mb-0! text-xs font-bold text-brand">{t("copyLabel")}</p>
       </div>
 
-      <FeeTable headers={[t("copyTimeHeader"), t("copyFeeHeader")]} rows={rows} />
+      <FeeTable headers={[timeHeader, feeHeader]} rows={rows} />
 
       <div className="flex justify-end">
         <button
