@@ -37,6 +37,7 @@ export type Airline = {
 const t = (he: string, en: string): Localized => ({ he, en });
 const TROLLEY10 = t('10 ק"ג', "10 kg");
 const TROLLEY8 = t('8 ק"ג', "8 kg");
+const TROLLEY7 = t('7 ק"ג', "7 kg");
 const DEPENDS = t("תלוי בכרטיס", "Depends on ticket");
 const TICKET_WEIGHT = t(
   'המשקל המדויק מופיע על הכרטיס עצמו (23 או 30 ק"ג)',
@@ -456,7 +457,7 @@ const AIRLINES: Airline[] = [
     flag: "🇪🇸",
     name: t("אייר אירופה", "Air Europa"),
     kg: "23",
-    note: TROLLEY8,
+    note: TROLLEY10,
     website: "https://www.aireuropa.com/",
   },
   {
@@ -465,7 +466,7 @@ const AIRLINES: Airline[] = [
     flag: "🇨🇦",
     name: t("אייר קנדה", "Air Canada"),
     kg: "23",
-    note: TROLLEY8,
+    note: TROLLEY10,
     website: "https://www.aircanada.com/",
     commission: "0%/1%",
   },
@@ -476,16 +477,16 @@ const AIRLINES: Airline[] = [
     name: t("אנימה ווינגס", "Anima Wings"),
     kg: "23",
     note: TROLLEY8,
-    website: "https://www.animawings.com/",
+    website: "https://www.animawings.com/en/",
   },
   {
     id: "hisky",
-    iata: "H4",
+    iata: "H7",
     flag: "🇷🇴",
     name: t("הייסקיי יורופ", "HiSky Europe"),
     kg: "23",
-    note: TROLLEY8,
-    website: "https://www.hisky.aero/",
+    note: TROLLEY10,
+    website: "https://www.hisky.aero/en/",
   },
   {
     id: "air-baltic",
@@ -501,7 +502,7 @@ const AIRLINES: Airline[] = [
     iata: "DE",
     flag: "🇩🇪",
     name: t("קונדור", "Condor"),
-    kg: "23",
+    kg: "20",
     note: TROLLEY8,
     website: "https://www.condor.com/",
   },
@@ -511,7 +512,7 @@ const AIRLINES: Airline[] = [
     flag: "🇭🇰",
     name: t("קתאי פסיפיק", "Cathay Pacific"),
     kg: "23",
-    note: TROLLEY8,
+    note: TROLLEY7,
     website: "https://www.cathaypacific.com/",
   },
   {
