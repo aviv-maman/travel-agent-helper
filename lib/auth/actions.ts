@@ -5,11 +5,16 @@ import { and, eq, gt, isNull, or } from "drizzle-orm";
 import { db } from "@/db";
 import { invitations, users, type UserRole } from "@/db/schema";
 import { hashPassword, verifyPassword } from "./password";
-import { createSession, invalidateSession } from "./session";
+import {
+  createSession,
+  invalidateSession,
+  invalidateOtherSessions,
+  invalidateUserSessions,
+} from "./session";
 import { can, getCurrentUser } from ".";
 import { generateInviteCode, inviteStatus } from "./invites";
 
-export type AuthState = { error?: string };
+export type AuthState = { error?: string; ok?: boolean };
 
 /**
  * A well-formed but unmatchable hash. When the username doesn't exist we still
@@ -46,6 +51,35 @@ export async function login(
 export async function logout(locale: string): Promise<void> {
   await invalidateSession();
   redirect(`/${locale}`);
+}
+
+/** Self-service password change. Verifies the current password, then signs out other devices. */
+export async function changePassword(
+  locale: string,
+  _prev: AuthState,
+  formData: FormData,
+): Promise<AuthState> {
+  const user = await getCurrentUser();
+  if (!user) redirect(`/${locale}/login`);
+
+  const current = String(formData.get("currentPassword") ?? "");
+  const next = String(formData.get("newPassword") ?? "");
+  const confirm = String(formData.get("confirmPassword") ?? "");
+
+  if (next.length < 8) return { error: "passwordShort" };
+  if (next !== confirm) return { error: "passwordMismatch" };
+  if (!(await verifyPassword(current, user.passwordHash))) return { error: "wrongPassword" };
+
+  await db.update(users).set({ passwordHash: await hashPassword(next) }).where(eq(users.id, user.id));
+  await invalidateOtherSessions(user.id); // other devices must re-login with the new password
+  return { ok: true };
+}
+
+/** Sign out of every device (including this one) and return to login. */
+export async function logoutEverywhere(locale: string): Promise<void> {
+  const user = await getCurrentUser();
+  if (user) await invalidateUserSessions(user.id);
+  redirect(`/${locale}/login`);
 }
 
 const USERNAME_RE = /^[a-z0-9._-]+$/;
