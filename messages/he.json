@@ -57,6 +57,7 @@
     "usersTitle": "משתמשים",
     "usersSubtitle": "שנה תפקידים או הסר משתמשים. אינך יכול לשנות את התפקיד שלך.",
     "colUser": "משתמש",
+    "colLastActive": "פעיל לאחרונה",
     "colSessions": "התחברויות",
     "save": "שמור",
     "delete": "מחק",
