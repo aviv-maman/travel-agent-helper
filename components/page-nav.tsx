@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useSelectedLayoutSegment } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";
 import Link from "next/link";
-import { Menu } from "lucide-react";
+import { Menu, CircleUser } from "lucide-react";
 import { cn } from "@/lib/utils";
 import {
   NavigationMenu,
@@ -96,6 +96,17 @@ export function PageNav() {
             </nav>
             <Separator />
             <div className="flex flex-col gap-3 p-4">
+              <SheetClose
+                nativeButton={false}
+                render={
+                  <Link
+                    href={`/${locale}/login`}
+                    className="flex items-center gap-3 rounded-md text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+                  />
+                }>
+                <CircleUser className="size-4" />
+                {tNav("account")}
+              </SheetClose>
               <div className="flex items-center justify-between gap-2">
                 <span className="text-sm text-muted-foreground">{tNav("themeLabel")}</span>
                 <ThemeToggle />
@@ -141,8 +152,14 @@ export function PageNav() {
           </NavigationMenuList>
         </NavigationMenu>
 
-        {/* Desktop controls cluster — login will join here later. */}
+        {/* Desktop controls cluster */}
         <div className="ms-auto hidden shrink-0 items-center gap-2 sm:flex">
+          <Link
+            href={`/${locale}/login`}
+            aria-label={tNav("account")}
+            className="flex size-9 items-center justify-center rounded-md text-muted-foreground transition-colors hover:text-foreground">
+            <CircleUser className="size-5" />
+          </Link>
           <ThemeToggle />
           <LanguageSwitcher />
         </div>

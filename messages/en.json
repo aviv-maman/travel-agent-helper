@@ -12,7 +12,8 @@
     "themeLabel": "Theme",
     "light": "Light",
     "dark": "Dark",
-    "system": "System"
+    "system": "System",
+    "account": "Account"
   },
   "tabs": {
     "suppliers": "Suppliers",
@@ -27,6 +28,21 @@
     "allSources": "All",
     "readMore": "Read more",
     "empty": "😕 No articles right now. Please try again later."
+  },
+  "auth": {
+    "title": "Sign in",
+    "subtitle": "Enter your username and password.",
+    "accountTitle": "Account",
+    "accountSubtitle": "You are signed in.",
+    "username": "Username",
+    "password": "Password",
+    "signIn": "Sign in",
+    "signingIn": "Signing in…",
+    "signOut": "Sign out",
+    "signedInAs": "Signed in as {username} ({role}).",
+    "errMissing": "Enter a username and password.",
+    "errInvalid": "Invalid username or password.",
+    "roles": { "admin": "admin", "editor": "editor", "agent": "agent" }
   },
   "commissions": {
     "baggage": "Baggage",
