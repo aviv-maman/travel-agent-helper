@@ -1,11 +1,13 @@
 "use server";
 
 import { redirect } from "next/navigation";
-import { eq } from "drizzle-orm";
+import { and, eq, gt, isNull, or } from "drizzle-orm";
 import { db } from "@/db";
-import { users } from "@/db/schema";
-import { verifyPassword } from "./password";
+import { invitations, users, type UserRole } from "@/db/schema";
+import { hashPassword, verifyPassword } from "./password";
 import { createSession, invalidateSession } from "./session";
+import { can, getCurrentUser } from ".";
+import { generateInviteCode, inviteStatus } from "./invites";
 
 export type AuthState = { error?: string };
 
@@ -44,4 +46,111 @@ export async function login(
 export async function logout(locale: string): Promise<void> {
   await invalidateSession();
   redirect(`/${locale}`);
+}
+
+const USERNAME_RE = /^[a-z0-9._-]+$/;
+
+/** Public registration: consumes a valid invite code and creates the user with its role. */
+export async function register(
+  locale: string,
+  _prev: AuthState,
+  formData: FormData,
+): Promise<AuthState> {
+  const code = String(formData.get("code") ?? "").trim();
+  const username = String(formData.get("username") ?? "")
+    .trim()
+    .toLowerCase();
+  const password = String(formData.get("password") ?? "");
+
+  if (!code) return { error: "codeMissing" };
+  if (username.length < 3) return { error: "usernameShort" };
+  if (!USERNAME_RE.test(username)) return { error: "usernameChars" };
+  if (password.length < 8) return { error: "passwordShort" };
+
+  const [invite] = await db
+    .select()
+    .from(invitations)
+    .where(eq(invitations.code, code))
+    .limit(1);
+  if (!invite || inviteStatus(invite) !== "active") return { error: "codeInvalid" };
+
+  const [taken] = await db
+    .select({ id: users.id })
+    .from(users)
+    .where(eq(users.username, username))
+    .limit(1);
+  if (taken) return { error: "usernameTaken" };
+
+  const passwordHash = await hashPassword(password);
+  let userId: number;
+  try {
+    const [created] = await db
+      .insert(users)
+      .values({ username, passwordHash, role: invite.role })
+      .returning({ id: users.id });
+    userId = created.id;
+  } catch {
+    // Unique-index race on the username.
+    return { error: "usernameTaken" };
+  }
+
+  // Atomically claim the invite. If it was used/revoked/expired in the race
+  // window, undo the user we just created and reject.
+  const now = new Date();
+  const claimed = await db
+    .update(invitations)
+    .set({ usedAt: now, usedBy: userId })
+    .where(
+      and(
+        eq(invitations.id, invite.id),
+        isNull(invitations.usedAt),
+        isNull(invitations.revokedAt),
+        or(isNull(invitations.expiresAt), gt(invitations.expiresAt, now)),
+      ),
+    )
+    .returning({ id: invitations.id });
+  if (claimed.length === 0) {
+    await db.delete(users).where(eq(users.id, userId));
+    return { error: "codeInvalid" };
+  }
+
+  await createSession(userId);
+  redirect(`/${locale}`);
+}
+
+export type InviteState = { error?: string };
+
+/** Admin-only: mint a single-use invite carrying `role`, optionally expiring. */
+export async function createInvite(
+  _prev: InviteState,
+  formData: FormData,
+): Promise<InviteState> {
+  if (!(await can("invites:manage"))) return { error: "forbidden" };
+
+  const role = String(formData.get("role") ?? "");
+  if (!(["admin", "editor", "agent"] as const).includes(role as UserRole)) {
+    return { error: "badRole" };
+  }
+  const days = Number(formData.get("expiresInDays"));
+  const expiresAt = Number.isFinite(days) && days > 0
+    ? new Date(Date.now() + days * 86_400_000)
+    : null;
+
+  const admin = await getCurrentUser();
+  await db.insert(invitations).values({
+    code: generateInviteCode(),
+    role: role as UserRole,
+    createdBy: admin?.id ?? null,
+    expiresAt,
+  });
+  return {};
+}
+
+/** Admin-only: revoke an unused invite (bound to its id by the form). */
+export async function revokeInvite(id: number): Promise<void> {
+  if (!(await can("invites:manage"))) return;
+  await db
+    .update(invitations)
+    .set({ revokedAt: new Date() })
+    .where(and(eq(invitations.id, id), isNull(invitations.usedAt), isNull(invitations.revokedAt)));
 }
