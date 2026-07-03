@@ -64,6 +64,13 @@
       "when": 1783107743332,
       "tag": "0008_hot_sheva_callister",
       "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "7",
+      "when": 1783109490493,
+      "tag": "0009_strange_pixie",
+      "breakpoints": true
     }
   ]
 }

@@ -1,14 +1,20 @@
 import "server-only";
-import { asc, eq, sql } from "drizzle-orm";
+import { asc, count, eq, ilike, sql } from "drizzle-orm";
 import { db } from "@/db";
 import { users, sessions } from "@/db/schema";
 
+const PER_PAGE = 20;
+
 /**
- * All users (no password hashes), oldest first, with a count of their
- * *active* (non-expired) sessions — for the admin table's force-logout control.
+ * A page of users (no password hashes), oldest first, each with a count of their
+ * *active* (non-expired) sessions. Optional `search` filters by username.
  */
-export async function listUsers() {
-  return db
+export async function listUsers(opts: { search?: string; page?: number } = {}) {
+  const page = Math.max(1, opts.page ?? 1);
+  const search = opts.search?.trim();
+  const where = search ? ilike(users.username, `%${search}%`) : undefined;
+
+  const rows = await db
     .select({
       id: users.id,
       username: users.username,
@@ -21,8 +27,20 @@ export async function listUsers() {
     })
     .from(users)
     .leftJoin(sessions, eq(sessions.userId, users.id))
+    .where(where)
     .groupBy(users.id)
-    .orderBy(asc(users.createdAt));
+    .orderBy(asc(users.createdAt))
+    .limit(PER_PAGE)
+    .offset((page - 1) * PER_PAGE);
+
+  const [{ total }] = await db.select({ total: count() }).from(users).where(where);
+
+  return {
+    rows,
+    total,
+    page,
+    pageCount: Math.max(1, Math.ceil(total / PER_PAGE)),
+  };
 }
 
-export type UserRow = Awaited<ReturnType<typeof listUsers>>[number];
+export type UserRow = Awaited<ReturnType<typeof listUsers>>["rows"][number];

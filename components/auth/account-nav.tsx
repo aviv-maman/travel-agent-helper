@@ -12,9 +12,11 @@ import { cn } from "@/lib/utils";
 export function AccountNav({
   canInvites,
   canUsers,
+  canAudit,
 }: {
   canInvites: boolean;
   canUsers: boolean;
+  canAudit: boolean;
 }) {
   const t = useTranslations("account");
   const pathname = usePathname(); // locale-stripped, e.g. "/account/security"
@@ -24,6 +26,7 @@ export function AccountNav({
     { href: "/account/security", label: t("security") },
     ...(canInvites ? [{ href: "/account/admin/invites", label: t("invites") }] : []),
     ...(canUsers ? [{ href: "/account/admin/users", label: t("users") }] : []),
+    ...(canAudit ? [{ href: "/account/admin/audit", label: t("audit") }] : []),
   ];
 
   return (
