@@ -11,8 +11,7 @@ import {
   CardContent,
 } from "@/components/ui/card";
 
-// Admin-only; reads the session + DB, so always rendered per-request.
-export default async function AdminInvitesPage({
+export default async function AccountInvitesPage({
   params,
 }: {
   params: Promise<{ locale: string }>;
@@ -27,7 +26,7 @@ export default async function AdminInvitesPage({
   const invites = await listInvites();
 
   return (
-    <div className="mx-auto flex w-full max-w-3xl flex-col gap-6 py-8">
+    <div className="flex flex-col gap-6">
       <Card>
         <CardHeader>
           <CardTitle>{t("invitesTitle")}</CardTitle>

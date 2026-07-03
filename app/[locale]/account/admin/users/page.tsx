@@ -4,8 +4,7 @@ import { listUsers } from "@/lib/auth/users";
 import { UsersTable } from "@/components/auth/users-table";
 import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 
-// Admin-only; reads the session + DB, so always rendered per-request.
-export default async function AdminUsersPage({
+export default async function AccountUsersPage({
   params,
 }: {
   params: Promise<{ locale: string }>;
@@ -19,7 +18,7 @@ export default async function AdminUsersPage({
   const users = await listUsers();
 
   return (
-    <div className="mx-auto flex w-full max-w-3xl flex-col gap-6 py-8">
+    <div className="flex flex-col gap-6">
       <Card>
         <CardHeader>
           <CardTitle>{t("usersTitle")}</CardTitle>

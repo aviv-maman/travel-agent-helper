@@ -3,7 +3,7 @@ import { cookies, headers } from "next/headers";
 import { createHash, randomBytes } from "node:crypto";
 import { and, desc, eq, ne } from "drizzle-orm";
 import { db } from "@/db";
-import { sessions, users, type User, type UserRole } from "@/db/schema";
+import { sessions, users, type User } from "@/db/schema";
 import { USER_COOKIE } from "./public-user";
 
 /**
@@ -29,7 +29,6 @@ function hashToken(token: string): string {
 export async function createSession(user: {
   id: number;
   username: string;
-  role: UserRole;
 }): Promise<void> {
   const token = randomBytes(32).toString("base64url");
   const expiresAt = new Date(Date.now() + SESSION_DURATION_MS);
@@ -46,7 +45,7 @@ export async function createSession(user: {
     expires: expiresAt,
   };
   store.set(COOKIE_NAME, token, { httpOnly: true, ...base });
-  store.set(USER_COOKIE, `${user.username}:${user.role}`, { httpOnly: false, ...base });
+  store.set(USER_COOKIE, user.username, { httpOnly: false, ...base });
 }
 
 /**

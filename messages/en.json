@@ -107,6 +107,15 @@
     "roles": { "admin": "admin", "editor": "editor", "agent": "agent" },
     "status": { "active": "Active", "used": "Used", "revoked": "Revoked", "expired": "Expired" }
   },
+  "account": {
+    "profile": "Profile",
+    "security": "Security",
+    "invites": "Invites",
+    "users": "Users",
+    "profileTitle": "Profile",
+    "profileSubtitle": "Your account details.",
+    "memberSince": "Member since"
+  },
   "commissions": {
     "baggage": "Baggage",
     "website": "Website",

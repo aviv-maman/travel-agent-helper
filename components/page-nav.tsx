@@ -48,6 +48,8 @@ export function PageNav() {
   const [open, setOpen] = useState(false);
 
   const active = PAGES.find((p) => p.segment === segment) ?? PAGES[PAGES.length - 1];
+  // Signed in → the account area; signed out → login.
+  const accountHref = user ? `/${locale}/account` : `/${locale}/login`;
 
   return (
     <div className="sticky top-0 z-50 border-b border-border bg-background/60 backdrop-blur-xs">
@@ -104,7 +106,7 @@ export function PageNav() {
                 nativeButton={false}
                 render={
                   <Link
-                    href={`/${locale}/login`}
+                    href={accountHref}
                     className="flex items-center gap-3 rounded-md text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
                   />
                 }>
@@ -173,7 +175,7 @@ export function PageNav() {
           {user ? (
             <>
               <Link
-                href={`/${locale}/login`}
+                href={accountHref}
                 className="flex items-center gap-1.5 rounded-md px-2 py-1 text-sm font-medium text-foreground transition-colors hover:text-brand">
                 <CircleUser className="size-4" />
                 {user.username}

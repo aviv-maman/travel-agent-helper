@@ -107,6 +107,15 @@
     "roles": { "admin": "מנהל", "editor": "עורך", "agent": "סוכן" },
     "status": { "active": "פעיל", "used": "נוצל", "revoked": "בוטל", "expired": "פג תוקף" }
   },
+  "account": {
+    "profile": "פרופיל",
+    "security": "אבטחה",
+    "invites": "הזמנות",
+    "users": "משתמשים",
+    "profileTitle": "פרופיל",
+    "profileSubtitle": "פרטי החשבון שלך.",
+    "memberSince": "חבר מאז"
+  },
   "commissions": {
     "baggage": "כבודה",
     "website": "אתר",
