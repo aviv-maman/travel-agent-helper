@@ -1,6 +1,6 @@
 import { getTranslations } from "next-intl/server";
 import type { UserRow } from "@/lib/auth/users";
-import { setUserRole, deleteUser } from "@/lib/auth/actions";
+import { setUserRole, deleteUser, forceLogoutUser } from "@/lib/auth/actions";
 import { Button } from "@/components/ui/button";
 
 export async function UsersTable({
@@ -23,6 +23,7 @@ export async function UsersTable({
             <th className="px-3 py-2 text-start font-medium">{t("colUser")}</th>
             <th className="px-3 py-2 text-start font-medium">{t("role")}</th>
             <th className="px-3 py-2 text-start font-medium">{t("colCreated")}</th>
+            <th className="px-3 py-2 text-start font-medium">{t("colSessions")}</th>
             <th className="px-3 py-2" />
           </tr>
         </thead>
@@ -55,6 +56,15 @@ export async function UsersTable({
                   )}
                 </td>
                 <td className="px-3 py-2 text-muted-foreground">{fmt.format(user.createdAt)}</td>
+                <td className="px-3 py-2">
+                  {user.sessionCount > 0 && !isSelf && (
+                    <form action={forceLogoutUser.bind(null, user.id)}>
+                      <Button type="submit" variant="outline" size="sm">
+                        {t("forceLogout", { count: user.sessionCount })}
+                      </Button>
+                    </form>
+                  )}
+                </td>
                 <td className="px-3 py-2 text-end">
                   {!isSelf && (
                     <form action={deleteUser.bind(null, user.id)}>

@@ -1,9 +1,12 @@
 import "server-only";
-import { asc } from "drizzle-orm";
+import { asc, eq, sql } from "drizzle-orm";
 import { db } from "@/db";
-import { users } from "@/db/schema";
+import { users, sessions } from "@/db/schema";
 
-/** All users (no password hashes), oldest first, for the admin table. */
+/**
+ * All users (no password hashes), oldest first, with a count of their
+ * *active* (non-expired) sessions — for the admin table's force-logout control.
+ */
 export async function listUsers() {
   return db
     .select({
@@ -11,8 +14,13 @@ export async function listUsers() {
       username: users.username,
       role: users.role,
       createdAt: users.createdAt,
+      sessionCount: sql<number>`count(${sessions.id}) filter (where ${sessions.expiresAt} > now())`.mapWith(
+        Number,
+      ),
     })
     .from(users)
+    .leftJoin(sessions, eq(sessions.userId, users.id))
+    .groupBy(users.id)
     .orderBy(asc(users.createdAt));
 }
 

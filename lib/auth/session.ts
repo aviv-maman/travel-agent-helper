@@ -15,6 +15,7 @@ import { USER_COOKIE } from "./public-user";
 
 const COOKIE_NAME = "session";
 const SESSION_DURATION_MS = 1000 * 60 * 60 * 24 * 30; // 30 days
+const LAST_SEEN_THROTTLE_MS = 5 * 60 * 1000; // bump "last active" at most this often
 
 function hashToken(token: string): string {
   return createHash("sha256").update(token).digest("hex");
@@ -55,13 +56,20 @@ export async function createSession(user: {
 export async function validateSession(): Promise<User | null> {
   const token = (await cookies()).get(COOKIE_NAME)?.value;
   if (!token) return null;
+  const sessionId = hashToken(token);
   const [found] = await db
-    .select({ user: users, expiresAt: sessions.expiresAt })
+    .select({ user: users, expiresAt: sessions.expiresAt, lastSeenAt: sessions.lastSeenAt })
     .from(sessions)
     .innerJoin(users, eq(sessions.userId, users.id))
-    .where(eq(sessions.id, hashToken(token)))
+    .where(eq(sessions.id, sessionId))
     .limit(1);
   if (!found || found.expiresAt.getTime() < Date.now()) return null;
+
+  // Throttled "last active" bump — at most once per LAST_SEEN_THROTTLE_MS so it
+  // doesn't add a write to every request.
+  if (Date.now() - found.lastSeenAt.getTime() > LAST_SEEN_THROTTLE_MS) {
+    await db.update(sessions).set({ lastSeenAt: new Date() }).where(eq(sessions.id, sessionId));
+  }
   return found.user;
 }
 
@@ -93,9 +101,14 @@ export async function invalidateOtherSessions(userId: number): Promise<void> {
     );
 }
 
-/** Delete every session for `userId` (all devices) and clear the cookies. */
-export async function invalidateUserSessions(userId: number): Promise<void> {
+/** Delete every session for `userId` (no cookie changes) — used to force-log-out any user. */
+export async function deleteAllUserSessions(userId: number): Promise<void> {
   await db.delete(sessions).where(eq(sessions.userId, userId));
+}
+
+/** Delete every session for `userId` (all devices) and clear *this* request's cookies. */
+export async function invalidateUserSessions(userId: number): Promise<void> {
+  await deleteAllUserSessions(userId);
   const store = await cookies();
   store.delete(COOKIE_NAME);
   store.delete(USER_COOKIE);
@@ -113,12 +126,13 @@ export async function listSessions(userId: number) {
     .select({
       id: sessions.id,
       createdAt: sessions.createdAt,
+      lastSeenAt: sessions.lastSeenAt,
       userAgent: sessions.userAgent,
       expiresAt: sessions.expiresAt,
     })
     .from(sessions)
     .where(eq(sessions.userId, userId))
-    .orderBy(desc(sessions.createdAt));
+    .orderBy(desc(sessions.lastSeenAt));
 }
 
 export type SessionRow = Awaited<ReturnType<typeof listSessions>>[number];
