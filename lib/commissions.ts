@@ -18,7 +18,7 @@ import { localized } from "@/lib/hotels";
 export type CommLevel = "high" | "mid" | "low" | "range" | "net";
 
 /** Which glyph leads a baggage row (and its color). */
-export type BaggageIcon = "bag" | "ok" | "warn" | "flight" | "package" | "tour";
+export type BaggageIcon = "bag" | "ok" | "warn" | "flight" | "package" | "tour" | "village";
 
 /** A commission percentage for one of the three default categories. */
 export type CommissionValue = {
@@ -415,6 +415,7 @@ const SUPPLIERS: Supplier[] = [
     flightsOnly: c("7%", "7%", "mid"),
     packages: c("9.5%", "9.5%", "high"),
     organizedTours: c("7%", "7%", "mid"),
+    customCommission1: cc("🌴 כפרי נופש", "🌴 Holiday villages", "7%", "7%", "mid"),
     baggage: [
       { icon: "bag", text: t('תיק גב עד 4 ק"ג — כלול', "Backpack up to 4 kg — included") },
       {
@@ -429,6 +430,13 @@ const SUPPLIERS: Supplier[] = [
         text: t(
           "חבילות נופש: טרולי כלול, מזוודה לא כלולה\nמזוודה הלוך ושוב: **110$ ברוטו**",
           "Vacation packages: trolley included, suitcase not included\nSuitcase round trip: **$110 gross**",
+        ),
+      },
+      {
+        icon: "village",
+        text: t(
+          "כפרי נופש: טרולי כלול\nמזוודה הלוך ושוב: **95€ ברוטו**",
+          "Holiday villages: trolley included\nSuitcase round trip: **€95 gross**",
         ),
       },
     ],

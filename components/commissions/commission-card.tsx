@@ -26,6 +26,7 @@ const BAG_ICON: Record<BaggageIcon, { glyph: string; className: string }> = {
   warn: { glyph: "⚠", className: "text-gold" },
   flight: { glyph: "✈️", className: "" },
   package: { glyph: "🏖️", className: "" },
+  village: { glyph: "🌴", className: "" },
   tour: { glyph: "🧳", className: "" },
 };
 
@@ -37,6 +38,7 @@ const BAG_ICON: Record<BaggageIcon, { glyph: string; className: string }> = {
 const TABLE_CATEGORIES = [
   { icon: "flight", labelKey: "flightsOnly" },
   { icon: "package", labelKey: "packages" },
+  { icon: "village", labelKey: "holidayVillages" },
   { icon: "tour", labelKey: "organizedTours" },
 ] as const;
 
@@ -115,7 +117,7 @@ export function CommissionCard({ supplier }: { supplier: ViewSupplier }) {
             <a
               href={supplier.website}
               target="_blank"
-              className="mt-1.5 inline-flex max-w-full items-center gap-1 align-top text-sm font-medium leading-snug text-brand hover:underline">
+              className="mt-1.5 inline-flex max-w-full items-center gap-1 align-top text-sm leading-snug font-medium text-brand hover:underline">
               <Globe className="size-3.5 shrink-0" aria-hidden />
               <span className="truncate">{t("website")}</span>
             </a>
@@ -134,23 +136,23 @@ export function CommissionCard({ supplier }: { supplier: ViewSupplier }) {
             <TableBody>
               {commissionRows.map((row, i) => (
                 <TableRow key={i} className="hover:bg-muted/30">
-                    <TableCell className="px-3 py-2 align-top text-sm font-medium whitespace-normal text-foreground">
-                      <span className="flex items-center gap-1.5">
-                        {row.glyph && (
-                          <span className="shrink-0 text-base" aria-hidden>
-                            {row.glyph}
-                          </span>
-                        )}
-                        {row.label}
-                      </span>
-                    </TableCell>
-                    <TableCell className="w-px px-3 py-2 text-end align-top whitespace-nowrap">
-                      {row.value && (
-                        <span className={`text-sm font-bold ${LEVEL[row.level]}`}>{row.value}</span>
+                  <TableCell className="px-3 py-2 align-top text-sm font-medium whitespace-normal text-foreground">
+                    <span className="flex items-center gap-1.5">
+                      {row.glyph && (
+                        <span className="shrink-0 text-base" aria-hidden>
+                          {row.glyph}
+                        </span>
                       )}
-                    </TableCell>
-                  </TableRow>
-                ))}
+                      {row.label}
+                    </span>
+                  </TableCell>
+                  <TableCell className="w-px px-3 py-2 text-end align-top whitespace-nowrap">
+                    {row.value && (
+                      <span className={`text-sm font-bold ${LEVEL[row.level]}`}>{row.value}</span>
+                    )}
+                  </TableCell>
+                </TableRow>
+              ))}
             </TableBody>
           </Table>
         </div>
@@ -160,7 +162,7 @@ export function CommissionCard({ supplier }: { supplier: ViewSupplier }) {
           <Alert
             key={i}
             variant={note.variant === "info" ? "default" : "warning"}
-            className="mt-2.5 gap-x-2 px-3 py-2 [&>svg]:size-3.5 has-[>svg]:grid-cols-[14px_1fr] has-[>svg]:gap-x-2">
+            className="mt-2.5 gap-x-2 px-3 py-2 has-[>svg]:grid-cols-[14px_1fr] has-[>svg]:gap-x-2 [&>svg]:size-3.5">
             {note.variant === "info" ? <Info /> : <TriangleAlert />}
             {note.showTitle && (
               <AlertTitle className="text-xs font-semibold">
@@ -192,7 +194,9 @@ export function CommissionCard({ supplier }: { supplier: ViewSupplier }) {
                       <TableCell className="w-px px-2 py-2 align-top text-xs font-medium whitespace-nowrap text-foreground sm:px-3 sm:text-sm">
                         <span className="flex items-center gap-1.5">
                           {icon.glyph && (
-                            <span className={`shrink-0 text-sm sm:text-base ${icon.className}`} aria-hidden>
+                            <span
+                              className={`shrink-0 text-sm sm:text-base ${icon.className}`}
+                              aria-hidden>
                               {icon.glyph}
                             </span>
                           )}

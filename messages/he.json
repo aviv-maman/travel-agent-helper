@@ -2,7 +2,7 @@
   "app": {
     "title": "כלי עזר לסוכני נסיעות",
     "subtitle": "חיפוש ספקים, דמי ביטול, הסעות, כבודה ומלונות"
-   },
+  },
   "nav": {
     "menu": "תפריט",
     "language": "שפה",
@@ -113,6 +113,7 @@
     "commissionsTitle": "עמלות",
     "flightsOnly": "טיסות בלבד",
     "packages": "חבילות נופש",
+    "holidayVillages": "כפרי נופש",
     "organizedTours": "טיולים מאורגנים",
     "warningTitle": "הערה חשובה",
     "info": "מידע",
