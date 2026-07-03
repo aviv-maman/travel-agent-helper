@@ -24,6 +24,7 @@ import {
   currentSessionId,
 } from "./session";
 import { can, getCurrentUser } from ".";
+import { recordAudit } from "./audit";
 import { generateInviteCode, inviteStatus } from "./invites";
 import { isLocked, recordFailure, clearAttempts, clientIp } from "./rate-limit";
 
@@ -64,6 +65,7 @@ export async function login(
 
   await clearAttempts(ip);
   await createSession(user);
+  await recordAudit("login", { actorId: user.id });
   // Cross-device theme: apply this account's saved preference on this device.
   if (user.themePref && isTheme(user.themePref)) {
     (await cookies()).set(THEME_COOKIE, user.themePref, {
@@ -102,6 +104,7 @@ export async function changePassword(
 
   await db.update(users).set({ passwordHash: await hashPassword(next) }).where(eq(users.id, user.id));
   await invalidateOtherSessions(user.id); // other devices must re-login with the new password
+  await recordAudit("password.change", { actorId: user.id });
   return { ok: true };
 }
 
@@ -168,6 +171,7 @@ export async function setPassword(
   if (next !== confirm) return { error: "passwordMismatch" };
 
   await db.update(users).set({ passwordHash: await hashPassword(next) }).where(eq(users.id, user.id));
+  await recordAudit("password.set", { actorId: user.id });
   revalidatePath("/[locale]/account/security", "page");
   return { ok: true };
 }
@@ -184,6 +188,7 @@ export async function deleteMyAccount(locale: string): Promise<void> {
     const [{ n }] = await db.select({ n: count() }).from(users).where(eq(users.role, "admin"));
     if (n <= 1) return;
   }
+  await recordAudit("account.delete", { actorId: user.id, meta: { username: user.username } });
   await invalidateSession(); // clear this device's session + cookies
   await db.delete(users).where(eq(users.id, user.id)); // cascades any other sessions
   redirect(`/${locale}/login`);
@@ -284,17 +289,20 @@ export async function createInvite(
     createdBy: admin?.id ?? null,
     expiresAt,
   });
+  await recordAudit("invite.create", { actorId: admin?.id ?? null, meta: { role } });
   revalidatePath("/[locale]/account/admin/invites", "page");
   return {};
 }
 
 /** Admin-only: revoke an unused invite (bound to its id by the form). */
 export async function revokeInvite(id: number): Promise<void> {
+  const me = await getCurrentUser();
   if (!(await can("invites:manage"))) return;
   await db
     .update(invitations)
     .set({ revokedAt: new Date() })
     .where(and(eq(invitations.id, id), isNull(invitations.usedAt), isNull(invitations.revokedAt)));
+  await recordAudit("invite.revoke", { actorId: me?.id ?? null, targetType: "invite", targetId: id });
   revalidatePath("/[locale]/account/admin/invites", "page");
 }
 
@@ -310,6 +318,7 @@ export async function setUserRole(userId: number, formData: FormData): Promise<v
   const role = String(formData.get("role") ?? "");
   if (!(["admin", "editor", "agent"] as const).includes(role as UserRole)) return;
   await db.update(users).set({ role: role as UserRole }).where(eq(users.id, userId));
+  await recordAudit("user.role", { actorId: me.id, targetType: "user", targetId: userId, meta: { role } });
   revalidatePath("/[locale]/account/admin/users", "page");
 }
 
@@ -319,6 +328,7 @@ export async function deleteUser(userId: number): Promise<void> {
   const me = await getCurrentUser();
   if (!me || me.id === userId) return;
   await db.delete(users).where(eq(users.id, userId));
+  await recordAudit("user.delete", { actorId: me.id, targetType: "user", targetId: userId });
   revalidatePath("/[locale]/account/admin/users", "page");
 }
 
@@ -329,8 +339,10 @@ export async function deleteUser(userId: number): Promise<void> {
  * harmless, the server denies them.)
  */
 export async function forceLogoutUser(userId: number): Promise<void> {
+  const me = await getCurrentUser();
   if (!(await can("users:manage"))) return;
   await deleteAllUserSessions(userId);
+  await recordAudit("user.force_logout", { actorId: me?.id ?? null, targetType: "user", targetId: userId });
   revalidatePath("/[locale]/account/admin/users", "page");
 }
 
@@ -352,5 +364,6 @@ export async function unlinkAccount(provider: AuthProviderName): Promise<void> {
   await db
     .delete(accounts)
     .where(and(eq(accounts.userId, user.id), eq(accounts.provider, provider)));
+  await recordAudit("account.unlink", { actorId: user.id, meta: { provider } });
   revalidatePath("/[locale]/account/security", "page");
 }

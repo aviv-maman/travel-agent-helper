@@ -368,9 +368,37 @@ export const loginAttempts = pgTable("login_attempts", {
   lockedUntil: timestamp("locked_until", { withTimezone: true }),
 });
 
+/**
+ * Append-only audit trail of privileged/security actions (logins, role changes,
+ * user/invite management, password changes…). `actor_user_id` is nulled if that
+ * user is later deleted (the entry stays for history — put the name in `meta`).
+ */
+export const auditLog = pgTable(
+  "audit_log",
+  {
+    id: serial("id").primaryKey(),
+    actorUserId: integer("actor_user_id").references(() => users.id, {
+      onDelete: "set null",
+    }),
+    /** Dotted action key, e.g. "login", "user.role", "invite.create". */
+    action: varchar("action", { length: 40 }).notNull(),
+    /** What the action targeted, e.g. "user" / "invite" (+ `targetId`). */
+    targetType: varchar("target_type", { length: 20 }),
+    targetId: integer("target_id"),
+    /** Extra context (role, provider, username of a deleted actor, …). */
+    meta: jsonb("meta").$type<Record<string, unknown>>(),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (t) => [
+    index("audit_log_created_idx").on(t.createdAt),
+    index("audit_log_actor_idx").on(t.actorUserId),
+  ],
+);
+
 export type User = typeof users.$inferSelect;
 export type Session = typeof sessions.$inferSelect;
 export type Invitation = typeof invitations.$inferSelect;
 export type UserRole = (typeof userRole.enumValues)[number];
 export type Account = typeof accounts.$inferSelect;
 export type AuthProviderName = (typeof authProvider.enumValues)[number];
+export type AuditEntry = typeof auditLog.$inferSelect;

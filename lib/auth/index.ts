@@ -34,7 +34,7 @@ export const getCurrentUser = cache(async (): Promise<User | null> => {
  * capability is a one-line change here.
  */
 export const ROLE_PERMISSIONS = {
-  admin: ["users:manage", "invites:manage", "news:revalidate", "content:edit"],
+  admin: ["users:manage", "invites:manage", "audit:read", "news:revalidate", "content:edit"],
   editor: ["news:revalidate", "content:edit"],
   agent: [],
 } as const satisfies Record<UserRole, readonly string[]>;
