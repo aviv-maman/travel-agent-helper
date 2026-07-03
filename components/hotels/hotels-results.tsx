@@ -5,17 +5,18 @@ import { useTranslations } from "next-intl";
 import { LayoutGrid, List } from "lucide-react";
 import type { ViewHotel } from "@/lib/hotels";
 import { Button } from "@/components/ui/button";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { HotelCard } from "./hotel-card";
 import { HotelDetailModal } from "./hotel-detail-modal";
 import { useViewMode } from "./use-view-mode";
 
-export function HotelsResults({ hotels }: { hotels: ViewHotel[] }) {
+export function HotelsResults({
+  hotels,
+  canEdit = false,
+}: {
+  hotels: ViewHotel[];
+  canEdit?: boolean;
+}) {
   const t = useTranslations("hotels");
   const [selected, setSelected] = useState<ViewHotel | null>(null);
   const [view, setView] = useViewMode();
@@ -63,7 +64,13 @@ export function HotelsResults({ hotels }: { hotels: ViewHotel[] }) {
             : "flex flex-col gap-4"
         }>
         {hotels.map((h) => (
-          <HotelCard key={h.id} hotel={h} layout={view} onOpen={() => setSelected(h)} />
+          <HotelCard
+            key={h.id}
+            hotel={h}
+            layout={view}
+            canEdit={canEdit}
+            onOpen={() => setSelected(h)}
+          />
         ))}
       </div>
 

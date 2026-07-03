@@ -2,6 +2,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { InfoIcon, TriangleAlertIcon } from "lucide-react";
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 import type { HotelFeatureValue, HotelTagValue, BoardCode } from "@/db/schema";
+import { can } from "@/lib/auth";
 import { getDestinationsList, getDestinationView, type SortMode } from "@/lib/hotels";
 import { DestinationCombobox } from "@/components/hotels/destination-combobox";
 import { HotelFilters } from "@/components/hotels/hotel-filters";
@@ -35,7 +36,10 @@ export default async function HotelsPage({
   const page = Math.max(1, Number(asString(sp.page) ?? "1") || 1);
   const perPage = Math.max(0, Number(asString(sp.perPage) ?? "0") || 0);
 
-  const destinations = await getDestinationsList(locale);
+  const [destinations, canEdit] = await Promise.all([
+    getDestinationsList(locale),
+    can("content:edit"),
+  ]);
   const view = dest
     ? await getDestinationView(dest, {
         tags,
@@ -70,7 +74,7 @@ export default async function HotelsPage({
       {view && (
         <>
           <HotelFilters landmarks={view.landmarks} />
-          <HotelsResults hotels={view.hotels} />
+          <HotelsResults hotels={view.hotels} canEdit={canEdit} />
           <HotelsPager
             total={view.total}
             page={view.page}

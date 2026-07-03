@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { ExternalLinkIcon, Star } from "lucide-react";
 import { GoogleMapsIcon } from "@/components/icons/google-maps-icon";
@@ -13,6 +13,7 @@ import { ButtonGroup } from "@/components/ui/button-group";
 import { Card } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { CopyLinkButton } from "./copy-link-button";
+import { EditBookingScore } from "./edit-booking-score";
 import type { ViewMode } from "./use-view-mode";
 import { useHotelParams } from "./use-hotel-params";
 
@@ -69,15 +70,23 @@ export function HotelCard({
   hotel,
   layout = "grid",
   onOpen,
+  canEdit = false,
 }: {
   hotel: ViewHotel;
   layout?: ViewMode;
   onOpen: () => void;
+  canEdit?: boolean;
 }) {
   const locale = useLocale();
   const t = useTranslations("hotels");
   const timeLabel = useTimeLabel();
   const { sort } = useHotelParams();
+
+  // Editors can adjust the Booking score inline; the badge reads from local
+  // state so an edit reflects immediately (revalidation syncs other sessions).
+  // Only DB-backed hotels have a numeric id — the seed fallback can't persist.
+  const [score, setScore] = useState(hotel.bookingScore);
+  const canEditScore = canEdit && /^\d+$/.test(hotel.id);
 
   // When sorting by distance to a landmark, surface that landmark's row first
   // and mark it as selected.
@@ -123,10 +132,13 @@ export function HotelCard({
           {hotel.stars}
         </span>
       )}
-      {hotel.bookingScore != null && (
+      {score != null && (
         <span className="inline-flex items-center gap-1 rounded-md bg-success/10 px-1.5 py-0.5 text-xs font-bold text-success">
-          {t("card.booking")} {hotel.bookingScore}
+          {t("card.booking")} {score}
         </span>
+      )}
+      {canEditScore && (
+        <EditBookingScore hotelId={Number(hotel.id)} value={score} onSaved={setScore} />
       )}
     </div>
   );

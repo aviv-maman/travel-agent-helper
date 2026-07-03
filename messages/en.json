@@ -266,7 +266,12 @@
       "copied": "Link copied",
       "walk": "{minutes} minutes walking",
       "ride": "{minutes} minutes riding",
-      "details": "Click for details"
+      "details": "Click for details",
+      "editScore": "Edit Booking score",
+      "scorePlaceholder": "0–10 (empty = none)",
+      "save": "Save",
+      "saving": "Saving…",
+      "cancel": "Cancel"
     },
     "board": {
       "bb": "Breakfast",
