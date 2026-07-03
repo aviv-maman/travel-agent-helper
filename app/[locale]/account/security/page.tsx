@@ -2,6 +2,7 @@ import { setRequestLocale, getTranslations } from "next-intl/server";
 import { requireUser } from "@/lib/auth";
 import { listSessions, currentSessionId } from "@/lib/auth/session";
 import { ChangePasswordForm } from "@/components/auth/change-password-form";
+import { SetPasswordForm } from "@/components/auth/set-password-form";
 import { SessionsList } from "@/components/auth/sessions-list";
 import { LogoutEverywhereButton } from "@/components/auth/logout-everywhere-button";
 import { ConnectedAccounts } from "@/components/auth/connected-accounts";
@@ -29,10 +30,14 @@ export default async function SecurityPage({
     <div className="flex flex-col gap-6">
       <Card>
         <CardHeader>
-          <CardTitle>{t("changePassword")}</CardTitle>
+          <CardTitle>{user.passwordHash ? t("changePassword") : t("setPassword")}</CardTitle>
         </CardHeader>
         <CardContent className="max-w-sm">
-          <ChangePasswordForm locale={locale} />
+          {user.passwordHash ? (
+            <ChangePasswordForm locale={locale} />
+          ) : (
+            <SetPasswordForm locale={locale} />
+          )}
         </CardContent>
       </Card>
       <Card>

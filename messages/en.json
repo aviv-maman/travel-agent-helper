@@ -69,6 +69,9 @@
     "updatePassword": "Update password",
     "updating": "Updating…",
     "passwordUpdated": "Password updated — other devices were signed out.",
+    "setPassword": "Set a password",
+    "setPasswordCta": "Set password",
+    "passwordSet": "Password set.",
     "logoutEverywhere": "Log out everywhere",
     "logoutAllConfirm": "Sign out of all devices, including this one?",
     "orContinue": "or",
@@ -121,7 +124,17 @@
     "users": "Users",
     "profileTitle": "Profile",
     "profileSubtitle": "Your account details.",
-    "memberSince": "Member since"
+    "memberSince": "Member since",
+    "displayName": "Display name",
+    "displayNamePlaceholder": "Your name",
+    "save": "Save",
+    "saving": "Saving…",
+    "saved": "Saved.",
+    "dangerZone": "Danger zone",
+    "deleteAccount": "Delete my account",
+    "deleteHint": "Permanently delete your account and sign out everywhere.",
+    "deleteConfirm": "Permanently delete your account? This can't be undone.",
+    "lastAdminNote": "You're the last admin — assign another admin before deleting your account."
   },
   "commissions": {
     "baggage": "Baggage",
