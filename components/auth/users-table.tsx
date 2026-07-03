@@ -14,6 +14,7 @@ export async function UsersTable({
 }) {
   const t = await getTranslations({ locale, namespace: "auth" });
   const fmt = new Intl.DateTimeFormat(locale, { dateStyle: "medium" });
+  const fmtDateTime = new Intl.DateTimeFormat(locale, { dateStyle: "medium", timeStyle: "short" });
 
   return (
     <div className="overflow-x-auto rounded-xl border border-border">
@@ -23,6 +24,7 @@ export async function UsersTable({
             <th className="px-3 py-2 text-start font-medium">{t("colUser")}</th>
             <th className="px-3 py-2 text-start font-medium">{t("role")}</th>
             <th className="px-3 py-2 text-start font-medium">{t("colCreated")}</th>
+            <th className="px-3 py-2 text-start font-medium">{t("colLastActive")}</th>
             <th className="px-3 py-2 text-start font-medium">{t("colSessions")}</th>
             <th className="px-3 py-2" />
           </tr>
@@ -56,6 +58,9 @@ export async function UsersTable({
                   )}
                 </td>
                 <td className="px-3 py-2 text-muted-foreground">{fmt.format(user.createdAt)}</td>
+                <td className="px-3 py-2 text-muted-foreground">
+                  {user.lastActive ? fmtDateTime.format(user.lastActive) : "—"}
+                </td>
                 <td className="px-3 py-2">
                   {user.sessionCount > 0 && !isSelf && (
                     <form action={forceLogoutUser.bind(null, user.id)}>

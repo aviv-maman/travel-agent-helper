@@ -57,6 +57,7 @@
     "usersTitle": "Users",
     "usersSubtitle": "Change roles or remove users. You can't change your own role.",
     "colUser": "User",
+    "colLastActive": "Last active",
     "colSessions": "Sessions",
     "save": "Save",
     "delete": "Delete",

@@ -17,6 +17,7 @@ export async function listUsers() {
       sessionCount: sql<number>`count(${sessions.id}) filter (where ${sessions.expiresAt} > now())`.mapWith(
         Number,
       ),
+      lastActive: sql<Date | null>`max(${sessions.lastSeenAt})`.mapWith(sessions.lastSeenAt),
     })
     .from(users)
     .leftJoin(sessions, eq(sessions.userId, users.id))
