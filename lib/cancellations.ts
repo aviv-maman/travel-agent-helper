@@ -672,6 +672,105 @@ const SUPPLIERS: CancelSupplier[] = [
       },
     ],
   },
+  {
+    id: "eshet",
+    logo: "/suppliers/eshet-tours.png",
+    name: t("אשת טורס", "Eshet Tours"),
+    code: "ESHET",
+    products: [P_FLIGHT, P_PACKAGE, P_ORGANIZED],
+    blocks: [
+      { kind: "heading", text: t("✈️ טיסות + חבילות נופש", "✈️ Flights + vacation packages") },
+      {
+        kind: "table",
+        caption: CAP_INTERNAL,
+        headers: [H_TIME_CANCEL, H_FEE_PAX_NET],
+        rows: [
+          row(
+            "net",
+            "עד 22 ימי עסקים לפני היציאה",
+            "Up to 22 business days before departure",
+            "25% מהעלות",
+            "25% of cost",
+          ),
+          row(
+            "gross",
+            "21–15 ימי עסקים לפני היציאה",
+            "21–15 business days before departure",
+            "50% מהעלות",
+            "50% of cost",
+          ),
+          row(
+            "gross",
+            "14–8 ימי עסקים לפני היציאה",
+            "14–8 business days before departure",
+            "75% מהעלות",
+            "75% of cost",
+          ),
+          row(
+            "full",
+            "7 ימי עסקים ומטה לפני היציאה",
+            "7 business days or fewer before departure",
+            "100% — ללא החזר",
+            "100% — no refund",
+          ),
+        ],
+      },
+      {
+        kind: "copy",
+        text: copyText(
+          "departure",
+          "לאחר מכן ועד 22 ימי עסקים לפני היציאה — 35% מהעלות לנוסע.\n\n21–15 ימי עסקים לפני היציאה — 60% מהעלות לנוסע.\n\n14–8 ימי עסקים לפני היציאה — 85% מהעלות לנוסע.\n\n7 ימי עסקים ומטה לפני היציאה — 100% מהעלות, ללא כל החזר.",
+          "Thereafter and up to 22 business days before departure — 35% of the cost per traveler.\n\n21–15 business days before departure — 60% of the cost per traveler.\n\n14–8 business days before departure — 85% of the cost per traveler.\n\n7 business days or fewer before departure — 100% of the cost, no refund.",
+        ),
+        levels: ["net", "gross", "gross", "full"],
+      },
+      { kind: "heading", text: t("🚌 טיולים מאורגנים", "🚌 Organized tours") },
+      {
+        kind: "table",
+        caption: CAP_INTERNAL,
+        headers: [H_TIME_CANCEL, H_FEE_PAX_NET],
+        rows: [
+          row(
+            "net",
+            "עד 22 ימי עסקים לפני היציאה",
+            "Up to 22 business days before departure",
+            "25% מהעלות",
+            "25% of cost",
+          ),
+          row(
+            "gross",
+            "21–15 ימי עסקים לפני היציאה",
+            "21–15 business days before departure",
+            "50% מהעלות",
+            "50% of cost",
+          ),
+          row(
+            "gross",
+            "14–8 ימי עסקים לפני היציאה",
+            "14–8 business days before departure",
+            "75% מהעלות",
+            "75% of cost",
+          ),
+          row(
+            "full",
+            "7 ימי עסקים ומטה לפני היציאה",
+            "7 business days or fewer before departure",
+            "100% — ללא החזר",
+            "100% — no refund",
+          ),
+        ],
+      },
+      {
+        kind: "copy",
+        text: copyText(
+          "departure",
+          "לאחר מכן ועד 22 ימי עסקים לפני היציאה — 35% מהעלות לנוסע.\n\n21–15 ימי עסקים לפני היציאה — 60% מהעלות לנוסע.\n\n14–8 ימי עסקים לפני היציאה — 85% מהעלות לנוסע.\n\n7 ימי עסקים ומטה לפני היציאה — 100% מהעלות, ללא כל החזר.",
+          "Thereafter and up to 22 business days before departure — 35% of the cost per traveler.\n\n21–15 business days before departure — 60% of the cost per traveler.\n\n14–8 business days before departure — 85% of the cost per traveler.\n\n7 business days or fewer before departure — 100% of the cost, no refund.",
+        ),
+        levels: ["net", "gross", "gross", "full"],
+      },
+    ],
+  },
 ];
 
 // ── Locale-resolved view types ───────────────────────────────────────────────
