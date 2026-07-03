@@ -5,7 +5,7 @@ import Image from "next/image";
 import type { ColumnDef } from "@tanstack/react-table";
 import { Info } from "lucide-react";
 import { useLocale, type useTranslations } from "next-intl";
-import type { WeightTier, ViewAirline } from "@/lib/baggage";
+import type { WeightTier, ViewAirline } from "@/lib/airlines";
 import { CountryFlag } from "@/components/country-flag";
 import { DataTableColumnHeader } from "@/components/ui/data-table";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";

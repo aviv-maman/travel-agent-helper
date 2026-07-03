@@ -2,7 +2,7 @@
  * Downloads supplier / airline logos (favicons) into public/{suppliers,airlines}/{id}.png.
  *
  * The id + website lists are read straight from the data files (lib/commissions.ts
- * for suppliers, lib/baggage.ts for airlines), so they always match the data.
+ * for suppliers, lib/airlines.ts for airlines), so they always match the data.
  * Each card renders `logo ?? placeholder`, so dropping a file at
  * public/<dir>/{id}.png "upgrades" that supplier/airline.
  *
@@ -49,7 +49,7 @@ function readSuppliers(): Entity[] {
  * braces, so each `{ ... }` in the AIRLINES array is one airline.
  */
 function readAirlines(): Entity[] {
-  const src = readFileSync(join(ROOT, "lib/baggage.ts"), "utf8");
+  const src = readFileSync(join(ROOT, "lib/airlines.ts"), "utf8");
   const start = src.indexOf("const AIRLINES");
   const end = src.indexOf("\n];", start);
   if (start < 0 || end < 0) return [];
@@ -193,11 +193,9 @@ async function fetchOne(s: Entity, outDir: string): Promise<void> {
 async function main() {
   const args = process.argv.slice(2);
   const type = (args.includes("--type") ? args[args.indexOf("--type") + 1] : undefined) as
-    | EntityType
-    | string
-    | undefined;
+    EntityType | string | undefined;
   if (type !== "supplier" && type !== "airline" && type !== "news") {
-    console.error('--type is required. Use --type supplier, --type airline or --type news.');
+    console.error("--type is required. Use --type supplier, --type airline or --type news.");
     process.exit(1);
   }
 
