@@ -481,7 +481,7 @@ const AIRLINES: Airline[] = [
   },
   {
     id: "hisky",
-    iata: "H7",
+    iata: "H4",
     flag: "🇷🇴",
     name: t("הייסקיי יורופ", "HiSky Europe"),
     kg: "23",
