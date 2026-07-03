@@ -1,15 +1,19 @@
 /**
- * Seeds Neon from the legacy HTML. Idempotent: destinations/landmarks are
- * upserted; a destination's hotels are replaced wholesale on each run (cascades
- * clean up features/distances).
+ * Seeds Neon from data/seed.json (the exported destination/hotel data).
+ * Idempotent: destinations/landmarks are upserted; a destination's hotels are
+ * replaced wholesale on each run (cascades clean up features/distances).
  *
  * Run with: `bun run seed` (Bun auto-loads .env.local).
  */
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
 import { eq } from "drizzle-orm";
 import { neon } from "@neondatabase/serverless";
 import { drizzle } from "drizzle-orm/neon-http";
 import * as schema from "../db/schema";
-import { extractSeed } from "./extract";
+import type { SeedDestination } from "./extract";
+
+const SEED_FILE = join(process.cwd(), "data", "seed.json");
 
 const {
   destinations,
@@ -27,7 +31,7 @@ if (!process.env.DATABASE_URL) {
 const db = drizzle(neon(process.env.DATABASE_URL), { schema });
 
 async function main() {
-  const data = extractSeed();
+  const data = JSON.parse(readFileSync(SEED_FILE, "utf8")) as SeedDestination[];
   let hotelTotal = 0;
 
   for (const d of data) {
