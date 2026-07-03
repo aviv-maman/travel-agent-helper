@@ -53,7 +53,7 @@ export type SupplierNote = {
 export type Supplier = {
   id: string;
   name: Localized;
-  /** Alternate name shown as the card subtitle and indexed for search (e.g. Israir ↔ Unital). */
+  /** Alternate name shown as the card subtitle and indexed for search (e.g. Israir ↔ Natour). */
   alias?: Localized;
   /** Supplier website URL (placeholder for now; wired up elsewhere later). */
   website?: string;
@@ -114,13 +114,13 @@ const SUPPLIERS: Supplier[] = [
     website: "https://www.israir.co.il/",
     logo: "/suppliers/israir.png",
     name: t("ישראייר — Israir", "Israir"),
-    alias: t("יוניטל", "Unital"),
+    alias: t("נתור", "Natour"),
     flightsOnly: c("7.5%", "7.5%", "mid"),
     packages: c("9.5%", "9.5%", "high"),
     organizedTours: c("7.5%", "7.5%", "mid"),
     notes: [
       {
-        text: t("ידוע גם כיוניטל בטיולים מאורגנים", "Also known as Unital for organized tours"),
+        text: t("ידוע גם כנתור בטיולים מאורגנים", "Also known as Natour for organized tours"),
         variant: "info",
         showTitle: false,
       },
