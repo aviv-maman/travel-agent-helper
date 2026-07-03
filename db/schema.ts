@@ -6,6 +6,7 @@ import {
   varchar,
   text,
   real,
+  boolean,
   jsonb,
   timestamp,
   uniqueIndex,
@@ -261,6 +262,10 @@ export const users = pgTable(
      * have no password and sign in via a linked provider (see `accounts`).
      */
     passwordHash: text("password_hash"),
+    /** Base32 TOTP secret. Present during setup; 2FA is active once `totpEnabledAt` is set. */
+    totpSecret: text("totp_secret"),
+    /** When 2FA was confirmed/activated; null = not enabled. */
+    totpEnabledAt: timestamp("totp_enabled_at", { withTimezone: true }),
     role: userRole("role").notNull().default("agent"),
     createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
   },
@@ -288,9 +293,29 @@ export const sessions = pgTable(
     lastSeenAt: timestamp("last_seen_at", { withTimezone: true }).notNull().defaultNow(),
     /** User-agent at sign-in, for the "active sessions" list. */
     userAgent: text("user_agent"),
+    /** True between password and 2FA steps — such sessions do NOT authenticate yet. */
+    mfaPending: boolean("mfa_pending").notNull().default(false),
     expiresAt: timestamp("expires_at", { withTimezone: true }).notNull(),
   },
   (t) => [index("sessions_user_idx").on(t.userId)],
+);
+
+/**
+ * One-time backup codes for 2FA (used when an authenticator isn't available).
+ * Only the hash is stored; `usedAt` marks a code spent.
+ */
+export const backupCodes = pgTable(
+  "backup_codes",
+  {
+    id: serial("id").primaryKey(),
+    userId: integer("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    codeHash: text("code_hash").notNull(),
+    usedAt: timestamp("used_at", { withTimezone: true }),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (t) => [index("backup_codes_user_idx").on(t.userId)],
 );
 
 /** External identity providers a user can link and sign in with. */
@@ -402,3 +427,4 @@ export type UserRole = (typeof userRole.enumValues)[number];
 export type Account = typeof accounts.$inferSelect;
 export type AuthProviderName = (typeof authProvider.enumValues)[number];
 export type AuditEntry = typeof auditLog.$inferSelect;
+export type BackupCode = typeof backupCodes.$inferSelect;

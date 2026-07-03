@@ -8,6 +8,7 @@ import { THEME_COOKIE, THEME_MAX_AGE, isTheme } from "@/lib/theme";
 import { db } from "@/db";
 import {
   accounts,
+  backupCodes,
   invitations,
   sessions,
   users,
@@ -16,19 +17,27 @@ import {
 } from "@/db/schema";
 import { hashPassword, verifyPassword } from "./password";
 import {
+  generateSecret,
+  verifyTotp,
+  generateBackupCodes,
+  hashBackupCode,
+} from "./totp";
+import {
   createSession,
   invalidateSession,
   invalidateOtherSessions,
   invalidateUserSessions,
   deleteAllUserSessions,
   currentSessionId,
+  mfaPendingUser,
+  completeMfa,
 } from "./session";
 import { can, getCurrentUser } from ".";
 import { recordAudit } from "./audit";
 import { generateInviteCode, inviteStatus } from "./invites";
 import { isLocked, recordFailure, clearAttempts, clientIp } from "./rate-limit";
 
-export type AuthState = { error?: string; ok?: boolean };
+export type AuthState = { error?: string; ok?: boolean; mfa?: boolean };
 
 /**
  * A well-formed but unmatchable hash. When the username doesn't exist we still
@@ -64,16 +73,64 @@ export async function login(
   }
 
   await clearAttempts(ip);
+
+  // With 2FA on, the password is only step one: create a *pending* session and
+  // ask for a code. The session doesn't authenticate until verifyMfa completes.
+  if (user.totpEnabledAt) {
+    await createSession(user, { mfaPending: true });
+    return { mfa: true };
+  }
+
   await createSession(user);
   await recordAudit("login", { actorId: user.id });
-  // Cross-device theme: apply this account's saved preference on this device.
-  if (user.themePref && isTheme(user.themePref)) {
-    (await cookies()).set(THEME_COOKIE, user.themePref, {
+  await applyThemePref(user.themePref);
+  redirect(`/${locale}`);
+}
+
+/** Set the theme cookie from a saved preference (cross-device). */
+async function applyThemePref(themePref: string | null): Promise<void> {
+  if (themePref && isTheme(themePref)) {
+    (await cookies()).set(THEME_COOKIE, themePref, {
       path: "/",
       maxAge: THEME_MAX_AGE,
       sameSite: "lax",
     });
   }
+}
+
+/** Second login step: verify a TOTP or backup code, then finish signing in. */
+export async function verifyMfa(
+  locale: string,
+  _prev: AuthState,
+  formData: FormData,
+): Promise<AuthState> {
+  const user = await mfaPendingUser();
+  if (!user || !user.totpSecret) return { error: "expired" };
+
+  const code = String(formData.get("code") ?? "").trim();
+  let ok = verifyTotp(user.totpSecret, code);
+  if (!ok) {
+    const [backup] = await db
+      .select({ id: backupCodes.id })
+      .from(backupCodes)
+      .where(
+        and(
+          eq(backupCodes.userId, user.id),
+          eq(backupCodes.codeHash, hashBackupCode(code)),
+          isNull(backupCodes.usedAt),
+        ),
+      )
+      .limit(1);
+    if (backup) {
+      await db.update(backupCodes).set({ usedAt: new Date() }).where(eq(backupCodes.id, backup.id));
+      ok = true;
+    }
+  }
+  if (!ok) return { error: "invalidCode" };
+
+  await completeMfa(user.username);
+  await recordAudit("login", { actorId: user.id });
+  await applyThemePref(user.themePref);
   redirect(`/${locale}`);
 }
 
@@ -366,4 +423,72 @@ export async function unlinkAccount(provider: AuthProviderName): Promise<void> {
     .where(and(eq(accounts.userId, user.id), eq(accounts.provider, provider)));
   await recordAudit("account.unlink", { actorId: user.id, meta: { provider } });
   revalidatePath("/[locale]/account/security", "page");
+}
+
+export type TotpState = { error?: string; backupCodes?: string[] };
+
+/** Begin 2FA setup: generate a secret (kept until confirmed; not yet active). */
+export async function startTotpSetup(): Promise<void> {
+  const user = await getCurrentUser();
+  if (!user || user.totpEnabledAt) return;
+  await db.update(users).set({ totpSecret: generateSecret() }).where(eq(users.id, user.id));
+  revalidatePath("/[locale]/account/security", "page");
+}
+
+/** Abort an in-progress (unconfirmed) 2FA setup. */
+export async function cancelTotpSetup(): Promise<void> {
+  const user = await getCurrentUser();
+  if (!user || user.totpEnabledAt) return;
+  await db.update(users).set({ totpSecret: null }).where(eq(users.id, user.id));
+  revalidatePath("/[locale]/account/security", "page");
+}
+
+/** Confirm setup with a current code → activate 2FA and issue backup codes (shown once). */
+export async function confirmTotpSetup(_prev: TotpState, formData: FormData): Promise<TotpState> {
+  const user = await getCurrentUser();
+  if (!user || user.totpEnabledAt || !user.totpSecret) return { error: "state" };
+  if (!verifyTotp(user.totpSecret, String(formData.get("code") ?? ""))) {
+    return { error: "invalidCode" };
+  }
+  const codes = generateBackupCodes();
+  await db.update(users).set({ totpEnabledAt: new Date() }).where(eq(users.id, user.id));
+  await db
+    .insert(backupCodes)
+    .values(codes.map((c) => ({ userId: user.id, codeHash: hashBackupCode(c) })));
+  await recordAudit("2fa.enable", { actorId: user.id });
+  revalidatePath("/[locale]/account/security", "page");
+  return { backupCodes: codes };
+}
+
+/** Turn 2FA off — requires a current code or the account password. */
+export async function disableTotp(_prev: TotpState, formData: FormData): Promise<TotpState> {
+  const user = await getCurrentUser();
+  if (!user || !user.totpEnabledAt || !user.totpSecret) return { error: "state" };
+  const code = String(formData.get("code") ?? "");
+  const password = String(formData.get("password") ?? "");
+  const ok =
+    verifyTotp(user.totpSecret, code) ||
+    (user.passwordHash ? await verifyPassword(password, user.passwordHash) : false);
+  if (!ok) return { error: "invalidCode" };
+  await db.update(users).set({ totpSecret: null, totpEnabledAt: null }).where(eq(users.id, user.id));
+  await db.delete(backupCodes).where(eq(backupCodes.userId, user.id));
+  await recordAudit("2fa.disable", { actorId: user.id });
+  revalidatePath("/[locale]/account/security", "page");
+  return {};
+}
+
+/** Replace all backup codes with a fresh set (shown once). */
+export async function regenerateBackupCodes(
+  _prev: TotpState,
+  _formData: FormData,
+): Promise<TotpState> {
+  const user = await getCurrentUser();
+  if (!user || !user.totpEnabledAt) return { error: "state" };
+  await db.delete(backupCodes).where(eq(backupCodes.userId, user.id));
+  const codes = generateBackupCodes();
+  await db
+    .insert(backupCodes)
+    .values(codes.map((c) => ({ userId: user.id, codeHash: hashBackupCode(c) })));
+  revalidatePath("/[locale]/account/security", "page");
+  return { backupCodes: codes };
 }

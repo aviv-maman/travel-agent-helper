@@ -3,6 +3,7 @@
 import { useActionState } from "react";
 import { useTranslations } from "next-intl";
 import { login, type AuthState } from "@/lib/auth/actions";
+import { MfaForm } from "./mfa-form";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
@@ -14,6 +15,9 @@ export function LoginForm({ locale }: { locale: string }) {
     login.bind(null, locale),
     {},
   );
+
+  // Password accepted but the account has 2FA → show the code step.
+  if (state.mfa) return <MfaForm locale={locale} />;
 
   return (
     <form action={action} className="flex flex-col gap-4">
