@@ -10,6 +10,8 @@ export type AuditAction =
   | "password.set"
   | "account.delete"
   | "account.unlink"
+  | "2fa.enable"
+  | "2fa.disable"
   | "user.role"
   | "user.delete"
   | "user.force_logout"

@@ -10,6 +10,10 @@ const eslintConfig = defineConfig([
       "no-console": "warn",
       "no-empty-pattern": "warn",
       "no-unused-vars": ["error", { argsIgnorePattern: "^_", varsIgnorePattern: "^_" }],
+      "@typescript-eslint/no-unused-vars": [
+        "error",
+        { argsIgnorePattern: "^_", varsIgnorePattern: "^_" },
+      ],
       "prefer-const": "warn",
       "no-empty-function": "warn",
       "@typescript-eslint/no-empty-function": "warn",

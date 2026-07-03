@@ -26,16 +26,20 @@ function hashToken(token: string): string {
  * only from a Server Action or Route Handler (never during render). Also sets a
  * readable mirror cookie (public identity) for the client nav.
  */
-export async function createSession(user: {
-  id: number;
-  username: string;
-}): Promise<void> {
+export async function createSession(
+  user: { id: number; username: string },
+  opts: { mfaPending?: boolean } = {},
+): Promise<void> {
   const token = randomBytes(32).toString("base64url");
   const expiresAt = new Date(Date.now() + SESSION_DURATION_MS);
   const userAgent = (await headers()).get("user-agent")?.slice(0, 400) ?? null;
-  await db
-    .insert(sessions)
-    .values({ id: hashToken(token), userId: user.id, userAgent, expiresAt });
+  await db.insert(sessions).values({
+    id: hashToken(token),
+    userId: user.id,
+    userAgent,
+    expiresAt,
+    mfaPending: opts.mfaPending ?? false,
+  });
 
   const store = await cookies();
   const base = {
@@ -45,7 +49,42 @@ export async function createSession(user: {
     expires: expiresAt,
   };
   store.set(COOKIE_NAME, token, { httpOnly: true, ...base });
-  store.set(USER_COOKIE, user.username, { httpOnly: false, ...base });
+  // The nav mirror is set only once fully authenticated (not mid-2FA).
+  if (!opts.mfaPending) store.set(USER_COOKIE, user.username, { httpOnly: false, ...base });
+}
+
+/**
+ * The user of a **2FA-pending** session (between the password and code steps),
+ * or null. Used by the second login step; `validateSession` deliberately ignores
+ * pending sessions, so this is the only way to see them.
+ */
+export async function mfaPendingUser(): Promise<User | null> {
+  const token = (await cookies()).get(COOKIE_NAME)?.value;
+  if (!token) return null;
+  const [found] = await db
+    .select({ user: users, expiresAt: sessions.expiresAt, mfaPending: sessions.mfaPending })
+    .from(sessions)
+    .innerJoin(users, eq(sessions.userId, users.id))
+    .where(eq(sessions.id, hashToken(token)))
+    .limit(1);
+  if (!found || !found.mfaPending || found.expiresAt.getTime() < Date.now()) return null;
+  return found.user;
+}
+
+/** Promote the current pending session to fully authenticated and set the nav mirror. */
+export async function completeMfa(username: string): Promise<void> {
+  const store = await cookies();
+  const token = store.get(COOKIE_NAME)?.value;
+  if (!token) return;
+  const expiresAt = new Date(Date.now() + SESSION_DURATION_MS);
+  await db.update(sessions).set({ mfaPending: false }).where(eq(sessions.id, hashToken(token)));
+  store.set(USER_COOKIE, username, {
+    httpOnly: false,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "lax",
+    path: "/",
+    expires: expiresAt,
+  });
 }
 
 /**
@@ -60,7 +99,7 @@ export async function validateSession(): Promise<User | null> {
     .select({ user: users, expiresAt: sessions.expiresAt, lastSeenAt: sessions.lastSeenAt })
     .from(sessions)
     .innerJoin(users, eq(sessions.userId, users.id))
-    .where(eq(sessions.id, sessionId))
+    .where(and(eq(sessions.id, sessionId), eq(sessions.mfaPending, false)))
     .limit(1);
   if (!found || found.expiresAt.getTime() < Date.now()) return null;
 

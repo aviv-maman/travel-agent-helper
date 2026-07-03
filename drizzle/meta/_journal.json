@@ -71,6 +71,13 @@
       "when": 1783109490493,
       "tag": "0009_strange_pixie",
       "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "7",
+      "when": 1783114825769,
+      "tag": "0010_silky_rogue",
+      "breakpoints": true
     }
   ]
 }

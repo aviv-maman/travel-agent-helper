@@ -7,6 +7,7 @@ import { SetPasswordForm } from "@/components/auth/set-password-form";
 import { SessionsList } from "@/components/auth/sessions-list";
 import { LogoutEverywhereButton } from "@/components/auth/logout-everywhere-button";
 import { ConnectedAccounts } from "@/components/auth/connected-accounts";
+import { TwoFactor } from "@/components/auth/two-factor";
 import { AuditList } from "@/components/auth/audit-list";
 import {
   Card,
@@ -42,6 +43,15 @@ export default async function SecurityPage({
           ) : (
             <SetPasswordForm locale={locale} />
           )}
+        </CardContent>
+      </Card>
+      <Card>
+        <CardHeader>
+          <CardTitle>{t("twoFactor")}</CardTitle>
+          <CardDescription>{t("twoFactorHint")}</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <TwoFactor user={user} locale={locale} />
         </CardContent>
       </Card>
       <Card>
