@@ -154,3 +154,25 @@ export async function revokeInvite(id: number): Promise<void> {
     .set({ revokedAt: new Date() })
     .where(and(eq(invitations.id, id), isNull(invitations.usedAt), isNull(invitations.revokedAt)));
 }
+
+/**
+ * Admin-only: change a user's role. You can't change your **own** role — that
+ * both prevents locking yourself out and guarantees at least one admin remains
+ * (the acting admin).
+ */
+export async function setUserRole(userId: number, formData: FormData): Promise<void> {
+  if (!(await can("users:manage"))) return;
+  const me = await getCurrentUser();
+  if (!me || me.id === userId) return;
+  const role = String(formData.get("role") ?? "");
+  if (!(["admin", "editor", "agent"] as const).includes(role as UserRole)) return;
+  await db.update(users).set({ role: role as UserRole }).where(eq(users.id, userId));
+}
+
+/** Admin-only: delete a user (cascades their sessions). You can't delete yourself. */
+export async function deleteUser(userId: number): Promise<void> {
+  if (!(await can("users:manage"))) return;
+  const me = await getCurrentUser();
+  if (!me || me.id === userId) return;
+  await db.delete(users).where(eq(users.id, userId));
+}

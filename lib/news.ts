@@ -51,6 +51,9 @@ const MAX_PER_SOURCE = 12;
 const FETCH_TIMEOUT_MS = 15_000;
 const REVALIDATE_SECONDS = 1_800; // 30 min
 
+/** Cache tag on every news fetch — `revalidateTag(NEWS_TAG)` forces a full refresh. */
+export const NEWS_TAG = "news";
+
 const BROWSER_HEADERS = {
   "User-Agent":
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
@@ -565,7 +568,7 @@ async function fetchOgImage(url: string): Promise<string | null> {
     const res = await fetch(url, {
       headers: BROWSER_HEADERS,
       signal: AbortSignal.timeout(FETCH_TIMEOUT_MS),
-      next: { revalidate: REVALIDATE_SECONDS },
+      next: { revalidate: REVALIDATE_SECONDS, tags: [NEWS_TAG] },
     });
     if (!res.ok) return null;
     const $ = cheerio.load(await res.text());
@@ -583,7 +586,7 @@ async function fetchSource(src: NewsSource): Promise<NewsArticle[]> {
     const res = await fetch(src.url, {
       headers: BROWSER_HEADERS,
       signal: AbortSignal.timeout(FETCH_TIMEOUT_MS),
-      next: { revalidate: REVALIDATE_SECONDS },
+      next: { revalidate: REVALIDATE_SECONDS, tags: [NEWS_TAG] },
     });
     if (!res.ok) return [];
     const body = await res.text();
