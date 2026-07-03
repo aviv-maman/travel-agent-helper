@@ -1,7 +1,7 @@
 import "server-only";
-import { cookies } from "next/headers";
+import { cookies, headers } from "next/headers";
 import { createHash, randomBytes } from "node:crypto";
-import { and, eq, ne } from "drizzle-orm";
+import { and, desc, eq, ne } from "drizzle-orm";
 import { db } from "@/db";
 import { sessions, users, type User, type UserRole } from "@/db/schema";
 import { USER_COOKIE } from "./public-user";
@@ -32,7 +32,10 @@ export async function createSession(user: {
 }): Promise<void> {
   const token = randomBytes(32).toString("base64url");
   const expiresAt = new Date(Date.now() + SESSION_DURATION_MS);
-  await db.insert(sessions).values({ id: hashToken(token), userId: user.id, expiresAt });
+  const userAgent = (await headers()).get("user-agent")?.slice(0, 400) ?? null;
+  await db
+    .insert(sessions)
+    .values({ id: hashToken(token), userId: user.id, userAgent, expiresAt });
 
   const store = await cookies();
   const base = {
@@ -97,3 +100,25 @@ export async function invalidateUserSessions(userId: number): Promise<void> {
   store.delete(COOKIE_NAME);
   store.delete(USER_COOKIE);
 }
+
+/** The current session's id (the hashed token), or null when signed out. */
+export async function currentSessionId(): Promise<string | null> {
+  const token = (await cookies()).get(COOKIE_NAME)?.value;
+  return token ? hashToken(token) : null;
+}
+
+/** A user's active sessions, newest first, for the "active sessions" list. */
+export async function listSessions(userId: number) {
+  return db
+    .select({
+      id: sessions.id,
+      createdAt: sessions.createdAt,
+      userAgent: sessions.userAgent,
+      expiresAt: sessions.expiresAt,
+    })
+    .from(sessions)
+    .where(eq(sessions.userId, userId))
+    .orderBy(desc(sessions.createdAt));
+}
+
+export type SessionRow = Awaited<ReturnType<typeof listSessions>>[number];
