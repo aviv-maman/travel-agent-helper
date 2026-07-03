@@ -73,6 +73,7 @@
     "errWrongPassword": "Your current password is incorrect.",
     "errMissing": "Enter a username and password.",
     "errInvalid": "Invalid username or password.",
+    "errLocked": "Too many attempts. Try again in a few minutes.",
     "errCodeMissing": "Enter your invite code.",
     "errCodeInvalid": "This invite code is invalid, used or expired.",
     "errUsernameShort": "Username must be at least 3 characters.",

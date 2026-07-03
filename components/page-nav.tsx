@@ -4,8 +4,10 @@ import { useState } from "react";
 import { useSelectedLayoutSegment } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";
 import Link from "next/link";
-import { Menu, CircleUser } from "lucide-react";
+import { Menu, CircleUser, LogOut } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { logout } from "@/lib/auth/actions";
+import { useSession } from "@/components/auth/session-provider";
 import {
   NavigationMenu,
   NavigationMenuItem,
@@ -38,6 +40,8 @@ export function PageNav() {
   const t = useTranslations("tabs");
   const tNav = useTranslations("nav");
   const tApp = useTranslations("app");
+  const tAuth = useTranslations("auth");
+  const user = useSession();
   const locale = useLocale();
   const direction = useDirection();
   const segment = useSelectedLayoutSegment() ?? "hotels";
@@ -105,8 +109,20 @@ export function PageNav() {
                   />
                 }>
                 <CircleUser className="size-4" />
-                {tNav("account")}
+                {user ? user.username : tNav("account")}
               </SheetClose>
+              {user && (
+                <form action={logout.bind(null, locale)}>
+                  <Button
+                    type="submit"
+                    variant="ghost"
+                    size="sm"
+                    className="w-full justify-start px-0 text-muted-foreground">
+                    <LogOut className="size-4" />
+                    {tAuth("signOut")}
+                  </Button>
+                </form>
+              )}
               <div className="flex items-center justify-between gap-2">
                 <span className="text-sm text-muted-foreground">{tNav("themeLabel")}</span>
                 <ThemeToggle />
@@ -154,12 +170,28 @@ export function PageNav() {
 
         {/* Desktop controls cluster */}
         <div className="ms-auto hidden shrink-0 items-center gap-2 sm:flex">
-          <Link
-            href={`/${locale}/login`}
-            aria-label={tNav("account")}
-            className="flex size-9 items-center justify-center rounded-md text-muted-foreground transition-colors hover:text-foreground">
-            <CircleUser className="size-5" />
-          </Link>
+          {user ? (
+            <>
+              <Link
+                href={`/${locale}/login`}
+                className="flex items-center gap-1.5 rounded-md px-2 py-1 text-sm font-medium text-foreground transition-colors hover:text-brand">
+                <CircleUser className="size-4" />
+                {user.username}
+              </Link>
+              <form action={logout.bind(null, locale)}>
+                <Button type="submit" variant="ghost" size="icon-sm" aria-label={tAuth("signOut")}>
+                  <LogOut className="size-4" />
+                </Button>
+              </form>
+            </>
+          ) : (
+            <Link
+              href={`/${locale}/login`}
+              aria-label={tNav("account")}
+              className="flex size-9 items-center justify-center rounded-md text-muted-foreground transition-colors hover:text-foreground">
+              <CircleUser className="size-5" />
+            </Link>
+          )}
           <ThemeToggle />
           <LanguageSwitcher />
         </div>

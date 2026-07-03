@@ -3,7 +3,8 @@ import { cookies } from "next/headers";
 import { createHash, randomBytes } from "node:crypto";
 import { and, eq, ne } from "drizzle-orm";
 import { db } from "@/db";
-import { sessions, users, type User } from "@/db/schema";
+import { sessions, users, type User, type UserRole } from "@/db/schema";
+import { USER_COOKIE } from "./public-user";
 
 /**
  * Server-side session store. The cookie holds an opaque random token; the DB
@@ -20,20 +21,28 @@ function hashToken(token: string): string {
 }
 
 /**
- * Create a session for `userId` and set the cookie. Writes a cookie, so call it
- * only from a Server Action or Route Handler (never during render).
+ * Create a session for `user` and set the cookies. Writes cookies, so call it
+ * only from a Server Action or Route Handler (never during render). Also sets a
+ * readable mirror cookie (public identity) for the client nav.
  */
-export async function createSession(userId: number): Promise<void> {
+export async function createSession(user: {
+  id: number;
+  username: string;
+  role: UserRole;
+}): Promise<void> {
   const token = randomBytes(32).toString("base64url");
   const expiresAt = new Date(Date.now() + SESSION_DURATION_MS);
-  await db.insert(sessions).values({ id: hashToken(token), userId, expiresAt });
-  (await cookies()).set(COOKIE_NAME, token, {
-    httpOnly: true,
+  await db.insert(sessions).values({ id: hashToken(token), userId: user.id, expiresAt });
+
+  const store = await cookies();
+  const base = {
     secure: process.env.NODE_ENV === "production",
-    sameSite: "lax",
+    sameSite: "lax" as const,
     path: "/",
     expires: expiresAt,
-  });
+  };
+  store.set(COOKIE_NAME, token, { httpOnly: true, ...base });
+  store.set(USER_COOKIE, `${user.username}:${user.role}`, { httpOnly: false, ...base });
 }
 
 /**
@@ -60,9 +69,9 @@ export async function validateSession(): Promise<User | null> {
 export async function invalidateSession(): Promise<void> {
   const store = await cookies();
   const token = store.get(COOKIE_NAME)?.value;
-  if (!token) return;
-  await db.delete(sessions).where(eq(sessions.id, hashToken(token)));
+  if (token) await db.delete(sessions).where(eq(sessions.id, hashToken(token)));
   store.delete(COOKIE_NAME);
+  store.delete(USER_COOKIE);
 }
 
 /**
@@ -81,8 +90,10 @@ export async function invalidateOtherSessions(userId: number): Promise<void> {
     );
 }
 
-/** Delete every session for `userId` (all devices) and clear this cookie. */
+/** Delete every session for `userId` (all devices) and clear the cookies. */
 export async function invalidateUserSessions(userId: number): Promise<void> {
   await db.delete(sessions).where(eq(sessions.userId, userId));
-  (await cookies()).delete(COOKIE_NAME);
+  const store = await cookies();
+  store.delete(COOKIE_NAME);
+  store.delete(USER_COOKIE);
 }

@@ -39,7 +39,11 @@ export function LoginForm({ locale }: { locale: string }) {
       </div>
       {state.error && (
         <p className="text-sm text-destructive">
-          {state.error === "missing" ? t("errMissing") : t("errInvalid")}
+          {state.error === "missing"
+            ? t("errMissing")
+            : state.error === "locked"
+              ? t("errLocked")
+              : t("errInvalid")}
         </p>
       )}
       <Button type="submit" disabled={pending}>

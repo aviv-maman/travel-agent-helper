@@ -307,6 +307,18 @@ export const invitations = pgTable(
   (t) => [uniqueIndex("invitations_code_key").on(t.code)],
 );
 
+/**
+ * Failed-login throttling, keyed by username. A rolling window counts recent
+ * failures; once it trips, `locked_until` blocks attempts for a cooldown. A
+ * successful login deletes the row.
+ */
+export const loginAttempts = pgTable("login_attempts", {
+  key: varchar("key", { length: 60 }).primaryKey(),
+  count: integer("count").notNull().default(0),
+  windowStartsAt: timestamp("window_starts_at", { withTimezone: true }).notNull().defaultNow(),
+  lockedUntil: timestamp("locked_until", { withTimezone: true }),
+});
+
 export type User = typeof users.$inferSelect;
 export type Session = typeof sessions.$inferSelect;
 export type Invitation = typeof invitations.$inferSelect;
