@@ -2,7 +2,10 @@ import { setRequestLocale, getTranslations } from "next-intl/server";
 import { getCurrentUser } from "@/lib/auth";
 import { LoginForm } from "@/components/auth/login-form";
 import { LogoutButton } from "@/components/auth/logout-button";
+import { ChangePasswordForm } from "@/components/auth/change-password-form";
+import { LogoutEverywhereButton } from "@/components/auth/logout-everywhere-button";
 import { Link } from "@/i18n/navigation";
+import { Separator } from "@/components/ui/separator";
 import {
   Card,
   CardHeader,
@@ -32,27 +35,36 @@ export default async function LoginPage({
         </CardHeader>
         <CardContent>
           {user ? (
-            <div className="flex flex-col gap-4">
-              <p className="text-sm text-muted-foreground">
-                {t("signedInAs", { username: user.username, role: t(`roles.${user.role}`) })}
-              </p>
-              <div className="flex flex-wrap items-center gap-3">
-                <LogoutButton locale={locale} />
-                {user.role === "admin" && (
-                  <>
-                    <Link
-                      href="/admin/invites"
-                      className="text-sm font-medium text-brand hover:underline">
-                      {t("manageInvites")}
-                    </Link>
-                    <Link
-                      href="/admin/users"
-                      className="text-sm font-medium text-brand hover:underline">
-                      {t("manageUsers")}
-                    </Link>
-                  </>
-                )}
+            <div className="flex flex-col gap-5">
+              <div className="flex flex-col gap-3">
+                <p className="text-sm text-muted-foreground">
+                  {t("signedInAs", { username: user.username, role: t(`roles.${user.role}`) })}
+                </p>
+                <div className="flex flex-wrap items-center gap-3">
+                  <LogoutButton locale={locale} />
+                  {user.role === "admin" && (
+                    <>
+                      <Link
+                        href="/admin/invites"
+                        className="text-sm font-medium text-brand hover:underline">
+                        {t("manageInvites")}
+                      </Link>
+                      <Link
+                        href="/admin/users"
+                        className="text-sm font-medium text-brand hover:underline">
+                        {t("manageUsers")}
+                      </Link>
+                    </>
+                  )}
+                </div>
               </div>
+              <Separator />
+              <div className="flex flex-col gap-3">
+                <h3 className="text-sm font-semibold text-foreground">{t("changePassword")}</h3>
+                <ChangePasswordForm locale={locale} />
+              </div>
+              <Separator />
+              <LogoutEverywhereButton locale={locale} />
             </div>
           ) : (
             <LoginForm locale={locale} />

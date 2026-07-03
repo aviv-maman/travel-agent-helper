@@ -1,7 +1,7 @@
 import "server-only";
 import { cookies } from "next/headers";
 import { createHash, randomBytes } from "node:crypto";
-import { eq } from "drizzle-orm";
+import { and, eq, ne } from "drizzle-orm";
 import { db } from "@/db";
 import { sessions, users, type User } from "@/db/schema";
 
@@ -63,4 +63,26 @@ export async function invalidateSession(): Promise<void> {
   if (!token) return;
   await db.delete(sessions).where(eq(sessions.id, hashToken(token)));
   store.delete(COOKIE_NAME);
+}
+
+/**
+ * Delete every session for `userId` except the current device's — used after a
+ * password change to sign out other devices while keeping this one active.
+ */
+export async function invalidateOtherSessions(userId: number): Promise<void> {
+  const token = (await cookies()).get(COOKIE_NAME)?.value;
+  const currentId = token ? hashToken(token) : null;
+  await db
+    .delete(sessions)
+    .where(
+      currentId
+        ? and(eq(sessions.userId, userId), ne(sessions.id, currentId))
+        : eq(sessions.userId, userId),
+    );
+}
+
+/** Delete every session for `userId` (all devices) and clear this cookie. */
+export async function invalidateUserSessions(userId: number): Promise<void> {
+  await db.delete(sessions).where(eq(sessions.userId, userId));
+  (await cookies()).delete(COOKIE_NAME);
 }
