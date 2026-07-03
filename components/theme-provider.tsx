@@ -2,8 +2,10 @@
 
 import * as React from "react";
 import { useServerInsertedHTML } from "next/navigation";
+import { THEME_COOKIE, THEME_MAX_AGE, isTheme, type Theme } from "@/lib/theme";
+import { readUserCookie } from "@/lib/auth/public-user";
+import { updateTheme } from "@/lib/auth/actions";
 
-type Theme = "light" | "dark" | "system";
 type ResolvedTheme = "light" | "dark";
 
 type ThemeContextValue = {
@@ -12,21 +14,35 @@ type ThemeContextValue = {
   setTheme: (_theme: Theme) => void;
 };
 
-const STORAGE_KEY = "theme";
 const THEME_EVENT = "themechange";
+const CHANNEL = "theme";
 
 const ThemeContext = React.createContext<ThemeContextValue | undefined>(undefined);
 
-// --- persisted preference, modeled as an external store -------------------
+// --- persisted preference (a readable cookie), modeled as an external store ---
+
+function readThemeCookie(): Theme | null {
+  const match = document.cookie.match(/(?:^|;\s*)theme=([^;]*)/);
+  const value = match ? decodeURIComponent(match[1]) : "";
+  return isTheme(value) ? value : null;
+}
+
+function writeThemeCookie(theme: Theme) {
+  document.cookie = `${THEME_COOKIE}=${theme}; path=/; max-age=${THEME_MAX_AGE}; samesite=lax`;
+}
 
 function subscribeTheme(callback: () => void) {
-  // `storage` fires for changes from other tabs; the custom event covers
-  // same-tab updates (storage events never fire in the tab that wrote them).
-  window.addEventListener("storage", callback);
+  // Same-tab updates via a custom event; cross-tab via BroadcastChannel (cookies
+  // fire no change event of their own).
   window.addEventListener(THEME_EVENT, callback);
+  let channel: BroadcastChannel | null = null;
+  if (typeof BroadcastChannel !== "undefined") {
+    channel = new BroadcastChannel(CHANNEL);
+    channel.addEventListener("message", callback);
+  }
   return () => {
-    window.removeEventListener("storage", callback);
     window.removeEventListener(THEME_EVENT, callback);
+    channel?.close();
   };
 }
 
@@ -50,13 +66,11 @@ function applyTheme(resolved: ResolvedTheme) {
 }
 
 /**
- * Inline script run before hydration to set the theme class on <html>, so the
- * first paint already matches the stored preference (no flash). Injected via
- * useServerInsertedHTML rather than a rendered <script> element — React 19
- * warns about (and never executes) scripts rendered through components.
+ * Inline script run before hydration to set the theme class on <html> from the
+ * cookie, so the first paint already matches the stored preference (no flash).
  */
 function noFlashScript(defaultTheme: Theme) {
-  return `(function(){try{var s=localStorage.getItem('${STORAGE_KEY}')||'${defaultTheme}';var t=s==='system'?(window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'):s;var r=document.documentElement;r.classList.remove('light','dark');r.classList.add(t);r.style.colorScheme=t;}catch(e){}})();`;
+  return `(function(){try{var m=document.cookie.match(/(?:^|;\\s*)theme=([^;]*)/);var s=m?decodeURIComponent(m[1]):'${defaultTheme}';if(s!=='light'&&s!=='dark'&&s!=='system')s='${defaultTheme}';var t=s==='system'?(window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'):s;var r=document.documentElement;r.classList.remove('light','dark');r.classList.add(t);r.style.colorScheme=t;}catch(e){}})();`;
 }
 
 function ThemeProvider({
@@ -70,14 +84,10 @@ function ThemeProvider({
     <script dangerouslySetInnerHTML={{ __html: noFlashScript(defaultTheme) }} />
   ));
 
-  const getTheme = React.useCallback((): Theme => {
-    try {
-      return (localStorage.getItem(STORAGE_KEY) as Theme | null) ?? defaultTheme;
-    } catch {
-      return defaultTheme;
-    }
-  }, [defaultTheme]);
-
+  const getTheme = React.useCallback(
+    (): Theme => readThemeCookie() ?? defaultTheme,
+    [defaultTheme],
+  );
   const getServerTheme = React.useCallback(() => defaultTheme, [defaultTheme]);
 
   // useSyncExternalStore reads the server snapshot during hydration and swaps
@@ -98,10 +108,15 @@ function ThemeProvider({
   }, [resolvedTheme]);
 
   const setTheme = React.useCallback((next: Theme) => {
-    try {
-      localStorage.setItem(STORAGE_KEY, next);
-    } catch {}
+    writeThemeCookie(next);
     window.dispatchEvent(new Event(THEME_EVENT));
+    if (typeof BroadcastChannel !== "undefined") {
+      const channel = new BroadcastChannel(CHANNEL);
+      channel.postMessage(next);
+      channel.close();
+    }
+    // Persist to the DB (cross-device) — only when signed in.
+    if (readUserCookie()) void updateTheme(next);
   }, []);
 
   const value = React.useMemo<ThemeContextValue>(

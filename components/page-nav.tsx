@@ -8,6 +8,7 @@ import { Menu, CircleUser, LogOut } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { logout } from "@/lib/auth/actions";
 import { useSession } from "@/components/auth/session-provider";
+import { UserAvatar } from "@/components/auth/user-avatar";
 import {
   NavigationMenu,
   NavigationMenuItem,
@@ -110,7 +111,11 @@ export function PageNav() {
                     className="flex items-center gap-3 rounded-md text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
                   />
                 }>
-                <CircleUser className="size-4" />
+                {user ? (
+                  <UserAvatar name={user.username} className="size-6 text-[0.6rem]" />
+                ) : (
+                  <CircleUser className="size-4" />
+                )}
                 {user ? user.username : tNav("account")}
               </SheetClose>
               {user && (
@@ -177,7 +182,7 @@ export function PageNav() {
               <Link
                 href={accountHref}
                 className="flex items-center gap-1.5 rounded-md px-2 py-1 text-sm font-medium text-foreground transition-colors hover:text-brand">
-                <CircleUser className="size-4" />
+                <UserAvatar name={user.username} className="size-6 text-[0.6rem]" />
                 {user.username}
               </Link>
               <form action={logout.bind(null, locale)}>

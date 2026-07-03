@@ -1,0 +1,1 @@
+ALTER TABLE "users" ADD COLUMN "theme_pref" varchar(7);

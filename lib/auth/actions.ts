@@ -2,7 +2,9 @@
 
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
-import { and, eq, gt, isNull, or } from "drizzle-orm";
+import { cookies } from "next/headers";
+import { and, count, eq, gt, isNull, or } from "drizzle-orm";
+import { THEME_COOKIE, THEME_MAX_AGE, isTheme } from "@/lib/theme";
 import { db } from "@/db";
 import {
   accounts,
@@ -62,6 +64,14 @@ export async function login(
 
   await clearAttempts(ip);
   await createSession(user);
+  // Cross-device theme: apply this account's saved preference on this device.
+  if (user.themePref && isTheme(user.themePref)) {
+    (await cookies()).set(THEME_COOKIE, user.themePref, {
+      path: "/",
+      maxAge: THEME_MAX_AGE,
+      sameSite: "lax",
+    });
+  }
   redirect(`/${locale}`);
 }
 
@@ -115,6 +125,68 @@ export async function revokeSession(sessionId: string): Promise<void> {
     .delete(sessions)
     .where(and(eq(sessions.id, sessionId), eq(sessions.userId, user.id)));
   revalidatePath("/[locale]/account/security", "page");
+}
+
+/** Persist the signed-in user's theme preference (for cross-device sync). No-op when logged out. */
+export async function updateTheme(theme: string): Promise<void> {
+  if (!isTheme(theme)) return;
+  const user = await getCurrentUser();
+  if (!user) return;
+  await db.update(users).set({ themePref: theme }).where(eq(users.id, user.id));
+}
+
+/** Edit your own profile (display name for now). */
+export async function updateProfile(
+  locale: string,
+  _prev: AuthState,
+  formData: FormData,
+): Promise<AuthState> {
+  const user = await getCurrentUser();
+  if (!user) redirect(`/${locale}/login`);
+  const displayName = String(formData.get("displayName") ?? "").trim().slice(0, 80);
+  await db
+    .update(users)
+    .set({ displayName: displayName || null })
+    .where(eq(users.id, user.id));
+  revalidatePath("/[locale]/account/profile", "page");
+  return { ok: true };
+}
+
+/** Set a password for an OAuth-only account (one that has none yet). */
+export async function setPassword(
+  locale: string,
+  _prev: AuthState,
+  formData: FormData,
+): Promise<AuthState> {
+  const user = await getCurrentUser();
+  if (!user) redirect(`/${locale}/login`);
+  if (user.passwordHash) return { error: "hasPassword" }; // use change-password instead
+
+  const next = String(formData.get("newPassword") ?? "");
+  const confirm = String(formData.get("confirmPassword") ?? "");
+  if (next.length < 8) return { error: "passwordShort" };
+  if (next !== confirm) return { error: "passwordMismatch" };
+
+  await db.update(users).set({ passwordHash: await hashPassword(next) }).where(eq(users.id, user.id));
+  revalidatePath("/[locale]/account/security", "page");
+  return { ok: true };
+}
+
+/**
+ * Self-service account deletion — removes the user (cascading their sessions) and
+ * signs them out. Refuses if they're the **last admin** (they'd orphan the app);
+ * the UI also disables the button in that case.
+ */
+export async function deleteMyAccount(locale: string): Promise<void> {
+  const user = await getCurrentUser();
+  if (!user) redirect(`/${locale}/login`);
+  if (user.role === "admin") {
+    const [{ n }] = await db.select({ n: count() }).from(users).where(eq(users.role, "admin"));
+    if (n <= 1) return;
+  }
+  await invalidateSession(); // clear this device's session + cookies
+  await db.delete(users).where(eq(users.id, user.id)); // cascades any other sessions
+  redirect(`/${locale}/login`);
 }
 
 const USERNAME_RE = /^[a-z0-9._-]+$/;

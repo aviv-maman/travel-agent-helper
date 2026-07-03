@@ -250,6 +250,10 @@ export const users = pgTable(
     id: serial("id").primaryKey(),
     /** Stored lower-cased; the unique index enforces case-insensitive uniqueness. */
     username: varchar("username", { length: 40 }).notNull(),
+    /** Optional friendly name shown in the UI; falls back to `username`. */
+    displayName: varchar("display_name", { length: 80 }),
+    /** Cross-device theme preference ("light" | "dark" | "system"); null = unset. */
+    themePref: varchar("theme_pref", { length: 7 }),
     /** Primary email (from a linked provider or set manually). Null when unknown. */
     email: varchar("email", { length: 255 }),
     /**
