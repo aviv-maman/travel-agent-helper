@@ -1,6 +1,7 @@
 "use server";
 
 import { redirect } from "next/navigation";
+import { revalidatePath } from "next/cache";
 import { and, eq, gt, isNull, or } from "drizzle-orm";
 import { db } from "@/db";
 import { invitations, sessions, users, type UserRole } from "@/db/schema";
@@ -103,6 +104,7 @@ export async function revokeSession(sessionId: string): Promise<void> {
   await db
     .delete(sessions)
     .where(and(eq(sessions.id, sessionId), eq(sessions.userId, user.id)));
+  revalidatePath("/[locale]/account/security", "page");
 }
 
 const USERNAME_RE = /^[a-z0-9._-]+$/;
@@ -171,7 +173,7 @@ export async function register(
     return { error: "codeInvalid" };
   }
 
-  await createSession({ id: userId, username, role: invite.role });
+  await createSession({ id: userId, username });
   redirect(`/${locale}`);
 }
 
@@ -200,6 +202,7 @@ export async function createInvite(
     createdBy: admin?.id ?? null,
     expiresAt,
   });
+  revalidatePath("/[locale]/account/admin/invites", "page");
   return {};
 }
 
@@ -210,6 +213,7 @@ export async function revokeInvite(id: number): Promise<void> {
     .update(invitations)
     .set({ revokedAt: new Date() })
     .where(and(eq(invitations.id, id), isNull(invitations.usedAt), isNull(invitations.revokedAt)));
+  revalidatePath("/[locale]/account/admin/invites", "page");
 }
 
 /**
@@ -224,6 +228,7 @@ export async function setUserRole(userId: number, formData: FormData): Promise<v
   const role = String(formData.get("role") ?? "");
   if (!(["admin", "editor", "agent"] as const).includes(role as UserRole)) return;
   await db.update(users).set({ role: role as UserRole }).where(eq(users.id, userId));
+  revalidatePath("/[locale]/account/admin/users", "page");
 }
 
 /** Admin-only: delete a user (cascades their sessions). You can't delete yourself. */
@@ -232,6 +237,7 @@ export async function deleteUser(userId: number): Promise<void> {
   const me = await getCurrentUser();
   if (!me || me.id === userId) return;
   await db.delete(users).where(eq(users.id, userId));
+  revalidatePath("/[locale]/account/admin/users", "page");
 }
 
 /**
@@ -243,4 +249,5 @@ export async function deleteUser(userId: number): Promise<void> {
 export async function forceLogoutUser(userId: number): Promise<void> {
   if (!(await can("users:manage"))) return;
   await deleteAllUserSessions(userId);
+  revalidatePath("/[locale]/account/admin/users", "page");
 }
