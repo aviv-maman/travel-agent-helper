@@ -3,17 +3,18 @@
 import { redirect } from "next/navigation";
 import { and, eq, gt, isNull, or } from "drizzle-orm";
 import { db } from "@/db";
-import { invitations, users, type UserRole } from "@/db/schema";
+import { invitations, sessions, users, type UserRole } from "@/db/schema";
 import { hashPassword, verifyPassword } from "./password";
 import {
   createSession,
   invalidateSession,
   invalidateOtherSessions,
   invalidateUserSessions,
+  currentSessionId,
 } from "./session";
 import { can, getCurrentUser } from ".";
 import { generateInviteCode, inviteStatus } from "./invites";
-import { isLocked, recordFailure, clearAttempts } from "./rate-limit";
+import { isLocked, recordFailure, clearAttempts, clientIp } from "./rate-limit";
 
 export type AuthState = { error?: string; ok?: boolean };
 
@@ -38,18 +39,19 @@ export async function login(
   if (!username || !password) {
     return { error: "missing" };
   }
-  if (await isLocked(username)) {
+  const ip = await clientIp();
+  if (await isLocked(ip)) {
     return { error: "locked" };
   }
 
   const [user] = await db.select().from(users).where(eq(users.username, username)).limit(1);
   const ok = await verifyPassword(password, user?.passwordHash ?? DUMMY_HASH);
   if (!user || !ok) {
-    await recordFailure(username);
+    await recordFailure(ip);
     return { error: "invalid" };
   }
 
-  await clearAttempts(username);
+  await clearAttempts(ip);
   await createSession(user);
   redirect(`/${locale}`);
 }
@@ -86,6 +88,20 @@ export async function logoutEverywhere(locale: string): Promise<void> {
   const user = await getCurrentUser();
   if (user) await invalidateUserSessions(user.id);
   redirect(`/${locale}/login`);
+}
+
+/**
+ * Revoke one of your own sessions ("sign out this device"). Refuses the current
+ * session — use `logout` for that so the cookies are cleared too. The session id
+ * is a token *hash*, so passing it around is harmless.
+ */
+export async function revokeSession(sessionId: string): Promise<void> {
+  const user = await getCurrentUser();
+  if (!user) return;
+  if (sessionId === (await currentSessionId())) return;
+  await db
+    .delete(sessions)
+    .where(and(eq(sessions.id, sessionId), eq(sessions.userId, user.id)));
 }
 
 const USERNAME_RE = /^[a-z0-9._-]+$/;

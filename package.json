@@ -18,7 +18,8 @@
     "parse": "bun scripts/parse-html.ts",
     "seed": "bun scripts/seed.ts",
     "logos": "bun scripts/fetch-logos.ts",
-    "create-admin": "bun scripts/create-admin.ts"
+    "create-admin": "bun scripts/create-admin.ts",
+    "cleanup": "bun scripts/cleanup.ts"
   },
   "dependencies": {
     "@base-ui/react": "^1.6.0",

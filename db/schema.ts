@@ -270,6 +270,9 @@ export const sessions = pgTable(
     userId: integer("user_id")
       .notNull()
       .references(() => users.id, { onDelete: "cascade" }),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+    /** User-agent at sign-in, for the "active sessions" list. */
+    userAgent: text("user_agent"),
     expiresAt: timestamp("expires_at", { withTimezone: true }).notNull(),
   },
   (t) => [index("sessions_user_idx").on(t.userId)],

@@ -1,21 +1,30 @@
 import "server-only";
 import { eq } from "drizzle-orm";
+import { headers } from "next/headers";
 import { db } from "@/db";
 import { loginAttempts } from "@/db/schema";
 
 /**
- * Failed-login throttling, keyed by username. DB-backed so it holds across
+ * Failed-login throttling, keyed by **client IP**. DB-backed so it holds across
  * serverless instances (an in-memory counter wouldn't). After MAX_FAILURES
  * failures inside WINDOW, the key is locked for LOCKOUT.
  *
- * Note: locking by username means an attacker can lock out a known account
- * (a mild DoS). Acceptable for a small internal tool; switch the key to the
- * client IP if that becomes a concern.
+ * Keying on IP (not username) throttles the attacker's source and avoids letting
+ * anyone lock a known account out of spite. Tradeoff: many users behind one NAT
+ * share a bucket — fine for a small internal tool with a generous threshold.
  */
 
 const MAX_FAILURES = 5;
-const WINDOW_MS = 15 * 60 * 1000;
+export const WINDOW_MS = 15 * 60 * 1000;
 const LOCKOUT_MS = 15 * 60 * 1000;
+
+/** Best-effort client IP from proxy headers; a stable fallback when unknown. */
+export async function clientIp(): Promise<string> {
+  const h = await headers();
+  const forwarded = h.get("x-forwarded-for");
+  if (forwarded) return forwarded.split(",")[0].trim().slice(0, 60);
+  return (h.get("x-real-ip") ?? "unknown").slice(0, 60);
+}
 
 /** Whether `key` is currently locked out. */
 export async function isLocked(key: string): Promise<boolean> {

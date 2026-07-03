@@ -1,9 +1,11 @@
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import { getCurrentUser } from "@/lib/auth";
+import { listSessions, currentSessionId } from "@/lib/auth/session";
 import { LoginForm } from "@/components/auth/login-form";
 import { LogoutButton } from "@/components/auth/logout-button";
 import { ChangePasswordForm } from "@/components/auth/change-password-form";
 import { LogoutEverywhereButton } from "@/components/auth/logout-everywhere-button";
+import { SessionsList } from "@/components/auth/sessions-list";
 import { Link } from "@/i18n/navigation";
 import { Separator } from "@/components/ui/separator";
 import {
@@ -25,9 +27,11 @@ export default async function LoginPage({
   setRequestLocale(locale);
   const t = await getTranslations({ locale, namespace: "auth" });
   const user = await getCurrentUser();
+  const sessions = user ? await listSessions(user.id) : [];
+  const sessionId = user ? await currentSessionId() : null;
 
   return (
-    <div className="mx-auto w-full max-w-sm py-8">
+    <div className={`mx-auto w-full py-8 ${user ? "max-w-md" : "max-w-sm"}`}>
       <Card>
         <CardHeader>
           <CardTitle>{user ? t("accountTitle") : t("title")}</CardTitle>
@@ -62,6 +66,11 @@ export default async function LoginPage({
               <div className="flex flex-col gap-3">
                 <h3 className="text-sm font-semibold text-foreground">{t("changePassword")}</h3>
                 <ChangePasswordForm locale={locale} />
+              </div>
+              <Separator />
+              <div className="flex flex-col gap-3">
+                <h3 className="text-sm font-semibold text-foreground">{t("activeSessions")}</h3>
+                <SessionsList sessions={sessions} currentSessionId={sessionId} locale={locale} />
               </div>
               <Separator />
               <LogoutEverywhereButton locale={locale} />
