@@ -283,6 +283,31 @@ export const sessionsRelations = relations(sessions, ({ one }) => ({
   user: one(users, { fields: [sessions.userId], references: [users.id] }),
 }));
 
+/**
+ * Single-use registration invites. A code carries the role the new user gets.
+ * "Active" means: not used, not revoked, and not past `expiresAt` (null = never).
+ * `created_by`/`used_by` are set null if that user is later deleted (audit only).
+ */
+export const invitations = pgTable(
+  "invitations",
+  {
+    id: serial("id").primaryKey(),
+    code: varchar("code", { length: 64 }).notNull(),
+    role: userRole("role").notNull().default("agent"),
+    createdBy: integer("created_by").references(() => users.id, { onDelete: "set null" }),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+    /** Null = no expiry. */
+    expiresAt: timestamp("expires_at", { withTimezone: true }),
+    /** Set when redeemed; null = unused. */
+    usedAt: timestamp("used_at", { withTimezone: true }),
+    usedBy: integer("used_by").references(() => users.id, { onDelete: "set null" }),
+    /** Set when an admin revokes it; null = not revoked. */
+    revokedAt: timestamp("revoked_at", { withTimezone: true }),
+  },
+  (t) => [uniqueIndex("invitations_code_key").on(t.code)],
+);
+
 export type User = typeof users.$inferSelect;
 export type Session = typeof sessions.$inferSelect;
+export type Invitation = typeof invitations.$inferSelect;
 export type UserRole = (typeof userRole.enumValues)[number];

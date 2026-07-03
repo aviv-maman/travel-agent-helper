@@ -15,6 +15,13 @@
       "when": 1783035830538,
       "tag": "0001_stale_skullbuster",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1783067009840,
+      "tag": "0002_clever_jack_power",
+      "breakpoints": true
     }
   ]
 }
