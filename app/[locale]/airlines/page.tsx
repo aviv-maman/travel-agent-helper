@@ -1,14 +1,10 @@
 import { setRequestLocale } from "next-intl/server";
-import { getBaggage } from "@/lib/baggage";
-import { BaggageView } from "@/components/baggage/baggage-view";
+import { getAirlines } from "@/lib/airlines";
+import { AirlineView } from "@/components/airline/airline-view";
 
-export default async function BaggagePage({
-  params,
-}: {
-  params: Promise<{ locale: string }>;
-}) {
+export default async function AirlinePage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
   setRequestLocale(locale);
-  const baggage = getBaggage(locale);
-  return <BaggageView airlines={baggage} />;
+  const airlines = getAirlines(locale);
+  return <AirlineView airlines={airlines} />;
 }

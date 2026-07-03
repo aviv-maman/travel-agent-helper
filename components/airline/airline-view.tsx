@@ -4,17 +4,17 @@ import { useMemo } from "react";
 import { useTranslations } from "next-intl";
 import type { FilterFn } from "@tanstack/react-table";
 import { Info } from "lucide-react";
-import type { ViewAirline } from "@/lib/baggage";
+import type { ViewAirline } from "@/lib/airlines";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { DataTable } from "@/components/ui/data-table";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import { airlineColumns } from "./baggage-columns";
+import { airlineColumns } from "./airline-columns";
 
 // Match the search box against the precomputed he + en + iata string.
 const filterAirline: FilterFn<ViewAirline> = (row, _columnId, value) =>
   row.original.search.includes(String(value).toLowerCase());
 
-export function BaggageView({ airlines }: { airlines: ViewAirline[] }) {
+export function AirlineView({ airlines }: { airlines: ViewAirline[] }) {
   const t = useTranslations("baggage");
   const columns = useMemo(() => airlineColumns(t), [t]);
 

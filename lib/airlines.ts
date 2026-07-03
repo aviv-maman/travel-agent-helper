@@ -577,7 +577,7 @@ function maxNum(s: string): number {
 }
 
 /** All airlines, resolved to `locale`, in guide order. */
-export function getBaggage(locale: string): ViewAirline[] {
+export function getAirlines(locale: string): ViewAirline[] {
   const lc = locale as Locale;
   const pick = (v: Localized) => localized(v, lc);
   const unit = lc === "he" ? 'ק"ג' : "kg";
