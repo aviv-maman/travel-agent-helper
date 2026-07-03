@@ -78,7 +78,7 @@
     "twoFactorOff": "Two-factor authentication is off.",
     "enable2fa": "Enable",
     "disable2fa": "Disable",
-    "setupScan": "Add this key to your authenticator app (Google Authenticator, 1Password, …):",
+    "setupScan": "Scan this QR code with your authenticator app (Google Authenticator, 1Password, …), or enter the key manually:",
     "secretLabel": "Setup key",
     "verifyCode": "6-digit code",
     "confirm2fa": "Verify & enable",

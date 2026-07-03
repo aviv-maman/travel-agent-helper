@@ -1,6 +1,7 @@
 import { getTranslations } from "next-intl/server";
 import type { User } from "@/db/schema";
 import { otpauthURI } from "@/lib/auth/totp";
+import { qrDataUri } from "@/lib/qr";
 import { startTotpSetup, cancelTotpSetup } from "@/lib/auth/actions";
 import { TotpConfirm } from "./totp-confirm";
 import { TotpManage } from "./totp-manage";
@@ -29,7 +30,14 @@ export async function TwoFactor({ user, locale }: { user: User; locale: string }
     return (
       <div className="flex flex-col gap-4">
         <p className="text-sm text-muted-foreground">{t("setupScan")}</p>
-        {/* QR code is rendered here in the QR step; the setup key works meanwhile. */}
+        {/* eslint-disable-next-line @next/next/no-img-element -- inline data-URI SVG, no remote fetch */}
+        <img
+          src={qrDataUri(uri)}
+          alt=""
+          width={176}
+          height={176}
+          className="h-44 w-44 self-start rounded-md border bg-white p-2"
+        />
         <div className="flex flex-col gap-1">
           <span className="text-xs text-muted-foreground">{t("secretLabel")}</span>
           <div className="flex items-center gap-2">

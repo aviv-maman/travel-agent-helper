@@ -78,7 +78,7 @@
     "twoFactorOff": "אימות דו-שלבי כבוי.",
     "enable2fa": "הפעל",
     "disable2fa": "כבה",
-    "setupScan": "הוסף מפתח זה לאפליקציית האימות (Google Authenticator, ‏1Password ועוד):",
+    "setupScan": "סרוק את קוד ה-QR באפליקציית האימות (Google Authenticator, ‏1Password ועוד), או הזן את המפתח ידנית:",
     "secretLabel": "מפתח הגדרה",
     "verifyCode": "קוד בן 6 ספרות",
     "confirm2fa": "אמת והפעל",
