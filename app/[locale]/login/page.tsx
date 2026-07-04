@@ -16,10 +16,14 @@ import {
 // Reads the session cookie, so this route is always rendered per-request.
 export default async function LoginPage({
   params,
+  searchParams,
 }: {
   params: Promise<{ locale: string }>;
+  searchParams: Promise<{ next?: string | string[] }>;
 }) {
   const { locale } = await params;
+  const { next: nextParam } = await searchParams;
+  const next = Array.isArray(nextParam) ? nextParam[0] : nextParam;
   setRequestLocale(locale);
   if (await getCurrentUser()) redirect(`/${locale}/account`);
   const t = await getTranslations({ locale, namespace: "auth" });
@@ -32,7 +36,7 @@ export default async function LoginPage({
           <CardDescription>{t("subtitle")}</CardDescription>
         </CardHeader>
         <CardContent className="flex flex-col gap-4">
-          <LoginForm locale={locale} />
+          <LoginForm locale={locale} next={next} />
           <OAuthButtons locale={locale} mode="login" />
         </CardContent>
         <CardFooter>
