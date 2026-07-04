@@ -5,24 +5,16 @@ import { db } from "@/db";
 import { sessions } from "@/db/schema";
 import { routing } from "@/i18n/routing";
 import { isProtectedPath } from "@/lib/auth/protected-routes";
-import { USER_COOKIE } from "@/lib/auth/public-user";
+import { SESSION_COOKIE, USER_COOKIE, SESSION_VERIFIED_COOKIE } from "@/lib/auth/cookies";
 
 const handleI18n = createMiddleware(routing);
 const locales = routing.locales as readonly string[];
 
-const SESSION_COOKIE = "session";
-/**
- * Presence-only marker: set for `RECHECK_TTL_SECONDS` after a successful DB
- * validation. While it's alive the middleware trusts the session without another
- * DB round-trip. It carries no data — forging it can't grant access (the session
- * token is still the secret, and the server DAL re-checks the DB on every protected
- * render), it only controls how *often* we re-validate.
- */
-const VERIFIED_COOKIE = "session_verified";
 /**
  * How long a DB validation is trusted before we check again. A *fixed* (non-sliding)
- * lifetime, so even a continuously-active user re-validates at least this often —
- * bounding how long a revoked/expired session's nav name can linger to this window.
+ * lifetime for the `session_verified` marker, so even a continuously-active user
+ * re-validates at least this often — bounding how long a revoked/expired session's
+ * nav name can linger to this window.
  */
 const RECHECK_TTL_SECONDS = 60;
 
@@ -62,7 +54,7 @@ async function sessionIsValid(token: string): Promise<boolean> {
  *
  * To avoid a DB read on every logged-in navigation, a successful check drops a
  * short-lived `session_verified` cookie; while it's present we skip the lookup (see
- * VERIFIED_COOKIE / RECHECK_TTL_SECONDS).
+ * SESSION_VERIFIED_COOKIE / RECHECK_TTL_SECONDS).
  *
  * Still NOT the whole security boundary: it validates the session but not per-route
  * permissions/roles — the server DAL (requireUser / can / …) remains authoritative on
@@ -77,7 +69,7 @@ export default async function proxy(req: NextRequest): Promise<NextResponse> {
   // No session cookie → anonymous, no DB hit. Recently verified → trust the marker.
   // Otherwise validate against the DB (and remember the result via the marker below).
   const token = req.cookies.get(SESSION_COOKIE)?.value;
-  const trusted = Boolean(req.cookies.get(VERIFIED_COOKIE));
+  const trusted = Boolean(req.cookies.get(SESSION_VERIFIED_COOKIE));
   let didDbCheck = false;
   let loggedIn = false;
   if (token) {
@@ -112,13 +104,13 @@ function syncAuthCookies(
   didDbCheck: boolean,
 ): NextResponse {
   if (!loggedIn) {
-    if (req.cookies.get(SESSION_COOKIE) || req.cookies.get(USER_COOKIE) || req.cookies.get(VERIFIED_COOKIE)) {
+    if (req.cookies.get(SESSION_COOKIE) || req.cookies.get(USER_COOKIE) || req.cookies.get(SESSION_VERIFIED_COOKIE)) {
       res.cookies.delete(SESSION_COOKIE);
       res.cookies.delete(USER_COOKIE);
-      res.cookies.delete(VERIFIED_COOKIE);
+      res.cookies.delete(SESSION_VERIFIED_COOKIE);
     }
   } else if (didDbCheck) {
-    res.cookies.set(VERIFIED_COOKIE, "1", {
+    res.cookies.set(SESSION_VERIFIED_COOKIE, "1", {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "lax",
