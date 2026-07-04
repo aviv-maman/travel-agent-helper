@@ -25,6 +25,12 @@
       "skillPath": "skills/claude-api/SKILL.md",
       "computedHash": "d7848cf69221dc3edce871768ae8dc3914331b4f8af47dd88aa0eedeb29d12c7"
     },
+    "error-handling-patterns": {
+      "source": "wshobson/agents",
+      "sourceType": "github",
+      "skillPath": "plugins/developer-essentials/skills/error-handling-patterns/SKILL.md",
+      "computedHash": "61c0f8496afccbc0b9c46cf0878fac064892cb80981eb6b64ebc5892c71cfec7"
+    },
     "find-skills": {
       "source": "vercel-labs/skills",
       "sourceType": "github",
