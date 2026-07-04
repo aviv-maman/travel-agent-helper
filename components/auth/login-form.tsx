@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 
-export function LoginForm({ locale }: { locale: string }) {
+export function LoginForm({ locale, next }: { locale: string; next?: string }) {
   const t = useTranslations("auth");
   // Bind the locale so the action's redirect stays on the active language.
   const [state, action, pending] = useActionState<AuthState, FormData>(
@@ -17,10 +17,11 @@ export function LoginForm({ locale }: { locale: string }) {
   );
 
   // Password accepted but the account has 2FA → show the code step.
-  if (state.mfa) return <MfaForm locale={locale} />;
+  if (state.mfa) return <MfaForm locale={locale} next={next} />;
 
   return (
     <form action={action} className="flex flex-col gap-4">
+      {next && <input type="hidden" name="next" value={next} />}
       <div className="flex flex-col gap-1.5">
         <Label htmlFor="username">{t("username")}</Label>
         <Input

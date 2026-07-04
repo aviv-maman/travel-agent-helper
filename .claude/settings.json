@@ -16,7 +16,8 @@
       "PowerShell(if \\(Test-Path package.json\\) { \\(Get-Content package.json -Raw | ConvertFrom-Json\\).scripts | ConvertTo-Json })",
       "PowerShell(npm run typecheck 2>&1)",
       "Bash(cat)",
-      "Bash(node_modules/.bin/tsc --noEmit)"
+      "Bash(node_modules/.bin/tsc --noEmit)",
+      "Bash(git pull *)"
     ]
   }
 }

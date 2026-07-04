@@ -33,6 +33,7 @@ import {
   completeMfa,
 } from "./session";
 import { can, getCurrentUser } from ".";
+import { safeNext } from "./protected-routes";
 import { recordAudit } from "./audit";
 import { generateInviteCode, inviteStatus } from "./invites";
 import { isLocked, recordFailure, clearAttempts, clientIp } from "./rate-limit";
@@ -84,7 +85,7 @@ export async function login(
   await createSession(user);
   await recordAudit("login", { actorId: user.id });
   await applyThemePref(user.themePref);
-  redirect(`/${locale}`);
+  redirect(safeNext(String(formData.get("next") ?? ""), locale));
 }
 
 /** Set the theme cookie from a saved preference (cross-device). */
@@ -131,12 +132,12 @@ export async function verifyMfa(
   await completeMfa(user.username);
   await recordAudit("login", { actorId: user.id });
   await applyThemePref(user.themePref);
-  redirect(`/${locale}`);
+  redirect(safeNext(String(formData.get("next") ?? ""), locale));
 }
 
 export async function logout(locale: string): Promise<void> {
   await invalidateSession();
-  redirect(`/${locale}`);
+  redirect(`/${locale}/login`);
 }
 
 /** Self-service password change. Verifies the current password, then signs out other devices. */

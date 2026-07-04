@@ -8,7 +8,7 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 
 /** Second login step — TOTP or backup code. Shown after a correct password. */
-export function MfaForm({ locale }: { locale: string }) {
+export function MfaForm({ locale, next }: { locale: string; next?: string }) {
   const t = useTranslations("auth");
   const [state, action, pending] = useActionState<AuthState, FormData>(
     verifyMfa.bind(null, locale),
@@ -17,6 +17,7 @@ export function MfaForm({ locale }: { locale: string }) {
 
   return (
     <form action={action} className="flex flex-col gap-3">
+      {next && <input type="hidden" name="next" value={next} />}
       <div className="flex flex-col gap-1.5">
         <Label htmlFor="mfa-code">{t("mfaTitle")}</Label>
         <p className="text-sm text-muted-foreground">{t("mfaHint")}</p>
