@@ -4,7 +4,7 @@ import { createHash, randomBytes } from "node:crypto";
 import { and, desc, eq, ne } from "drizzle-orm";
 import { db } from "@/db";
 import { sessions, users, type User } from "@/db/schema";
-import { USER_COOKIE } from "./public-user";
+import { SESSION_COOKIE, USER_COOKIE, SESSION_VERIFIED_COOKIE } from "./cookies";
 
 /**
  * Server-side session store. The cookie holds an opaque random token; the DB
@@ -13,7 +13,6 @@ import { USER_COOKIE } from "./public-user";
  * their user.
  */
 
-const COOKIE_NAME = "session";
 const SESSION_DURATION_MS = 1000 * 60 * 60 * 24 * 30; // 30 days
 const LAST_SEEN_THROTTLE_MS = 5 * 60 * 1000; // bump "last active" at most this often
 
@@ -48,7 +47,7 @@ export async function createSession(
     path: "/",
     expires: expiresAt,
   };
-  store.set(COOKIE_NAME, token, { httpOnly: true, ...base });
+  store.set(SESSION_COOKIE, token, { httpOnly: true, ...base });
   // The nav mirror is set only once fully authenticated (not mid-2FA).
   if (!opts.mfaPending) store.set(USER_COOKIE, user.username, { httpOnly: false, ...base });
 }
@@ -59,7 +58,7 @@ export async function createSession(
  * pending sessions, so this is the only way to see them.
  */
 export async function mfaPendingUser(): Promise<User | null> {
-  const token = (await cookies()).get(COOKIE_NAME)?.value;
+  const token = (await cookies()).get(SESSION_COOKIE)?.value;
   if (!token) return null;
   const [found] = await db
     .select({ user: users, expiresAt: sessions.expiresAt, mfaPending: sessions.mfaPending })
@@ -74,7 +73,7 @@ export async function mfaPendingUser(): Promise<User | null> {
 /** Promote the current pending session to fully authenticated and set the nav mirror. */
 export async function completeMfa(username: string): Promise<void> {
   const store = await cookies();
-  const token = store.get(COOKIE_NAME)?.value;
+  const token = store.get(SESSION_COOKIE)?.value;
   if (!token) return;
   const expiresAt = new Date(Date.now() + SESSION_DURATION_MS);
   await db.update(sessions).set({ mfaPending: false }).where(eq(sessions.id, hashToken(token)));
@@ -92,7 +91,7 @@ export async function completeMfa(username: string): Promise<void> {
  * cookie writes), so it is safe to call during render.
  */
 export async function validateSession(): Promise<User | null> {
-  const token = (await cookies()).get(COOKIE_NAME)?.value;
+  const token = (await cookies()).get(SESSION_COOKIE)?.value;
   if (!token) return null;
   const sessionId = hashToken(token);
   const [found] = await db
@@ -117,10 +116,11 @@ export async function validateSession(): Promise<User | null> {
  */
 export async function invalidateSession(): Promise<void> {
   const store = await cookies();
-  const token = store.get(COOKIE_NAME)?.value;
+  const token = store.get(SESSION_COOKIE)?.value;
   if (token) await db.delete(sessions).where(eq(sessions.id, hashToken(token)));
-  store.delete(COOKIE_NAME);
+  store.delete(SESSION_COOKIE);
   store.delete(USER_COOKIE);
+  store.delete(SESSION_VERIFIED_COOKIE); // drop the middleware's recheck marker too
 }
 
 /**
@@ -128,7 +128,7 @@ export async function invalidateSession(): Promise<void> {
  * password change to sign out other devices while keeping this one active.
  */
 export async function invalidateOtherSessions(userId: number): Promise<void> {
-  const token = (await cookies()).get(COOKIE_NAME)?.value;
+  const token = (await cookies()).get(SESSION_COOKIE)?.value;
   const currentId = token ? hashToken(token) : null;
   await db
     .delete(sessions)
@@ -148,13 +148,14 @@ export async function deleteAllUserSessions(userId: number): Promise<void> {
 export async function invalidateUserSessions(userId: number): Promise<void> {
   await deleteAllUserSessions(userId);
   const store = await cookies();
-  store.delete(COOKIE_NAME);
+  store.delete(SESSION_COOKIE);
   store.delete(USER_COOKIE);
+  store.delete(SESSION_VERIFIED_COOKIE);
 }
 
 /** The current session's id (the hashed token), or null when signed out. */
 export async function currentSessionId(): Promise<string | null> {
-  const token = (await cookies()).get(COOKIE_NAME)?.value;
+  const token = (await cookies()).get(SESSION_COOKIE)?.value;
   return token ? hashToken(token) : null;
 }
 

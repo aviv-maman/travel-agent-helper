@@ -48,7 +48,11 @@ export function PageNav() {
   const segment = useSelectedLayoutSegment() ?? "hotels";
   const [open, setOpen] = useState(false);
 
-  const active = PAGES.find((p) => p.segment === segment) ?? PAGES[PAGES.length - 1];
+  // `segment` is the route segment directly under the [locale] layout: a content
+  // page ("hotels", "news", …) or the account area ("account"). Only content pages
+  // have an entry here — elsewhere there's none, so the mobile header falls back to
+  // the app title instead of a stray page (previously it defaulted to "news").
+  const active = PAGES.find((p) => p.segment === segment);
   // Signed in → the account area; signed out → login.
   const accountHref = user ? `/${locale}/account` : `/${locale}/login`;
 
@@ -143,10 +147,16 @@ export function PageNav() {
         </Sheet>
 
         <span className="flex items-center gap-2 font-medium text-foreground sm:hidden">
-          <span className="text-lg" aria-hidden>
-            {active.emoji}
-          </span>
-          {t(active.segment)}
+          {active ? (
+            <>
+              <span className="text-lg" aria-hidden>
+                {active.emoji}
+              </span>
+              {t(active.segment)}
+            </>
+          ) : (
+            tApp("title")
+          )}
         </span>
 
         {/* Desktop: horizontal page links */}
