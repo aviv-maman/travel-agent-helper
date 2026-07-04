@@ -180,7 +180,8 @@
     "usersCount": "{total} משתמשים",
     "pageOf": "עמוד {page} מתוך {pageCount}",
     "prev": "הקודם",
-    "next": "הבא"
+    "next": "הבא",
+    "noSessions": "אין התחברויות פעילות."
   },
   "commissions": {
     "baggage": "כבודה",

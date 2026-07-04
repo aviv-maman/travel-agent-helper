@@ -6,6 +6,29 @@ import { users, sessions } from "@/db/schema";
 const PER_PAGE = 20;
 
 /**
+ * One user's public-facing record (no password hash), or null when not found —
+ * for the admin user-detail page. Sessions are fetched separately via
+ * `listSessions` so this stays a single-row lookup.
+ */
+export async function getUserDetail(id: number) {
+  const [user] = await db
+    .select({
+      id: users.id,
+      username: users.username,
+      displayName: users.displayName,
+      role: users.role,
+      createdAt: users.createdAt,
+      totpEnabledAt: users.totpEnabledAt,
+    })
+    .from(users)
+    .where(eq(users.id, id))
+    .limit(1);
+  return user ?? null;
+}
+
+export type UserDetail = NonNullable<Awaited<ReturnType<typeof getUserDetail>>>;
+
+/**
  * A page of users (no password hashes), oldest first, each with a count of their
  * *active* (non-expired) sessions. Optional `search` filters by username.
  */

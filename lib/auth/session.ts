@@ -1,7 +1,7 @@
 import "server-only";
 import { cookies, headers } from "next/headers";
 import { createHash, randomBytes } from "node:crypto";
-import { and, desc, eq, ne } from "drizzle-orm";
+import { and, desc, eq, gt, ne } from "drizzle-orm";
 import { db } from "@/db";
 import { sessions, users, type User } from "@/db/schema";
 import { SESSION_COOKIE, USER_COOKIE, SESSION_VERIFIED_COOKIE } from "./cookies";
@@ -159,7 +159,7 @@ export async function currentSessionId(): Promise<string | null> {
   return token ? hashToken(token) : null;
 }
 
-/** A user's active sessions, newest first, for the "active sessions" list. */
+/** A user's sessions, newest first, for the "active sessions" list. */
 export async function listSessions(userId: number) {
   return db
     .select({
@@ -171,6 +171,19 @@ export async function listSessions(userId: number) {
     })
     .from(sessions)
     .where(eq(sessions.userId, userId))
+    .orderBy(desc(sessions.lastSeenAt));
+}
+
+/** A user's *non-expired* sessions, newest first — for the admin user-detail view. */
+export async function listActiveSessions(userId: number) {
+  return db
+    .select({
+      id: sessions.id,
+      lastSeenAt: sessions.lastSeenAt,
+      userAgent: sessions.userAgent,
+    })
+    .from(sessions)
+    .where(and(eq(sessions.userId, userId), gt(sessions.expiresAt, new Date())))
     .orderBy(desc(sessions.lastSeenAt));
 }
 
