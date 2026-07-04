@@ -10,6 +10,22 @@ import { USER_COOKIE } from "@/lib/auth/public-user";
 const handleI18n = createMiddleware(routing);
 const locales = routing.locales as readonly string[];
 
+const SESSION_COOKIE = "session";
+/**
+ * Presence-only marker: set for `RECHECK_TTL_SECONDS` after a successful DB
+ * validation. While it's alive the middleware trusts the session without another
+ * DB round-trip. It carries no data — forging it can't grant access (the session
+ * token is still the secret, and the server DAL re-checks the DB on every protected
+ * render), it only controls how *often* we re-validate.
+ */
+const VERIFIED_COOKIE = "session_verified";
+/**
+ * How long a DB validation is trusted before we check again. A *fixed* (non-sliding)
+ * lifetime, so even a continuously-active user re-validates at least this often —
+ * bounding how long a revoked/expired session's nav name can linger to this window.
+ */
+const RECHECK_TTL_SECONDS = 60;
+
 /**
  * SHA-256 → hex using Web Crypto (edge-safe). Mirrors the `node:crypto` hashing in
  * session.ts so the same token yields the same session-row id here as on the server.
@@ -37,11 +53,16 @@ async function sessionIsValid(token: string): Promise<boolean> {
 
 /**
  * First-pass auth gate composed with next-intl routing. Unlike a presence check, it
- * looks the `session` token up in the DB, because a token can outlive its row — the
- * DB was reseeded in dev, or the session was revoked from another device — leaving
- * the client-readable `session_user` nav mirror showing a signed-in user the server
- * rejects. So when the session isn't valid we (a) redirect protected pages to /login
- * and (b) clear BOTH cookies, keeping the client's view in sync with the server's.
+ * confirms the `session` token is really live, because a token can outlive its row —
+ * the DB was reseeded in dev, or the session was revoked from another device —
+ * leaving the client-readable `session_user` nav mirror showing a signed-in user the
+ * server rejects. So when the session isn't valid we (a) redirect protected pages to
+ * /login and (b) clear the auth cookies, keeping the client's view in sync with the
+ * server's.
+ *
+ * To avoid a DB read on every logged-in navigation, a successful check drops a
+ * short-lived `session_verified` cookie; while it's present we skip the lookup (see
+ * VERIFIED_COOKIE / RECHECK_TTL_SECONDS).
  *
  * Still NOT the whole security boundary: it validates the session but not per-route
  * permissions/roles — the server DAL (requireUser / can / …) remains authoritative on
@@ -53,26 +74,57 @@ export default async function proxy(req: NextRequest): Promise<NextResponse> {
   const locale = hasLocale ? segments[0] : routing.defaultLocale;
   const appPath = `/${(hasLocale ? segments.slice(1) : segments).join("/")}`;
 
-  // Only hit the DB when a session cookie is actually present (anonymous users don't).
-  const token = req.cookies.get("session")?.value;
-  const loggedIn = token ? await sessionIsValid(token) : false;
+  // No session cookie → anonymous, no DB hit. Recently verified → trust the marker.
+  // Otherwise validate against the DB (and remember the result via the marker below).
+  const token = req.cookies.get(SESSION_COOKIE)?.value;
+  const trusted = Boolean(req.cookies.get(VERIFIED_COOKIE));
+  let didDbCheck = false;
+  let loggedIn = false;
+  if (token) {
+    if (trusted) {
+      loggedIn = true;
+    } else {
+      loggedIn = await sessionIsValid(token);
+      didDbCheck = true;
+    }
+  }
 
   if (isProtectedPath(appPath) && !loggedIn) {
     const url = req.nextUrl.clone();
     url.pathname = `/${locale}/login`;
     url.search = "";
     url.searchParams.set("next", req.nextUrl.pathname);
-    return clearStaleCookies(NextResponse.redirect(url), req, loggedIn);
+    return syncAuthCookies(NextResponse.redirect(url), req, loggedIn, didDbCheck);
   }
 
-  return clearStaleCookies(handleI18n(req), req, loggedIn);
+  return syncAuthCookies(handleI18n(req), req, loggedIn, didDbCheck);
 }
 
-/** Drop orphaned auth cookies (session + nav mirror) whenever the session isn't valid. */
-function clearStaleCookies(res: NextResponse, req: NextRequest, loggedIn: boolean): NextResponse {
-  if (!loggedIn && (req.cookies.get("session") || req.cookies.get(USER_COOKIE))) {
-    res.cookies.delete("session");
-    res.cookies.delete(USER_COOKIE);
+/**
+ * Reconcile the auth cookies with what we just determined:
+ *   - invalid session → drop `session`, the `session_user` nav mirror, and the marker;
+ *   - freshly DB-validated → (re)issue the short-lived `session_verified` marker.
+ */
+function syncAuthCookies(
+  res: NextResponse,
+  req: NextRequest,
+  loggedIn: boolean,
+  didDbCheck: boolean,
+): NextResponse {
+  if (!loggedIn) {
+    if (req.cookies.get(SESSION_COOKIE) || req.cookies.get(USER_COOKIE) || req.cookies.get(VERIFIED_COOKIE)) {
+      res.cookies.delete(SESSION_COOKIE);
+      res.cookies.delete(USER_COOKIE);
+      res.cookies.delete(VERIFIED_COOKIE);
+    }
+  } else if (didDbCheck) {
+    res.cookies.set(VERIFIED_COOKIE, "1", {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
+      path: "/",
+      maxAge: RECHECK_TTL_SECONDS,
+    });
   }
   return res;
 }
