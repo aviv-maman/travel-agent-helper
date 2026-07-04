@@ -347,6 +347,7 @@ export const accounts = pgTable(
 export const usersRelations = relations(users, ({ many }) => ({
   sessions: many(sessions),
   accounts: many(accounts),
+  aiCredentials: many(userAiCredentials),
 }));
 
 export const sessionsRelations = relations(sessions, ({ one }) => ({
@@ -355,6 +356,35 @@ export const sessionsRelations = relations(sessions, ({ one }) => ({
 
 export const accountsRelations = relations(accounts, ({ one }) => ({
   user: one(users, { fields: [accounts.userId], references: [users.id] }),
+}));
+
+export const aiProvider = pgEnum("ai_provider", ["anthropic"]);
+
+/**
+ * A user's own AI provider API key (BYO). Written/read by the Python backend, which
+ * **encrypts it at rest** (AES-GCM; the encryption key lives only on the backend) —
+ * we store just the ciphertext, its nonce, and the last 4 chars for display, never
+ * the plaintext. Unlocks the AI quote assistant. See docs/ai-quote-assistant-contract.md.
+ */
+export const userAiCredentials = pgTable(
+  "user_ai_credentials",
+  {
+    id: serial("id").primaryKey(),
+    userId: integer("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    provider: aiProvider("provider").notNull(),
+    ciphertext: text("ciphertext").notNull(), // base64(AES-GCM ciphertext)
+    nonce: text("nonce").notNull(), // base64(96-bit GCM nonce)
+    last4: varchar("last4", { length: 4 }).notNull(),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+    updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (t) => [uniqueIndex("user_ai_credentials_user_provider_key").on(t.userId, t.provider)],
+);
+
+export const userAiCredentialsRelations = relations(userAiCredentials, ({ one }) => ({
+  user: one(users, { fields: [userAiCredentials.userId], references: [users.id] }),
 }));
 
 /**
