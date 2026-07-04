@@ -29,6 +29,8 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    ".agents/**",
+    ".claude/**",
     // Vendored third-party source (Project Nayuki, MIT) — kept verbatim.
     "lib/vendor/**",
   ]),
