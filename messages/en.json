@@ -180,7 +180,8 @@
     "usersCount": "{total} users",
     "pageOf": "Page {page} of {pageCount}",
     "prev": "Previous",
-    "next": "Next"
+    "next": "Next",
+    "noSessions": "No active sessions."
   },
   "commissions": {
     "baggage": "Baggage",

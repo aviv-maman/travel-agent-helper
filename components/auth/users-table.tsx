@@ -1,6 +1,7 @@
 import { getTranslations } from "next-intl/server";
 import type { UserRow } from "@/lib/auth/users";
 import { setUserRole, deleteUser, forceLogoutUser } from "@/lib/auth/actions";
+import { Link } from "@/i18n/navigation";
 import { Button } from "@/components/ui/button";
 
 export async function UsersTable({
@@ -35,7 +36,11 @@ export async function UsersTable({
             return (
               <tr key={user.id} className="border-t border-border align-middle">
                 <td className="px-3 py-2 font-medium text-foreground">
-                  {user.username}
+                  <Link
+                    href={`/account/admin/users/${user.id}`}
+                    className="hover:text-brand hover:underline">
+                    {user.username}
+                  </Link>
                   {isSelf && <span className="ms-1 text-xs text-muted-foreground">({t("you")})</span>}
                 </td>
                 <td className="px-3 py-2">

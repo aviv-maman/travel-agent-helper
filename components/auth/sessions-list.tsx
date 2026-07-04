@@ -4,7 +4,7 @@ import { revokeSession } from "@/lib/auth/actions";
 import { Button } from "@/components/ui/button";
 
 /** Best-effort friendly label from a user-agent string (no dependency). */
-function describeUserAgent(ua: string | null): string {
+export function describeUserAgent(ua: string | null): string {
   if (!ua) return "";
   const browser =
     /Edg\//.test(ua) ? "Edge"

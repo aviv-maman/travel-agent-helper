@@ -1,7 +1,8 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { Link, usePathname } from "@/i18n/navigation";
+import { useSelectedLayoutSegments } from "next/navigation";
+import { Link } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
 
 /**
@@ -19,7 +20,11 @@ export function AccountNav({
   canAudit: boolean;
 }) {
   const t = useTranslations("account");
-  const pathname = usePathname(); // locale-stripped, e.g. "/account/security"
+  // Segments *below* the /account layout this nav lives in — e.g. ["profile"] or
+  // ["admin", "users", "12"]. Prefix-matching against these keeps a tab lit on its
+  // nested pages (the Users tab stays active on /account/admin/users/[id]), which an
+  // exact pathname compare could not.
+  const segments = useSelectedLayoutSegments();
 
   const tabs = [
     { href: "/account/profile", label: t("profile") },
@@ -29,10 +34,15 @@ export function AccountNav({
     ...(canAudit ? [{ href: "/account/admin/audit", label: t("audit") }] : []),
   ];
 
+  const isActive = (href: string): boolean => {
+    const tabSegments = href.replace(/^\/account\/?/, "").split("/").filter(Boolean);
+    return tabSegments.every((seg, i) => segments[i] === seg);
+  };
+
   return (
     <nav className="flex flex-wrap gap-1 border-b border-border pb-2">
       {tabs.map((tab) => {
-        const active = pathname === tab.href;
+        const active = isActive(tab.href);
         return (
           <Link
             key={tab.href}
