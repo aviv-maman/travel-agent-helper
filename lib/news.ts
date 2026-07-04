@@ -45,6 +45,12 @@ type NewsSource = {
    * so enable it only for small feeds.
    */
   hydrateImages?: boolean;
+  /**
+   * Route this source's fetches through NEWS_FETCH_PROXY (see `proxiedUrl`). Set on
+   * publishers whose WAF blocks our production host's datacenter IP; harmless when the
+   * env var is unset (fetched directly), so local dev is unaffected.
+   */
+  proxied?: boolean;
 };
 
 const MAX_PER_SOURCE = 12;
@@ -487,6 +493,7 @@ const SOURCES: Record<Locale, NewsSource[]> = {
       parse: parseRss,
       filterPath: "/travel",
       hydrateImages: true, // feed carries no thumbnails; pull og:image per article
+      proxied: true, // Imperva WAF blocks our datacenter IP in production
     },
     {
       id: "c14",
@@ -494,6 +501,7 @@ const SOURCES: Record<Locale, NewsSource[]> = {
       url: "https://www.c14.co.il/archive/55128",
       base: "https://www.c14.co.il",
       parse: scrapeC14,
+      proxied: true, // Cloudflare bot management blocks our datacenter IP in production
     },
     {
       id: "ynet",
@@ -529,6 +537,7 @@ const SOURCES: Record<Locale, NewsSource[]> = {
       url: "https://www.maariv.co.il/lifestyle/travel",
       base: "https://www.maariv.co.il",
       parse: anchorScraper('a[href^="/lifestyle/travel/article-"]'),
+      proxied: true, // Cloudflare bot management blocks our datacenter IP in production
     },
   ],
   en: [
@@ -562,10 +571,24 @@ export function getNewsSources(locale: string): { id: string; name: string }[] {
   return sources.map(({ id, name }) => ({ id, name }));
 }
 
+/**
+ * Route a fetch through NEWS_FETCH_PROXY when the source is flagged `proxied` and the
+ * env var is set. The proxy is a tiny service on an allowed (non-datacenter) IP that
+ * refetches the URL and returns the body — needed in production because some
+ * publishers' WAFs (Cloudflare/Imperva) block our host's datacenter IP. With no env
+ * set (local dev, from a residential IP) we fetch the origin directly, so nothing
+ * changes. Adding a newly-blocked source is then a one-line `proxied: true`.
+ */
+function proxiedUrl(url: string, proxied: boolean | undefined): string {
+  const base = process.env.NEWS_FETCH_PROXY;
+  if (!proxied || !base) return url;
+  return `${base}${base.includes("?") ? "&" : "?"}url=${encodeURIComponent(url)}`;
+}
+
 /** Fetch a single article page and return its og:image (absolute), or null. */
-async function fetchOgImage(url: string): Promise<string | null> {
+async function fetchOgImage(url: string, proxied?: boolean): Promise<string | null> {
   try {
-    const res = await fetch(url, {
+    const res = await fetch(proxiedUrl(url, proxied), {
       headers: BROWSER_HEADERS,
       signal: AbortSignal.timeout(FETCH_TIMEOUT_MS),
       next: { revalidate: REVALIDATE_SECONDS, tags: [NEWS_TAG] },
@@ -583,7 +606,7 @@ async function fetchOgImage(url: string): Promise<string | null> {
 
 async function fetchSource(src: NewsSource): Promise<NewsArticle[]> {
   try {
-    const res = await fetch(src.url, {
+    const res = await fetch(proxiedUrl(src.url, src.proxied), {
       headers: BROWSER_HEADERS,
       signal: AbortSignal.timeout(FETCH_TIMEOUT_MS),
       next: { revalidate: REVALIDATE_SECONDS, tags: [NEWS_TAG] },
@@ -595,7 +618,7 @@ async function fetchSource(src: NewsSource): Promise<NewsArticle[]> {
       // Backfill missing thumbnails from each article's og:image, in parallel.
       await Promise.all(
         articles.map(async (a) => {
-          if (!a.image) a.image = await fetchOgImage(a.url);
+          if (!a.image) a.image = await fetchOgImage(a.url, src.proxied);
         }),
       );
     }
