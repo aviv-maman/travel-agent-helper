@@ -61,6 +61,12 @@
       "skillPath": "data/skills/sql-queries/SKILL.md",
       "computedHash": "9e5eaf6a5466840a23a1826ba59819cc2341a9ee5b52be0a1eaa74cd7ff99290"
     },
+    "system-design": {
+      "source": "anthropics/knowledge-work-plugins",
+      "sourceType": "github",
+      "skillPath": "engineering/skills/system-design/SKILL.md",
+      "computedHash": "9b334dd1bc654fda2ed014680e1910f33fcb4b0daa6fee2b91ef50156f401b81"
+    },
     "vercel-react-best-practices": {
       "source": "vercel-labs/agent-skills",
       "sourceType": "github",
