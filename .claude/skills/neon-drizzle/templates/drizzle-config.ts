@@ -26,7 +26,7 @@ if (!dbUrl) {
 }
 
 // Determine connection type based on environment
-const _isServerless = process.env.RUNTIME === 'edge' ||
+const isServerless = process.env.RUNTIME === 'edge' ||
                     process.env.VERCEL_ENV === 'production';
 
 export default {
