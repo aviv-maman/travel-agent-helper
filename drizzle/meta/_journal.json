@@ -78,6 +78,13 @@
       "when": 1783114825769,
       "tag": "0010_silky_rogue",
       "breakpoints": true
+    },
+    {
+      "idx": 11,
+      "version": "7",
+      "when": 1783197315307,
+      "tag": "0011_many_iron_patriot",
+      "breakpoints": true
     }
   ]
 }
