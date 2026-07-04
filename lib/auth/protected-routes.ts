@@ -3,13 +3,15 @@
  * (proxy.ts) and the login/MFA actions.
  *
  * Protection model (defense in depth):
- *   - proxy.ts middleware = OPTIMISTIC gate. Redirects protected *pages* to /login
- *     when the `session` cookie is absent. Fast, centralized, runs before render.
- *     It only sees the cookie's presence, never its validity — so it is NOT the
- *     security boundary.
+ *   - proxy.ts middleware = first-pass gate. Looks the `session` token up in the DB
+ *     (not just cookie presence) and redirects protected *pages* to /login when
+ *     there's no live session; it also clears orphaned auth cookies (`session` + the
+ *     `session_user` nav mirror) so the client's view can't drift from the server's.
+ *     Centralized, runs before render — but NOT the whole boundary: it validates the
+ *     session, not per-route permissions/roles.
  *   - Server DAL (`requireUser` / `requirePermission` / `getCurrentUser` / `can` in
  *     lib/auth) = the REAL boundary. Every protected layout, page and privileged
- *     Server Action must still check it (DB-backed session validation).
+ *     Server Action must still check it (DB-backed session + permission validation).
  *   - Client `useSession()` = cosmetic only (show/hide UI); never trusted.
  *
  * Gating an element inside a PUBLIC page: branch on `await getCurrentUser()` /
