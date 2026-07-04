@@ -1,47 +1,72 @@
 # Backend overview (the separate Python service)
 
-This Next app has **no API routes**. A small, separate **Python backend** owns the few server responsibilities that Next can't (or shouldn't) do itself. This is the index; each responsibility has its own contract doc. Copy these docs into the backend repo so it can be built against them.
+This Next app has **no API routes**. A small, separate **Python backend** (FastAPI) owns the server responsibilities Next can't or shouldn't do. This is the index; each responsibility has its own contract doc. Copy these docs into the backend repo so it can be built against them.
 
-## Why a separate service at all
+## The mental model
 
-- **OAuth** needs provider callbacks, client secrets, and a place to set the session cookie — none of which belong in a static-first Next app with no API routes.
-- **News fetching** for a few publishers must egress from an **allowed (non-datacenter) IP**; Vercel's IP is blocked. See [news-fetch-proxy.md](./news-fetch-proxy.md).
-- **Cron** (periodic cleanup) needs a scheduler.
-- **File upload** (planned) needs object storage + signing.
+The backend is a **capability provider**, not a second home for business logic. Auth/session/token logic stays in **Next server actions** (where the custom auth already lives); the backend supplies capabilities Next lacks:
+
+- **Only the backend can:** OAuth callbacks, secret-holding, cron, object storage, calls to paid/keyed APIs, decrypting users' stored AI keys.
+- **Next orchestrates, backend supplies one capability:** e.g. *Next* creates a password-reset token + writes the DB; the backend only **sends the email**.
 
 ## Topology (shared by all responsibilities)
 
-- **Shared Neon DB.** The backend connects to the **same** `DATABASE_URL`. The Drizzle schema in [`db/schema.ts`](../db/schema.ts) is the source of truth and **Next owns migrations** (`bun run db:migrate`). The backend only reads/writes existing tables; it never runs migrations. New columns a backend feature needs (e.g. an image URL) are added to the schema **in the Next repo** first.
-- **Same origin.** Deploy behind one origin (a reverse proxy): `/api/*` (or `/auth/*`) → Python, everything else → Next. Same-origin is what lets the backend set/read the session **cookie** Next issues (`sha256(cookie token)` = `sessions.id`). Cross-origin breaks cookie sharing.
-- **Auth check.** Any authenticated backend endpoint validates the Next `session` cookie the same way `lib/auth/session.ts` does: hash the token, look up `sessions.id`, ensure not expired and `mfaPending = false`; then map to the user (and role, for permission checks).
-- **Suggested stack:** FastAPI + httpx (matches the news-proxy reference implementation).
+- **Shared Neon DB.** Backend uses the same `DATABASE_URL`. The Drizzle schema in [`db/schema.ts`](../db/schema.ts) is the source of truth and **Next owns migrations** (`bun run db:migrate`). New columns/tables a backend feature needs are added **in the Next repo first**; the backend only reads/writes them.
+- **Same origin.** Deploy behind one origin (reverse proxy): `/api/*` → Python, everything else → Next. Same-origin lets the backend read/set the session **cookie** Next issues (`sha256(token)` = `sessions.id`).
+- **Auth check.** Any authenticated backend endpoint validates the `session` cookie exactly as [`lib/auth/session.ts`](../lib/auth/session.ts) does (hash → `sessions.id`, not expired, `mfaPending = false`) → user + role.
+- **Secrets that live only on the backend:** OAuth client secrets, the email-provider key, the **AI-key encryption key**, WhatsApp credentials, and R2 credentials. None of these touch Vercel.
+- **Stack:** FastAPI + httpx.
 
 ## Responsibilities
 
+Grouped by the phase they're scheduled in (see Phasing). Status is as of 2026-07.
+
 | # | Responsibility | Kind | Contract | Status |
 |---|---|---|---|---|
-| 1 | Google/Microsoft OAuth (login / register / link / unlink) | HTTP routes | [auth-backend-contract.md](./auth-backend-contract.md) | Spec'd; not built |
-| 2 | News fetch-proxy for WAF-blocked publishers | HTTP route (`GET /fetch?url=`) | [news-fetch-proxy.md](./news-fetch-proxy.md) | Next side merged; backend not built |
-| 3 | File upload (avatars now; documents/images later) | HTTP route(s) + Cloudflare R2 | [file-upload-contract.md](./file-upload-contract.md) | Proposed |
-| 4 | Scheduled cleanup (expired sessions, stale login-attempt rows) | Cron job | see below | Anticipated |
+| 1 | Google/Microsoft **OAuth** | HTTP routes | [auth-backend-contract.md](./auth-backend-contract.md) | Spec'd |
+| 2 | **News fetch-proxy** (WAF-blocked publishers) | `GET /fetch?url=` | [news-fetch-proxy.md](./news-fetch-proxy.md) | Next side merged |
+| 3 | **Transactional email** | `POST /email/send` | [email-contract.md](./email-contract.md) | Spec'd |
+| 4 | **Password reset + email verification** (email send only; logic in Next) | uses #3 | [password-reset-contract.md](./password-reset-contract.md) | Spec'd |
+| 5 | **AI quote assistant** (BYO-key store + vision chat → quote) | routes + Anthropic API | [ai-quote-assistant-contract.md](./ai-quote-assistant-contract.md) | Spec'd ⭐ |
+| 6 | **File upload** (avatars now; docs/images later) | routes + R2 | [file-upload-contract.md](./file-upload-contract.md) | Proposed |
+| 7 | **Exchange-rate service** | daily cron → table | [exchange-rate-contract.md](./exchange-rate-contract.md) | Proposed |
+| 8 | **WhatsApp** (send quotes/alerts) | route/worker | [whatsapp-contract.md](./whatsapp-contract.md) | Proposed |
+| 9 | **Scheduled cleanup + audit retention** | cron | see below | Anticipated |
 
-### 4. Scheduled cleanup (cron)
+### 9. Cron jobs
+- **Cleanup:** delete expired `sessions` + stale `loginAttempts` — logic already in [`scripts/cleanup.ts`](../scripts/cleanup.ts), run daily.
+- **Audit-log retention:** delete audit rows older than the retention window (e.g. 12 months).
 
-The delete logic already exists as [`scripts/cleanup.ts`](../scripts/cleanup.ts) (removes expired `sessions` and stale `loginAttempts`). It's safe to run any time and idempotent. The backend should run the equivalent on a daily schedule (a cron/APScheduler job, or the host's scheduler hitting a small protected endpoint). No new tables. Keep the exact delete conditions in sync with `scripts/cleanup.ts` (or have the cron just shell out to `bun run cleanup` if the backend host has Bun).
-
-## Environment variables the Next app uses to reach the backend
+## Environment variables Next uses to reach the backend
 
 | Var | Used by | Purpose |
 |---|---|---|
-| `AUTH_BACKEND_URL` | `oauth-buttons.tsx`, `connected-accounts.tsx` | Base URL of OAuth endpoints; buttons hide until set |
-| `NEWS_FETCH_PROXY` | `lib/news.ts` | Full URL of the fetch-proxy endpoint; blocked sources fetched directly until set |
-| `FILE_UPLOAD_URL` *(planned)* | file-upload feature | Base URL of the upload signing endpoint |
+| `AUTH_BACKEND_URL` | `oauth-buttons.tsx`, `connected-accounts.tsx` | OAuth endpoints; buttons hide until set |
+| `NEWS_FETCH_PROXY` | `lib/news.ts` | Fetch-proxy endpoint; blocked sources go direct until set |
+| `BACKEND_URL` *(planned)* | email send, AI chat, uploads | Base URL for the newer endpoints (server-to-server; browser can use same-origin relative paths) |
 
-## Explicitly out of scope (until a feature needs it)
+## Suggested phasing (2026-07)
 
-- **Email / SMTP** — no password reset, no email invites (invites are code-based). Don't build it speculatively.
-- **Rate limiting** — already handled in Next, DB-backed (`lib/auth/rate-limit.ts`). The backend only helps by running the cron that trims its rows (#4).
+The backend service itself gates most of this, so standing it up is Phase 0 — with news `/fetch` as the trivial first endpoint that also **proves the host's IP is allowed**. The **AI quote assistant is pulled forward** (top business value) right after Phase 0.
+
+| Phase | What | Notes |
+|---|---|---|
+| **0 — Foundations** | Stand up backend (news `/fetch` first). **Transactional email** (backend-owned). | Unlocks everything ✉️ and every backend feature. |
+| **1 — AI quote assistant** ⭐ | 1a encrypted **BYO-key store** → 1b **quote chat** (image → extract → quote; general prompts; streaming). | Independent of email. Top priority. |
+| **2 — Email-verified identity** | **Capture email at registration** + **email verification** ✉️. | Prerequisite for reset; makes `users.email` trustworthy. |
+| **3 — Account security** | **Password reset** ✉️ (2FA-required) · **security notifications** ✉️ · **admin send-reset** ✉️ · **emailed invites** ✉️. | Depends on 0 + 2. |
+| **4 — Ops cron** | cleanup · audit-log retention. | Cheap, no email. |
+| **5 — Domain win** | **exchange-rate service** (daily FX → table → surfaced in commissions). | Small, high daily value. |
+| **6 — Comms** | **WhatsApp** (send the generated quote/alerts). | Follows the AI feature. |
+| **7 — Advanced** | file upload (avatars) · **Passkeys/WebAuthn**. | Nice-to-have. |
+| **Later (backlog)** | news warm-up · invite-expiry reminders · exports · content-pipeline move · Telegram · GDS · payments/billing. | Deferred. |
+
+## Explicitly out of scope (until a feature demands it)
+- **Payments/billing, heavy GDS integrations, Telegram** — deferred.
+- **SMS 2FA** — TOTP (already built) is strictly better.
+- **CAPTCHA** — invite-only + the DB-backed IP throttle in `lib/auth/rate-limit.ts` suffice.
+- **Self-hosted SMTP** — use a provider (deliverability).
 
 ## Continuing this work with Claude in the backend repo
 
-Claude's memory is **per-project (per folder)** — a new repo starts with empty memory and no history of these chats. So context travels via **these docs**: copy `docs/*-contract.md` + this overview into the backend repo, then start Claude there with *"read backend-overview.md and the contract docs; let's build endpoint N."* That's enough to continue with full context.
+Claude's memory is **per-project (per folder)** — a new repo starts empty with no history of these chats. Context travels via **these docs**: copy `docs/*.md` (overview + contracts) into the backend repo, then start Claude there with *"read backend-overview.md and the contract docs; let's build responsibility N."*
