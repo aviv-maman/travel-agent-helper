@@ -61,6 +61,12 @@
       "skillPath": "skills/neon-postgres-egress-optimizer/SKILL.md",
       "computedHash": "5064d3cc376a444e0ba66e8a3aabfb7fca328fc53495bc3800b53a009589f767"
     },
+    "pdf": {
+      "source": "openai/skills",
+      "sourceType": "github",
+      "skillPath": "skills/.curated/pdf/SKILL.md",
+      "computedHash": "af1e0791f5356b6de053e6b97d7703fe0d7ea1997371b9023afd4720bebcf93f"
+    },
     "playwright": {
       "source": "openai/skills",
       "sourceType": "github",
