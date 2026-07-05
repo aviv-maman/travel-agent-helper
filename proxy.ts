@@ -1,6 +1,6 @@
 import createMiddleware from "next-intl/middleware";
 import { NextResponse, type NextRequest } from "next/server";
-import { and, eq } from "drizzle-orm";
+import { eq } from "drizzle-orm";
 import { db } from "@/db";
 import { sessions } from "@/db/schema";
 import { routing } from "@/i18n/routing";
@@ -30,17 +30,23 @@ async function hashToken(token: string): Promise<string> {
 }
 
 /**
- * Whether the raw session token maps to a live, fully-authenticated session row.
+ * Classify the raw session token against its DB row:
+ *   - "valid"   → a live, fully-authenticated session (grants access);
+ *   - "pending" → a live session still in the 2FA code step (no access yet, but
+ *                 its cookie MUST survive so `verifyMfa` can read it);
+ *   - "none"    → no row, expired, or otherwise dead → safe to clear the cookies.
+ *
  * (A deleted user cascade-deletes their sessions, so a surviving row implies a
  * real user — no join needed. Mirrors `validateSession`, minus the last-seen bump.)
  */
-async function sessionIsValid(token: string): Promise<boolean> {
+async function sessionState(token: string): Promise<"valid" | "pending" | "none"> {
   const [row] = await db
-    .select({ expiresAt: sessions.expiresAt })
+    .select({ expiresAt: sessions.expiresAt, mfaPending: sessions.mfaPending })
     .from(sessions)
-    .where(and(eq(sessions.id, await hashToken(token)), eq(sessions.mfaPending, false)))
+    .where(eq(sessions.id, await hashToken(token)))
     .limit(1);
-  return Boolean(row) && row.expiresAt.getTime() >= Date.now();
+  if (!row || row.expiresAt.getTime() < Date.now()) return "none";
+  return row.mfaPending ? "pending" : "valid";
 }
 
 /**
@@ -71,45 +77,50 @@ export default async function proxy(req: NextRequest): Promise<NextResponse> {
   const token = req.cookies.get(SESSION_COOKIE)?.value;
   const trusted = Boolean(req.cookies.get(SESSION_VERIFIED_COOKIE));
   let didDbCheck = false;
-  let loggedIn = false;
+  // "pending" (mid-2FA) sessions are never marked trusted, so they always hit the
+  // DB check below and are classified correctly — never mistaken for "none".
+  let state: "valid" | "pending" | "none" = "none";
   if (token) {
     if (trusted) {
-      loggedIn = true;
+      state = "valid";
     } else {
-      loggedIn = await sessionIsValid(token);
+      state = await sessionState(token);
       didDbCheck = true;
     }
   }
+  const loggedIn = state === "valid";
 
   if (isProtectedPath(appPath) && !loggedIn) {
     const url = req.nextUrl.clone();
     url.pathname = `/${locale}/login`;
     url.search = "";
     url.searchParams.set("next", req.nextUrl.pathname);
-    return syncAuthCookies(NextResponse.redirect(url), req, loggedIn, didDbCheck);
+    return syncAuthCookies(NextResponse.redirect(url), req, state, didDbCheck);
   }
 
-  return syncAuthCookies(handleI18n(req), req, loggedIn, didDbCheck);
+  return syncAuthCookies(handleI18n(req), req, state, didDbCheck);
 }
 
 /**
  * Reconcile the auth cookies with what we just determined:
- *   - invalid session → drop `session`, the `session_user` nav mirror, and the marker;
+ *   - dead session ("none") → drop `session`, the `session_user` nav mirror, and the marker;
+ *   - pending session (mid-2FA) → leave cookies untouched so `verifyMfa` can still read
+ *     the `session` token to finish signing in;
  *   - freshly DB-validated → (re)issue the short-lived `session_verified` marker.
  */
 function syncAuthCookies(
   res: NextResponse,
   req: NextRequest,
-  loggedIn: boolean,
+  state: "valid" | "pending" | "none",
   didDbCheck: boolean,
 ): NextResponse {
-  if (!loggedIn) {
+  if (state === "none") {
     if (req.cookies.get(SESSION_COOKIE) || req.cookies.get(USER_COOKIE) || req.cookies.get(SESSION_VERIFIED_COOKIE)) {
       res.cookies.delete(SESSION_COOKIE);
       res.cookies.delete(USER_COOKIE);
       res.cookies.delete(SESSION_VERIFIED_COOKIE);
     }
-  } else if (didDbCheck) {
+  } else if (state === "valid" && didDbCheck) {
     res.cookies.set(SESSION_VERIFIED_COOKIE, "1", {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
