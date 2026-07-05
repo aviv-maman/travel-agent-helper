@@ -348,6 +348,7 @@ export const usersRelations = relations(users, ({ many }) => ({
   sessions: many(sessions),
   accounts: many(accounts),
   aiCredentials: many(userAiCredentials),
+  savedQuotes: many(savedQuotes),
 }));
 
 export const sessionsRelations = relations(sessions, ({ one }) => ({
@@ -385,6 +386,39 @@ export const userAiCredentials = pgTable(
 
 export const userAiCredentialsRelations = relations(userAiCredentials, ({ one }) => ({
   user: one(users, { fields: [userAiCredentials.userId], references: [users.id] }),
+}));
+
+/**
+ * A quote the agent **explicitly saved** from the AI assistant chat (the chat
+ * itself is ephemeral — nothing is written until the user clicks "Save"). We
+ * persist these ourselves via Drizzle; no backend capability needed. Text only
+ * for now: `imageKey`/`imageMediaType` are a nullable slot for the originating
+ * image, populated later once the R2/file-upload backend exists (privacy default
+ * — no image stored until then). See docs/ai-quote-assistant-contract.md.
+ */
+export const savedQuotes = pgTable(
+  "saved_quotes",
+  {
+    id: serial("id").primaryKey(),
+    userId: integer("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    /** Short label for the history list, derived from the originating request. */
+    title: text("title").notNull(),
+    /** The forwardable client quote (the WhatsApp message). */
+    content: text("content").notNull(),
+    /** The request that produced the quote — kept for reference / re-titling. */
+    prompt: text("prompt").notNull().default(""),
+    /** Future: R2 object key of the original image; null until the backend lands. */
+    imageKey: text("image_key"),
+    imageMediaType: text("image_media_type"),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (t) => [index("saved_quotes_user_created_idx").on(t.userId, t.createdAt)],
+);
+
+export const savedQuotesRelations = relations(savedQuotes, ({ one }) => ({
+  user: one(users, { fields: [savedQuotes.userId], references: [users.id] }),
 }));
 
 /**
