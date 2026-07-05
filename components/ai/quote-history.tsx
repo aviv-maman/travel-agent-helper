@@ -4,11 +4,20 @@ import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
-import { Check, Copy, Eye, ImageIcon, Trash2 } from "lucide-react";
+import { Check, Copy, Eye, ImageIcon, List, PanelRight, Trash2 } from "lucide-react";
 import { deleteQuoteAction } from "@/app/actions/ai";
+import { QUOTE_HISTORY_VIEW_COOKIE } from "@/lib/ai/constants";
 import type { SavedQuote } from "@/lib/ai/quotes";
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
+import { useDirection } from "@/components/ui/direction";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
 import {
   Dialog,
   DialogContent,
@@ -27,6 +36,8 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 
+type ViewMode = "list" | "drawer";
+
 /**
  * Resolve a stored quote's image to a URL. The `mock` sentinel (set in dev, when
  * no R2 backend stores real bytes) points at the bundled sample image; real keys
@@ -37,14 +48,25 @@ function quoteImageSrc(imageKey: string): string {
 }
 
 /**
- * The saved-quotes history, shown below the chat. Each quote is a box with a
- * title/date and Eye + Trash actions; Eye opens a dialog with the full message,
- * a Copy button, and Trash. The original image renders in the dialog once stored
- * (R2 backend pending; `imageKey` is null for now).
+ * The saved-quotes history. Each quote is a box with a title/date and Eye + Trash
+ * actions; Eye opens a dialog with the full message, a Copy button, and Trash. A
+ * toggle switches between the **list** (below the chat) and a side **drawer**; the
+ * choice is remembered per browser via a cookie. The original image renders in the
+ * dialog once stored (R2 backend pending; `imageKey` is null for now).
  */
-export function QuoteHistory({ locale, quotes }: { locale: string; quotes: SavedQuote[] }) {
+export function QuoteHistory({
+  locale,
+  quotes,
+  initialView,
+}: {
+  locale: string;
+  quotes: SavedQuote[];
+  initialView: ViewMode;
+}) {
   const t = useTranslations("ai");
   const router = useRouter();
+  const direction = useDirection();
+  const [view, setView] = useState<ViewMode>(initialView);
   const [viewTarget, setViewTarget] = useState<SavedQuote | null>(null);
   const [deleteTarget, setDeleteTarget] = useState<SavedQuote | null>(null);
   const [copied, setCopied] = useState(false);
@@ -52,6 +74,11 @@ export function QuoteHistory({ locale, quotes }: { locale: string; quotes: Saved
   const [pending, startTransition] = useTransition();
 
   const dateFmt = new Intl.DateTimeFormat(locale, { dateStyle: "medium" });
+
+  function setViewMode(mode: ViewMode) {
+    setView(mode);
+    document.cookie = `${QUOTE_HISTORY_VIEW_COOKIE}=${mode}; path=/; max-age=31536000; samesite=lax`;
+  }
 
   function onDelete() {
     const target = deleteTarget;
@@ -75,48 +102,93 @@ export function QuoteHistory({ locale, quotes }: { locale: string; quotes: Saved
     }
   }
 
+  // The boxes list (or empty state) — reused in both the list and drawer modes.
+  const quoteList =
+    quotes.length === 0 ? (
+      <p className="rounded-lg border border-dashed border-border px-4 py-6 text-center text-sm text-muted-foreground">
+        {t("noSavedQuotes")}
+      </p>
+    ) : (
+      <ul className="flex flex-col gap-2">
+        {quotes.map((quote) => (
+          <li
+            key={quote.id}
+            className="flex items-center gap-2 rounded-xl border border-border bg-card px-4 py-2.5">
+            <div className="flex min-w-0 flex-1 flex-col">
+              <span className="truncate text-sm font-medium text-foreground">{quote.title}</span>
+              <span className="text-xs text-muted-foreground">
+                {dateFmt.format(new Date(quote.createdAt))}
+              </span>
+            </div>
+            <Button
+              type="button"
+              variant="ghost"
+              size="icon-sm"
+              aria-label={t("view")}
+              onClick={() => {
+                setCopied(false);
+                setViewTarget(quote);
+              }}>
+              <Eye className="size-4" />
+            </Button>
+            <Button
+              type="button"
+              variant="ghost"
+              size="icon-sm"
+              aria-label={t("deleteQuote")}
+              onClick={() => setDeleteTarget(quote)}>
+              <Trash2 className="size-4 text-destructive" />
+            </Button>
+          </li>
+        ))}
+      </ul>
+    );
+
   return (
     <section className="flex flex-col gap-2">
-      <h3 className="text-sm font-semibold text-foreground">{t("savedQuotesTitle")}</h3>
+      <div className="flex items-center justify-between gap-2">
+        <h3 className="text-sm font-semibold text-foreground">{t("savedQuotesTitle")}</h3>
+        {/* List ⇄ drawer view toggle */}
+        <div className="flex items-center gap-0.5 rounded-lg border border-border p-0.5">
+          <Button
+            type="button"
+            variant={view === "list" ? "secondary" : "ghost"}
+            size="icon-sm"
+            aria-label={t("viewAsList")}
+            aria-pressed={view === "list"}
+            onClick={() => setViewMode("list")}>
+            <List className="size-4" />
+          </Button>
+          <Button
+            type="button"
+            variant={view === "drawer" ? "secondary" : "ghost"}
+            size="icon-sm"
+            aria-label={t("viewAsDrawer")}
+            aria-pressed={view === "drawer"}
+            onClick={() => setViewMode("drawer")}>
+            <PanelRight className="size-4" />
+          </Button>
+        </div>
+      </div>
 
-      {quotes.length === 0 ? (
-        <p className="rounded-lg border border-dashed border-border px-4 py-6 text-center text-sm text-muted-foreground">
-          {t("noSavedQuotes")}
-        </p>
+      {view === "list" ? (
+        quoteList
       ) : (
-        <ul className="flex flex-col gap-2">
-          {quotes.map((quote) => (
-            <li
-              key={quote.id}
-              className="flex items-center gap-2 rounded-xl border border-border bg-card px-4 py-2.5">
-              <div className="flex min-w-0 flex-1 flex-col">
-                <span className="truncate text-sm font-medium text-foreground">{quote.title}</span>
-                <span className="text-xs text-muted-foreground">
-                  {dateFmt.format(new Date(quote.createdAt))}
-                </span>
-              </div>
-              <Button
-                type="button"
-                variant="ghost"
-                size="icon-sm"
-                aria-label={t("view")}
-                onClick={() => {
-                  setCopied(false);
-                  setViewTarget(quote);
-                }}>
-                <Eye className="size-4" />
-              </Button>
-              <Button
-                type="button"
-                variant="ghost"
-                size="icon-sm"
-                aria-label={t("deleteQuote")}
-                onClick={() => setDeleteTarget(quote)}>
-                <Trash2 className="size-4 text-destructive" />
-              </Button>
-            </li>
-          ))}
-        </ul>
+        <Sheet>
+          <SheetTrigger render={<Button variant="outline" className="self-start gap-2" />}>
+            <PanelRight className="size-4" />
+            {t("openSavedQuotes")}
+            {quotes.length > 0 ? ` (${quotes.length})` : ""}
+          </SheetTrigger>
+          <SheetContent
+            side={direction === "rtl" ? "left" : "right"}
+            className="flex flex-col gap-0 sm:max-w-md">
+            <SheetHeader>
+              <SheetTitle>{t("savedQuotesTitle")}</SheetTitle>
+            </SheetHeader>
+            <div className="min-h-0 flex-1 overflow-y-auto px-4 pb-4">{quoteList}</div>
+          </SheetContent>
+        </Sheet>
       )}
 
       {/* View dialog */}

@@ -27,3 +27,10 @@ export const AI_ENABLED_COOKIE = "ai_enabled";
  * moment a real backend is configured.
  */
 export const AI_MOCK_KEY_COOKIE = "ai_key_mock";
+
+/**
+ * Per-browser preference for how the saved-quotes history renders — `"list"`
+ * (boxes below the chat) or `"drawer"` (a side sheet). Read at SSR so there's no
+ * flash; written client-side by the toggle. Non-sensitive UI state.
+ */
+export const QUOTE_HISTORY_VIEW_COOKIE = "quote_history_view";
