@@ -1,35 +1,75 @@
 /**
- * Per-supplier contact details for the suppliers tab. Mirrors the contact
- * feature from the original single-page commissions guide: each supplier keeps
- * an email + phone, optional "sales rep" and "agent" groups, and any number of
- * extra email/phone channels. Stored in localStorage, keyed by supplier id.
+ * Per-supplier (and per-airline) contact details for the suppliers/airlines
+ * tabs. Every contact is a single typed record: a `label` (display name), a
+ * `type` (its role — shown translated), an optional phone/email, and an
+ * `active` flag so a contact can be hidden from the dialog without deleting it.
+ * Records are grouped into `general` / `sales` / `agents` by type. Stored in
+ * localStorage keyed by supplier/airline id; the shape maps cleanly to a future
+ * `supplier_contacts` + `contacts` DB schema.
  */
 
-export type ContactGroup = { active: boolean; name: string; phone: string; email: string };
-export type ContactExtra = { type: "email" | "phone"; label: string; value: string };
-export type SupplierContact = {
-  email: string;
-  phone: string;
-  sales: ContactGroup;
-  /** Any number of agents / contact people — each rendered as its own block. */
-  agents: ContactGroup[];
-  extras: ContactExtra[];
+export type ContactType =
+  | "agent-support"
+  | "operation"
+  | "operation-manager"
+  | "sales-rep"
+  | "agent";
+
+/** Every selectable contact type, in menu order. */
+export const CONTACT_TYPES: ContactType[] = [
+  "agent-support",
+  "operation",
+  "operation-manager",
+  "sales-rep",
+  "agent",
+];
+
+export type ContactGroup = {
+  active: boolean;
+  /** White display title (usually a person name, e.g. "ליאור דהן"). */
+  label: string;
+  /** Role — resolved to a localized grey subtitle in the UI. */
+  type: ContactType;
+  phone?: string;
+  email?: string;
 };
 
-const STORAGE_KEY = "commContacts_v1";
+export type SupplierContact = {
+  /** Supplier/airline name (DB-ready; falls back to the caller's name prop). */
+  name: string;
+  /** agent-support / operation / operation-manager contacts. */
+  general?: ContactGroup[];
+  /** sales-rep contacts. */
+  sales?: ContactGroup[];
+  /** agent contacts. */
+  agents?: ContactGroup[];
+};
 
-export function emptyGroup(): ContactGroup {
-  return { active: false, name: "", phone: "", email: "" };
+const STORAGE_KEY = "commContacts_v2";
+
+/** Which section array a contact lives in, derived from its type. */
+export function sectionForType(type: ContactType): "general" | "sales" | "agents" {
+  if (type === "sales-rep") return "sales";
+  if (type === "agent") return "agents";
+  return "general";
+}
+
+export function newContactGroup(type: ContactType): ContactGroup {
+  return { active: true, label: "", type, phone: "", email: "" };
 }
 
 export function emptyContact(): SupplierContact {
-  return { email: "", phone: "", sales: emptyGroup(), agents: [], extras: [] };
+  return { name: "", general: [], sales: [], agents: [] };
 }
 
-/** A pre-filled (active) contact group, used to seed the defaults below. */
-function grp(name: string, phone = "", email = ""): ContactGroup {
-  return { active: true, name, phone, email };
-}
+/** Compact builder for the seed below. */
+const c = (type: ContactType, label: string, phone = "", email = ""): ContactGroup => ({
+  active: true,
+  label,
+  type,
+  phone,
+  email,
+});
 
 /**
  * Curated per-supplier contacts, keyed by the supplier ids in `lib/commissions`.
@@ -39,121 +79,86 @@ function grp(name: string, phone = "", email = ""): ContactGroup {
  */
 const DEFAULT_CONTACTS: Record<string, SupplierContact> = {
   israir: {
-    ...emptyContact(),
-    email: "israir_agents@israir.co.il",
-    phone: "03-7954000",
-    extras: [{ type: "phone", label: "טלפון נוסף", value: "03-7954003" }],
-  },
-  "kavei-hufsha": {
-    ...emptyContact(),
-    email: "support@kavei.co.il",
-    phone: "03-6211000",
-    agents: [grp("Aldo", "054-6230867", "Aldo.h@kavei.co.il")],
-    extras: [
-      { type: "email", label: "Operation", value: "ops@kavei.co.il" },
-      { type: "email", label: "Operation Manager", value: "revital.av@kavei.co.il" },
+    name: "ישראייר",
+    general: [
+      c("agent-support", "שירות", "03-7954000", "israir_agents@israir.co.il"),
+      c("agent-support", "טלפון נוסף", "03-7954003"),
     ],
   },
+  "kavei-hufsha": {
+    name: "קווי חופשה",
+    general: [
+      c("agent-support", "שירות", "03-6211000", "support@kavei.co.il"),
+      c("operation", "תפעול", "", "ops@kavei.co.il"),
+      c("operation-manager", "רויטל", "", "revital.av@kavei.co.il"),
+    ],
+    agents: [c("agent", "אלדו", "054-6230867", "Aldo.h@kavei.co.il")],
+  },
   flying: {
-    ...emptyContact(),
-    email: "sherut@flying.co.il",
-    phone: "03-5151600",
-    sales: grp("Lior Dahan", "054-3247602", "liord@flying.co.il"),
-    agents: [grp("Anna Lenkov", "054-5914972", "Annalen@flying.co.il")],
+    name: "שטיח מעופף",
+    general: [c("agent-support", "שירות", "03-5151600", "sherut@flying.co.il")],
+    sales: [c("sales-rep", "ליאור דהן", "054-3247602", "liord@flying.co.il")],
+    agents: [c("agent", "אנה לנקוב", "054-5914972", "Annalen@flying.co.il")],
   },
   "flying-sp": {
-    ...emptyContact(),
-    email: "sherut@flying.co.il",
-    phone: "03-5151600",
-    sales: grp("Lior Dahan", "054-3247602", "liord@flying.co.il"),
-    agents: [grp("Anna Lenkov", "054-5914972", "Annalen@flying.co.il")],
+    name: "שטיח מעופף",
+    general: [c("agent-support", "שירות", "03-5151600", "sherut@flying.co.il")],
+    sales: [c("sales-rep", "ליאור דהן", "054-3247602", "liord@flying.co.il")],
+    agents: [c("agent", "אנה לנקוב", "054-5914972", "Annalen@flying.co.il")],
   },
   "kishrei-teufa": {
-    ...emptyContact(),
-    phone: "03-5205020",
-    sales: grp("Moshe Elish", "054-2494400"),
-    agents: [grp("Diana", "054-2494484", "diana.or@aviation-links.co.il")],
+    name: "קשרי תעופה",
+    general: [c("agent-support", "שירות", "03-5205020")],
+    sales: [c("sales-rep", "משה אליש", "054-2494400")],
+    agents: [c("agent", "דיאנה", "054-2494484", "diana.or@aviation-links.co.il")],
   },
   "eshet-tours": {
-    ...emptyContact(),
-    email: "sitonaut@eshet-tours.co.il",
-    phone: "03-7771025",
-    sales: grp("Dudu", "052-4294620", "dudu.k@eshet-tours.co.il"),
+    name: "אשת טורס",
+    general: [c("agent-support", "שירות", "03-7771025", "sitonaut@eshet-tours.co.il")],
+    sales: [c("sales-rep", "דודו", "052-4294620", "dudu.k@eshet-tours.co.il")],
     agents: [
-      grp("Avigail Mihaeli", "", "avigailm@eshet-tours.co.il"),
-      grp("Sharon Bazel", "", "sharonb@eshet-tours.co.il"),
+      c("agent", "אביגיל מיכאלי", "", "avigailm@eshet-tours.co.il"),
+      c("agent", "שרון בזל", "", "sharonb@eshet-tours.co.il"),
     ],
   },
   arkia: {
-    ...emptyContact(),
-    email: "clickagent@arkia.co.il",
-    phone: "03-6903713",
-    agents: [grp("Nofar", "050-2600481")],
-    extras: [{ type: "email", label: "Agent support", value: "Agentsupport@arkia.co.il" }],
+    name: "ארקיע",
+    general: [
+      c("agent-support", "שירות", "03-6903713", "clickagent@arkia.co.il"),
+      c("agent-support", "תמיכת סוכנים", "", "Agentsupport@arkia.co.il"),
+    ],
+    agents: [c("agent", "נופר", "050-2600481")],
   },
   "mona-tours": {
-    ...emptyContact(),
-    phone: "03-5141866",
+    name: "מונה טורס",
+    general: [c("agent-support", "שירות", "03-5141866")],
     agents: [
-      grp("Veda Bykhovsky", "", "vedab@mona.co.il"),
-      grp("Sofa Promislovsky", "", "sofa@mona.co.il"),
-      grp("Ilana Barsky", "", "ilana@mona.co.il"),
-      grp("Tal Moshkovitz", "", "talm@mona.co.il"),
+      c("agent", "ודה ביחובסקי", "", "vedab@mona.co.il"),
+      c("agent", "סופה פרומיסלובסקי", "", "sofa@mona.co.il"),
+      c("agent", "אילנה ברסקי", "", "ilana@mona.co.il"),
+      c("agent", "טל מושקוביץ", "", "talm@mona.co.il"),
     ],
   },
   issta: {
-    ...emptyContact(),
-    email: "charter-issta@issta.co.il",
-    phone: "03-7777377",
+    name: "איסתא",
+    general: [c("agent-support", "שירות", "03-7777377", "charter-issta@issta.co.il")],
     agents: [
-      grp("Tom Avni", "054-2120206", "tomavni@issta.co.il"),
-      grp("Eti Bar David", "", "etiba@issta.co.il"),
-      grp("Zohar Shpinei", "052-7807468", "Zoharshpinei@issta.co.il"),
+      c("agent", "תום אבני", "054-2120206", "tomavni@issta.co.il"),
+      c("agent", "אתי בר דוד", "", "etiba@issta.co.il"),
+      c("agent", "זוהר שפיני", "052-7807468", "Zoharshpinei@issta.co.il"),
     ],
   },
   wtc: {
-    ...emptyContact(),
-    phone: "03-5656333",
-    agents: [grp("Einat", "", "einat@wtc.co.il")],
+    name: "WTC",
+    general: [c("agent-support", "שירות", "03-5656333")],
+    agents: [c("agent", "עינת", "", "einat@wtc.co.il")],
   },
   ayala: {
-    ...emptyContact(),
-    phone: "03-9436017",
-    agents: [grp("Assaf", "", "assaf@ayalagroup.co.il")],
+    name: "איילה",
+    general: [c("agent-support", "שירות", "03-9436017")],
+    agents: [c("agent", "אסף", "", "assaf@ayalagroup.co.il")],
   },
 };
-
-/**
- * Hebrew display names for the seeded contact people, keyed by the Latin name
- * stored above. Used to show Hebrew names in the Hebrew UI while keeping the
- * Latin names in English. Names the user types themselves aren't in the map and
- * are shown as-is in both locales.
- */
-const HEBREW_NAMES: Record<string, string> = {
-  "Lior Dahan": "ליאור דהן",
-  "Anna Lenkov": "אנה לנקוב",
-  Aldo: "אלדו",
-  "Moshe Elish": "משה אליש",
-  Diana: "דיאנה",
-  Dudu: "דודו",
-  "Avigail Mihaeli": "אביגיל מיכאלי",
-  "Sharon Bazel": "שרון בזל",
-  Nofar: "נופר",
-  "Veda Bykhovsky": "ודה ביחובסקי",
-  "Sofa Promislovsky": "סופה פרומיסלובסקי",
-  "Ilana Barsky": "אילנה ברסקי",
-  "Tal Moshkovitz": "טל מושקוביץ",
-  "Tom Avni": "תום אבני",
-  "Eti Bar David": "אתי בר דוד",
-  "Zohar Shpinei": "זוהר שפיני",
-  Einat: "עינת",
-  Assaf: "אסף",
-};
-
-/** Resolve a contact person's name for the active locale (Hebrew seed names in `he`). */
-export function localizeName(name: string, locale: string): string {
-  return locale === "he" ? (HEBREW_NAMES[name] ?? name) : name;
-}
 
 /** Read every stored contact, keyed by supplier id. Safe on the server. */
 function readAll(): Record<string, SupplierContact> {
@@ -165,19 +170,20 @@ function readAll(): Record<string, SupplierContact> {
   }
 }
 
+/** All contacts of a record, flattened in general → sales → agents order. */
+export function allContacts(contact: SupplierContact): ContactGroup[] {
+  return [...(contact.general ?? []), ...(contact.sales ?? []), ...(contact.agents ?? [])];
+}
+
 export function getContact(id: string): SupplierContact {
   // Stored (user-edited) contact wins outright; otherwise fall back to the seed.
-  const stored = readAll()[id] as (Partial<SupplierContact> & { agent?: ContactGroup }) | undefined;
-  const merged = { ...emptyContact(), ...DEFAULT_CONTACTS[id], ...stored } as SupplierContact & {
-    agent?: ContactGroup;
+  const base = readAll()[id] ?? DEFAULT_CONTACTS[id] ?? emptyContact();
+  return {
+    name: base.name ?? "",
+    general: base.general ?? [],
+    sales: base.sales ?? [],
+    agents: base.agents ?? [],
   };
-  // Migrate the legacy single `agent` field (pre-`agents[]`) into the array.
-  if (stored && !Array.isArray(stored.agents) && merged.agent) {
-    const a = merged.agent;
-    merged.agents = a.name || a.phone || a.email ? [{ ...a, active: true }] : [];
-  }
-  delete merged.agent;
-  return merged;
 }
 
 export function setContact(id: string, contact: SupplierContact): void {
@@ -196,13 +202,7 @@ export function cleanPhone(p: string): string {
   return (p || "").replace(/[^0-9+]/g, "");
 }
 
-/** Whether a contact has anything worth showing in the view. */
-export function hasAnyContact(c: SupplierContact): boolean {
-  return Boolean(
-    c.email ||
-      c.phone ||
-      c.extras.some((e) => e.value) ||
-      (c.sales.active && (c.sales.name || c.sales.phone || c.sales.email)) ||
-      c.agents.some((a) => a.name || a.phone || a.email),
-  );
+/** Whether a contact has any active, reachable entry worth showing in the view. */
+export function hasAnyContact(contact: SupplierContact): boolean {
+  return allContacts(contact).some((g) => g.active && (g.phone || g.email));
 }
