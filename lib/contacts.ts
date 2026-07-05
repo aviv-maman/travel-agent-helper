@@ -123,6 +123,38 @@ const DEFAULT_CONTACTS: Record<string, SupplierContact> = {
   },
 };
 
+/**
+ * Hebrew display names for the seeded contact people, keyed by the Latin name
+ * stored above. Used to show Hebrew names in the Hebrew UI while keeping the
+ * Latin names in English. Names the user types themselves aren't in the map and
+ * are shown as-is in both locales.
+ */
+const HEBREW_NAMES: Record<string, string> = {
+  "Lior Dahan": "ליאור דהן",
+  "Anna Lenkov": "אנה לנקוב",
+  Aldo: "אלדו",
+  "Moshe Elish": "משה אליש",
+  Diana: "דיאנה",
+  Dudu: "דודו",
+  "Avigail Mihaeli": "אביגיל מיכאלי",
+  "Sharon Bazel": "שרון בזל",
+  Nofar: "נופר",
+  "Veda Bykhovsky": "ודה ביחובסקי",
+  "Sofa Promislovsky": "סופה פרומיסלובסקי",
+  "Ilana Barsky": "אילנה ברסקי",
+  "Tal Moshkovitz": "טל מושקוביץ",
+  "Tom Avni": "תום אבני",
+  "Eti Bar David": "אתי בר דוד",
+  "Zohar Shpinei": "זוהר שפיני",
+  Einat: "עינת",
+  Assaf: "אסף",
+};
+
+/** Resolve a contact person's name for the active locale (Hebrew seed names in `he`). */
+export function localizeName(name: string, locale: string): string {
+  return locale === "he" ? (HEBREW_NAMES[name] ?? name) : name;
+}
+
 /** Read every stored contact, keyed by supplier id. Safe on the server. */
 function readAll(): Record<string, SupplierContact> {
   if (typeof window === "undefined") return {};
