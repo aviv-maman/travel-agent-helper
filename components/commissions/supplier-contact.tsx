@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { useTranslations } from "next-intl";
-import { Check, Copy, Phone } from "lucide-react";
+import { useLocale, useTranslations } from "next-intl";
+import { Briefcase, Check, Copy, Mail, Phone, User } from "lucide-react";
 import {
   Dialog,
   DialogTrigger,
@@ -29,18 +29,11 @@ import {
   emptyGroup,
   getContact,
   hasAnyContact,
+  localizeName,
   setContact,
 } from "@/lib/contacts";
 
-type RowColor = "brand" | "success" | "warning" | "purple";
-const ROW_CHIP: Record<RowColor, string> = {
-  brand: "bg-brand/15 text-brand",
-  success: "bg-success/15 text-success",
-  warning: "bg-warning/15 text-warning",
-  purple: "bg-purple/15 text-purple",
-};
-
-/** A copy-to-clipboard button that briefly confirms with a check icon. */
+/** A boxed icon-only copy button that briefly confirms with a check. */
 function CopyButton({ value }: { value: string }) {
   const t = useTranslations("commissions.contact");
   const [copied, setCopied] = useState(false);
@@ -56,61 +49,78 @@ function CopyButton({ value }: { value: string }) {
   }
 
   return (
-    <TooltipProvider>
-      <Tooltip>
-        <TooltipTrigger
-          render={
-            <Button
-              type="button"
-              variant="ghost"
-              size="icon-sm"
-              onClick={copy}
-              aria-label={copied ? t("copied") : t("copy")}
-              className={copied ? "text-success" : "text-muted-foreground"}
-            />
-          }>
-          {copied ? <Check className="size-4" /> : <Copy className="size-4" />}
-        </TooltipTrigger>
-        <TooltipContent>{copied ? t("copied") : t("copy")}</TooltipContent>
-      </Tooltip>
-    </TooltipProvider>
+    <Button
+      type="button"
+      variant="outline"
+      size="icon-sm"
+      onClick={copy}
+      aria-label={copied ? t("copied") : t("copy")}
+      className={`shrink-0 ${copied ? "text-success" : "text-muted-foreground"}`}>
+      {copied ? <Check className="size-4" /> : <Copy className="size-4" />}
+    </Button>
   );
 }
 
-/** A single read-only contact line with an optional tel:/mailto: link. */
-function ContactRow({
-  icon,
-  color,
-  label,
+/**
+ * One channel on its own line: a plain icon-only action button (opens the mail
+ * app / dialer), the value as ltr text, an optional muted label (extra channels
+ * like "Operation"), and the boxed copy button.
+ */
+function ChannelLine({
+  type,
   value,
-  href,
+  label,
 }: {
-  icon: string;
-  color: RowColor;
-  label: string;
+  type: "email" | "phone";
   value: string;
-  href?: string;
+  label?: string;
 }) {
+  const t = useTranslations("commissions.contact");
+  const Icon = type === "email" ? Mail : Phone;
+  const href = type === "email" ? `mailto:${value}` : `tel:${cleanPhone(value)}`;
   return (
-    <div className="flex items-center gap-3 rounded-xl bg-surface-2 px-3 py-2.5">
-      <span
-        className={`flex size-9 shrink-0 items-center justify-center rounded-lg ${ROW_CHIP[color]}`}
-        aria-hidden>
-        {icon}
+    <div className="flex items-center gap-2 py-1.5">
+      <Button
+        variant="ghost"
+        size="icon-sm"
+        aria-label={type === "email" ? t("email") : t("phone")}
+        className="shrink-0 text-muted-foreground"
+        render={<a href={href} />}>
+        <Icon className="size-4" />
+      </Button>
+      <span className="min-w-0 flex-1 text-sm font-bold break-all text-brand" dir="ltr">
+        {value}
       </span>
-      <div className="min-w-0 flex-1">
-        <div className="text-xs font-bold text-muted-foreground">{label}</div>
-        <div className="font-bold break-words" dir="ltr">
-          {href ? (
-            <a href={href} className="text-brand hover:underline">
-              {value}
-            </a>
-          ) : (
-            value
-          )}
-        </div>
+      {label && <span className="shrink-0 text-xs text-muted-foreground">{label}</span>}
+      <CopyButton value={value} />
+    </div>
+  );
+}
+
+/**
+ * A sales rep or agent, separated by a top divider: a header row with the
+ * person's name (bold) plus a role icon at the start and a muted role label at
+ * the end, then their channel lines.
+ */
+function PersonBlock({ group, role, t }: { group: ContactGroup; role: "sales" | "agent"; t: T }) {
+  const locale = useLocale();
+  if (!group.name && !group.phone && !group.email) return null;
+  const RoleIcon = role === "sales" ? Briefcase : User;
+  const roleLabel = role === "sales" ? t("sales") : t("agent");
+  return (
+    <div className="mt-1 border-t border-border pt-2">
+      <div className="flex items-center gap-2 px-0.5">
+        <RoleIcon
+          className={`size-4 shrink-0 ${role === "sales" ? "text-gold" : "text-brand"}`}
+          aria-hidden
+        />
+        <span className="flex-1 text-sm font-bold" dir="auto">
+          {localizeName(group.name, locale) || roleLabel}
+        </span>
+        <span className="shrink-0 text-xs text-muted-foreground">{roleLabel}</span>
       </div>
-      {href && <CopyButton value={value} />}
+      {group.phone && <ChannelLine type="phone" value={group.phone} />}
+      {group.email && <ChannelLine type="email" value={group.email} />}
     </div>
   );
 }
@@ -280,87 +290,26 @@ function ContactView({ supplierId, t }: { supplierId: string; t: T }) {
       </p>
     );
   }
+  const agents = contact.agents.filter((a) => a.name || a.phone || a.email);
+  const hasSupplier = Boolean(contact.email || contact.phone || contact.extras.some((e) => e.value));
   return (
-    <div className="flex flex-col gap-2">
-      {contact.email && (
-        <ContactRow
-          icon="📧"
-          color="brand"
-          label={t("supplierEmail")}
-          value={contact.email}
-          href={`mailto:${contact.email}`}
-        />
+    <div className="flex flex-col">
+      {hasSupplier && (
+        <div>
+          <div className="px-0.5 text-xs text-muted-foreground">{t("supplier")}</div>
+          {contact.email && <ChannelLine type="email" value={contact.email} />}
+          {contact.phone && <ChannelLine type="phone" value={contact.phone} />}
+          {contact.extras.map((ex, i) =>
+            ex.value ? (
+              <ChannelLine key={i} type={ex.type} value={ex.value} label={ex.label} />
+            ) : null,
+          )}
+        </div>
       )}
-      {contact.phone && (
-        <ContactRow
-          icon="☎️"
-          color="success"
-          label={t("supplierPhone")}
-          value={contact.phone}
-          href={`tel:${cleanPhone(contact.phone)}`}
-        />
-      )}
-      {contact.extras.map((ex, i) =>
-        ex.value ? (
-          <ContactRow
-            key={i}
-            icon={ex.type === "email" ? "📧" : "☎️"}
-            color="brand"
-            label={ex.label || (ex.type === "email" ? t("email") : t("phone"))}
-            value={ex.value}
-            href={ex.type === "email" ? `mailto:${ex.value}` : `tel:${cleanPhone(ex.value)}`}
-          />
-        ) : null,
-      )}
-      {contact.sales.active && (
-        <ContactGroupView group={contact.sales} color="warning" tag={`📈 ${t("sales")}`} t={t} />
-      )}
-      {contact.agents.map((agent, i) => (
-        <ContactGroupView key={i} group={agent} color="purple" tag={`👤 ${t("agent")}`} t={t} />
+      {contact.sales.active && <PersonBlock group={contact.sales} role="sales" t={t} />}
+      {agents.map((agent, i) => (
+        <PersonBlock key={i} group={agent} role="agent" t={t} />
       ))}
-    </div>
-  );
-}
-
-function ContactGroupView({
-  group,
-  color,
-  tag,
-  t,
-}: {
-  group: ContactGroup;
-  color: RowColor;
-  tag: string;
-  t: T;
-}) {
-  if (!group.name && !group.phone && !group.email) return null;
-  const border = color === "warning" ? "border-warning/40" : "border-purple/40";
-  return (
-    <div className={`flex flex-col gap-2 rounded-xl border border-dashed ${border} p-2.5`}>
-      <span className={`text-xs font-bold ${color === "warning" ? "text-warning" : "text-purple"}`}>
-        {tag}
-      </span>
-      {group.name && (
-        <ContactRow icon="🪪" color={color} label={t("name")} value={group.name} />
-      )}
-      {group.phone && (
-        <ContactRow
-          icon="📱"
-          color={color}
-          label={t("phone")}
-          value={group.phone}
-          href={`tel:${cleanPhone(group.phone)}`}
-        />
-      )}
-      {group.email && (
-        <ContactRow
-          icon="✉️"
-          color={color}
-          label={t("email")}
-          value={group.email}
-          href={`mailto:${group.email}`}
-        />
-      )}
     </div>
   );
 }
@@ -500,7 +449,7 @@ function GroupEdit({
   t,
 }: {
   group: ContactGroup;
-  color: RowColor;
+  color: "warning" | "purple";
   tag: string;
   onChange: (_patch: Partial<ContactGroup>) => void;
   onRemove: () => void;

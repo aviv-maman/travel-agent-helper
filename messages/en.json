@@ -278,6 +278,7 @@
       "button": "Contact",
       "title": "Contact — {name}",
       "subtitle": "Supplier contact details",
+      "supplier": "Supplier",
       "supplierEmail": "Supplier email",
       "supplierPhone": "Supplier phone",
       "name": "Name",
