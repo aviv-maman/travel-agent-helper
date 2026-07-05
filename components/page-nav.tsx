@@ -1,12 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useSelectedLayoutSegment } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";
 import Link from "next/link";
 import { Menu, CircleUser, LogOut } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { logout } from "@/lib/auth/actions";
+import { useAiEnabled } from "@/lib/ai/ai-enabled-store";
 import { useSession } from "@/components/auth/session-provider";
 import { UserAvatar } from "@/components/auth/user-avatar";
 import {
@@ -46,13 +47,25 @@ export function PageNav() {
   const locale = useLocale();
   const direction = useDirection();
   const segment = useSelectedLayoutSegment() ?? "hotels";
+  const aiEnabled = useAiEnabled();
   const [open, setOpen] = useState(false);
+
+  // The Assistant tab is revealed only once the user has a stored AI key
+  // (contract §Access). Signed-in + key-configured, mirrored client-side so the
+  // root layout needn't read the session (which would make public pages dynamic).
+  const pages = useMemo(
+    () =>
+      user && aiEnabled
+        ? [...PAGES, { segment: "assistant", emoji: "🤖" } as const]
+        : PAGES,
+    [user, aiEnabled],
+  );
 
   // `segment` is the route segment directly under the [locale] layout: a content
   // page ("hotels", "news", …) or the account area ("account"). Only content pages
   // have an entry here — elsewhere there's none, so the mobile header falls back to
   // the app title instead of a stray page (previously it defaulted to "news").
-  const active = PAGES.find((p) => p.segment === segment);
+  const active = pages.find((p) => p.segment === segment);
   // Signed in → the account area; signed out → login.
   const accountHref = user ? `/${locale}/account` : `/${locale}/login`;
 
@@ -80,7 +93,7 @@ export function PageNav() {
             </SheetHeader>
             <Separator />
             <nav className="flex flex-col gap-1 p-2">
-              {PAGES.map(({ segment: value, emoji }) => {
+              {pages.map(({ segment: value, emoji }) => {
                 const isActive = segment === value;
                 return (
                   <SheetClose
@@ -162,7 +175,7 @@ export function PageNav() {
         {/* Desktop: horizontal page links */}
         <NavigationMenu className="hidden max-w-full flex-none sm:flex">
           <NavigationMenuList className="justify-start gap-1">
-            {PAGES.map(({ segment: value, emoji }) => {
+            {pages.map(({ segment: value, emoji }) => {
               const isActive = segment === value;
               return (
                 <NavigationMenuItem key={value}>

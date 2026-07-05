@@ -29,6 +29,7 @@ export function AccountNav({
   const tabs = [
     { href: "/account/profile", label: t("profile") },
     { href: "/account/security", label: t("security") },
+    { href: "/account/ai", label: t("ai") },
     ...(canInvites ? [{ href: "/account/admin/invites", label: t("invites") }] : []),
     ...(canUsers ? [{ href: "/account/admin/users", label: t("users") }] : []),
     ...(canAudit ? [{ href: "/account/admin/audit", label: t("audit") }] : []),
