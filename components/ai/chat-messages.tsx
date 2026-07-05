@@ -2,10 +2,16 @@
 
 import { useTranslations } from "next-intl";
 import { BookmarkCheck, BookmarkPlus, ImageIcon } from "lucide-react";
-import { cn } from "@/lib/utils";
 import { useSession } from "@/components/auth/session-provider";
 import { UserAvatar } from "@/components/auth/user-avatar";
 import { Button } from "@/components/ui/button";
+import { Bubble, BubbleContent } from "@/components/ui/bubble";
+import {
+  Message,
+  MessageAvatar,
+  MessageContent,
+  MessageFooter,
+} from "@/components/ui/message";
 import {
   MessageScroller,
   MessageScrollerButton,
@@ -83,62 +89,62 @@ function MessageItem({
   const canSave = !isUser && !message.pending && message.content.trim().length > 0;
 
   return (
-    <div className={cn("group flex gap-3", isUser ? "flex-row-reverse" : "flex-row")}>
-      {isUser ? (
-        <UserAvatar name={username || "?"} className="mt-0.5 size-8 text-xs" />
-      ) : (
-        <AssistantBadge className="mt-0.5" />
-      )}
+    <Message align={isUser ? "end" : "start"}>
+      <MessageAvatar className="bg-transparent">
+        {isUser ? (
+          <UserAvatar name={username || "?"} className="size-8 text-xs" />
+        ) : (
+          <AssistantBadge />
+        )}
+      </MessageAvatar>
 
-      <div className={cn("flex min-w-0 max-w-[82%] flex-col gap-1", isUser ? "items-end" : "items-start")}>
-        <div
-          className={cn(
-            "w-fit max-w-full rounded-2xl px-4 py-2.5 text-sm whitespace-pre-wrap",
-            isUser
-              ? "rounded-tr-sm bg-primary text-primary-foreground"
-              : "rounded-tl-sm border border-border bg-surface-2 text-foreground",
-          )}>
-          {message.hadImage && (
-            <span className="mb-1 flex items-center gap-1.5 text-xs opacity-80">
-              <ImageIcon className="size-3.5" />
-              {t("imageAttached")}
-            </span>
-          )}
-          {message.pending && !message.content ? (
-            <TypingDots />
-          ) : (
-            <>
-              {message.content}
-              {message.pending && (
-                <span className="ms-0.5 inline-block h-4 w-[3px] translate-y-0.5 animate-pulse rounded-full bg-current align-baseline" />
-              )}
-            </>
-          )}
-        </div>
-
-        {canSave && (
-          <Button
-            type="button"
-            variant="ghost"
-            size="xs"
-            className="text-muted-foreground"
-            disabled={saved}
-            onClick={onSave}>
-            {saved ? (
-              <>
-                <BookmarkCheck className="text-success" />
-                {t("saved")}
-              </>
+      <MessageContent>
+        <Bubble variant={isUser ? "default" : "muted"}>
+          <BubbleContent className="whitespace-pre-wrap">
+            {message.hadImage && (
+              <span className="mb-1 flex items-center gap-1.5 text-xs opacity-80">
+                <ImageIcon className="size-3.5" />
+                {t("imageAttached")}
+              </span>
+            )}
+            {message.pending && !message.content ? (
+              <TypingDots />
             ) : (
               <>
-                <BookmarkPlus />
-                {t("saveToHistory")}
+                {message.content}
+                {message.pending && (
+                  <span className="ms-0.5 inline-block h-4 w-[3px] translate-y-0.5 animate-pulse rounded-full bg-current align-baseline" />
+                )}
               </>
             )}
-          </Button>
+          </BubbleContent>
+        </Bubble>
+
+        {canSave && (
+          <MessageFooter>
+            <Button
+              type="button"
+              variant="ghost"
+              size="xs"
+              className="text-muted-foreground"
+              disabled={saved}
+              onClick={onSave}>
+              {saved ? (
+                <>
+                  <BookmarkCheck className="text-success" />
+                  {t("saved")}
+                </>
+              ) : (
+                <>
+                  <BookmarkPlus />
+                  {t("saveToHistory")}
+                </>
+              )}
+            </Button>
+          </MessageFooter>
         )}
-      </div>
-    </div>
+      </MessageContent>
+    </Message>
   );
 }
 
