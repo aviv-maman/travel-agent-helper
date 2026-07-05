@@ -1,3 +1,4 @@
+import { cookies } from "next/headers";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { InfoIcon, TriangleAlertIcon } from "lucide-react";
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
@@ -7,6 +8,7 @@ import { getDestinationsList, getDestinationView, type SortMode } from "@/lib/ho
 import { DestinationCombobox } from "@/components/hotels/destination-combobox";
 import { HotelFilters } from "@/components/hotels/hotel-filters";
 import { HotelsResults } from "@/components/hotels/hotels-results";
+import { HOTELS_VIEW_MODE_COOKIE, parseViewMode } from "@/components/hotels/view-mode";
 import { HotelsPager } from "@/components/hotels/hotels-pager";
 import { CityInfoAccordion } from "@/components/hotels/city-info-accordion";
 
@@ -40,6 +42,7 @@ export default async function HotelsPage({
     getDestinationsList(locale),
     can("content:edit"),
   ]);
+  const hotelsView = parseViewMode((await cookies()).get(HOTELS_VIEW_MODE_COOKIE)?.value);
   const view = dest
     ? await getDestinationView(dest, {
         tags,
@@ -74,7 +77,7 @@ export default async function HotelsPage({
       {view && (
         <>
           <HotelFilters landmarks={view.landmarks} />
-          <HotelsResults hotels={view.hotels} canEdit={canEdit} />
+          <HotelsResults hotels={view.hotels} canEdit={canEdit} initialView={hotelsView} />
           <HotelsPager
             total={view.total}
             page={view.page}

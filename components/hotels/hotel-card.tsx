@@ -14,7 +14,7 @@ import { Card } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { CopyLinkButton } from "./copy-link-button";
 import { EditBookingScore } from "./edit-booking-score";
-import type { ViewMode } from "./use-view-mode";
+import type { ViewMode } from "./view-mode";
 import { useHotelParams } from "./use-hotel-params";
 
 type FilterKey = keyof (typeof import("@/messages/en.json"))["hotels"]["filter"];

@@ -9,17 +9,20 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/comp
 import { HotelCard } from "./hotel-card";
 import { HotelDetailModal } from "./hotel-detail-modal";
 import { useViewMode } from "./use-view-mode";
+import type { ViewMode } from "./view-mode";
 
 export function HotelsResults({
   hotels,
   canEdit = false,
+  initialView,
 }: {
   hotels: ViewHotel[];
   canEdit?: boolean;
+  initialView: ViewMode;
 }) {
   const t = useTranslations("hotels");
   const [selected, setSelected] = useState<ViewHotel | null>(null);
-  const [view, setView] = useViewMode();
+  const [view, setView] = useViewMode(initialView);
 
   if (hotels.length === 0) {
     return <p className="py-8 text-center text-sm text-muted-foreground">{t("noResults")}</p>;
