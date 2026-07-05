@@ -276,8 +276,7 @@
     },
     "contact": {
       "button": "Contact",
-      "title": "Contact — {name}",
-      "subtitle": "Supplier contact details",
+      "title": "Contact",
       "supplierName": "Supplier name",
       "label": "Label",
       "type": "Type",
