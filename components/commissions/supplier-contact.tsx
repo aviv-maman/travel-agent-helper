@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { useLocale, useTranslations } from "next-intl";
-import { Briefcase, Check, Copy, Mail, Phone, User } from "lucide-react";
+import { useTranslations } from "next-intl";
+import { Briefcase, Check, Copy, type LucideIcon, Mail, Phone, User } from "lucide-react";
 import {
   Dialog,
   DialogTrigger,
@@ -21,17 +21,36 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import {
-  type ContactExtra,
+  CONTACT_TYPES,
   type ContactGroup,
-  type SupplierContact,
+  type ContactType,
+  type SupplierContact as SupplierContactRecord,
+  allContacts,
   cleanPhone,
-  emptyContact,
-  emptyGroup,
   getContact,
   hasAnyContact,
-  localizeName,
+  newContactGroup,
+  sectionForType,
   setContact,
 } from "@/lib/contacts";
+
+type T = ReturnType<typeof useTranslations<"commissions.contact">>;
+
+/** contact type → translation key for its grey subtitle. */
+const TYPE_KEY = {
+  "agent-support": "typeAgentSupport",
+  operation: "typeOperation",
+  "operation-manager": "typeOperationManager",
+  "sales-rep": "typeSalesRep",
+  agent: "typeAgent",
+} as const;
+
+/** Optional leading icon for a contact type (people get one; general lines don't). */
+function typeIcon(type: ContactType): { Icon: LucideIcon; className: string } | null {
+  if (type === "sales-rep") return { Icon: Briefcase, className: "text-gold" };
+  if (type === "agent") return { Icon: User, className: "text-brand" };
+  return null;
+}
 
 /** A boxed icon-only copy button that briefly confirms with a check. */
 function CopyButton({ value }: { value: string }) {
@@ -63,18 +82,9 @@ function CopyButton({ value }: { value: string }) {
 
 /**
  * One channel on its own line: a plain icon-only action button (opens the mail
- * app / dialer), the value as ltr text, an optional muted label (extra channels
- * like "Operation"), and the boxed copy button.
+ * app / dialer), the value as ltr text, and the boxed copy button.
  */
-function ChannelLine({
-  type,
-  value,
-  label,
-}: {
-  type: "email" | "phone";
-  value: string;
-  label?: string;
-}) {
+function ChannelLine({ type, value }: { type: "email" | "phone"; value: string }) {
   const t = useTranslations("commissions.contact");
   const Icon = type === "email" ? Mail : Phone;
   const href = type === "email" ? `mailto:${value}` : `tel:${cleanPhone(value)}`;
@@ -91,36 +101,39 @@ function ChannelLine({
       <span className="min-w-0 flex-1 text-sm font-bold break-all text-brand" dir="ltr">
         {value}
       </span>
-      {label && <span className="shrink-0 text-xs text-muted-foreground">{label}</span>}
       <CopyButton value={value} />
     </div>
   );
 }
 
 /**
- * A sales rep or agent, separated by a top divider: a header row with the
- * person's name (bold) plus a role icon at the start and a muted role label at
- * the end, then their channel lines.
+ * A titled contact group, separated from the previous one by a top divider: a
+ * header row with a bold title (and optional leading role icon) at the start and
+ * a muted "type" label at the end, then its channel lines.
  */
-function PersonBlock({ group, role, t }: { group: ContactGroup; role: "sales" | "agent"; t: T }) {
-  const locale = useLocale();
-  if (!group.name && !group.phone && !group.email) return null;
-  const RoleIcon = role === "sales" ? Briefcase : User;
-  const roleLabel = role === "sales" ? t("sales") : t("agent");
+function ContactBlock({
+  title,
+  type,
+  icon: Icon,
+  iconClass,
+  children,
+}: {
+  title: string;
+  type: string;
+  icon?: LucideIcon;
+  iconClass?: string;
+  children: React.ReactNode;
+}) {
   return (
-    <div className="mt-1 border-t border-border pt-2">
+    <div className="mt-1 border-t border-border pt-2 first:mt-0 first:border-t-0 first:pt-0">
       <div className="flex items-center gap-2 px-0.5">
-        <RoleIcon
-          className={`size-4 shrink-0 ${role === "sales" ? "text-gold" : "text-brand"}`}
-          aria-hidden
-        />
+        {Icon && <Icon className={`size-4 shrink-0 ${iconClass ?? ""}`} aria-hidden />}
         <span className="flex-1 text-sm font-bold" dir="auto">
-          {localizeName(group.name, locale) || roleLabel}
+          {title}
         </span>
-        <span className="shrink-0 text-xs text-muted-foreground">{roleLabel}</span>
+        <span className="shrink-0 text-xs text-muted-foreground">{type}</span>
       </div>
-      {group.phone && <ChannelLine type="phone" value={group.phone} />}
-      {group.email && <ChannelLine type="email" value={group.email} />}
+      {children}
     </div>
   );
 }
@@ -148,7 +161,8 @@ export function SupplierContact({
   const [openState, setOpenState] = useState(false);
   const open = controlled ? openProp : openState;
   const [editing, setEditing] = useState(false);
-  const [draft, setDraft] = useState<SupplierContact>(emptyContact);
+  const [editName, setEditName] = useState("");
+  const [draft, setDraft] = useState<ContactGroup[]>([]);
 
   function handleOpenChange(o: boolean) {
     if (!controlled) setOpenState(o);
@@ -158,48 +172,36 @@ export function SupplierContact({
   }
 
   function startEdit() {
-    setDraft(getContact(supplierId));
+    const cur = getContact(supplierId);
+    setEditName(cur.name || supplierName);
+    setDraft(allContacts(cur));
     setEditing(true);
   }
 
   function save() {
-    // Drop a group if the user emptied it; keep only filled agents/extras.
-    const tidyGroup = (g: ContactGroup): ContactGroup => ({
-      ...g,
-      active: g.active && Boolean(g.name || g.phone || g.email),
-    });
-    const next: SupplierContact = {
-      email: draft.email.trim(),
-      phone: draft.phone.trim(),
-      sales: tidyGroup(draft.sales),
-      agents: draft.agents.filter((a) => a.name.trim() || a.phone.trim() || a.email.trim()),
-      extras: draft.extras.filter((e) => e.value.trim()),
-    };
+    // A contact needs a label and at least one channel; route each by its type.
+    const next: SupplierContactRecord = { name: editName.trim(), general: [], sales: [], agents: [] };
+    for (const g of draft) {
+      const email = (g.email ?? "").trim();
+      const phone = (g.phone ?? "").trim();
+      const label = g.label.trim();
+      if (!label || (!email && !phone)) continue;
+      next[sectionForType(g.type)]!.push({
+        active: g.active,
+        label,
+        type: g.type,
+        ...(phone ? { phone } : {}),
+        ...(email ? { email } : {}),
+      });
+    }
     setContact(supplierId, next);
     setEditing(false);
   }
 
-  // ── group + extra editing helpers (operate on the draft) ──
-  const setSales = (patch: Partial<ContactGroup>) =>
-    setDraft((d) => ({ ...d, sales: { ...d.sales, ...patch } }));
-  const addAgent = () =>
-    setDraft((d) => ({ ...d, agents: [...d.agents, emptyGroup()] }));
-  const setAgent = (i: number, patch: Partial<ContactGroup>) =>
-    setDraft((d) => ({
-      ...d,
-      agents: d.agents.map((a, idx) => (idx === i ? { ...a, ...patch } : a)),
-    }));
-  const removeAgent = (i: number) =>
-    setDraft((d) => ({ ...d, agents: d.agents.filter((_, idx) => idx !== i) }));
-  const setExtra = (i: number, patch: Partial<ContactExtra>) =>
-    setDraft((d) => ({
-      ...d,
-      extras: d.extras.map((e, idx) => (idx === i ? { ...e, ...patch } : e)),
-    }));
-  const addExtra = () =>
-    setDraft((d) => ({ ...d, extras: [...d.extras, { type: "email", label: "", value: "" }] }));
-  const removeExtra = (i: number) =>
-    setDraft((d) => ({ ...d, extras: d.extras.filter((_, idx) => idx !== i) }));
+  const updateContact = (i: number, patch: Partial<ContactGroup>) =>
+    setDraft((d) => d.map((g, idx) => (idx === i ? { ...g, ...patch } : g)));
+  const addContact = () => setDraft((d) => [...d, newContactGroup("agent-support")]);
+  const removeContact = (i: number) => setDraft((d) => d.filter((_, idx) => idx !== i));
 
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
@@ -239,15 +241,12 @@ export function SupplierContact({
           <ContactView supplierId={supplierId} t={t} />
         ) : (
           <ContactEdit
-            draft={draft}
-            setDraft={setDraft}
-            setSales={setSales}
-            addAgent={addAgent}
-            setAgent={setAgent}
-            removeAgent={removeAgent}
-            setExtra={setExtra}
-            addExtra={addExtra}
-            removeExtra={removeExtra}
+            name={editName}
+            setName={setEditName}
+            contacts={draft}
+            updateContact={updateContact}
+            addContact={addContact}
+            removeContact={removeContact}
             t={t}
           />
         )}
@@ -278,8 +277,6 @@ export function SupplierContact({
   );
 }
 
-type T = ReturnType<typeof useTranslations<"commissions.contact">>;
-
 /** Read-only contact details. Reads the latest stored contact on render. */
 function ContactView({ supplierId, t }: { supplierId: string; t: T }) {
   const contact = getContact(supplierId);
@@ -290,177 +287,93 @@ function ContactView({ supplierId, t }: { supplierId: string; t: T }) {
       </p>
     );
   }
-  const agents = contact.agents.filter((a) => a.name || a.phone || a.email);
-  const hasSupplier = Boolean(contact.email || contact.phone || contact.extras.some((e) => e.value));
+  const visible = allContacts(contact).filter((g) => g.active && (g.phone || g.email));
   return (
     <div className="flex flex-col">
-      {hasSupplier && (
-        <div>
-          <div className="px-0.5 text-xs text-muted-foreground">{t("supplier")}</div>
-          {contact.email && <ChannelLine type="email" value={contact.email} />}
-          {contact.phone && <ChannelLine type="phone" value={contact.phone} />}
-          {contact.extras.map((ex, i) =>
-            ex.value ? (
-              <ChannelLine key={i} type={ex.type} value={ex.value} label={ex.label} />
-            ) : null,
-          )}
-        </div>
-      )}
-      {contact.sales.active && <PersonBlock group={contact.sales} role="sales" t={t} />}
-      {agents.map((agent, i) => (
-        <PersonBlock key={i} group={agent} role="agent" t={t} />
-      ))}
+      {visible.map((g, i) => {
+        const ic = typeIcon(g.type);
+        const typeText = t(TYPE_KEY[g.type]);
+        const title = g.label || typeText;
+        return (
+          <ContactBlock
+            key={i}
+            title={title}
+            type={title === typeText ? "" : typeText}
+            icon={ic?.Icon}
+            iconClass={ic?.className}>
+            {g.phone && <ChannelLine type="phone" value={g.phone} />}
+            {g.email && <ChannelLine type="email" value={g.email} />}
+          </ContactBlock>
+        );
+      })}
     </div>
   );
 }
 
-/** Editable form bound to the draft contact. */
+/** Editable form: the supplier name plus a flat, reorderable list of contacts. */
 function ContactEdit({
-  draft,
-  setDraft,
-  setSales,
-  addAgent,
-  setAgent,
-  removeAgent,
-  setExtra,
-  addExtra,
-  removeExtra,
+  name,
+  setName,
+  contacts,
+  updateContact,
+  addContact,
+  removeContact,
   t,
 }: {
-  draft: SupplierContact;
-  setDraft: React.Dispatch<React.SetStateAction<SupplierContact>>;
-  setSales: (_patch: Partial<ContactGroup>) => void;
-  addAgent: () => void;
-  setAgent: (_i: number, _patch: Partial<ContactGroup>) => void;
-  removeAgent: (_i: number) => void;
-  setExtra: (_i: number, _patch: Partial<ContactExtra>) => void;
-  addExtra: () => void;
-  removeExtra: (_i: number) => void;
+  name: string;
+  setName: (_name: string) => void;
+  contacts: ContactGroup[];
+  updateContact: (_i: number, _patch: Partial<ContactGroup>) => void;
+  addContact: () => void;
+  removeContact: (_i: number) => void;
   t: T;
 }) {
   return (
     <div className="flex flex-col gap-3">
-      <Field label={`📧 ${t("supplierEmail")}`}>
-        <Input
-          type="email"
-          dir="ltr"
-          value={draft.email}
-          placeholder="info@example.com"
-          onChange={(e) => setDraft((d) => ({ ...d, email: e.target.value }))}
-        />
+      <Field label={t("supplierName")}>
+        <Input value={name} onChange={(e) => setName(e.target.value)} />
       </Field>
-      <Field label={`☎️ ${t("supplierPhone")}`}>
-        <Input
-          type="tel"
-          dir="ltr"
-          value={draft.phone}
-          placeholder="03-1234567"
-          onChange={(e) => setDraft((d) => ({ ...d, phone: e.target.value }))}
-        />
-      </Field>
-
-      {draft.sales.active && (
-        <GroupEdit
-          group={draft.sales}
-          color="warning"
-          tag={`📈 ${t("sales")}`}
-          onChange={setSales}
-          onRemove={() => setSales(emptyGroup())}
-          t={t}
-        />
-      )}
-      {draft.agents.map((agent, i) => (
-        <GroupEdit
+      {contacts.map((g, i) => (
+        <ContactEditRow
           key={i}
-          group={agent}
-          color="purple"
-          tag={`👤 ${t("agent")}${draft.agents.length > 1 ? ` ${i + 1}` : ""}`}
-          onChange={(patch) => setAgent(i, patch)}
-          onRemove={() => removeAgent(i)}
+          group={g}
+          onChange={(patch) => updateContact(i, patch)}
+          onRemove={() => removeContact(i)}
           t={t}
         />
       ))}
-
-      {draft.extras.map((ex, i) => (
-        <div key={i} className="flex flex-col gap-2 rounded-xl border border-dashed border-brand/40 p-3">
-          <div className="flex items-center justify-between">
-            <span className="text-xs font-bold text-brand">➕ {t("extraChannel")}</span>
-            <button
-              type="button"
-              onClick={() => removeExtra(i)}
-              className="text-xs font-bold text-muted-foreground hover:text-destructive">
-              🗑 {t("remove")}
-            </button>
-          </div>
-          <div className="flex gap-1.5">
-            {(["email", "phone"] as const).map((type) => (
-              <button
-                key={type}
-                type="button"
-                onClick={() => setExtra(i, { type })}
-                className={`flex-1 rounded-lg border py-2 text-xs font-bold ${
-                  ex.type === type
-                    ? "border-brand bg-brand/15 text-brand"
-                    : "border-border text-muted-foreground"
-                }`}>
-                {type === "email" ? `📧 ${t("email")}` : `☎️ ${t("phone")}`}
-              </button>
-            ))}
-          </div>
-          <Field label={t("extraLabel")}>
-            <Input
-              type="text"
-              value={ex.label}
-              placeholder="support / ops"
-              onChange={(e) => setExtra(i, { label: e.target.value })}
-            />
-          </Field>
-          <Field label={t("extraValue")}>
-            <Input
-              type={ex.type === "email" ? "email" : "tel"}
-              dir="ltr"
-              value={ex.value}
-              placeholder={ex.type === "email" ? "support@example.com" : "03-1234567"}
-              onChange={(e) => setExtra(i, { value: e.target.value })}
-            />
-          </Field>
-        </div>
-      ))}
-
-      <div className="flex flex-wrap gap-2">
-        {!draft.sales.active && (
-          <AddButton onClick={() => setSales({ active: true })}>
-            ➕ {t("sales")}
-          </AddButton>
-        )}
-        <AddButton onClick={addAgent}>➕ {t("agent")}</AddButton>
-        <AddButton onClick={addExtra}>➕ {t("addExtra")}</AddButton>
-      </div>
+      <AddButton onClick={addContact}>➕ {t("addContact")}</AddButton>
     </div>
   );
 }
 
-function GroupEdit({
+/** One editable contact: active toggle, type, label, email, phone. */
+function ContactEditRow({
   group,
-  color,
-  tag,
   onChange,
   onRemove,
   t,
 }: {
   group: ContactGroup;
-  color: "warning" | "purple";
-  tag: string;
   onChange: (_patch: Partial<ContactGroup>) => void;
   onRemove: () => void;
   t: T;
 }) {
-  const border = color === "warning" ? "border-warning/40" : "border-purple/40";
-  const text = color === "warning" ? "text-warning" : "text-purple";
   return (
-    <div className={`flex flex-col gap-2 rounded-xl border border-dashed ${border} p-3`}>
+    <div
+      className={`flex flex-col gap-2 rounded-xl border border-dashed p-3 ${
+        group.active ? "border-border" : "border-border/60 opacity-70"
+      }`}>
       <div className="flex items-center justify-between">
-        <span className={`text-xs font-bold ${text}`}>{tag}</span>
+        <label className="flex items-center gap-2 text-xs font-bold text-muted-foreground">
+          <input
+            type="checkbox"
+            checked={group.active}
+            onChange={(e) => onChange({ active: e.target.checked })}
+            className="size-4 accent-brand"
+          />
+          {t("active")}
+        </label>
         <button
           type="button"
           onClick={onRemove}
@@ -468,23 +381,37 @@ function GroupEdit({
           🗑 {t("remove")}
         </button>
       </div>
-      <Field label={t("name")}>
-        <Input type="text" value={group.name} onChange={(e) => onChange({ name: e.target.value })} />
+      <Field label={t("type")}>
+        <select
+          value={group.type}
+          onChange={(e) => onChange({ type: e.target.value as ContactType })}
+          className="h-9 rounded-lg border border-input bg-transparent px-2 text-sm outline-none focus-visible:border-ring dark:bg-input/30">
+          {CONTACT_TYPES.map((ty) => (
+            <option key={ty} value={ty}>
+              {t(TYPE_KEY[ty])}
+            </option>
+          ))}
+        </select>
       </Field>
-      <Field label={t("phone")}>
-        <Input
-          type="tel"
-          dir="ltr"
-          value={group.phone}
-          onChange={(e) => onChange({ phone: e.target.value })}
-        />
+      <Field label={t("label")}>
+        <Input value={group.label} onChange={(e) => onChange({ label: e.target.value })} />
       </Field>
-      <Field label={t("email")}>
+      <Field label={`📧 ${t("email")}`}>
         <Input
           type="email"
           dir="ltr"
-          value={group.email}
+          value={group.email ?? ""}
+          placeholder="name@example.com"
           onChange={(e) => onChange({ email: e.target.value })}
+        />
+      </Field>
+      <Field label={`☎️ ${t("phone")}`}>
+        <Input
+          type="tel"
+          dir="ltr"
+          value={group.phone ?? ""}
+          placeholder="03-1234567"
+          onChange={(e) => onChange({ phone: e.target.value })}
         />
       </Field>
     </div>
@@ -505,7 +432,7 @@ function AddButton({ onClick, children }: { onClick: () => void; children: React
     <button
       type="button"
       onClick={onClick}
-      className="flex-1 rounded-lg border border-dashed border-border px-3 py-2.5 text-xs font-bold text-muted-foreground transition-colors hover:border-brand hover:text-brand">
+      className="rounded-lg border border-dashed border-border px-3 py-2.5 text-xs font-bold text-muted-foreground transition-colors hover:border-brand hover:text-brand">
       {children}
     </button>
   );
