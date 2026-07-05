@@ -111,7 +111,7 @@ export function ChatInterface() {
   }
 
   return (
-    <div className="flex min-h-[56svh] flex-col overflow-hidden rounded-2xl border border-border bg-surface/40">
+    <div className="flex h-[60svh] flex-col overflow-hidden rounded-2xl border border-border bg-surface/40">
       {/* Header strip */}
       <div className="flex items-center justify-between gap-2 border-b border-border bg-card/40 px-3 py-2.5">
         <div className="flex items-center gap-2">
@@ -145,7 +145,7 @@ export function ChatInterface() {
         </div>
       ) : (
         <>
-          <div className="min-h-0 flex-1 px-3">
+          <div className="min-h-0 flex-1">
             <ChatMessages messages={messages} onSave={handleSaveQuote} savedIndexes={savedIndexes} />
           </div>
           <div className="border-t border-border bg-card/40 p-3">

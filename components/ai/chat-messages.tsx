@@ -1,12 +1,19 @@
 "use client";
 
-import { useEffect, useRef } from "react";
 import { useTranslations } from "next-intl";
 import { BookmarkCheck, BookmarkPlus, ImageIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useSession } from "@/components/auth/session-provider";
 import { UserAvatar } from "@/components/auth/user-avatar";
 import { Button } from "@/components/ui/button";
+import {
+  MessageScroller,
+  MessageScrollerButton,
+  MessageScrollerContent,
+  MessageScrollerItem,
+  MessageScrollerProvider,
+  MessageScrollerViewport,
+} from "@/components/ui/message-scroller";
 import { AssistantBadge } from "./assistant-badge";
 
 export type UiMessage = {
@@ -30,26 +37,31 @@ export function ChatMessages({
 }) {
   const t = useTranslations("ai");
   const user = useSession();
-  const endRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    endRef.current?.scrollIntoView({ block: "end" });
-  }, [messages]);
 
   return (
-    <div className="flex flex-1 flex-col gap-5 overflow-y-auto px-1 py-4">
-      {messages.map((message, i) => (
-        <MessageItem
-          key={i}
-          message={message}
-          t={t}
-          username={user?.username ?? ""}
-          saved={savedIndexes.has(i)}
-          onSave={() => onSave(i)}
-        />
-      ))}
-      <div ref={endRef} />
-    </div>
+    <MessageScrollerProvider autoScroll defaultScrollPosition="end" scrollPreviousItemPeek={64}>
+      <MessageScroller>
+        <MessageScrollerViewport className="px-4 py-4">
+          <MessageScrollerContent className="gap-5">
+            {messages.map((message, i) => (
+              <MessageScrollerItem
+                key={i}
+                messageId={String(i)}
+                scrollAnchor={message.role === "user"}>
+                <MessageItem
+                  message={message}
+                  t={t}
+                  username={user?.username ?? ""}
+                  saved={savedIndexes.has(i)}
+                  onSave={() => onSave(i)}
+                />
+              </MessageScrollerItem>
+            ))}
+          </MessageScrollerContent>
+        </MessageScrollerViewport>
+        <MessageScrollerButton direction="end" />
+      </MessageScroller>
+    </MessageScrollerProvider>
   );
 }
 
