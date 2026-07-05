@@ -2,7 +2,18 @@
 
 import { useState } from "react";
 import { useTranslations } from "next-intl";
-import { Briefcase, Check, Copy, type LucideIcon, Mail, Phone, User } from "lucide-react";
+import {
+  BadgeDollarSignIcon,
+  Check,
+  ContactIcon,
+  Copy,
+  HeadsetIcon,
+  type LucideIcon,
+  Mail,
+  PencilIcon,
+  Phone,
+  ToolCaseIcon,
+} from "lucide-react";
 import {
   Dialog,
   DialogTrigger,
@@ -45,12 +56,14 @@ const TYPE_KEY = {
   agent: "typeAgent",
 } as const;
 
-/** Optional leading icon for a contact type (people get one; general lines don't). */
-function typeIcon(type: ContactType): { Icon: LucideIcon; className: string } | null {
-  if (type === "sales-rep") return { Icon: Briefcase, className: "text-gold" };
-  if (type === "agent") return { Icon: User, className: "text-brand" };
-  return null;
-}
+/** Leading icon + color per contact type. */
+const TYPE_ICON: Record<ContactType, { Icon: LucideIcon; className: string }> = {
+  "agent-support": { Icon: HeadsetIcon, className: "text-success" },
+  operation: { Icon: ToolCaseIcon, className: "text-warning" },
+  "operation-manager": { Icon: ContactIcon, className: "text-purple" },
+  "sales-rep": { Icon: BadgeDollarSignIcon, className: "text-gold" },
+  agent: { Icon: ContactIcon, className: "text-brand" },
+};
 
 /** A boxed icon-only copy button that briefly confirms with a check. */
 function CopyButton({ value }: { value: string }) {
@@ -232,9 +245,9 @@ export function SupplierContact({
       <DialogContent className="max-h-[85vh] overflow-y-auto sm:max-w-md">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2 text-base">
-            <span aria-hidden>📞</span> {t("title", { name: supplierName })}
+            <ContactIcon className="size-5 text-brand" aria-hidden /> {t("title")}
           </DialogTitle>
-          <DialogDescription>{t("subtitle")}</DialogDescription>
+          <DialogDescription>{supplierName}</DialogDescription>
         </DialogHeader>
 
         {!editing ? (
@@ -254,8 +267,8 @@ export function SupplierContact({
         <DialogFooter>
           {!editing ? (
             <>
-              <Button type="button" onClick={startEdit} className="flex-1">
-                ✏️ {t("edit")}
+              <Button type="button" onClick={startEdit}>
+                <PencilIcon className="size-4" /> {t("edit")}
               </Button>
               <Button type="button" variant="outline" onClick={() => handleOpenChange(false)}>
                 {t("close")}
@@ -291,16 +304,17 @@ function ContactView({ supplierId, t }: { supplierId: string; t: T }) {
   return (
     <div className="flex flex-col">
       {visible.map((g, i) => {
-        const ic = typeIcon(g.type);
+        const ic = TYPE_ICON[g.type];
         const typeText = t(TYPE_KEY[g.type]);
-        const title = g.label || typeText;
+        // Show the grey type whenever there's a label (even if it matches the
+        // type); only fall back to the type-as-title when no label was given.
         return (
           <ContactBlock
             key={i}
-            title={title}
-            type={title === typeText ? "" : typeText}
-            icon={ic?.Icon}
-            iconClass={ic?.className}>
+            title={g.label || typeText}
+            type={g.label ? typeText : ""}
+            icon={ic.Icon}
+            iconClass={ic.className}>
             {g.phone && <ChannelLine type="phone" value={g.phone} />}
             {g.email && <ChannelLine type="email" value={g.email} />}
           </ContactBlock>

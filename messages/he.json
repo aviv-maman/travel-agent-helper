@@ -276,8 +276,7 @@
     },
     "contact": {
       "button": "יצירת קשר",
-      "title": "יצירת קשר — {name}",
-      "subtitle": "פרטי התקשרות עם הספק",
+      "title": "יצירת קשר",
       "supplierName": "שם הספק",
       "label": "תווית",
       "type": "סוג",
