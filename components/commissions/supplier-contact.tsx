@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useTranslations } from "next-intl";
-import { Phone } from "lucide-react";
+import { Check, Copy, Phone } from "lucide-react";
 import {
   Dialog,
   DialogTrigger,
@@ -40,6 +40,43 @@ const ROW_CHIP: Record<RowColor, string> = {
   purple: "bg-purple/15 text-purple",
 };
 
+/** A copy-to-clipboard button that briefly confirms with a check icon. */
+function CopyButton({ value }: { value: string }) {
+  const t = useTranslations("commissions.contact");
+  const [copied, setCopied] = useState(false);
+
+  async function copy() {
+    try {
+      await navigator.clipboard.writeText(value);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1500);
+    } catch {
+      /* clipboard unavailable (e.g. insecure context) — nothing else to do */
+    }
+  }
+
+  return (
+    <TooltipProvider>
+      <Tooltip>
+        <TooltipTrigger
+          render={
+            <Button
+              type="button"
+              variant="ghost"
+              size="icon-sm"
+              onClick={copy}
+              aria-label={copied ? t("copied") : t("copy")}
+              className={copied ? "text-success" : "text-muted-foreground"}
+            />
+          }>
+          {copied ? <Check className="size-4" /> : <Copy className="size-4" />}
+        </TooltipTrigger>
+        <TooltipContent>{copied ? t("copied") : t("copy")}</TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
+  );
+}
+
 /** A single read-only contact line with an optional tel:/mailto: link. */
 function ContactRow({
   icon,
@@ -73,7 +110,7 @@ function ContactRow({
           )}
         </div>
       </div>
-      {href && <span className="text-muted-foreground">›</span>}
+      {href && <CopyButton value={value} />}
     </div>
   );
 }
@@ -116,7 +153,7 @@ export function SupplierContact({
   }
 
   function save() {
-    // Drop a group if the user emptied it; keep only filled extras.
+    // Drop a group if the user emptied it; keep only filled agents/extras.
     const tidyGroup = (g: ContactGroup): ContactGroup => ({
       ...g,
       active: g.active && Boolean(g.name || g.phone || g.email),
@@ -125,7 +162,7 @@ export function SupplierContact({
       email: draft.email.trim(),
       phone: draft.phone.trim(),
       sales: tidyGroup(draft.sales),
-      agent: tidyGroup(draft.agent),
+      agents: draft.agents.filter((a) => a.name.trim() || a.phone.trim() || a.email.trim()),
       extras: draft.extras.filter((e) => e.value.trim()),
     };
     setContact(supplierId, next);
@@ -133,8 +170,17 @@ export function SupplierContact({
   }
 
   // ── group + extra editing helpers (operate on the draft) ──
-  const setGroup = (which: "sales" | "agent", patch: Partial<ContactGroup>) =>
-    setDraft((d) => ({ ...d, [which]: { ...d[which], ...patch } }));
+  const setSales = (patch: Partial<ContactGroup>) =>
+    setDraft((d) => ({ ...d, sales: { ...d.sales, ...patch } }));
+  const addAgent = () =>
+    setDraft((d) => ({ ...d, agents: [...d.agents, emptyGroup()] }));
+  const setAgent = (i: number, patch: Partial<ContactGroup>) =>
+    setDraft((d) => ({
+      ...d,
+      agents: d.agents.map((a, idx) => (idx === i ? { ...a, ...patch } : a)),
+    }));
+  const removeAgent = (i: number) =>
+    setDraft((d) => ({ ...d, agents: d.agents.filter((_, idx) => idx !== i) }));
   const setExtra = (i: number, patch: Partial<ContactExtra>) =>
     setDraft((d) => ({
       ...d,
@@ -185,7 +231,10 @@ export function SupplierContact({
           <ContactEdit
             draft={draft}
             setDraft={setDraft}
-            setGroup={setGroup}
+            setSales={setSales}
+            addAgent={addAgent}
+            setAgent={setAgent}
+            removeAgent={removeAgent}
             setExtra={setExtra}
             addExtra={addExtra}
             removeExtra={removeExtra}
@@ -266,9 +315,9 @@ function ContactView({ supplierId, t }: { supplierId: string; t: T }) {
       {contact.sales.active && (
         <ContactGroupView group={contact.sales} color="warning" tag={`📈 ${t("sales")}`} t={t} />
       )}
-      {contact.agent.active && (
-        <ContactGroupView group={contact.agent} color="purple" tag={`👤 ${t("agent")}`} t={t} />
-      )}
+      {contact.agents.map((agent, i) => (
+        <ContactGroupView key={i} group={agent} color="purple" tag={`👤 ${t("agent")}`} t={t} />
+      ))}
     </div>
   );
 }
@@ -320,7 +369,10 @@ function ContactGroupView({
 function ContactEdit({
   draft,
   setDraft,
-  setGroup,
+  setSales,
+  addAgent,
+  setAgent,
+  removeAgent,
   setExtra,
   addExtra,
   removeExtra,
@@ -328,7 +380,10 @@ function ContactEdit({
 }: {
   draft: SupplierContact;
   setDraft: React.Dispatch<React.SetStateAction<SupplierContact>>;
-  setGroup: (_which: "sales" | "agent", _patch: Partial<ContactGroup>) => void;
+  setSales: (_patch: Partial<ContactGroup>) => void;
+  addAgent: () => void;
+  setAgent: (_i: number, _patch: Partial<ContactGroup>) => void;
+  removeAgent: (_i: number) => void;
   setExtra: (_i: number, _patch: Partial<ContactExtra>) => void;
   addExtra: () => void;
   removeExtra: (_i: number) => void;
@@ -355,22 +410,27 @@ function ContactEdit({
         />
       </Field>
 
-      <GroupEdit
-        which="sales"
-        group={draft.sales}
-        color="warning"
-        tag={`📈 ${t("sales")}`}
-        setGroup={setGroup}
-        t={t}
-      />
-      <GroupEdit
-        which="agent"
-        group={draft.agent}
-        color="purple"
-        tag={`👤 ${t("agent")}`}
-        setGroup={setGroup}
-        t={t}
-      />
+      {draft.sales.active && (
+        <GroupEdit
+          group={draft.sales}
+          color="warning"
+          tag={`📈 ${t("sales")}`}
+          onChange={setSales}
+          onRemove={() => setSales(emptyGroup())}
+          t={t}
+        />
+      )}
+      {draft.agents.map((agent, i) => (
+        <GroupEdit
+          key={i}
+          group={agent}
+          color="purple"
+          tag={`👤 ${t("agent")}${draft.agents.length > 1 ? ` ${i + 1}` : ""}`}
+          onChange={(patch) => setAgent(i, patch)}
+          onRemove={() => removeAgent(i)}
+          t={t}
+        />
+      ))}
 
       {draft.extras.map((ex, i) => (
         <div key={i} className="flex flex-col gap-2 rounded-xl border border-dashed border-brand/40 p-3">
@@ -420,15 +480,11 @@ function ContactEdit({
 
       <div className="flex flex-wrap gap-2">
         {!draft.sales.active && (
-          <AddButton onClick={() => setGroup("sales", { active: true })}>
+          <AddButton onClick={() => setSales({ active: true })}>
             ➕ {t("sales")}
           </AddButton>
         )}
-        {!draft.agent.active && (
-          <AddButton onClick={() => setGroup("agent", { active: true })}>
-            ➕ {t("agent")}
-          </AddButton>
-        )}
+        <AddButton onClick={addAgent}>➕ {t("agent")}</AddButton>
         <AddButton onClick={addExtra}>➕ {t("addExtra")}</AddButton>
       </div>
     </div>
@@ -436,21 +492,20 @@ function ContactEdit({
 }
 
 function GroupEdit({
-  which,
   group,
   color,
   tag,
-  setGroup,
+  onChange,
+  onRemove,
   t,
 }: {
-  which: "sales" | "agent";
   group: ContactGroup;
   color: RowColor;
   tag: string;
-  setGroup: (_which: "sales" | "agent", _patch: Partial<ContactGroup>) => void;
+  onChange: (_patch: Partial<ContactGroup>) => void;
+  onRemove: () => void;
   t: T;
 }) {
-  if (!group.active) return null;
   const border = color === "warning" ? "border-warning/40" : "border-purple/40";
   const text = color === "warning" ? "text-warning" : "text-purple";
   return (
@@ -459,24 +514,20 @@ function GroupEdit({
         <span className={`text-xs font-bold ${text}`}>{tag}</span>
         <button
           type="button"
-          onClick={() => setGroup(which, emptyGroup())}
+          onClick={onRemove}
           className="text-xs font-bold text-muted-foreground hover:text-destructive">
           🗑 {t("remove")}
         </button>
       </div>
       <Field label={t("name")}>
-        <Input
-          type="text"
-          value={group.name}
-          onChange={(e) => setGroup(which, { name: e.target.value })}
-        />
+        <Input type="text" value={group.name} onChange={(e) => onChange({ name: e.target.value })} />
       </Field>
       <Field label={t("phone")}>
         <Input
           type="tel"
           dir="ltr"
           value={group.phone}
-          onChange={(e) => setGroup(which, { phone: e.target.value })}
+          onChange={(e) => onChange({ phone: e.target.value })}
         />
       </Field>
       <Field label={t("email")}>
@@ -484,7 +535,7 @@ function GroupEdit({
           type="email"
           dir="ltr"
           value={group.email}
-          onChange={(e) => setGroup(which, { email: e.target.value })}
+          onChange={(e) => onChange({ email: e.target.value })}
         />
       </Field>
     </div>

@@ -294,7 +294,9 @@
       "close": "סגור",
       "save": "שמור",
       "cancel": "ביטול",
-      "remove": "הסר"
+      "remove": "הסר",
+      "copy": "העתק",
+      "copied": "הועתק"
     }
   },
   "transfers": {

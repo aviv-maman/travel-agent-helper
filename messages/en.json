@@ -294,7 +294,9 @@
       "close": "Close",
       "save": "Save",
       "cancel": "Cancel",
-      "remove": "Remove"
+      "remove": "Remove",
+      "copy": "Copy",
+      "copied": "Copied"
     }
   },
   "transfers": {
