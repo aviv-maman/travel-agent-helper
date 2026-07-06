@@ -4,6 +4,8 @@ import {
   serial,
   integer,
   varchar,
+  char,
+  numeric,
   text,
   real,
   boolean,
@@ -11,6 +13,7 @@ import {
   timestamp,
   uniqueIndex,
   index,
+  primaryKey,
 } from "drizzle-orm/pg-core";
 import { relations } from "drizzle-orm";
 import type { Locale } from "../i18n/config";
@@ -456,6 +459,24 @@ export const loginAttempts = pgTable("login_attempts", {
   windowStartsAt: timestamp("window_starts_at", { withTimezone: true }).notNull().defaultNow(),
   lockedUntil: timestamp("locked_until", { withTimezone: true }),
 });
+
+/**
+ * Advisory FX rates, refreshed daily by the Python backend's `/cron/fx` job
+ * (docs/exchange-rate-contract.md). One current row per (base, quote) pair —
+ * the backend upserts; Next only reads. `rate` = how many `quote` units one
+ * `base` unit buys (base ILS, quote USD, rate ≈ 0.27 → ₪1 ≈ $0.27; the inverse
+ * 1/rate gives ₪ per unit). Display/estimate-grade, not booking-grade.
+ */
+export const exchangeRates = pgTable(
+  "exchange_rates",
+  {
+    base: char("base", { length: 3 }).notNull(),
+    quote: char("quote", { length: 3 }).notNull(),
+    rate: numeric("rate", { precision: 18, scale: 8 }).notNull(),
+    fetchedAt: timestamp("fetched_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (t) => [primaryKey({ columns: [t.base, t.quote] })],
+);
 
 /**
  * Append-only audit trail of privileged/security actions (logins, role changes,
