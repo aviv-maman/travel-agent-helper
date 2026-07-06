@@ -25,6 +25,7 @@ export class AiChatError extends Error {
  */
 const SSE_ERROR_STATUS: Record<string, number> = {
   invalid_key: 401,
+  no_credits: 402,
   rate_limit: 429,
 };
 

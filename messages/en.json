@@ -75,6 +75,7 @@
     "errNotImage": "That file isn't an image.",
     "errImageTooLarge": "Image is too large (max 5 MB).",
     "errChat401": "Your API key is invalid — update it in settings.",
+    "errNoCredits": "Your Anthropic account is out of credits — top up at console.anthropic.com and try again.",
     "errChatGeneric": "Something went wrong. Please try again.",
     "greetingTitle": "What can I quote for you today?",
     "greetingSubtitle": "Paste an offer or attach a screenshot of a hotel deal — I'll extract the details and draft a client-ready quote you can forward.",
