@@ -5,9 +5,10 @@ import { savedQuotes } from "@/db/schema";
 
 /**
  * Persistence for **explicitly saved** quotes (the AI chat itself is ephemeral —
- * nothing is written until the agent clicks "Save"). Text only for now; the
- * originating image is attached later via `imageKey` once the R2 backend exists.
- * Every read/write is scoped to the owning user. See docs/ai-quote-assistant-contract.md.
+ * nothing is written until the agent clicks "Save"). The originating screenshot is
+ * uploaded to R2 on save and referenced by `imageKey` (private; resolved through the
+ * ownership-checked backend endpoint). Every read/write is scoped to the owning user.
+ * See docs/ai-quote-assistant-contract.md.
  */
 
 export type SavedQuote = {

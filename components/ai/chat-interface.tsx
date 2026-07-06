@@ -12,6 +12,7 @@ import { AssistantBadge } from "./assistant-badge";
 import { Button } from "@/components/ui/button";
 import { streamAssistant, AiChatError, type ChatTurn } from "@/lib/ai/stream";
 import { saveQuoteAction } from "@/app/actions/ai";
+import { uploadQuoteImage } from "@/lib/ai/quote-image-upload";
 
 /**
  * The quote conversation — an **ephemeral** scratchpad. Messages live in memory
@@ -19,7 +20,7 @@ import { saveQuoteAction } from "@/app/actions/ai";
  * quote (→ `saveQuoteAction`, surfaced in the history list below). Multi-turn
  * context is sent on every request (the API is stateless per contract).
  */
-export function ChatInterface() {
+export function ChatInterface({ signUrl }: { signUrl: string | null }) {
   const t = useTranslations("ai");
   const router = useRouter();
   const [messages, setMessages] = useState<UiMessage[]>([]);
@@ -60,7 +61,8 @@ export function ChatInterface() {
 
     setMessages((prev) => [
       ...prev,
-      { role: "user", content: prompt, hadImage },
+      // Keep the File in memory so it can be uploaded to R2 if this quote is saved.
+      { role: "user", content: prompt, hadImage, file: image ?? undefined },
       { role: "assistant", content: "", pending: true },
     ]);
     setStreaming(true);
@@ -92,15 +94,26 @@ export function ChatInterface() {
     // The nearest preceding user turn is the request that produced this quote.
     let prompt = "";
     let hadImage = false;
+    let file: File | undefined;
     for (let i = index - 1; i >= 0; i--) {
       if (messages[i].role === "user") {
         prompt = messages[i].content;
         hadImage = Boolean(messages[i].hadImage);
+        file = messages[i].file;
         break;
       }
     }
 
-    const result = await saveQuoteAction(content, prompt, hadImage);
+    // If that turn carried an image and uploads are configured, store the original
+    // to R2 first. A failed upload doesn't block saving — we keep the text quote.
+    const image = file && signUrl ? await uploadQuoteImage(file, signUrl) : null;
+
+    const result = await saveQuoteAction(
+      content,
+      prompt,
+      hadImage,
+      image ? { imageKey: image.key, imageMediaType: image.mediaType } : undefined,
+    );
     if ("error" in result) {
       toast.error(t(result.error === "empty" ? "errEmpty" : "errForbidden"));
       return;
