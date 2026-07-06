@@ -10,14 +10,29 @@ export function initialsOf(name: string): string {
 }
 
 /** A simple initials avatar (no image). Safe in server or client components. */
-export function UserAvatar({ name, className }: { name: string; className?: string }) {
+/**
+ * Avatar: the user's image when `src` is set, else an initials fallback. Safe in
+ * server or client components. Uses a plain <img> (a small R2 asset on an external
+ * domain — no next/image loader config needed).
+ */
+export function UserAvatar({
+  name,
+  src,
+  className,
+}: {
+  name: string;
+  src?: string | null;
+  className?: string;
+}) {
+  const base = "inline-flex shrink-0 items-center justify-center overflow-hidden rounded-full";
+  if (src) {
+    return (
+      // eslint-disable-next-line @next/next/no-img-element
+      <img src={src} alt={name} className={cn(base, "size-full object-cover", className)} />
+    );
+  }
   return (
-    <span
-      aria-hidden
-      className={cn(
-        "inline-flex shrink-0 items-center justify-center rounded-full bg-brand/15 font-semibold text-brand",
-        className,
-      )}>
+    <span aria-hidden className={cn(base, "bg-brand/15 font-semibold text-brand", className)}>
       {initialsOf(name)}
     </span>
   );

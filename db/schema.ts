@@ -263,6 +263,8 @@ export const users = pgTable(
     email: varchar("email", { length: 255 }),
     /** When the user confirmed their email (via a `verify` token). Null = unverified. */
     emailVerifiedAt: timestamp("email_verified_at", { withTimezone: true }),
+    /** Public R2 URL of the user's avatar image; null = show initials. */
+    avatarUrl: text("avatar_url"),
     /**
      * scrypt digest, "scrypt:<salt>:<hash>". **Null** for OAuth-only users — they
      * have no password and sign in via a linked provider (see `accounts`).

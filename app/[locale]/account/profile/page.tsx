@@ -7,7 +7,7 @@ import { requireUser } from "@/lib/auth";
 import { ProfileForm } from "@/components/auth/profile-form";
 import { DeleteAccountButton } from "@/components/auth/delete-account-button";
 import { LogoutButton } from "@/components/auth/logout-button";
-import { UserAvatar } from "@/components/auth/user-avatar";
+import { AvatarUpload } from "@/components/auth/avatar-upload";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 
@@ -43,13 +43,12 @@ export default async function ProfilePage({
           <CardDescription>{t("profileSubtitle")}</CardDescription>
         </CardHeader>
         <CardContent className="flex flex-col gap-5">
-          <div className="flex items-center gap-3">
-            <UserAvatar name={user.displayName || user.username} className="size-12 text-lg" />
-            <div className="min-w-0">
-              <p className="font-semibold text-foreground">{user.displayName || user.username}</p>
-              <p className="text-sm text-muted-foreground">@{user.username}</p>
-            </div>
-          </div>
+          <AvatarUpload
+            locale={locale}
+            name={user.displayName || user.username}
+            avatarUrl={user.avatarUrl}
+            signUrl={process.env.FILE_UPLOAD_URL ?? null}
+          />
           <ProfileForm locale={locale} defaultDisplayName={user.displayName ?? ""} />
           <dl className="flex flex-col gap-3 border-t border-border pt-4 text-sm">
             {rows.map((row) => (
