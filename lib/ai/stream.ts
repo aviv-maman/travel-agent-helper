@@ -1,10 +1,12 @@
 /**
  * Client-side streaming for the quote chat. Consumes the backend SSE endpoint
- * (`POST /api/ai/chat`, same-origin per docs/backend-overview.md) as an async
- * generator of text chunks. When `NEXT_PUBLIC_AI_MOCK==="1"` (or no backend is
- * wired) it yields a canned quote token-by-token so the UI is fully clickable.
- * Streaming must run in the browser, so this is imported only by Client
- * Components. See docs/ai-quote-assistant-contract.md.
+ * (`POST /api/ai/chat`, same-origin via the next.config.ts rewrite) as an async
+ * generator of text chunks. The backend frames typed SSE events — `delta`
+ * (quote text), `tool` (a pricing/lookup tool ran), `error`, `done` — which we
+ * parse here; only delta text reaches the UI. When `NEXT_PUBLIC_AI_MOCK==="1"`
+ * it yields a canned quote token-by-token so the UI is fully clickable without
+ * the backend. Streaming must run in the browser, so this is imported only by
+ * Client Components. See docs/ai-quote-assistant-contract.md.
  */
 
 export type ChatTurn = { role: "user" | "assistant"; content: string };
@@ -16,6 +18,15 @@ export class AiChatError extends Error {
     this.name = "AiChatError";
   }
 }
+
+/**
+ * SSE `error` events arrive mid-stream (HTTP 200 already sent), carrying a code
+ * instead of a status. Map them onto the statuses the UI already understands.
+ */
+const SSE_ERROR_STATUS: Record<string, number> = {
+  invalid_key: 401,
+  rate_limit: 429,
+};
 
 const MOCK = process.env.NEXT_PUBLIC_AI_MOCK === "1";
 
@@ -41,13 +52,39 @@ export async function* streamAssistant(opts: {
   const res = await fetch("/api/ai/chat", { method: "POST", body: form, signal: opts.signal });
   if (!res.ok || !res.body) throw new AiChatError(res.status);
 
+  // Parse the SSE frames: blocks separated by a blank line, each with
+  // `event: <name>` and `data: <json>` lines.
   const reader = res.body.getReader();
   const decoder = new TextDecoder();
+  let buffer = "";
   while (true) {
     const { done, value } = await reader.read();
     if (done) break;
-    const chunk = decoder.decode(value, { stream: true });
-    if (chunk) yield chunk;
+    buffer += decoder.decode(value, { stream: true });
+
+    let sep: number;
+    while ((sep = buffer.indexOf("\n\n")) !== -1) {
+      const frame = buffer.slice(0, sep);
+      buffer = buffer.slice(sep + 2);
+
+      let event = "";
+      let data = "";
+      for (const line of frame.split("\n")) {
+        if (line.startsWith("event: ")) event = line.slice(7).trim();
+        else if (line.startsWith("data: ")) data = line.slice(6);
+      }
+
+      if (event === "delta") {
+        const text = (JSON.parse(data) as { text?: string }).text;
+        if (text) yield text;
+      } else if (event === "error") {
+        const code = (JSON.parse(data) as { code?: string }).code ?? "";
+        throw new AiChatError(SSE_ERROR_STATUS[code] ?? 502);
+      } else if (event === "done") {
+        return;
+      }
+      // `tool` events (a backend lookup/pricing tool ran) carry no text — skip.
+    }
   }
 }
 
