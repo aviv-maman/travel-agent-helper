@@ -25,6 +25,7 @@ const nextConfig: NextConfig = {
     return [
       { source: "/api/ai/:path*", destination: `${backend}/ai/:path*` },
       { source: "/api/auth/:path*", destination: `${backend}/auth/:path*` },
+      { source: "/api/files/:path*", destination: `${backend}/files/:path*` },
     ]
   },
 }

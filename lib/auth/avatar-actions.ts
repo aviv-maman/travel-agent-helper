@@ -1,0 +1,42 @@
+"use server";
+
+import { revalidatePath } from "next/cache";
+import { eq } from "drizzle-orm";
+import { db } from "@/db";
+import { users } from "@/db/schema";
+import { getCurrentUser } from ".";
+
+/**
+ * Persist an avatar the user just uploaded to R2 (docs/file-upload-contract.md).
+ * The backend signed a presigned POST and the browser uploaded straight to R2;
+ * here we only record the resulting URL. NEVER trust the client-supplied URL —
+ * re-validate it against the configured R2 public base and the `avatar/` prefix,
+ * so a malicious client can't point the avatar at an arbitrary URL.
+ */
+
+export type AvatarState = { ok?: boolean; error?: "forbidden" | "invalid" };
+
+export async function setAvatar(key: string, publicUrl: string): Promise<AvatarState> {
+  const user = await getCurrentUser();
+  if (!user) return { error: "forbidden" };
+
+  const base = process.env.R2_PUBLIC_BASE_URL?.replace(/\/$/, "");
+  if (
+    !base ||
+    !key.startsWith("avatar/") ||
+    publicUrl !== `${base}/${key}` // exact match: base + the server-chosen key
+  ) {
+    return { error: "invalid" };
+  }
+
+  await db.update(users).set({ avatarUrl: publicUrl }).where(eq(users.id, user.id));
+  revalidatePath("/[locale]/account/profile", "page");
+  return { ok: true };
+}
+
+export async function removeAvatar(): Promise<void> {
+  const user = await getCurrentUser();
+  if (!user) return;
+  await db.update(users).set({ avatarUrl: null }).where(eq(users.id, user.id));
+  revalidatePath("/[locale]/account/profile", "page");
+}
