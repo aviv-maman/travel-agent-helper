@@ -17,6 +17,46 @@ import { uploadQuoteImage } from "@/lib/ai/quote-image-upload";
 const MAX_IMAGE_BYTES = 5 * 1024 * 1024; // 5 MB — offers are screenshots, not photos
 
 /**
+ * Vision tokens scale with pixels, and current Claude models accept screenshots at
+ * full resolution — a 2560px display capture costs ~4–5K tokens per request round.
+ * 1568px is the classic Claude vision resolution, so capping there keeps small
+ * digits perfectly legible while cutting the image to ~1.2K tokens.
+ */
+const MAX_IMAGE_EDGE = 1568;
+
+/** Downscale oversized screenshots to MAX_IMAGE_EDGE (JPEG); falls back to the original. */
+async function downscaleImage(file: File): Promise<File> {
+  try {
+    const bitmap = await createImageBitmap(file);
+    const { width, height } = bitmap;
+    const longEdge = Math.max(width, height);
+    if (longEdge <= MAX_IMAGE_EDGE) {
+      bitmap.close();
+      return file;
+    }
+    const scale = MAX_IMAGE_EDGE / longEdge;
+    const canvas = document.createElement("canvas");
+    canvas.width = Math.round(width * scale);
+    canvas.height = Math.round(height * scale);
+    const ctx = canvas.getContext("2d");
+    if (!ctx) {
+      bitmap.close();
+      return file;
+    }
+    ctx.drawImage(bitmap, 0, 0, canvas.width, canvas.height);
+    bitmap.close();
+    const blob = await new Promise<Blob | null>((resolve) =>
+      canvas.toBlob(resolve, "image/jpeg", 0.85),
+    );
+    if (!blob) return file;
+    const name = file.name.replace(/\.\w+$/, "") || "screenshot";
+    return new File([blob], `${name}.jpg`, { type: "image/jpeg" });
+  } catch {
+    return file; // decode/canvas failure — send the original as before
+  }
+}
+
+/**
  * The quote conversation — an **ephemeral** scratchpad. Messages live in memory
  * for the session only; nothing is persisted until the user clicks "Save" on a
  * quote (→ `saveQuoteAction`, surfaced in the history list below). Multi-turn
@@ -48,17 +88,19 @@ export function ChatInterface({ signUrl }: { signUrl: string | null }) {
     .join(", ");
 
   /** Validate + attach an image (from the paperclip, paste, or drag-and-drop). */
-  function pickImage(file: File | null) {
+  async function pickImage(file: File | null) {
     if (!file) return;
     if (!file.type.startsWith("image/")) {
       toast.error(t("errNotImage"));
       return;
     }
-    if (file.size > MAX_IMAGE_BYTES) {
+    // Downscale before the size check — big originals often compress under the cap.
+    const scaled = await downscaleImage(file);
+    if (scaled.size > MAX_IMAGE_BYTES) {
       toast.error(t("errImageTooLarge"));
       return;
     }
-    setImage(file);
+    setImage(scaled);
   }
 
   const hasFiles = (e: DragEvent) => e.dataTransfer.types.includes("Files");
