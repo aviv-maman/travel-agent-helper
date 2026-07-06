@@ -9,6 +9,8 @@ const ACTION_KEY: Record<string, string> = {
   "account.unlink": "auditAccountUnlink",
   "2fa.enable": "audit2faEnable",
   "2fa.disable": "audit2faDisable",
+  "passkey.add": "auditPasskeyAdd",
+  "passkey.remove": "auditPasskeyRemove",
   "user.role": "auditUserRole",
   "user.delete": "auditUserDelete",
   "user.force_logout": "auditForceLogout",

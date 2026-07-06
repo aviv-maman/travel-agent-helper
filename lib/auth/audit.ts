@@ -12,6 +12,8 @@ export type AuditAction =
   | "account.unlink"
   | "2fa.enable"
   | "2fa.disable"
+  | "passkey.add"
+  | "passkey.remove"
   | "user.role"
   | "user.delete"
   | "user.force_logout"
