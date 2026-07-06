@@ -53,7 +53,11 @@ export async function saveCredentialToBackend(
       headers: { "content-type": "application/json" },
       body: JSON.stringify({ provider, apiKey }),
     });
-    if (res.status === 401) return { ok: false, error: "invalidKey" };
+    // The backend returns 400 "invalid API key" (Anthropic AuthenticationError)
+    // and 401 for a bad session; both mean the caller's key can't be stored.
+    // Its only other 400s here ("unsupported provider"/"apiKey required") are
+    // unreachable — we always send provider=anthropic and guard empty keys.
+    if (res.status === 401 || res.status === 400) return { ok: false, error: "invalidKey" };
     if (res.status === 429) return { ok: false, error: "rateLimited" };
     if (!res.ok) return { ok: false, error: "backend" };
     const data = (await res.json()) as { last4?: string };
