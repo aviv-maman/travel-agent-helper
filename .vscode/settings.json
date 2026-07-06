@@ -5,8 +5,12 @@
     "cmdk",
     "KHTML",
     "neondatabase",
+    "simplewebauthn",
+    "sslmode",
     "unparseable",
+    "uvicorn",
     "vaul",
+    "Vercel",
     "waterpark"
   ]
 }
