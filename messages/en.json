@@ -68,6 +68,7 @@
     "composerPlaceholder": "Message the assistant…",
     "attachImage": "Attach image",
     "removeImage": "Remove image",
+    "dropImageHere": "Drop image to attach",
     "imageReady": "Ready to send",
     "imageAttached": "Image attached",
     "send": "Send",
