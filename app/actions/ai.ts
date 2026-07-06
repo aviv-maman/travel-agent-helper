@@ -5,7 +5,8 @@ import { revalidatePath } from "next/cache";
 import { getCurrentUser } from "@/lib/auth";
 import { backendUrl } from "@/lib/ai/backend";
 import { saveCredentialToBackend, deleteCredentialFromBackend } from "@/lib/ai/credentials";
-import { saveQuote, deleteSavedQuote, buildQuoteTitle } from "@/lib/ai/quotes";
+import { saveQuote, deleteSavedQuote } from "@/lib/ai/quotes";
+import { buildQuoteTitle } from "@/lib/ai/quote-title";
 import { AI_ENABLED_COOKIE, AI_MOCK_KEY_COOKIE, DEFAULT_AI_PROVIDER } from "@/lib/ai/constants";
 
 /**

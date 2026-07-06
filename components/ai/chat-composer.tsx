@@ -1,9 +1,9 @@
 "use client";
 
-import { useRef, useState, type KeyboardEvent } from "react";
+import { useRef, useState, type ClipboardEvent, type DragEvent, type KeyboardEvent } from "react";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
-import { ArrowRightLeft, ArrowUp, ChevronDown, ImageIcon, Paperclip, X } from "lucide-react";
+import { ArrowRightLeft, ArrowUp, ChevronDown, ImageIcon, ImagePlus, Paperclip, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import {
@@ -44,7 +44,11 @@ export function ChatComposer({
   const [rates, setRates] = useState<Rate[]>([]);
   const [draftRate, setDraftRate] = useState("");
   const [draftCurrency, setDraftCurrency] = useState<Currency>("USD");
+  const [dragging, setDragging] = useState(false);
   const fileRef = useRef<HTMLInputElement>(null);
+  // Child elements fire dragenter/dragleave pairs while moving inside the composer;
+  // count the depth so the overlay doesn't flicker and only clears on a real leave.
+  const dragDepth = useRef(0);
 
   const available = CURRENCIES.filter((c) => !rates.some((r) => r.currency === c));
   const selectedCurrency: Currency = available.includes(draftCurrency)
@@ -111,11 +115,60 @@ export function ChatComposer({
     }
   }
 
+  // Pasting a screenshot attaches it (replacing any current image); text paste is untouched.
+  function onPaste(e: ClipboardEvent<HTMLTextAreaElement>) {
+    if (disabled) return;
+    const item = Array.from(e.clipboardData.items).find(
+      (i) => i.kind === "file" && i.type.startsWith("image/"),
+    );
+    const file = item?.getAsFile();
+    if (!file) return;
+    e.preventDefault();
+    pickImage(file);
+  }
+
+  const hasFiles = (e: DragEvent) => e.dataTransfer.types.includes("Files");
+
+  function onDragEnter(e: DragEvent<HTMLDivElement>) {
+    if (disabled || !hasFiles(e)) return;
+    e.preventDefault();
+    dragDepth.current += 1;
+    setDragging(true);
+  }
+
+  function onDragLeave(e: DragEvent<HTMLDivElement>) {
+    if (dragDepth.current === 0) return;
+    e.preventDefault();
+    dragDepth.current -= 1;
+    if (dragDepth.current === 0) setDragging(false);
+  }
+
+  function onDrop(e: DragEvent<HTMLDivElement>) {
+    dragDepth.current = 0;
+    setDragging(false);
+    if (disabled || !hasFiles(e)) return;
+    e.preventDefault();
+    pickImage(e.dataTransfer.files?.[0] ?? null);
+  }
+
   const canSend = !disabled && text.trim().length > 0;
   const ratesSet = rates.length > 0;
 
   return (
-    <div className="flex flex-col gap-2 rounded-2xl border border-border bg-card p-2 shadow-sm transition-colors focus-within:border-ring/60 focus-within:ring-3 focus-within:ring-ring/15">
+    <div
+      className="relative flex flex-col gap-2 rounded-2xl border border-border bg-card p-2 shadow-sm transition-colors focus-within:border-ring/60 focus-within:ring-3 focus-within:ring-ring/15"
+      onDragEnter={onDragEnter}
+      onDragLeave={onDragLeave}
+      onDragOver={(e) => {
+        if (hasFiles(e)) e.preventDefault();
+      }}
+      onDrop={onDrop}>
+      {dragging && (
+        <div className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center gap-2 rounded-2xl border-2 border-dashed border-brand bg-brand/5 text-sm font-medium text-brand">
+          <ImagePlus className="size-4" />
+          {t("dropImageHere")}
+        </div>
+      )}
       <input
         ref={fileRef}
         type="file"
@@ -153,6 +206,7 @@ export function ChatComposer({
         value={text}
         onChange={(e) => setText(e.target.value)}
         onKeyDown={onKeyDown}
+        onPaste={onPaste}
         placeholder={t("composerPlaceholder")}
         rows={1}
         disabled={disabled}

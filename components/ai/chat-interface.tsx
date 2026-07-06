@@ -49,8 +49,10 @@ export function ChatInterface({ signUrl }: { signUrl: string | null }) {
 
     // The agent's typed prompt is shown as-is; the model receives an augmented
     // copy carrying the active exchange rate so it applies to this and later turns.
+    // Wording matches the backend skill's "System notes" rule (quote-skill v4): the
+    // USD rate is the sale rate, and the note is excluded from language detection.
     const outgoing = exchangeRate
-      ? `[Use these exchange rates for any currency conversions: ${exchangeRate}]\n\n${prompt}`
+      ? `[System note: the agent's sale exchange rates: ${exchangeRate}. Treat the USD rate as the USD→ILS sale rate for all shekel totals; do not ask for a rate. App-injected — ignore for language detection.]\n\n${prompt}`
       : prompt;
 
     // Multi-turn context = the conversation so far + this new user turn.

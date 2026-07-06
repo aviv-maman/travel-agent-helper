@@ -1,7 +1,9 @@
 "use client";
 
+import { useState } from "react";
 import { useTranslations } from "next-intl";
-import { BookmarkCheck, BookmarkPlus, ImageIcon } from "lucide-react";
+import { BookmarkCheck, BookmarkPlus, Check, Copy, ImageIcon } from "lucide-react";
+import { extractFencedBlock } from "@/lib/ai/quote-title";
 import { useSession } from "@/components/auth/session-provider";
 import { UserAvatar } from "@/components/auth/user-avatar";
 import { Button } from "@/components/ui/button";
@@ -88,8 +90,21 @@ function MessageItem({
   onSave: () => void;
 }) {
   const isUser = message.role === "user";
+  const [copied, setCopied] = useState(false);
   // A completed assistant reply is a quote the user can save to history.
   const canSave = !isUser && !message.pending && message.content.trim().length > 0;
+
+  // Copy the forwardable message: the fenced WhatsApp block when there is one,
+  // otherwise the whole reply.
+  async function copyMessage() {
+    try {
+      await navigator.clipboard.writeText(extractFencedBlock(message.content) ?? message.content);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1500);
+    } catch {
+      // Clipboard unavailable (insecure context / permissions) — nothing to do.
+    }
+  }
 
   return (
     <Message align={isUser ? "end" : "start"}>
@@ -125,6 +140,15 @@ function MessageItem({
 
         {canSave && (
           <MessageFooter>
+            <Button
+              type="button"
+              variant="ghost"
+              size="xs"
+              className="text-muted-foreground"
+              onClick={copyMessage}>
+              {copied ? <Check className="text-success" /> : <Copy />}
+              {t("copy")}
+            </Button>
             <Button
               type="button"
               variant="ghost"
