@@ -13,8 +13,8 @@ const MAX_BYTES = 2 * 1024 * 1024;
 
 /**
  * Avatar with change/remove. The three-step upload (docs/file-upload-contract.md):
- *   1. ask the backend to sign a presigned R2 POST (`{signUrl}/sign`),
- *   2. POST the file DIRECTLY to R2 (bytes never touch our servers),
+ *   1. ask the backend to sign a presigned storage PUT (`{signUrl}/sign`),
+ *   2. PUT the file DIRECTLY to Supabase Storage (bytes never touch our servers),
  *   3. persist the resulting URL via a server action (which re-validates it).
  * `signUrl` (the `FILE_UPLOAD_URL` env, e.g. "/api/files") is null when uploads
  * aren't configured — then only the avatar renders, no controls.
@@ -47,16 +47,18 @@ export function AvatarUpload({
         body: JSON.stringify({ purpose: "avatar", contentType: file.type, size: file.size }),
       });
       if (!signRes.ok) throw new Error("sign failed");
-      const { uploadUrl, fields, key, publicUrl } = await signRes.json();
+      const { uploadUrl, contentType, key, publicUrl } = await signRes.json();
 
-      // 2. Upload straight to R2 (multipart; the signed fields must come first).
-      const form = new FormData();
-      for (const [k, v] of Object.entries(fields)) form.append(k, v as string);
-      form.append("file", file);
-      const up = await fetch(uploadUrl, { method: "POST", body: form });
+      // 2. Upload straight to Supabase Storage (raw PUT; Content-Type must match
+      // the type signed into the URL, else the signature check rejects it).
+      const up = await fetch(uploadUrl, {
+        method: "PUT",
+        headers: { "Content-Type": contentType },
+        body: file,
+      });
       if (!up.ok) throw new Error("upload failed");
 
-      // 3. Persist (server re-validates the URL against the R2 base + prefix).
+      // 3. Persist (server re-validates the URL against the storage base + prefix).
       const result = await setAvatar(key, publicUrl);
       if (result.error) throw new Error(result.error);
       toast.success(t("avatarUpdated"));

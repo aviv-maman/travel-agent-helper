@@ -164,7 +164,7 @@ export function ChatInterface({ signUrl }: { signUrl: string | null }) {
 
     setMessages((prev) => [
       ...prev,
-      // Keep the File in memory so it can be uploaded to R2 if this quote is saved.
+      // Keep the File in memory so it can be uploaded to storage if this quote is saved.
       { role: "user", content: prompt, hadImage, file: file ?? undefined },
       { role: "assistant", content: "", pending: true },
     ]);
@@ -211,7 +211,7 @@ export function ChatInterface({ signUrl }: { signUrl: string | null }) {
     }
 
     // If that turn carried an image and uploads are configured, store the original
-    // to R2 first. A failed upload doesn't block saving — we keep the text quote.
+    // to storage first. A failed upload doesn't block saving — we keep the text quote.
     const uploadedImage = file && signUrl ? await uploadQuoteImage(file, signUrl) : null;
 
     const result = await saveQuoteAction(

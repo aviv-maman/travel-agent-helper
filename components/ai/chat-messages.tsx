@@ -30,7 +30,7 @@ export type UiMessage = {
   content: string;
   hadImage?: boolean;
   pending?: boolean;
-  /** The uploaded image for a user turn, kept in memory so it can be stored to R2
+  /** The uploaded image for a user turn, kept in memory so it can be stored to storage
    *  if the resulting quote is saved (the chat itself never uploads). */
   file?: File;
 };
@@ -94,7 +94,7 @@ function MessageItem({
   const [copied, setCopied] = useState(false);
   const [zoomed, setZoomed] = useState(false);
 
-  // Thumbnail of the attached screenshot (kept in memory on the message for R2
+  // Thumbnail of the attached screenshot (kept in memory on the message for storage
   // upload on save); revoked when the message unmounts.
   const imageUrl = useMemo(
     () => (message.file ? URL.createObjectURL(message.file) : null),

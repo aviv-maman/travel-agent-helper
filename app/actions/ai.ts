@@ -83,8 +83,8 @@ export async function deleteAiKey(_locale: string): Promise<void> {
 
 export type SaveQuoteResult = { ok: true; id: number } | { error: "empty" | "forbidden" };
 
-/** The R2 object of a quote's original image, already uploaded client-side via the
- *  backend's presigned POST (see lib/ai/quote-image-upload.ts). */
+/** The storage object of a quote's original image, already uploaded client-side via the
+ *  backend's presigned PUT (see lib/ai/quote-image-upload.ts). */
 export type QuoteImage = { imageKey: string; imageMediaType: string };
 
 /**
@@ -93,7 +93,7 @@ export type QuoteImage = { imageKey: string; imageMediaType: string };
  * `hadImage` records whether the request carried an image. The chat itself is
  * never auto-saved.
  *
- * When the R2 backend is wired, the client uploads the original screenshot first
+ * When the storage backend is wired, the client uploads the original screenshot first
  * and passes its `image` (key + media type) here; we store the key on the row and
  * the history dialog resolves it through the ownership-checked backend endpoint.
  * In mock/dev (no `BACKEND_URL`, no upload) a quote that had an image is tagged
