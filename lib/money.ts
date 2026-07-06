@@ -30,12 +30,43 @@ const FALLBACK_RATES: Record<string, number> = {
 export type IlsRates = Record<string, number>;
 
 /**
- * Live "ILS per 1 unit" rates for every currency we display. Uses the free,
- * key-less open.er-api.com endpoint; revalidates daily. Always resolves —
- * unknown/failed lookups fall back to {@link FALLBACK_RATES}.
+ * "ILS per 1 unit" rates for every currency we display. Three tiers, best first
+ * (docs/exchange-rate-contract.md):
+ *   1. the `exchange_rates` table the Python backend's daily `/cron/fx` refreshes
+ *      (pure DB read — no request-time third-party call),
+ *   2. a live fetch from the free open.er-api.com endpoint (daily revalidate),
+ *   3. the approximate {@link FALLBACK_RATES} constants.
+ * Always resolves. NOTE: the backend job refreshes the same currency list —
+ * keep FALLBACK_RATES keys and the backend's FX_CURRENCIES in sync.
  */
 export async function getIlsRates(): Promise<IlsRates> {
   const codes = Object.keys(FALLBACK_RATES);
+
+  // 1. The table the backend cron keeps fresh. Rows store "quote units per 1
+  //    ILS" (base=ILS) — invert for ILS-per-unit. Falls through when the table
+  //    is empty (cron hasn't run yet) or unreachable. Dynamic import keeps this
+  //    module usable in contexts without DATABASE_URL (db/index.ts throws at load).
+  try {
+    const { db, schema } = await import("@/db");
+    const { eq } = await import("drizzle-orm");
+    const rows = await db
+      .select()
+      .from(schema.exchangeRates)
+      .where(eq(schema.exchangeRates.base, "ILS"));
+    if (rows.length > 0) {
+      const out: IlsRates = { ...FALLBACK_RATES };
+      for (const row of rows) {
+        const code = row.quote.trim();
+        const perIls = Number(row.rate);
+        if (codes.includes(code) && perIls > 0) out[code] = 1 / perIls;
+      }
+      return out;
+    }
+  } catch {
+    // fall through to the live fetch
+  }
+
+  // 2. Live fetch (the pre-cron behavior, kept as a fallback).
   try {
     const res = await fetch("https://open.er-api.com/v6/latest/ILS", {
       next: { revalidate: 86400 },
