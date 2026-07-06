@@ -1,7 +1,8 @@
 /**
  * One-off repair: re-title saved quotes whose title is a bare confirmation
  * ("כן", "ok", …) — an artifact of the old title fallback that used the last
- * user prompt verbatim. Recomputes each with the current `buildQuoteTitle`.
+ * user prompt verbatim — or contains a flag emoji (renders as LTR letters on
+ * Windows and scrambles RTL titles). Recomputes each with `buildQuoteTitle`.
  *
  * Usage: bun --env-file=.env.local scripts/fix-saved-quote-titles.ts [--apply]
  * Without --apply it only prints what would change.
@@ -25,9 +26,11 @@ const rows = (await sql`select id, title, prompt, content from saved_quotes orde
   content: string;
 }[];
 
+const HAS_FLAG = /[\u{1F1E6}-\u{1F1FF}]/u;
+
 let changed = 0;
 for (const row of rows) {
-  if (!CONFIRMATION_TITLE.test(row.title.trim())) continue;
+  if (!CONFIRMATION_TITLE.test(row.title.trim()) && !HAS_FLAG.test(row.title)) continue;
   const next = buildQuoteTitle(row.prompt, row.content);
   if (next === row.title) continue;
   changed++;

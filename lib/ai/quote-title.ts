@@ -18,6 +18,14 @@ function tidy(s: string): string {
     .replace(/[,.;:]+$/, "");
 }
 
+/**
+ * Drop flag emojis (regional-indicator pairs). Windows has no flag glyphs, so
+ * "🇬🇷" renders as the LTR letters "GR" inside an RTL title and scrambles it.
+ */
+function stripFlags(s: string): string {
+  return s.replace(/[\u{1F1E6}-\u{1F1FF}]/gu, "").replace(/\s+/g, " ").trim();
+}
+
 /** Cap a string at `max` characters without splitting surrogate pairs / emoji. */
 function capChars(s: string, max: number): string {
   const chars = Array.from(s);
@@ -33,7 +41,7 @@ export function extractFencedBlock(content: string): string | null {
 /** The first line with real content — skips blanks and fence markers. */
 function firstMeaningfulLine(text: string): string | null {
   for (const raw of text.split("\n")) {
-    const line = tidy(raw.replace(/^```.*$/, ""));
+    const line = stripFlags(tidy(raw.replace(/^```.*$/, "")));
     if (line) return line;
   }
   return null;

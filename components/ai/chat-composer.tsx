@@ -1,9 +1,8 @@
 "use client";
 
-import { useRef, useState, type ClipboardEvent, type DragEvent, type KeyboardEvent } from "react";
+import { useEffect, useMemo, useRef, useState, type ClipboardEvent, type KeyboardEvent } from "react";
 import { useTranslations } from "next-intl";
-import { toast } from "sonner";
-import { ArrowRightLeft, ArrowUp, ChevronDown, ImageIcon, ImagePlus, Paperclip, X } from "lucide-react";
+import { ArrowRightLeft, ArrowUp, ChevronDown, ImageIcon, Paperclip, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import {
@@ -15,97 +14,79 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 
-const MAX_IMAGE_BYTES = 5 * 1024 * 1024; // 5 MB — offers are screenshots, not photos
-
 /** Target currency for conversions, and the source currencies we support for now. */
-const TARGET_CURRENCY = "ILS";
-const CURRENCIES = ["USD", "EUR"] as const;
-type Currency = (typeof CURRENCIES)[number];
-type Rate = { currency: Currency; rate: string };
+export const TARGET_CURRENCY = "ILS";
+export const CURRENCIES = ["USD", "EUR"] as const;
+export type Currency = (typeof CURRENCIES)[number];
+export type Rate = { currency: Currency; rate: string };
 
 /**
  * The prompt composer, styled as a single elevated pill (à la ChatGPT/Claude):
  * an optional image chip, a borderless auto-growing textarea, and a toolbar with
  * an attach button, an exchange-rate builder, and a circular brand send button.
- * Exchange rates persist across sends and are forwarded to the model so they apply
- * to subsequent prompts. Enter sends, Shift+Enter newlines.
+ * The attached image and exchange rates are **owned by the parent** (ChatInterface):
+ * the composer remounts when the chat leaves its empty state, so any state that
+ * must survive a send — the rates, the image — cannot live here. Images arrive
+ * via the paperclip, clipboard paste, or the parent's chat-wide drag-and-drop.
+ * Enter sends, Shift+Enter newlines.
  */
 export function ChatComposer({
   disabled,
+  image,
+  onPickImage,
+  onClearImage,
+  rates,
+  onRatesChange,
   onSend,
 }: {
   disabled: boolean;
-  onSend: (_prompt: string, _image: File | null, _exchangeRate: string) => void;
+  image: File | null;
+  onPickImage: (_file: File | null) => void;
+  onClearImage: () => void;
+  rates: Rate[];
+  onRatesChange: (_rates: Rate[]) => void;
+  onSend: (_prompt: string) => void;
 }) {
   const t = useTranslations("ai");
   const [text, setText] = useState("");
-  const [image, setImage] = useState<File | null>(null);
-  const [preview, setPreview] = useState<string | null>(null);
-  const [rates, setRates] = useState<Rate[]>([]);
   const [draftRate, setDraftRate] = useState("");
   const [draftCurrency, setDraftCurrency] = useState<Currency>("USD");
-  const [dragging, setDragging] = useState(false);
   const fileRef = useRef<HTMLInputElement>(null);
-  // Child elements fire dragenter/dragleave pairs while moving inside the composer;
-  // count the depth so the overlay doesn't flicker and only clears on a real leave.
-  const dragDepth = useRef(0);
+
+  // Preview URL derived from the (parent-owned) image; revoked on change/unmount.
+  const preview = useMemo(() => (image ? URL.createObjectURL(image) : null), [image]);
+  useEffect(() => {
+    if (!image && fileRef.current) fileRef.current.value = "";
+    return () => {
+      if (preview) URL.revokeObjectURL(preview);
+    };
+  }, [image, preview]);
 
   const available = CURRENCIES.filter((c) => !rates.some((r) => r.currency === c));
   const selectedCurrency: Currency = available.includes(draftCurrency)
     ? draftCurrency
     : (available[0] ?? "USD");
 
-  // "1 USD = 3.65 ILS, 1 EUR = 4.0 ILS" — sent to the model (not shown in chat).
-  const formattedRates = rates
-    .map((r) => `1 ${r.currency} = ${r.rate} ${TARGET_CURRENCY}`)
-    .join(", ");
-
-  function pickImage(file: File | null) {
-    if (!file) return;
-    if (!file.type.startsWith("image/")) {
-      toast.error(t("errNotImage"));
-      return;
-    }
-    if (file.size > MAX_IMAGE_BYTES) {
-      toast.error(t("errImageTooLarge"));
-      return;
-    }
-    setImage(file);
-    setPreview((prev) => {
-      if (prev) URL.revokeObjectURL(prev);
-      return URL.createObjectURL(file);
-    });
-  }
-
-  function clearImage() {
-    setImage(null);
-    setPreview((prev) => {
-      if (prev) URL.revokeObjectURL(prev);
-      return null;
-    });
-    if (fileRef.current) fileRef.current.value = "";
-  }
-
   function addRate() {
     const value = draftRate.trim();
     const num = Number(value);
     if (!value || !Number.isFinite(num) || num <= 0) return;
     if (rates.some((r) => r.currency === selectedCurrency)) return;
-    setRates((prev) => [...prev, { currency: selectedCurrency, rate: value }]);
+    onRatesChange([...rates, { currency: selectedCurrency, rate: value }]);
     setDraftRate("");
   }
 
   function removeRate(currency: Currency) {
-    setRates((prev) => prev.filter((r) => r.currency !== currency));
+    onRatesChange(rates.filter((r) => r.currency !== currency));
   }
 
   function submit() {
     const prompt = text.trim();
     if (!prompt || disabled) return;
-    onSend(prompt, image, formattedRates);
+    onSend(prompt);
     setText("");
-    clearImage();
-    // Exchange rates persist on purpose — they apply to subsequent prompts too.
+    // The image is cleared by the parent after the send; exchange rates persist
+    // on purpose — they apply to subsequent prompts too.
   }
 
   function onKeyDown(e: KeyboardEvent<HTMLTextAreaElement>) {
@@ -124,57 +105,20 @@ export function ChatComposer({
     const file = item?.getAsFile();
     if (!file) return;
     e.preventDefault();
-    pickImage(file);
-  }
-
-  const hasFiles = (e: DragEvent) => e.dataTransfer.types.includes("Files");
-
-  function onDragEnter(e: DragEvent<HTMLDivElement>) {
-    if (disabled || !hasFiles(e)) return;
-    e.preventDefault();
-    dragDepth.current += 1;
-    setDragging(true);
-  }
-
-  function onDragLeave(e: DragEvent<HTMLDivElement>) {
-    if (dragDepth.current === 0) return;
-    e.preventDefault();
-    dragDepth.current -= 1;
-    if (dragDepth.current === 0) setDragging(false);
-  }
-
-  function onDrop(e: DragEvent<HTMLDivElement>) {
-    dragDepth.current = 0;
-    setDragging(false);
-    if (disabled || !hasFiles(e)) return;
-    e.preventDefault();
-    pickImage(e.dataTransfer.files?.[0] ?? null);
+    onPickImage(file);
   }
 
   const canSend = !disabled && text.trim().length > 0;
   const ratesSet = rates.length > 0;
 
   return (
-    <div
-      className="relative flex flex-col gap-2 rounded-2xl border border-border bg-card p-2 shadow-sm transition-colors focus-within:border-ring/60 focus-within:ring-3 focus-within:ring-ring/15"
-      onDragEnter={onDragEnter}
-      onDragLeave={onDragLeave}
-      onDragOver={(e) => {
-        if (hasFiles(e)) e.preventDefault();
-      }}
-      onDrop={onDrop}>
-      {dragging && (
-        <div className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center gap-2 rounded-2xl border-2 border-dashed border-brand bg-brand/5 text-sm font-medium text-brand">
-          <ImagePlus className="size-4" />
-          {t("dropImageHere")}
-        </div>
-      )}
+    <div className="flex flex-col gap-2 rounded-2xl border border-border bg-card p-2 shadow-sm transition-colors focus-within:border-ring/60 focus-within:ring-3 focus-within:ring-ring/15">
       <input
         ref={fileRef}
         type="file"
         accept="image/*"
         hidden
-        onChange={(e) => pickImage(e.target.files?.[0] ?? null)}
+        onChange={(e) => onPickImage(e.target.files?.[0] ?? null)}
       />
 
       {image && preview && (
@@ -196,7 +140,7 @@ export function ChatComposer({
             size="icon-sm"
             className="ms-auto"
             aria-label={t("removeImage")}
-            onClick={clearImage}>
+            onClick={onClearImage}>
             <X className="size-3.5" />
           </Button>
         </div>
