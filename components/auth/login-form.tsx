@@ -4,6 +4,7 @@ import { useActionState } from "react";
 import { useTranslations } from "next-intl";
 import { login, type AuthState } from "@/lib/auth/actions";
 import { MfaForm } from "./mfa-form";
+import { Link } from "@/i18n/navigation";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
@@ -33,7 +34,12 @@ export function LoginForm({ locale, next }: { locale: string; next?: string }) {
         />
       </div>
       <div className="flex flex-col gap-1.5">
-        <Label htmlFor="password">{t("password")}</Label>
+        <div className="flex items-center justify-between">
+          <Label htmlFor="password">{t("password")}</Label>
+          <Link href="/forgot" className="text-xs text-muted-foreground hover:underline">
+            {t("forgotLink")}
+          </Link>
+        </div>
         <Input
           id="password"
           name="password"

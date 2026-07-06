@@ -4,6 +4,7 @@ import { listSessions, currentSessionId } from "@/lib/auth/session";
 import { listAudit } from "@/lib/auth/audit";
 import { listPasskeys } from "@/lib/auth/passkeys";
 import { PasskeysManage } from "@/components/auth/passkeys-manage";
+import { EmailVerification } from "@/components/auth/email-verification";
 import { ChangePasswordForm } from "@/components/auth/change-password-form";
 import { SetPasswordForm } from "@/components/auth/set-password-form";
 import { SessionsList } from "@/components/auth/sessions-list";
@@ -21,10 +22,13 @@ import {
 
 export default async function SecurityPage({
   params,
+  searchParams,
 }: {
   params: Promise<{ locale: string }>;
+  searchParams: Promise<{ verified?: string }>;
 }) {
   const { locale } = await params;
+  const { verified } = await searchParams;
   setRequestLocale(locale);
   const user = await requireUser(locale);
   const t = await getTranslations({ locale, namespace: "auth" });
@@ -55,6 +59,22 @@ export default async function SecurityPage({
         </CardHeader>
         <CardContent>
           <TwoFactor user={user} locale={locale} />
+        </CardContent>
+      </Card>
+      <Card>
+        <CardHeader>
+          <CardTitle>{t("emailTitle")}</CardTitle>
+          <CardDescription>{t("emailHint")}</CardDescription>
+        </CardHeader>
+        <CardContent>
+          {verified === "1" && (
+            <p className="mb-2 text-sm text-success">{t("verifyDone")}</p>
+          )}
+          <EmailVerification
+            locale={locale}
+            email={user.email}
+            verified={user.emailVerifiedAt !== null}
+          />
         </CardContent>
       </Card>
       <Card>
