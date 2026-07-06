@@ -6,7 +6,7 @@ import { savedQuotes } from "@/db/schema";
 /**
  * Persistence for **explicitly saved** quotes (the AI chat itself is ephemeral —
  * nothing is written until the agent clicks "Save"). The originating screenshot is
- * uploaded to R2 on save and referenced by `imageKey` (private; resolved through the
+ * uploaded to storage on save and referenced by `imageKey` (private; resolved through the
  * ownership-checked backend endpoint). Every read/write is scoped to the owning user.
  * See docs/ai-quote-assistant-contract.md.
  */

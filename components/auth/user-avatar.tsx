@@ -12,7 +12,7 @@ export function initialsOf(name: string): string {
 /** A simple initials avatar (no image). Safe in server or client components. */
 /**
  * Avatar: the user's image when `src` is set, else an initials fallback. Safe in
- * server or client components. Uses a plain <img> (a small R2 asset on an external
+ * server or client components. Uses a plain <img> (a small storage asset on an external
  * domain — no next/image loader config needed).
  */
 export function UserAvatar({

@@ -263,7 +263,7 @@ export const users = pgTable(
     email: varchar("email", { length: 255 }),
     /** When the user confirmed their email (via a `verify` token). Null = unverified. */
     emailVerifiedAt: timestamp("email_verified_at", { withTimezone: true }),
-    /** Public R2 URL of the user's avatar image; null = show initials. */
+    /** Public storage URL of the user's avatar image; null = show initials. */
     avatarUrl: text("avatar_url"),
     /**
      * scrypt digest, "scrypt:<salt>:<hash>". **Null** for OAuth-only users — they
@@ -400,7 +400,7 @@ export const userAiCredentialsRelations = relations(userAiCredentials, ({ one })
  * A quote the agent **explicitly saved** from the AI assistant chat (the chat
  * itself is ephemeral — nothing is written until the user clicks "Save"). We
  * persist these ourselves via Drizzle. `imageKey`/`imageMediaType` reference the
- * originating screenshot, uploaded to a **private** R2 bucket on save and served
+ * originating screenshot, uploaded to a **private** storage bucket on save and served
  * only through the backend's ownership-checked GET (client PII). Null when the
  * request carried no image. See docs/ai-quote-assistant-contract.md.
  */
@@ -417,7 +417,7 @@ export const savedQuotes = pgTable(
     content: text("content").notNull(),
     /** The request that produced the quote — kept for reference / re-titling. */
     prompt: text("prompt").notNull().default(""),
-    /** Future: R2 object key of the original image; null until the backend lands. */
+    /** Future: storage object key of the original image; null until the backend lands. */
     imageKey: text("image_key"),
     imageMediaType: text("image_media_type"),
     createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),

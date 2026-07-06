@@ -7,10 +7,10 @@ import { users } from "@/db/schema";
 import { getCurrentUser } from ".";
 
 /**
- * Persist an avatar the user just uploaded to R2 (docs/file-upload-contract.md).
- * The backend signed a presigned POST and the browser uploaded straight to R2;
+ * Persist an avatar the user just uploaded to Supabase Storage (docs/file-upload-contract.md).
+ * The backend signed a presigned PUT and the browser uploaded straight to storage;
  * here we only record the resulting URL. NEVER trust the client-supplied URL —
- * re-validate it against the configured R2 public base and the `avatar/` prefix,
+ * re-validate it against the configured storage public base and the `avatar/` prefix,
  * so a malicious client can't point the avatar at an arbitrary URL.
  */
 
@@ -20,7 +20,7 @@ export async function setAvatar(key: string, publicUrl: string): Promise<AvatarS
   const user = await getCurrentUser();
   if (!user) return { error: "forbidden" };
 
-  const base = process.env.R2_PUBLIC_BASE_URL?.replace(/\/$/, "");
+  const base = process.env.SUPABASE_PUBLIC_BASE_URL?.replace(/\/$/, "");
   if (
     !base ||
     !key.startsWith("avatar/") ||

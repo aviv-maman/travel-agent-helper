@@ -40,7 +40,7 @@ type ViewMode = "list" | "drawer";
 
 /**
  * Resolve a stored quote's image to a URL. The `mock` sentinel (set in dev, when
- * no R2 backend stores real bytes) points at the bundled sample image; real keys
+ * no storage backend stores real bytes) points at the bundled sample image; real keys
  * go through the backend image endpoint.
  */
 function quoteImageSrc(imageKey: string): string {
@@ -52,7 +52,7 @@ function quoteImageSrc(imageKey: string): string {
  * actions; Eye opens a dialog with the full message, a Copy button, and Trash. A
  * toggle switches between the **list** (below the chat) and a side **drawer**; the
  * choice is remembered per browser via a cookie. The original image renders in the
- * dialog once stored (R2 backend pending; `imageKey` is null for now).
+ * dialog once stored (storage backend pending; `imageKey` is null for now).
  */
 export function QuoteHistory({
   locale,
@@ -205,7 +205,7 @@ export function QuoteHistory({
             <DialogTitle className="pe-6 text-lg">{viewTarget?.title}</DialogTitle>
           </DialogHeader>
 
-          {/* Original image — shown when stored (R2 pending), placeholder otherwise.
+          {/* Original image — shown when stored (storage upload pending), placeholder otherwise.
               Click to enlarge to full/original size. */}
           {viewTarget?.imageKey ? (
             <button
