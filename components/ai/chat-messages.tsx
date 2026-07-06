@@ -1,9 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useTranslations } from "next-intl";
 import { BookmarkCheck, BookmarkPlus, Check, Copy, ImageIcon } from "lucide-react";
 import { extractFencedBlock } from "@/lib/ai/quote-title";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { useSession } from "@/components/auth/session-provider";
 import { UserAvatar } from "@/components/auth/user-avatar";
 import { Button } from "@/components/ui/button";
@@ -91,6 +92,19 @@ function MessageItem({
 }) {
   const isUser = message.role === "user";
   const [copied, setCopied] = useState(false);
+  const [zoomed, setZoomed] = useState(false);
+
+  // Thumbnail of the attached screenshot (kept in memory on the message for R2
+  // upload on save); revoked when the message unmounts.
+  const imageUrl = useMemo(
+    () => (message.file ? URL.createObjectURL(message.file) : null),
+    [message.file],
+  );
+  useEffect(() => {
+    return () => {
+      if (imageUrl) URL.revokeObjectURL(imageUrl);
+    };
+  }, [imageUrl]);
   // A completed assistant reply is a quote the user can save to history.
   const canSave = !isUser && !message.pending && message.content.trim().length > 0;
 
@@ -119,11 +133,26 @@ function MessageItem({
       <MessageContent>
         <Bubble variant={isUser ? "default" : "muted"}>
           <BubbleContent className="whitespace-pre-wrap">
-            {message.hadImage && (
-              <span className="mb-1 flex items-center gap-1.5 text-xs opacity-80">
-                <ImageIcon className="size-3.5" />
-                {t("imageAttached")}
-              </span>
+            {imageUrl ? (
+              <button
+                type="button"
+                onClick={() => setZoomed(true)}
+                aria-label={t("enlargeImage")}
+                className="mb-1.5 block cursor-zoom-in overflow-hidden rounded-lg border border-border/60">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={imageUrl}
+                  alt={t("imageAttached")}
+                  className="max-h-40 max-w-full object-contain transition-transform hover:scale-[1.02]"
+                />
+              </button>
+            ) : (
+              message.hadImage && (
+                <span className="mb-1 flex items-center gap-1.5 text-xs opacity-80">
+                  <ImageIcon className="size-3.5" />
+                  {t("imageAttached")}
+                </span>
+              )
             )}
             {message.pending && !message.content ? (
               <TypingDots />
@@ -137,6 +166,16 @@ function MessageItem({
             )}
           </BubbleContent>
         </Bubble>
+
+        {/* Full-size lightbox for the attached screenshot. */}
+        {imageUrl && (
+          <Dialog open={zoomed} onOpenChange={setZoomed}>
+            <DialogContent className="max-h-[95vh] overflow-auto p-2 sm:max-w-[95vw]">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={imageUrl} alt={t("imageAttached")} className="mx-auto max-w-none" />
+            </DialogContent>
+          </Dialog>
+        )}
 
         {canSave && (
           <MessageFooter>
