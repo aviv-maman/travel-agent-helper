@@ -139,9 +139,11 @@ export function ChatInterface({ signUrl }: { signUrl: string | null }) {
       const message =
         err instanceof AiChatError && err.status === 401
           ? t("errChat401")
-          : err instanceof AiChatError && err.status === 429
-            ? t("errRateLimited")
-            : t("errChatGeneric");
+          : err instanceof AiChatError && err.status === 402
+            ? t("errNoCredits")
+            : err instanceof AiChatError && err.status === 429
+              ? t("errRateLimited")
+              : t("errChatGeneric");
       toast.error(message);
       if (!full) full = message;
     }
