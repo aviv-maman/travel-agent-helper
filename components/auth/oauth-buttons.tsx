@@ -1,5 +1,5 @@
 import { getTranslations } from "next-intl/server";
-import { PROVIDERS, PROVIDER_LABEL } from "@/lib/auth/accounts";
+import { enabledProviders, PROVIDER_LABEL } from "@/lib/auth/accounts";
 import { ProviderIcon } from "./provider-icons";
 
 /**
@@ -20,6 +20,8 @@ export async function OAuthButtons({
 }) {
   const base = process.env.AUTH_BACKEND_URL;
   if (!base) return null;
+  const providers = enabledProviders();
+  if (providers.length === 0) return null;
   const t = await getTranslations({ locale, namespace: "auth" });
 
   return (
@@ -30,7 +32,7 @@ export async function OAuthButtons({
         <span className="h-px flex-1 bg-border" />
       </div>
       <div className="flex flex-col gap-2">
-        {PROVIDERS.map((provider) => {
+        {providers.map((provider) => {
           const params = new URLSearchParams({ mode, locale });
           if (code) params.set("code", code);
           return (

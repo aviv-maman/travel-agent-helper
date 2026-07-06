@@ -1,5 +1,5 @@
 import { getTranslations } from "next-intl/server";
-import { listAccounts, PROVIDERS, PROVIDER_LABEL } from "@/lib/auth/accounts";
+import { listAccounts, enabledProviders, PROVIDER_LABEL } from "@/lib/auth/accounts";
 import { unlinkAccount } from "@/lib/auth/actions";
 import { ProviderIcon } from "./provider-icons";
 import { Button } from "@/components/ui/button";
@@ -22,10 +22,13 @@ export async function ConnectedAccounts({
   const t = await getTranslations({ locale, namespace: "auth" });
   const linked = await listAccounts(userId);
   const byProvider = new Map(linked.map((a) => [a.provider, a]));
+  // Show a row for every enabled provider, plus any already-linked provider
+  // (so a link stays visible/disconnectable even if it's later disabled).
+  const rows = [...new Set([...enabledProviders(), ...linked.map((a) => a.provider)])];
 
   return (
     <ul className="flex flex-col divide-y divide-border">
-      {PROVIDERS.map((provider) => {
+      {rows.map((provider) => {
         const account = byProvider.get(provider);
         // Removing this one must leave at least one sign-in method.
         const canUnlink = hasPassword || linked.length > 1;
