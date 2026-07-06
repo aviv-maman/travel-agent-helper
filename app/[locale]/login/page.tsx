@@ -29,12 +29,17 @@ export default async function LoginPage({
   searchParams,
 }: {
   params: Promise<{ locale: string }>;
-  searchParams: Promise<{ next?: string | string[]; error?: string | string[] }>;
+  searchParams: Promise<{
+    next?: string | string[];
+    error?: string | string[];
+    reset?: string | string[];
+  }>;
 }) {
   const { locale } = await params;
-  const { next: nextParam, error: errorParam } = await searchParams;
+  const { next: nextParam, error: errorParam, reset: resetParam } = await searchParams;
   const next = Array.isArray(nextParam) ? nextParam[0] : nextParam;
   const errorCode = Array.isArray(errorParam) ? errorParam[0] : errorParam;
+  const resetDone = (Array.isArray(resetParam) ? resetParam[0] : resetParam) === "1";
   setRequestLocale(locale);
   if (await getCurrentUser()) redirect(`/${locale}/account`);
   const t = await getTranslations({ locale, namespace: "auth" });
@@ -48,6 +53,13 @@ export default async function LoginPage({
           <CardDescription>{t("subtitle")}</CardDescription>
         </CardHeader>
         <CardContent className="flex flex-col gap-4">
+          {resetDone && (
+            <p
+              role="status"
+              className="rounded-md border border-success/40 bg-success/10 px-3 py-2 text-sm text-success">
+              {t("resetDone")}
+            </p>
+          )}
           {oauthError && (
             <p
               role="alert"

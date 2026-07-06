@@ -261,6 +261,8 @@ export const users = pgTable(
     themePref: varchar("theme_pref", { length: 7 }),
     /** Primary email (from a linked provider or set manually). Null when unknown. */
     email: varchar("email", { length: 255 }),
+    /** When the user confirmed their email (via a `verify` token). Null = unverified. */
+    emailVerifiedAt: timestamp("email_verified_at", { withTimezone: true }),
     /**
      * scrypt digest, "scrypt:<salt>:<hash>". **Null** for OAuth-only users — they
      * have no password and sign in via a linked provider (see `accounts`).
@@ -424,6 +426,30 @@ export const savedQuotes = pgTable(
 export const savedQuotesRelations = relations(savedQuotes, ({ one }) => ({
   user: one(users, { fields: [savedQuotes.userId], references: [users.id] }),
 }));
+
+/** Email tokens are single-use, for either email verification or password reset. */
+export const emailTokenKind = pgEnum("email_token_kind", ["verify", "reset"]);
+
+/**
+ * Single-use email tokens (verification + password reset). Like sessions, only the
+ * token *hash* is stored (`id` = sha256 of the raw base64url token) — the raw token
+ * lives only in the emailed link. `used_at` marks it spent; `expires_at` bounds it
+ * (verify ~24h, reset ~45min). See docs/password-reset-contract.md.
+ */
+export const emailTokens = pgTable(
+  "email_tokens",
+  {
+    id: text("id").primaryKey(),
+    userId: integer("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    kind: emailTokenKind("kind").notNull(),
+    expiresAt: timestamp("expires_at", { withTimezone: true }).notNull(),
+    usedAt: timestamp("used_at", { withTimezone: true }),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (t) => [index("email_tokens_user_idx").on(t.userId)],
+);
 
 /**
  * Single-use registration invites. A code carries the role the new user gets.
