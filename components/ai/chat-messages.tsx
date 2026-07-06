@@ -27,6 +27,9 @@ export type UiMessage = {
   content: string;
   hadImage?: boolean;
   pending?: boolean;
+  /** The uploaded image for a user turn, kept in memory so it can be stored to R2
+   *  if the resulting quote is saved (the chat itself never uploads). */
+  file?: File;
 };
 
 type T = ReturnType<typeof useTranslations<"ai">>;

@@ -30,7 +30,7 @@ export default async function AssistantPage({
     <div className="mx-auto flex w-full max-w-3xl flex-col gap-6">
       <AiEnabledSync enabled />
       {/* Ephemeral scratchpad — nothing persists until a quote is saved. */}
-      <ChatInterface />
+      <ChatInterface signUrl={process.env.FILE_UPLOAD_URL ?? null} />
       <QuoteHistory locale={locale} quotes={quotes} initialView={historyView} />
     </div>
   );

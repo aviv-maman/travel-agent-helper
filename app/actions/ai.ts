@@ -82,31 +82,44 @@ export async function deleteAiKey(_locale: string): Promise<void> {
 
 export type SaveQuoteResult = { ok: true; id: number } | { error: "empty" | "forbidden" };
 
+/** The R2 object of a quote's original image, already uploaded client-side via the
+ *  backend's presigned POST (see lib/ai/quote-image-upload.ts). */
+export type QuoteImage = { imageKey: string; imageMediaType: string };
+
 /**
  * Persist a quote the user explicitly chose to save. `content` is the forwardable
  * message; `prompt` is the originating request (used for the derived title);
  * `hadImage` records whether the request carried an image. The chat itself is
  * never auto-saved.
  *
- * Until the R2/file-upload backend exists we don't persist the real bytes, so in
- * mock/dev (no `BACKEND_URL`) a quote that had an image is tagged with the `mock`
- * sentinel `imageKey`, which the UI resolves to the bundled sample image.
+ * When the R2 backend is wired, the client uploads the original screenshot first
+ * and passes its `image` (key + media type) here; we store the key on the row and
+ * the history dialog resolves it through the ownership-checked backend endpoint.
+ * In mock/dev (no `BACKEND_URL`, no upload) a quote that had an image is tagged
+ * with the `mock` sentinel `imageKey`, which the UI resolves to a bundled sample.
  */
 export async function saveQuoteAction(
   content: string,
   prompt: string,
   hadImage = false,
+  image?: QuoteImage,
 ): Promise<SaveQuoteResult> {
   const user = await getCurrentUser();
   if (!user) return { error: "forbidden" };
   const text = content.trim();
   if (!text) return { error: "empty" };
 
+  // Only accept a key from our own quote-image prefix (defence-in-depth — the key
+  // is browser-supplied). Keys are unguessable random uuids, but the prefix is the
+  // ownership boundary the backend also enforces on read.
+  const uploaded = image && image.imageKey.startsWith("quote/") ? image : null;
+
   const id = await saveQuote(user.id, {
     title: buildQuoteTitle(prompt, text),
     content: text,
     prompt: prompt.trim(),
-    imageKey: hadImage && backendUrl() === null ? "mock" : null,
+    imageKey: uploaded?.imageKey ?? (hadImage && backendUrl() === null ? "mock" : null),
+    imageMediaType: uploaded?.imageMediaType ?? null,
   });
   revalidatePath("/[locale]/assistant", "page");
   return { ok: true, id };

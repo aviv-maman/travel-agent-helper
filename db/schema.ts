@@ -399,10 +399,10 @@ export const userAiCredentialsRelations = relations(userAiCredentials, ({ one })
 /**
  * A quote the agent **explicitly saved** from the AI assistant chat (the chat
  * itself is ephemeral — nothing is written until the user clicks "Save"). We
- * persist these ourselves via Drizzle; no backend capability needed. Text only
- * for now: `imageKey`/`imageMediaType` are a nullable slot for the originating
- * image, populated later once the R2/file-upload backend exists (privacy default
- * — no image stored until then). See docs/ai-quote-assistant-contract.md.
+ * persist these ourselves via Drizzle. `imageKey`/`imageMediaType` reference the
+ * originating screenshot, uploaded to a **private** R2 bucket on save and served
+ * only through the backend's ownership-checked GET (client PII). Null when the
+ * request carried no image. See docs/ai-quote-assistant-contract.md.
  */
 export const savedQuotes = pgTable(
   "saved_quotes",
