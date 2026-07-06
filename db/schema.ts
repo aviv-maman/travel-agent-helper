@@ -3,6 +3,7 @@ import {
   pgEnum,
   serial,
   integer,
+  bigint,
   varchar,
   char,
   numeric,
@@ -459,6 +460,35 @@ export const loginAttempts = pgTable("login_attempts", {
   windowStartsAt: timestamp("window_starts_at", { withTimezone: true }).notNull().defaultNow(),
   lockedUntil: timestamp("locked_until", { withTimezone: true }),
 });
+
+/**
+ * WebAuthn passkeys (Phase 7). One row per registered credential; a user may
+ * have several (phone, laptop…). Only the PUBLIC key is stored — the private
+ * key never leaves the user's authenticator. `counter` is the signature
+ * counter used to detect cloned authenticators. Passkey sign-in creates a
+ * fully-authenticated session (no TOTP step — a passkey is itself
+ * phishing-resistant MFA: possession + biometric/PIN).
+ */
+export const passkeys = pgTable(
+  "passkeys",
+  {
+    /** WebAuthn credential id (base64url) — chosen by the authenticator. */
+    id: text("id").primaryKey(),
+    userId: integer("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    /** COSE public key, base64url-encoded. */
+    publicKey: text("public_key").notNull(),
+    counter: bigint("counter", { mode: "number" }).notNull().default(0),
+    /** JSON array of WebAuthn transports (e.g. ["internal","hybrid"]). */
+    transports: text("transports"),
+    /** Friendly label derived from the registering device's user-agent. */
+    deviceName: text("device_name"),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+    lastUsedAt: timestamp("last_used_at", { withTimezone: true }),
+  },
+  (t) => [index("passkeys_user_idx").on(t.userId)],
+);
 
 /**
  * Advisory FX rates, refreshed daily by the Python backend's `/cron/fx` job

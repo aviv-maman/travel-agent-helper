@@ -2,6 +2,8 @@ import { setRequestLocale, getTranslations } from "next-intl/server";
 import { requireUser } from "@/lib/auth";
 import { listSessions, currentSessionId } from "@/lib/auth/session";
 import { listAudit } from "@/lib/auth/audit";
+import { listPasskeys } from "@/lib/auth/passkeys";
+import { PasskeysManage } from "@/components/auth/passkeys-manage";
 import { ChangePasswordForm } from "@/components/auth/change-password-form";
 import { SetPasswordForm } from "@/components/auth/set-password-form";
 import { SessionsList } from "@/components/auth/sessions-list";
@@ -30,6 +32,7 @@ export default async function SecurityPage({
   const sessions = await listSessions(user.id);
   const sessionId = await currentSessionId();
   const activity = await listAudit({ actorId: user.id, limit: 10 });
+  const passkeys = await listPasskeys(user.id);
 
   return (
     <div className="flex flex-col gap-6">
@@ -52,6 +55,15 @@ export default async function SecurityPage({
         </CardHeader>
         <CardContent>
           <TwoFactor user={user} locale={locale} />
+        </CardContent>
+      </Card>
+      <Card>
+        <CardHeader>
+          <CardTitle>{t("passkeys")}</CardTitle>
+          <CardDescription>{t("passkeysHint")}</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <PasskeysManage passkeys={passkeys} />
         </CardContent>
       </Card>
       <Card>
