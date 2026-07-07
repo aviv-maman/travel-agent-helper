@@ -3,8 +3,10 @@
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { Search, X } from "lucide-react";
-import type { ViewSupplier } from "@/lib/commissions";
+import type { SupplierCategory, ViewSupplier } from "@/lib/commissions";
 import { Input } from "@/components/ui/input";
+import { Badge } from "@/components/ui/badge";
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { CommissionCard } from "./commission-card";
 
 const LEGEND: { dot: string; key: "high" | "mid" | "low" | "net" }[] = [
@@ -14,23 +16,37 @@ const LEGEND: { dot: string; key: "high" | "mid" | "low" | "net" }[] = [
   { dot: "bg-destructive", key: "net" },
 ];
 
+const CATEGORIES: {
+  value: SupplierCategory;
+  key: "main" | "hotels" | "carRental";
+  emoji: string;
+}[] = [
+  { value: "flights", key: "main", emoji: "✈️" },
+  { value: "hotels", key: "hotels", emoji: "🏨" },
+  { value: "car-rental", key: "carRental", emoji: "🚗" },
+];
+
 export function CommissionsView({ suppliers }: { suppliers: ViewSupplier[] }) {
   const t = useTranslations("commissions");
   const [query, setQuery] = useState("");
+  const [tab, setTab] = useState<SupplierCategory>("flights");
 
   const tokens = query.trim().toLowerCase().split(/\s+/).filter(Boolean);
-  const filtered = suppliers.filter((s) => tokens.every((tok) => s.search.includes(tok)));
+  const match = (s: ViewSupplier) => tokens.every((tok) => s.search.includes(tok));
 
   return (
     <div className="flex flex-col gap-5">
-      <div className="flex flex-wrap gap-x-4 gap-y-2">
-        {LEGEND.map(({ dot, key }) => (
-          <span key={key} className="flex items-center gap-1.5 text-xs text-muted-foreground">
-            <span className={`size-2.5 rounded-full ${dot}`} aria-hidden />
-            {t(`legend.${key}`)}
-          </span>
-        ))}
-      </div>
+      {/* The commission-percent legend only applies to the main (flights) tab. */}
+      {tab === "flights" && (
+        <div className="flex flex-wrap gap-x-4 gap-y-2">
+          {LEGEND.map(({ dot, key }) => (
+            <span key={key} className="flex items-center gap-1.5 text-xs text-muted-foreground">
+              <span className={`size-2.5 rounded-full ${dot}`} aria-hidden />
+              {t(`legend.${key}`)}
+            </span>
+          ))}
+        </div>
+      )}
 
       <div className="relative">
         <Search
@@ -54,17 +70,41 @@ export function CommissionsView({ suppliers }: { suppliers: ViewSupplier[] }) {
         )}
       </div>
 
-      {filtered.length === 0 ? (
-        <p className="rounded-xl border border-dashed border-border bg-surface/50 px-5 py-8 text-center text-sm text-muted-foreground">
-          {t("noResults")}
-        </p>
-      ) : (
-        <div className="grid grid-cols-1 gap-3.5 md:grid-cols-2">
-          {filtered.map((s) => (
-            <CommissionCard key={s.id} supplier={s} />
-          ))}
-        </div>
-      )}
+      <Tabs value={tab} onValueChange={(v) => setTab(v as SupplierCategory)}>
+        <TabsList className="rounded-xl">
+          {CATEGORIES.map(({ value, key, emoji }) => {
+            const count = suppliers.filter((s) => s.category === value).length;
+            return (
+              <TabsTrigger key={value} value={value}>
+                <span aria-hidden>{emoji}</span>
+                {t(`categories.${key}`)}
+                <Badge variant="secondary" className="ms-0.5">
+                  {count}
+                </Badge>
+              </TabsTrigger>
+            );
+          })}
+        </TabsList>
+
+        {CATEGORIES.map(({ value }) => {
+          const list = suppliers.filter((s) => s.category === value && match(s));
+          return (
+            <TabsContent key={value} value={value} className="pt-3">
+              {list.length === 0 ? (
+                <p className="rounded-xl border border-dashed border-border bg-surface/50 px-5 py-8 text-center text-sm text-muted-foreground">
+                  {t("noResults")}
+                </p>
+              ) : (
+                <div className="grid grid-cols-1 gap-3.5 md:grid-cols-2">
+                  {list.map((s) => (
+                    <CommissionCard key={s.id} supplier={s} />
+                  ))}
+                </div>
+              )}
+            </TabsContent>
+          );
+        })}
+      </Tabs>
     </div>
   );
 }

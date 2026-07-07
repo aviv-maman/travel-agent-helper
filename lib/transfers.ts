@@ -157,15 +157,15 @@ const COUNTRIES: CountryGroup[] = [
     cities: [
       {
         id: "turkish-cyprus",
-        name: t("קפריסין הטורקית (ECN/GEC)", "Turkish Cyprus (ECN/GEC)"),
-        search: "קפריסין הטורקית turkish cyprus ecn gec",
+        name: t("צפון קפריסין (הצד הטורקי) (ECN/GEC)", "Northern Cyprus (Turkish side) (ECN/GEC)"),
+        search: "צפון קפריסין הטורקית northern turkish cyprus ecn gec",
         pills: [g("yes", "כל הספקים", "all suppliers")],
       },
       {
         id: "greek-cyprus",
         name: t(
-          "קפריסין היוונית — לימסול (QLI/LCA · QLI/PFO) · לרנקה (LCA) · איה נאפה (AYA/LCA) · פאפוס (PFO)",
-          "Greek Cyprus — Limassol (QLI/LCA · QLI/PFO) · Larnaca (LCA) · Ayia Napa (AYA/LCA) · Paphos (PFO)",
+          "לימסול (QLI/LCA) · לרנקה (LCA) · איה נאפה (AYA/LCA) · פאפוס (PFO)",
+          "Limassol (QLI/LCA) · Larnaca (LCA) · Ayia Napa (AYA/LCA) · Paphos (PFO)",
         ),
         search:
           "qli lca pfo aya לימסול limassol לרנקה larnaca פאפוס paphos איה נאפה ayia napa",

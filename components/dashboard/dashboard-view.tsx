@@ -15,7 +15,6 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Greeting } from "./greeting";
 import { BankDetailsCard } from "./bank-details-card";
-import { QuickAddBar } from "./quick-add-bar";
 import { TaskSection } from "./task-section";
 import { TaskCard } from "./task-card";
 import { Playground } from "./playground";
@@ -70,29 +69,32 @@ export function DashboardView({
 
         <TabsContent value="main" className="flex flex-col gap-6 pt-3">
           <Playground initialContent={scratchpad} />
-          <QuickAddBar />
 
           <div className="flex flex-col gap-6">
             <TaskSection
               emoji="📋"
+              type="task"
               title={t("sections.today")}
               emptyText={t("empty.today")}
               tasks={todayTasks}
             />
             <TaskSection
               emoji="⏳"
+              type="awaiting_supplier"
               title={t("sections.awaiting")}
               emptyText={t("empty.awaiting")}
               tasks={awaiting}
             />
             <TaskSection
               emoji="📞"
+              type="client_followup"
               title={t("sections.followup")}
               emptyText={t("empty.followup")}
               tasks={followup}
             />
             <TaskSection
               emoji="🔔"
+              type="reminder"
               title={t("sections.reminders")}
               emptyText={t("empty.reminders")}
               tasks={reminders}

@@ -53,6 +53,7 @@
     },
     "quickAdd": {
       "title": "Quick add",
+      "titleLabel": "Title",
       "placeholder": "What needs doing?",
       "client": "Client name",
       "phone": "Phone (international, e.g. +9725...)",
@@ -423,6 +424,11 @@
     "searchPlaceholder": "Search a supplier... (Hebrew or English)",
     "clear": "Clear search",
     "noResults": "😕 No matching supplier found",
+    "categories": {
+      "main": "Main",
+      "hotels": "Hotels",
+      "carRental": "Car rental"
+    },
     "legend": {
       "high": "High 10%+",
       "mid": "Medium 7–9.5%",

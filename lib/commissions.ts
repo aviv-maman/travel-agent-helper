@@ -50,11 +50,16 @@ export type SupplierNote = {
   showTitle?: boolean;
 };
 
+/** Which suppliers-page tab a supplier belongs to. */
+export type SupplierCategory = "flights" | "hotels" | "car-rental";
+
 export type Supplier = {
   id: string;
   name: Localized;
   /** Short Latin code shown as a small chip next to the name (same style as the cancellations page). */
   code: string;
+  /** Tab bucket on the suppliers page; defaults to "flights" (the main tab). */
+  category?: SupplierCategory;
   /** Alternate name shown as the card subtitle and indexed for search (e.g. Israir ↔ Natour). */
   alias?: Localized;
   /** Supplier website URL (placeholder for now; wired up elsewhere later). */
@@ -96,6 +101,30 @@ const cc = (
   en: string,
   level: CommLevel,
 ): CustomCommission => ({ label: t(labelHe, labelEn), value: t(he, en), level });
+
+/**
+ * A skeleton supplier for the hotels / car-rental tabs — name + code only, with
+ * a "coming soon" note. Commission and baggage details are filled in later.
+ */
+const placeholder = (
+  id: string,
+  name: string,
+  code: string,
+  category: SupplierCategory,
+): Supplier => ({
+  id,
+  name: t(name, name),
+  code,
+  category,
+  baggage: [],
+  notes: [
+    {
+      text: t("התוכן יעודכן בקרוב", "Details will be added soon"),
+      variant: "info",
+      showTitle: false,
+    },
+  ],
+});
 
 // Shared baggage lines reused across many suppliers.
 const BACKPACK = (): BaggageRow => ({
@@ -585,6 +614,15 @@ const SUPPLIERS: Supplier[] = [
       },
     ],
   },
+
+  // ── Hotels tab (skeleton — content added later) ────────────────────────────
+  placeholder("goglobal", "GoGlobal", "GOGLOBAL", "hotels"),
+  placeholder("tbo-holidays", "TBO Holidays", "TBO", "hotels"),
+  placeholder("instant-travel", "Instant Travel", "INSTANT", "hotels"),
+  placeholder("ratehawk", "RateHawk", "RATEHAWK", "hotels"),
+
+  // ── Car-rental tab (skeleton — content added later) ────────────────────────
+  placeholder("auto-europe", "Auto Europe", "AUTOEUROPE", "car-rental"),
 ];
 
 // ── Locale-resolved view types (what the client receives) ────────────────────
@@ -596,6 +634,7 @@ export type ViewSupplier = {
   id: string;
   name: string;
   code: string;
+  category: SupplierCategory;
   alias: string | null;
   website: string | null;
   logo: string | null;
@@ -619,6 +658,7 @@ export function getCommissions(locale: string): ViewSupplier[] {
     id: s.id,
     name: pick(s.name),
     code: s.code,
+    category: s.category ?? "flights",
     alias: s.alias ? pick(s.alias) : null,
     website: s.website ?? null,
     logo: s.logo ?? null,
