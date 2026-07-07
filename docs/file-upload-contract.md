@@ -55,7 +55,7 @@ Permissions come from `ROLE_PERMISSIONS` in [`lib/auth/index.ts`](../lib/auth/in
 - **Auth:** validate the Next `session` cookie exactly as `lib/auth/session.ts` does (hash → `sessions.id`, not expired, `mfaPending = false`) → user + role. Reject unauthenticated with `401`.
 - **Body:** `{ purpose: string, contentType: string, size: number }`.
 - **Checks:** purpose exists; user holds the purpose's permission; `contentType` in the allowlist; `size` ≤ max.
-- **Key:** `${purpose}/${uuid4}.${ext}` — random, no user-controlled path (prevents overwrite/traversal).
+- **Key:** `${purpose}/${uuid4}.${ext}` — random, no user-controlled path (prevents overwrite/traversal). **Exception — `avatar`:** the key is the deterministic `avatar/${userId}.${ext}` so each user has exactly ONE avatar object that uploads overwrite in place; the sign call also best-effort deletes stale variants under other extensions, and `publicUrl` carries a `?v=<hex>` cache-buster (the bare URL is stable across replacements).
 - **Bucket:** public purposes → the public bucket; private → the private bucket.
 - **Presign:** short expiry (~2 min), a PUT with the exact `Content-Type` signed in.
 - **Returns:** `{ uploadUrl, key, contentType, publicUrl }` (public bucket) **or** `{ uploadUrl, key, contentType }` (private bucket — no public URL; downloads use the signed-GET endpoint below).

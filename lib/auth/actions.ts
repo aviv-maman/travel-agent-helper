@@ -33,6 +33,7 @@ import {
   completeMfa,
 } from "./session";
 import { can, getCurrentUser } from ".";
+import { USER_COOKIE, serializePublicUser } from "./public-user";
 import { safeNext } from "./protected-routes";
 import { recordAudit } from "./audit";
 import { generateInviteCode, inviteStatus } from "./invites";
@@ -129,7 +130,7 @@ export async function verifyMfa(
   }
   if (!ok) return { error: "invalidCode" };
 
-  await completeMfa(user.username);
+  await completeMfa(user);
   await recordAudit("login", { actorId: user.id });
   await applyThemePref(user.themePref);
   redirect(safeNext(String(formData.get("next") ?? ""), locale));
@@ -209,6 +210,18 @@ export async function updateProfile(
     .update(users)
     .set({ displayName: displayName || null })
     .where(eq(users.id, user.id));
+  // Refresh the nav mirror cookie so the new name shows without re-login.
+  (await cookies()).set(
+    USER_COOKIE,
+    serializePublicUser({ username: user.username, displayName: displayName || undefined }),
+    {
+      httpOnly: false,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
+      path: "/",
+      maxAge: 30 * 24 * 3600,
+    },
+  );
   revalidatePath("/[locale]/account/profile", "page");
   return { ok: true };
 }

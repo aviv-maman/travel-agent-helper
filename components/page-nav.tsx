@@ -49,6 +49,8 @@ export function PageNav() {
   const segment = useSelectedLayoutSegment() ?? "hotels";
   const aiEnabled = useAiEnabled();
   const [open, setOpen] = useState(false);
+  // Prefer the display name over the username; CSS-truncated to 16ch in the nav.
+  const userLabel = user ? user.displayName?.trim() || user.username : "";
 
   // The Assistant tab is revealed only once the user has a stored AI key
   // (contract §Access). Signed-in + key-configured, mirrored client-side so the
@@ -129,11 +131,15 @@ export function PageNav() {
                   />
                 }>
                 {user ? (
-                  <UserAvatar name={user.username} className="size-6 text-[0.6rem]" />
+                  <UserAvatar name={userLabel} className="size-6 text-[0.6rem]" />
                 ) : (
                   <CircleUser className="size-4" />
                 )}
-                {user ? user.username : tNav("account")}
+                {user ? (
+                  <span className="max-w-[16ch] truncate">{userLabel}</span>
+                ) : (
+                  tNav("account")
+                )}
               </SheetClose>
               {user && (
                 <form action={logout.bind(null, locale)}>
@@ -205,8 +211,8 @@ export function PageNav() {
               <Link
                 href={accountHref}
                 className="flex items-center gap-1.5 rounded-md px-2 py-1 text-sm font-medium text-foreground transition-colors hover:text-brand">
-                <UserAvatar name={user.username} className="size-6 text-[0.6rem]" />
-                {user.username}
+                <UserAvatar name={userLabel} className="size-6 text-[0.6rem]" />
+                <span className="max-w-[16ch] truncate">{userLabel}</span>
               </Link>
               <form action={logout.bind(null, locale)}>
                 <Button type="submit" variant="ghost" size="icon-sm" aria-label={tAuth("signOut")}>

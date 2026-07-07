@@ -1,9 +1,10 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { BookmarkCheck, BookmarkPlus, Check, Copy, ImageIcon } from "lucide-react";
 import { extractFencedBlock } from "@/lib/ai/quote-title";
+import { fileUrl } from "@/lib/object-url";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { useSession } from "@/components/auth/session-provider";
 import { UserAvatar } from "@/components/auth/user-avatar";
@@ -30,9 +31,13 @@ export type UiMessage = {
   content: string;
   hadImage?: boolean;
   pending?: boolean;
-  /** The uploaded image for a user turn, kept in memory so it can be stored to storage
-   *  if the resulting quote is saved (the chat itself never uploads). */
+  /** The attached image for a user turn: the File renders the thumbnail, and the
+   *  storage key/media-type of its eager upload (set on attach) are reused verbatim
+   *  when the resulting quote is saved. `imageKey` is undefined if the upload failed
+   *  — saving then retries the upload from the File. */
   file?: File;
+  imageKey?: string;
+  imageMediaType?: string;
 };
 
 type T = ReturnType<typeof useTranslations<"ai">>;
@@ -95,18 +100,13 @@ function MessageItem({
   const [zoomed, setZoomed] = useState(false);
 
   // Thumbnail of the attached screenshot (kept in memory on the message for storage
-  // upload on save); revoked when the message unmounts.
-  const imageUrl = useMemo(
-    () => (message.file ? URL.createObjectURL(message.file) : null),
-    [message.file],
-  );
-  useEffect(() => {
-    return () => {
-      if (imageUrl) URL.revokeObjectURL(imageUrl);
-    };
-  }, [imageUrl]);
-  // A completed assistant reply is a quote the user can save to history.
-  const canSave = !isUser && !message.pending && message.content.trim().length > 0;
+  // upload on save). `fileUrl` caches one URL per File for the page's lifetime —
+  // see lib/object-url.ts for why we don't create/revoke it here.
+  const imageUrl = message.file ? fileUrl(message.file) : null;
+  // Copy/Save only apply to a reply carrying the fenced WhatsApp block (the
+  // forwardable quote). Clarifying questions and other chatter get no actions.
+  const canSave =
+    !isUser && !message.pending && extractFencedBlock(message.content) !== null;
 
   // Copy the forwardable message: the fenced WhatsApp block when there is one,
   // otherwise the whole reply.

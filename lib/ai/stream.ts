@@ -113,23 +113,25 @@ function buildMockQuote(prompt: string, hadImage: boolean): string {
   const intro = hadImage
     ? "I extracted the offer from your image. Here's a client-ready quote:"
     : "Here's a client-ready quote based on what you shared:";
+  // The forwardable message sits in a fenced block, exactly like the real skill's
+  // output — the chat's Copy/Save actions only appear on replies that carry one.
   return `${intro}
 
-**Hotel:** Sunrise Beach Resort — Antalya
-**Dates:** 12 Aug → 19 Aug 2026 (7 nights)
-**Board:** All-inclusive
-**Room:** Deluxe sea-view, 2 adults
+\`\`\`
+Sunrise Beach Resort — Antalya
+12 Aug → 19 Aug 2026 (7 nights)
+All-inclusive · Deluxe sea-view · 2 adults
 
 Price breakdown
 • Per night: €180
 • 7 nights: €1,260
 • Transfers (return): €90
 
-**Total: €1,350**
+Total: €1,350
 
-Key conditions
-• Free cancellation until 5 Aug 2026
-• Prices in EUR, subject to availability at booking
+Free cancellation until 5 Aug 2026
+Prices in EUR, subject to availability at booking
+\`\`\`
 
 You can forward this to your client as-is. Want me to adjust the markup, switch to a different room, or translate it to Hebrew?
 

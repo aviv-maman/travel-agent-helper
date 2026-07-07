@@ -5,6 +5,7 @@ import { and, desc, eq, gt, ne } from "drizzle-orm";
 import { db } from "@/db";
 import { sessions, users, type User } from "@/db/schema";
 import { SESSION_COOKIE, USER_COOKIE, SESSION_VERIFIED_COOKIE } from "./cookies";
+import { serializePublicUser } from "./public-user";
 
 /**
  * Server-side session store. The cookie holds an opaque random token; the DB
@@ -26,7 +27,7 @@ function hashToken(token: string): string {
  * readable mirror cookie (public identity) for the client nav.
  */
 export async function createSession(
-  user: { id: number; username: string },
+  user: { id: number; username: string; displayName?: string | null },
   opts: { mfaPending?: boolean } = {},
 ): Promise<void> {
   const token = randomBytes(32).toString("base64url");
@@ -49,7 +50,13 @@ export async function createSession(
   };
   store.set(SESSION_COOKIE, token, { httpOnly: true, ...base });
   // The nav mirror is set only once fully authenticated (not mid-2FA).
-  if (!opts.mfaPending) store.set(USER_COOKIE, user.username, { httpOnly: false, ...base });
+  if (!opts.mfaPending) {
+    store.set(
+      USER_COOKIE,
+      serializePublicUser({ username: user.username, displayName: user.displayName ?? undefined }),
+      { httpOnly: false, ...base },
+    );
+  }
 }
 
 /**
@@ -71,19 +78,26 @@ export async function mfaPendingUser(): Promise<User | null> {
 }
 
 /** Promote the current pending session to fully authenticated and set the nav mirror. */
-export async function completeMfa(username: string): Promise<void> {
+export async function completeMfa(user: {
+  username: string;
+  displayName?: string | null;
+}): Promise<void> {
   const store = await cookies();
   const token = store.get(SESSION_COOKIE)?.value;
   if (!token) return;
   const expiresAt = new Date(Date.now() + SESSION_DURATION_MS);
   await db.update(sessions).set({ mfaPending: false }).where(eq(sessions.id, hashToken(token)));
-  store.set(USER_COOKIE, username, {
-    httpOnly: false,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: "lax",
-    path: "/",
-    expires: expiresAt,
-  });
+  store.set(
+    USER_COOKIE,
+    serializePublicUser({ username: user.username, displayName: user.displayName ?? undefined }),
+    {
+      httpOnly: false,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
+      path: "/",
+      expires: expiresAt,
+    },
+  );
 }
 
 /**
