@@ -3,7 +3,7 @@
 import { cookies } from "next/headers";
 import { revalidatePath } from "next/cache";
 import { getCurrentUser } from "@/lib/auth";
-import { backendUrl } from "@/lib/ai/backend";
+import { backendUrl, deleteQuoteImages } from "@/lib/ai/backend";
 import { saveCredentialToBackend, deleteCredentialFromBackend } from "@/lib/ai/credentials";
 import { saveQuote, deleteSavedQuote } from "@/lib/ai/quotes";
 import { buildQuoteTitle } from "@/lib/ai/quote-title";
@@ -126,10 +126,14 @@ export async function saveQuoteAction(
   return { ok: true, id };
 }
 
-/** Delete a saved quote from the history list. */
+/** Delete a saved quote from the history list, freeing its screenshot with it. */
 export async function deleteQuoteAction(id: number): Promise<void> {
   const user = await getCurrentUser();
   if (!user) return;
-  await deleteSavedQuote(user.id, id);
+  const imageKey = await deleteSavedQuote(user.id, id);
+  // Best-effort storage cleanup (the backend withholds keys other quotes still
+  // share, and prefix-guards to quote/). The row is the source of truth — a
+  // failed cleanup only orphans the object.
+  if (imageKey && imageKey !== "mock") await deleteQuoteImages([imageKey]);
   revalidatePath("/[locale]/assistant", "page");
 }
