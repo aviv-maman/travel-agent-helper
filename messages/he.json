@@ -70,6 +70,8 @@
     "removeImage": "הסרת תמונה",
     "dropImageHere": "שחררו כדי לצרף תמונה",
     "imageReady": "מוכן לשליחה",
+    "uploadingImage": "מעלה…",
+    "errImageUpload": "העלאת התמונה נכשלה — ננסה שוב בשמירת ההצעה.",
     "imageAttached": "תמונה צורפה",
     "send": "שליחה",
     "errNotImage": "הקובץ הזה אינו תמונה.",

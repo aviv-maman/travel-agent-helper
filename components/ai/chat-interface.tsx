@@ -74,6 +74,19 @@ export function ChatInterface({ signUrl }: { signUrl: string | null }) {
   const [streaming, setStreaming] = useState(false);
   const [savedIndexes, setSavedIndexes] = useState<Set<number>>(new Set());
   const [image, setImage] = useState<File | null>(null);
+  // The attached image is uploaded to storage EAGERLY (on attach, not on save) so
+  // the composer can show real progress and saving is instant. `imageKey` is the
+  // uploaded object's key (null while uploading / on failure — save falls back to
+  // uploading then). `uploadSeq` guards against a stale completion overwriting the
+  // state after the user swapped or cleared the image mid-flight.
+  const [imageKey, setImageKey] = useState<string | null>(null);
+  const [imageUploading, setImageUploading] = useState(false);
+  const uploadSeq = useRef(0);
+  // The conversation's screenshot. The API is stateless (multi-turn context is resent
+  // every request) and the backend attaches the image to the LATEST user turn — so to
+  // keep vision context on follow-ups ("make it 10% more") we must resend the image
+  // with every later send, not just the turn that attached it.
+  const [sentImage, setSentImage] = useState<File | null>(null);
   const [rates, setRates] = useState<Rate[]>([]);
   const [dragging, setDragging] = useState(false);
   // Child elements fire dragenter/dragleave pairs while moving inside the card;
@@ -87,7 +100,8 @@ export function ChatInterface({ signUrl }: { signUrl: string | null }) {
     .map((r) => `1 ${r.currency} = ${r.rate} ${TARGET_CURRENCY}`)
     .join(", ");
 
-  /** Validate + attach an image (from the paperclip, paste, or drag-and-drop). */
+  /** Validate + attach an image (from the paperclip, paste, or drag-and-drop),
+   *  then upload it to storage right away (spinner in the composer chip). */
   async function pickImage(file: File | null) {
     if (!file) return;
     if (!file.type.startsWith("image/")) {
@@ -100,7 +114,23 @@ export function ChatInterface({ signUrl }: { signUrl: string | null }) {
       toast.error(t("errImageTooLarge"));
       return;
     }
+    const seq = ++uploadSeq.current;
     setImage(scaled);
+    setImageKey(null);
+    if (!signUrl) return; // uploads unconfigured — chat still works, save is text-only
+    setImageUploading(true);
+    const uploaded = await uploadQuoteImage(scaled, signUrl);
+    if (seq !== uploadSeq.current) return; // image swapped/cleared while uploading
+    setImageUploading(false);
+    if (uploaded) setImageKey(uploaded.key);
+    else toast.error(t("errImageUpload")); // save falls back to re-uploading
+  }
+
+  function clearImage() {
+    uploadSeq.current++; // invalidate any in-flight upload completion
+    setImage(null);
+    setImageKey(null);
+    setImageUploading(false);
   }
 
   const hasFiles = (e: DragEvent) => e.dataTransfer.types.includes("Files");
@@ -139,14 +169,19 @@ export function ChatInterface({ signUrl }: { signUrl: string | null }) {
     setMessages([]);
     setSavedIndexes(new Set());
     setStreaming(false);
-    setImage(null);
+    clearImage();
+    setSentImage(null); // the screenshot belongs to the conversation it was sent in
     // Exchange rates persist across chats on purpose — they're a session setting.
   }
 
   async function handleSend(prompt: string) {
-    if (streaming) return;
-    const file = image;
-    const hadImage = Boolean(file);
+    if (streaming || imageUploading) return;
+    const newImage = image; // freshly attached this turn (chip in the composer)
+    const newImageKey = imageKey; // its already-uploaded storage key (may be null)
+    // What the model sees: a new attachment wins; otherwise resend the conversation's
+    // image so follow-up turns keep vision context (the API is stateless).
+    const file = newImage ?? sentImage;
+    const hadImage = Boolean(newImage);
 
     // The agent's typed prompt is shown as-is; the model receives an augmented
     // copy carrying the active exchange rate so it applies to this and later turns.
@@ -164,12 +199,22 @@ export function ChatInterface({ signUrl }: { signUrl: string | null }) {
 
     setMessages((prev) => [
       ...prev,
-      // Keep the File in memory so it can be uploaded to storage if this quote is saved.
-      { role: "user", content: prompt, hadImage, file: file ?? undefined },
+      // The turn that ATTACHED the image carries the File (thumbnail) and its
+      // uploaded storage key (used verbatim on save); follow-ups reuse the image
+      // invisibly via `sentImage`.
+      {
+        role: "user",
+        content: prompt,
+        hadImage,
+        file: newImage ?? undefined,
+        imageKey: newImage ? (newImageKey ?? undefined) : undefined,
+        imageMediaType: newImage?.type,
+      },
       { role: "assistant", content: "", pending: true },
     ]);
     setStreaming(true);
-    setImage(null); // consumed by this send; the rates stay
+    if (newImage) setSentImage(newImage); // becomes the conversation's image
+    clearImage(); // consumed by this send; the rates stay
 
     let full = "";
     try {
@@ -197,29 +242,41 @@ export function ChatInterface({ signUrl }: { signUrl: string | null }) {
   async function handleSaveQuote(index: number) {
     const content = messages[index]?.content ?? "";
     if (!content.trim() || savedIndexes.has(index)) return;
-    // The nearest preceding user turn is the request that produced this quote.
+    // The nearest preceding user turn is the request that produced this quote. The
+    // image, though, may live on an EARLIER turn (follow-ups reuse the conversation's
+    // screenshot without re-carrying it) — keep walking back until we find it.
     let prompt = "";
     let hadImage = false;
     let file: File | undefined;
+    let storedKey: string | undefined;
+    let storedMediaType: string | undefined;
     for (let i = index - 1; i >= 0; i--) {
-      if (messages[i].role === "user") {
+      if (messages[i].role !== "user") continue;
+      if (!prompt) {
         prompt = messages[i].content;
         hadImage = Boolean(messages[i].hadImage);
+      }
+      if (messages[i].file) {
         file = messages[i].file;
+        storedKey = messages[i].imageKey;
+        storedMediaType = messages[i].imageMediaType;
         break;
       }
     }
+    if (file) hadImage = true; // the quote was informed by that screenshot
 
-    // If that turn carried an image and uploads are configured, store the original
-    // to storage first. A failed upload doesn't block saving — we keep the text quote.
-    const uploadedImage = file && signUrl ? await uploadQuoteImage(file, signUrl) : null;
+    // The image was uploaded eagerly on attach; reuse its key. If that upload had
+    // failed (or predates the eager flow), retry here. A failed upload never blocks
+    // saving — we keep the text quote.
+    const image = storedKey
+      ? { imageKey: storedKey, imageMediaType: storedMediaType ?? file!.type }
+      : file && signUrl
+        ? await uploadQuoteImage(file, signUrl).then(
+            (up) => up && { imageKey: up.key, imageMediaType: up.mediaType },
+          )
+        : null;
 
-    const result = await saveQuoteAction(
-      content,
-      prompt,
-      hadImage,
-      uploadedImage ? { imageKey: uploadedImage.key, imageMediaType: uploadedImage.mediaType } : undefined,
-    );
+    const result = await saveQuoteAction(content, prompt, hadImage, image || undefined);
     if ("error" in result) {
       toast.error(t(result.error === "empty" ? "errEmpty" : "errForbidden"));
       return;
@@ -233,8 +290,9 @@ export function ChatInterface({ signUrl }: { signUrl: string | null }) {
     <ChatComposer
       disabled={streaming}
       image={image}
+      imageUploading={imageUploading}
       onPickImage={pickImage}
-      onClearImage={() => setImage(null)}
+      onClearImage={clearImage}
       rates={rates}
       onRatesChange={setRates}
       onSend={handleSend}
@@ -243,7 +301,7 @@ export function ChatInterface({ signUrl }: { signUrl: string | null }) {
 
   return (
     <div
-      className="relative flex h-[60svh] flex-col overflow-hidden rounded-2xl border border-border bg-surface/40"
+      className="relative flex h-[75svh] flex-col overflow-hidden rounded-2xl border border-border bg-surface/40 sm:h-[60svh]"
       onDragEnter={onDragEnter}
       onDragLeave={onDragLeave}
       onDragOver={(e) => {
@@ -280,18 +338,24 @@ export function ChatInterface({ signUrl }: { signUrl: string | null }) {
       </div>
 
       {isEmpty ? (
-        <div className="flex flex-1 flex-col p-3">
-          <div className="flex flex-1 flex-col items-center justify-center gap-6 pb-4">
-            <ChatEmptyState />
+        <div className="flex min-h-0 flex-1 flex-col p-3">
+          {/* Scrollable so tall content (stacked cards on mobile, a grown textarea)
+              squeezes THIS area instead of clipping the composer out of view. */}
+          <div className="min-h-0 flex-1 overflow-y-auto">
+            <div className="flex min-h-full flex-col items-center justify-center gap-6 pb-4">
+              <ChatEmptyState />
+            </div>
           </div>
-          <div className="w-full">{composer}</div>
+          <div className="w-full shrink-0">{composer}</div>
         </div>
       ) : (
         <>
           <div className="min-h-0 flex-1">
             <ChatMessages messages={messages} onSave={handleSaveQuote} savedIndexes={savedIndexes} />
           </div>
-          <div className="border-t border-border bg-card/40 p-3">{composer}</div>
+          {/* shrink-0: when the textarea auto-grows (Shift+Enter), the transcript
+              shrinks — the composer toolbar must never get clipped. */}
+          <div className="shrink-0 border-t border-border bg-card/40 p-3">{composer}</div>
         </>
       )}
     </div>

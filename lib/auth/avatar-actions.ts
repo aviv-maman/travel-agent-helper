@@ -21,10 +21,14 @@ export async function setAvatar(key: string, publicUrl: string): Promise<AvatarS
   if (!user) return { error: "forbidden" };
 
   const base = process.env.SUPABASE_PUBLIC_BASE_URL?.replace(/\/$/, "");
+  // The URL is base + the server-chosen key, plus an optional `?v=<hex>` cache-buster
+  // (avatars are keyed per-user and overwritten in place, so the bare URL is stable).
+  const [bareUrl, query] = publicUrl.split("?");
   if (
     !base ||
     !key.startsWith("avatar/") ||
-    publicUrl !== `${base}/${key}` // exact match: base + the server-chosen key
+    bareUrl !== `${base}/${key}` ||
+    (query !== undefined && !/^v=[0-9a-f]{1,32}$/.test(query))
   ) {
     return { error: "invalid" };
   }

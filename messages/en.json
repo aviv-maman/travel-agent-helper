@@ -70,6 +70,8 @@
     "removeImage": "Remove image",
     "dropImageHere": "Drop image to attach",
     "imageReady": "Ready to send",
+    "uploadingImage": "Uploading…",
+    "errImageUpload": "Image upload failed — we'll retry when you save the quote.",
     "imageAttached": "Image attached",
     "send": "Send",
     "errNotImage": "That file isn't an image.",

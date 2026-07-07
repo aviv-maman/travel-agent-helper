@@ -1,10 +1,12 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState, type ClipboardEvent, type KeyboardEvent } from "react";
+import { useEffect, useRef, useState, type ClipboardEvent, type KeyboardEvent } from "react";
 import { useTranslations } from "next-intl";
-import { ArrowRightLeft, ArrowUp, ChevronDown, ImageIcon, Paperclip, X } from "lucide-react";
+import { ArrowRightLeft, ArrowUp, ChevronDown, ImageIcon, Loader2, Paperclip, X } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { fileUrl } from "@/lib/object-url";
 import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
 import {
   Popover,
   PopoverContent,
@@ -33,6 +35,7 @@ export type Rate = { currency: Currency; rate: string };
 export function ChatComposer({
   disabled,
   image,
+  imageUploading,
   onPickImage,
   onClearImage,
   rates,
@@ -41,6 +44,7 @@ export function ChatComposer({
 }: {
   disabled: boolean;
   image: File | null;
+  imageUploading: boolean;
   onPickImage: (_file: File | null) => void;
   onClearImage: () => void;
   rates: Rate[];
@@ -51,16 +55,18 @@ export function ChatComposer({
   const [text, setText] = useState("");
   const [draftRate, setDraftRate] = useState("");
   const [draftCurrency, setDraftCurrency] = useState<Currency>("USD");
+  const [zoomed, setZoomed] = useState(false);
+  const [ratesOpen, setRatesOpen] = useState(false);
   const fileRef = useRef<HTMLInputElement>(null);
 
-  // Preview URL derived from the (parent-owned) image; revoked on change/unmount.
-  const preview = useMemo(() => (image ? URL.createObjectURL(image) : null), [image]);
+  // Preview URL derived from the (parent-owned) image. `fileUrl` caches one URL per
+  // File for the page's lifetime — see lib/object-url.ts for why not create/revoke here.
+  const preview = image ? fileUrl(image) : null;
   useEffect(() => {
+    // Clearing the image must also reset the <input type=file> so re-picking the
+    // same file fires onChange again.
     if (!image && fileRef.current) fileRef.current.value = "";
-    return () => {
-      if (preview) URL.revokeObjectURL(preview);
-    };
-  }, [image, preview]);
+  }, [image]);
 
   const available = CURRENCIES.filter((c) => !rates.some((r) => r.currency === c));
   const selectedCurrency: Currency = available.includes(draftCurrency)
@@ -74,6 +80,7 @@ export function ChatComposer({
     if (rates.some((r) => r.currency === selectedCurrency)) return;
     onRatesChange([...rates, { currency: selectedCurrency, rate: value }]);
     setDraftRate("");
+    setRatesOpen(false); // rate confirmed — close the popover
   }
 
   function removeRate(currency: Currency) {
@@ -82,7 +89,7 @@ export function ChatComposer({
 
   function submit() {
     const prompt = text.trim();
-    if (!prompt || disabled) return;
+    if (!prompt || disabled || imageUploading) return; // wait for the upload to settle
     onSend(prompt);
     setText("");
     // The image is cleared by the parent after the send; exchange rates persist
@@ -108,7 +115,7 @@ export function ChatComposer({
     onPickImage(file);
   }
 
-  const canSend = !disabled && text.trim().length > 0;
+  const canSend = !disabled && !imageUploading && text.trim().length > 0;
   const ratesSet = rates.length > 0;
 
   return (
@@ -123,16 +130,33 @@ export function ChatComposer({
 
       {image && preview && (
         <div className="flex items-center gap-2 rounded-xl bg-muted/60 p-1.5 ps-2">
-          <span className="relative size-10 shrink-0 overflow-hidden rounded-lg border border-border">
+          {/* Actual image preview — spinner while it uploads to storage, then click
+              to inspect full-size before sending. */}
+          <button
+            type="button"
+            onClick={() => !imageUploading && setZoomed(true)}
+            aria-label={imageUploading ? t("uploadingImage") : t("enlargeImage")}
+            className="relative size-12 shrink-0 cursor-zoom-in overflow-hidden rounded-lg border border-border transition-transform hover:scale-[1.03]">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={preview} alt={image.name} className="size-full object-cover" />
-          </span>
+            <img
+              src={preview}
+              alt={image.name}
+              className={cn("size-full object-cover", imageUploading && "opacity-30 blur-[1px]")}
+            />
+            {imageUploading && (
+              <span className="absolute inset-0 flex items-center justify-center">
+                <Loader2 className="size-5 animate-spin text-foreground" />
+              </span>
+            )}
+          </button>
           <span className="flex min-w-0 flex-col leading-tight">
             <span className="flex items-center gap-1 truncate text-xs font-medium text-foreground">
               <ImageIcon className="size-3 shrink-0 text-muted-foreground" />
               {image.name}
             </span>
-            <span className="text-[0.7rem] text-muted-foreground">{t("imageReady")}</span>
+            <span className="text-[0.7rem] text-muted-foreground">
+              {imageUploading ? t("uploadingImage") : t("imageReady")}
+            </span>
           </span>
           <Button
             type="button"
@@ -143,6 +167,14 @@ export function ChatComposer({
             onClick={onClearImage}>
             <X className="size-3.5" />
           </Button>
+
+          {/* Full-size lightbox (same pattern as the transcript's thumbnails). */}
+          <Dialog open={zoomed} onOpenChange={setZoomed}>
+            <DialogContent className="max-h-[95vh] overflow-auto p-2 sm:max-w-[95vw]">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={preview} alt={image.name} className="mx-auto max-w-none" />
+            </DialogContent>
+          </Dialog>
         </div>
       )}
 
@@ -168,7 +200,7 @@ export function ChatComposer({
           <Paperclip className="size-4" />
         </Button>
 
-        <Popover>
+        <Popover open={ratesOpen} onOpenChange={setRatesOpen}>
           <PopoverTrigger
             render={
               <Button
