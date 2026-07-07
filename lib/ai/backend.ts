@@ -28,3 +28,25 @@ export async function backendFetch(path: string, init: RequestInit = {}): Promis
   if (token) headers.set("cookie", `${SESSION_COOKIE}=${token}`);
   return fetch(`${base}${path.startsWith("/") ? path : `/${path}`}`, { ...init, headers });
 }
+
+/**
+ * Ask the backend to free quote screenshots after their saved_quotes rows were
+ * deleted (POST /files/delete-quote-images — service-key auth, like email send).
+ * The backend re-checks each key is unreferenced and prefix-guards to `quote/`.
+ * Best-effort: rows are the source of truth; on any failure the object is merely
+ * orphaned (never resurrected), so callers don't need the result.
+ */
+export async function deleteQuoteImages(keys: string[]): Promise<void> {
+  const base = backendUrl();
+  const serviceKey = process.env.SERVICE_KEY;
+  if (!base || !serviceKey || keys.length === 0) return;
+  try {
+    await fetch(`${base}/files/delete-quote-images`, {
+      method: "POST",
+      headers: { "content-type": "application/json", "x-service-key": serviceKey },
+      body: JSON.stringify({ keys }),
+    });
+  } catch {
+    // Backend down — the object stays orphaned; nothing to surface to the user.
+  }
+}

@@ -62,7 +62,13 @@ export async function saveQuote(userId: number, input: SaveQuoteInput): Promise<
   return row.id;
 }
 
-/** Delete one of the user's saved quotes (ownership-scoped). */
-export async function deleteSavedQuote(userId: number, id: number): Promise<void> {
-  await db.delete(savedQuotes).where(and(eq(savedQuotes.id, id), eq(savedQuotes.userId, userId)));
+/** Delete one of the user's saved quotes (ownership-scoped). Returns the deleted
+ *  row's imageKey (null when it had none / nothing was deleted) so the caller can
+ *  free the storage object. */
+export async function deleteSavedQuote(userId: number, id: number): Promise<string | null> {
+  const [row] = await db
+    .delete(savedQuotes)
+    .where(and(eq(savedQuotes.id, id), eq(savedQuotes.userId, userId)))
+    .returning({ imageKey: savedQuotes.imageKey });
+  return row?.imageKey ?? null;
 }

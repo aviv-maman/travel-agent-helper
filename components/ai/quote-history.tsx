@@ -6,6 +6,7 @@ import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { Check, Copy, Eye, ImageIcon, List, PanelRight, Trash2 } from "lucide-react";
 import { deleteQuoteAction } from "@/app/actions/ai";
+import { emitQuoteDeleted } from "@/lib/ai/quote-events";
 import { QUOTE_HISTORY_VIEW_COOKIE } from "@/lib/ai/constants";
 import type { SavedQuote } from "@/lib/ai/quotes";
 import { Button } from "@/components/ui/button";
@@ -85,6 +86,9 @@ export function QuoteHistory({
     if (!target) return;
     startTransition(async () => {
       await deleteQuoteAction(target.id);
+      // Tell the chat: re-enable "Save" on the reply that produced this quote, and
+      // drop the (now freed) imageKey so a re-save re-uploads the screenshot.
+      emitQuoteDeleted({ id: target.id, imageKey: target.imageKey });
       setDeleteTarget(null);
       toast.success(t("quoteDeleted"));
       router.refresh();

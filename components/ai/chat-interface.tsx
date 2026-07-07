@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState, type DragEvent } from "react";
+import { useEffect, useRef, useState, type DragEvent } from "react";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
@@ -12,6 +12,7 @@ import { AssistantBadge } from "./assistant-badge";
 import { Button } from "@/components/ui/button";
 import { streamAssistant, AiChatError, type ChatTurn } from "@/lib/ai/stream";
 import { saveQuoteAction } from "@/app/actions/ai";
+import { onQuoteDeleted } from "@/lib/ai/quote-events";
 import { uploadQuoteImage } from "@/lib/ai/quote-image-upload";
 
 const MAX_IMAGE_BYTES = 5 * 1024 * 1024; // 5 MB — offers are screenshots, not photos
@@ -72,7 +73,9 @@ export function ChatInterface({ signUrl }: { signUrl: string | null }) {
   const router = useRouter();
   const [messages, setMessages] = useState<UiMessage[]>([]);
   const [streaming, setStreaming] = useState(false);
-  const [savedIndexes, setSavedIndexes] = useState<Set<number>>(new Set());
+  // Message index → the saved quote's DB id. A map (not a Set) so that when the
+  // history deletes a quote we can find and RE-ENABLE its "Save" button.
+  const [savedIds, setSavedIds] = useState<Map<number, number>>(new Map());
   const [image, setImage] = useState<File | null>(null);
   // The attached image is uploaded to storage EAGERLY (on attach, not on save) so
   // the composer can show real progress and saving is instant. `imageKey` is the
@@ -94,6 +97,27 @@ export function ChatInterface({ signUrl }: { signUrl: string | null }) {
   const dragDepth = useRef(0);
 
   const isEmpty = messages.length === 0;
+
+  // History deleted a quote → re-enable "Save" on the reply that produced it, and
+  // strip the freed imageKey from the attaching message (the object is gone from
+  // storage, so a re-save must re-upload from the in-memory File).
+  useEffect(() => {
+    return onQuoteDeleted(({ id, imageKey }) => {
+      setSavedIds((prev) => {
+        if (![...prev.values()].includes(id)) return prev;
+        return new Map([...prev].filter(([, quoteId]) => quoteId !== id));
+      });
+      if (imageKey && imageKey !== "mock") {
+        setMessages((prev) =>
+          prev.map((m) =>
+            m.imageKey === imageKey
+              ? { ...m, imageKey: undefined, imageMediaType: undefined }
+              : m,
+          ),
+        );
+      }
+    });
+  }, []);
 
   // "1 USD = 3.65 ILS, 1 EUR = 4.0 ILS" — sent to the model (not shown in chat).
   const formattedRates = rates
@@ -167,7 +191,7 @@ export function ChatInterface({ signUrl }: { signUrl: string | null }) {
 
   function handleNewChat() {
     setMessages([]);
-    setSavedIndexes(new Set());
+    setSavedIds(new Map());
     setStreaming(false);
     clearImage();
     setSentImage(null); // the screenshot belongs to the conversation it was sent in
@@ -241,7 +265,7 @@ export function ChatInterface({ signUrl }: { signUrl: string | null }) {
 
   async function handleSaveQuote(index: number) {
     const content = messages[index]?.content ?? "";
-    if (!content.trim() || savedIndexes.has(index)) return;
+    if (!content.trim() || savedIds.has(index)) return;
     // The nearest preceding user turn is the request that produced this quote. The
     // image, though, may live on an EARLIER turn (follow-ups reuse the conversation's
     // screenshot without re-carrying it) — keep walking back until we find it.
@@ -281,7 +305,7 @@ export function ChatInterface({ signUrl }: { signUrl: string | null }) {
       toast.error(t(result.error === "empty" ? "errEmpty" : "errForbidden"));
       return;
     }
-    setSavedIndexes((prev) => new Set(prev).add(index));
+    setSavedIds((prev) => new Map(prev).set(index, result.id));
     toast.success(t("quoteSaved"));
     router.refresh(); // update the saved-quotes list below the chat
   }
@@ -351,7 +375,11 @@ export function ChatInterface({ signUrl }: { signUrl: string | null }) {
       ) : (
         <>
           <div className="min-h-0 flex-1">
-            <ChatMessages messages={messages} onSave={handleSaveQuote} savedIndexes={savedIndexes} />
+            <ChatMessages
+              messages={messages}
+              onSave={handleSaveQuote}
+              savedIndexes={new Set(savedIds.keys())}
+            />
           </div>
           {/* shrink-0: when the textarea auto-grows (Shift+Enter), the transcript
               shrinks — the composer toolbar must never get clipped. */}
