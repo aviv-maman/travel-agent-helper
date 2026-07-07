@@ -24,7 +24,7 @@
  */
 
 /** Locale-stripped path prefixes that require a signed-in user. Add new ones here. */
-export const PROTECTED_PREFIXES = ["/account"] as const;
+export const PROTECTED_PREFIXES = ["/account", "/dashboard"] as const;
 
 /** Whether `path` (locale already stripped, e.g. "/account/security") is gated. */
 export function isProtectedPath(path: string): boolean {
@@ -38,7 +38,7 @@ export function isProtectedPath(path: string): boolean {
  * landing. Guards against open redirects.
  */
 export function safeNext(next: string | null | undefined, locale: string): string {
-  const fallback = `/${locale}/suppliers`;
+  const fallback = `/${locale}/dashboard`;
   if (!next || !next.startsWith(`/${locale}/`) || next.startsWith("//")) return fallback;
   return next;
 }

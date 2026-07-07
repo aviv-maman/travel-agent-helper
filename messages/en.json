@@ -16,6 +16,7 @@
     "account": "Account"
   },
   "tabs": {
+    "dashboard": "Dashboard",
     "suppliers": "Suppliers",
     "transfers": "Transfers",
     "airlines": "Airlines",
@@ -23,6 +24,94 @@
     "hotels": "Hotels",
     "news": "News",
     "assistant": "AI Assistant"
+  },
+  "dashboard": {
+    "greeting": {
+      "morning": "Good morning",
+      "afternoon": "Good afternoon",
+      "evening": "Good evening",
+      "night": "Good night",
+      "subtitle": "Here's what's on your plate today"
+    },
+    "tabs": {
+      "main": "Workspace",
+      "bank": "Bank details"
+    },
+    "bank": {
+      "title": "Bank account details",
+      "bank": "Bank",
+      "branch": "Branch",
+      "account": "Account number",
+      "beneficiary": "Beneficiary",
+      "copy": "Copy details",
+      "copied": "Copied ✓",
+      "copyHeading": "Account details for transfer:",
+      "edit": "Edit details",
+      "save": "Save",
+      "cancel": "Cancel",
+      "empty": "No account details yet — tap Edit to add them"
+    },
+    "quickAdd": {
+      "title": "Quick add",
+      "placeholder": "What needs doing?",
+      "client": "Client name",
+      "phone": "Phone (international, e.g. +9725...)",
+      "supplier": "Supplier name",
+      "order": "Order number",
+      "notes": "Notes",
+      "type": "Type",
+      "add": "Add",
+      "added": "Added ✓"
+    },
+    "types": {
+      "task": "Task",
+      "awaiting_supplier": "Awaiting supplier",
+      "client_followup": "Client callback",
+      "reminder": "Reminder"
+    },
+    "sections": {
+      "today": "Today's tasks",
+      "awaiting": "Awaiting supplier reply",
+      "followup": "Client callbacks",
+      "reminders": "Reminders",
+      "completed": "Completed today"
+    },
+    "empty": {
+      "today": "Nothing due today — all clear ✨",
+      "awaiting": "No suppliers awaiting a reply",
+      "followup": "No clients to call back",
+      "reminders": "No open reminders"
+    },
+    "task": {
+      "complete": "Mark done",
+      "reopen": "Reopen",
+      "edit": "Edit",
+      "delete": "Delete",
+      "save": "Save",
+      "cancel": "Cancel",
+      "whatsapp": "Send WhatsApp",
+      "copyPhone": "Copy number",
+      "phoneCopied": "Number copied ✓",
+      "order": "Order",
+      "sentToday": "Sent today",
+      "sentYesterday": "Sent yesterday",
+      "sentAgo": "Sent {days} days ago",
+      "overdue": "Overdue",
+      "dueToday": "Today",
+      "confirmDelete": "Delete this item?"
+    },
+    "playground": {
+      "title": "Work scratchpad",
+      "placeholder": "Jot calculations or notes...\ne.g. 1250*1.065",
+      "saved": "Saved ✓",
+      "saving": "Saving…",
+      "offline": "No connection",
+      "clear": "Clear all",
+      "copy": "Copy all",
+      "copied": "Copied ✓",
+      "confirmClear": "Clear the entire scratchpad?"
+    },
+    "offline": "No connection — the change wasn't saved"
   },
   "ai": {
     "title": "AI Quote Assistant",

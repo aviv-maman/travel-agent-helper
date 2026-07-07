@@ -52,16 +52,17 @@ export function PageNav() {
   // Prefer the display name over the username; CSS-truncated to 16ch in the nav.
   const userLabel = user ? user.displayName?.trim() || user.username : "";
 
-  // The Assistant tab is revealed only once the user has a stored AI key
-  // (contract §Access). Signed-in + key-configured, mirrored client-side so the
-  // root layout needn't read the session (which would make public pages dynamic).
-  const pages = useMemo(
-    () =>
-      user && aiEnabled
-        ? [...PAGES, { segment: "assistant", emoji: "🤖" } as const]
-        : PAGES,
-    [user, aiEnabled],
-  );
+  // The Dashboard tab (the signed-in landing page) leads the list for signed-in
+  // users only — it's login-gated. The Assistant tab is revealed only once the
+  // user also has a stored AI key (contract §Access). Both are mirrored
+  // client-side so the root layout needn't read the session (which would make
+  // public pages dynamic).
+  const pages = useMemo(() => {
+    const base = user ? [{ segment: "dashboard", emoji: "📊" } as const, ...PAGES] : PAGES;
+    return user && aiEnabled
+      ? [...base, { segment: "assistant", emoji: "🤖" } as const]
+      : base;
+  }, [user, aiEnabled]);
 
   // `segment` is the route segment directly under the [locale] layout: a content
   // page ("hotels", "news", …) or the account area ("account"). Only content pages

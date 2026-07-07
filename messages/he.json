@@ -16,6 +16,7 @@
     "account": "חשבון"
   },
   "tabs": {
+    "dashboard": "לוח בקרה",
     "suppliers": "ספקים",
     "transfers": "הסעות",
     "airlines": "חברות תעופה",
@@ -23,6 +24,94 @@
     "hotels": "מלונות",
     "news": "חדשות",
     "assistant": "עוזר AI"
+  },
+  "dashboard": {
+    "greeting": {
+      "morning": "בוקר טוב",
+      "afternoon": "צהריים טובים",
+      "evening": "ערב טוב",
+      "night": "לילה טוב",
+      "subtitle": "הנה מה שמחכה לך היום"
+    },
+    "tabs": {
+      "main": "סביבת עבודה",
+      "bank": "פרטי חשבון"
+    },
+    "bank": {
+      "title": "פרטי חשבון לתשלום",
+      "bank": "בנק",
+      "branch": "סניף",
+      "account": "מספר חשבון",
+      "beneficiary": "שם המוטב",
+      "copy": "העתקת פרטים",
+      "copied": "הועתק ✓",
+      "copyHeading": "פרטי חשבון להעברה:",
+      "edit": "עריכת פרטים",
+      "save": "שמירה",
+      "cancel": "ביטול",
+      "empty": "לא הוזנו עדיין פרטי חשבון — לחצו על עריכה כדי להוסיף"
+    },
+    "quickAdd": {
+      "title": "הוספה מהירה",
+      "placeholder": "מה צריך לעשות?",
+      "client": "שם לקוח",
+      "phone": "טלפון (בינלאומי, למשל ‎+9725...)",
+      "supplier": "שם ספק",
+      "order": "מספר הזמנה",
+      "notes": "הערות",
+      "type": "סוג",
+      "add": "הוספה",
+      "added": "נוסף ✓"
+    },
+    "types": {
+      "task": "משימה",
+      "awaiting_supplier": "ממתין לספק",
+      "client_followup": "חזרה ללקוח",
+      "reminder": "תזכורת"
+    },
+    "sections": {
+      "today": "משימות להיום",
+      "awaiting": "ממתין לתשובה מספק",
+      "followup": "לחזור ללקוח",
+      "reminders": "תזכורות",
+      "completed": "הושלמו היום"
+    },
+    "empty": {
+      "today": "אין משימות להיום — הכול נקי ✨",
+      "awaiting": "אין ספקים שממתינים לתשובה",
+      "followup": "אין לקוחות לחזור אליהם",
+      "reminders": "אין תזכורות פתוחות"
+    },
+    "task": {
+      "complete": "סימון כהושלם",
+      "reopen": "החזרה לפתוח",
+      "edit": "עריכה",
+      "delete": "מחיקה",
+      "save": "שמירה",
+      "cancel": "ביטול",
+      "whatsapp": "שליחת וואטסאפ",
+      "copyPhone": "העתקת מספר",
+      "phoneCopied": "המספר הועתק ✓",
+      "order": "הזמנה",
+      "sentToday": "נשלח היום",
+      "sentYesterday": "נשלח אתמול",
+      "sentAgo": "נשלח לפני {days} ימים",
+      "overdue": "באיחור",
+      "dueToday": "להיום",
+      "confirmDelete": "למחוק את הפריט?"
+    },
+    "playground": {
+      "title": "פנקס עבודה",
+      "placeholder": "כתבו חישובים או הערות...\nלמשל: 1250*1.065",
+      "saved": "נשמר ✓",
+      "saving": "שומר…",
+      "offline": "אין חיבור",
+      "clear": "ניקוי הכל",
+      "copy": "העתקת הכל",
+      "copied": "הועתק ✓",
+      "confirmClear": "לנקות את כל התוכן שבפנקס?"
+    },
+    "offline": "אין חיבור — הפעולה לא נשמרה"
   },
   "ai": {
     "title": "עוזר הצעות מחיר AI",
