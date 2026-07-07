@@ -110,9 +110,14 @@ export function CommissionCard({ supplier }: { supplier: ViewSupplier }) {
           />
         </span>
         <div className="min-w-0 flex-1">
-          <h3 className="truncate text-base leading-tight font-bold text-foreground">
-            {supplier.name}
-          </h3>
+          <div className="flex items-baseline gap-2">
+            <h3 className="truncate text-base leading-tight font-bold text-foreground">
+              {supplier.name}
+            </h3>
+            <span className="shrink-0 text-[0.7rem] font-normal text-muted-foreground">
+              {supplier.code}
+            </span>
+          </div>
           {supplier.website && (
             <a
               href={supplier.website}

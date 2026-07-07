@@ -53,6 +53,8 @@ export type SupplierNote = {
 export type Supplier = {
   id: string;
   name: Localized;
+  /** Short Latin code shown as a small chip next to the name (same style as the cancellations page). */
+  code: string;
   /** Alternate name shown as the card subtitle and indexed for search (e.g. Israir ↔ Natour). */
   alias?: Localized;
   /** Supplier website URL (placeholder for now; wired up elsewhere later). */
@@ -113,7 +115,8 @@ const SUPPLIERS: Supplier[] = [
     id: "israir",
     website: "https://www.israir.co.il/",
     logo: "/suppliers/israir.png",
-    name: t("ישראייר — Israir", "Israir"),
+    name: t("ישראייר", "Israir"),
+    code: "ISRAIR",
     alias: t("נתור", "Natour"),
     flightsOnly: c("7.5%", "7.5%", "mid"),
     packages: c("9.5%", "9.5%", "high"),
@@ -154,7 +157,8 @@ const SUPPLIERS: Supplier[] = [
     id: "kavei-hufsha",
     website: "https://www.kavei.co.il/",
     logo: "/suppliers/kavei-hufsha.png",
-    name: t("קווי חופשה — Kavei", "Kavei Hufsha"),
+    name: t("קווי חופשה", "Kavei Hufsha"),
+    code: "KAVEI",
     flightsOnly: c("נטו", "Net", "net"),
     packages: c("נטו", "Net", "net"),
     organizedTours: c("נטו", "Net", "net"),
@@ -181,10 +185,55 @@ const SUPPLIERS: Supplier[] = [
     ],
   },
   {
+    id: "issta",
+    website: "https://www.issta.co.il/",
+    logo: "/suppliers/issta.png",
+    name: t("איסתא", "Issta"),
+    code: "ISSTA",
+    flightsOnly: c("7%", "7%", "mid"),
+    packages: c("9.5%", "9.5%", "high"),
+    organizedTours: c("7%", "7%", "mid"),
+    customCommission1: cc("🌴 כפרי נופש", "🌴 Holiday villages", "7%", "7%", "mid"),
+    baggage: [
+      { icon: "bag", text: t('תיק גב עד 4 ק"ג — כלול', "Backpack up to 4 kg — included") },
+      {
+        icon: "flight",
+        text: t(
+          "טיסות בלבד: מזוודה וטרולי לא כלולים\nמזוודה הלוך ושוב: **130$ ברוטו**\nטרולי הלוך ושוב: **60$ ברוטו**",
+          "Flights only: suitcase & trolley not included\nSuitcase round trip: **$130 gross**\nTrolley round trip: **$60 gross**",
+        ),
+      },
+      {
+        icon: "package",
+        text: t(
+          "חבילות נופש: טרולי כלול, מזוודה לא כלולה\nמזוודה הלוך ושוב: **110$ ברוטו**",
+          "Vacation packages: trolley included, suitcase not included\nSuitcase round trip: **$110 gross**",
+        ),
+      },
+      {
+        icon: "village",
+        text: t(
+          "כפרי נופש: טרולי כלול\nמזוודה הלוך ושוב: **95€ ברוטו**",
+          "Holiday villages: trolley included\nSuitcase round trip: **€95 gross**",
+        ),
+      },
+    ],
+    notes: [
+      {
+        text: t(
+          "מאורגנים מסוימים — עמלה מיוחדת של 10%",
+          "Certain organized tours — a special 10% commission",
+        ),
+        variant: "warning",
+      },
+    ],
+  },
+  {
     id: "flying",
     website: "https://www.flyingcarpet.co.il/",
     logo: "/suppliers/flying.png",
-    name: t("שטיח מעופף — Flying", "Flying Carpet — Flying"),
+    name: t("שטיח מעופף", "Flying Carpet"),
+    code: "FLYING",
     flightsOnly: c("5%", "5%", "low"),
     packages: c("11%", "11%", "high"),
     organizedTours: c("9%", "9%", "high"),
@@ -231,7 +280,8 @@ const SUPPLIERS: Supplier[] = [
     id: "flying-sp",
     website: "https://www.flyingcarpet.co.il/",
     logo: "/suppliers/flying-sp.png",
-    name: t("שטיח מעופף — FlyingSP", "Flying Carpet — FlyingSP"),
+    name: t("שטיח מעופף", "Flying Carpet"),
+    code: "FLYINGSP",
     flightsOnly: c("5%", "5%", "low"),
     packages: c("7%", "7%", "mid"),
     baggage: [
@@ -268,51 +318,11 @@ const SUPPLIERS: Supplier[] = [
     ],
   },
   {
-    id: "kishrei-teufa",
-    website: "https://www.kishrey-teufa.co.il/",
-    logo: "/suppliers/kishrei-teufa.png",
-    name: t("קשרי תעופה — Kishre", "Kishrei Teufa"),
-    flightsOnly: c("7%", "7%", "mid"),
-    packages: c("10%", "10%", "high"),
-    organizedTours: c("7–10%", "7–10%", "range"),
-    customCommission1: cc("✈️ טיסות בלבד: דובאי", "✈️ Flight only — Dubai", "10%", "10%", "high"),
-    customCommission2: cc(
-      "🏖️ חבילות נופש: בטומי",
-      "🏖️ Vacation packages — Batumi",
-      "8%",
-      "8%",
-      "mid",
-    ),
-    baggage: [
-      BACKPACK(),
-      {
-        icon: "flight",
-        text: t("טיסות בלבד: מזוודה וטרולי כלולים", "Flight only: suitcase & trolley included"),
-      },
-      {
-        icon: "package",
-        text: t(
-          "חבילות נופש: מזוודה וטרולי כלולים",
-          "Vacation packages: suitcase & trolley included",
-        ),
-      },
-      ARKIA_TROLLEY(60),
-    ],
-    notes: [
-      {
-        text: t(
-          "טיולים מאורגנים: יש לוודא עמלה ספציפית לכל טיול",
-          "Organized tours: confirm the specific commission for each trip",
-        ),
-        variant: "warning",
-      },
-    ],
-  },
-  {
     id: "eshet-tours",
     website: "https://www.eshet.com/",
     logo: "/suppliers/eshet-tours.png",
-    name: t("אשת טורס — Eshet", "Eshet Tours"),
+    name: t("אשת טורס", "Eshet Tours"),
+    code: "ESHET",
     flightsOnly: c("5%", "5%", "low"),
     packages: c("10%", "10%", "high"),
     organizedTours: c("7%", "7%", "mid"),
@@ -342,7 +352,8 @@ const SUPPLIERS: Supplier[] = [
     id: "arkia",
     website: "https://www.arkia.co.il/",
     logo: "/suppliers/arkia.png",
-    name: t("ארקיע — Arkia", "Arkia"),
+    name: t("ארקיע", "Arkia"),
+    code: "ARKIA",
     flightsOnly: c("6%", "6%", "low"),
     packages: c("10%", "10%", "high"),
     customCommission1: cc(
@@ -385,12 +396,55 @@ const SUPPLIERS: Supplier[] = [
     ],
   },
   {
-    id: "mona-tours",
-    website: "https://www.monatours.co.il/",
-    logo: "/suppliers/mona-tours.png",
-    name: t("מונה טורס — Mona", "Mona Tours"),
-    flightsOnly: c("5%", "5%", "low"),
+    id: "kishrei-teufa",
+    website: "https://www.kishrey-teufa.co.il/",
+    logo: "/suppliers/kishrei-teufa.png",
+    name: t("קשרי תעופה", "Kishrei Teufa"),
+    code: "KISHREI",
+    flightsOnly: c("7%", "7%", "mid"),
     packages: c("10%", "10%", "high"),
+    organizedTours: c("7–10%", "7–10%", "range"),
+    customCommission1: cc("✈️ טיסות בלבד: דובאי", "✈️ Flight only — Dubai", "10%", "10%", "high"),
+    customCommission2: cc(
+      "🏖️ חבילות נופש: בטומי",
+      "🏖️ Vacation packages — Batumi",
+      "8%",
+      "8%",
+      "mid",
+    ),
+    baggage: [
+      BACKPACK(),
+      {
+        icon: "flight",
+        text: t("טיסות בלבד: מזוודה וטרולי כלולים", "Flight only: suitcase & trolley included"),
+      },
+      {
+        icon: "package",
+        text: t(
+          "חבילות נופש: מזוודה וטרולי כלולים",
+          "Vacation packages: suitcase & trolley included",
+        ),
+      },
+      ARKIA_TROLLEY(60),
+    ],
+    notes: [
+      {
+        text: t(
+          "טיולים מאורגנים: יש לוודא עמלה ספציפית לכל טיול",
+          "Organized tours: confirm the specific commission for each trip",
+        ),
+        variant: "warning",
+      },
+    ],
+  },
+  {
+    id: "ayala",
+    website: "https://www.ayala.co.il/",
+    logo: "/suppliers/ayala.png",
+    name: t("איילה", "Ayala"),
+    code: "AYALA",
+    flightsOnly: c("5%", "5%", "low"),
+    packages: c("7%", "7%", "mid"),
     baggage: [
       BACKPACK(),
       {
@@ -408,53 +462,11 @@ const SUPPLIERS: Supplier[] = [
     ],
   },
   {
-    id: "issta",
-    website: "https://www.issta.co.il/",
-    logo: "/suppliers/issta.png",
-    name: t("איסתא — Issta", "Issta"),
-    flightsOnly: c("7%", "7%", "mid"),
-    packages: c("9.5%", "9.5%", "high"),
-    organizedTours: c("7%", "7%", "mid"),
-    customCommission1: cc("🌴 כפרי נופש", "🌴 Holiday villages", "7%", "7%", "mid"),
-    baggage: [
-      { icon: "bag", text: t('תיק גב עד 4 ק"ג — כלול', "Backpack up to 4 kg — included") },
-      {
-        icon: "flight",
-        text: t(
-          "טיסות בלבד: מזוודה וטרולי לא כלולים\nמזוודה הלוך ושוב: **130$ ברוטו**\nטרולי הלוך ושוב: **60$ ברוטו**",
-          "Flights only: suitcase & trolley not included\nSuitcase round trip: **$130 gross**\nTrolley round trip: **$60 gross**",
-        ),
-      },
-      {
-        icon: "package",
-        text: t(
-          "חבילות נופש: טרולי כלול, מזוודה לא כלולה\nמזוודה הלוך ושוב: **110$ ברוטו**",
-          "Vacation packages: trolley included, suitcase not included\nSuitcase round trip: **$110 gross**",
-        ),
-      },
-      {
-        icon: "village",
-        text: t(
-          "כפרי נופש: טרולי כלול\nמזוודה הלוך ושוב: **95€ ברוטו**",
-          "Holiday villages: trolley included\nSuitcase round trip: **€95 gross**",
-        ),
-      },
-    ],
-    notes: [
-      {
-        text: t(
-          "מאורגנים מסוימים — עמלה מיוחדת של 10%",
-          "Certain organized tours — a special 10% commission",
-        ),
-        variant: "warning",
-      },
-    ],
-  },
-  {
     id: "wtc",
     website: "https://wtc.co.il/",
     logo: "/suppliers/wtc.png",
     name: t("WTC", "WTC"),
+    code: "WTC",
     flightsOnly: c("5%", "5%", "low"),
     packages: c("8%", "8%", "mid"),
     baggage: [
@@ -480,34 +492,13 @@ const SUPPLIERS: Supplier[] = [
     ],
   },
   {
-    id: "ayala",
-    website: "https://www.ayala.co.il/",
-    logo: "/suppliers/ayala.png",
-    name: t("איילה — Ayala", "Ayala"),
+    id: "mona-tours",
+    website: "https://www.monatours.co.il/",
+    logo: "/suppliers/mona-tours.png",
+    name: t("מונה טורס", "Mona Tours"),
+    code: "MONA",
     flightsOnly: c("5%", "5%", "low"),
-    packages: c("7%", "7%", "mid"),
-    baggage: [
-      BACKPACK(),
-      {
-        icon: "flight",
-        text: t("טיסות בלבד: מזוודה וטרולי כלולים", "Flight only: suitcase & trolley included"),
-      },
-      {
-        icon: "package",
-        text: t(
-          "חבילות נופש: מזוודה וטרולי כלולים",
-          "Vacation packages: suitcase & trolley included",
-        ),
-      },
-    ],
-  },
-  {
-    id: "disenhause",
-    website: "https://www.deasy.co.il/",
-    logo: "/suppliers/disenhause.png",
-    name: t("דיזנהאוז — Disenhaus", "Diesenhaus"),
-    flightsOnly: c("7%", "7%", "mid"),
-    packages: c("7%", "7%", "mid"),
+    packages: c("10%", "10%", "high"),
     baggage: [
       BACKPACK(),
       {
@@ -523,18 +514,13 @@ const SUPPLIERS: Supplier[] = [
       },
       ARKIA_TROLLEY(60),
     ],
-    notes: [
-      {
-        text: t("לבדוק תקופתית — תנאים עשויים להשתנות", "Check periodically — terms may change"),
-        variant: "warning",
-      },
-    ],
   },
   {
     id: "rimon",
     website: "https://rimon-tours.co.il/",
     logo: "/suppliers/rimon.png",
-    name: t("רימון — Rimon", "Rimon"),
+    name: t("רימון", "Rimon"),
+    code: "RIMON",
     customCommission1: cc(
       "🧳 טיולים מאורגנים עד $3,000 לאדם",
       "🧳 Organized tours up to $3,000 pp",
@@ -569,6 +555,36 @@ const SUPPLIERS: Supplier[] = [
       },
     ],
   },
+  {
+    id: "disenhause",
+    website: "https://www.deasy.co.il/",
+    logo: "/suppliers/disenhause.png",
+    name: t("דיזנהאוז", "Diesenhaus"),
+    code: "DEASY",
+    flightsOnly: c("7%", "7%", "mid"),
+    packages: c("7%", "7%", "mid"),
+    baggage: [
+      BACKPACK(),
+      {
+        icon: "flight",
+        text: t("טיסות בלבד: מזוודה וטרולי כלולים", "Flight only: suitcase & trolley included"),
+      },
+      {
+        icon: "package",
+        text: t(
+          "חבילות נופש: מזוודה וטרולי כלולים",
+          "Vacation packages: suitcase & trolley included",
+        ),
+      },
+      ARKIA_TROLLEY(60),
+    ],
+    notes: [
+      {
+        text: t("לבדוק תקופתית — תנאים עשויים להשתנות", "Check periodically — terms may change"),
+        variant: "warning",
+      },
+    ],
+  },
 ];
 
 // ── Locale-resolved view types (what the client receives) ────────────────────
@@ -579,6 +595,7 @@ export type ViewBaggageRow = { icon: BaggageIcon; text: string };
 export type ViewSupplier = {
   id: string;
   name: string;
+  code: string;
   alias: string | null;
   website: string | null;
   logo: string | null;
@@ -589,7 +606,7 @@ export type ViewSupplier = {
   customCommissions: ViewCustomCommission[];
   baggage: ViewBaggageRow[];
   notes: ViewNote[];
-  /** Lowercased he + en name + alias, for client-side filtering across locales. */
+  /** Lowercased he + en name + alias + code, for client-side filtering across locales. */
   search: string;
 };
 
@@ -601,6 +618,7 @@ export function getCommissions(locale: string): ViewSupplier[] {
   return SUPPLIERS.map((s) => ({
     id: s.id,
     name: pick(s.name),
+    code: s.code,
     alias: s.alias ? pick(s.alias) : null,
     website: s.website ?? null,
     logo: s.logo ?? null,
@@ -616,8 +634,9 @@ export function getCommissions(locale: string): ViewSupplier[] {
       variant: n.variant,
       showTitle: n.showTitle ?? true,
     })),
-    search: `${s.name.he ?? ""} ${s.name.en ?? ""} ${s.alias?.he ?? ""} ${s.alias?.en ?? ""}`
-      .toLowerCase()
-      .trim(),
+    search:
+      `${s.name.he ?? ""} ${s.name.en ?? ""} ${s.alias?.he ?? ""} ${s.alias?.en ?? ""} ${s.code}`
+        .toLowerCase()
+        .trim(),
   }));
 }

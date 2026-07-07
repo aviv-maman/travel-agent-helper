@@ -7,6 +7,7 @@ import { can } from "@/lib/auth";
 import { getDestinationsList, getDestinationView, type SortMode } from "@/lib/hotels";
 import { DestinationCombobox } from "@/components/hotels/destination-combobox";
 import { HotelFilters } from "@/components/hotels/hotel-filters";
+import { HotelSearch } from "@/components/hotels/hotel-search";
 import { HotelsResults } from "@/components/hotels/hotels-results";
 import { HOTELS_VIEW_MODE_COOKIE, parseViewMode } from "@/components/hotels/view-mode";
 import { HotelsPager } from "@/components/hotels/hotels-pager";
@@ -34,6 +35,7 @@ export default async function HotelsPage({
   const tags = csv("tags") as HotelTagValue[];
   const boards = csv("boards") as BoardCode[];
   const features = csv("features") as HotelFeatureValue[];
+  const q = asString(sp.q) ?? "";
   const sort = (asString(sp.sort) ?? "default") as SortMode;
   const page = Math.max(1, Number(asString(sp.page) ?? "1") || 1);
   const perPage = Math.max(0, Number(asString(sp.perPage) ?? "0") || 0);
@@ -48,6 +50,7 @@ export default async function HotelsPage({
         tags,
         boards,
         features,
+        q,
         sort,
         page,
         perPage,
@@ -77,6 +80,7 @@ export default async function HotelsPage({
       {view && (
         <>
           <HotelFilters landmarks={view.landmarks} />
+          <HotelSearch key={view.iata} hotelNames={view.hotelNames} />
           <HotelsResults hotels={view.hotels} canEdit={canEdit} initialView={hotelsView} />
           <HotelsPager
             total={view.total}

@@ -8,6 +8,7 @@ import type {
 } from "@/db/schema";
 import type { Locale } from "@/i18n/config";
 import { getIlsRates, toIls, type IlsRates } from "./money";
+import { smartNormalize, smartScore } from "./search";
 
 /**
  * Pick a translatable value for the active locale. No cross-language fallback:
@@ -144,6 +145,8 @@ export type DestinationView = {
   info: ViewInfo | null;
   landmarks: ViewLandmark[];
   hotels: ViewHotel[];
+  /** All hotel names in this destination (post filters, pre name-query) for autocomplete. */
+  hotelNames: string[];
   total: number;
   page: number;
   perPage: number;
@@ -236,7 +239,8 @@ function sortHotels(hotels: UIHotel[], mode: SortMode): UIHotel[] {
           Number.POSITIVE_INFINITY;
         return list.sort((a, b) => m(a) - m(b));
       }
-      return list; // "default" → original sortOrder
+      // "default" → alphabetical (A→Z) by hotel name.
+      return list.sort((a, b) => a.name.localeCompare(b.name));
   }
 }
 
@@ -267,6 +271,8 @@ export async function getDestinationView(
     tags?: HotelTagValue[];
     boards?: BoardCode[];
     features?: HotelFeatureValue[];
+    /** Free-text hotel-name query (smart, Hebrew-aware). */
+    q?: string;
     sort?: SortMode;
     page?: number;
     perPage?: number;
@@ -276,6 +282,7 @@ export async function getDestinationView(
   const tags = opts.tags ?? [];
   const boards = opts.boards ?? [];
   const features = opts.features ?? [];
+  const query = (opts.q ?? "").trim();
   const sort = opts.sort ?? "default";
   const perPage = opts.perPage && opts.perPage > 0 ? opts.perPage : DEFAULT_PER_PAGE;
   const locale = opts.locale;
@@ -285,15 +292,24 @@ export async function getDestinationView(
   const rates = await getIlsRates();
 
   // amenities AND; tags / boards each OR within themselves.
-  const filtered = sortHotels(
-    d.hotels.filter(
-      (h) =>
-        features.every((f) => h.features.includes(f)) &&
-        (tags.length === 0 || tags.some((t) => h.tags.includes(t))) &&
-        (boards.length === 0 || boards.some((b) => h.boards.includes(b))),
-    ),
-    sort,
+  const baseFiltered = d.hotels.filter(
+    (h) =>
+      features.every((f) => h.features.includes(f)) &&
+      (tags.length === 0 || tags.some((t) => h.tags.includes(t))) &&
+      (boards.length === 0 || boards.some((b) => h.boards.includes(b))),
   );
+
+  // Autocomplete suggestions reflect the current filter context (not the name
+  // query itself), sorted A→Z and de-duplicated.
+  const hotelNames = [...new Set(baseFiltered.map((h) => h.name))].sort((a, b) =>
+    a.localeCompare(b),
+  );
+
+  // Narrow by the name query (smart fuzzy match), then apply the chosen sort.
+  const nameMatched = query
+    ? baseFiltered.filter((h) => smartScore(query, smartNormalize(h.name)) >= 0)
+    : baseFiltered;
+  const filtered = sortHotels(nameMatched, sort);
 
   const total = filtered.length;
   const totalPages = Math.max(1, Math.ceil(total / perPage));
@@ -311,6 +327,7 @@ export async function getDestinationView(
       name: localized(l.name, locale),
     })),
     hotels: pageHotels.map((h) => resolveHotel(h, locale)),
+    hotelNames,
     total,
     page,
     perPage,
