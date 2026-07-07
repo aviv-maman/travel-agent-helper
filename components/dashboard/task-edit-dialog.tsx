@@ -75,7 +75,7 @@ export function TaskEditDialog({ task, onClose }: { task: DashTask; onClose: () 
           <DialogTitle>{t("task.edit")}</DialogTitle>
         </DialogHeader>
         <div className="flex flex-col gap-3">
-          <EditField label={t("quickAdd.title")}>
+          <EditField label={t("quickAdd.titleLabel")}>
             <Input value={title} onChange={(e) => setTitle(e.target.value)} />
           </EditField>
           <EditField label={t("quickAdd.type")}>

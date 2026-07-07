@@ -132,6 +132,7 @@ export function CommissionCard({ supplier }: { supplier: ViewSupplier }) {
       </header>
 
       <div className="flex flex-col p-3">
+        {commissionRows.length > 0 && (
         <div className="overflow-hidden rounded-lg border border-border">
           <div className="flex items-center gap-2 border-b border-border bg-surface-2/60 px-3 py-2">
             <Percent className="size-4 shrink-0 text-brand" aria-hidden />
@@ -161,6 +162,7 @@ export function CommissionCard({ supplier }: { supplier: ViewSupplier }) {
             </TableBody>
           </Table>
         </div>
+        )}
 
         {/* Commission-related notes sit between the commission and baggage tables. */}
         {supplier.notes.map((note, i) => (
@@ -182,6 +184,7 @@ export function CommissionCard({ supplier }: { supplier: ViewSupplier }) {
           </Alert>
         ))}
 
+        {tableRows.some((row) => row.details.length > 0) && (
         <div className="mt-2.5 overflow-hidden rounded-lg border border-border">
           <div className="flex items-center gap-2 border-b border-border bg-surface-2/60 px-3 py-2">
             <Luggage className="size-4 shrink-0 text-brand" aria-hidden />
@@ -228,6 +231,7 @@ export function CommissionCard({ supplier }: { supplier: ViewSupplier }) {
             </TableBody>
           </Table>
         </div>
+        )}
 
         {/* Baggage-related alerts sit below the baggage table. */}
         {supplier.baggage
