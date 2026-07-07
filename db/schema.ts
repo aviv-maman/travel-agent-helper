@@ -12,6 +12,8 @@ import {
   boolean,
   jsonb,
   timestamp,
+  date,
+  uuid,
   uniqueIndex,
   index,
   primaryKey,
@@ -571,3 +573,78 @@ export type Account = typeof accounts.$inferSelect;
 export type AuthProviderName = (typeof authProvider.enumValues)[number];
 export type AuditEntry = typeof auditLog.$inferSelect;
 export type BackupCode = typeof backupCodes.$inferSelect;
+
+/**
+ * ── Dashboard (personal work homepage) ──────────────────────────────────────
+ * Per-user data behind the login-gated `/dashboard`: task/follow-up items, a
+ * single free-form calculator scratchpad, and a key/value settings store (bank
+ * details for the one-tap WhatsApp copy). All rows are scoped to `user_id`.
+ */
+
+/** Kind of dashboard item; drives which section it renders in. */
+export const dashboardTaskType = pgEnum("dashboard_task_type", [
+  "task",
+  "awaiting_supplier",
+  "client_followup",
+  "reminder",
+]);
+
+/** Lifecycle of a dashboard item. `done` auto-moves to `archived` after 7 days. */
+export const dashboardTaskStatus = pgEnum("dashboard_task_status", [
+  "open",
+  "done",
+  "archived",
+]);
+
+export const dashboardTasks = pgTable(
+  "dashboard_tasks",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    userId: integer("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    title: text("title").notNull(),
+    clientName: text("client_name"),
+    /** International format (e.g. "+9725…") for wa.me links. */
+    clientPhone: text("client_phone"),
+    type: dashboardTaskType("type").notNull(),
+    /** For `awaiting_supplier` items. */
+    supplierName: text("supplier_name"),
+    /** Booking/order reference number for the item. */
+    orderNumber: text("order_number"),
+    dueDate: date("due_date"),
+    notes: text("notes"),
+    status: dashboardTaskStatus("status").notNull().default("open"),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+    completedAt: timestamp("completed_at", { withTimezone: true }),
+  },
+  (t) => [index("dashboard_tasks_user_status_idx").on(t.userId, t.status)],
+);
+
+/** One free-form scratchpad row per user (upserted on save). */
+export const dashboardScratchpad = pgTable("dashboard_scratchpad", {
+  userId: integer("user_id")
+    .primaryKey()
+    .references(() => users.id, { onDelete: "cascade" }),
+  content: text("content").notNull().default(""),
+  updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+});
+
+/** Per-user key/value store (bank details today; future settings later). */
+export const dashboardSettings = pgTable(
+  "dashboard_settings",
+  {
+    userId: integer("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    key: text("key").notNull(),
+    value: text("value").notNull().default(""),
+  },
+  (t) => [primaryKey({ columns: [t.userId, t.key] })],
+);
+
+export type DashboardTask = typeof dashboardTasks.$inferSelect;
+export type DashboardTaskType = (typeof dashboardTaskType.enumValues)[number];
+export type DashboardTaskStatus = (typeof dashboardTaskStatus.enumValues)[number];
+export type DashboardScratchpad = typeof dashboardScratchpad.$inferSelect;
+export type DashboardSetting = typeof dashboardSettings.$inferSelect;
