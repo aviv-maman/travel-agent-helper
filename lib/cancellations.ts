@@ -1046,7 +1046,7 @@ const SUPPLIERS: CancelSupplier[] = [
   {
     id: "mona-tours",
     logo: "/suppliers/mona-tours.png",
-    name: t("מונה טורס — Mona", "Mona Tours"),
+    name: t("מונה טורס", "Mona Tours"),
     code: "MONA",
     products: [P_FLIGHT, P_PACKAGE],
     blocks: [
@@ -1078,7 +1078,7 @@ const SUPPLIERS: CancelSupplier[] = [
   {
     id: "ayala",
     logo: "/suppliers/ayala.png",
-    name: t("איילה — Ayala", "Ayala"),
+    name: t("איילה", "Ayala"),
     code: "AYALA",
     products: [P_FLIGHT, P_PACKAGE],
     blocks: [
@@ -1110,7 +1110,7 @@ const SUPPLIERS: CancelSupplier[] = [
   {
     id: "disenhause",
     logo: "/suppliers/disenhause.png",
-    name: t("דיזנהאוז — Disenhaus", "Diesenhaus"),
+    name: t("דיזנהאוז", "Diesenhaus"),
     code: "DEASY",
     products: [P_FLIGHT, P_PACKAGE],
     blocks: [
@@ -1142,7 +1142,7 @@ const SUPPLIERS: CancelSupplier[] = [
   {
     id: "arkia",
     logo: "/suppliers/arkia.png",
-    name: t("ארקיע — Arkia", "Arkia"),
+    name: t("ארקיע", "Arkia"),
     code: "ARKIA",
     products: [P_FLIGHT, P_PACKAGE],
     blocks: [
@@ -1319,7 +1319,7 @@ const SUPPLIERS: CancelSupplier[] = [
   {
     id: "rimon",
     logo: "/suppliers/rimon.png",
-    name: t("רימון — Rimon", "Rimon"),
+    name: t("רימון", "Rimon"),
     code: "RIMON",
     products: [P_ORGANIZED],
     blocks: [

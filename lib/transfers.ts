@@ -137,6 +137,12 @@ const COUNTRIES: CountryGroup[] = [
         pills: [g("no", "כל הספקים", "All suppliers")],
       },
       {
+        id: "khalkidhiki",
+        name: t("חלקידיקי (HLK/SKG)", "Khalkidhiki (HLK/SKG)"),
+        search: "חלקידיקי khalkidhiki halkidiki halkidhiki hlk סלוניקי thessaloniki skg",
+        pills: [NONE],
+      },
+      {
         id: "athens-thess",
         name: t("אתונה (ATH) · סלוניקי (SKG)", "Athens (ATH) · Thessaloniki (SKG)"),
         search: "אתונה athens ath סלוניקי thessaloniki skg",
@@ -158,11 +164,11 @@ const COUNTRIES: CountryGroup[] = [
       {
         id: "greek-cyprus",
         name: t(
-          "קפריסין היוונית — לימסול (LCA) · לרנקה (LCA) · איה נאפה (AYA) · פאפוס (PFO)",
-          "Greek Cyprus — Limassol (LCA) · Larnaca (LCA) · Ayia Napa (AYA) · Paphos (PFO)",
+          "קפריסין היוונית — לימסול (QLI/LCA · QLI/PFO) · לרנקה (LCA) · איה נאפה (AYA/LCA) · פאפוס (PFO)",
+          "Greek Cyprus — Limassol (QLI/LCA · QLI/PFO) · Larnaca (LCA) · Ayia Napa (AYA/LCA) · Paphos (PFO)",
         ),
         search:
-          "lca pfo aya לימסול limassol לרנקה larnaca פאפוס paphos איה נאפה ayia napa",
+          "qli lca pfo aya לימסול limassol לרנקה larnaca פאפוס paphos איה נאפה ayia napa",
         pills: [
           p("yes", "flying"),
           p("yes", "issta"),
@@ -221,6 +227,12 @@ const COUNTRIES: CountryGroup[] = [
           p("no", "mona"),
           p("no", "eshet"),
         ],
+      },
+      {
+        id: "abu-dhabi",
+        name: t("אבו דאבי (AUH)", "Abu Dhabi (AUH)"),
+        search: "אבו דאבי abu dhabi auh אמירויות emirates uae",
+        pills: [NONE],
       },
     ],
   },
@@ -374,6 +386,19 @@ const COUNTRIES: CountryGroup[] = [
         id: "poland-cities",
         name: t("וורשה (WAW) · קרקוב (KRK)", "Warsaw (WAW) · Krakow (KRK)"),
         search: "וורשה warsaw waw קרקוב krakow krk",
+        pills: [NONE],
+      },
+    ],
+  },
+  {
+    id: "lithuania",
+    country: t("ליטא", "Lithuania"),
+    code: "LT",
+    cities: [
+      {
+        id: "vilnius",
+        name: t("וילנה (VNO)", "Vilnius (VNO)"),
+        search: "וילנה vilnius vno ליטא lithuania",
         pills: [NONE],
       },
     ],

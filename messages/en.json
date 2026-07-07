@@ -420,6 +420,8 @@
     "emptyHint": "Pick a destination to see its hotels. Type a destination name, country or airport code — e.g. Batumi, Athens, Sofia or BUH.",
     "noResults": "No hotels found",
     "warningTitle": "Important note",
+    "searchHotel": "Search a hotel by name...",
+    "clearSearch": "Clear search",
     "sort": {
       "label": "Sort",
       "default": "Default",

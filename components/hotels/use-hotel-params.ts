@@ -10,6 +10,7 @@ type Update = {
   tags?: HotelTagValue[];
   boards?: BoardCode[];
   features?: HotelFeatureValue[];
+  q?: string | null;
   sort?: SortMode;
   page?: number;
   perPage?: number;
@@ -32,6 +33,7 @@ export function useHotelParams() {
   const tags = list("tags") as HotelTagValue[];
   const boards = list("boards") as BoardCode[];
   const features = list("features") as HotelFeatureValue[];
+  const q = sp.get("q") ?? "";
   const sort = (sp.get("sort") ?? "default") as SortMode;
   const page = Math.max(1, Number(sp.get("page") ?? "1") || 1);
   const perPage = Math.max(1, Number(sp.get("perPage") ?? "0") || 0);
@@ -51,6 +53,7 @@ export function useHotelParams() {
     if ("tags" in next) setList("tags", next.tags);
     if ("boards" in next) setList("boards", next.boards);
     if ("features" in next) setList("features", next.features);
+    if ("q" in next) setVal("q", next.q);
     if ("sort" in next) setVal("sort", next.sort, "default");
     if ("perPage" in next)
       setVal("perPage", next.perPage ? String(next.perPage) : null);
@@ -68,6 +71,7 @@ export function useHotelParams() {
     tags,
     boards,
     features,
+    q,
     sort,
     page,
     perPage,

@@ -74,7 +74,7 @@ export function DestinationCombobox({ destinations }: { destinations: Destinatio
             size="icon-sm"
             aria-label={t("clearDestination")}
             className="absolute inset-e-8 top-1 text-muted-foreground hover:text-red-600"
-            onClick={() => update({ dest: null, features: [], sort: "default" })}>
+            onClick={() => update({ dest: null, features: [], q: null, sort: "default" })}>
             <X className="size-4" />
           </Button>
         )}
@@ -105,7 +105,7 @@ export function DestinationCombobox({ destinations }: { destinations: Destinatio
                     data-checked={dest === d.iata}
                     className="ps-4"
                     onSelect={() => {
-                      update({ dest: d.iata, features: [], sort: "default" });
+                      update({ dest: d.iata, features: [], q: null, sort: "default" });
                       setOpen(false);
                     }}>
                     <Badge
