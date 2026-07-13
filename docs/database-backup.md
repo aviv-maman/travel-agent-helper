@@ -6,8 +6,10 @@ Each run produces a **`pg_dump --format=custom`** file (compressed, portable —
 
 | Where | Retention | Purpose |
 |---|---|---|
-| Supabase Storage — `backups/` prefix of the **private** bucket | 12 newest dumps | Long-term, provider-independent of Neon |
+| Supabase Storage — the dedicated **private `backups` bucket** | 12 newest dumps | Long-term, provider-independent of Neon |
 | Workflow artifact on the run | 90 days | One-click download from the Actions tab |
+
+> Backups get their **own private bucket** (no MIME restriction) — the quote-images bucket deliberately allows images only, which is exactly why it rejects dump files. Don't loosen that bucket; it polices browser uploads.
 
 ## Take a backup whenever you want
 
@@ -18,7 +20,7 @@ GitHub → backend repo → **Actions** tab → **db-backup** → **Run workflow
 ## Get a dump file
 
 - **From the run:** open the workflow run → Artifacts → download.
-- **From Supabase:** Dashboard → Storage → the private bucket → `backups/` (or via S3: `aws --endpoint-url $SUPABASE_S3_ENDPOINT s3 cp s3://$SUPABASE_PRIVATE_BUCKET/backups/<file> .`).
+- **From Supabase:** Dashboard → Storage → the `backups` bucket (or via S3: `aws --endpoint-url $SUPABASE_S3_ENDPOINT s3 cp s3://backups/<file> .`).
 
 ## Restore (or move to a new database/provider)
 
@@ -47,4 +49,4 @@ pg_dump "$DATABASE_URL" --format=custom --file="neon-$(date +%Y-%m-%d).dump"
 
 ## Required Actions secrets
 
-Documented in the workflow header: `DATABASE_URL`, `SUPABASE_S3_ENDPOINT`, `SUPABASE_S3_REGION`, `SUPABASE_S3_ACCESS_KEY_ID`, `SUPABASE_S3_SECRET_ACCESS_KEY`, `SUPABASE_PRIVATE_BUCKET` — the same values the backend's `.env` uses. The `backups/` prefix is safe from the weekly quote sweep, which is prefix-guarded to `quote/`.
+Documented in the workflow header: `DATABASE_URL`, `SUPABASE_S3_ENDPOINT`, `SUPABASE_S3_REGION`, `SUPABASE_S3_ACCESS_KEY_ID`, `SUPABASE_S3_SECRET_ACCESS_KEY` (same values as the backend's `.env`), plus `SUPABASE_BACKUP_BUCKET` — the dedicated private backups bucket (created once in the dashboard: Storage → New bucket → private, no MIME restriction). A separate bucket also keeps backups fully out of reach of the weekly quote sweep.
