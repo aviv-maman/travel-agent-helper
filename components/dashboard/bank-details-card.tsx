@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useTransition } from "react";
+import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { Copy, Pencil, Check, X, Landmark } from "lucide-react";
@@ -18,6 +19,7 @@ import { Label } from "@/components/ui/label";
 export function BankDetailsCard({ bank }: { bank: BankDetails }) {
   const t = useTranslations("dashboard.bank");
   const tRoot = useTranslations("dashboard");
+  const router = useRouter();
   const [editing, setEditing] = useState(false);
   const [draft, setDraft] = useState<BankDetails>(bank);
   const [pending, startTransition] = useTransition();
@@ -44,6 +46,7 @@ export function BankDetailsCard({ bank }: { bank: BankDetails }) {
         return;
       }
       setEditing(false);
+      router.refresh();
     });
   }
 

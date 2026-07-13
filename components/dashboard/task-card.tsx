@@ -23,7 +23,7 @@ import {
 import { TaskEditDialog } from "./task-edit-dialog";
 import { PhoneActions } from "./phone-actions";
 
-export function TaskCard({ task }: { task: DashTask }) {
+export function TaskCard({ task, handle }: { task: DashTask; handle?: React.ReactNode }) {
   const t = useTranslations("dashboard");
   const router = useRouter();
   const [pending, startTransition] = useTransition();
@@ -76,6 +76,7 @@ export function TaskCard({ task }: { task: DashTask }) {
 
   return (
     <div className="group flex items-start gap-3 rounded-xl border border-border/70 bg-surface p-3 transition-colors hover:border-border">
+      {handle}
       <Checkbox
         checked={done}
         onCheckedChange={(c) => toggle(Boolean(c))}

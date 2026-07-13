@@ -5,7 +5,7 @@ import { ChevronDown, LayoutGrid, Landmark } from "lucide-react";
 import type { DashTask } from "./types";
 import type { BankDetails } from "@/lib/dashboard/bank";
 import type { GreetingKey } from "@/lib/dashboard/dates";
-import { isSameJerusalemDay, isTodayOrOverdue } from "@/lib/dashboard/dates";
+import { isSameJerusalemDay } from "@/lib/dashboard/dates";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import {
   Collapsible,
@@ -15,7 +15,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Greeting } from "./greeting";
 import { BankDetailsCard } from "./bank-details-card";
-import { TaskSection } from "./task-section";
+import { TaskBoard } from "./task-board";
 import { TaskCard } from "./task-card";
 import { Playground } from "./playground";
 
@@ -41,12 +41,6 @@ export function DashboardView({
 }) {
   const t = useTranslations("dashboard");
 
-  const todayTasks = tasks.filter(
-    (x) => x.type === "task" && (!x.dueDate || isTodayOrOverdue(x.dueDate)),
-  );
-  const awaiting = tasks.filter((x) => x.type === "awaiting_supplier");
-  const followup = tasks.filter((x) => x.type === "client_followup");
-  const reminders = tasks.filter((x) => x.type === "reminder");
   const completedToday = doneTasks.filter(
     (x) => x.completedAt && isSameJerusalemDay(new Date(x.completedAt)),
   );
@@ -69,37 +63,7 @@ export function DashboardView({
 
         <TabsContent value="main" className="flex flex-col gap-6 pt-3">
           <Playground initialContent={scratchpad} />
-
-          <div className="flex flex-col gap-6">
-            <TaskSection
-              emoji="📋"
-              type="task"
-              title={t("sections.today")}
-              emptyText={t("empty.today")}
-              tasks={todayTasks}
-            />
-            <TaskSection
-              emoji="⏳"
-              type="awaiting_supplier"
-              title={t("sections.awaiting")}
-              emptyText={t("empty.awaiting")}
-              tasks={awaiting}
-            />
-            <TaskSection
-              emoji="📞"
-              type="client_followup"
-              title={t("sections.followup")}
-              emptyText={t("empty.followup")}
-              tasks={followup}
-            />
-            <TaskSection
-              emoji="🔔"
-              type="reminder"
-              title={t("sections.reminders")}
-              emptyText={t("empty.reminders")}
-              tasks={reminders}
-            />
-          </div>
+          <TaskBoard tasks={tasks} />
 
           {completedToday.length > 0 && (
             <Collapsible>

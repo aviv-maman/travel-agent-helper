@@ -7,16 +7,6 @@ import { Calculator, Copy, Trash2 } from "lucide-react";
 import { evalLine, formatNumber } from "@/lib/dashboard/calc";
 import { saveScratchpadAction } from "@/app/actions/dashboard";
 import { Button } from "@/components/ui/button";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
 
 type SaveStatus = "idle" | "saving" | "saved" | "offline";
 
@@ -27,10 +17,8 @@ type SaveStatus = "idle" | "saving" | "saved" | "offline";
  */
 export function Playground({ initialContent }: { initialContent: string }) {
   const t = useTranslations("dashboard.playground");
-  const tTask = useTranslations("dashboard.task");
   const [value, setValue] = useState(initialContent);
   const [status, setStatus] = useState<SaveStatus>("idle");
-  const [confirmClear, setConfirmClear] = useState(false);
   const firstRender = useRef(true);
 
   // Debounced auto-save (~1s after the last keystroke).
@@ -87,27 +75,9 @@ export function Playground({ initialContent }: { initialContent: string }) {
           <Button variant="outline" size="sm" onClick={copyAll}>
             <Copy className="size-3.5" /> {t("copy")}
           </Button>
-          <AlertDialog open={confirmClear} onOpenChange={setConfirmClear}>
-            <AlertDialogTrigger render={<Button variant="outline" size="sm" />}>
-              <Trash2 className="size-3.5" /> {t("clear")}
-            </AlertDialogTrigger>
-            <AlertDialogContent size="sm">
-              <AlertDialogHeader>
-                <AlertDialogTitle>{t("confirmClear")}</AlertDialogTitle>
-              </AlertDialogHeader>
-              <AlertDialogFooter>
-                <AlertDialogCancel>{tTask("cancel")}</AlertDialogCancel>
-                <AlertDialogAction
-                  variant="destructive"
-                  onClick={() => {
-                    setConfirmClear(false);
-                    setValue("");
-                  }}>
-                  {t("clear")}
-                </AlertDialogAction>
-              </AlertDialogFooter>
-            </AlertDialogContent>
-          </AlertDialog>
+          <Button variant="outline" size="sm" onClick={() => setValue("")}>
+            <Trash2 className="size-3.5" /> {t("clear")}
+          </Button>
         </div>
       </div>
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useTransition, type ReactNode } from "react";
+import { useRef, useState, useTransition, type ReactNode } from "react";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
@@ -27,8 +27,10 @@ export function AddItemPopover({ type }: { type: TaskTypeValue }) {
   const [clientPhone, setClientPhone] = useState("");
   const [supplierName, setSupplierName] = useState("");
   const [orderNumber, setOrderNumber] = useState("");
+  const titleRef = useRef<HTMLInputElement>(null);
 
-  const showClient = type === "client_followup";
+  // Supplier only makes sense for the awaiting-supplier section; client name +
+  // phone are useful everywhere (the card shows them for any type).
   const showSupplier = type === "awaiting_supplier";
 
   function reset() {
@@ -46,8 +48,8 @@ export function AddItemPopover({ type }: { type: TaskTypeValue }) {
       const res = await createTaskAction({
         title: trimmed,
         type,
-        clientName: showClient ? clientName || null : null,
-        clientPhone: showClient ? clientPhone || null : null,
+        clientName: clientName || null,
+        clientPhone: clientPhone || null,
         supplierName: showSupplier ? supplierName || null : null,
         orderNumber: orderNumber || null,
       });
@@ -80,14 +82,17 @@ export function AddItemPopover({ type }: { type: TaskTypeValue }) {
         }>
         <Plus className="size-4" />
       </PopoverTrigger>
-      <PopoverContent align="end" className="w-[min(20rem,90vw)]">
+      {/* initialFocus (instead of autoFocus) focuses the field only after the
+          popup is positioned — React's autoFocus fired while the portal was
+          still at the document top, scrolling the page up and dismissing it. */}
+      <PopoverContent align="end" initialFocus={titleRef} className="w-[min(20rem,90vw)]">
         <AddField label={t("quickAdd.titleLabel")}>
           <Input
-            autoFocus
+            ref={titleRef}
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             onKeyDown={(e) => {
-              if (e.key === "Enter" && !showClient) submit();
+              if (e.key === "Enter") submit();
             }}
             placeholder={t("quickAdd.placeholder")}
           />
@@ -99,20 +104,16 @@ export function AddItemPopover({ type }: { type: TaskTypeValue }) {
           </AddField>
         )}
 
-        {showClient && (
-          <>
-            <AddField label={t("quickAdd.client")}>
-              <Input value={clientName} onChange={(e) => setClientName(e.target.value)} />
-            </AddField>
-            <AddField label={t("quickAdd.phone")}>
-              <Input
-                inputMode="tel"
-                value={clientPhone}
-                onChange={(e) => setClientPhone(e.target.value)}
-              />
-            </AddField>
-          </>
-        )}
+        <AddField label={t("quickAdd.client")}>
+          <Input value={clientName} onChange={(e) => setClientName(e.target.value)} />
+        </AddField>
+        <AddField label={t("quickAdd.phone")}>
+          <Input
+            inputMode="tel"
+            value={clientPhone}
+            onChange={(e) => setClientPhone(e.target.value)}
+          />
+        </AddField>
 
         <AddField label={t("quickAdd.order")}>
           <Input value={orderNumber} onChange={(e) => setOrderNumber(e.target.value)} />

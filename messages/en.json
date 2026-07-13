@@ -91,6 +91,7 @@
       "save": "Save",
       "cancel": "Cancel",
       "whatsapp": "Send WhatsApp",
+      "drag": "Drag",
       "copyPhone": "Copy number",
       "phoneCopied": "Number copied ✓",
       "order": "Order",
@@ -109,8 +110,7 @@
       "offline": "No connection",
       "clear": "Clear all",
       "copy": "Copy all",
-      "copied": "Copied ✓",
-      "confirmClear": "Clear the entire scratchpad?"
+      "copied": "Copied ✓"
     },
     "offline": "No connection — the change wasn't saved"
   },
