@@ -1,8 +1,21 @@
+"use client";
+
 import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { Luggage, TriangleAlert, Info, Percent, Globe } from "lucide-react";
-import type { CommLevel, BaggageIcon, ViewSupplier } from "@/lib/commissions";
+import { useState } from "react";
+import type {
+  CommLevel,
+  BaggageIcon,
+  EditableSupplier,
+  ViewSupplier,
+} from "@/lib/commissions";
 import { emptyContact, type SupplierContact as SupplierContactRecord } from "@/lib/contacts";
+import {
+  BaggageEditor,
+  CommissionsEditor,
+  SectionEditButtons,
+} from "./supplier-inline-edit";
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
 import { RichText } from "./rich-text";
@@ -47,12 +60,24 @@ export function CommissionCard({
   supplier,
   contact,
   canEditContact,
+  editable,
 }: {
   supplier: ViewSupplier;
   contact?: SupplierContactRecord;
   canEditContact?: boolean;
+  /** Raw both-locale rows for the inline editors; null hides the edit buttons. */
+  editable?: EditableSupplier | null;
 }) {
   const t = useTranslations("commissions");
+  // Which section is being edited inline, and whether it opened via "+".
+  const [editSection, setEditSection] = useState<"commissions" | "baggage" | null>(null);
+  const [withNewRow, setWithNewRow] = useState(false);
+  const canEdit = Boolean(canEditContact && editable);
+
+  const startEdit = (section: "commissions" | "baggage", addRow: boolean) => {
+    setWithNewRow(addRow);
+    setEditSection(section);
+  };
 
   // Always render the same three category rows, pulling each supplier's matching
   // baggage details by icon. A category with no data shows an empty details cell.
@@ -147,12 +172,27 @@ export function CommissionCard({
       </header>
 
       <div className="flex flex-col p-3">
-        {commissionRows.length > 0 && (
+        {(commissionRows.length > 0 || canEdit) && (
         <div className="overflow-hidden rounded-lg border border-border">
           <div className="flex items-center gap-2 border-b border-border bg-surface-2/60 px-3 py-2">
             <Percent className="size-4 shrink-0 text-brand" aria-hidden />
             <span className="text-sm font-semibold text-foreground">{t("commissionsTitle")}</span>
+            {canEdit && editSection !== "commissions" && (
+              <SectionEditButtons
+                onEdit={() => startEdit("commissions", false)}
+                onAdd={() => startEdit("commissions", true)}
+                disabled={editSection !== null}
+              />
+            )}
           </div>
+          {editSection === "commissions" && editable ? (
+            <CommissionsEditor
+              slug={supplier.id}
+              initial={editable.commissions}
+              startWithNewRow={withNewRow}
+              onDone={() => setEditSection(null)}
+            />
+          ) : (
           <Table>
             <TableBody>
               {commissionRows.map((row, i) => (
@@ -176,6 +216,7 @@ export function CommissionCard({
               ))}
             </TableBody>
           </Table>
+          )}
         </div>
         )}
 
@@ -199,13 +240,28 @@ export function CommissionCard({
           </Alert>
         ))}
 
-        {tableRows.some((row) => row.details.length > 0) && (
+        {(tableRows.some((row) => row.details.length > 0) || canEdit) && (
         <div className="mt-2.5 overflow-hidden rounded-lg border border-border">
           <div className="flex items-center gap-2 border-b border-border bg-surface-2/60 px-3 py-2">
             <Luggage className="size-4 shrink-0 text-brand" aria-hidden />
             <span className="text-sm font-semibold text-foreground">{t("baggage")}</span>
+            {canEdit && editSection !== "baggage" && (
+              <SectionEditButtons
+                onEdit={() => startEdit("baggage", false)}
+                onAdd={() => startEdit("baggage", true)}
+                disabled={editSection !== null}
+              />
+            )}
           </div>
 
+          {editSection === "baggage" && editable ? (
+            <BaggageEditor
+              slug={supplier.id}
+              initial={editable.baggage}
+              startWithNewRow={withNewRow}
+              onDone={() => setEditSection(null)}
+            />
+          ) : (
           <Table>
             <TableBody>
               {tableRows
@@ -245,11 +301,13 @@ export function CommissionCard({
                 })}
             </TableBody>
           </Table>
+          )}
         </div>
         )}
 
-        {/* Baggage-related alerts sit below the baggage table. */}
-        {supplier.baggage
+        {/* Baggage-related alerts sit below the baggage table (hidden while the
+            baggage editor is open — they render the same rows being edited). */}
+        {editSection !== "baggage" && supplier.baggage
           .filter((r) => r.icon === "warn")
           .map((row, i) => (
             <div
@@ -265,7 +323,7 @@ export function CommissionCard({
             </div>
           ))}
 
-        {supplier.baggage
+        {editSection !== "baggage" && supplier.baggage
           .filter((r) => r.icon === "ok")
           .map((row, i) => (
             <div
@@ -281,7 +339,7 @@ export function CommissionCard({
             </div>
           ))}
 
-        {supplier.baggage
+        {editSection !== "baggage" && supplier.baggage
           .filter((r) => r.icon === "bag")
           .map((row, i) => (
             <div

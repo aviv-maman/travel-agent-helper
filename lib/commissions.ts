@@ -20,10 +20,54 @@ export type { CommLevel, BaggageIcon, BaggageRow, SupplierNote, SupplierCategory
 import type {
   BaggageIcon,
   BaggageRow,
+  CommissionKind,
   CommLevel,
   SupplierCategory,
   SupplierNote,
 } from "@/db/schema";
+
+/** One raw commission line, as stored — the shape the inline editor edits. */
+export type EditableCommissionRow = {
+  kind: CommissionKind;
+  /** Only for kind='custom' — the line's own label. */
+  label: Localized | null;
+  value: Localized;
+  level: CommLevel;
+};
+
+/** A supplier's raw editable content (both locales), keyed by slug. */
+export type EditableSupplier = {
+  commissions: EditableCommissionRow[];
+  baggage: BaggageRow[];
+};
+
+/**
+ * Raw commission/baggage data for the inline editors, keyed by supplier slug —
+ * or null without a database (the in-code arrays aren't editable at runtime).
+ * Fetch only for editors; carries both locales.
+ */
+export async function getEditableSuppliers(): Promise<Record<string, EditableSupplier> | null> {
+  if (!usingDatabase()) return null;
+  const { db } = await import("@/db");
+  const rows = await db.query.suppliers.findMany({
+    with: { commissions: { orderBy: (t, { asc }) => [asc(t.sortOrder)] } },
+    orderBy: (t, { asc }) => [asc(t.sortOrder)],
+  });
+  return Object.fromEntries(
+    rows.map((r) => [
+      r.slug,
+      {
+        commissions: r.commissions.map((c) => ({
+          kind: c.kind,
+          label: c.label ?? null,
+          value: c.value,
+          level: c.level,
+        })),
+        baggage: r.baggage,
+      },
+    ]),
+  );
+}
 
 /** A commission percentage for one of the three default categories. */
 export type CommissionValue = {
