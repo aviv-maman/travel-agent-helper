@@ -262,7 +262,9 @@ export function SupplierContact({
           <DialogDescription>{supplierName}</DialogDescription>
         </DialogHeader>
 
-        <div className="-mx-1 min-h-0 flex-1 overflow-y-auto px-1">
+        {/* Full-bleed scroll area (-mx-4 vs the dialog's p-4) so the scrollbar
+            hugs the dialog edge; a top divider separates it from the header. */}
+        <div className="-mx-4 min-h-0 flex-1 overflow-y-auto border-t border-border px-4 pt-3">
           {!editing ? (
             <ContactView contact={contact} t={t} />
           ) : (
@@ -276,7 +278,7 @@ export function SupplierContact({
           )}
         </div>
 
-        <DialogFooter>
+        <DialogFooter className="flex-row justify-end">
           {!editing ? (
             <>
               {canEdit && (
@@ -290,10 +292,8 @@ export function SupplierContact({
             </>
           ) : (
             <>
-              {/* sm:flex-1 only — plain flex-1 in the stacked mobile footer
-                  (flex-col-reverse) collapses the button's height. */}
-              <Button type="button" onClick={save} disabled={saving} className="sm:flex-1">
-                💾 {t("save")}
+              <Button type="button" onClick={save} disabled={saving}>
+                {t("save")}
               </Button>
               <Button type="button" variant="outline" onClick={() => setEditing(false)}>
                 {t("cancel")}
