@@ -23,15 +23,15 @@ Grouped by the phase they're scheduled in (see Phasing). Status is as of 2026-07
 
 | # | Responsibility | Kind | Contract | Status |
 |---|---|---|---|---|
-| 1 | Google/Microsoft **OAuth** | HTTP routes | [auth-backend-contract.md](./auth-backend-contract.md) | Spec'd |
+| 1 | Google/Microsoft **OAuth** | HTTP routes | [auth-backend-contract.md](./auth-backend-contract.md) | Google built (provider unwired); Microsoft TODO |
 | 2 | **News fetch-proxy** (WAF-blocked publishers) | `GET /fetch?url=` | [news-fetch-proxy.md](./news-fetch-proxy.md) | Next side merged |
-| 3 | **Transactional email** | `POST /email/send` | [email-contract.md](./email-contract.md) | Spec'd |
+| 3 | **Transactional email** | `POST /email/send` | [email-contract.md](./email-contract.md) | Built (provider unwired) |
 | 4 | **Password reset + email verification** (email send only; logic in Next) | uses #3 | [password-reset-contract.md](./password-reset-contract.md) | Spec'd |
-| 5 | **AI quote assistant** (BYO-key store + vision chat → quote) | routes + Anthropic API | [ai-quote-assistant-contract.md](./ai-quote-assistant-contract.md) | Spec'd ⭐ |
-| 6 | **File upload** (avatars now; docs/images later) | routes + Supabase Storage | [file-upload-contract.md](./file-upload-contract.md) | Proposed |
-| 7 | **Exchange-rate service** | daily cron → table | [exchange-rate-contract.md](./exchange-rate-contract.md) | Proposed |
-| 8 | **WhatsApp** (send quotes/alerts) | route/worker | [whatsapp-contract.md](./whatsapp-contract.md) | Proposed |
-| 9 | **Scheduled cleanup + audit retention** | cron | see below | Anticipated |
+| 5 | **AI quote assistant** (BYO-key store + vision chat → quote) | routes + Anthropic API | [ai-quote-assistant-contract.md](./ai-quote-assistant-contract.md) | Implemented ⭐ |
+| 6 | **File upload** (avatars now; docs/images later) | routes + Supabase Storage | [file-upload-contract.md](./file-upload-contract.md) | Avatar built (provider unwired); presigned PUT /files/sign |
+| 7 | **Exchange-rate service** | daily cron → table | [exchange-rate-contract.md](./exchange-rate-contract.md) | Implemented (`POST /cron/fx`; table via Next migration 0013) |
+| 8 | **WhatsApp** (send quotes/alerts) | route/worker | [whatsapp-contract.md](./whatsapp-contract.md) | Built (provider unwired; admin-only) |
+| 9 | **Scheduled cleanup + audit retention** | cron | see below | Implemented (`POST /cron/cleanup` + GH Actions schedule) |
 
 ### 9. Cron jobs
 - **Cleanup:** delete expired `sessions` + stale `loginAttempts` — logic already in [`scripts/cleanup.ts`](../scripts/cleanup.ts), run daily.
