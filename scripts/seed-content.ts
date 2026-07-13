@@ -5,10 +5,13 @@
  * DB is the read source.
  *
  * Idempotent: parents (suppliers, airlines, transfer countries) are upserted
- * on slug; their child rows (commission lines, cancellation sets, cities) are
- * replaced wholesale on each run. Contacts are the exception — they are
- * editor-managed IN the app after launch, so they are only seeded when the
- * contacts table is empty (bootstrap), never overwritten.
+ * on slug; cancellation sets and transfer cities are replaced wholesale on
+ * each run. The app-managed data is bootstrap-only and never overwritten:
+ *   - contacts — seeded only while the contacts table is empty;
+ *   - supplier commission lines — seeded per supplier only while it has none;
+ *   - supplier baggage — written only when the supplier row is first created.
+ * Those three are edited in the app (content:edit); the arrays here remain
+ * the no-DB fallback and the first-boot seed.
  *
  * Run with: `bun run seed` (Bun auto-loads .env.local).
  */
@@ -70,6 +73,9 @@ async function seedSuppliers(): Promise<Map<string, number>> {
       })
       .onConflictDoUpdate({
         target: suppliers.slug,
+        // `baggage` is deliberately NOT in the update set: it's edited in-app
+        // (the card's inline editor), so a re-seed must not clobber it — it's
+        // only written when the supplier row is first created.
         set: {
           name: s.name,
           code: s.code,
@@ -77,7 +83,6 @@ async function seedSuppliers(): Promise<Map<string, number>> {
           alias: s.alias ?? null,
           website: s.website ?? null,
           logo: s.logo ?? cancel?.logo ?? null,
-          baggage: s.baggage,
           notes: s.notes ?? [],
           placeholder: Boolean(s.placeholder),
           sortOrder,
@@ -112,13 +117,29 @@ async function seedSuppliers(): Promise<Map<string, number>> {
   return slugToId;
 }
 
+/**
+ * Bootstrap-only, per supplier: commission lines are edited in-app (the card's
+ * inline editor), so a re-seed must never clobber them. Only suppliers with NO
+ * lines at all are seeded — a supplier newly added to lib/commissions.ts still
+ * gets its lines on the next run.
+ */
 async function seedCommissionLines(slugToId: Map<string, number>): Promise<number> {
+  const alreadySeeded = new Set(
+    (
+      await db
+        .selectDistinct({ supplierId: supplierCommissions.supplierId })
+        .from(supplierCommissions)
+    ).map((r) => r.supplierId),
+  );
+
   let total = 0;
+  let skipped = 0;
   for (const s of SUPPLIERS) {
     const supplierId = slugToId.get(s.id)!;
-    await db
-      .delete(supplierCommissions)
-      .where(eq(supplierCommissions.supplierId, supplierId));
+    if (alreadySeeded.has(supplierId)) {
+      skipped++;
+      continue;
+    }
 
     const rows: (typeof supplierCommissions.$inferInsert)[] = [];
     if (s.flightsOnly) {
@@ -159,6 +180,9 @@ async function seedCommissionLines(slugToId: Map<string, number>): Promise<numbe
       });
     if (rows.length) await db.insert(supplierCommissions).values(rows);
     total += rows.length;
+  }
+  if (skipped > 0) {
+    console.log(`  commissions: ${skipped} suppliers already have lines — skipped (app-managed)`);
   }
   return total;
 }
