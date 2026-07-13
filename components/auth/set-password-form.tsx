@@ -2,6 +2,7 @@
 
 import { useActionState } from "react";
 import { useTranslations } from "next-intl";
+import { useSuccessToast } from "@/hooks/use-success-toast";
 import { setPassword, type AuthState } from "@/lib/auth/actions";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -27,6 +28,7 @@ export function SetPasswordForm({ locale }: { locale: string }) {
     setPassword.bind(null, locale),
     {},
   );
+  useSuccessToast(state, t("passwordSet"), "password-set");
 
   return (
     <form action={action} className="flex flex-col gap-3">

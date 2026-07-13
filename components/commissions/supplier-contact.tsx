@@ -106,6 +106,7 @@ function ChannelLine({ type, value }: { type: "email" | "phone"; value: string }
       <Button
         variant="ghost"
         size="icon-sm"
+        nativeButton={false}
         aria-label={type === "email" ? t("email") : t("phone")}
         className="shrink-0 text-muted-foreground"
         render={<a href={href} />}>
@@ -215,6 +216,7 @@ export function SupplierContact({
       toast.error(t("saveError"));
       return;
     }
+    toast.success(t("saved"));
     setEditing(false);
     router.refresh();
   }

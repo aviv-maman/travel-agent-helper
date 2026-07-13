@@ -112,7 +112,13 @@
       "copy": "Copy all",
       "copied": "Copied ✓"
     },
-    "offline": "No connection — the change wasn't saved"
+    "offline": "No connection — the change wasn't saved",
+    "toasts": {
+      "completed": "Task completed",
+      "reopened": "Task reopened",
+      "deleted": "Task deleted",
+      "saved": "Saved"
+    }
   },
   "ai": {
     "title": "AI Quote Assistant",
@@ -130,6 +136,7 @@
     "save": "Save",
     "keySaved": "AI key saved.",
     "keyRemoved": "AI key removed.",
+    "keyDeleteError": "Couldn't remove the key — try again.",
     "deleteTitle": "Remove AI key?",
     "deleteDescription": "You'll need to paste a key again to use the assistant.",
     "demoNote": "Demo mode: no AI backend is configured, so the key isn't sent anywhere — it just unlocks the UI.",
@@ -151,6 +158,7 @@
     "openSavedQuotes": "Open saved quotes",
     "deleteQuote": "Delete quote",
     "quoteDeleted": "Quote deleted.",
+    "deleteError": "Couldn't delete the quote — try again.",
     "deleteQuoteTitle": "Delete saved quote?",
     "deleteQuoteDescription": "This permanently removes the saved quote.",
     "emptyTitle": "Create a client-ready quote",
@@ -197,6 +205,8 @@
     "readMore": "Read more",
     "refresh": "Refresh",
     "refreshing": "Refreshing…",
+    "refreshed": "News refreshed.",
+    "refreshError": "Refresh failed — try again.",
     "empty": "😕 No articles right now. Please try again later."
   },
   "auth": {
@@ -237,6 +247,14 @@
     "updatePassword": "Update password",
     "updating": "Updating…",
     "passwordUpdated": "Password updated — other devices were signed out.",
+    "toastInviteCreated": "Invite created",
+    "toastInviteRevoked": "Invite revoked",
+    "toastRoleSaved": "Role updated",
+    "toastUserDeleted": "User deleted",
+    "toastUserLoggedOut": "User signed out everywhere",
+    "toastSessionRevoked": "Device signed out",
+    "toastAccountUnlinked": "Account disconnected",
+    "toastActionFailed": "The action failed — try again",
     "setPassword": "Set a password",
     "setPasswordCta": "Set password",
     "passwordSet": "Password set.",
@@ -457,7 +475,8 @@
       "remove": "Remove",
       "copy": "Copy",
       "copied": "Copied",
-      "saveError": "Saving failed — please try again"
+      "saveError": "Saving failed — please try again",
+      "saved": "Contact details saved"
     }
   },
   "transfers": {
@@ -566,6 +585,8 @@
       "details": "Click for details",
       "editScore": "Edit Booking score",
       "scorePlaceholder": "0–10 (empty = none)",
+      "scoreSaved": "Score saved",
+      "scoreError": "Saving the score failed — try again",
       "save": "Save",
       "saving": "Saving…",
       "cancel": "Cancel"

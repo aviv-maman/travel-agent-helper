@@ -4,6 +4,7 @@ import { inviteStatus, type InviteStatus } from "@/lib/auth/invites";
 import { revokeInvite } from "@/lib/auth/actions";
 import { CopyButton } from "@/components/auth/copy-button";
 import { Button } from "@/components/ui/button";
+import { ActionForm } from "@/components/auth/action-form";
 
 const STATUS_CLASS: Record<InviteStatus, string> = {
   active: "border-success/25 bg-success/10 text-success",
@@ -65,11 +66,14 @@ export async function InvitesTable({
                 </td>
                 <td className="px-3 py-2 text-end">
                   {status === "active" && (
-                    <form action={revokeInvite.bind(null, invite.id)}>
+                    <ActionForm
+                      action={revokeInvite.bind(null, invite.id)}
+                      successMessage={t("toastInviteRevoked")}
+                      errorMessage={t("toastActionFailed")}>
                       <Button type="submit" variant="destructive" size="sm">
                         {t("revoke")}
                       </Button>
-                    </form>
+                    </ActionForm>
                   )}
                 </td>
               </tr>

@@ -335,7 +335,7 @@ export async function register(
   redirect(`/${locale}`);
 }
 
-export type InviteState = { error?: string };
+export type InviteState = { ok?: boolean; error?: string };
 
 /** Admin-only: mint a single-use invite carrying `role`, optionally expiring. */
 export async function createInvite(
@@ -362,7 +362,7 @@ export async function createInvite(
   });
   await recordAudit("invite.create", { actorId: admin?.id ?? null, meta: { role } });
   revalidatePath("/[locale]/account/admin/invites", "page");
-  return {};
+  return { ok: true };
 }
 
 /** Admin-only: revoke an unused invite (bound to its id by the form). */

@@ -3,6 +3,7 @@ import { listAccounts, enabledProviders, PROVIDER_LABEL } from "@/lib/auth/accou
 import { unlinkAccount } from "@/lib/auth/actions";
 import { ProviderIcon } from "./provider-icons";
 import { Button } from "@/components/ui/button";
+import { ActionForm } from "@/components/auth/action-form";
 
 /**
  * Lists each supported provider as linked (with email + Disconnect) or not
@@ -42,11 +43,14 @@ export async function ConnectedAccounts({
               )}
             </span>
             {account ? (
-              <form action={unlinkAccount.bind(null, provider)}>
+              <ActionForm
+                action={unlinkAccount.bind(null, provider)}
+                successMessage={t("toastAccountUnlinked")}
+                errorMessage={t("toastActionFailed")}>
                 <Button type="submit" variant="outline" size="sm" disabled={!canUnlink}>
                   {t("disconnect")}
                 </Button>
-              </form>
+              </ActionForm>
             ) : base ? (
               <a
                 href={`${base}/auth/${provider}/start?mode=link&locale=${locale}`}

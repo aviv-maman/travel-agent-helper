@@ -45,6 +45,7 @@ export function BankDetailsCard({ bank }: { bank: BankDetails }) {
         toast.error(tRoot("offline"));
         return;
       }
+      toast.success(tRoot("toasts.saved"));
       setEditing(false);
       router.refresh();
     });
