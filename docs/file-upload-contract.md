@@ -23,6 +23,7 @@ The backend keeps a table of purposes; every request names one and is checked ag
 | purpose | who (permission) | allowed types | max size | bucket visibility |
 |---|---|---|---|---|
 | `avatar` | any signed-in user (writes their **own** `users.avatarUrl`) | `image/png`, `image/jpeg`, `image/webp` | 2 MB | **public** |
+| `quote-image` | any signed-in user (stored on their **own** `saved_quotes` row) | `image/png`, `image/jpeg`, `image/webp`, `image/gif` (the set `/ai/chat` accepts) | 8 MB | **private** (client PII) |
 | `content-image` *(future)* | `content:edit` (editor + admin, **not agent**) | `image/*` allowlist | 8 MB | public |
 | `document` *(future)* | `content:edit` | `application/pdf`, `docx`, `xlsx` mimes | 20 MB | **private** (signed GET on download) |
 
@@ -63,6 +64,19 @@ Permissions come from `ROLE_PERMISSIONS` in [`lib/auth/index.ts`](../lib/auth/in
 ### `GET {FILE_UPLOAD_URL}/signed-get?key=…` — authenticated *(only for private purposes)*
 Returns a short-lived signed storage GET URL after re-checking the caller may read that key. Public purposes (avatars) skip this — the public bucket's URL serves them directly.
 
+**As implemented for `quote-image`:** the signed GET lives at **`GET /ai/quote-image/{key}`** (routers/ai.py), not a generic `/signed-get` — it 302-redirects to a 5-minute signed storage GET only if the caller owns a `saved_quotes` row referencing `key`, and 404s on any miss (never reveals which keys exist).
+
+### `POST {FILE_UPLOAD_URL}/delete-quote-images` — service-key only
+- **Auth:** `X-Service-Key` only (Next server action → backend, server-to-server). Not session-callable.
+- **Body:** `{ keys: string[] }` — the `image_key`s of `saved_quotes` rows Next **already deleted**.
+- **Guards:** each key must start with `quote/` (can't be repurposed against avatars), and is re-checked against the DB — a key still referenced by ANY surviving quote is **withheld**, not deleted (two quotes saved from one conversation share a screenshot: the client reuses the eagerly-uploaded key).
+- **Returns:** `{ deleted, withheld }`. Best-effort: storage unconfigured → `deleted: 0` (the DB rows are already gone; the weekly sweep is the backstop).
+
+## Quote-image delete lifecycle
+
+1. **User deletes a saved quote** → the Next server action deletes the `saved_quotes` row first (source of truth), then calls `POST /files/delete-quote-images` with the freed key(s). Re-saving a quote from the same conversation after a delete is allowed — the eagerly-uploaded key is still valid until nothing references it.
+2. **Weekly backstop:** `POST /cron/quotes` deletes rows older than `QUOTE_RETENTION_DAYS` (default 14) and frees their now-unreferenced screenshots — the same shared-key withholding applies (`db.delete_old_saved_quotes` only returns keys no surviving row references).
+
 ## Security notes
 
 - **Random keys + signed Content-Type + per-bucket MIME/size limits** are the core defenses; never trust client-provided keys or URLs when persisting — validate against the storage public base + purpose prefix.
@@ -75,7 +89,7 @@ Returns a short-lived signed storage GET URL after re-checking the caller may re
 - Schema: `users.avatarUrl text` (nullable), added in the Next repo.
 - UI: `components/auth/user-avatar.tsx` renders `avatarUrl` when present, else the existing initials.
 - Persist action: updates **only the current user's** row (no admin-sets-others needed for v1).
-- Replacing an avatar orphans the old object — fine short-term; add a bucket lifecycle/cleanup pass later.
+- Replacing an avatar does NOT orphan the old object: the key is the deterministic `avatar/${userId}.${ext}`, so uploads overwrite in place (stale other-extension variants are best-effort deleted at sign time).
 
 ## Alternative worth knowing (no backend needed for the simple case)
 

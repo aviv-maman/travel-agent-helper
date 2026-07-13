@@ -1,8 +1,10 @@
 # Travel Agent Helper
 
-An internal tool for travel agents: supplier commissions, cancellation fees, transfers, baggage, hotels, and a tourism news feed — with invite-only accounts and roles.
+An internal tool for travel agents: supplier commissions, cancellation fees, transfers, baggage, hotels, airlines, a tourism news feed, an **AI quote assistant** (screenshot → priced client quote, `/assistant`), and a **personal dashboard** (`/dashboard`, the post-login landing page — see [docs/dashboard.md](docs/dashboard.md)) — with invite-only accounts and roles.
 
 Built with Next.js 16 (App Router), next-intl (Hebrew/English), Tailwind + shadcn/ui, Drizzle ORM, and Neon Postgres.
+
+The Next app has **no API routes**. Server capabilities Next can't own (AI chat, OAuth, transactional email, cron, file storage, WhatsApp) live in the sibling **FastAPI backend** ([travel-agent-backend](https://github.com/aviv-maman/travel-agent-backend)); the architecture and per-feature contracts are in [docs/backend-overview.md](docs/backend-overview.md) (mirrored between the two repos).
 
 ## Getting started
 
@@ -15,7 +17,7 @@ bun run create-admin myname 'pw'    # bootstrap the first admin
 bun run dev
 ```
 
-The database powers **`/hotels`** and **auth**; the other pages work without it. Full setup, the Drizzle migrate/generate/push workflow, and troubleshooting (including the "Failed query … destinations" error) are in **[docs/database-setup.md](docs/database-setup.md)**.
+The database powers **`/hotels`**, **auth**, the **dashboard** (per-user tables), **saved AI quotes**, and **exchange rates**; the static content pages work without it. Full setup, the Drizzle migrate/generate/push workflow, and troubleshooting (including the "Failed query … destinations" error) are in **[docs/database-setup.md](docs/database-setup.md)**.
 
 ## Useful scripts
 
