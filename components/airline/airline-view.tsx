@@ -5,6 +5,7 @@ import { useTranslations } from "next-intl";
 import type { FilterFn } from "@tanstack/react-table";
 import { Info } from "lucide-react";
 import type { ViewAirline } from "@/lib/airlines";
+import type { SupplierContact } from "@/lib/contacts";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { DataTable } from "@/components/ui/data-table";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -14,9 +15,21 @@ import { airlineColumns } from "./airline-columns";
 const filterAirline: FilterFn<ViewAirline> = (row, _columnId, value) =>
   row.original.search.includes(String(value).toLowerCase());
 
-export function AirlineView({ airlines }: { airlines: ViewAirline[] }) {
+export function AirlineView({
+  airlines,
+  contacts,
+  canEditContacts,
+}: {
+  airlines: ViewAirline[];
+  /** Shared contact records keyed by `air:{slug}` (server-fetched). */
+  contacts: Record<string, SupplierContact>;
+  canEditContacts: boolean;
+}) {
   const t = useTranslations("baggage");
-  const columns = useMemo(() => airlineColumns(t), [t]);
+  const columns = useMemo(
+    () => airlineColumns(t, contacts, canEditContacts),
+    [t, contacts, canEditContacts],
+  );
 
   return (
     <TooltipProvider>

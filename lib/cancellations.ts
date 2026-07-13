@@ -1,29 +1,23 @@
-import type { Localized } from "@/db/schema";
+import type {
+  CancelBlock as Block,
+  CancelProduct as Product,
+  Localized,
+} from "@/db/schema";
 import type { Locale } from "@/i18n/config";
-import { localized } from "@/lib/hotels";
+import { localized, usingDatabase } from "@/lib/hotels";
 
 /**
  * Cancellation-fee guide per supplier. Each card holds the internal NET fee
  * tables (supplier cost) plus ready-to-send "client copy" scripts that keep a
  * 10% gross margin and fold in the Israeli Consumer Protection Law. Curated
- * editorial data, resolved to the active locale on the server.
+ * editorial data: the array below is the seed source (`bun run seed`) and the
+ * no-DB fallback; with `DATABASE_URL` configured the page reads the
+ * `supplier_cancellations` table. Resolved to the active locale on the server.
  */
 
-/** Fee severity → cell color. low = blue, net = gold, gross = orange, full = red. */
-export type FeeLevel = "low" | "net" | "gross" | "full";
-
-/** Product tag color: flight = blue, package = green, organized = purple. */
-export type ProductKind = "flight" | "package" | "organized";
-
-export type FeeRow = { timeframe: Localized; fee: Localized; level: FeeLevel };
-
-export type Block =
-  | { kind: "heading"; text: Localized }
-  | { kind: "subheading"; text: Localized; tone: "accent" | "gold" }
-  | { kind: "table"; caption: Localized; headers?: [Localized, Localized]; rows: FeeRow[] }
-  | { kind: "copy"; text: Localized; levels?: FeeLevel[]; title?: Localized; variant?: "change" };
-
-export type Product = { kind: ProductKind; label: Localized };
+export type { FeeLevel, FeeRow, ProductKind } from "@/db/schema";
+export type { CancelBlock as Block, CancelProduct as Product } from "@/db/schema";
+import type { FeeLevel, FeeRow, ProductKind } from "@/db/schema";
 
 export type CancelSupplier = {
   id: string;
@@ -61,7 +55,7 @@ const P_SPORTS: Product = {
 };
 
 // Canonical render order for product tags — core categories first, then extras.
-const PRODUCT_ORDER: Product[] = [P_FLIGHT, P_PACKAGE, P_ORGANIZED, P_SPORTS, P_SKI, P_VILLAGE];
+export const PRODUCT_ORDER: Product[] = [P_FLIGHT, P_PACKAGE, P_ORGANIZED, P_SPORTS, P_SKI, P_VILLAGE];
 
 // Table header presets.
 const H_TIME_CANCEL = t("מועד ביטול", "Cancellation timing");
@@ -101,7 +95,8 @@ function changeCopy(he: string, en: string): Localized {
   return t(`${leadHe}\n\n${he}`, `${leadEn}\n\n${en}`);
 }
 
-const SUPPLIERS: CancelSupplier[] = [
+/** Curated cancellation data, in guide order — the DB seed source and no-DB fallback. */
+export const SUPPLIERS: CancelSupplier[] = [
   {
     id: "flying",
     logo: "/suppliers/flying.png",
@@ -834,7 +829,7 @@ const SUPPLIERS: CancelSupplier[] = [
     ],
   },
   {
-    id: "eshet",
+    id: "eshet-tours",
     logo: "/suppliers/eshet-tours.png",
     name: t("אשת טורס", "Eshet Tours"),
     code: "ESHET",
@@ -1396,17 +1391,43 @@ export type ViewCancelSupplier = {
   search: string;
 };
 
+/** Cancellation sets from Neon when configured, otherwise the in-code array. */
+async function loadCancelSuppliers(): Promise<CancelSupplier[]> {
+  if (!usingDatabase()) {
+    // Pre-sort products to match the stored order (the seed sorts the same way;
+    // PRODUCT_ORDER identity comparison only works against the in-module data).
+    return SUPPLIERS.map((s) => ({
+      ...s,
+      products: [...s.products].sort(
+        (a, b) => PRODUCT_ORDER.indexOf(a) - PRODUCT_ORDER.indexOf(b),
+      ),
+    }));
+  }
+  const { db } = await import("@/db");
+  const rows = await db.query.supplierCancellations.findMany({
+    with: { supplier: true },
+    orderBy: (t, { asc }) => [asc(t.sortOrder)],
+  });
+  return rows.map((r) => ({
+    id: r.supplier.slug,
+    logo: r.supplier.logo ?? undefined,
+    name: r.supplier.name,
+    code: r.supplier.code,
+    products: r.products,
+    blocks: r.blocks,
+  }));
+}
+
 /** All cancellation suppliers, resolved to `locale`, in guide order. */
-export function getCancellations(locale: string): ViewCancelSupplier[] {
+export async function getCancellations(locale: string): Promise<ViewCancelSupplier[]> {
   const pick = (v: Localized) => localized(v, locale as Locale);
-  return SUPPLIERS.map((s) => ({
+  const suppliers = await loadCancelSuppliers();
+  return suppliers.map((s) => ({
     id: s.id,
     logo: s.logo ?? null,
     name: pick(s.name),
     code: s.code,
-    products: [...s.products]
-      .sort((a, b) => PRODUCT_ORDER.indexOf(a) - PRODUCT_ORDER.indexOf(b))
-      .map((p) => ({ kind: p.kind, label: pick(p.label) })),
+    products: s.products.map((p) => ({ kind: p.kind, label: pick(p.label) })),
     blocks: s.blocks.map((b): ViewBlock => {
       switch (b.kind) {
         case "heading":

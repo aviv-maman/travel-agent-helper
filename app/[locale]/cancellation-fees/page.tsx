@@ -9,6 +9,6 @@ export default async function CancellationsPage({
 }) {
   const { locale } = await params;
   setRequestLocale(locale);
-  const cancellations = getCancellations(locale);
+  const cancellations = await getCancellations(locale);
   return <CancellationsView suppliers={cancellations} />;
 }

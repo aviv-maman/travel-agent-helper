@@ -9,6 +9,6 @@ export default async function TransfersPage({
 }) {
   const { locale } = await params;
   setRequestLocale(locale);
-  const transfers = getTransfers(locale);
+  const transfers = await getTransfers(locale);
   return <TransfersView groups={transfers} />;
 }

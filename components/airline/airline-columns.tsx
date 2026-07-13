@@ -6,6 +6,7 @@ import type { ColumnDef } from "@tanstack/react-table";
 import { Info } from "lucide-react";
 import { useLocale, type useTranslations } from "next-intl";
 import type { WeightTier, ViewAirline } from "@/lib/airlines";
+import type { SupplierContact } from "@/lib/contacts";
 import { CountryFlag } from "@/components/country-flag";
 import { DataTableColumnHeader } from "@/components/ui/data-table";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
@@ -76,7 +77,11 @@ function AirlineNameCell({ airline }: { airline: ViewAirline }) {
 }
 
 /** Build the airline DataTable columns, resolved against the active locale. */
-export function airlineColumns(t: T): ColumnDef<ViewAirline>[] {
+export function airlineColumns(
+  t: T,
+  contacts: Record<string, SupplierContact>,
+  canEditContacts: boolean,
+): ColumnDef<ViewAirline>[] {
   return [
     {
       id: "logo",
@@ -163,6 +168,8 @@ export function airlineColumns(t: T): ColumnDef<ViewAirline>[] {
             id={row.original.id}
             name={row.original.name}
             website={row.original.website}
+            contact={contacts[row.original.id]}
+            canEditContact={canEditContacts}
           />
         ),
     },

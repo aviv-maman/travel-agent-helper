@@ -1,0 +1,1 @@
+ALTER TABLE "supplier_cancellations" ADD COLUMN "sort_order" integer DEFAULT 0 NOT NULL;

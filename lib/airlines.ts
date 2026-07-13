@@ -1,6 +1,6 @@
 import type { Localized } from "@/db/schema";
 import type { Locale } from "@/i18n/config";
-import { localized } from "@/lib/hotels";
+import { localized, usingDatabase } from "@/lib/hotels";
 
 /**
  * Checked-baggage allowance per airline. Backpack (≤4 kg) and trolley (8 kg, or
@@ -48,7 +48,8 @@ const TICKET_WEIGHT_15_23 = t(
   "The exact weight is printed on the ticket itself (15 or 23 kg)",
 );
 
-const AIRLINES: Airline[] = [
+/** Curated airline data, in guide order — the DB seed source and no-DB fallback. */
+export const AIRLINES: Airline[] = [
   {
     id: "israir",
     iata: "6H",
@@ -576,12 +577,35 @@ function maxNum(s: string): number {
   return nums.length ? Math.max(...nums) : 0;
 }
 
+/** Airlines from Neon when configured, otherwise the in-code array. */
+async function loadAirlines(): Promise<Airline[]> {
+  if (!usingDatabase()) return AIRLINES;
+  const { db } = await import("@/db");
+  const rows = await db.query.airlines.findMany({
+    orderBy: (t, { asc }) => [asc(t.sortOrder)],
+  });
+  return rows.map((r) => ({
+    id: r.slug,
+    iata: r.iata ?? undefined,
+    flag: r.flag ?? undefined,
+    name: r.name,
+    kg: r.kg,
+    note: r.note ?? undefined,
+    noteTone: r.noteTone ?? undefined,
+    info: r.info ?? undefined,
+    website: r.website,
+    highlight: r.highlight || undefined,
+    commission: r.commission ?? undefined,
+  }));
+}
+
 /** All airlines, resolved to `locale`, in guide order. */
-export function getAirlines(locale: string): ViewAirline[] {
+export async function getAirlines(locale: string): Promise<ViewAirline[]> {
   const lc = locale as Locale;
   const pick = (v: Localized) => localized(v, lc);
   const unit = lc === "he" ? 'ק"ג' : "kg";
-  return AIRLINES.map((a) => {
+  const airlines = await loadAirlines();
+  return airlines.map((a) => {
     const note = a.note ? pick(a.note) : null;
     const commission = a.commission ?? "0%";
     const commissionSort = maxNum(commission);

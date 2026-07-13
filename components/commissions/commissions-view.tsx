@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { Search, X } from "lucide-react";
 import type { SupplierCategory, ViewSupplier } from "@/lib/commissions";
+import type { SupplierContact } from "@/lib/contacts";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
@@ -26,7 +27,16 @@ const CATEGORIES: {
   { value: "car-rental", key: "carRental", emoji: "🚗" },
 ];
 
-export function CommissionsView({ suppliers }: { suppliers: ViewSupplier[] }) {
+export function CommissionsView({
+  suppliers,
+  contacts,
+  canEditContacts,
+}: {
+  suppliers: ViewSupplier[];
+  /** Shared contact records keyed by supplier slug (server-fetched). */
+  contacts: Record<string, SupplierContact>;
+  canEditContacts: boolean;
+}) {
   const t = useTranslations("commissions");
   const [query, setQuery] = useState("");
   const [tab, setTab] = useState<SupplierCategory>("flights");
@@ -97,7 +107,12 @@ export function CommissionsView({ suppliers }: { suppliers: ViewSupplier[] }) {
               ) : (
                 <div className="grid grid-cols-1 gap-3.5 md:grid-cols-2">
                   {list.map((s) => (
-                    <CommissionCard key={s.id} supplier={s} />
+                    <CommissionCard
+                      key={s.id}
+                      supplier={s}
+                      contact={contacts[s.id]}
+                      canEditContact={canEditContacts}
+                    />
                   ))}
                 </div>
               )}

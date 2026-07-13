@@ -438,7 +438,6 @@
     "contact": {
       "button": "יצירת קשר",
       "title": "יצירת קשר",
-      "supplierName": "שם הספק",
       "label": "תווית",
       "type": "סוג",
       "active": "פעיל",
@@ -457,7 +456,8 @@
       "cancel": "ביטול",
       "remove": "הסר",
       "copy": "העתק",
-      "copied": "הועתק"
+      "copied": "הועתק",
+      "saveError": "השמירה נכשלה — נסה שוב"
     }
   },
   "transfers": {

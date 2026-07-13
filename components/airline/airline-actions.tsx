@@ -11,6 +11,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { SupplierContact } from "@/components/commissions/supplier-contact";
+import { emptyContact, type SupplierContact as SupplierContactRecord } from "@/lib/contacts";
 
 /**
  * Row actions for an airline — a "Contact" icon button (opens the shared contact
@@ -22,10 +23,14 @@ export function AirlineActions({
   id,
   name,
   website,
+  contact,
+  canEditContact,
 }: {
   id: string;
   name: string;
   website: string;
+  contact?: SupplierContactRecord;
+  canEditContact?: boolean;
 }) {
   const t = useTranslations("baggage");
   const tc = useTranslations("commissions.contact");
@@ -72,6 +77,8 @@ export function AirlineActions({
       <SupplierContact
         supplierId={id}
         supplierName={name}
+        contact={contact ?? emptyContact()}
+        canEdit={canEditContact}
         open={contactOpen}
         onOpenChange={setContactOpen}
         hideTrigger

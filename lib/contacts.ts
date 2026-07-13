@@ -3,10 +3,14 @@
  * tabs. Every contact is a single typed record: a `label` (display name), a
  * `type` (its role — shown translated), an optional phone/email, and an
  * `active` flag so a contact can be hidden from the dialog without deleting it.
- * Records are grouped into `general` / `sales` / `agents` by type. Stored in
- * localStorage keyed by supplier/airline id; the shape maps cleanly to a future
- * `supplier_contacts` + `contacts` DB schema.
+ * Records are grouped into `general` / `sales` / `agents` by type.
+ *
+ * Stored in the shared `contacts` table, keyed by supplier slug (or
+ * `air:{slug}` for airlines) — one team-wide phonebook, edited in-app by
+ * editors (see `app/actions/contacts.ts`). `DEFAULT_CONTACTS` below is the
+ * one-time DB bootstrap (`bun run seed`) and the no-DB fallback.
  */
+import { usingDatabase } from "@/lib/hotels";
 
 export type ContactType =
   | "agent-support"
@@ -45,8 +49,6 @@ export type SupplierContact = {
   agents?: ContactGroup[];
 };
 
-const STORAGE_KEY = "commContacts_v2";
-
 /** Which section array a contact lives in, derived from its type. */
 export function sectionForType(type: ContactType): "general" | "sales" | "agents" {
   if (type === "sales-rep") return "sales";
@@ -77,7 +79,7 @@ const c = (type: ContactType, label: string, phone = "", email = ""): ContactGro
  * once a user edits and saves a supplier, their stored copy fully overrides the
  * default here (see `getContact`).
  */
-const DEFAULT_CONTACTS: Record<string, SupplierContact> = {
+export const DEFAULT_CONTACTS: Record<string, SupplierContact> = {
   israir: {
     name: "ישראייר",
     general: [
@@ -160,41 +162,37 @@ const DEFAULT_CONTACTS: Record<string, SupplierContact> = {
   },
 };
 
-/** Read every stored contact, keyed by supplier id. Safe on the server. */
-function readAll(): Record<string, SupplierContact> {
-  if (typeof window === "undefined") return {};
-  try {
-    return JSON.parse(window.localStorage.getItem(STORAGE_KEY) ?? "{}");
-  } catch {
-    return {};
-  }
-}
-
 /** All contacts of a record, flattened in general → sales → agents order. */
 export function allContacts(contact: SupplierContact): ContactGroup[] {
   return [...(contact.general ?? []), ...(contact.sales ?? []), ...(contact.agents ?? [])];
 }
 
-export function getContact(id: string): SupplierContact {
-  // Stored (user-edited) contact wins outright; otherwise fall back to the seed.
-  const base = readAll()[id] ?? DEFAULT_CONTACTS[id] ?? emptyContact();
-  return {
-    name: base.name ?? "",
-    general: base.general ?? [],
-    sales: base.sales ?? [],
-    agents: base.agents ?? [],
-  };
-}
-
-export function setContact(id: string, contact: SupplierContact): void {
-  if (typeof window === "undefined") return;
-  const all = readAll();
-  all[id] = contact;
-  try {
-    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(all));
-  } catch {
-    /* storage full or unavailable — nothing else we can do */
+/**
+ * Every contact record keyed by supplier slug / `air:{slug}` — from Neon when
+ * configured, otherwise the curated defaults. Server-side only (the pages fetch
+ * this and pass each record down to the contact dialog).
+ */
+export async function getContactsMap(): Promise<Record<string, SupplierContact>> {
+  if (!usingDatabase()) return DEFAULT_CONTACTS;
+  const { db } = await import("@/db");
+  const rows = await db.query.contacts.findMany({
+    with: { supplier: true, airline: true },
+    orderBy: (t, { asc }) => [asc(t.sortOrder)],
+  });
+  const map: Record<string, SupplierContact> = {};
+  for (const r of rows) {
+    const key = r.supplier ? r.supplier.slug : r.airline ? `air:${r.airline.slug}` : null;
+    if (!key) continue;
+    const record = (map[key] ??= emptyContact());
+    record[r.section]!.push({
+      active: r.active,
+      label: r.label,
+      type: r.type,
+      ...(r.phone ? { phone: r.phone } : {}),
+      ...(r.email ? { email: r.email } : {}),
+    });
   }
+  return map;
 }
 
 /** Strip a phone number down to digits and a leading "+" for tel: links. */

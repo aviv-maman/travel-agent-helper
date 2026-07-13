@@ -1,7 +1,9 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
+import { toast } from "sonner";
 import {
   BadgeDollarSignIcon,
   Check,
@@ -38,12 +40,10 @@ import {
   type SupplierContact as SupplierContactRecord,
   allContacts,
   cleanPhone,
-  getContact,
   hasAnyContact,
   newContactGroup,
-  sectionForType,
-  setContact,
 } from "@/lib/contacts";
+import { saveContactsAction } from "@/app/actions/contacts";
 
 type T = ReturnType<typeof useTranslations<"commissions.contact">>;
 
@@ -154,6 +154,8 @@ function ContactBlock({
 export function SupplierContact({
   supplierId,
   supplierName,
+  contact,
+  canEdit = false,
   size = "icon-sm",
   open: openProp,
   onOpenChange,
@@ -161,6 +163,10 @@ export function SupplierContact({
 }: {
   supplierId: string;
   supplierName: string;
+  /** The shared contact record for this supplier/airline (fetched server-side). */
+  contact: SupplierContactRecord;
+  /** Server-computed `can("content:edit")` — cosmetic; the action re-checks. */
+  canEdit?: boolean;
   /** Trigger button size. Defaults to `icon-sm` (28px); `icon` is 32px. */
   size?: React.ComponentProps<typeof Button>["size"];
   /** Controlled open state. When provided, the component is fully controlled. */
@@ -170,11 +176,12 @@ export function SupplierContact({
   hideTrigger?: boolean;
 }) {
   const t = useTranslations("commissions.contact");
+  const router = useRouter();
   const controlled = openProp !== undefined;
   const [openState, setOpenState] = useState(false);
   const open = controlled ? openProp : openState;
   const [editing, setEditing] = useState(false);
-  const [editName, setEditName] = useState("");
+  const [saving, setSaving] = useState(false);
   const [draft, setDraft] = useState<ContactGroup[]>([]);
 
   function handleOpenChange(o: boolean) {
@@ -185,30 +192,31 @@ export function SupplierContact({
   }
 
   function startEdit() {
-    const cur = getContact(supplierId);
-    setEditName(cur.name || supplierName);
-    setDraft(allContacts(cur));
+    setDraft(allContacts(contact));
     setEditing(true);
   }
 
-  function save() {
-    // A contact needs a label and at least one channel; route each by its type.
-    const next: SupplierContactRecord = { name: editName.trim(), general: [], sales: [], agents: [] };
-    for (const g of draft) {
-      const email = (g.email ?? "").trim();
-      const phone = (g.phone ?? "").trim();
-      const label = g.label.trim();
-      if (!label || (!email && !phone)) continue;
-      next[sectionForType(g.type)]!.push({
+  async function save() {
+    // A contact needs a label and at least one channel; the action routes each
+    // into its section by type and replaces this supplier's rows wholesale.
+    const next = draft
+      .map((g) => ({
         active: g.active,
-        label,
+        label: g.label.trim(),
         type: g.type,
-        ...(phone ? { phone } : {}),
-        ...(email ? { email } : {}),
-      });
+        phone: (g.phone ?? "").trim(),
+        email: (g.email ?? "").trim(),
+      }))
+      .filter((g) => g.label && (g.phone || g.email));
+    setSaving(true);
+    const result = await saveContactsAction(supplierId, next);
+    setSaving(false);
+    if ("error" in result) {
+      toast.error(t("saveError"));
+      return;
     }
-    setContact(supplierId, next);
     setEditing(false);
+    router.refresh();
   }
 
   const updateContact = (i: number, patch: Partial<ContactGroup>) =>
@@ -251,11 +259,9 @@ export function SupplierContact({
         </DialogHeader>
 
         {!editing ? (
-          <ContactView supplierId={supplierId} t={t} />
+          <ContactView contact={contact} t={t} />
         ) : (
           <ContactEdit
-            name={editName}
-            setName={setEditName}
             contacts={draft}
             updateContact={updateContact}
             addContact={addContact}
@@ -267,16 +273,18 @@ export function SupplierContact({
         <DialogFooter>
           {!editing ? (
             <>
-              <Button type="button" onClick={startEdit}>
-                <PencilIcon className="size-4" /> {t("edit")}
-              </Button>
+              {canEdit && (
+                <Button type="button" onClick={startEdit}>
+                  <PencilIcon className="size-4" /> {t("edit")}
+                </Button>
+              )}
               <Button type="button" variant="outline" onClick={() => handleOpenChange(false)}>
                 {t("close")}
               </Button>
             </>
           ) : (
             <>
-              <Button type="button" onClick={save} className="flex-1">
+              <Button type="button" onClick={save} disabled={saving} className="flex-1">
                 💾 {t("save")}
               </Button>
               <Button type="button" variant="outline" onClick={() => setEditing(false)}>
@@ -290,9 +298,8 @@ export function SupplierContact({
   );
 }
 
-/** Read-only contact details. Reads the latest stored contact on render. */
-function ContactView({ supplierId, t }: { supplierId: string; t: T }) {
-  const contact = getContact(supplierId);
+/** Read-only contact details. */
+function ContactView({ contact, t }: { contact: SupplierContactRecord; t: T }) {
   if (!hasAnyContact(contact)) {
     return (
       <p className="rounded-lg bg-surface-2 px-3 py-6 text-center text-sm text-muted-foreground">
@@ -324,18 +331,14 @@ function ContactView({ supplierId, t }: { supplierId: string; t: T }) {
   );
 }
 
-/** Editable form: the supplier name plus a flat, reorderable list of contacts. */
+/** Editable form: a flat list of contacts (the name comes from the supplier row). */
 function ContactEdit({
-  name,
-  setName,
   contacts,
   updateContact,
   addContact,
   removeContact,
   t,
 }: {
-  name: string;
-  setName: (_name: string) => void;
   contacts: ContactGroup[];
   updateContact: (_i: number, _patch: Partial<ContactGroup>) => void;
   addContact: () => void;
@@ -344,9 +347,6 @@ function ContactEdit({
 }) {
   return (
     <div className="flex flex-col gap-3">
-      <Field label={t("supplierName")}>
-        <Input value={name} onChange={(e) => setName(e.target.value)} />
-      </Field>
       {contacts.map((g, i) => (
         <ContactEditRow
           key={i}
