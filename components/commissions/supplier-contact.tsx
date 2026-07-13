@@ -252,7 +252,9 @@ export function SupplierContact({
         </TooltipProvider>
       )}
 
-      <DialogContent className="max-h-[85vh] overflow-y-auto sm:max-w-md">
+      {/* Flex column with the body as the ONLY scroll area, so the header and
+          the Save/Cancel footer stay visible however long the contact list gets. */}
+      <DialogContent className="flex max-h-[85vh] flex-col sm:max-w-md">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2 text-base">
             <ContactIcon className="size-5 text-brand" aria-hidden /> {t("title")}
@@ -260,17 +262,19 @@ export function SupplierContact({
           <DialogDescription>{supplierName}</DialogDescription>
         </DialogHeader>
 
-        {!editing ? (
-          <ContactView contact={contact} t={t} />
-        ) : (
-          <ContactEdit
-            contacts={draft}
-            updateContact={updateContact}
-            addContact={addContact}
-            removeContact={removeContact}
-            t={t}
-          />
-        )}
+        <div className="-mx-1 min-h-0 flex-1 overflow-y-auto px-1">
+          {!editing ? (
+            <ContactView contact={contact} t={t} />
+          ) : (
+            <ContactEdit
+              contacts={draft}
+              updateContact={updateContact}
+              addContact={addContact}
+              removeContact={removeContact}
+              t={t}
+            />
+          )}
+        </div>
 
         <DialogFooter>
           {!editing ? (
@@ -286,7 +290,9 @@ export function SupplierContact({
             </>
           ) : (
             <>
-              <Button type="button" onClick={save} disabled={saving} className="flex-1">
+              {/* sm:flex-1 only — plain flex-1 in the stacked mobile footer
+                  (flex-col-reverse) collapses the button's height. */}
+              <Button type="button" onClick={save} disabled={saving} className="sm:flex-1">
                 💾 {t("save")}
               </Button>
               <Button type="button" variant="outline" onClick={() => setEditing(false)}>
