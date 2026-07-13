@@ -1,13 +1,14 @@
 import type { Localized } from "@/db/schema";
 import type { Locale } from "@/i18n/config";
-import { localized } from "@/lib/hotels";
+import { localized, usingDatabase } from "@/lib/hotels";
 
 /**
- * Supplier commission guide. This is curated, fairly static editorial data
- * (not hotel inventory), so it lives in code rather than the DB — mirroring the
- * structure of the original single-page guide. Every text value is `Localized`
- * and resolved to the active locale on the server (see `getCommissions`), so the
- * client only ever receives the language it displays.
+ * Supplier commission guide. Curated editorial data: the array below is the
+ * seed source (`bun run seed`) and the no-DB fallback; when `DATABASE_URL` is
+ * configured the page reads the `suppliers`/`supplier_commissions` tables.
+ * Every text value is `Localized` and resolved to the active locale on the
+ * server (see `getCommissions`), so the client only ever receives the language
+ * it displays.
  */
 
 /**
@@ -15,10 +16,14 @@ import { localized } from "@/lib/hotels";
  * high = green (10%+), mid = blue (7–9.5%), low = orange (5–6%),
  * range = gold (a span like 7–10% or "varies"), net = red ("net price").
  */
-export type CommLevel = "high" | "mid" | "low" | "range" | "net";
-
-/** Which glyph leads a baggage row (and its color). */
-export type BaggageIcon = "bag" | "ok" | "warn" | "flight" | "package" | "tour" | "village";
+export type { CommLevel, BaggageIcon, BaggageRow, SupplierNote, SupplierCategory } from "@/db/schema";
+import type {
+  BaggageIcon,
+  BaggageRow,
+  CommLevel,
+  SupplierCategory,
+  SupplierNote,
+} from "@/db/schema";
 
 /** A commission percentage for one of the three default categories. */
 export type CommissionValue = {
@@ -33,25 +38,6 @@ export type CustomCommission = {
   value: Localized;
   level: CommLevel;
 };
-
-export type BaggageRow = {
-  icon: BaggageIcon;
-  /** May contain `**bold**` spans (rendered as emphasis). */
-  text: Localized;
-};
-
-/** A commission-related note shown below the commission table. */
-export type SupplierNote = {
-  /** May contain `**bold**` spans and `\n` line breaks. */
-  text: Localized;
-  /** `info` → grey alert; `warning` → amber alert. */
-  variant: "info" | "warning";
-  /** Whether to show the variant title (e.g. "הערה חשובה"). Defaults true. */
-  showTitle?: boolean;
-};
-
-/** Which suppliers-page tab a supplier belongs to. */
-export type SupplierCategory = "flights" | "hotels" | "car-rental";
 
 export type Supplier = {
   id: string;
@@ -83,6 +69,8 @@ export type Supplier = {
   baggage: BaggageRow[];
   /** Commission-related notes, rendered in order below the commission table. */
   notes?: SupplierNote[];
+  /** Skeleton entry on the hotels/car-rental tabs — details to be filled in later. */
+  placeholder?: boolean;
 };
 
 const t = (he: string, en: string): Localized => ({ he, en });
@@ -124,6 +112,7 @@ const placeholder = (
       showTitle: false,
     },
   ],
+  placeholder: true,
 });
 
 // Shared baggage lines reused across many suppliers.
@@ -139,7 +128,8 @@ const ARKIA_TROLLEY = (price = 60): BaggageRow => ({
   ),
 });
 
-const SUPPLIERS: Supplier[] = [
+/** Curated supplier data, in guide order — the DB seed source and no-DB fallback. */
+export const SUPPLIERS: Supplier[] = [
   {
     id: "israir",
     website: "https://www.israir.co.il/",
@@ -649,12 +639,52 @@ export type ViewSupplier = {
   search: string;
 };
 
+/** Suppliers from Neon when configured, otherwise the in-code array. */
+async function loadSuppliers(): Promise<Supplier[]> {
+  if (!usingDatabase()) return SUPPLIERS;
+  const { db } = await import("@/db");
+  const rows = await db.query.suppliers.findMany({
+    with: {
+      commissions: { orderBy: (t, { asc }) => [asc(t.sortOrder)] },
+    },
+    orderBy: (t, { asc }) => [asc(t.sortOrder)],
+  });
+  return rows.map((r) => {
+    const byKind = (kind: "flights" | "packages" | "organized") => {
+      const row = r.commissions.find((c) => c.kind === kind);
+      return row ? { value: row.value, level: row.level } : undefined;
+    };
+    const customs = r.commissions
+      .filter((c) => c.kind === "custom")
+      .map((c) => ({ label: c.label ?? {}, value: c.value, level: c.level }));
+    return {
+      id: r.slug,
+      name: r.name,
+      code: r.code,
+      category: r.category,
+      alias: r.alias ?? undefined,
+      website: r.website ?? undefined,
+      logo: r.logo ?? undefined,
+      flightsOnly: byKind("flights"),
+      packages: byKind("packages"),
+      organizedTours: byKind("organized"),
+      customCommission1: customs[0],
+      customCommission2: customs[1],
+      customCommission3: customs[2],
+      baggage: r.baggage,
+      notes: r.notes,
+      placeholder: r.placeholder || undefined,
+    };
+  });
+}
+
 /** All suppliers, resolved to `locale`, in guide order. */
-export function getCommissions(locale: string): ViewSupplier[] {
+export async function getCommissions(locale: string): Promise<ViewSupplier[]> {
   const pick = (v: Localized) => localized(v, locale as Locale);
   const cv = (v?: CommissionValue): ViewCommissionValue =>
     v ? { value: pick(v.value), level: v.level } : null;
-  return SUPPLIERS.map((s) => ({
+  const suppliers = await loadSuppliers();
+  return suppliers.map((s) => ({
     id: s.id,
     name: pick(s.name),
     code: s.code,

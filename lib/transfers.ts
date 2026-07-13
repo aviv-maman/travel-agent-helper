@@ -1,24 +1,19 @@
-import type { Localized } from "@/db/schema";
+import type { Localized, PillVariant, TransferPill as Pill } from "@/db/schema";
 import type { Locale } from "@/i18n/config";
-import { localized } from "@/lib/hotels";
+import { localized, usingDatabase } from "@/lib/hotels";
 
 /**
  * Airport-transfer inclusion guide. Transfers to/from the hotel are included in
  * **vacation packages only**; this table maps each destination to which
  * suppliers include them. Grouped by country (each with its flag); a country's
  * cities are listed as separate rows, since their inclusion rules can differ.
+ * Curated editorial data: the array below is the seed source (`bun run seed`)
+ * and the no-DB fallback; with `DATABASE_URL` configured the page reads the
+ * `transfer_countries`/`transfer_cities` tables.
  */
 
-export type PillVariant = "yes" | "no" | "warn";
-
-export type Pill = {
-  variant: PillVariant;
-  /** Optional leading flag/glyph (🇮🇱 for Israeli suppliers, 🌐 for WTC). */
-  flag?: string;
-  label: Localized;
-  /** Optional note shown only on hover (keeps the pill label short). */
-  tooltip?: Localized;
-};
+export type { PillVariant } from "@/db/schema";
+export type { TransferPill as Pill } from "@/db/schema";
 
 export type CityRow = {
   id: string;
@@ -69,7 +64,8 @@ function g(variant: PillVariant, he: string, en: string): Pill {
 /** Shorthand "✗ all suppliers" pill used by the not-included countries. */
 const NONE: Pill = g("no", "כל הספקים", "All suppliers");
 
-const COUNTRIES: CountryGroup[] = [
+/** Curated transfer data, in guide order — the DB seed source and no-DB fallback. */
+export const COUNTRIES: CountryGroup[] = [
   {
     id: "bulgaria",
     country: t("בולגריה", "Bulgaria"),
@@ -517,10 +513,32 @@ export type ViewCountryGroup = {
   cities: ViewCityRow[];
 };
 
+/** Transfer groups from Neon when configured, otherwise the in-code array. */
+async function loadCountries(): Promise<CountryGroup[]> {
+  if (!usingDatabase()) return COUNTRIES;
+  const { db } = await import("@/db");
+  const rows = await db.query.transferCountries.findMany({
+    with: { cities: { orderBy: (t, { asc }) => [asc(t.sortOrder)] } },
+    orderBy: (t, { asc }) => [asc(t.sortOrder)],
+  });
+  return rows.map((c) => ({
+    id: c.slug,
+    country: c.country,
+    code: c.code,
+    cities: c.cities.map((city) => ({
+      id: city.slug,
+      name: city.name,
+      search: city.search,
+      pills: city.pills,
+    })),
+  }));
+}
+
 /** All transfer countries, resolved to `locale`. */
-export function getTransfers(locale: string): ViewCountryGroup[] {
+export async function getTransfers(locale: string): Promise<ViewCountryGroup[]> {
   const pick = (v: Localized) => localized(v, locale as Locale);
-  return COUNTRIES.map((c) => ({
+  const countries = await loadCountries();
+  return countries.map((c) => ({
     id: c.id,
     country: pick(c.country),
     code: c.code,

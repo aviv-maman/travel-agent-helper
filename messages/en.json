@@ -438,7 +438,6 @@
     "contact": {
       "button": "Contact",
       "title": "Contact",
-      "supplierName": "Supplier name",
       "label": "Label",
       "type": "Type",
       "active": "Active",
@@ -457,7 +456,8 @@
       "cancel": "Cancel",
       "remove": "Remove",
       "copy": "Copy",
-      "copied": "Copied"
+      "copied": "Copied",
+      "saveError": "Saving failed — please try again"
     }
   },
   "transfers": {

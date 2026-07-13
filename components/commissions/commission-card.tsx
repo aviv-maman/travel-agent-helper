@@ -2,6 +2,7 @@ import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { Luggage, TriangleAlert, Info, Percent, Globe } from "lucide-react";
 import type { CommLevel, BaggageIcon, ViewSupplier } from "@/lib/commissions";
+import { emptyContact, type SupplierContact as SupplierContactRecord } from "@/lib/contacts";
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
 import { RichText } from "./rich-text";
@@ -42,7 +43,15 @@ const TABLE_CATEGORIES = [
   { icon: "tour", labelKey: "organizedTours" },
 ] as const;
 
-export function CommissionCard({ supplier }: { supplier: ViewSupplier }) {
+export function CommissionCard({
+  supplier,
+  contact,
+  canEditContact,
+}: {
+  supplier: ViewSupplier;
+  contact?: SupplierContactRecord;
+  canEditContact?: boolean;
+}) {
   const t = useTranslations("commissions");
 
   // Always render the same three category rows, pulling each supplier's matching
@@ -128,7 +137,13 @@ export function CommissionCard({ supplier }: { supplier: ViewSupplier }) {
             </a>
           )}
         </div>
-        <SupplierContact supplierId={supplier.id} supplierName={supplier.name} size="icon" />
+        <SupplierContact
+          supplierId={supplier.id}
+          supplierName={supplier.name}
+          contact={contact ?? emptyContact()}
+          canEdit={canEditContact}
+          size="icon"
+        />
       </header>
 
       <div className="flex flex-col p-3">

@@ -17,8 +17,9 @@ import {
   uniqueIndex,
   index,
   primaryKey,
+  check,
 } from "drizzle-orm/pg-core";
-import { relations } from "drizzle-orm";
+import { relations, sql } from "drizzle-orm";
 import type { Locale } from "../i18n/config";
 
 /**
@@ -245,6 +246,322 @@ export type HotelTier = (typeof hotelTier.enumValues)[number];
 export type HotelTagValue = (typeof hotelTag.enumValues)[number];
 export type HotelFeatureValue = (typeof hotelFeature.enumValues)[number];
 export type BoardCode = (typeof boardCode.enumValues)[number];
+
+// ── Content: suppliers, airlines, transfers (guide pages) ────────────────────
+// The guide pages read these tables DB-first with the in-code data arrays in
+// lib/{commissions,cancellations,airlines,transfers,contacts}.ts as the seed
+// source and no-DB fallback (same split as hotels ↔ data/seed.json).
+
+/** Commission chip color: high green (10%+), mid blue, low orange, range gold, net red. */
+export const commissionLevel = pgEnum("commission_level", [
+  "high",
+  "mid",
+  "low",
+  "range",
+  "net",
+]);
+
+/** Which suppliers-page tab a supplier belongs to. */
+export const supplierCategory = pgEnum("supplier_category", [
+  "flights",
+  "hotels",
+  "car-rental",
+]);
+
+/** The three default commission rows, plus labeled extra lines. */
+export const commissionKind = pgEnum("commission_kind", [
+  "flights",
+  "packages",
+  "organized",
+  "custom",
+]);
+
+/** Tone of the airline trolley note (gold = highlighted). */
+export const noteTone = pgEnum("note_tone", ["muted", "gold"]);
+
+/** Contact grouping section on the contact dialog (derived from type). */
+export const contactSection = pgEnum("contact_section", [
+  "general",
+  "sales",
+  "agents",
+]);
+
+/** Contact role, shown as a translated subtitle. */
+export const contactType = pgEnum("contact_type", [
+  "agent-support",
+  "operation",
+  "operation-manager",
+  "sales-rep",
+  "agent",
+]);
+
+/** Which glyph leads a supplier baggage row (and its color). */
+export type BaggageIcon =
+  | "bag"
+  | "ok"
+  | "warn"
+  | "flight"
+  | "package"
+  | "tour"
+  | "village";
+
+/** A supplier baggage line; text may contain `**bold**` spans. */
+export type BaggageRow = { icon: BaggageIcon; text: Localized };
+
+/** A commission-related note; `showTitle` defaults to true. */
+export type SupplierNote = {
+  text: Localized;
+  variant: "info" | "warning";
+  showTitle?: boolean;
+};
+
+/** Cancellation-guide product tag color: flight blue, package green, organized purple. */
+export type ProductKind = "flight" | "package" | "organized";
+export type CancelProduct = { kind: ProductKind; label: Localized };
+
+/** Fee-row severity → row color on the cancellations page. */
+export type FeeLevel = "low" | "net" | "gross" | "full";
+export type FeeRow = { timeframe: Localized; fee: Localized; level: FeeLevel };
+
+/** One rendered block of a cancellation card, in display order. */
+export type CancelBlock =
+  | { kind: "heading"; text: Localized }
+  | { kind: "subheading"; text: Localized; tone: "accent" | "gold" }
+  | {
+      kind: "table";
+      caption: Localized;
+      headers?: [Localized, Localized];
+      rows: FeeRow[];
+    }
+  | {
+      kind: "copy";
+      text: Localized;
+      levels?: FeeLevel[];
+      title?: Localized;
+      variant?: "change";
+    };
+
+/** Transfer-inclusion pill chip; label/flag are resolved at seed time. */
+export type PillVariant = "yes" | "no" | "warn";
+export type TransferPill = {
+  variant: PillVariant;
+  flag?: string;
+  label: Localized;
+  tooltip?: Localized;
+};
+
+export const suppliers = pgTable(
+  "suppliers",
+  {
+    id: serial("id").primaryKey(),
+    /** Stable slug (logo file, contacts key, seed identity). */
+    slug: varchar("slug", { length: 48 }).notNull(),
+    name: jsonb("name").$type<Localized>().notNull(),
+    /** Short Latin code chip shown next to the name. */
+    code: varchar("code", { length: 24 }).notNull(),
+    category: supplierCategory("category").notNull().default("flights"),
+    alias: jsonb("alias").$type<Localized>(),
+    website: text("website"),
+    logo: text("logo"),
+    baggage: jsonb("baggage").$type<BaggageRow[]>().notNull().default([]),
+    notes: jsonb("notes").$type<SupplierNote[]>().notNull().default([]),
+    /** Skeleton card on the hotels/car-rental tabs ("details soon"). */
+    placeholder: boolean("placeholder").notNull().default(false),
+    sortOrder: integer("sort_order").notNull().default(0),
+  },
+  (t) => [uniqueIndex("suppliers_slug_key").on(t.slug)],
+);
+
+export const supplierCommissions = pgTable(
+  "supplier_commissions",
+  {
+    id: serial("id").primaryKey(),
+    supplierId: integer("supplier_id")
+      .notNull()
+      .references(() => suppliers.id, { onDelete: "cascade" }),
+    kind: commissionKind("kind").notNull(),
+    /** Only for kind='custom' — the line's own label. */
+    label: jsonb("label").$type<Localized>(),
+    /** Display value, e.g. "7.5%" / "7–10%" or a localized phrase. */
+    value: jsonb("value").$type<Localized>().notNull(),
+    level: commissionLevel("level").notNull(),
+    sortOrder: integer("sort_order").notNull().default(0),
+  },
+  (t) => [
+    uniqueIndex("supplier_commissions_unique").on(t.supplierId, t.kind, t.sortOrder),
+  ],
+);
+
+export const supplierCancellations = pgTable(
+  "supplier_cancellations",
+  {
+    id: serial("id").primaryKey(),
+    supplierId: integer("supplier_id")
+      .notNull()
+      .references(() => suppliers.id, { onDelete: "cascade" }),
+    /** Pre-sorted in display order (the UI renders as stored). */
+    products: jsonb("products").$type<CancelProduct[]>().notNull().default([]),
+    blocks: jsonb("blocks").$type<CancelBlock[]>().notNull().default([]),
+    /** Cancellations-page order — independent of the suppliers-page order. */
+    sortOrder: integer("sort_order").notNull().default(0),
+  },
+  (t) => [uniqueIndex("supplier_cancellations_supplier_key").on(t.supplierId)],
+);
+
+export const airlines = pgTable(
+  "airlines",
+  {
+    id: serial("id").primaryKey(),
+    /** Stable slug, used for the logo file (public/airlines/{slug}.png) and contacts. */
+    slug: varchar("slug", { length: 48 }).notNull(),
+    /** IATA code(s) as displayed, e.g. "LY" or "XC / 4D". Null for the catch-all row. */
+    iata: varchar("iata", { length: 16 }),
+    /** Flag emoji (the ISO code for the SVG flag is derived at read time). */
+    flag: varchar("flag", { length: 8 }),
+    name: jsonb("name").$type<Localized>().notNull(),
+    /** Raw checked-suitcase figure: "23", "20", "15/23", "23/30". */
+    kg: varchar("kg", { length: 16 }).notNull(),
+    /** Trolley allowance shown in the "Trolley" column. */
+    note: jsonb("note").$type<Localized>(),
+    noteTone: noteTone("note_tone"),
+    /** Free-text note shown in the dedicated "Note" column. */
+    info: jsonb("info").$type<Localized>(),
+    website: text("website").notNull(),
+    /** Subtly highlighted catch-all row ("all other airlines"). */
+    highlight: boolean("highlight").notNull().default(false),
+    /** Base-fare commission chip, e.g. "0%", "7%", "0%/5%". Null renders as "0%". */
+    commission: varchar("commission", { length: 16 }),
+    sortOrder: integer("sort_order").notNull().default(0),
+  },
+  (t) => [uniqueIndex("airlines_slug_key").on(t.slug)],
+);
+
+/** A single contact entry for a supplier or an airline (exactly one FK set). */
+export const contacts = pgTable(
+  "contacts",
+  {
+    id: serial("id").primaryKey(),
+    supplierId: integer("supplier_id").references(() => suppliers.id, {
+      onDelete: "cascade",
+    }),
+    airlineId: integer("airline_id").references(() => airlines.id, {
+      onDelete: "cascade",
+    }),
+    section: contactSection("section").notNull(),
+    type: contactType("type").notNull(),
+    /** Display title, usually a person name. */
+    label: text("label").notNull().default(""),
+    phone: varchar("phone", { length: 32 }).notNull().default(""),
+    email: varchar("email", { length: 160 }).notNull().default(""),
+    /** Hidden from the dialog without deleting when false. */
+    active: boolean("active").notNull().default(true),
+    sortOrder: integer("sort_order").notNull().default(0),
+  },
+  (t) => [
+    index("contacts_supplier_idx").on(t.supplierId),
+    index("contacts_airline_idx").on(t.airlineId),
+    check("contacts_owner_check", sql`num_nonnulls(supplier_id, airline_id) = 1`),
+  ],
+);
+
+export const transferCountries = pgTable(
+  "transfer_countries",
+  {
+    id: serial("id").primaryKey(),
+    slug: varchar("slug", { length: 48 }).notNull(),
+    country: jsonb("country").$type<Localized>().notNull(),
+    /** ISO 3166-1 alpha-2 code for the flag, or null for the catch-all "other". */
+    code: varchar("code", { length: 2 }),
+    sortOrder: integer("sort_order").notNull().default(0),
+  },
+  (t) => [uniqueIndex("transfer_countries_slug_key").on(t.slug)],
+);
+
+export const transferCities = pgTable(
+  "transfer_cities",
+  {
+    id: serial("id").primaryKey(),
+    countryId: integer("country_id")
+      .notNull()
+      .references(() => transferCountries.id, { onDelete: "cascade" }),
+    slug: varchar("slug", { length: 64 }).notNull(),
+    name: jsonb("name").$type<Localized>().notNull(),
+    /** Extra search terms (IATA codes etc.); locale names are appended at read time. */
+    search: text("search").notNull().default(""),
+    pills: jsonb("pills").$type<TransferPill[]>().notNull().default([]),
+    sortOrder: integer("sort_order").notNull().default(0),
+  },
+  (t) => [uniqueIndex("transfer_cities_unique").on(t.countryId, t.slug)],
+);
+
+// ── Content relations ─────────────────────────────────────────────────────────
+export const suppliersRelations = relations(suppliers, ({ one, many }) => ({
+  commissions: many(supplierCommissions),
+  cancellation: one(supplierCancellations),
+  contacts: many(contacts),
+}));
+
+export const supplierCommissionsRelations = relations(
+  supplierCommissions,
+  ({ one }) => ({
+    supplier: one(suppliers, {
+      fields: [supplierCommissions.supplierId],
+      references: [suppliers.id],
+    }),
+  }),
+);
+
+export const supplierCancellationsRelations = relations(
+  supplierCancellations,
+  ({ one }) => ({
+    supplier: one(suppliers, {
+      fields: [supplierCancellations.supplierId],
+      references: [suppliers.id],
+    }),
+  }),
+);
+
+export const airlinesRelations = relations(airlines, ({ many }) => ({
+  contacts: many(contacts),
+}));
+
+export const contactsRelations = relations(contacts, ({ one }) => ({
+  supplier: one(suppliers, {
+    fields: [contacts.supplierId],
+    references: [suppliers.id],
+  }),
+  airline: one(airlines, {
+    fields: [contacts.airlineId],
+    references: [airlines.id],
+  }),
+}));
+
+export const transferCountriesRelations = relations(
+  transferCountries,
+  ({ many }) => ({
+    cities: many(transferCities),
+  }),
+);
+
+export const transferCitiesRelations = relations(transferCities, ({ one }) => ({
+  country: one(transferCountries, {
+    fields: [transferCities.countryId],
+    references: [transferCountries.id],
+  }),
+}));
+
+export type SupplierRow = typeof suppliers.$inferSelect;
+export type SupplierCommissionRow = typeof supplierCommissions.$inferSelect;
+export type SupplierCancellationRow = typeof supplierCancellations.$inferSelect;
+export type AirlineRow = typeof airlines.$inferSelect;
+export type ContactRow = typeof contacts.$inferSelect;
+export type TransferCountryRow = typeof transferCountries.$inferSelect;
+export type TransferCityRow = typeof transferCities.$inferSelect;
+export type CommissionKind = (typeof commissionKind.enumValues)[number];
+export type CommLevel = (typeof commissionLevel.enumValues)[number];
+export type SupplierCategory = (typeof supplierCategory.enumValues)[number];
+export type ContactSectionValue = (typeof contactSection.enumValues)[number];
+export type ContactTypeValue = (typeof contactType.enumValues)[number];
 
 // ── Auth ──────────────────────────────────────────────────────────────────────
 
