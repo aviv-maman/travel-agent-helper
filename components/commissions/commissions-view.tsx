@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { Search, X } from "lucide-react";
-import type { SupplierCategory, ViewSupplier } from "@/lib/commissions";
+import type { EditableSupplier, SupplierCategory, ViewSupplier } from "@/lib/commissions";
 import type { SupplierContact } from "@/lib/contacts";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
@@ -31,11 +31,14 @@ export function CommissionsView({
   suppliers,
   contacts,
   canEditContacts,
+  editableSuppliers,
 }: {
   suppliers: ViewSupplier[];
   /** Shared contact records keyed by supplier slug (server-fetched). */
   contacts: Record<string, SupplierContact>;
   canEditContacts: boolean;
+  /** Raw editable rows keyed by slug (editors with a DB only), else null. */
+  editableSuppliers?: Record<string, EditableSupplier> | null;
 }) {
   const t = useTranslations("commissions");
   const [query, setQuery] = useState("");
@@ -112,6 +115,7 @@ export function CommissionsView({
                       supplier={s}
                       contact={contacts[s.id]}
                       canEditContact={canEditContacts}
+                      editable={editableSuppliers?.[s.id] ?? null}
                     />
                   ))}
                 </div>
