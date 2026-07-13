@@ -112,7 +112,13 @@
       "copy": "העתקת הכל",
       "copied": "הועתק ✓"
     },
-    "offline": "אין חיבור — הפעולה לא נשמרה"
+    "offline": "אין חיבור — הפעולה לא נשמרה",
+    "toasts": {
+      "completed": "המשימה הושלמה",
+      "reopened": "המשימה נפתחה מחדש",
+      "deleted": "המשימה נמחקה",
+      "saved": "נשמר"
+    }
   },
   "ai": {
     "title": "עוזר הצעות מחיר AI",
@@ -130,6 +136,7 @@
     "save": "שמירה",
     "keySaved": "מפתח ה-AI נשמר.",
     "keyRemoved": "מפתח ה-AI הוסר.",
+    "keyDeleteError": "הסרת המפתח נכשלה — נסה שוב.",
     "deleteTitle": "להסיר את מפתח ה-AI?",
     "deleteDescription": "תצטרכו להדביק מפתח שוב כדי להשתמש בעוזר.",
     "demoNote": "מצב הדגמה: לא הוגדר שרת AI, כך שהמפתח לא נשלח לשום מקום — הוא רק פותח את הממשק.",
@@ -151,6 +158,7 @@
     "openSavedQuotes": "פתיחת הצעות שמורות",
     "deleteQuote": "מחיקת הצעה",
     "quoteDeleted": "ההצעה נמחקה.",
+    "deleteError": "מחיקת ההצעה נכשלה — נסה שוב.",
     "deleteQuoteTitle": "למחוק את ההצעה השמורה?",
     "deleteQuoteDescription": "פעולה זו מוחקת את ההצעה השמורה לצמיתות.",
     "emptyTitle": "יצירת הצעת מחיר מוכנה ללקוח",
@@ -197,6 +205,8 @@
     "readMore": "קרא עוד",
     "refresh": "רענן",
     "refreshing": "מרענן…",
+    "refreshed": "החדשות עודכנו.",
+    "refreshError": "הרענון נכשל — נסה שוב.",
     "empty": "😕 לא נמצאו כתבות כרגע. נסה שוב מאוחר יותר."
   },
   "auth": {
@@ -237,6 +247,14 @@
     "updatePassword": "עדכן סיסמה",
     "updating": "מעדכן…",
     "passwordUpdated": "הסיסמה עודכנה — מכשירים אחרים נותקו.",
+    "toastInviteCreated": "ההזמנה נוצרה",
+    "toastInviteRevoked": "ההזמנה בוטלה",
+    "toastRoleSaved": "התפקיד עודכן",
+    "toastUserDeleted": "המשתמש נמחק",
+    "toastUserLoggedOut": "המשתמש נותק מכל המכשירים",
+    "toastSessionRevoked": "המכשיר נותק",
+    "toastAccountUnlinked": "החשבון נותק",
+    "toastActionFailed": "הפעולה נכשלה — נסה שוב",
     "setPassword": "הגדר סיסמה",
     "setPasswordCta": "הגדר סיסמה",
     "passwordSet": "הסיסמה הוגדרה.",
@@ -457,7 +475,8 @@
       "remove": "הסר",
       "copy": "העתק",
       "copied": "הועתק",
-      "saveError": "השמירה נכשלה — נסה שוב"
+      "saveError": "השמירה נכשלה — נסה שוב",
+      "saved": "פרטי הקשר נשמרו"
     }
   },
   "transfers": {
@@ -566,6 +585,8 @@
       "details": "לחץ לפרטים",
       "editScore": "עריכת דירוג Booking",
       "scorePlaceholder": "0–10 (ריק = ללא)",
+      "scoreSaved": "הדירוג נשמר",
+      "scoreError": "שמירת הדירוג נכשלה — נסה שוב",
       "save": "שמור",
       "saving": "שומר…",
       "cancel": "ביטול"

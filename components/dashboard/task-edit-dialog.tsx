@@ -59,6 +59,7 @@ export function TaskEditDialog({ task, onClose }: { task: DashTask; onClose: () 
         toast.error(t("offline"));
         return;
       }
+      toast.success(t("toasts.saved"));
       close();
       router.refresh();
     });

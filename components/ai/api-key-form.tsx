@@ -90,7 +90,12 @@ export function ApiKeyForm({
 
   function onDelete() {
     startDelete(async () => {
-      await deleteAiKey(locale);
+      try {
+        await deleteAiKey(locale);
+      } catch {
+        toast.error(t("keyDeleteError"));
+        return;
+      }
       setSavedLast4(null);
       setRemoved(true);
       setRotating(false);

@@ -85,7 +85,12 @@ export function QuoteHistory({
     const target = deleteTarget;
     if (!target) return;
     startTransition(async () => {
-      await deleteQuoteAction(target.id);
+      try {
+        await deleteQuoteAction(target.id);
+      } catch {
+        toast.error(t("deleteError"));
+        return;
+      }
       // Tell the chat: re-enable "Save" on the reply that produced this quote, and
       // drop the (now freed) imageKey so a re-save re-uploads the screenshot.
       emitQuoteDeleted({ id: target.id, imageKey: target.imageKey });

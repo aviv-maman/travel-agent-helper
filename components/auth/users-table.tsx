@@ -3,6 +3,7 @@ import type { UserRow } from "@/lib/auth/users";
 import { setUserRole, deleteUser, forceLogoutUser } from "@/lib/auth/actions";
 import { Link } from "@/i18n/navigation";
 import { Button } from "@/components/ui/button";
+import { ActionForm } from "@/components/auth/action-form";
 
 export async function UsersTable({
   users,
@@ -47,7 +48,11 @@ export async function UsersTable({
                   {isSelf ? (
                     t(`roles.${user.role}`)
                   ) : (
-                    <form action={setUserRole.bind(null, user.id)} className="flex items-center gap-1.5">
+                    <ActionForm
+                      action={setUserRole.bind(null, user.id)}
+                      successMessage={t("toastRoleSaved")}
+                      errorMessage={t("toastActionFailed")}
+                      className="flex items-center gap-1.5">
                       <select
                         name="role"
                         defaultValue={user.role}
@@ -59,7 +64,7 @@ export async function UsersTable({
                       <Button type="submit" variant="outline" size="sm">
                         {t("save")}
                       </Button>
-                    </form>
+                    </ActionForm>
                   )}
                 </td>
                 <td className="px-3 py-2 text-muted-foreground">{fmt.format(user.createdAt)}</td>
@@ -68,20 +73,26 @@ export async function UsersTable({
                 </td>
                 <td className="px-3 py-2">
                   {user.sessionCount > 0 && !isSelf && (
-                    <form action={forceLogoutUser.bind(null, user.id)}>
+                    <ActionForm
+                      action={forceLogoutUser.bind(null, user.id)}
+                      successMessage={t("toastUserLoggedOut")}
+                      errorMessage={t("toastActionFailed")}>
                       <Button type="submit" variant="outline" size="sm">
                         {t("forceLogout", { count: user.sessionCount })}
                       </Button>
-                    </form>
+                    </ActionForm>
                   )}
                 </td>
                 <td className="px-3 py-2 text-end">
                   {!isSelf && (
-                    <form action={deleteUser.bind(null, user.id)}>
+                    <ActionForm
+                      action={deleteUser.bind(null, user.id)}
+                      successMessage={t("toastUserDeleted")}
+                      errorMessage={t("toastActionFailed")}>
                       <Button type="submit" variant="destructive" size="sm">
                         {t("delete")}
                       </Button>
-                    </form>
+                    </ActionForm>
                   )}
                 </td>
               </tr>

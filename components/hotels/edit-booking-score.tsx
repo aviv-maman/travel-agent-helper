@@ -2,6 +2,7 @@
 
 import { useState, useTransition } from "react";
 import { useTranslations } from "next-intl";
+import { toast } from "sonner";
 import { Pencil } from "lucide-react";
 import { updateHotelBookingScore } from "@/app/actions/hotels";
 import { Button } from "@/components/ui/button";
@@ -40,9 +41,11 @@ export function EditBookingScore({
     startTransition(async () => {
       const res = await updateHotelBookingScore(hotelId, score);
       if ("ok" in res) {
+        toast.success(t("scoreSaved"));
         onSaved(res.score);
         setOpen(false);
       } else {
+        toast.error(t("scoreError"));
         setError(true);
       }
     });

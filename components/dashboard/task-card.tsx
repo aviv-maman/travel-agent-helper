@@ -40,6 +40,7 @@ export function TaskCard({ task, handle }: { task: DashTask; handle?: React.Reac
         toast.error(t("offline"));
         return;
       }
+      toast.success(t(checked ? "toasts.completed" : "toasts.reopened"));
       router.refresh();
     });
   }
@@ -52,6 +53,7 @@ export function TaskCard({ task, handle }: { task: DashTask; handle?: React.Reac
         toast.error(t("offline"));
         return;
       }
+      toast.success(t("toasts.deleted"));
       router.refresh();
     });
   }

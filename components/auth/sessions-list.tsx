@@ -2,6 +2,7 @@ import { getTranslations } from "next-intl/server";
 import type { SessionRow } from "@/lib/auth/session";
 import { revokeSession } from "@/lib/auth/actions";
 import { Button } from "@/components/ui/button";
+import { ActionForm } from "@/components/auth/action-form";
 
 /** Best-effort friendly label from a user-agent string (no dependency). */
 export function describeUserAgent(ua: string | null): string {
@@ -56,11 +57,14 @@ export async function SessionsList({
               </p>
             </div>
             {!isCurrent && (
-              <form action={revokeSession.bind(null, session.id)}>
+              <ActionForm
+                action={revokeSession.bind(null, session.id)}
+                successMessage={t("toastSessionRevoked")}
+                errorMessage={t("toastActionFailed")}>
                 <Button type="submit" variant="outline" size="sm">
                   {t("signOutDevice")}
                 </Button>
-              </form>
+              </ActionForm>
             )}
           </li>
         );

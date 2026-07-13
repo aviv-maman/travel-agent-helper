@@ -2,6 +2,7 @@
 
 import { useActionState } from "react";
 import { useTranslations } from "next-intl";
+import { useSuccessToast } from "@/hooks/use-success-toast";
 import { changePassword, type AuthState } from "@/lib/auth/actions";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -28,6 +29,7 @@ export function ChangePasswordForm({ locale }: { locale: string }) {
     changePassword.bind(null, locale),
     {},
   );
+  useSuccessToast(state, t("passwordUpdated"), "password-changed");
 
   return (
     <form action={action} className="flex flex-col gap-3">

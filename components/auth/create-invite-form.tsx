@@ -2,6 +2,7 @@
 
 import { useActionState } from "react";
 import { useTranslations } from "next-intl";
+import { useSuccessToast } from "@/hooks/use-success-toast";
 import { createInvite, type InviteState } from "@/lib/auth/actions";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
@@ -10,6 +11,7 @@ import { Button } from "@/components/ui/button";
 export function CreateInviteForm() {
   const t = useTranslations("auth");
   const [state, action, pending] = useActionState<InviteState, FormData>(createInvite, {});
+  useSuccessToast(state, t("toastInviteCreated"), "invite-created");
 
   return (
     <form action={action} className="flex flex-wrap items-end gap-3">
