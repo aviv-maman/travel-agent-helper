@@ -7,7 +7,12 @@ The app uses **[Neon](https://neon.tech) (serverless Postgres)** with **[Drizzle
 - **Auth** — `users`, `sessions`, `invitations`, `login_attempts`.
 - **Per-user features** — the dashboard tables ([docs/dashboard.md](./dashboard.md)), `saved_quotes`, `exchange_rates`.
 
-Every content page still works with **no database at all**: the curated data arrays in `lib/{commissions,cancellations,airlines,transfers,contacts}.ts` are both the seed source and the no-DB fallback (the same split as hotels ↔ `data/seed.json`). **Code is the source of truth for content** — edit the array, then `bun run seed`. The one exception is **contacts**: after the first seed they are edited in-app by editors and never overwritten by re-seeds.
+Every content page still works with **no database at all**: the curated data arrays in `lib/{commissions,cancellations,airlines,transfers,contacts}.ts` are both the seed source and the no-DB fallback (the same split as hotels ↔ `data/seed.json`). **Code is the source of truth for most content** — edit the array, then `bun run seed`. The exceptions are **app-managed** (edited in the UI by editors, bootstrap-only in the seed, never overwritten by re-seeds):
+
+- **contacts** — the shared phonebook dialog;
+- **supplier commission lines & baggage** — the pencil/+ inline editors on the supplier cards.
+
+Editing those in `lib/*.ts` only affects the no-DB fallback and brand-new databases.
 
 > **The error you saw** (`Failed query: select … from "destinations" …` on `/hotels`) means the connection worked but the **tables don't exist yet** — you set `DATABASE_URL` but never applied the migrations. Steps 2–3 below fix it.
 
@@ -44,7 +49,7 @@ This runs each SQL file in `drizzle/` in order (`0000_…` → `0005_…`), buil
 bun run seed
 ```
 
-Runs both seed scripts: `scripts/seed.ts` populates `destinations`, `hotels`, `landmarks`, etc. from `data/seed.json`, and `scripts/seed-content.ts` populates the content tables (suppliers, commissions, cancellations, airlines, transfers, contacts) from the `lib/*.ts` data arrays. Both are **idempotent** — parents are upserted, children replaced wholesale. Contacts are only seeded into an **empty** table (they're app-managed afterwards). `bun run seed:content` runs just the content half.
+Runs both seed scripts: `scripts/seed.ts` populates `destinations`, `hotels`, `landmarks`, etc. from `data/seed.json`, and `scripts/seed-content.ts` populates the content tables (suppliers, commissions, cancellations, airlines, transfers, contacts) from the `lib/*.ts` data arrays. Both are **idempotent** — parents are upserted, cancellations/transfer children replaced wholesale. The app-managed data (contacts, supplier commission lines, supplier baggage) is **bootstrap-only**: seeded when missing, never overwritten on re-runs. `bun run seed:content` runs just the content half.
 
 ## 4. Create your first admin (auth bootstrap)
 

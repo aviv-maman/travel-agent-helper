@@ -17,7 +17,7 @@ bun run create-admin myname 'pw'    # bootstrap the first admin
 bun run dev
 ```
 
-The database powers **`/hotels`**, the **content guides** (suppliers, cancellation fees, airlines, transfers, contacts), **auth**, the **dashboard** (per-user tables), **saved AI quotes**, and **exchange rates**. The content pages fall back to their in-code data arrays when no database is configured (code is the source of truth — edit `lib/*.ts`, then `bun run seed`). The database is backed up monthly + on demand — see [docs/database-backup.md](docs/database-backup.md). Full setup, the Drizzle migrate/generate/push workflow, and troubleshooting (including the "Failed query … destinations" error) are in **[docs/database-setup.md](docs/database-setup.md)**.
+The database powers **`/hotels`**, the **content guides** (suppliers, cancellation fees, airlines, transfers, contacts), **auth**, the **dashboard** (per-user tables), **saved AI quotes**, and **exchange rates**. The content pages fall back to their in-code data arrays when no database is configured (code is the source of truth for most content — edit `lib/*.ts`, then `bun run seed`; contacts and supplier commissions/baggage are edited in-app and survive re-seeds). The database is backed up monthly + on demand — see [docs/database-backup.md](docs/database-backup.md). Full setup, the Drizzle migrate/generate/push workflow, and troubleshooting (including the "Failed query … destinations" error) are in **[docs/database-setup.md](docs/database-setup.md)**.
 
 ## Useful scripts
 

@@ -19,9 +19,10 @@ import type { EditableCommissionRow } from "@/lib/commissions";
  * (the suppliers-page pencil/+ buttons). The UI only shows the controls to
  * permitted users, but these re-checks are the real security boundary.
  *
- * Like the hotels booking score: `bun run seed` resets suppliers to the
- * curated arrays in lib/commissions.ts, so lasting changes should also be
- * folded back into the seed data.
+ * The app is the source of truth for these two: the seed is bootstrap-only
+ * for commission lines and baggage (like contacts), so `bun run seed` never
+ * overwrites in-app edits. The lib/commissions.ts arrays remain the no-DB
+ * fallback and the first-boot seed.
  *
  * No `revalidatePath`: the card calls `router.refresh()` on success (the
  * dashboard/contacts convention).
