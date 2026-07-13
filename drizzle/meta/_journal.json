@@ -134,6 +134,13 @@
       "when": 1783450166438,
       "tag": "0018_mighty_wallow",
       "breakpoints": true
+    },
+    {
+      "idx": 19,
+      "version": "7",
+      "when": 1783545617039,
+      "tag": "0019_magical_loki",
+      "breakpoints": true
     }
   ]
 }

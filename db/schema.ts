@@ -615,6 +615,8 @@ export const dashboardTasks = pgTable(
     dueDate: date("due_date"),
     notes: text("notes"),
     status: dashboardTaskStatus("status").notNull().default("open"),
+    /** Manual position within a section (drag & drop); ties broken by createdAt. */
+    sortOrder: integer("sort_order").notNull().default(0),
     createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
     completedAt: timestamp("completed_at", { withTimezone: true }),
   },

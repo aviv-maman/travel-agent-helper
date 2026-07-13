@@ -1,5 +1,5 @@
 import "server-only";
-import { and, desc, eq, lt } from "drizzle-orm";
+import { and, desc, eq, lt, max } from "drizzle-orm";
 import { db } from "@/db";
 import { dashboardTasks, type DashboardTask, type DashboardTaskType } from "@/db/schema";
 
@@ -25,13 +25,13 @@ export type NewTaskInput = {
 
 export type TaskPatch = Partial<NewTaskInput>;
 
-/** A user's open items (today's tasks + pending follow-ups), oldest first. */
+/** A user's open items, in manual (drag & drop) order; ties broken by creation time. */
 export async function listOpenTasks(userId: number): Promise<DashboardTask[]> {
   return db
     .select()
     .from(dashboardTasks)
     .where(and(eq(dashboardTasks.userId, userId), eq(dashboardTasks.status, "open")))
-    .orderBy(dashboardTasks.createdAt);
+    .orderBy(dashboardTasks.sortOrder, dashboardTasks.createdAt);
 }
 
 /** Items completed but not yet archived (the last ~7 days), newest first. */
@@ -43,12 +43,23 @@ export async function listDoneTasks(userId: number): Promise<DashboardTask[]> {
     .orderBy(desc(dashboardTasks.completedAt));
 }
 
-/** Insert a new item for `userId`; returns its uuid. */
+/** Insert a new item for `userId` at the end of its section; returns its uuid. */
 export async function createTask(userId: number, input: NewTaskInput): Promise<string> {
+  const [top] = await db
+    .select({ max: max(dashboardTasks.sortOrder) })
+    .from(dashboardTasks)
+    .where(
+      and(
+        eq(dashboardTasks.userId, userId),
+        eq(dashboardTasks.type, input.type),
+        eq(dashboardTasks.status, "open"),
+      ),
+    );
   const [row] = await db
     .insert(dashboardTasks)
     .values({
       userId,
+      sortOrder: (top?.max ?? -1) + 1,
       title: input.title,
       type: input.type,
       clientName: input.clientName ?? null,
@@ -101,6 +112,22 @@ export async function deleteTask(userId: number, id: string): Promise<void> {
   await db
     .delete(dashboardTasks)
     .where(and(eq(dashboardTasks.id, id), eq(dashboardTasks.userId, userId)));
+}
+
+export type ReorderUpdate = { id: string; type: DashboardTaskType; sortOrder: number };
+
+/**
+ * Persist a drag & drop result: each item's section (`type`) and position.
+ * Row-by-row updates (neon-http has no transactions); dashboards are small, so
+ * the handful of round-trips is fine.
+ */
+export async function reorderTasks(userId: number, updates: ReorderUpdate[]): Promise<void> {
+  for (const u of updates) {
+    await db
+      .update(dashboardTasks)
+      .set({ type: u.type, sortOrder: u.sortOrder })
+      .where(and(eq(dashboardTasks.id, u.id), eq(dashboardTasks.userId, userId)));
+  }
 }
 
 /** Flip `done` items completed more than 7 days ago to `archived` (housekeeping). */
