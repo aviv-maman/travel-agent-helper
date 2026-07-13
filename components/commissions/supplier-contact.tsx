@@ -252,7 +252,9 @@ export function SupplierContact({
         </TooltipProvider>
       )}
 
-      <DialogContent className="max-h-[85vh] overflow-y-auto sm:max-w-md">
+      {/* Flex column with the body as the ONLY scroll area, so the header and
+          the Save/Cancel footer stay visible however long the contact list gets. */}
+      <DialogContent className="flex max-h-[85vh] flex-col sm:max-w-md">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2 text-base">
             <ContactIcon className="size-5 text-brand" aria-hidden /> {t("title")}
@@ -260,19 +262,23 @@ export function SupplierContact({
           <DialogDescription>{supplierName}</DialogDescription>
         </DialogHeader>
 
-        {!editing ? (
-          <ContactView contact={contact} t={t} />
-        ) : (
-          <ContactEdit
-            contacts={draft}
-            updateContact={updateContact}
-            addContact={addContact}
-            removeContact={removeContact}
-            t={t}
-          />
-        )}
+        {/* Full-bleed scroll area (-mx-4 vs the dialog's p-4) so the scrollbar
+            hugs the dialog edge; a top divider separates it from the header. */}
+        <div className="-mx-4 min-h-0 flex-1 overflow-y-auto border-t border-border px-4 pt-3">
+          {!editing ? (
+            <ContactView contact={contact} t={t} />
+          ) : (
+            <ContactEdit
+              contacts={draft}
+              updateContact={updateContact}
+              addContact={addContact}
+              removeContact={removeContact}
+              t={t}
+            />
+          )}
+        </div>
 
-        <DialogFooter>
+        <DialogFooter className="flex-row justify-end">
           {!editing ? (
             <>
               {canEdit && (
@@ -286,8 +292,8 @@ export function SupplierContact({
             </>
           ) : (
             <>
-              <Button type="button" onClick={save} disabled={saving} className="flex-1">
-                💾 {t("save")}
+              <Button type="button" onClick={save} disabled={saving}>
+                {t("save")}
               </Button>
               <Button type="button" variant="outline" onClick={() => setEditing(false)}>
                 {t("cancel")}
