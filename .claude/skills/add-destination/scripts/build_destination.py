@@ -341,7 +341,14 @@ def main():
                 tlat, tlon = rp["pt"]["lat"], rp["pt"]["lon"]
                 label, pct = None, None
             foot = osrm_route(OSRM_FOOT, hlat, hlon, tlat, tlon)
-            car = osrm_route(OSRM_CAR, hlat, hlon, tlat, tlon)
+            walk_min = int(round(foot["duration_s"] / 60)) if foot else None
+            # מרחק נסיעה רלוונטי רק כשההליכה ארוכה (25 דק' ומעלה) — אחרת
+            # לא בודקים ולא מציגים (וגם חוסכים קריאת OSRM).
+            car = (
+                osrm_route(OSRM_CAR, hlat, hlon, tlat, tlon)
+                if walk_min is not None and walk_min >= 25
+                else None
+            )
             rec = {
                 "ref_name_he": rp.get("name_he", rp.get("osm_name", rp.get("query", ""))),
                 "nearest_point_label": label,
@@ -349,7 +356,7 @@ def main():
                 "target_lat": round(tlat, 6),
                 "target_lng": round(tlon, 6),
                 "meters": round_meters(foot["distance_m"]) if foot else None,
-                "walk_min": int(round(foot["duration_s"] / 60)) if foot else None,
+                "walk_min": walk_min,
                 "drive_min": int(round(car["duration_s"] / 60)) if car else None,
                 "maps_check_link": maps_link(hlat, hlon, tlat, tlon),
             }
