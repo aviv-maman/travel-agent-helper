@@ -1,3382 +1,3382 @@
 {
- "code": "prg",
- "iata": "PRG",
- "name": {
-  "he": "פראג",
-  "en": "Prague"
- },
- "country": {
-  "he": "צ'כיה",
-  "en": "Czech Republic"
- },
- "countryCode": "CZ",
- "sortOrder": 9,
- "info": {
-  "about": {
-   "he": "פראג בנויה סביב נהר הוולטבה: העיר העתיקה (Staré Město) עם כיכר השעון האסטרונומי, העיר החדשה (Nové Město) סביב כיכר ואצלב — אזור הקניות והמלונות המרכזי, ורובע מאלה סטראנה למרגלות הטירה בגדה השנייה. רוב המלונות למטיילים נמצאים בעיר העתיקה ובעיר החדשה, במרחק הליכה מכל האטרקציות.",
-   "en": "Prague is built around the Vltava river: the Old Town (Staré Město) with the Astronomical Clock square, the New Town (Nové Město) around Wenceslas Square — the main shopping and hotel area, and Malá Strana below the castle on the far bank. Most hotels for travelers are in the Old and New Towns, within walking distance of all the sights."
+  "code": "prg",
+  "iata": "PRG",
+  "name": {
+    "he": "פראג",
+    "en": "Prague"
   },
-  "attractions": {
-   "he": "🏛 אתרים מרכזיים: כיכר העיר העתיקה והשעון האסטרונומי · גשר קארל · טירת פראג וקתדרלת סנט ויטוס · הרובע היהודי (יוזפוב) · כיכר ואצלב · גבעת פטרשין",
-   "en": "🏛 Main sights: Old Town Square & the Astronomical Clock · Charles Bridge · Prague Castle & St. Vitus Cathedral · the Jewish Quarter (Josefov) · Wenceslas Square · Petřín Hill"
+  "country": {
+    "he": "צ'כיה",
+    "en": "Czech Republic"
   },
-  "currencyNote": {
-   "he": "המטבע המקומי: קרונה צ'כית (CZK) · הערכת שער: ₪1 ≈ 7 קרונות",
-   "en": "Local currency: Czech Koruna (CZK) · Approx. rate: ₪1 ≈ 7 CZK"
+  "countryCode": "CZ",
+  "sortOrder": 9,
+  "info": {
+    "about": {
+      "he": "פראג בנויה סביב נהר הוולטבה: העיר העתיקה (Staré Město) עם כיכר השעון האסטרונומי, העיר החדשה (Nové Město) סביב כיכר ואצלב — אזור הקניות והמלונות המרכזי, ורובע מאלה סטראנה למרגלות הטירה בגדה השנייה. רוב המלונות למטיילים נמצאים בעיר העתיקה ובעיר החדשה, במרחק הליכה מכל האטרקציות.",
+      "en": "Prague is built around the Vltava river: the Old Town (Staré Město) with the Astronomical Clock square, the New Town (Nové Město) around Wenceslas Square — the main shopping and hotel area, and Malá Strana below the castle on the far bank. Most hotels for travelers are in the Old and New Towns, within walking distance of all the sights."
+    },
+    "attractions": {
+      "he": "🏛 אתרים מרכזיים: כיכר העיר העתיקה והשעון האסטרונומי · גשר קארל · טירת פראג וקתדרלת סנט ויטוס · הרובע היהודי (יוזפוב) · כיכר ואצלב · גבעת פטרשין",
+      "en": "🏛 Main sights: Old Town Square & the Astronomical Clock · Charles Bridge · Prague Castle & St. Vitus Cathedral · the Jewish Quarter (Josefov) · Wenceslas Square · Petřín Hill"
+    },
+    "currencyNote": {
+      "he": "המטבע המקומי: קרונה צ'כית (CZK) · הערכת שער: ₪1 ≈ 7 קרונות",
+      "en": "Local currency: Czech Koruna (CZK) · Approx. rate: ₪1 ≈ 7 CZK"
+    },
+    "airport": {
+      "title": {
+        "he": "✈ שדה התעופה — PRG (Václav Havel)",
+        "en": "✈ Airport — PRG (Václav Havel)"
+      },
+      "note": {
+        "he": "מרחק: ~17 ק\"מ ממרכז העיר · זמן נסיעה: 30–40 דקות",
+        "en": "Distance: ~17 km from the city center · Travel time: 30–40 minutes"
+      }
+    },
+    "transport": [
+      {
+        "icon": "🚌",
+        "mode": {
+          "he": "Airport Express (AE)",
+          "en": "Airport Express (AE)"
+        },
+        "detail": {
+          "he": "לתחנת הרכבת המרכזית · ~35 דק' · 200 קרונות",
+          "en": "To the main train station · ~35 min · 200 CZK"
+        },
+        "price": "~8€"
+      },
+      {
+        "icon": "🚌",
+        "mode": {
+          "he": "טרוליבוס 59 + מטרו A",
+          "en": "Trolleybus 59 + Metro A"
+        },
+        "detail": {
+          "he": "לתחנת Veleslavín ומשם מטרו · ~45 דק' · כרטיס 90 דק' (40 קרונות)",
+          "en": "To Veleslavín, then the metro · ~45 min · one 90-min ticket (40 CZK)"
+        },
+        "price": "~1.6€"
+      },
+      {
+        "icon": "📱",
+        "mode": {
+          "he": "Bolt / Uber",
+          "en": "Bolt / Uber"
+        },
+        "detail": {
+          "he": "~30 דק' · איסוף מחוץ לטרמינל · 450–700 קרונות",
+          "en": "~30 min · pickup outside the terminal · 450–700 CZK"
+        },
+        "price": "18–28€"
+      }
+    ],
+    "warnings": [
+      {
+        "he": "לשלם תמיד בקרונות (CZK) — חיוב בהמרה לאירו/דולר (DCC) יקר משמעותית; מוניות רק ב-Bolt/Uber או מהדלפק הרשמי, לא מנהגים שפונים בשדה.",
+        "en": "Always pay in CZK — dynamic currency conversion to EUR/USD is significantly more expensive; take taxis only via Bolt/Uber or the official desk, never from drivers approaching you at the airport."
+      }
+    ]
   },
-  "airport": {
-   "title": {
-    "he": "✈ שדה התעופה — PRG (Václav Havel)",
-    "en": "✈ Airport — PRG (Václav Havel)"
-   },
-   "note": {
-    "he": "מרחק: ~17 ק\"מ ממרכז העיר · זמן נסיעה: 30–40 דקות",
-    "en": "Distance: ~17 km from the city center · Travel time: 30–40 minutes"
-   }
-  },
-  "transport": [
-   {
-    "icon": "🚌",
-    "mode": {
-     "he": "Airport Express (AE)",
-     "en": "Airport Express (AE)"
+  "landmarks": [
+    {
+      "key": "wenceslas",
+      "name": {
+        "he": "כיכר ואצלב",
+        "en": "Wenceslas Square"
+      }
     },
-    "detail": {
-     "he": "לתחנת הרכבת המרכזית · ~35 דק' · 200 קרונות",
-     "en": "To the main train station · ~35 min · 200 CZK"
+    {
+      "key": "naprikope",
+      "name": {
+        "he": "רחוב Na Příkopě",
+        "en": "Na Příkopě"
+      }
     },
-    "price": "~8€"
-   },
-   {
-    "icon": "🚌",
-    "mode": {
-     "he": "טרוליבוס 59 + מטרו A",
-     "en": "Trolleybus 59 + Metro A"
+    {
+      "key": "charles",
+      "name": {
+        "he": "גשר קארל",
+        "en": "Charles Bridge"
+      }
     },
-    "detail": {
-     "he": "לתחנת Veleslavín ומשם מטרו · ~45 דק' · כרטיס 90 דק' (40 קרונות)",
-     "en": "To Veleslavín, then the metro · ~45 min · one 90-min ticket (40 CZK)"
+    {
+      "key": "palladium",
+      "name": {
+        "he": "קניון פלדיום",
+        "en": "Palladium Mall"
+      }
     },
-    "price": "~1.6€"
-   },
-   {
-    "icon": "📱",
-    "mode": {
-     "he": "Bolt / Uber",
-     "en": "Bolt / Uber"
-    },
-    "detail": {
-     "he": "~30 דק' · איסוף מחוץ לטרמינל · 450–700 קרונות",
-     "en": "~30 min · pickup outside the terminal · 450–700 CZK"
-    },
-    "price": "18–28€"
-   }
+    {
+      "key": "oldtown",
+      "name": {
+        "he": "כיכר העיר העתיקה",
+        "en": "Old Town Square"
+      }
+    }
   ],
-  "warnings": [
-   {
-    "he": "לשלם תמיד בקרונות (CZK) — חיוב בהמרה לאירו/דולר (DCC) יקר משמעותית; מוניות רק ב-Bolt/Uber או מהדלפק הרשמי, לא מנהגים שפונים בשדה.",
-    "en": "Always pay in CZK — dynamic currency conversion to EUR/USD is significantly more expensive; take taxis only via Bolt/Uber or the official desk, never from drivers approaching you at the airport."
-   }
+  "hotels": [
+    {
+      "name": "Jalta Boutique Hotel",
+      "stars": 5,
+      "tags": [],
+      "boards": [
+        "bb"
+      ],
+      "bookingScore": 8.5,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.081084,14.428416",
+      "bookingUrl": "https://www.booking.com/hotel/cz/jalta.html",
+      "roomsNote": null,
+      "sortOrder": 0,
+      "features": [],
+      "distances": [
+        {
+          "landmarkKey": "wenceslas",
+          "meters": 90,
+          "walkMinutes": 1,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "naprikope",
+          "meters": 500,
+          "walkMinutes": 7,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "charles",
+          "meters": 1750,
+          "walkMinutes": 24,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "palladium",
+          "meters": 1200,
+          "walkMinutes": 16,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "oldtown",
+          "meters": 990,
+          "walkMinutes": 13,
+          "rideMinutes": null
+        }
+      ],
+      "rooms": []
+    },
+    {
+      "name": "Hotel Grandium Prague",
+      "stars": 5,
+      "tags": [],
+      "boards": [
+        "bb",
+        "hb"
+      ],
+      "bookingScore": 8.6,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.082264,14.429924",
+      "bookingUrl": "https://www.booking.com/hotel/cz/yasminhotel.html",
+      "roomsNote": null,
+      "sortOrder": 1,
+      "features": [
+        "spa"
+      ],
+      "distances": [
+        {
+          "landmarkKey": "wenceslas",
+          "meters": 310,
+          "walkMinutes": 4,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "naprikope",
+          "meters": 490,
+          "walkMinutes": 6,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "charles",
+          "meters": 1900,
+          "walkMinutes": 26,
+          "rideMinutes": 9
+        },
+        {
+          "landmarkKey": "palladium",
+          "meters": 1000,
+          "walkMinutes": 13,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "oldtown",
+          "meters": 990,
+          "walkMinutes": 13,
+          "rideMinutes": null
+        }
+      ],
+      "rooms": []
+    },
+    {
+      "name": "Grandior Hotel Prague",
+      "stars": 5,
+      "tags": [],
+      "boards": [
+        "bb",
+        "hb"
+      ],
+      "bookingScore": 8.9,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.090065,14.436062",
+      "bookingUrl": "https://www.booking.com/hotel/cz/grandior-prague.html",
+      "roomsNote": null,
+      "sortOrder": 2,
+      "features": [
+        "spa"
+      ],
+      "distances": [
+        {
+          "landmarkKey": "wenceslas",
+          "meters": 1300,
+          "walkMinutes": 17,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "naprikope",
+          "meters": 750,
+          "walkMinutes": 10,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "charles",
+          "meters": 2250,
+          "walkMinutes": 30,
+          "rideMinutes": 7
+        },
+        {
+          "landmarkKey": "palladium",
+          "meters": 470,
+          "walkMinutes": 6,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "oldtown",
+          "meters": 1300,
+          "walkMinutes": 17,
+          "rideMinutes": null
+        }
+      ],
+      "rooms": []
+    },
+    {
+      "name": "Grand Majestic Plaza",
+      "stars": 4,
+      "tags": [],
+      "boards": [
+        "bb"
+      ],
+      "bookingScore": 8.9,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.090516,14.43043",
+      "bookingUrl": "https://www.booking.com/hotel/cz/grand-majestic-plaza.html",
+      "roomsNote": null,
+      "sortOrder": 3,
+      "features": [],
+      "distances": [
+        {
+          "landmarkKey": "wenceslas",
+          "meters": 910,
+          "walkMinutes": 12,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "naprikope",
+          "meters": 440,
+          "walkMinutes": 6,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "charles",
+          "meters": 1900,
+          "walkMinutes": 26,
+          "rideMinutes": 7
+        },
+        {
+          "landmarkKey": "palladium",
+          "meters": 420,
+          "walkMinutes": 6,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "oldtown",
+          "meters": 940,
+          "walkMinutes": 13,
+          "rideMinutes": null
+        }
+      ],
+      "rooms": []
+    },
+    {
+      "name": "Majestic Plaza Hotel Prague",
+      "stars": 4,
+      "tags": [],
+      "boards": [
+        "bb",
+        "hb"
+      ],
+      "bookingScore": 8.6,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.078671,14.425129",
+      "bookingUrl": "https://www.booking.com/hotel/cz/design-majestic-plaza.html",
+      "roomsNote": null,
+      "sortOrder": 4,
+      "features": [
+        "spa"
+      ],
+      "distances": [
+        {
+          "landmarkKey": "wenceslas",
+          "meters": 570,
+          "walkMinutes": 8,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "naprikope",
+          "meters": 830,
+          "walkMinutes": 11,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "charles",
+          "meters": 1950,
+          "walkMinutes": 26,
+          "rideMinutes": 9
+        },
+        {
+          "landmarkKey": "palladium",
+          "meters": 1550,
+          "walkMinutes": 21,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "oldtown",
+          "meters": 1250,
+          "walkMinutes": 17,
+          "rideMinutes": null
+        }
+      ],
+      "rooms": []
+    },
+    {
+      "name": "Urban Creme",
+      "stars": 5,
+      "tags": [],
+      "boards": [
+        "bb"
+      ],
+      "bookingScore": 8.5,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.090226,14.436652",
+      "bookingUrl": "https://www.booking.com/hotel/cz/urban-creme.html",
+      "roomsNote": null,
+      "sortOrder": 5,
+      "features": [],
+      "distances": [
+        {
+          "landmarkKey": "wenceslas",
+          "meters": 1300,
+          "walkMinutes": 18,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "naprikope",
+          "meters": 780,
+          "walkMinutes": 10,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "charles",
+          "meters": 2300,
+          "walkMinutes": 31,
+          "rideMinutes": 7
+        },
+        {
+          "landmarkKey": "palladium",
+          "meters": 500,
+          "walkMinutes": 7,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "oldtown",
+          "meters": 1300,
+          "walkMinutes": 18,
+          "rideMinutes": null
+        }
+      ],
+      "rooms": []
+    },
+    {
+      "name": "987 Design Prague Hotel",
+      "stars": 4,
+      "tags": [],
+      "boards": [
+        "bb"
+      ],
+      "bookingScore": 8.8,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.086043,14.433801",
+      "bookingUrl": "https://www.booking.com/hotel/cz/987praguehotel.html",
+      "roomsNote": null,
+      "sortOrder": 6,
+      "features": [],
+      "distances": [
+        {
+          "landmarkKey": "wenceslas",
+          "meters": 700,
+          "walkMinutes": 9,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "naprikope",
+          "meters": 570,
+          "walkMinutes": 8,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "charles",
+          "meters": 2150,
+          "walkMinutes": 28,
+          "rideMinutes": 8
+        },
+        {
+          "landmarkKey": "palladium",
+          "meters": 730,
+          "walkMinutes": 10,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "oldtown",
+          "meters": 1150,
+          "walkMinutes": 15,
+          "rideMinutes": null
+        }
+      ],
+      "rooms": []
+    },
+    {
+      "name": "K+K Hotel Fenix",
+      "stars": 4,
+      "tags": [],
+      "boards": [
+        "bb"
+      ],
+      "bookingScore": 8.6,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.079617,14.427634",
+      "bookingUrl": "https://www.booking.com/hotel/cz/kkfenix.html",
+      "roomsNote": null,
+      "sortOrder": 7,
+      "features": [],
+      "distances": [
+        {
+          "landmarkKey": "wenceslas",
+          "meters": 140,
+          "walkMinutes": 2,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "naprikope",
+          "meters": 690,
+          "walkMinutes": 9,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "charles",
+          "meters": 1900,
+          "walkMinutes": 26,
+          "rideMinutes": 9
+        },
+        {
+          "landmarkKey": "palladium",
+          "meters": 1400,
+          "walkMinutes": 19,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "oldtown",
+          "meters": 1150,
+          "walkMinutes": 15,
+          "rideMinutes": null
+        }
+      ],
+      "rooms": []
+    },
+    {
+      "name": "Pytloun Boutique Hotel Prague",
+      "stars": 5,
+      "tags": [],
+      "boards": [
+        "bb"
+      ],
+      "bookingScore": 9.1,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.08307,14.424504",
+      "bookingUrl": "https://www.booking.com/hotel/cz/pytloun-prague.html",
+      "roomsNote": null,
+      "sortOrder": 8,
+      "features": [],
+      "distances": [
+        {
+          "landmarkKey": "wenceslas",
+          "meters": 140,
+          "walkMinutes": 2,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "naprikope",
+          "meters": 170,
+          "walkMinutes": 2,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "charles",
+          "meters": 1400,
+          "walkMinutes": 19,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "palladium",
+          "meters": 940,
+          "walkMinutes": 13,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "oldtown",
+          "meters": 630,
+          "walkMinutes": 8,
+          "rideMinutes": null
+        }
+      ],
+      "rooms": []
+    },
+    {
+      "name": "Ambassador Zlata Husa",
+      "stars": 5,
+      "tags": [],
+      "boards": [
+        "bb"
+      ],
+      "bookingScore": 8.3,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.084019,14.425174",
+      "bookingUrl": "https://www.booking.com/hotel/cz/ambassador.html",
+      "roomsNote": null,
+      "sortOrder": 9,
+      "features": [
+        "casino"
+      ],
+      "distances": [
+        {
+          "landmarkKey": "wenceslas",
+          "meters": 110,
+          "walkMinutes": 1,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "naprikope",
+          "meters": 60,
+          "walkMinutes": 1,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "charles",
+          "meters": 1350,
+          "walkMinutes": 18,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "palladium",
+          "meters": 780,
+          "walkMinutes": 10,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "oldtown",
+          "meters": 550,
+          "walkMinutes": 7,
+          "rideMinutes": null
+        }
+      ],
+      "rooms": []
+    },
+    {
+      "name": "Hotel Kings Court",
+      "stars": 5,
+      "tags": [],
+      "boards": [
+        "bb"
+      ],
+      "bookingScore": 9.5,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.088262,14.428038",
+      "bookingUrl": "https://www.booking.com/hotel/cz/kings-court.html",
+      "roomsNote": null,
+      "sortOrder": 10,
+      "features": [
+        "spa",
+        "pool-in"
+      ],
+      "distances": [
+        {
+          "landmarkKey": "wenceslas",
+          "meters": 590,
+          "walkMinutes": 8,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "naprikope",
+          "meters": 150,
+          "walkMinutes": 2,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "charles",
+          "meters": 1600,
+          "walkMinutes": 21,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "palladium",
+          "meters": 240,
+          "walkMinutes": 3,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "oldtown",
+          "meters": 630,
+          "walkMinutes": 8,
+          "rideMinutes": null
+        }
+      ],
+      "rooms": []
+    },
+    {
+      "name": "NH Collection Prague Carlo IV",
+      "stars": 5,
+      "tags": [],
+      "boards": [
+        "bb"
+      ],
+      "bookingScore": 8.9,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.086308,14.433845",
+      "bookingUrl": "https://www.booking.com/hotel/cz/carlo-iv-the-dedica-anthology-autograph-collection.html",
+      "roomsNote": null,
+      "sortOrder": 11,
+      "features": [
+        "spa",
+        "pool-in"
+      ],
+      "distances": [
+        {
+          "landmarkKey": "wenceslas",
+          "meters": 740,
+          "walkMinutes": 10,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "naprikope",
+          "meters": 540,
+          "walkMinutes": 7,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "charles",
+          "meters": 2100,
+          "walkMinutes": 28,
+          "rideMinutes": 9
+        },
+        {
+          "landmarkKey": "palladium",
+          "meters": 700,
+          "walkMinutes": 9,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "oldtown",
+          "meters": 1150,
+          "walkMinutes": 15,
+          "rideMinutes": null
+        }
+      ],
+      "rooms": []
+    },
+    {
+      "name": "The Grand Mark Prague",
+      "stars": 5,
+      "tags": [],
+      "boards": [
+        "bb"
+      ],
+      "bookingScore": 9.5,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.087094,14.431337",
+      "bookingUrl": "https://www.booking.com/hotel/cz/kempinski-hybernska-prague.html",
+      "roomsNote": null,
+      "sortOrder": 12,
+      "features": [
+        "spa"
+      ],
+      "distances": [
+        {
+          "landmarkKey": "wenceslas",
+          "meters": 780,
+          "walkMinutes": 10,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "naprikope",
+          "meters": 210,
+          "walkMinutes": 3,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "charles",
+          "meters": 1800,
+          "walkMinutes": 24,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "palladium",
+          "meters": 490,
+          "walkMinutes": 7,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "oldtown",
+          "meters": 810,
+          "walkMinutes": 11,
+          "rideMinutes": null
+        }
+      ],
+      "rooms": []
+    },
+    {
+      "name": "Hotel Raffaello Prague",
+      "stars": 4,
+      "tags": [],
+      "boards": [
+        "bb"
+      ],
+      "bookingScore": 8.4,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.074501,14.430575",
+      "bookingUrl": "https://www.booking.com/hotel/cz/raffaello-hlavni-mesto-praha.html",
+      "roomsNote": null,
+      "sortOrder": 13,
+      "features": [],
+      "distances": [
+        {
+          "landmarkKey": "wenceslas",
+          "meters": 610,
+          "walkMinutes": 8,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "naprikope",
+          "meters": 1350,
+          "walkMinutes": 18,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "charles",
+          "meters": 2600,
+          "walkMinutes": 34,
+          "rideMinutes": 9
+        },
+        {
+          "landmarkKey": "palladium",
+          "meters": 2050,
+          "walkMinutes": 27,
+          "rideMinutes": 6
+        },
+        {
+          "landmarkKey": "oldtown",
+          "meters": 1800,
+          "walkMinutes": 24,
+          "rideMinutes": null
+        }
+      ],
+      "rooms": []
+    },
+    {
+      "name": "Grand Hotel Bohemia",
+      "stars": 5,
+      "tags": [],
+      "boards": [
+        "bb"
+      ],
+      "bookingScore": 9.2,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.0877,14.426563",
+      "bookingUrl": "https://www.booking.com/hotel/cz/grandhotelbohemia.html",
+      "roomsNote": null,
+      "sortOrder": 14,
+      "features": [],
+      "distances": [
+        {
+          "landmarkKey": "wenceslas",
+          "meters": 520,
+          "walkMinutes": 7,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "naprikope",
+          "meters": 200,
+          "walkMinutes": 3,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "charles",
+          "meters": 1450,
+          "walkMinutes": 19,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "palladium",
+          "meters": 370,
+          "walkMinutes": 5,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "oldtown",
+          "meters": 480,
+          "walkMinutes": 6,
+          "rideMinutes": null
+        }
+      ],
+      "rooms": []
+    },
+    {
+      "name": "Hotel Paris Prague",
+      "stars": 5,
+      "tags": [],
+      "boards": [
+        "bb"
+      ],
+      "bookingScore": 9.2,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.088201,14.427489",
+      "bookingUrl": "https://www.booking.com/hotel/cz/pariz.html",
+      "roomsNote": null,
+      "sortOrder": 15,
+      "features": [
+        "spa"
+      ],
+      "distances": [
+        {
+          "landmarkKey": "wenceslas",
+          "meters": 600,
+          "walkMinutes": 8,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "naprikope",
+          "meters": 190,
+          "walkMinutes": 3,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "charles",
+          "meters": 1550,
+          "walkMinutes": 21,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "palladium",
+          "meters": 280,
+          "walkMinutes": 4,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "oldtown",
+          "meters": 590,
+          "walkMinutes": 8,
+          "rideMinutes": null
+        }
+      ],
+      "rooms": []
+    },
+    {
+      "name": "Century Old Town Prague - MGallery",
+      "stars": 4,
+      "tags": [],
+      "boards": [
+        "bb"
+      ],
+      "bookingScore": 9,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.089528,14.431291",
+      "bookingUrl": "https://www.booking.com/hotel/cz/mercure-prague-old-town.html",
+      "roomsNote": null,
+      "sortOrder": 16,
+      "features": [],
+      "distances": [
+        {
+          "landmarkKey": "wenceslas",
+          "meters": 850,
+          "walkMinutes": 11,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "naprikope",
+          "meters": 390,
+          "walkMinutes": 5,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "charles",
+          "meters": 1900,
+          "walkMinutes": 25,
+          "rideMinutes": 7
+        },
+        {
+          "landmarkKey": "palladium",
+          "meters": 90,
+          "walkMinutes": 1,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "oldtown",
+          "meters": 930,
+          "walkMinutes": 12,
+          "rideMinutes": null
+        }
+      ],
+      "rooms": []
+    },
+    {
+      "name": "Buddha-Bar Hotel Prague",
+      "stars": 5,
+      "tags": [],
+      "boards": [
+        "bb"
+      ],
+      "bookingScore": 9,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.088151,14.425856",
+      "bookingUrl": "https://www.booking.com/hotel/cz/buddha-bar-prague.html",
+      "roomsNote": null,
+      "sortOrder": 17,
+      "features": [
+        "spa"
+      ],
+      "distances": [
+        {
+          "landmarkKey": "wenceslas",
+          "meters": 580,
+          "walkMinutes": 8,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "naprikope",
+          "meters": 280,
+          "walkMinutes": 4,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "charles",
+          "meters": 1450,
+          "walkMinutes": 19,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "palladium",
+          "meters": 450,
+          "walkMinutes": 6,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "oldtown",
+          "meters": 460,
+          "walkMinutes": 6,
+          "rideMinutes": null
+        }
+      ],
+      "rooms": []
+    },
+    {
+      "name": "Eurostars Thalia",
+      "stars": 5,
+      "tags": [],
+      "boards": [
+        "bb"
+      ],
+      "bookingScore": 8.9,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.081859,14.416516",
+      "bookingUrl": "https://www.booking.com/hotel/cz/eurostars-thalia.html",
+      "roomsNote": null,
+      "sortOrder": 18,
+      "features": [],
+      "distances": [
+        {
+          "landmarkKey": "wenceslas",
+          "meters": 590,
+          "walkMinutes": 8,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "naprikope",
+          "meters": 600,
+          "walkMinutes": 8,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "charles",
+          "meters": 1100,
+          "walkMinutes": 14,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "palladium",
+          "meters": 1350,
+          "walkMinutes": 18,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "oldtown",
+          "meters": 870,
+          "walkMinutes": 12,
+          "rideMinutes": null
+        }
+      ],
+      "rooms": []
+    },
+    {
+      "name": "Hotel U Prince",
+      "stars": 5,
+      "tags": [],
+      "boards": [
+        "bb"
+      ],
+      "bookingScore": 8.3,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.086431,14.420154",
+      "bookingUrl": "https://www.booking.com/hotel/cz/u-prince.html",
+      "roomsNote": null,
+      "sortOrder": 19,
+      "features": [],
+      "distances": [
+        {
+          "landmarkKey": "wenceslas",
+          "meters": 410,
+          "walkMinutes": 6,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "naprikope",
+          "meters": 460,
+          "walkMinutes": 6,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "charles",
+          "meters": 930,
+          "walkMinutes": 12,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "palladium",
+          "meters": 910,
+          "walkMinutes": 12,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "oldtown",
+          "meters": 150,
+          "walkMinutes": 2,
+          "rideMinutes": null
+        }
+      ],
+      "rooms": []
+    },
+    {
+      "name": "The Manes Boutique Hotel",
+      "stars": 4,
+      "tags": [],
+      "boards": [
+        "bb"
+      ],
+      "bookingScore": 9.7,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.090238,14.410924",
+      "bookingUrl": "https://www.booking.com/hotel/cz/euroagentur-manes.html",
+      "roomsNote": null,
+      "sortOrder": 20,
+      "features": [],
+      "distances": [
+        {
+          "landmarkKey": "wenceslas",
+          "meters": 1250,
+          "walkMinutes": 17,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "naprikope",
+          "meters": 1300,
+          "walkMinutes": 17,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "charles",
+          "meters": 600,
+          "walkMinutes": 8,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "palladium",
+          "meters": 1700,
+          "walkMinutes": 23,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "oldtown",
+          "meters": 840,
+          "walkMinutes": 11,
+          "rideMinutes": null
+        }
+      ],
+      "rooms": []
+    },
+    {
+      "name": "Prague Marriott Hotel",
+      "stars": 5,
+      "tags": [],
+      "boards": [
+        "bb"
+      ],
+      "bookingScore": 8.6,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.08798,14.431533",
+      "bookingUrl": "https://www.booking.com/hotel/cz/prague-marriott.html",
+      "roomsNote": null,
+      "sortOrder": 21,
+      "features": [
+        "pool-in"
+      ],
+      "distances": [
+        {
+          "landmarkKey": "wenceslas",
+          "meters": 780,
+          "walkMinutes": 10,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "naprikope",
+          "meters": 310,
+          "walkMinutes": 4,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "charles",
+          "meters": 1850,
+          "walkMinutes": 25,
+          "rideMinutes": 7
+        },
+        {
+          "landmarkKey": "palladium",
+          "meters": 310,
+          "walkMinutes": 4,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "oldtown",
+          "meters": 870,
+          "walkMinutes": 12,
+          "rideMinutes": null
+        }
+      ],
+      "rooms": []
+    },
+    {
+      "name": "Hilton Prague",
+      "stars": 5,
+      "tags": [],
+      "boards": [
+        "bb"
+      ],
+      "bookingScore": 8.4,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.093347,14.439665",
+      "bookingUrl": "https://www.booking.com/hotel/cz/hilton-prague.html",
+      "roomsNote": null,
+      "sortOrder": 22,
+      "features": [
+        "spa",
+        "pool-in",
+        "casino"
+      ],
+      "distances": [
+        {
+          "landmarkKey": "wenceslas",
+          "meters": 1700,
+          "walkMinutes": 22,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "naprikope",
+          "meters": 1200,
+          "walkMinutes": 16,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "charles",
+          "meters": 2750,
+          "walkMinutes": 36,
+          "rideMinutes": 7
+        },
+        {
+          "landmarkKey": "palladium",
+          "meters": 920,
+          "walkMinutes": 12,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "oldtown",
+          "meters": 1750,
+          "walkMinutes": 23,
+          "rideMinutes": null
+        }
+      ],
+      "rooms": []
+    },
+    {
+      "name": "Hilton Prague Old Town",
+      "stars": 5,
+      "tags": [],
+      "boards": [
+        "bb"
+      ],
+      "bookingScore": 8.6,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.08877,14.431934",
+      "bookingUrl": "https://www.booking.com/hotel/cz/hilton-prague-old-town.html",
+      "roomsNote": null,
+      "sortOrder": 23,
+      "features": [
+        "spa",
+        "pool-in"
+      ],
+      "distances": [
+        {
+          "landmarkKey": "wenceslas",
+          "meters": 880,
+          "walkMinutes": 12,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "naprikope",
+          "meters": 410,
+          "walkMinutes": 5,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "charles",
+          "meters": 1900,
+          "walkMinutes": 26,
+          "rideMinutes": 8
+        },
+        {
+          "landmarkKey": "palladium",
+          "meters": 350,
+          "walkMinutes": 5,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "oldtown",
+          "meters": 940,
+          "walkMinutes": 13,
+          "rideMinutes": null
+        }
+      ],
+      "rooms": []
+    },
+    {
+      "name": "King David Prague (Kosher)",
+      "stars": 5,
+      "tags": [
+        "kosher"
+      ],
+      "boards": [
+        "bb",
+        "hb"
+      ],
+      "bookingScore": 8.7,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.086551,14.43683",
+      "bookingUrl": "https://www.booking.com/hotel/cz/hotel-king-david-prague.html",
+      "roomsNote": null,
+      "sortOrder": 24,
+      "features": [
+        "spa",
+        "pool-in"
+      ],
+      "distances": [
+        {
+          "landmarkKey": "wenceslas",
+          "meters": 1000,
+          "walkMinutes": 13,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "naprikope",
+          "meters": 640,
+          "walkMinutes": 8,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "charles",
+          "meters": 2200,
+          "walkMinutes": 29,
+          "rideMinutes": 9
+        },
+        {
+          "landmarkKey": "palladium",
+          "meters": 760,
+          "walkMinutes": 10,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "oldtown",
+          "meters": 1250,
+          "walkMinutes": 16,
+          "rideMinutes": null
+        }
+      ],
+      "rooms": []
+    },
+    {
+      "name": "Hotel Clementin",
+      "stars": 4,
+      "tags": [],
+      "boards": [
+        "bb"
+      ],
+      "bookingScore": 9.3,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.086193,14.417243",
+      "bookingUrl": "https://www.booking.com/hotel/cz/clementin-old-town.html",
+      "roomsNote": null,
+      "sortOrder": 25,
+      "features": [],
+      "distances": [
+        {
+          "landmarkKey": "wenceslas",
+          "meters": 630,
+          "walkMinutes": 8,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "naprikope",
+          "meters": 670,
+          "walkMinutes": 9,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "charles",
+          "meters": 670,
+          "walkMinutes": 9,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "palladium",
+          "meters": 1200,
+          "walkMinutes": 16,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "oldtown",
+          "meters": 430,
+          "walkMinutes": 6,
+          "rideMinutes": null
+        }
+      ],
+      "rooms": []
+    },
+    {
+      "name": "Hotel Rott",
+      "stars": 4,
+      "tags": [
+        "adults-only"
+      ],
+      "boards": [
+        "bb"
+      ],
+      "bookingScore": 9.4,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.086812,14.419208",
+      "bookingUrl": "https://www.booking.com/hotel/cz/rott.html",
+      "roomsNote": null,
+      "sortOrder": 26,
+      "features": [],
+      "distances": [
+        {
+          "landmarkKey": "wenceslas",
+          "meters": 480,
+          "walkMinutes": 6,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "naprikope",
+          "meters": 520,
+          "walkMinutes": 7,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "charles",
+          "meters": 910,
+          "walkMinutes": 12,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "palladium",
+          "meters": 1000,
+          "walkMinutes": 13,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "oldtown",
+          "meters": 230,
+          "walkMinutes": 3,
+          "rideMinutes": null
+        }
+      ],
+      "rooms": []
+    },
+    {
+      "name": "Hotel Josef",
+      "stars": 4,
+      "tags": [],
+      "boards": [
+        "bb"
+      ],
+      "bookingScore": 9.3,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.090089,14.426445",
+      "bookingUrl": "https://www.booking.com/hotel/cz/josef-praha-1.html",
+      "roomsNote": null,
+      "sortOrder": 27,
+      "features": [],
+      "distances": [
+        {
+          "landmarkKey": "wenceslas",
+          "meters": 800,
+          "walkMinutes": 11,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "naprikope",
+          "meters": 440,
+          "walkMinutes": 6,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "charles",
+          "meters": 1600,
+          "walkMinutes": 21,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "palladium",
+          "meters": 500,
+          "walkMinutes": 7,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "oldtown",
+          "meters": 620,
+          "walkMinutes": 8,
+          "rideMinutes": null
+        }
+      ],
+      "rooms": []
+    },
+    {
+      "name": "Art Deco Imperial Hotel",
+      "stars": 5,
+      "tags": [],
+      "boards": [
+        "bb"
+      ],
+      "bookingScore": 9.1,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.089923,14.432811",
+      "bookingUrl": "https://www.booking.com/hotel/cz/prague-imperial.html",
+      "roomsNote": null,
+      "sortOrder": 28,
+      "features": [],
+      "distances": [
+        {
+          "landmarkKey": "wenceslas",
+          "meters": 970,
+          "walkMinutes": 13,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "naprikope",
+          "meters": 510,
+          "walkMinutes": 7,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "charles",
+          "meters": 2000,
+          "walkMinutes": 27,
+          "rideMinutes": 7
+        },
+        {
+          "landmarkKey": "palladium",
+          "meters": 210,
+          "walkMinutes": 3,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "oldtown",
+          "meters": 1050,
+          "walkMinutes": 14,
+          "rideMinutes": null
+        }
+      ],
+      "rooms": []
+    },
+    {
+      "name": "Metropolitan Old Town Hotel",
+      "stars": 4,
+      "tags": [],
+      "boards": [
+        "bb"
+      ],
+      "bookingScore": 9.1,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.091195,14.425698",
+      "bookingUrl": "https://www.booking.com/hotel/cz/rubicon-old-town.html",
+      "roomsNote": null,
+      "sortOrder": 29,
+      "features": [],
+      "distances": [
+        {
+          "landmarkKey": "wenceslas",
+          "meters": 970,
+          "walkMinutes": 13,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "naprikope",
+          "meters": 630,
+          "walkMinutes": 8,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "charles",
+          "meters": 1650,
+          "walkMinutes": 22,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "palladium",
+          "meters": 620,
+          "walkMinutes": 8,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "oldtown",
+          "meters": 690,
+          "walkMinutes": 9,
+          "rideMinutes": null
+        }
+      ],
+      "rooms": []
+    },
+    {
+      "name": "Cosmopolitan Hotel Prague",
+      "stars": 5,
+      "tags": [],
+      "boards": [
+        "bb"
+      ],
+      "bookingScore": 9,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.089968,14.432078",
+      "bookingUrl": "https://www.booking.com/hotel/cz/cosmopolitan-prague.html",
+      "roomsNote": null,
+      "sortOrder": 30,
+      "features": [],
+      "distances": [
+        {
+          "landmarkKey": "wenceslas",
+          "meters": 970,
+          "walkMinutes": 13,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "naprikope",
+          "meters": 500,
+          "walkMinutes": 7,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "charles",
+          "meters": 2000,
+          "walkMinutes": 27,
+          "rideMinutes": 7
+        },
+        {
+          "landmarkKey": "palladium",
+          "meters": 210,
+          "walkMinutes": 3,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "oldtown",
+          "meters": 1050,
+          "walkMinutes": 14,
+          "rideMinutes": null
+        }
+      ],
+      "rooms": []
+    },
+    {
+      "name": "Motel One Prague-Florentinum",
+      "stars": 3,
+      "tags": [],
+      "boards": [
+        "bb"
+      ],
+      "bookingScore": 8.7,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.089695,14.434487",
+      "bookingUrl": "https://www.booking.com/hotel/cz/motel-one-prague.html",
+      "roomsNote": null,
+      "sortOrder": 31,
+      "features": [],
+      "distances": [
+        {
+          "landmarkKey": "wenceslas",
+          "meters": 1100,
+          "walkMinutes": 15,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "naprikope",
+          "meters": 640,
+          "walkMinutes": 8,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "charles",
+          "meters": 2150,
+          "walkMinutes": 29,
+          "rideMinutes": 7
+        },
+        {
+          "landmarkKey": "palladium",
+          "meters": 360,
+          "walkMinutes": 5,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "oldtown",
+          "meters": 1200,
+          "walkMinutes": 16,
+          "rideMinutes": null
+        }
+      ],
+      "rooms": []
+    },
+    {
+      "name": "Maximilian Hotel",
+      "stars": 4,
+      "tags": [],
+      "boards": [
+        "bb"
+      ],
+      "bookingScore": 9.3,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.090963,14.424662",
+      "bookingUrl": "https://www.booking.com/hotel/cz/maximilian-hlavni-mesto-praha.html",
+      "roomsNote": null,
+      "sortOrder": 32,
+      "features": [],
+      "distances": [
+        {
+          "landmarkKey": "wenceslas",
+          "meters": 950,
+          "walkMinutes": 13,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "naprikope",
+          "meters": 620,
+          "walkMinutes": 8,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "charles",
+          "meters": 1550,
+          "walkMinutes": 20,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "palladium",
+          "meters": 660,
+          "walkMinutes": 9,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "oldtown",
+          "meters": 550,
+          "walkMinutes": 7,
+          "rideMinutes": null
+        }
+      ],
+      "rooms": []
+    },
+    {
+      "name": "The Mozart Prague",
+      "stars": 5,
+      "tags": [],
+      "boards": [
+        "bb",
+        "hb"
+      ],
+      "bookingScore": 8.4,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.084616,14.414087",
+      "bookingUrl": "https://www.booking.com/hotel/cz/pachtuvpalaceprague.html",
+      "roomsNote": null,
+      "sortOrder": 33,
+      "features": [
+        "spa"
+      ],
+      "distances": [
+        {
+          "landmarkKey": "wenceslas",
+          "meters": 810,
+          "walkMinutes": 11,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "naprikope",
+          "meters": 850,
+          "walkMinutes": 11,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "charles",
+          "meters": 640,
+          "walkMinutes": 9,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "palladium",
+          "meters": 1500,
+          "walkMinutes": 20,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "oldtown",
+          "meters": 760,
+          "walkMinutes": 10,
+          "rideMinutes": null
+        }
+      ],
+      "rooms": []
+    },
+    {
+      "name": "INNSiDE by Melia Prague Old Town",
+      "stars": 4,
+      "tags": [],
+      "boards": [
+        "bb",
+        "hb"
+      ],
+      "bookingScore": 9,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.091469,14.431",
+      "bookingUrl": "https://www.booking.com/hotel/cz/innside-by-melia.html",
+      "roomsNote": null,
+      "sortOrder": 34,
+      "features": [],
+      "distances": [
+        {
+          "landmarkKey": "wenceslas",
+          "meters": 1100,
+          "walkMinutes": 15,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "naprikope",
+          "meters": 640,
+          "walkMinutes": 9,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "charles",
+          "meters": 1950,
+          "walkMinutes": 26,
+          "rideMinutes": 6
+        },
+        {
+          "landmarkKey": "palladium",
+          "meters": 450,
+          "walkMinutes": 6,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "oldtown",
+          "meters": 970,
+          "walkMinutes": 13,
+          "rideMinutes": null
+        }
+      ],
+      "rooms": []
+    },
+    {
+      "name": "Four Seasons Hotel Prague",
+      "stars": 5,
+      "tags": [],
+      "boards": [
+        "bb"
+      ],
+      "bookingScore": 9,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.08771,14.414537",
+      "bookingUrl": "https://www.booking.com/hotel/cz/four-seasons-prague.html",
+      "roomsNote": null,
+      "sortOrder": 35,
+      "features": [
+        "spa",
+        "pool-in"
+      ],
+      "distances": [
+        {
+          "landmarkKey": "wenceslas",
+          "meters": 930,
+          "walkMinutes": 12,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "naprikope",
+          "meters": 970,
+          "walkMinutes": 13,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "charles",
+          "meters": 690,
+          "walkMinutes": 9,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "palladium",
+          "meters": 1400,
+          "walkMinutes": 19,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "oldtown",
+          "meters": 550,
+          "walkMinutes": 7,
+          "rideMinutes": null
+        }
+      ],
+      "rooms": []
+    },
+    {
+      "name": "Elysee Hotel",
+      "stars": 4,
+      "tags": [],
+      "boards": [
+        "bb"
+      ],
+      "bookingScore": 8.5,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.081377,14.428307",
+      "bookingUrl": "https://www.booking.com/hotel/cz/elysee.html",
+      "roomsNote": null,
+      "sortOrder": 36,
+      "features": [],
+      "distances": [
+        {
+          "landmarkKey": "wenceslas",
+          "meters": 310,
+          "walkMinutes": 4,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "naprikope",
+          "meters": 770,
+          "walkMinutes": 10,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "charles",
+          "meters": 2050,
+          "walkMinutes": 27,
+          "rideMinutes": 10
+        },
+        {
+          "landmarkKey": "palladium",
+          "meters": 1200,
+          "walkMinutes": 16,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "oldtown",
+          "meters": 1200,
+          "walkMinutes": 16,
+          "rideMinutes": null
+        }
+      ],
+      "rooms": []
+    },
+    {
+      "name": "Almanac X Alcron Prague",
+      "stars": 5,
+      "tags": [],
+      "boards": [
+        "bb"
+      ],
+      "bookingScore": 9.2,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.080077,14.426401",
+      "bookingUrl": "https://www.booking.com/hotel/cz/alcron.html",
+      "roomsNote": null,
+      "sortOrder": 37,
+      "features": [],
+      "distances": [
+        {
+          "landmarkKey": "wenceslas",
+          "meters": 230,
+          "walkMinutes": 3,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "naprikope",
+          "meters": 590,
+          "walkMinutes": 8,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "charles",
+          "meters": 1850,
+          "walkMinutes": 24,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "palladium",
+          "meters": 1300,
+          "walkMinutes": 17,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "oldtown",
+          "meters": 1050,
+          "walkMinutes": 14,
+          "rideMinutes": null
+        }
+      ],
+      "rooms": []
+    },
+    {
+      "name": "W Prague",
+      "stars": 5,
+      "tags": [],
+      "boards": [
+        "bb"
+      ],
+      "bookingScore": 9.4,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.08226,14.427",
+      "bookingUrl": "https://www.booking.com/hotel/cz/w-prague.html",
+      "roomsNote": null,
+      "sortOrder": 38,
+      "features": [
+        "spa",
+        "pool-in"
+      ],
+      "distances": [
+        {
+          "landmarkKey": "wenceslas",
+          "meters": 120,
+          "walkMinutes": 2,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "naprikope",
+          "meters": 330,
+          "walkMinutes": 4,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "charles",
+          "meters": 1600,
+          "walkMinutes": 21,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "palladium",
+          "meters": 1000,
+          "walkMinutes": 14,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "oldtown",
+          "meters": 820,
+          "walkMinutes": 11,
+          "rideMinutes": null
+        }
+      ],
+      "rooms": []
+    },
+    {
+      "name": "Occidental Praha Wilson",
+      "stars": 5,
+      "tags": [],
+      "boards": [
+        "bb"
+      ],
+      "bookingScore": 8.4,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.079929,14.430411",
+      "bookingUrl": "https://www.booking.com/hotel/cz/occidental-praha-wilson.html",
+      "roomsNote": null,
+      "sortOrder": 39,
+      "features": [],
+      "distances": [
+        {
+          "landmarkKey": "wenceslas",
+          "meters": 30,
+          "walkMinutes": 0,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "naprikope",
+          "meters": 740,
+          "walkMinutes": 10,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "charles",
+          "meters": 2000,
+          "walkMinutes": 27,
+          "rideMinutes": 9
+        },
+        {
+          "landmarkKey": "palladium",
+          "meters": 1350,
+          "walkMinutes": 18,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "oldtown",
+          "meters": 1250,
+          "walkMinutes": 16,
+          "rideMinutes": null
+        }
+      ],
+      "rooms": []
+    },
+    {
+      "name": "Maestro by Adrez",
+      "stars": 4,
+      "tags": [],
+      "boards": [
+        "bb"
+      ],
+      "bookingScore": 8.5,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.082066,14.430287",
+      "bookingUrl": "https://www.booking.com/hotel/cz/sovereign-prague.html",
+      "roomsNote": null,
+      "sortOrder": 40,
+      "features": [],
+      "distances": [
+        {
+          "landmarkKey": "wenceslas",
+          "meters": 240,
+          "walkMinutes": 3,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "naprikope",
+          "meters": 520,
+          "walkMinutes": 7,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "charles",
+          "meters": 1950,
+          "walkMinutes": 26,
+          "rideMinutes": 9
+        },
+        {
+          "landmarkKey": "palladium",
+          "meters": 1050,
+          "walkMinutes": 14,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "oldtown",
+          "meters": 1000,
+          "walkMinutes": 14,
+          "rideMinutes": null
+        }
+      ],
+      "rooms": []
+    },
+    {
+      "name": "The ICON Hotel & Lounge",
+      "stars": 4,
+      "tags": [],
+      "boards": [
+        "bb"
+      ],
+      "bookingScore": 8.8,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.080085,14.424708",
+      "bookingUrl": "https://www.booking.com/hotel/cz/the-icon-boutique.html",
+      "roomsNote": null,
+      "sortOrder": 41,
+      "features": [],
+      "distances": [
+        {
+          "landmarkKey": "wenceslas",
+          "meters": 230,
+          "walkMinutes": 3,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "naprikope",
+          "meters": 620,
+          "walkMinutes": 8,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "charles",
+          "meters": 1700,
+          "walkMinutes": 23,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "palladium",
+          "meters": 1350,
+          "walkMinutes": 18,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "oldtown",
+          "meters": 1050,
+          "walkMinutes": 14,
+          "rideMinutes": null
+        }
+      ],
+      "rooms": []
+    },
+    {
+      "name": "Adria Hotel Prague",
+      "stars": 4,
+      "tags": [],
+      "boards": [
+        "bb",
+        "hb"
+      ],
+      "bookingScore": 8.3,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.082653,14.425105",
+      "bookingUrl": "https://www.booking.com/hotel/cz/hoteladria.html",
+      "roomsNote": null,
+      "sortOrder": 42,
+      "features": [],
+      "distances": [
+        {
+          "landmarkKey": "wenceslas",
+          "meters": 120,
+          "walkMinutes": 2,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "naprikope",
+          "meters": 240,
+          "walkMinutes": 3,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "charles",
+          "meters": 1450,
+          "walkMinutes": 20,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "palladium",
+          "meters": 1000,
+          "walkMinutes": 13,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "oldtown",
+          "meters": 690,
+          "walkMinutes": 9,
+          "rideMinutes": null
+        }
+      ],
+      "rooms": []
+    },
+    {
+      "name": "Esplanade Hotel Prague",
+      "stars": 5,
+      "tags": [],
+      "boards": [
+        "bb"
+      ],
+      "bookingScore": 8.5,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.081871,14.431925",
+      "bookingUrl": "https://www.booking.com/hotel/cz/esplanadeprague.html",
+      "roomsNote": null,
+      "sortOrder": 43,
+      "features": [],
+      "distances": [
+        {
+          "landmarkKey": "wenceslas",
+          "meters": 280,
+          "walkMinutes": 4,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "naprikope",
+          "meters": 690,
+          "walkMinutes": 9,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "charles",
+          "meters": 2100,
+          "walkMinutes": 28,
+          "rideMinutes": 9
+        },
+        {
+          "landmarkKey": "palladium",
+          "meters": 1100,
+          "walkMinutes": 14,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "oldtown",
+          "meters": 1200,
+          "walkMinutes": 16,
+          "rideMinutes": null
+        }
+      ],
+      "rooms": []
+    },
+    {
+      "name": "Wenceslas Hotel & Apartments",
+      "stars": 4,
+      "tags": [
+        "aparthotel"
+      ],
+      "boards": [
+        "bb"
+      ],
+      "bookingScore": 8.6,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.078247,14.428157",
+      "bookingUrl": "https://www.booking.com/hotel/cz/myo-wenceslas.html",
+      "roomsNote": null,
+      "sortOrder": 44,
+      "features": [],
+      "distances": [
+        {
+          "landmarkKey": "wenceslas",
+          "meters": 330,
+          "walkMinutes": 4,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "naprikope",
+          "meters": 850,
+          "walkMinutes": 11,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "charles",
+          "meters": 2100,
+          "walkMinutes": 28,
+          "rideMinutes": 8
+        },
+        {
+          "landmarkKey": "palladium",
+          "meters": 1550,
+          "walkMinutes": 21,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "oldtown",
+          "meters": 1300,
+          "walkMinutes": 17,
+          "rideMinutes": null
+        }
+      ],
+      "rooms": []
+    },
+    {
+      "name": "Wenceslas Square Hotel",
+      "stars": 4,
+      "tags": [],
+      "boards": [
+        "bb"
+      ],
+      "bookingScore": 9.1,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.081478,14.428157",
+      "bookingUrl": "https://www.booking.com/hotel/cz/wenceslas-square.html",
+      "roomsNote": null,
+      "sortOrder": 45,
+      "features": [],
+      "distances": [
+        {
+          "landmarkKey": "wenceslas",
+          "meters": 330,
+          "walkMinutes": 4,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "naprikope",
+          "meters": 780,
+          "walkMinutes": 10,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "charles",
+          "meters": 2050,
+          "walkMinutes": 27,
+          "rideMinutes": 10
+        },
+        {
+          "landmarkKey": "palladium",
+          "meters": 1200,
+          "walkMinutes": 16,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "oldtown",
+          "meters": 1200,
+          "walkMinutes": 16,
+          "rideMinutes": null
+        }
+      ],
+      "rooms": []
+    },
+    {
+      "name": "Art Nouveau Palace Hotel",
+      "stars": 5,
+      "tags": [],
+      "boards": [
+        "bb"
+      ],
+      "bookingScore": 9.1,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.083924,14.427699",
+      "bookingUrl": "https://www.booking.com/hotel/cz/palaceprahaprague.html",
+      "roomsNote": null,
+      "sortOrder": 46,
+      "features": [],
+      "distances": [
+        {
+          "landmarkKey": "wenceslas",
+          "meters": 210,
+          "walkMinutes": 3,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "naprikope",
+          "meters": 230,
+          "walkMinutes": 3,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "charles",
+          "meters": 1650,
+          "walkMinutes": 22,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "palladium",
+          "meters": 800,
+          "walkMinutes": 11,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "oldtown",
+          "meters": 730,
+          "walkMinutes": 10,
+          "rideMinutes": null
+        }
+      ],
+      "rooms": []
+    },
+    {
+      "name": "NYX Hotel Prague by Leonardo Hotels",
+      "stars": 4,
+      "tags": [],
+      "boards": [
+        "bb"
+      ],
+      "bookingScore": 8.7,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.084011,14.428022",
+      "bookingUrl": "https://www.booking.com/hotel/cz/nyx-hotel-prague-by-leonardo-hotels.html",
+      "roomsNote": null,
+      "sortOrder": 47,
+      "features": [],
+      "distances": [
+        {
+          "landmarkKey": "wenceslas",
+          "meters": 210,
+          "walkMinutes": 3,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "naprikope",
+          "meters": 250,
+          "walkMinutes": 3,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "charles",
+          "meters": 1650,
+          "walkMinutes": 22,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "palladium",
+          "meters": 780,
+          "walkMinutes": 10,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "oldtown",
+          "meters": 750,
+          "walkMinutes": 10,
+          "rideMinutes": null
+        }
+      ],
+      "rooms": []
+    },
+    {
+      "name": "Hotel Prague Star",
+      "stars": 4,
+      "tags": [],
+      "boards": [
+        "bb"
+      ],
+      "bookingScore": 8.4,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.078142,14.426835",
+      "bookingUrl": "https://www.booking.com/hotel/cz/magic-centre-prague-accommodation.html",
+      "roomsNote": null,
+      "sortOrder": 48,
+      "features": [],
+      "distances": [
+        {
+          "landmarkKey": "wenceslas",
+          "meters": 460,
+          "walkMinutes": 6,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "naprikope",
+          "meters": 860,
+          "walkMinutes": 11,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "charles",
+          "meters": 2100,
+          "walkMinutes": 28,
+          "rideMinutes": 10
+        },
+        {
+          "landmarkKey": "palladium",
+          "meters": 1550,
+          "walkMinutes": 21,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "oldtown",
+          "meters": 1300,
+          "walkMinutes": 18,
+          "rideMinutes": null
+        }
+      ],
+      "rooms": []
+    },
+    {
+      "name": "MeetMe23",
+      "stars": 3,
+      "tags": [],
+      "boards": [
+        "bb"
+      ],
+      "bookingScore": 8.9,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.082362,14.432363",
+      "bookingUrl": "https://www.booking.com/hotel/cz/meetme23.html",
+      "roomsNote": null,
+      "sortOrder": 49,
+      "features": [],
+      "distances": [
+        {
+          "landmarkKey": "wenceslas",
+          "meters": 360,
+          "walkMinutes": 5,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "naprikope",
+          "meters": 640,
+          "walkMinutes": 8,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "charles",
+          "meters": 2150,
+          "walkMinutes": 28,
+          "rideMinutes": 9
+        },
+        {
+          "landmarkKey": "palladium",
+          "meters": 1000,
+          "walkMinutes": 13,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "oldtown",
+          "meters": 1200,
+          "walkMinutes": 16,
+          "rideMinutes": null
+        }
+      ],
+      "rooms": []
+    },
+    {
+      "name": "Falkensteiner Boutique Hotel Prague",
+      "stars": 5,
+      "tags": [],
+      "boards": [
+        "bb"
+      ],
+      "bookingScore": 9.1,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.082804,14.43163",
+      "bookingUrl": "https://www.booking.com/hotel/cz/mariapragfalkensteiner.html",
+      "roomsNote": null,
+      "sortOrder": 50,
+      "features": [
+        "spa"
+      ],
+      "distances": [
+        {
+          "landmarkKey": "wenceslas",
+          "meters": 350,
+          "walkMinutes": 5,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "naprikope",
+          "meters": 550,
+          "walkMinutes": 7,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "charles",
+          "meters": 2050,
+          "walkMinutes": 27,
+          "rideMinutes": 9
+        },
+        {
+          "landmarkKey": "palladium",
+          "meters": 920,
+          "walkMinutes": 12,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "oldtown",
+          "meters": 1150,
+          "walkMinutes": 15,
+          "rideMinutes": null
+        }
+      ],
+      "rooms": []
+    },
+    {
+      "name": "Hotel Amarilis",
+      "stars": 4,
+      "tags": [],
+      "boards": [
+        "bb"
+      ],
+      "bookingScore": 8.4,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.078054,14.425263",
+      "bookingUrl": "https://www.booking.com/hotel/cz/amarilis-jerome.html",
+      "roomsNote": null,
+      "sortOrder": 51,
+      "features": [],
+      "distances": [
+        {
+          "landmarkKey": "wenceslas",
+          "meters": 500,
+          "walkMinutes": 7,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "naprikope",
+          "meters": 830,
+          "walkMinutes": 11,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "charles",
+          "meters": 2000,
+          "walkMinutes": 27,
+          "rideMinutes": 9
+        },
+        {
+          "landmarkKey": "palladium",
+          "meters": 1550,
+          "walkMinutes": 21,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "oldtown",
+          "meters": 1300,
+          "walkMinutes": 17,
+          "rideMinutes": null
+        }
+      ],
+      "rooms": []
+    },
+    {
+      "name": "Salvator Boutique Hotel",
+      "stars": 4,
+      "tags": [],
+      "boards": [
+        "bb"
+      ],
+      "bookingScore": 8.7,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.077415,14.428627",
+      "bookingUrl": "https://www.booking.com/hotel/cz/salvator-boutique.html",
+      "roomsNote": null,
+      "sortOrder": 52,
+      "features": [],
+      "distances": [
+        {
+          "landmarkKey": "wenceslas",
+          "meters": 260,
+          "walkMinutes": 3,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "naprikope",
+          "meters": 1000,
+          "walkMinutes": 14,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "charles",
+          "meters": 2250,
+          "walkMinutes": 30,
+          "rideMinutes": 8
+        },
+        {
+          "landmarkKey": "palladium",
+          "meters": 1700,
+          "walkMinutes": 23,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "oldtown",
+          "meters": 1500,
+          "walkMinutes": 20,
+          "rideMinutes": null
+        }
+      ],
+      "rooms": []
+    },
+    {
+      "name": "Archibald City",
+      "stars": 4,
+      "tags": [],
+      "boards": [
+        "bb"
+      ],
+      "bookingScore": 8.7,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.07738,14.426865",
+      "bookingUrl": "https://www.booking.com/hotel/cz/archibald-city.html",
+      "roomsNote": null,
+      "sortOrder": 53,
+      "features": [],
+      "distances": [
+        {
+          "landmarkKey": "wenceslas",
+          "meters": 390,
+          "walkMinutes": 5,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "naprikope",
+          "meters": 980,
+          "walkMinutes": 13,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "charles",
+          "meters": 2200,
+          "walkMinutes": 30,
+          "rideMinutes": 8
+        },
+        {
+          "landmarkKey": "palladium",
+          "meters": 1700,
+          "walkMinutes": 23,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "oldtown",
+          "meters": 1450,
+          "walkMinutes": 19,
+          "rideMinutes": null
+        }
+      ],
+      "rooms": []
+    },
+    {
+      "name": "Michelangelo Grand Hotel",
+      "stars": 5,
+      "tags": [],
+      "boards": [
+        "bb"
+      ],
+      "bookingScore": 8.9,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.081001,14.421275",
+      "bookingUrl": "https://www.booking.com/hotel/cz/michelangelograndhotel.html",
+      "roomsNote": null,
+      "sortOrder": 54,
+      "features": [],
+      "distances": [
+        {
+          "landmarkKey": "wenceslas",
+          "meters": 390,
+          "walkMinutes": 5,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "naprikope",
+          "meters": 520,
+          "walkMinutes": 7,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "charles",
+          "meters": 1450,
+          "walkMinutes": 19,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "palladium",
+          "meters": 1300,
+          "walkMinutes": 17,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "oldtown",
+          "meters": 820,
+          "walkMinutes": 11,
+          "rideMinutes": null
+        }
+      ],
+      "rooms": []
+    },
+    {
+      "name": "Deminka Palace",
+      "stars": 4,
+      "tags": [],
+      "boards": [
+        "bb"
+      ],
+      "bookingScore": 8.6,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.07721,14.431353",
+      "bookingUrl": "https://www.booking.com/hotel/cz/deminka-palace.html",
+      "roomsNote": null,
+      "sortOrder": 55,
+      "features": [],
+      "distances": [
+        {
+          "landmarkKey": "wenceslas",
+          "meters": 360,
+          "walkMinutes": 5,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "naprikope",
+          "meters": 1100,
+          "walkMinutes": 15,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "charles",
+          "meters": 2350,
+          "walkMinutes": 31,
+          "rideMinutes": 8
+        },
+        {
+          "landmarkKey": "palladium",
+          "meters": 1800,
+          "walkMinutes": 24,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "oldtown",
+          "meters": 1550,
+          "walkMinutes": 21,
+          "rideMinutes": null
+        }
+      ],
+      "rooms": []
+    },
+    {
+      "name": "Hotel Essence",
+      "stars": 4,
+      "tags": [],
+      "boards": [
+        "bb"
+      ],
+      "bookingScore": 9.2,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.085445,14.42927",
+      "bookingUrl": "https://www.booking.com/hotel/cz/essence-praha.html",
+      "roomsNote": null,
+      "sortOrder": 56,
+      "features": [],
+      "distances": [
+        {
+          "landmarkKey": "wenceslas",
+          "meters": 430,
+          "walkMinutes": 6,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "naprikope",
+          "meters": 260,
+          "walkMinutes": 4,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "charles",
+          "meters": 1750,
+          "walkMinutes": 23,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "palladium",
+          "meters": 530,
+          "walkMinutes": 7,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "oldtown",
+          "meters": 780,
+          "walkMinutes": 10,
+          "rideMinutes": null
+        }
+      ],
+      "rooms": []
+    },
+    {
+      "name": "Friday Hotel",
+      "stars": 4,
+      "tags": [],
+      "boards": [
+        "bb"
+      ],
+      "bookingScore": 8.3,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.085039,14.424413",
+      "bookingUrl": "https://www.booking.com/hotel/cz/friday.html",
+      "roomsNote": null,
+      "sortOrder": 57,
+      "features": [],
+      "distances": [
+        {
+          "landmarkKey": "wenceslas",
+          "meters": 130,
+          "walkMinutes": 2,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "naprikope",
+          "meters": 40,
+          "walkMinutes": 1,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "charles",
+          "meters": 1350,
+          "walkMinutes": 18,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "palladium",
+          "meters": 690,
+          "walkMinutes": 9,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "oldtown",
+          "meters": 420,
+          "walkMinutes": 6,
+          "rideMinutes": null
+        }
+      ],
+      "rooms": []
+    },
+    {
+      "name": "Hotel Praga 1",
+      "stars": 4,
+      "tags": [],
+      "boards": [
+        "bb"
+      ],
+      "bookingScore": 8.6,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.07761,14.422178",
+      "bookingUrl": "https://www.booking.com/hotel/cz/hoteresidencepragaprague.html",
+      "roomsNote": null,
+      "sortOrder": 58,
+      "features": [],
+      "distances": [
+        {
+          "landmarkKey": "wenceslas",
+          "meters": 600,
+          "walkMinutes": 8,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "naprikope",
+          "meters": 900,
+          "walkMinutes": 12,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "charles",
+          "meters": 1900,
+          "walkMinutes": 25,
+          "rideMinutes": 7
+        },
+        {
+          "landmarkKey": "palladium",
+          "meters": 1650,
+          "walkMinutes": 22,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "oldtown",
+          "meters": 1300,
+          "walkMinutes": 18,
+          "rideMinutes": null
+        }
+      ],
+      "rooms": []
+    },
+    {
+      "name": "Radisson Blu Hotel Prague",
+      "stars": 5,
+      "tags": [],
+      "boards": [
+        "bb"
+      ],
+      "bookingScore": 8.7,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.080077,14.426401",
+      "bookingUrl": "https://www.booking.com/hotel/cz/radisson-blu-hotel-prague.html",
+      "roomsNote": null,
+      "sortOrder": 59,
+      "features": [],
+      "distances": [
+        {
+          "landmarkKey": "wenceslas",
+          "meters": 230,
+          "walkMinutes": 3,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "naprikope",
+          "meters": 590,
+          "walkMinutes": 8,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "charles",
+          "meters": 1850,
+          "walkMinutes": 24,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "palladium",
+          "meters": 1300,
+          "walkMinutes": 17,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "oldtown",
+          "meters": 1050,
+          "walkMinutes": 14,
+          "rideMinutes": null
+        }
+      ],
+      "rooms": []
+    },
+    {
+      "name": "BoHo Prague Hotel",
+      "stars": 4,
+      "tags": [],
+      "boards": [
+        "bb",
+        "hb"
+      ],
+      "bookingScore": 9.5,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.086085,14.429337",
+      "bookingUrl": "https://www.booking.com/hotel/cz/boho-prague.html",
+      "roomsNote": null,
+      "sortOrder": 60,
+      "features": [
+        "spa"
+      ],
+      "distances": [
+        {
+          "landmarkKey": "wenceslas",
+          "meters": 670,
+          "walkMinutes": 9,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "naprikope",
+          "meters": 190,
+          "walkMinutes": 2,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "charles",
+          "meters": 1750,
+          "walkMinutes": 23,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "palladium",
+          "meters": 450,
+          "walkMinutes": 6,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "oldtown",
+          "meters": 760,
+          "walkMinutes": 10,
+          "rideMinutes": null
+        }
+      ],
+      "rooms": []
+    },
+    {
+      "name": "Metropol Design Hotel Old Town",
+      "stars": 4,
+      "tags": [],
+      "boards": [
+        "bb"
+      ],
+      "bookingScore": 8.6,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.08266,14.419642",
+      "bookingUrl": "https://www.booking.com/hotel/cz/metropol-prague.html",
+      "roomsNote": null,
+      "sortOrder": 61,
+      "features": [],
+      "distances": [
+        {
+          "landmarkKey": "wenceslas",
+          "meters": 350,
+          "walkMinutes": 5,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "naprikope",
+          "meters": 360,
+          "walkMinutes": 5,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "charles",
+          "meters": 1200,
+          "walkMinutes": 16,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "palladium",
+          "meters": 1150,
+          "walkMinutes": 15,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "oldtown",
+          "meters": 630,
+          "walkMinutes": 8,
+          "rideMinutes": null
+        }
+      ],
+      "rooms": []
+    },
+    {
+      "name": "Miss Sophie's Downtown",
+      "stars": 4,
+      "tags": [],
+      "boards": [
+        "bb"
+      ],
+      "bookingScore": 9.2,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.087805,14.403774",
+      "bookingUrl": "https://www.booking.com/hotel/cz/miss-sophie-39-s-downtown.html",
+      "roomsNote": null,
+      "sortOrder": 62,
+      "features": [],
+      "distances": [
+        {
+          "landmarkKey": "wenceslas",
+          "meters": 1600,
+          "walkMinutes": 21,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "naprikope",
+          "meters": 1650,
+          "walkMinutes": 22,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "charles",
+          "meters": 350,
+          "walkMinutes": 5,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "palladium",
+          "meters": 2150,
+          "walkMinutes": 29,
+          "rideMinutes": 6
+        },
+        {
+          "landmarkKey": "oldtown",
+          "meters": 1400,
+          "walkMinutes": 19,
+          "rideMinutes": null
+        }
+      ],
+      "rooms": []
+    },
+    {
+      "name": "Novotel Praha Wenceslas Square",
+      "stars": 4,
+      "tags": [],
+      "boards": [
+        "bb"
+      ],
+      "bookingScore": 8.6,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.075041,14.42805",
+      "bookingUrl": "https://www.booking.com/hotel/cz/novotel-praha-wenceslas-square.html",
+      "roomsNote": null,
+      "sortOrder": 63,
+      "features": [
+        "pool-in"
+      ],
+      "distances": [
+        {
+          "landmarkKey": "wenceslas",
+          "meters": 530,
+          "walkMinutes": 7,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "naprikope",
+          "meters": 1300,
+          "walkMinutes": 17,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "charles",
+          "meters": 2500,
+          "walkMinutes": 34,
+          "rideMinutes": 9
+        },
+        {
+          "landmarkKey": "palladium",
+          "meters": 2000,
+          "walkMinutes": 27,
+          "rideMinutes": 7
+        },
+        {
+          "landmarkKey": "oldtown",
+          "meters": 1750,
+          "walkMinutes": 23,
+          "rideMinutes": null
+        }
+      ],
+      "rooms": []
+    },
+    {
+      "name": "Ibis Praha Old Town",
+      "stars": 3,
+      "tags": [],
+      "boards": [
+        "bb"
+      ],
+      "bookingScore": 8.1,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.089383,14.430843",
+      "bookingUrl": "https://www.booking.com/hotel/cz/ibis-praha-old-town.html",
+      "roomsNote": null,
+      "sortOrder": 64,
+      "features": [],
+      "distances": [
+        {
+          "landmarkKey": "wenceslas",
+          "meters": 820,
+          "walkMinutes": 11,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "naprikope",
+          "meters": 350,
+          "walkMinutes": 5,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "charles",
+          "meters": 1850,
+          "walkMinutes": 25,
+          "rideMinutes": 7
+        },
+        {
+          "landmarkKey": "palladium",
+          "meters": 50,
+          "walkMinutes": 1,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "oldtown",
+          "meters": 890,
+          "walkMinutes": 12,
+          "rideMinutes": null
+        }
+      ],
+      "rooms": []
+    },
+    {
+      "name": "Ibis Praha Wenceslas Square",
+      "stars": 3,
+      "tags": [],
+      "boards": [
+        "bb"
+      ],
+      "bookingScore": 8.3,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.074881,14.427385",
+      "bookingUrl": "https://www.booking.com/hotel/cz/ibis-praha-wenceslas-square.html",
+      "roomsNote": null,
+      "sortOrder": 65,
+      "features": [],
+      "distances": [
+        {
+          "landmarkKey": "wenceslas",
+          "meters": 590,
+          "walkMinutes": 8,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "naprikope",
+          "meters": 1300,
+          "walkMinutes": 17,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "charles",
+          "meters": 2550,
+          "walkMinutes": 34,
+          "rideMinutes": 9
+        },
+        {
+          "landmarkKey": "palladium",
+          "meters": 2000,
+          "walkMinutes": 27,
+          "rideMinutes": 7
+        },
+        {
+          "landmarkKey": "oldtown",
+          "meters": 1750,
+          "walkMinutes": 24,
+          "rideMinutes": null
+        }
+      ],
+      "rooms": []
+    },
+    {
+      "name": "K+K Hotel Central",
+      "stars": 4,
+      "tags": [],
+      "boards": [
+        "bb"
+      ],
+      "bookingScore": 8.8,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.086819,14.43085",
+      "bookingUrl": "https://www.booking.com/hotel/cz/kkcentral.html",
+      "roomsNote": null,
+      "sortOrder": 66,
+      "features": [],
+      "distances": [
+        {
+          "landmarkKey": "wenceslas",
+          "meters": 770,
+          "walkMinutes": 10,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "naprikope",
+          "meters": 180,
+          "walkMinutes": 2,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "charles",
+          "meters": 1750,
+          "walkMinutes": 23,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "palladium",
+          "meters": 460,
+          "walkMinutes": 6,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "oldtown",
+          "meters": 780,
+          "walkMinutes": 10,
+          "rideMinutes": null
+        }
+      ],
+      "rooms": []
+    },
+    {
+      "name": "Aquapalace Hotel Prague",
+      "stars": 4,
+      "tags": [],
+      "boards": [
+        "bb"
+      ],
+      "bookingScore": 8.7,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.007357,14.571302",
+      "bookingUrl": "https://www.booking.com/hotel/cz/aquapalace-prague.html",
+      "roomsNote": null,
+      "sortOrder": 67,
+      "features": [
+        "waterpark",
+        "pool-in",
+        "pool-out",
+        "spa"
+      ],
+      "distances": [
+        {
+          "landmarkKey": "wenceslas",
+          "meters": 15250,
+          "walkMinutes": null,
+          "rideMinutes": 17
+        },
+        {
+          "landmarkKey": "naprikope",
+          "meters": 16250,
+          "walkMinutes": null,
+          "rideMinutes": 19
+        },
+        {
+          "landmarkKey": "charles",
+          "meters": 17200,
+          "walkMinutes": null,
+          "rideMinutes": 23
+        },
+        {
+          "landmarkKey": "palladium",
+          "meters": 16350,
+          "walkMinutes": null,
+          "rideMinutes": 21
+        },
+        {
+          "landmarkKey": "oldtown",
+          "meters": 16450,
+          "walkMinutes": null,
+          "rideMinutes": 22
+        }
+      ],
+      "rooms": []
+    }
   ]
- },
- "landmarks": [
-  {
-   "key": "wenceslas",
-   "name": {
-    "he": "כיכר ואצלב",
-    "en": "Wenceslas Square"
-   }
-  },
-  {
-   "key": "naprikope",
-   "name": {
-    "he": "רחוב Na Příkopě",
-    "en": "Na Příkopě"
-   }
-  },
-  {
-   "key": "charles",
-   "name": {
-    "he": "גשר קארל",
-    "en": "Charles Bridge"
-   }
-  },
-  {
-   "key": "palladium",
-   "name": {
-    "he": "קניון פלדיום",
-    "en": "Palladium Mall"
-   }
-  },
-  {
-   "key": "oldtown",
-   "name": {
-    "he": "כיכר העיר העתיקה",
-    "en": "Old Town Square"
-   }
-  }
- ],
- "hotels": [
-  {
-   "name": "Jalta Boutique Hotel",
-   "stars": 5,
-   "tags": [],
-   "boards": [
-    "bb"
-   ],
-   "bookingScore": 8.5,
-   "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.081084,14.428416",
-   "bookingUrl": "https://www.booking.com/hotel/cz/jalta.html",
-   "roomsNote": null,
-   "sortOrder": 0,
-   "features": [],
-   "distances": [
-    {
-     "landmarkKey": "wenceslas",
-     "meters": 90,
-     "walkMinutes": 1,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "naprikope",
-     "meters": 500,
-     "walkMinutes": 7,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "charles",
-     "meters": 1750,
-     "walkMinutes": 24,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "palladium",
-     "meters": 1200,
-     "walkMinutes": 16,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "oldtown",
-     "meters": 990,
-     "walkMinutes": 13,
-     "rideMinutes": null
-    }
-   ],
-   "rooms": []
-  },
-  {
-   "name": "Hotel Grandium Prague",
-   "stars": 5,
-   "tags": [],
-   "boards": [
-    "bb",
-    "hb"
-   ],
-   "bookingScore": 8.6,
-   "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.082264,14.429924",
-   "bookingUrl": "https://www.booking.com/hotel/cz/yasminhotel.html",
-   "roomsNote": null,
-   "sortOrder": 1,
-   "features": [
-    "spa"
-   ],
-   "distances": [
-    {
-     "landmarkKey": "wenceslas",
-     "meters": 310,
-     "walkMinutes": 4,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "naprikope",
-     "meters": 490,
-     "walkMinutes": 6,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "charles",
-     "meters": 1900,
-     "walkMinutes": 26,
-     "rideMinutes": 9
-    },
-    {
-     "landmarkKey": "palladium",
-     "meters": 1000,
-     "walkMinutes": 13,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "oldtown",
-     "meters": 990,
-     "walkMinutes": 13,
-     "rideMinutes": null
-    }
-   ],
-   "rooms": []
-  },
-  {
-   "name": "Grandior Hotel Prague",
-   "stars": 5,
-   "tags": [],
-   "boards": [
-    "bb",
-    "hb"
-   ],
-   "bookingScore": 8.9,
-   "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.090065,14.436062",
-   "bookingUrl": "https://www.booking.com/hotel/cz/grandior-prague.html",
-   "roomsNote": null,
-   "sortOrder": 2,
-   "features": [
-    "spa"
-   ],
-   "distances": [
-    {
-     "landmarkKey": "wenceslas",
-     "meters": 1300,
-     "walkMinutes": 17,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "naprikope",
-     "meters": 750,
-     "walkMinutes": 10,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "charles",
-     "meters": 2250,
-     "walkMinutes": 30,
-     "rideMinutes": 7
-    },
-    {
-     "landmarkKey": "palladium",
-     "meters": 470,
-     "walkMinutes": 6,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "oldtown",
-     "meters": 1300,
-     "walkMinutes": 17,
-     "rideMinutes": null
-    }
-   ],
-   "rooms": []
-  },
-  {
-   "name": "Grand Majestic Plaza",
-   "stars": 4,
-   "tags": [],
-   "boards": [
-    "bb"
-   ],
-   "bookingScore": 8.9,
-   "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.090516,14.43043",
-   "bookingUrl": "https://www.booking.com/hotel/cz/grand-majestic-plaza.html",
-   "roomsNote": null,
-   "sortOrder": 3,
-   "features": [],
-   "distances": [
-    {
-     "landmarkKey": "wenceslas",
-     "meters": 910,
-     "walkMinutes": 12,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "naprikope",
-     "meters": 440,
-     "walkMinutes": 6,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "charles",
-     "meters": 1900,
-     "walkMinutes": 26,
-     "rideMinutes": 7
-    },
-    {
-     "landmarkKey": "palladium",
-     "meters": 420,
-     "walkMinutes": 6,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "oldtown",
-     "meters": 940,
-     "walkMinutes": 13,
-     "rideMinutes": null
-    }
-   ],
-   "rooms": []
-  },
-  {
-   "name": "Majestic Plaza Hotel Prague",
-   "stars": 4,
-   "tags": [],
-   "boards": [
-    "bb",
-    "hb"
-   ],
-   "bookingScore": 8.6,
-   "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.078671,14.425129",
-   "bookingUrl": "https://www.booking.com/hotel/cz/design-majestic-plaza.html",
-   "roomsNote": null,
-   "sortOrder": 4,
-   "features": [
-    "spa"
-   ],
-   "distances": [
-    {
-     "landmarkKey": "wenceslas",
-     "meters": 570,
-     "walkMinutes": 8,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "naprikope",
-     "meters": 830,
-     "walkMinutes": 11,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "charles",
-     "meters": 1950,
-     "walkMinutes": 26,
-     "rideMinutes": 9
-    },
-    {
-     "landmarkKey": "palladium",
-     "meters": 1550,
-     "walkMinutes": 21,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "oldtown",
-     "meters": 1250,
-     "walkMinutes": 17,
-     "rideMinutes": null
-    }
-   ],
-   "rooms": []
-  },
-  {
-   "name": "Urban Creme",
-   "stars": 5,
-   "tags": [],
-   "boards": [
-    "bb"
-   ],
-   "bookingScore": 8.5,
-   "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.090226,14.436652",
-   "bookingUrl": "https://www.booking.com/hotel/cz/urban-creme.html",
-   "roomsNote": null,
-   "sortOrder": 5,
-   "features": [],
-   "distances": [
-    {
-     "landmarkKey": "wenceslas",
-     "meters": 1300,
-     "walkMinutes": 18,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "naprikope",
-     "meters": 780,
-     "walkMinutes": 10,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "charles",
-     "meters": 2300,
-     "walkMinutes": 31,
-     "rideMinutes": 7
-    },
-    {
-     "landmarkKey": "palladium",
-     "meters": 500,
-     "walkMinutes": 7,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "oldtown",
-     "meters": 1300,
-     "walkMinutes": 18,
-     "rideMinutes": null
-    }
-   ],
-   "rooms": []
-  },
-  {
-   "name": "987 Design Prague Hotel",
-   "stars": 4,
-   "tags": [],
-   "boards": [
-    "bb"
-   ],
-   "bookingScore": 8.8,
-   "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.086043,14.433801",
-   "bookingUrl": "https://www.booking.com/hotel/cz/987praguehotel.html",
-   "roomsNote": null,
-   "sortOrder": 6,
-   "features": [],
-   "distances": [
-    {
-     "landmarkKey": "wenceslas",
-     "meters": 700,
-     "walkMinutes": 9,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "naprikope",
-     "meters": 570,
-     "walkMinutes": 8,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "charles",
-     "meters": 2150,
-     "walkMinutes": 28,
-     "rideMinutes": 8
-    },
-    {
-     "landmarkKey": "palladium",
-     "meters": 730,
-     "walkMinutes": 10,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "oldtown",
-     "meters": 1150,
-     "walkMinutes": 15,
-     "rideMinutes": null
-    }
-   ],
-   "rooms": []
-  },
-  {
-   "name": "K+K Hotel Fenix",
-   "stars": 4,
-   "tags": [],
-   "boards": [
-    "bb"
-   ],
-   "bookingScore": 8.6,
-   "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.079617,14.427634",
-   "bookingUrl": "https://www.booking.com/hotel/cz/kkfenix.html",
-   "roomsNote": null,
-   "sortOrder": 7,
-   "features": [],
-   "distances": [
-    {
-     "landmarkKey": "wenceslas",
-     "meters": 140,
-     "walkMinutes": 2,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "naprikope",
-     "meters": 690,
-     "walkMinutes": 9,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "charles",
-     "meters": 1900,
-     "walkMinutes": 26,
-     "rideMinutes": 9
-    },
-    {
-     "landmarkKey": "palladium",
-     "meters": 1400,
-     "walkMinutes": 19,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "oldtown",
-     "meters": 1150,
-     "walkMinutes": 15,
-     "rideMinutes": null
-    }
-   ],
-   "rooms": []
-  },
-  {
-   "name": "Pytloun Boutique Hotel Prague",
-   "stars": 5,
-   "tags": [],
-   "boards": [
-    "bb"
-   ],
-   "bookingScore": 9.1,
-   "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.08307,14.424504",
-   "bookingUrl": "https://www.booking.com/hotel/cz/pytloun-prague.html",
-   "roomsNote": null,
-   "sortOrder": 8,
-   "features": [],
-   "distances": [
-    {
-     "landmarkKey": "wenceslas",
-     "meters": 140,
-     "walkMinutes": 2,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "naprikope",
-     "meters": 170,
-     "walkMinutes": 2,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "charles",
-     "meters": 1400,
-     "walkMinutes": 19,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "palladium",
-     "meters": 940,
-     "walkMinutes": 13,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "oldtown",
-     "meters": 630,
-     "walkMinutes": 8,
-     "rideMinutes": null
-    }
-   ],
-   "rooms": []
-  },
-  {
-   "name": "Ambassador Zlata Husa",
-   "stars": 5,
-   "tags": [],
-   "boards": [
-    "bb"
-   ],
-   "bookingScore": 8.3,
-   "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.084019,14.425174",
-   "bookingUrl": "https://www.booking.com/hotel/cz/ambassador.html",
-   "roomsNote": null,
-   "sortOrder": 9,
-   "features": [
-    "casino"
-   ],
-   "distances": [
-    {
-     "landmarkKey": "wenceslas",
-     "meters": 110,
-     "walkMinutes": 1,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "naprikope",
-     "meters": 60,
-     "walkMinutes": 1,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "charles",
-     "meters": 1350,
-     "walkMinutes": 18,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "palladium",
-     "meters": 780,
-     "walkMinutes": 10,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "oldtown",
-     "meters": 550,
-     "walkMinutes": 7,
-     "rideMinutes": null
-    }
-   ],
-   "rooms": []
-  },
-  {
-   "name": "Hotel Kings Court",
-   "stars": 5,
-   "tags": [],
-   "boards": [
-    "bb"
-   ],
-   "bookingScore": 9.5,
-   "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.088262,14.428038",
-   "bookingUrl": "https://www.booking.com/hotel/cz/kings-court.html",
-   "roomsNote": null,
-   "sortOrder": 10,
-   "features": [
-    "spa",
-    "pool-in"
-   ],
-   "distances": [
-    {
-     "landmarkKey": "wenceslas",
-     "meters": 590,
-     "walkMinutes": 8,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "naprikope",
-     "meters": 150,
-     "walkMinutes": 2,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "charles",
-     "meters": 1600,
-     "walkMinutes": 21,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "palladium",
-     "meters": 240,
-     "walkMinutes": 3,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "oldtown",
-     "meters": 630,
-     "walkMinutes": 8,
-     "rideMinutes": null
-    }
-   ],
-   "rooms": []
-  },
-  {
-   "name": "NH Collection Prague Carlo IV",
-   "stars": 5,
-   "tags": [],
-   "boards": [
-    "bb"
-   ],
-   "bookingScore": 8.9,
-   "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.086308,14.433845",
-   "bookingUrl": "https://www.booking.com/hotel/cz/carlo-iv-the-dedica-anthology-autograph-collection.html",
-   "roomsNote": null,
-   "sortOrder": 11,
-   "features": [
-    "spa",
-    "pool-in"
-   ],
-   "distances": [
-    {
-     "landmarkKey": "wenceslas",
-     "meters": 740,
-     "walkMinutes": 10,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "naprikope",
-     "meters": 540,
-     "walkMinutes": 7,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "charles",
-     "meters": 2100,
-     "walkMinutes": 28,
-     "rideMinutes": 9
-    },
-    {
-     "landmarkKey": "palladium",
-     "meters": 700,
-     "walkMinutes": 9,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "oldtown",
-     "meters": 1150,
-     "walkMinutes": 15,
-     "rideMinutes": null
-    }
-   ],
-   "rooms": []
-  },
-  {
-   "name": "The Grand Mark Prague",
-   "stars": 5,
-   "tags": [],
-   "boards": [
-    "bb"
-   ],
-   "bookingScore": 9.5,
-   "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.087094,14.431337",
-   "bookingUrl": "https://www.booking.com/hotel/cz/kempinski-hybernska-prague.html",
-   "roomsNote": null,
-   "sortOrder": 12,
-   "features": [
-    "spa"
-   ],
-   "distances": [
-    {
-     "landmarkKey": "wenceslas",
-     "meters": 780,
-     "walkMinutes": 10,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "naprikope",
-     "meters": 210,
-     "walkMinutes": 3,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "charles",
-     "meters": 1800,
-     "walkMinutes": 24,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "palladium",
-     "meters": 490,
-     "walkMinutes": 7,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "oldtown",
-     "meters": 810,
-     "walkMinutes": 11,
-     "rideMinutes": null
-    }
-   ],
-   "rooms": []
-  },
-  {
-   "name": "Hotel Raffaello Prague",
-   "stars": 4,
-   "tags": [],
-   "boards": [
-    "bb"
-   ],
-   "bookingScore": 8.4,
-   "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.074501,14.430575",
-   "bookingUrl": "https://www.booking.com/hotel/cz/raffaello-hlavni-mesto-praha.html",
-   "roomsNote": null,
-   "sortOrder": 13,
-   "features": [],
-   "distances": [
-    {
-     "landmarkKey": "wenceslas",
-     "meters": 610,
-     "walkMinutes": 8,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "naprikope",
-     "meters": 1350,
-     "walkMinutes": 18,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "charles",
-     "meters": 2600,
-     "walkMinutes": 34,
-     "rideMinutes": 9
-    },
-    {
-     "landmarkKey": "palladium",
-     "meters": 2050,
-     "walkMinutes": 27,
-     "rideMinutes": 6
-    },
-    {
-     "landmarkKey": "oldtown",
-     "meters": 1800,
-     "walkMinutes": 24,
-     "rideMinutes": null
-    }
-   ],
-   "rooms": []
-  },
-  {
-   "name": "Grand Hotel Bohemia",
-   "stars": 5,
-   "tags": [],
-   "boards": [
-    "bb"
-   ],
-   "bookingScore": 9.2,
-   "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.0877,14.426563",
-   "bookingUrl": "https://www.booking.com/hotel/cz/grandhotelbohemia.html",
-   "roomsNote": null,
-   "sortOrder": 14,
-   "features": [],
-   "distances": [
-    {
-     "landmarkKey": "wenceslas",
-     "meters": 520,
-     "walkMinutes": 7,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "naprikope",
-     "meters": 200,
-     "walkMinutes": 3,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "charles",
-     "meters": 1450,
-     "walkMinutes": 19,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "palladium",
-     "meters": 370,
-     "walkMinutes": 5,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "oldtown",
-     "meters": 480,
-     "walkMinutes": 6,
-     "rideMinutes": null
-    }
-   ],
-   "rooms": []
-  },
-  {
-   "name": "Hotel Paris Prague",
-   "stars": 5,
-   "tags": [],
-   "boards": [
-    "bb"
-   ],
-   "bookingScore": 9.2,
-   "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.088201,14.427489",
-   "bookingUrl": "https://www.booking.com/hotel/cz/pariz.html",
-   "roomsNote": null,
-   "sortOrder": 15,
-   "features": [
-    "spa"
-   ],
-   "distances": [
-    {
-     "landmarkKey": "wenceslas",
-     "meters": 600,
-     "walkMinutes": 8,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "naprikope",
-     "meters": 190,
-     "walkMinutes": 3,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "charles",
-     "meters": 1550,
-     "walkMinutes": 21,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "palladium",
-     "meters": 280,
-     "walkMinutes": 4,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "oldtown",
-     "meters": 590,
-     "walkMinutes": 8,
-     "rideMinutes": null
-    }
-   ],
-   "rooms": []
-  },
-  {
-   "name": "Century Old Town Prague - MGallery",
-   "stars": 4,
-   "tags": [],
-   "boards": [
-    "bb"
-   ],
-   "bookingScore": 9,
-   "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.089528,14.431291",
-   "bookingUrl": "https://www.booking.com/hotel/cz/mercure-prague-old-town.html",
-   "roomsNote": null,
-   "sortOrder": 16,
-   "features": [],
-   "distances": [
-    {
-     "landmarkKey": "wenceslas",
-     "meters": 850,
-     "walkMinutes": 11,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "naprikope",
-     "meters": 390,
-     "walkMinutes": 5,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "charles",
-     "meters": 1900,
-     "walkMinutes": 25,
-     "rideMinutes": 7
-    },
-    {
-     "landmarkKey": "palladium",
-     "meters": 90,
-     "walkMinutes": 1,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "oldtown",
-     "meters": 930,
-     "walkMinutes": 12,
-     "rideMinutes": null
-    }
-   ],
-   "rooms": []
-  },
-  {
-   "name": "Buddha-Bar Hotel Prague",
-   "stars": 5,
-   "tags": [],
-   "boards": [
-    "bb"
-   ],
-   "bookingScore": 9,
-   "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.088151,14.425856",
-   "bookingUrl": "https://www.booking.com/hotel/cz/buddha-bar-prague.html",
-   "roomsNote": null,
-   "sortOrder": 17,
-   "features": [
-    "spa"
-   ],
-   "distances": [
-    {
-     "landmarkKey": "wenceslas",
-     "meters": 580,
-     "walkMinutes": 8,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "naprikope",
-     "meters": 280,
-     "walkMinutes": 4,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "charles",
-     "meters": 1450,
-     "walkMinutes": 19,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "palladium",
-     "meters": 450,
-     "walkMinutes": 6,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "oldtown",
-     "meters": 460,
-     "walkMinutes": 6,
-     "rideMinutes": null
-    }
-   ],
-   "rooms": []
-  },
-  {
-   "name": "Eurostars Thalia",
-   "stars": 5,
-   "tags": [],
-   "boards": [
-    "bb"
-   ],
-   "bookingScore": 8.9,
-   "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.081859,14.416516",
-   "bookingUrl": "https://www.booking.com/hotel/cz/eurostars-thalia.html",
-   "roomsNote": null,
-   "sortOrder": 18,
-   "features": [],
-   "distances": [
-    {
-     "landmarkKey": "wenceslas",
-     "meters": 590,
-     "walkMinutes": 8,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "naprikope",
-     "meters": 600,
-     "walkMinutes": 8,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "charles",
-     "meters": 1100,
-     "walkMinutes": 14,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "palladium",
-     "meters": 1350,
-     "walkMinutes": 18,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "oldtown",
-     "meters": 870,
-     "walkMinutes": 12,
-     "rideMinutes": null
-    }
-   ],
-   "rooms": []
-  },
-  {
-   "name": "Hotel U Prince",
-   "stars": 5,
-   "tags": [],
-   "boards": [
-    "bb"
-   ],
-   "bookingScore": 8.3,
-   "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.086431,14.420154",
-   "bookingUrl": "https://www.booking.com/hotel/cz/u-prince.html",
-   "roomsNote": null,
-   "sortOrder": 19,
-   "features": [],
-   "distances": [
-    {
-     "landmarkKey": "wenceslas",
-     "meters": 410,
-     "walkMinutes": 6,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "naprikope",
-     "meters": 460,
-     "walkMinutes": 6,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "charles",
-     "meters": 930,
-     "walkMinutes": 12,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "palladium",
-     "meters": 910,
-     "walkMinutes": 12,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "oldtown",
-     "meters": 150,
-     "walkMinutes": 2,
-     "rideMinutes": null
-    }
-   ],
-   "rooms": []
-  },
-  {
-   "name": "The Manes Boutique Hotel",
-   "stars": 4,
-   "tags": [],
-   "boards": [
-    "bb"
-   ],
-   "bookingScore": 9.7,
-   "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.090238,14.410924",
-   "bookingUrl": "https://www.booking.com/hotel/cz/euroagentur-manes.html",
-   "roomsNote": null,
-   "sortOrder": 20,
-   "features": [],
-   "distances": [
-    {
-     "landmarkKey": "wenceslas",
-     "meters": 1250,
-     "walkMinutes": 17,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "naprikope",
-     "meters": 1300,
-     "walkMinutes": 17,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "charles",
-     "meters": 600,
-     "walkMinutes": 8,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "palladium",
-     "meters": 1700,
-     "walkMinutes": 23,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "oldtown",
-     "meters": 840,
-     "walkMinutes": 11,
-     "rideMinutes": null
-    }
-   ],
-   "rooms": []
-  },
-  {
-   "name": "Prague Marriott Hotel",
-   "stars": 5,
-   "tags": [],
-   "boards": [
-    "bb"
-   ],
-   "bookingScore": 8.6,
-   "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.08798,14.431533",
-   "bookingUrl": "https://www.booking.com/hotel/cz/prague-marriott.html",
-   "roomsNote": null,
-   "sortOrder": 21,
-   "features": [
-    "pool-in"
-   ],
-   "distances": [
-    {
-     "landmarkKey": "wenceslas",
-     "meters": 780,
-     "walkMinutes": 10,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "naprikope",
-     "meters": 310,
-     "walkMinutes": 4,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "charles",
-     "meters": 1850,
-     "walkMinutes": 25,
-     "rideMinutes": 7
-    },
-    {
-     "landmarkKey": "palladium",
-     "meters": 310,
-     "walkMinutes": 4,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "oldtown",
-     "meters": 870,
-     "walkMinutes": 12,
-     "rideMinutes": null
-    }
-   ],
-   "rooms": []
-  },
-  {
-   "name": "Hilton Prague",
-   "stars": 5,
-   "tags": [],
-   "boards": [
-    "bb"
-   ],
-   "bookingScore": 8.4,
-   "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.093347,14.439665",
-   "bookingUrl": "https://www.booking.com/hotel/cz/hilton-prague.html",
-   "roomsNote": null,
-   "sortOrder": 22,
-   "features": [
-    "spa",
-    "pool-in",
-    "casino"
-   ],
-   "distances": [
-    {
-     "landmarkKey": "wenceslas",
-     "meters": 1700,
-     "walkMinutes": 22,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "naprikope",
-     "meters": 1200,
-     "walkMinutes": 16,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "charles",
-     "meters": 2750,
-     "walkMinutes": 36,
-     "rideMinutes": 7
-    },
-    {
-     "landmarkKey": "palladium",
-     "meters": 920,
-     "walkMinutes": 12,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "oldtown",
-     "meters": 1750,
-     "walkMinutes": 23,
-     "rideMinutes": null
-    }
-   ],
-   "rooms": []
-  },
-  {
-   "name": "Hilton Prague Old Town",
-   "stars": 5,
-   "tags": [],
-   "boards": [
-    "bb"
-   ],
-   "bookingScore": 8.6,
-   "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.08877,14.431934",
-   "bookingUrl": "https://www.booking.com/hotel/cz/hilton-prague-old-town.html",
-   "roomsNote": null,
-   "sortOrder": 23,
-   "features": [
-    "spa",
-    "pool-in"
-   ],
-   "distances": [
-    {
-     "landmarkKey": "wenceslas",
-     "meters": 880,
-     "walkMinutes": 12,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "naprikope",
-     "meters": 410,
-     "walkMinutes": 5,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "charles",
-     "meters": 1900,
-     "walkMinutes": 26,
-     "rideMinutes": 8
-    },
-    {
-     "landmarkKey": "palladium",
-     "meters": 350,
-     "walkMinutes": 5,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "oldtown",
-     "meters": 940,
-     "walkMinutes": 13,
-     "rideMinutes": null
-    }
-   ],
-   "rooms": []
-  },
-  {
-   "name": "King David Prague (Kosher)",
-   "stars": 5,
-   "tags": [
-    "kosher"
-   ],
-   "boards": [
-    "bb",
-    "hb"
-   ],
-   "bookingScore": 8.7,
-   "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.086551,14.43683",
-   "bookingUrl": "https://www.booking.com/hotel/cz/hotel-king-david-prague.html",
-   "roomsNote": null,
-   "sortOrder": 24,
-   "features": [
-    "spa",
-    "pool-in"
-   ],
-   "distances": [
-    {
-     "landmarkKey": "wenceslas",
-     "meters": 1000,
-     "walkMinutes": 13,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "naprikope",
-     "meters": 640,
-     "walkMinutes": 8,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "charles",
-     "meters": 2200,
-     "walkMinutes": 29,
-     "rideMinutes": 9
-    },
-    {
-     "landmarkKey": "palladium",
-     "meters": 760,
-     "walkMinutes": 10,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "oldtown",
-     "meters": 1250,
-     "walkMinutes": 16,
-     "rideMinutes": null
-    }
-   ],
-   "rooms": []
-  },
-  {
-   "name": "Hotel Clementin",
-   "stars": 4,
-   "tags": [],
-   "boards": [
-    "bb"
-   ],
-   "bookingScore": 9.3,
-   "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.086193,14.417243",
-   "bookingUrl": "https://www.booking.com/hotel/cz/clementin-old-town.html",
-   "roomsNote": null,
-   "sortOrder": 25,
-   "features": [],
-   "distances": [
-    {
-     "landmarkKey": "wenceslas",
-     "meters": 630,
-     "walkMinutes": 8,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "naprikope",
-     "meters": 670,
-     "walkMinutes": 9,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "charles",
-     "meters": 670,
-     "walkMinutes": 9,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "palladium",
-     "meters": 1200,
-     "walkMinutes": 16,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "oldtown",
-     "meters": 430,
-     "walkMinutes": 6,
-     "rideMinutes": null
-    }
-   ],
-   "rooms": []
-  },
-  {
-   "name": "Hotel Rott",
-   "stars": 4,
-   "tags": [
-    "adults-only"
-   ],
-   "boards": [
-    "bb"
-   ],
-   "bookingScore": 9.4,
-   "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.086812,14.419208",
-   "bookingUrl": "https://www.booking.com/hotel/cz/rott.html",
-   "roomsNote": null,
-   "sortOrder": 26,
-   "features": [],
-   "distances": [
-    {
-     "landmarkKey": "wenceslas",
-     "meters": 480,
-     "walkMinutes": 6,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "naprikope",
-     "meters": 520,
-     "walkMinutes": 7,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "charles",
-     "meters": 910,
-     "walkMinutes": 12,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "palladium",
-     "meters": 1000,
-     "walkMinutes": 13,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "oldtown",
-     "meters": 230,
-     "walkMinutes": 3,
-     "rideMinutes": null
-    }
-   ],
-   "rooms": []
-  },
-  {
-   "name": "Hotel Josef",
-   "stars": 4,
-   "tags": [],
-   "boards": [
-    "bb"
-   ],
-   "bookingScore": 9.3,
-   "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.090089,14.426445",
-   "bookingUrl": "https://www.booking.com/hotel/cz/josef-praha-1.html",
-   "roomsNote": null,
-   "sortOrder": 27,
-   "features": [],
-   "distances": [
-    {
-     "landmarkKey": "wenceslas",
-     "meters": 800,
-     "walkMinutes": 11,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "naprikope",
-     "meters": 440,
-     "walkMinutes": 6,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "charles",
-     "meters": 1600,
-     "walkMinutes": 21,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "palladium",
-     "meters": 500,
-     "walkMinutes": 7,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "oldtown",
-     "meters": 620,
-     "walkMinutes": 8,
-     "rideMinutes": null
-    }
-   ],
-   "rooms": []
-  },
-  {
-   "name": "Art Deco Imperial Hotel",
-   "stars": 5,
-   "tags": [],
-   "boards": [
-    "bb"
-   ],
-   "bookingScore": 9.1,
-   "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.089923,14.432811",
-   "bookingUrl": "https://www.booking.com/hotel/cz/prague-imperial.html",
-   "roomsNote": null,
-   "sortOrder": 28,
-   "features": [],
-   "distances": [
-    {
-     "landmarkKey": "wenceslas",
-     "meters": 970,
-     "walkMinutes": 13,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "naprikope",
-     "meters": 510,
-     "walkMinutes": 7,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "charles",
-     "meters": 2000,
-     "walkMinutes": 27,
-     "rideMinutes": 7
-    },
-    {
-     "landmarkKey": "palladium",
-     "meters": 210,
-     "walkMinutes": 3,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "oldtown",
-     "meters": 1050,
-     "walkMinutes": 14,
-     "rideMinutes": null
-    }
-   ],
-   "rooms": []
-  },
-  {
-   "name": "Metropolitan Old Town Hotel",
-   "stars": 4,
-   "tags": [],
-   "boards": [
-    "bb"
-   ],
-   "bookingScore": 9.1,
-   "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.091195,14.425698",
-   "bookingUrl": "https://www.booking.com/hotel/cz/rubicon-old-town.html",
-   "roomsNote": null,
-   "sortOrder": 29,
-   "features": [],
-   "distances": [
-    {
-     "landmarkKey": "wenceslas",
-     "meters": 970,
-     "walkMinutes": 13,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "naprikope",
-     "meters": 630,
-     "walkMinutes": 8,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "charles",
-     "meters": 1650,
-     "walkMinutes": 22,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "palladium",
-     "meters": 620,
-     "walkMinutes": 8,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "oldtown",
-     "meters": 690,
-     "walkMinutes": 9,
-     "rideMinutes": null
-    }
-   ],
-   "rooms": []
-  },
-  {
-   "name": "Cosmopolitan Hotel Prague",
-   "stars": 5,
-   "tags": [],
-   "boards": [
-    "bb"
-   ],
-   "bookingScore": 9,
-   "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.089968,14.432078",
-   "bookingUrl": "https://www.booking.com/hotel/cz/cosmopolitan-prague.html",
-   "roomsNote": null,
-   "sortOrder": 30,
-   "features": [],
-   "distances": [
-    {
-     "landmarkKey": "wenceslas",
-     "meters": 970,
-     "walkMinutes": 13,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "naprikope",
-     "meters": 500,
-     "walkMinutes": 7,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "charles",
-     "meters": 2000,
-     "walkMinutes": 27,
-     "rideMinutes": 7
-    },
-    {
-     "landmarkKey": "palladium",
-     "meters": 210,
-     "walkMinutes": 3,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "oldtown",
-     "meters": 1050,
-     "walkMinutes": 14,
-     "rideMinutes": null
-    }
-   ],
-   "rooms": []
-  },
-  {
-   "name": "Motel One Prague-Florentinum",
-   "stars": 3,
-   "tags": [],
-   "boards": [
-    "bb"
-   ],
-   "bookingScore": 8.7,
-   "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.089695,14.434487",
-   "bookingUrl": "https://www.booking.com/hotel/cz/motel-one-prague.html",
-   "roomsNote": null,
-   "sortOrder": 31,
-   "features": [],
-   "distances": [
-    {
-     "landmarkKey": "wenceslas",
-     "meters": 1100,
-     "walkMinutes": 15,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "naprikope",
-     "meters": 640,
-     "walkMinutes": 8,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "charles",
-     "meters": 2150,
-     "walkMinutes": 29,
-     "rideMinutes": 7
-    },
-    {
-     "landmarkKey": "palladium",
-     "meters": 360,
-     "walkMinutes": 5,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "oldtown",
-     "meters": 1200,
-     "walkMinutes": 16,
-     "rideMinutes": null
-    }
-   ],
-   "rooms": []
-  },
-  {
-   "name": "Maximilian Hotel",
-   "stars": 4,
-   "tags": [],
-   "boards": [
-    "bb"
-   ],
-   "bookingScore": 9.3,
-   "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.090963,14.424662",
-   "bookingUrl": "https://www.booking.com/hotel/cz/maximilian-hlavni-mesto-praha.html",
-   "roomsNote": null,
-   "sortOrder": 32,
-   "features": [],
-   "distances": [
-    {
-     "landmarkKey": "wenceslas",
-     "meters": 950,
-     "walkMinutes": 13,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "naprikope",
-     "meters": 620,
-     "walkMinutes": 8,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "charles",
-     "meters": 1550,
-     "walkMinutes": 20,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "palladium",
-     "meters": 660,
-     "walkMinutes": 9,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "oldtown",
-     "meters": 550,
-     "walkMinutes": 7,
-     "rideMinutes": null
-    }
-   ],
-   "rooms": []
-  },
-  {
-   "name": "The Mozart Prague",
-   "stars": 5,
-   "tags": [],
-   "boards": [
-    "bb",
-    "hb"
-   ],
-   "bookingScore": 8.4,
-   "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.084616,14.414087",
-   "bookingUrl": "https://www.booking.com/hotel/cz/pachtuvpalaceprague.html",
-   "roomsNote": null,
-   "sortOrder": 33,
-   "features": [
-    "spa"
-   ],
-   "distances": [
-    {
-     "landmarkKey": "wenceslas",
-     "meters": 810,
-     "walkMinutes": 11,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "naprikope",
-     "meters": 850,
-     "walkMinutes": 11,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "charles",
-     "meters": 640,
-     "walkMinutes": 9,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "palladium",
-     "meters": 1500,
-     "walkMinutes": 20,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "oldtown",
-     "meters": 760,
-     "walkMinutes": 10,
-     "rideMinutes": null
-    }
-   ],
-   "rooms": []
-  },
-  {
-   "name": "INNSiDE by Melia Prague Old Town",
-   "stars": 4,
-   "tags": [],
-   "boards": [
-    "bb",
-    "hb"
-   ],
-   "bookingScore": 9,
-   "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.091469,14.431",
-   "bookingUrl": "https://www.booking.com/hotel/cz/innside-by-melia.html",
-   "roomsNote": null,
-   "sortOrder": 34,
-   "features": [],
-   "distances": [
-    {
-     "landmarkKey": "wenceslas",
-     "meters": 1100,
-     "walkMinutes": 15,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "naprikope",
-     "meters": 640,
-     "walkMinutes": 9,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "charles",
-     "meters": 1950,
-     "walkMinutes": 26,
-     "rideMinutes": 6
-    },
-    {
-     "landmarkKey": "palladium",
-     "meters": 450,
-     "walkMinutes": 6,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "oldtown",
-     "meters": 970,
-     "walkMinutes": 13,
-     "rideMinutes": null
-    }
-   ],
-   "rooms": []
-  },
-  {
-   "name": "Four Seasons Hotel Prague",
-   "stars": 5,
-   "tags": [],
-   "boards": [
-    "bb"
-   ],
-   "bookingScore": 9,
-   "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.08771,14.414537",
-   "bookingUrl": "https://www.booking.com/hotel/cz/four-seasons-prague.html",
-   "roomsNote": null,
-   "sortOrder": 35,
-   "features": [
-    "spa",
-    "pool-in"
-   ],
-   "distances": [
-    {
-     "landmarkKey": "wenceslas",
-     "meters": 930,
-     "walkMinutes": 12,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "naprikope",
-     "meters": 970,
-     "walkMinutes": 13,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "charles",
-     "meters": 690,
-     "walkMinutes": 9,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "palladium",
-     "meters": 1400,
-     "walkMinutes": 19,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "oldtown",
-     "meters": 550,
-     "walkMinutes": 7,
-     "rideMinutes": null
-    }
-   ],
-   "rooms": []
-  },
-  {
-   "name": "Elysee Hotel",
-   "stars": 4,
-   "tags": [],
-   "boards": [
-    "bb"
-   ],
-   "bookingScore": 8.5,
-   "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.081377,14.428307",
-   "bookingUrl": "https://www.booking.com/hotel/cz/elysee.html",
-   "roomsNote": null,
-   "sortOrder": 36,
-   "features": [],
-   "distances": [
-    {
-     "landmarkKey": "wenceslas",
-     "meters": 310,
-     "walkMinutes": 4,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "naprikope",
-     "meters": 770,
-     "walkMinutes": 10,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "charles",
-     "meters": 2050,
-     "walkMinutes": 27,
-     "rideMinutes": 10
-    },
-    {
-     "landmarkKey": "palladium",
-     "meters": 1200,
-     "walkMinutes": 16,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "oldtown",
-     "meters": 1200,
-     "walkMinutes": 16,
-     "rideMinutes": null
-    }
-   ],
-   "rooms": []
-  },
-  {
-   "name": "Almanac X Alcron Prague",
-   "stars": 5,
-   "tags": [],
-   "boards": [
-    "bb"
-   ],
-   "bookingScore": 9.2,
-   "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.080077,14.426401",
-   "bookingUrl": "https://www.booking.com/hotel/cz/alcron.html",
-   "roomsNote": null,
-   "sortOrder": 37,
-   "features": [],
-   "distances": [
-    {
-     "landmarkKey": "wenceslas",
-     "meters": 230,
-     "walkMinutes": 3,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "naprikope",
-     "meters": 590,
-     "walkMinutes": 8,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "charles",
-     "meters": 1850,
-     "walkMinutes": 24,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "palladium",
-     "meters": 1300,
-     "walkMinutes": 17,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "oldtown",
-     "meters": 1050,
-     "walkMinutes": 14,
-     "rideMinutes": null
-    }
-   ],
-   "rooms": []
-  },
-  {
-   "name": "W Prague",
-   "stars": 5,
-   "tags": [],
-   "boards": [
-    "bb"
-   ],
-   "bookingScore": 9.4,
-   "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=41.310203,-96.809213",
-   "bookingUrl": "https://www.booking.com/hotel/cz/w-prague.html",
-   "roomsNote": null,
-   "sortOrder": 38,
-   "features": [
-    "spa",
-    "pool-in"
-   ],
-   "distances": [
-    {
-     "landmarkKey": "wenceslas",
-     "meters": 2743350,
-     "walkMinutes": 37148,
-     "rideMinutes": 1689
-    },
-    {
-     "landmarkKey": "naprikope",
-     "meters": 2743350,
-     "walkMinutes": 37149,
-     "rideMinutes": 1693
-    },
-    {
-     "landmarkKey": "charles",
-     "meters": 2742750,
-     "walkMinutes": 37141,
-     "rideMinutes": 1690
-    },
-    {
-     "landmarkKey": "palladium",
-     "meters": 2744150,
-     "walkMinutes": 37159,
-     "rideMinutes": 1690
-    },
-    {
-     "landmarkKey": "oldtown",
-     "meters": 2743550,
-     "walkMinutes": 37151,
-     "rideMinutes": 1691
-    }
-   ],
-   "rooms": []
-  },
-  {
-   "name": "Occidental Praha Wilson",
-   "stars": 5,
-   "tags": [],
-   "boards": [
-    "bb"
-   ],
-   "bookingScore": 8.4,
-   "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.079929,14.430411",
-   "bookingUrl": "https://www.booking.com/hotel/cz/occidental-praha-wilson.html",
-   "roomsNote": null,
-   "sortOrder": 39,
-   "features": [],
-   "distances": [
-    {
-     "landmarkKey": "wenceslas",
-     "meters": 30,
-     "walkMinutes": 0,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "naprikope",
-     "meters": 740,
-     "walkMinutes": 10,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "charles",
-     "meters": 2000,
-     "walkMinutes": 27,
-     "rideMinutes": 9
-    },
-    {
-     "landmarkKey": "palladium",
-     "meters": 1350,
-     "walkMinutes": 18,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "oldtown",
-     "meters": 1250,
-     "walkMinutes": 16,
-     "rideMinutes": null
-    }
-   ],
-   "rooms": []
-  },
-  {
-   "name": "Maestro by Adrez",
-   "stars": 4,
-   "tags": [],
-   "boards": [
-    "bb"
-   ],
-   "bookingScore": 8.5,
-   "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.082066,14.430287",
-   "bookingUrl": "https://www.booking.com/hotel/cz/sovereign-prague.html",
-   "roomsNote": null,
-   "sortOrder": 40,
-   "features": [],
-   "distances": [
-    {
-     "landmarkKey": "wenceslas",
-     "meters": 240,
-     "walkMinutes": 3,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "naprikope",
-     "meters": 520,
-     "walkMinutes": 7,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "charles",
-     "meters": 1950,
-     "walkMinutes": 26,
-     "rideMinutes": 9
-    },
-    {
-     "landmarkKey": "palladium",
-     "meters": 1050,
-     "walkMinutes": 14,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "oldtown",
-     "meters": 1000,
-     "walkMinutes": 14,
-     "rideMinutes": null
-    }
-   ],
-   "rooms": []
-  },
-  {
-   "name": "The ICON Hotel & Lounge",
-   "stars": 4,
-   "tags": [],
-   "boards": [
-    "bb"
-   ],
-   "bookingScore": 8.8,
-   "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.080085,14.424708",
-   "bookingUrl": "https://www.booking.com/hotel/cz/the-icon-boutique.html",
-   "roomsNote": null,
-   "sortOrder": 41,
-   "features": [],
-   "distances": [
-    {
-     "landmarkKey": "wenceslas",
-     "meters": 230,
-     "walkMinutes": 3,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "naprikope",
-     "meters": 620,
-     "walkMinutes": 8,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "charles",
-     "meters": 1700,
-     "walkMinutes": 23,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "palladium",
-     "meters": 1350,
-     "walkMinutes": 18,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "oldtown",
-     "meters": 1050,
-     "walkMinutes": 14,
-     "rideMinutes": null
-    }
-   ],
-   "rooms": []
-  },
-  {
-   "name": "Adria Hotel Prague",
-   "stars": 4,
-   "tags": [],
-   "boards": [
-    "bb",
-    "hb"
-   ],
-   "bookingScore": 8.3,
-   "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.082653,14.425105",
-   "bookingUrl": "https://www.booking.com/hotel/cz/hoteladria.html",
-   "roomsNote": null,
-   "sortOrder": 42,
-   "features": [],
-   "distances": [
-    {
-     "landmarkKey": "wenceslas",
-     "meters": 120,
-     "walkMinutes": 2,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "naprikope",
-     "meters": 240,
-     "walkMinutes": 3,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "charles",
-     "meters": 1450,
-     "walkMinutes": 20,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "palladium",
-     "meters": 1000,
-     "walkMinutes": 13,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "oldtown",
-     "meters": 690,
-     "walkMinutes": 9,
-     "rideMinutes": null
-    }
-   ],
-   "rooms": []
-  },
-  {
-   "name": "Esplanade Hotel Prague",
-   "stars": 5,
-   "tags": [],
-   "boards": [
-    "bb"
-   ],
-   "bookingScore": 8.5,
-   "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.081871,14.431925",
-   "bookingUrl": "https://www.booking.com/hotel/cz/esplanadeprague.html",
-   "roomsNote": null,
-   "sortOrder": 43,
-   "features": [],
-   "distances": [
-    {
-     "landmarkKey": "wenceslas",
-     "meters": 280,
-     "walkMinutes": 4,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "naprikope",
-     "meters": 690,
-     "walkMinutes": 9,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "charles",
-     "meters": 2100,
-     "walkMinutes": 28,
-     "rideMinutes": 9
-    },
-    {
-     "landmarkKey": "palladium",
-     "meters": 1100,
-     "walkMinutes": 14,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "oldtown",
-     "meters": 1200,
-     "walkMinutes": 16,
-     "rideMinutes": null
-    }
-   ],
-   "rooms": []
-  },
-  {
-   "name": "Wenceslas Hotel & Apartments",
-   "stars": 4,
-   "tags": [
-    "aparthotel"
-   ],
-   "boards": [
-    "bb"
-   ],
-   "bookingScore": 8.6,
-   "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.078247,14.428157",
-   "bookingUrl": "https://www.booking.com/hotel/cz/myo-wenceslas.html",
-   "roomsNote": null,
-   "sortOrder": 44,
-   "features": [],
-   "distances": [
-    {
-     "landmarkKey": "wenceslas",
-     "meters": 330,
-     "walkMinutes": 4,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "naprikope",
-     "meters": 850,
-     "walkMinutes": 11,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "charles",
-     "meters": 2100,
-     "walkMinutes": 28,
-     "rideMinutes": 8
-    },
-    {
-     "landmarkKey": "palladium",
-     "meters": 1550,
-     "walkMinutes": 21,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "oldtown",
-     "meters": 1300,
-     "walkMinutes": 17,
-     "rideMinutes": null
-    }
-   ],
-   "rooms": []
-  },
-  {
-   "name": "Wenceslas Square Hotel",
-   "stars": 4,
-   "tags": [],
-   "boards": [
-    "bb"
-   ],
-   "bookingScore": 9.1,
-   "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.081478,14.428157",
-   "bookingUrl": "https://www.booking.com/hotel/cz/wenceslas-square.html",
-   "roomsNote": null,
-   "sortOrder": 45,
-   "features": [],
-   "distances": [
-    {
-     "landmarkKey": "wenceslas",
-     "meters": 330,
-     "walkMinutes": 4,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "naprikope",
-     "meters": 780,
-     "walkMinutes": 10,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "charles",
-     "meters": 2050,
-     "walkMinutes": 27,
-     "rideMinutes": 10
-    },
-    {
-     "landmarkKey": "palladium",
-     "meters": 1200,
-     "walkMinutes": 16,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "oldtown",
-     "meters": 1200,
-     "walkMinutes": 16,
-     "rideMinutes": null
-    }
-   ],
-   "rooms": []
-  },
-  {
-   "name": "Art Nouveau Palace Hotel",
-   "stars": 5,
-   "tags": [],
-   "boards": [
-    "bb"
-   ],
-   "bookingScore": 9.1,
-   "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.083924,14.427699",
-   "bookingUrl": "https://www.booking.com/hotel/cz/palaceprahaprague.html",
-   "roomsNote": null,
-   "sortOrder": 46,
-   "features": [],
-   "distances": [
-    {
-     "landmarkKey": "wenceslas",
-     "meters": 210,
-     "walkMinutes": 3,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "naprikope",
-     "meters": 230,
-     "walkMinutes": 3,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "charles",
-     "meters": 1650,
-     "walkMinutes": 22,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "palladium",
-     "meters": 800,
-     "walkMinutes": 11,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "oldtown",
-     "meters": 730,
-     "walkMinutes": 10,
-     "rideMinutes": null
-    }
-   ],
-   "rooms": []
-  },
-  {
-   "name": "NYX Hotel Prague by Leonardo Hotels",
-   "stars": 4,
-   "tags": [],
-   "boards": [
-    "bb"
-   ],
-   "bookingScore": 8.7,
-   "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.084011,14.428022",
-   "bookingUrl": "https://www.booking.com/hotel/cz/nyx-hotel-prague-by-leonardo-hotels.html",
-   "roomsNote": null,
-   "sortOrder": 47,
-   "features": [],
-   "distances": [
-    {
-     "landmarkKey": "wenceslas",
-     "meters": 210,
-     "walkMinutes": 3,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "naprikope",
-     "meters": 250,
-     "walkMinutes": 3,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "charles",
-     "meters": 1650,
-     "walkMinutes": 22,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "palladium",
-     "meters": 780,
-     "walkMinutes": 10,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "oldtown",
-     "meters": 750,
-     "walkMinutes": 10,
-     "rideMinutes": null
-    }
-   ],
-   "rooms": []
-  },
-  {
-   "name": "Hotel Prague Star",
-   "stars": 4,
-   "tags": [],
-   "boards": [
-    "bb"
-   ],
-   "bookingScore": 8.4,
-   "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.078142,14.426835",
-   "bookingUrl": "https://www.booking.com/hotel/cz/magic-centre-prague-accommodation.html",
-   "roomsNote": null,
-   "sortOrder": 48,
-   "features": [],
-   "distances": [
-    {
-     "landmarkKey": "wenceslas",
-     "meters": 460,
-     "walkMinutes": 6,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "naprikope",
-     "meters": 860,
-     "walkMinutes": 11,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "charles",
-     "meters": 2100,
-     "walkMinutes": 28,
-     "rideMinutes": 10
-    },
-    {
-     "landmarkKey": "palladium",
-     "meters": 1550,
-     "walkMinutes": 21,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "oldtown",
-     "meters": 1300,
-     "walkMinutes": 18,
-     "rideMinutes": null
-    }
-   ],
-   "rooms": []
-  },
-  {
-   "name": "MeetMe23",
-   "stars": 3,
-   "tags": [],
-   "boards": [
-    "bb"
-   ],
-   "bookingScore": 8.9,
-   "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.082362,14.432363",
-   "bookingUrl": "https://www.booking.com/hotel/cz/meetme23.html",
-   "roomsNote": null,
-   "sortOrder": 49,
-   "features": [],
-   "distances": [
-    {
-     "landmarkKey": "wenceslas",
-     "meters": 360,
-     "walkMinutes": 5,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "naprikope",
-     "meters": 640,
-     "walkMinutes": 8,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "charles",
-     "meters": 2150,
-     "walkMinutes": 28,
-     "rideMinutes": 9
-    },
-    {
-     "landmarkKey": "palladium",
-     "meters": 1000,
-     "walkMinutes": 13,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "oldtown",
-     "meters": 1200,
-     "walkMinutes": 16,
-     "rideMinutes": null
-    }
-   ],
-   "rooms": []
-  },
-  {
-   "name": "Falkensteiner Boutique Hotel Prague",
-   "stars": 5,
-   "tags": [],
-   "boards": [
-    "bb"
-   ],
-   "bookingScore": 9.1,
-   "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.082804,14.43163",
-   "bookingUrl": "https://www.booking.com/hotel/cz/mariapragfalkensteiner.html",
-   "roomsNote": null,
-   "sortOrder": 50,
-   "features": [
-    "spa"
-   ],
-   "distances": [
-    {
-     "landmarkKey": "wenceslas",
-     "meters": 350,
-     "walkMinutes": 5,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "naprikope",
-     "meters": 550,
-     "walkMinutes": 7,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "charles",
-     "meters": 2050,
-     "walkMinutes": 27,
-     "rideMinutes": 9
-    },
-    {
-     "landmarkKey": "palladium",
-     "meters": 920,
-     "walkMinutes": 12,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "oldtown",
-     "meters": 1150,
-     "walkMinutes": 15,
-     "rideMinutes": null
-    }
-   ],
-   "rooms": []
-  },
-  {
-   "name": "Hotel Amarilis",
-   "stars": 4,
-   "tags": [],
-   "boards": [
-    "bb"
-   ],
-   "bookingScore": 8.4,
-   "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.078054,14.425263",
-   "bookingUrl": "https://www.booking.com/hotel/cz/amarilis-jerome.html",
-   "roomsNote": null,
-   "sortOrder": 51,
-   "features": [],
-   "distances": [
-    {
-     "landmarkKey": "wenceslas",
-     "meters": 500,
-     "walkMinutes": 7,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "naprikope",
-     "meters": 830,
-     "walkMinutes": 11,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "charles",
-     "meters": 2000,
-     "walkMinutes": 27,
-     "rideMinutes": 9
-    },
-    {
-     "landmarkKey": "palladium",
-     "meters": 1550,
-     "walkMinutes": 21,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "oldtown",
-     "meters": 1300,
-     "walkMinutes": 17,
-     "rideMinutes": null
-    }
-   ],
-   "rooms": []
-  },
-  {
-   "name": "Salvator Boutique Hotel",
-   "stars": 4,
-   "tags": [],
-   "boards": [
-    "bb"
-   ],
-   "bookingScore": 8.7,
-   "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.077415,14.428627",
-   "bookingUrl": "https://www.booking.com/hotel/cz/salvator-boutique.html",
-   "roomsNote": null,
-   "sortOrder": 52,
-   "features": [],
-   "distances": [
-    {
-     "landmarkKey": "wenceslas",
-     "meters": 260,
-     "walkMinutes": 3,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "naprikope",
-     "meters": 1000,
-     "walkMinutes": 14,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "charles",
-     "meters": 2250,
-     "walkMinutes": 30,
-     "rideMinutes": 8
-    },
-    {
-     "landmarkKey": "palladium",
-     "meters": 1700,
-     "walkMinutes": 23,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "oldtown",
-     "meters": 1500,
-     "walkMinutes": 20,
-     "rideMinutes": null
-    }
-   ],
-   "rooms": []
-  },
-  {
-   "name": "Archibald City",
-   "stars": 4,
-   "tags": [],
-   "boards": [
-    "bb"
-   ],
-   "bookingScore": 8.7,
-   "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.07738,14.426865",
-   "bookingUrl": "https://www.booking.com/hotel/cz/archibald-city.html",
-   "roomsNote": null,
-   "sortOrder": 53,
-   "features": [],
-   "distances": [
-    {
-     "landmarkKey": "wenceslas",
-     "meters": 390,
-     "walkMinutes": 5,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "naprikope",
-     "meters": 980,
-     "walkMinutes": 13,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "charles",
-     "meters": 2200,
-     "walkMinutes": 30,
-     "rideMinutes": 8
-    },
-    {
-     "landmarkKey": "palladium",
-     "meters": 1700,
-     "walkMinutes": 23,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "oldtown",
-     "meters": 1450,
-     "walkMinutes": 19,
-     "rideMinutes": null
-    }
-   ],
-   "rooms": []
-  },
-  {
-   "name": "Michelangelo Grand Hotel",
-   "stars": 5,
-   "tags": [],
-   "boards": [
-    "bb"
-   ],
-   "bookingScore": 8.9,
-   "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.081001,14.421275",
-   "bookingUrl": "https://www.booking.com/hotel/cz/michelangelograndhotel.html",
-   "roomsNote": null,
-   "sortOrder": 54,
-   "features": [],
-   "distances": [
-    {
-     "landmarkKey": "wenceslas",
-     "meters": 390,
-     "walkMinutes": 5,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "naprikope",
-     "meters": 520,
-     "walkMinutes": 7,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "charles",
-     "meters": 1450,
-     "walkMinutes": 19,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "palladium",
-     "meters": 1300,
-     "walkMinutes": 17,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "oldtown",
-     "meters": 820,
-     "walkMinutes": 11,
-     "rideMinutes": null
-    }
-   ],
-   "rooms": []
-  },
-  {
-   "name": "Deminka Palace",
-   "stars": 4,
-   "tags": [],
-   "boards": [
-    "bb"
-   ],
-   "bookingScore": 8.6,
-   "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.07721,14.431353",
-   "bookingUrl": "https://www.booking.com/hotel/cz/deminka-palace.html",
-   "roomsNote": null,
-   "sortOrder": 55,
-   "features": [],
-   "distances": [
-    {
-     "landmarkKey": "wenceslas",
-     "meters": 360,
-     "walkMinutes": 5,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "naprikope",
-     "meters": 1100,
-     "walkMinutes": 15,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "charles",
-     "meters": 2350,
-     "walkMinutes": 31,
-     "rideMinutes": 8
-    },
-    {
-     "landmarkKey": "palladium",
-     "meters": 1800,
-     "walkMinutes": 24,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "oldtown",
-     "meters": 1550,
-     "walkMinutes": 21,
-     "rideMinutes": null
-    }
-   ],
-   "rooms": []
-  },
-  {
-   "name": "Hotel Essence",
-   "stars": 4,
-   "tags": [],
-   "boards": [
-    "bb"
-   ],
-   "bookingScore": 9.2,
-   "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.085445,14.42927",
-   "bookingUrl": "https://www.booking.com/hotel/cz/essence-praha.html",
-   "roomsNote": null,
-   "sortOrder": 56,
-   "features": [],
-   "distances": [
-    {
-     "landmarkKey": "wenceslas",
-     "meters": 430,
-     "walkMinutes": 6,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "naprikope",
-     "meters": 260,
-     "walkMinutes": 4,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "charles",
-     "meters": 1750,
-     "walkMinutes": 23,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "palladium",
-     "meters": 530,
-     "walkMinutes": 7,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "oldtown",
-     "meters": 780,
-     "walkMinutes": 10,
-     "rideMinutes": null
-    }
-   ],
-   "rooms": []
-  },
-  {
-   "name": "Friday Hotel",
-   "stars": 4,
-   "tags": [],
-   "boards": [
-    "bb"
-   ],
-   "bookingScore": 8.3,
-   "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.085039,14.424413",
-   "bookingUrl": "https://www.booking.com/hotel/cz/friday.html",
-   "roomsNote": null,
-   "sortOrder": 57,
-   "features": [],
-   "distances": [
-    {
-     "landmarkKey": "wenceslas",
-     "meters": 130,
-     "walkMinutes": 2,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "naprikope",
-     "meters": 40,
-     "walkMinutes": 1,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "charles",
-     "meters": 1350,
-     "walkMinutes": 18,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "palladium",
-     "meters": 690,
-     "walkMinutes": 9,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "oldtown",
-     "meters": 420,
-     "walkMinutes": 6,
-     "rideMinutes": null
-    }
-   ],
-   "rooms": []
-  },
-  {
-   "name": "Hotel Praga 1",
-   "stars": 4,
-   "tags": [],
-   "boards": [
-    "bb"
-   ],
-   "bookingScore": 8.6,
-   "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.07761,14.422178",
-   "bookingUrl": "https://www.booking.com/hotel/cz/hoteresidencepragaprague.html",
-   "roomsNote": null,
-   "sortOrder": 58,
-   "features": [],
-   "distances": [
-    {
-     "landmarkKey": "wenceslas",
-     "meters": 600,
-     "walkMinutes": 8,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "naprikope",
-     "meters": 900,
-     "walkMinutes": 12,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "charles",
-     "meters": 1900,
-     "walkMinutes": 25,
-     "rideMinutes": 7
-    },
-    {
-     "landmarkKey": "palladium",
-     "meters": 1650,
-     "walkMinutes": 22,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "oldtown",
-     "meters": 1300,
-     "walkMinutes": 18,
-     "rideMinutes": null
-    }
-   ],
-   "rooms": []
-  },
-  {
-   "name": "Radisson Blu Hotel Prague",
-   "stars": 5,
-   "tags": [],
-   "boards": [
-    "bb"
-   ],
-   "bookingScore": 8.7,
-   "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.080077,14.426401",
-   "bookingUrl": "https://www.booking.com/hotel/cz/radisson-blu-hotel-prague.html",
-   "roomsNote": null,
-   "sortOrder": 59,
-   "features": [],
-   "distances": [
-    {
-     "landmarkKey": "wenceslas",
-     "meters": 230,
-     "walkMinutes": 3,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "naprikope",
-     "meters": 590,
-     "walkMinutes": 8,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "charles",
-     "meters": 1850,
-     "walkMinutes": 24,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "palladium",
-     "meters": 1300,
-     "walkMinutes": 17,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "oldtown",
-     "meters": 1050,
-     "walkMinutes": 14,
-     "rideMinutes": null
-    }
-   ],
-   "rooms": []
-  },
-  {
-   "name": "BoHo Prague Hotel",
-   "stars": 4,
-   "tags": [],
-   "boards": [
-    "bb",
-    "hb"
-   ],
-   "bookingScore": 9.5,
-   "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.086085,14.429337",
-   "bookingUrl": "https://www.booking.com/hotel/cz/boho-prague.html",
-   "roomsNote": null,
-   "sortOrder": 60,
-   "features": [
-    "spa"
-   ],
-   "distances": [
-    {
-     "landmarkKey": "wenceslas",
-     "meters": 670,
-     "walkMinutes": 9,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "naprikope",
-     "meters": 190,
-     "walkMinutes": 2,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "charles",
-     "meters": 1750,
-     "walkMinutes": 23,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "palladium",
-     "meters": 450,
-     "walkMinutes": 6,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "oldtown",
-     "meters": 760,
-     "walkMinutes": 10,
-     "rideMinutes": null
-    }
-   ],
-   "rooms": []
-  },
-  {
-   "name": "Metropol Design Hotel Old Town",
-   "stars": 4,
-   "tags": [],
-   "boards": [
-    "bb"
-   ],
-   "bookingScore": 8.6,
-   "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.08266,14.419642",
-   "bookingUrl": "https://www.booking.com/hotel/cz/metropol-prague.html",
-   "roomsNote": null,
-   "sortOrder": 61,
-   "features": [],
-   "distances": [
-    {
-     "landmarkKey": "wenceslas",
-     "meters": 350,
-     "walkMinutes": 5,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "naprikope",
-     "meters": 360,
-     "walkMinutes": 5,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "charles",
-     "meters": 1200,
-     "walkMinutes": 16,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "palladium",
-     "meters": 1150,
-     "walkMinutes": 15,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "oldtown",
-     "meters": 630,
-     "walkMinutes": 8,
-     "rideMinutes": null
-    }
-   ],
-   "rooms": []
-  },
-  {
-   "name": "Miss Sophie's Downtown",
-   "stars": 4,
-   "tags": [],
-   "boards": [
-    "bb"
-   ],
-   "bookingScore": 9.2,
-   "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.087805,14.403774",
-   "bookingUrl": "https://www.booking.com/hotel/cz/miss-sophie-39-s-downtown.html",
-   "roomsNote": null,
-   "sortOrder": 62,
-   "features": [],
-   "distances": [
-    {
-     "landmarkKey": "wenceslas",
-     "meters": 1600,
-     "walkMinutes": 21,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "naprikope",
-     "meters": 1650,
-     "walkMinutes": 22,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "charles",
-     "meters": 350,
-     "walkMinutes": 5,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "palladium",
-     "meters": 2150,
-     "walkMinutes": 29,
-     "rideMinutes": 6
-    },
-    {
-     "landmarkKey": "oldtown",
-     "meters": 1400,
-     "walkMinutes": 19,
-     "rideMinutes": null
-    }
-   ],
-   "rooms": []
-  },
-  {
-   "name": "Novotel Praha Wenceslas Square",
-   "stars": 4,
-   "tags": [],
-   "boards": [
-    "bb"
-   ],
-   "bookingScore": 8.6,
-   "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.075041,14.42805",
-   "bookingUrl": "https://www.booking.com/hotel/cz/novotel-praha-wenceslas-square.html",
-   "roomsNote": null,
-   "sortOrder": 63,
-   "features": [
-    "pool-in"
-   ],
-   "distances": [
-    {
-     "landmarkKey": "wenceslas",
-     "meters": 530,
-     "walkMinutes": 7,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "naprikope",
-     "meters": 1300,
-     "walkMinutes": 17,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "charles",
-     "meters": 2500,
-     "walkMinutes": 34,
-     "rideMinutes": 9
-    },
-    {
-     "landmarkKey": "palladium",
-     "meters": 2000,
-     "walkMinutes": 27,
-     "rideMinutes": 7
-    },
-    {
-     "landmarkKey": "oldtown",
-     "meters": 1750,
-     "walkMinutes": 23,
-     "rideMinutes": null
-    }
-   ],
-   "rooms": []
-  },
-  {
-   "name": "Ibis Praha Old Town",
-   "stars": 3,
-   "tags": [],
-   "boards": [
-    "bb"
-   ],
-   "bookingScore": 8.1,
-   "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.089383,14.430843",
-   "bookingUrl": "https://www.booking.com/hotel/cz/ibis-praha-old-town.html",
-   "roomsNote": null,
-   "sortOrder": 64,
-   "features": [],
-   "distances": [
-    {
-     "landmarkKey": "wenceslas",
-     "meters": 820,
-     "walkMinutes": 11,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "naprikope",
-     "meters": 350,
-     "walkMinutes": 5,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "charles",
-     "meters": 1850,
-     "walkMinutes": 25,
-     "rideMinutes": 7
-    },
-    {
-     "landmarkKey": "palladium",
-     "meters": 50,
-     "walkMinutes": 1,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "oldtown",
-     "meters": 890,
-     "walkMinutes": 12,
-     "rideMinutes": null
-    }
-   ],
-   "rooms": []
-  },
-  {
-   "name": "Ibis Praha Wenceslas Square",
-   "stars": 3,
-   "tags": [],
-   "boards": [
-    "bb"
-   ],
-   "bookingScore": 8.3,
-   "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.074881,14.427385",
-   "bookingUrl": "https://www.booking.com/hotel/cz/ibis-praha-wenceslas-square.html",
-   "roomsNote": null,
-   "sortOrder": 65,
-   "features": [],
-   "distances": [
-    {
-     "landmarkKey": "wenceslas",
-     "meters": 590,
-     "walkMinutes": 8,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "naprikope",
-     "meters": 1300,
-     "walkMinutes": 17,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "charles",
-     "meters": 2550,
-     "walkMinutes": 34,
-     "rideMinutes": 9
-    },
-    {
-     "landmarkKey": "palladium",
-     "meters": 2000,
-     "walkMinutes": 27,
-     "rideMinutes": 7
-    },
-    {
-     "landmarkKey": "oldtown",
-     "meters": 1750,
-     "walkMinutes": 24,
-     "rideMinutes": null
-    }
-   ],
-   "rooms": []
-  },
-  {
-   "name": "K+K Hotel Central",
-   "stars": 4,
-   "tags": [],
-   "boards": [
-    "bb"
-   ],
-   "bookingScore": 8.8,
-   "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.086819,14.43085",
-   "bookingUrl": "https://www.booking.com/hotel/cz/kkcentral.html",
-   "roomsNote": null,
-   "sortOrder": 66,
-   "features": [],
-   "distances": [
-    {
-     "landmarkKey": "wenceslas",
-     "meters": 770,
-     "walkMinutes": 10,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "naprikope",
-     "meters": 180,
-     "walkMinutes": 2,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "charles",
-     "meters": 1750,
-     "walkMinutes": 23,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "palladium",
-     "meters": 460,
-     "walkMinutes": 6,
-     "rideMinutes": null
-    },
-    {
-     "landmarkKey": "oldtown",
-     "meters": 780,
-     "walkMinutes": 10,
-     "rideMinutes": null
-    }
-   ],
-   "rooms": []
-  },
-  {
-   "name": "Aquapalace Hotel Prague",
-   "stars": 4,
-   "tags": [],
-   "boards": [
-    "bb"
-   ],
-   "bookingScore": 8.7,
-   "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.007357,14.571302",
-   "bookingUrl": "https://www.booking.com/hotel/cz/aquapalace-prague.html",
-   "roomsNote": null,
-   "sortOrder": 67,
-   "features": [
-    "waterpark",
-    "pool-in",
-    "pool-out",
-    "spa"
-   ],
-   "distances": [
-    {
-     "landmarkKey": "wenceslas",
-     "meters": 15250,
-     "walkMinutes": 203,
-     "rideMinutes": 17
-    },
-    {
-     "landmarkKey": "naprikope",
-     "meters": 16250,
-     "walkMinutes": 217,
-     "rideMinutes": 19
-    },
-    {
-     "landmarkKey": "charles",
-     "meters": 17200,
-     "walkMinutes": 230,
-     "rideMinutes": 23
-    },
-    {
-     "landmarkKey": "palladium",
-     "meters": 16350,
-     "walkMinutes": 218,
-     "rideMinutes": 21
-    },
-    {
-     "landmarkKey": "oldtown",
-     "meters": 16450,
-     "walkMinutes": 219,
-     "rideMinutes": 22
-    }
-   ],
-   "rooms": []
-  }
- ]
 }

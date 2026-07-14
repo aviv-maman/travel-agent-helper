@@ -47,6 +47,8 @@ CACHE_FILE = "geo_cache.json"
 EARTH_R = 6371000.0
 ON_STREET_THRESHOLD_M = 45   # פחות מזה -> "על הרחוב עצמו"
 NOMINATIM_SLEEP = 1.1        # כללי שימוש הוגן של Nominatim
+MAX_USEFUL_WALK_MIN = 40     # הליכה ארוכה מזה אינה שמישה -> מציגים נסיעה בלבד
+GEOCODE_SANITY_KM = 50       # מלון רחוק מזה מכל נקודות הציון -> גיאוקודינג חשוד (עיר אחרת)
 
 # ---------------------------------------------------------------- HTTP helpers
 
@@ -163,6 +165,15 @@ def xy_to_latlon(x, y, lat0):
     lat = math.degrees(y / EARTH_R)
     lon = math.degrees(x / (EARTH_R * math.cos(math.radians(lat0))))
     return lat, lon
+
+
+def aerial_m(lat1, lon1, lat2, lon2):
+    """מרחק אווירי (haversine) במטרים — לבדיקות שפיות, לא לתצוגה."""
+    p1, p2 = math.radians(lat1), math.radians(lat2)
+    dp = p2 - p1
+    dl = math.radians(lon2 - lon1)
+    a = math.sin(dp / 2) ** 2 + math.cos(p1) * math.cos(p2) * math.sin(dl / 2) ** 2
+    return 2 * EARTH_R * math.asin(math.sqrt(a))
 
 
 def nearest_point_on_segments(pt_lat, pt_lon, segments):
@@ -326,6 +337,20 @@ def main():
             out_hotels.append({"name": h["name"], "error": "geocoding failed"})
             continue
         hlat, hlon = g["lat"], g["lon"]
+        # בדיקת שפיות: Nominatim לפעמים מחזיר עיר אחרת באותו שם (למשל Prague, Nebraska).
+        # מלון רחוק מ-GEOCODE_SANITY_KM מכל נקודות הציון -> מסומן ככשל במקום לפלוט זבל.
+        ref_pts = []
+        for rp in refs:
+            if rp.get("pt"):
+                ref_pts.append((rp["pt"]["lat"], rp["pt"]["lon"]))
+            elif rp.get("start_pt"):
+                ref_pts.append(rp["start_pt"])
+        if ref_pts and min(aerial_m(hlat, hlon, la, lo) for la, lo in ref_pts) > GEOCODE_SANITY_KM * 1000:
+            print(f"!! גיאוקודינג חשוד (רחוק מ-{GEOCODE_SANITY_KM} ק\"מ מנקודות הציון): "
+                  f"{h['name']} — התקבל ({hlat:.4f},{hlon:.4f}); הוסף address או lat/lng והרץ שוב")
+            missing.append(h["name"])
+            out_hotels.append({"name": h["name"], "error": "geocoding suspect (wrong city?)"})
+            continue
         print(f" • {h['name']}  ({hlat:.5f},{hlon:.5f})")
         distances = []
         for rp in refs:
@@ -349,6 +374,9 @@ def main():
                 if walk_min is not None and walk_min >= 25
                 else None
             )
+            # הליכה ארוכה מ-MAX_USEFUL_WALK_MIN אינה אופציה אמיתית -> נסיעה בלבד.
+            if walk_min is not None and walk_min > MAX_USEFUL_WALK_MIN and car:
+                walk_min = None
             rec = {
                 "ref_name_he": rp.get("name_he", rp.get("osm_name", rp.get("query", ""))),
                 "nearest_point_label": label,
