@@ -169,6 +169,13 @@
       "when": 1784058908825,
       "tag": "0023_sturdy_pet_avengers",
       "breakpoints": true
+    },
+    {
+      "idx": 24,
+      "version": "7",
+      "when": 1784064064763,
+      "tag": "0024_colossal_silver_surfer",
+      "breakpoints": true
     }
   ]
 }

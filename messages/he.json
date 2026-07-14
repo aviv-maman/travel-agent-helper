@@ -621,7 +621,8 @@
     "tier": {
       "resort": "ריזורט",
       "kosher": "כשר",
-      "aparthotel": "מלון דירות"
+      "aparthotel": "מלון דירות",
+      "adults-only": "מבוגרים בלבד"
     },
     "card": {
       "maps": "גוגל מפות",

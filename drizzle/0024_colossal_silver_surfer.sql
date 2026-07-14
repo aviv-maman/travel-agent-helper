@@ -1,0 +1,1 @@
+ALTER TYPE "public"."hotel_tag" ADD VALUE 'adults-only';
