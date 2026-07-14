@@ -398,7 +398,10 @@ async function loadFromDb(): Promise<UIDestination[]> {
 }
 
 async function loadFromSeed(): Promise<UIDestination[]> {
-  const seed = (await import("../data/seed.json")).default as SeedShape[];
+  const legacy = (await import("../data/seed.json")).default as SeedShape[];
+  // Add-on destinations (built by the add-destination skill) share the shape.
+  const { EXTRA_DESTINATIONS } = await import("../data/destinations");
+  const seed = [...legacy, ...(EXTRA_DESTINATIONS as unknown as SeedShape[])];
   return seed.map((d) => {
     const lmName = new Map(d.landmarks.map((l) => [l.key, l.name]));
     return {

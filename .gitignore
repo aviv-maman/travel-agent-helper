@@ -39,3 +39,6 @@ pnpm-debug.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# add-destination skill: per-run scratch (input/output/geo cache)
+data/destinations/work/

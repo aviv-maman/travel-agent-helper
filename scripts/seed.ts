@@ -1,5 +1,6 @@
 /**
- * Seeds Neon from data/seed.json (the exported destination/hotel data).
+ * Seeds Neon from data/seed.json (the legacy-HTML export) plus the add-on
+ * destinations in data/destinations/ (built by the add-destination skill).
  * Idempotent: destinations/landmarks are upserted; a destination's hotels are
  * replaced wholesale on each run (cascades clean up features/distances).
  *
@@ -12,6 +13,7 @@ import { neon } from "@neondatabase/serverless";
 import { drizzle } from "drizzle-orm/neon-http";
 import * as schema from "../db/schema";
 import type { SeedDestination } from "./extract";
+import { EXTRA_DESTINATIONS } from "../data/destinations";
 
 const SEED_FILE = join(process.cwd(), "data", "seed.json");
 
@@ -31,7 +33,8 @@ if (!process.env.DATABASE_URL) {
 const db = drizzle(neon(process.env.DATABASE_URL), { schema });
 
 async function main() {
-  const data = JSON.parse(readFileSync(SEED_FILE, "utf8")) as SeedDestination[];
+  const legacy = JSON.parse(readFileSync(SEED_FILE, "utf8")) as SeedDestination[];
+  const data = [...legacy, ...EXTRA_DESTINATIONS];
   let hotelTotal = 0;
 
   for (const d of data) {

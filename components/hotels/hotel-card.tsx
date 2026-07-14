@@ -25,6 +25,7 @@ const FEATURE_META: Record<HotelFeatureValue, { emoji: string; key: FilterKey }>
   casino: { emoji: "🎰", key: "casino" },
   "casino-near": { emoji: "🎰", key: "casinoNear" },
   waterpark: { emoji: "🛝", key: "waterpark" },
+  spa: { emoji: "🧖", key: "spa" },
   "outside-center": { emoji: "📍", key: "outsideCenter" },
 };
 
