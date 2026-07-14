@@ -31,7 +31,7 @@ import type { Locale } from "../i18n/config";
 export type Localized = Partial<Record<Locale, string>>;
 
 /** Curated tags (a hotel may have several). */
-export const hotelTag = pgEnum("hotel_tag", ["resort", "kosher", "aparthotel"]);
+export const hotelTag = pgEnum("hotel_tag", ["resort", "kosher", "aparthotel", "adults-only"]);
 
 /** Board basis: breakfast / half board / full board. A hotel may offer several. */
 export const boardCode = pgEnum("board_code", ["bb", "hb", "fb"]);

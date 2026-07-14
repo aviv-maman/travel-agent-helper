@@ -10,6 +10,7 @@ import { useHotelParams } from "./use-hotel-params";
 const TAGS: { value: HotelTagValue; emoji: string }[] = [
   { value: "kosher", emoji: "✡️" },
   { value: "aparthotel", emoji: "🏢" },
+  { value: "adults-only", emoji: "🔞" },
 ];
 const BOARDS: { value: BoardCode; emoji: string }[] = [
   { value: "bb", emoji: "🍳" },

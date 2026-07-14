@@ -621,7 +621,8 @@
     "tier": {
       "resort": "Resort",
       "kosher": "Kosher",
-      "aparthotel": "Apartment Hotel"
+      "aparthotel": "Apartment Hotel",
+      "adults-only": "Adults only"
     },
     "card": {
       "maps": "Google Maps",

@@ -13,8 +13,8 @@ import type { SeedDestination } from "../../scripts/extract";
  * array entry below (the skill does both).
  */
 
-// import bts from "./bts.json";   // ← example: Bratislava
+import prg from "./prg.json";
 
 export const EXTRA_DESTINATIONS: SeedDestination[] = [
-  // bts as SeedDestination,
+  prg as SeedDestination,
 ];
