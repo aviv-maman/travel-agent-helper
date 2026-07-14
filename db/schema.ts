@@ -43,6 +43,7 @@ export const hotelFeature = pgEnum("hotel_feature", [
   "casino",
   "casino-near",
   "waterpark",
+  "spa",
   "outside-center",
 ]);
 

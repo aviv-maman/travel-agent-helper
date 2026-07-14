@@ -1,0 +1,40 @@
+{
+  "destination": {
+    "name_he": "בודפשט",
+    "name_en": "Budapest",
+    "country_en": "Hungary",
+    "iata": "BUD"
+  },
+  "reference_points": [
+    {
+      "name_he": "רחוב ואצי",
+      "type": "street",
+      "osm_name": "Váci utca",
+      "start": "north",
+      "_comment": "שם מדויק מ-OSM! Váci utca (מדרחוב) ולא Váci út (שדרה) — אלו שני רחובות שונים"
+    },
+    {
+      "name_he": "רחוב קיראי — הרובע היהודי",
+      "type": "street",
+      "osm_name": "Király utca",
+      "start": "west",
+      "_comment": "start קובע איזה קצה נחשב 'תחילת הרחוב' בתיאור המילולי: north/south/east/west"
+    },
+    {
+      "name_he": "הבזיליקה של סנט אישטוון",
+      "type": "point",
+      "query": "St. Stephen's Basilica, Budapest"
+    }
+  ],
+  "hotels": [
+    { "name": "Kempinski Hotel Corvinus Budapest", "stars": 5 },
+    { "name": "Hotel Rum Budapest", "stars": 4 },
+    {
+      "name": "מלון שהגיאוקודינג לא מצא — דוגמה לעקיפה ידנית",
+      "stars": 4,
+      "lat": 47.4979,
+      "lng": 19.0402,
+      "_comment": "אפשר לתת address במקום, או lat/lng ישירות. הרצה חוזרת מהירה בזכות ה-cache"
+    }
+  ]
+}

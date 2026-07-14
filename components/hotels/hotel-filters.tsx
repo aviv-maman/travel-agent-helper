@@ -24,6 +24,7 @@ const AMENITIES: { value: HotelFeatureValue; key: keyof HotelMessages["filter"];
     { value: "pool-out", key: "poolOut", emoji: "🌊" },
     { value: "casino", key: "casino", emoji: "🎰" },
     { value: "waterpark", key: "waterpark", emoji: "🛝" },
+    { value: "spa", key: "spa", emoji: "🧖" },
   ];
 const BASE_SORTS: { value: SortMode; key: keyof HotelMessages["sort"]; emoji: string }[] = [
   { value: "default", key: "default", emoji: "💠" },

@@ -1,0 +1,1 @@
+ALTER TYPE "public"."hotel_feature" ADD VALUE 'spa' BEFORE 'outside-center';
