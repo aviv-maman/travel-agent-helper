@@ -108,10 +108,17 @@ export async function saveSupplierBaggageAction(
     if (r.inclusion.status === "included") {
       clean.push({ icon: r.icon, text, inclusion: { status: "included" } });
     } else if (r.inclusion.status === "not_included") {
-      const price = (r.inclusion.price ?? "").trim().slice(0, 20);
+      const suitcasePrice = (r.inclusion.suitcasePrice ?? "").trim().slice(0, 20);
+      const trolleyPrice = (r.inclusion.trolleyPrice ?? "").trim().slice(0, 20);
       const priceKind = r.inclusion.priceKind;
-      if (!price || (priceKind !== "gross" && priceKind !== "net")) return { error: "invalid" };
-      clean.push({ icon: r.icon, text, inclusion: { status: "not_included", price, priceKind } });
+      if (!suitcasePrice || !trolleyPrice || (priceKind !== "gross" && priceKind !== "net")) {
+        return { error: "invalid" };
+      }
+      clean.push({
+        icon: r.icon,
+        text,
+        inclusion: { status: "not_included", suitcasePrice, trolleyPrice, priceKind },
+      });
     } else {
       return { error: "invalid" };
     }
