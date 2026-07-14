@@ -30,10 +30,7 @@ import type { Locale } from "../i18n/config";
  */
 export type Localized = Partial<Record<Locale, string>>;
 
-/** Our own hotel quality rating (not the official star rating). */
-export const hotelTier = pgEnum("hotel_tier", ["premium", "good"]);
-
-/** Curated tags, independent of quality (a hotel may have several). */
+/** Curated tags (a hotel may have several). */
 export const hotelTag = pgEnum("hotel_tag", ["resort", "kosher", "aparthotel"]);
 
 /** Board basis: breakfast / half board / full board. A hotel may offer several. */
@@ -110,7 +107,6 @@ export const hotels = pgTable(
       .references(() => destinations.id, { onDelete: "cascade" }),
     name: varchar("name", { length: 200 }).notNull(),
     stars: integer("stars"),
-    tier: hotelTier("tier").notNull(),
     /** Board options offered (breakfast / half / full). Empty for room-only. */
     boards: boardCode("boards").array().notNull().default([]),
     bookingScore: real("booking_score"),
@@ -242,7 +238,6 @@ export type Destination = typeof destinations.$inferSelect;
 export type Hotel = typeof hotels.$inferSelect;
 export type Landmark = typeof landmarks.$inferSelect;
 export type Room = typeof rooms.$inferSelect;
-export type HotelTier = (typeof hotelTier.enumValues)[number];
 export type HotelTagValue = (typeof hotelTag.enumValues)[number];
 export type HotelFeatureValue = (typeof hotelFeature.enumValues)[number];
 export type BoardCode = (typeof boardCode.enumValues)[number];

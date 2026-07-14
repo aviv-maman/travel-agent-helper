@@ -1,6 +1,6 @@
 /**
  * Parses the legacy `source/commissions-new.html` into structured seed data.
- * The HTML is the richest source (stars, tier, board, features, booking score,
+ * The HTML is the richest source (stars, board, features, booking score,
  * links, per-landmark distances as `data-<key>` attributes, the `ROOMS` JS
  * object, and the per-destination "about the city" info box).
  */
@@ -9,7 +9,6 @@ import { join } from "node:path";
 import * as cheerio from "cheerio";
 import HE_TO_EN from "../data/translations.json";
 import type {
-  HotelTier,
   HotelTagValue,
   HotelFeatureValue,
   BoardCode,
@@ -36,7 +35,6 @@ export type SeedRoom = {
 export type SeedHotel = {
   name: string;
   stars: number | null;
-  tier: HotelTier;
   tags: HotelTagValue[];
   boards: BoardCode[];
   bookingScore: number | null;
@@ -120,16 +118,10 @@ const BOARD_MAP: { match: string; code: BoardCode }[] = [
   { match: "פנסיון מלא", code: "fb" },
 ];
 
-// The source HTML groups hotels into 4 sections; we map them to a 2-value
-// quality tier plus tags (resort → premium+resort, kosher → good+kosher).
+// The source HTML groups hotels into 4 sections; tiers are gone — the section
+// only contributes tags now (resort → resort, kosher → kosher).
 type SourceTier = "premium" | "good" | "resort" | "kosher";
 const SOURCE_TIERS: SourceTier[] = ["premium", "good", "resort", "kosher"];
-const TIER_FROM_SOURCE: Record<SourceTier, HotelTier> = {
-  premium: "premium",
-  resort: "premium",
-  good: "good",
-  kosher: "good",
-};
 const TAG_FROM_SOURCE: Partial<Record<SourceTier, HotelTagValue>> = {
   resort: "resort",
   kosher: "kosher",
@@ -304,7 +296,7 @@ export function extractSeed(htmlPath?: string): SeedDestination[] {
     $section.find(".hotel-card").each((_, cardEl) => {
       const $card = $(cardEl);
 
-      // Source section (4-way) → quality tier (2-way) + tags.
+      // Source section (4-way) → tags only (tiers were removed).
       const tierClass = $card
         .closest(".hotel-tier")
         .find(".tier-icon")
@@ -312,7 +304,6 @@ export function extractSeed(htmlPath?: string): SeedDestination[] {
         .attr("class");
       const sourceTier =
         SOURCE_TIERS.find((k) => tierClass?.includes(`tier-icon-${k}`)) ?? "good";
-      const tier = TIER_FROM_SOURCE[sourceTier];
       const tags = new Set<HotelTagValue>();
       const sourceTag = TAG_FROM_SOURCE[sourceTier];
       if (sourceTag) tags.add(sourceTag);
@@ -403,7 +394,6 @@ export function extractSeed(htmlPath?: string): SeedDestination[] {
       hotels.push({
         name,
         stars,
-        tier,
         tags: [...tags],
         boards,
         bookingScore,

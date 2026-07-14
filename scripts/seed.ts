@@ -85,7 +85,6 @@ async function main() {
           destinationId: dest.id,
           name: h.name,
           stars: h.stars,
-          tier: h.tier,
           boards: h.boards,
           bookingScore: h.bookingScore,
           googleMapsUrl: h.googleMapsUrl,
