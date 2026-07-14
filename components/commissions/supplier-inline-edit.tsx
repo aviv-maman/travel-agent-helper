@@ -4,8 +4,8 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
-import { Pencil, Plus, Trash2 } from "lucide-react";
-import type { BaggageIcon, CommissionKind, CommLevel } from "@/db/schema";
+import { Pencil, Trash2 } from "lucide-react";
+import type { BaggageIcon, CommissionKind, CommLevel, Localized } from "@/db/schema";
 import type { BaggageRow, EditableCommissionRow } from "@/lib/commissions";
 import {
   saveSupplierBaggageAction,
@@ -13,11 +13,18 @@ import {
 } from "@/app/actions/suppliers";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 /**
  * Inline (no modal) editors for a supplier card's two sections. The pencil
- * swaps the section body for editable rows; the plus does the same and appends
- * a fresh row. Editing needs the database (the no-DB fallback is read-only)
+ * swaps the section body for editable rows (new rows are added from inside
+ * the editor). Editing needs the database (the no-DB fallback is read-only)
  * and `content:edit` — the server actions re-check.
  */
 
@@ -29,7 +36,15 @@ const STANDARD_KINDS: Exclude<CommissionKind, "custom">[] = [
   "packages",
   "organized",
 ];
-const ICONS: BaggageIcon[] = ["flight", "package", "village", "tour", "bag", "ok", "warn"];
+// `bag` (the backpack line) is hardcoded in the card and not editable.
+type EditorIcon = Exclude<BaggageIcon, "bag">;
+/** Product categories with structured inclusion editing. */
+const CATEGORY_ICONS: EditorIcon[] = ["flight", "package", "village", "tour"];
+/** Free-text note rows ("important note" alerts) — edited as before. */
+const NOTE_ICONS: EditorIcon[] = ["ok", "warn"];
+const EDITOR_ICONS: EditorIcon[] = [...CATEGORY_ICONS, ...NOTE_ICONS];
+
+const isCategory = (icon: BaggageIcon) => (CATEGORY_ICONS as BaggageIcon[]).includes(icon);
 
 const KIND_KEY = { flights: "kindFlights", packages: "kindPackages", organized: "kindOrganized", custom: "kindCustom" } as const;
 const LEVEL_KEY = { high: "levelHigh", mid: "levelMid", low: "levelLow", range: "levelRange", net: "levelNet" } as const;
@@ -38,24 +53,21 @@ const ICON_KEY = {
   package: "iconPackage",
   village: "iconVillage",
   tour: "iconTour",
-  bag: "iconBag",
   ok: "iconOk",
   warn: "iconWarn",
-} as const;
+} as const satisfies Record<EditorIcon, string>;
 
-/** The pencil + plus pair shown at the end of a section header for editors. */
-export function SectionEditButtons({
+/** The pencil shown at the end of a section header for editors. */
+export function SectionEditButton({
   onEdit,
-  onAdd,
   disabled,
 }: {
   onEdit: () => void;
-  onAdd: () => void;
   disabled?: boolean;
 }) {
   const t = useTranslations("commissions.editor");
   return (
-    <span className="ms-auto flex items-center gap-1">
+    <span className="ms-auto flex items-center">
       <Button
         type="button"
         variant="ghost"
@@ -65,16 +77,6 @@ export function SectionEditButtons({
         onClick={onEdit}
         className="text-muted-foreground hover:text-foreground">
         <Pencil className="size-3.5" />
-      </Button>
-      <Button
-        type="button"
-        variant="ghost"
-        size="icon-sm"
-        aria-label={t("add")}
-        disabled={disabled}
-        onClick={onAdd}
-        className="text-muted-foreground hover:text-foreground">
-        <Plus className="size-4" />
       </Button>
     </span>
   );
@@ -88,9 +90,6 @@ function Field({ label, children }: { label: string; children: React.ReactNode }
     </label>
   );
 }
-
-const selectClass =
-  "h-8 rounded-lg border border-input bg-transparent px-2 text-xs outline-none focus-visible:border-ring dark:bg-input/30";
 
 function EditorShell({
   onSave,
@@ -157,29 +156,23 @@ function nextKind(drafts: CommissionDraft[]): CommissionKind {
   return STANDARD_KINDS.find((k) => !drafts.some((d) => d.kind === k)) ?? "custom";
 }
 
-export function newCommissionDraft(drafts: CommissionDraft[]): CommissionDraft {
+function newCommissionDraft(drafts: CommissionDraft[]): CommissionDraft {
   return { kind: nextKind(drafts), labelHe: "", labelEn: "", valueHe: "", valueEn: "", level: "mid" };
 }
 
 export function CommissionsEditor({
   slug,
   initial,
-  startWithNewRow,
   onDone,
 }: {
   slug: string;
   initial: EditableCommissionRow[];
-  /** True when opened via the plus button — starts with a fresh row appended. */
-  startWithNewRow: boolean;
   onDone: () => void;
 }) {
   const t = useTranslations("commissions.editor");
   const router = useRouter();
   const [saving, setSaving] = useState(false);
-  const [drafts, setDrafts] = useState<CommissionDraft[]>(() => {
-    const base = toCommissionDrafts(initial);
-    return startWithNewRow ? [...base, newCommissionDraft(base)] : base;
-  });
+  const [drafts, setDrafts] = useState<CommissionDraft[]>(() => toCommissionDrafts(initial));
 
   const update = (i: number, patch: Partial<CommissionDraft>) =>
     setDrafts((d) => d.map((row, idx) => (idx === i ? { ...row, ...patch } : row)));
@@ -226,28 +219,40 @@ export function CommissionsEditor({
           className="flex flex-col gap-2 rounded-lg border border-dashed border-border p-2">
           <div className="flex items-end gap-2">
             <Field label={t("kind")}>
-              <select
+              {/* `items` gives the closed trigger the translated label (Base UI
+                  otherwise renders the raw value). */}
+              <Select
                 value={d.kind}
-                onChange={(e) => update(i, { kind: e.target.value as CommissionKind })}
-                className={selectClass}>
-                {kindOptions(i).map((k) => (
-                  <option key={k} value={k}>
-                    {t(KIND_KEY[k])}
-                  </option>
-                ))}
-              </select>
+                onValueChange={(v) => update(i, { kind: v as CommissionKind })}
+                items={Object.fromEntries(kindOptions(i).map((k) => [k, t(KIND_KEY[k])]))}>
+                <SelectTrigger className="w-full text-xs">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  {kindOptions(i).map((k) => (
+                    <SelectItem key={k} value={k}>
+                      {t(KIND_KEY[k])}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </Field>
             <Field label={t("level")}>
-              <select
+              <Select
                 value={d.level}
-                onChange={(e) => update(i, { level: e.target.value as CommLevel })}
-                className={selectClass}>
-                {LEVELS.map((l) => (
-                  <option key={l} value={l}>
-                    {t(LEVEL_KEY[l])}
-                  </option>
-                ))}
-              </select>
+                onValueChange={(v) => update(i, { level: v as CommLevel })}
+                items={Object.fromEntries(LEVELS.map((l) => [l, t(LEVEL_KEY[l])]))}>
+                <SelectTrigger className="w-full text-xs">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  {LEVELS.map((l) => (
+                    <SelectItem key={l} value={l}>
+                      {t(LEVEL_KEY[l])}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </Field>
             <Button
               type="button"
@@ -307,40 +312,114 @@ export function CommissionsEditor({
 
 // ── Baggage ───────────────────────────────────────────────────────────────────
 
-type BaggageDraft = { icon: BaggageIcon; textHe: string; textEn: string };
+type InclusionStatus = "included" | "not_included";
+type PriceKind = "gross" | "net";
+
+type BaggageDraft = {
+  icon: BaggageIcon;
+  /** Free text — note rows (ok/warn), and the legacy passthrough for category rows. */
+  textHe: string;
+  textEn: string;
+  /** Structured fields for category rows. */
+  status: InclusionStatus;
+  price: string;
+  priceKind: PriceKind;
+  /** Row was already structured (has `inclusion`) when loaded. */
+  structured: boolean;
+  /** Structured fields touched — the text will be regenerated on save. */
+  dirty: boolean;
+};
+
+/** The display text (both locales) a structured category row generates. */
+function inclusionText(d: BaggageDraft): Localized {
+  if (d.status === "included") {
+    return { he: "מזוודה וטרולי כלולים", en: "Suitcase & trolley included" };
+  }
+  const price = d.price.trim();
+  return {
+    he: `מזוודה וטרולי לא כלולים — **${price} ${d.priceKind === "gross" ? "ברוטו" : "נטו"}**`,
+    en: `Suitcase & trolley not included — **${price} ${d.priceKind === "gross" ? "gross" : "net"}**`,
+  };
+}
 
 export function BaggageEditor({
   slug,
   initial,
-  startWithNewRow,
   onDone,
 }: {
   slug: string;
   initial: BaggageRow[];
-  startWithNewRow: boolean;
   onDone: () => void;
 }) {
   const t = useTranslations("commissions.editor");
   const router = useRouter();
   const [saving, setSaving] = useState(false);
-  const [drafts, setDrafts] = useState<BaggageDraft[]>(() => {
-    const base = initial.map((r) => ({
-      icon: r.icon,
-      textHe: r.text.he ?? "",
-      textEn: r.text.en ?? "",
-    }));
-    return startWithNewRow ? [...base, { icon: "flight" as const, textHe: "", textEn: "" }] : base;
-  });
+  const [drafts, setDrafts] = useState<BaggageDraft[]>(() =>
+    initial
+      // The backpack line is hardcoded in the card now — legacy `bag` rows are
+      // not editable and get dropped on the next save.
+      .filter((r) => r.icon !== "bag")
+      .map((r) => ({
+        icon: r.icon,
+        textHe: r.text.he ?? "",
+        textEn: r.text.en ?? "",
+        // Legacy free-text rows: sniff a sensible default for the controls.
+        status: r.inclusion?.status ?? ((r.text.he ?? "").includes("לא כלול") ? "not_included" : "included"),
+        price: r.inclusion?.price ?? "",
+        priceKind: r.inclusion?.priceKind ?? "gross",
+        structured: Boolean(r.inclusion),
+        dirty: false,
+      })),
+  );
 
   const update = (i: number, patch: Partial<BaggageDraft>) =>
     setDrafts((d) => d.map((row, idx) => (idx === i ? { ...row, ...patch } : row)));
+  /** Structured-field change: also marks the row for text regeneration. */
+  const updateStructured = (i: number, patch: Partial<BaggageDraft>) =>
+    update(i, { ...patch, dirty: true });
   const remove = (i: number) => setDrafts((d) => d.filter((_, idx) => idx !== i));
-  const add = () => setDrafts((d) => [...d, { icon: "flight" as const, textHe: "", textEn: "" }]);
+  const add = () =>
+    setDrafts((d) => [
+      ...d,
+      {
+        icon: "flight" as const,
+        textHe: "",
+        textEn: "",
+        status: "included" as const,
+        price: "",
+        priceKind: "gross" as const,
+        structured: true,
+        dirty: true,
+      },
+    ]);
 
   async function save() {
-    const rows: BaggageRow[] = drafts
-      .filter((d) => d.textHe.trim() || d.textEn.trim())
-      .map((d) => ({ icon: d.icon, text: { he: d.textHe.trim(), en: d.textEn.trim() } }));
+    const rows: BaggageRow[] = [];
+    for (const d of drafts) {
+      if (isCategory(d.icon)) {
+        if (d.structured || d.dirty) {
+          if (d.status === "not_included" && !d.price.trim()) {
+            toast.error(t("priceRequired"));
+            return;
+          }
+          rows.push({
+            icon: d.icon,
+            text: inclusionText(d),
+            inclusion: {
+              status: d.status,
+              ...(d.status === "not_included"
+                ? { price: d.price.trim(), priceKind: d.priceKind }
+                : {}),
+            },
+          });
+        } else if (d.textHe.trim() || d.textEn.trim()) {
+          // Untouched legacy row — keep its hand-written text verbatim.
+          rows.push({ icon: d.icon, text: { he: d.textHe.trim(), en: d.textEn.trim() } });
+        }
+      } else if (d.textHe.trim() || d.textEn.trim()) {
+        rows.push({ icon: d.icon, text: { he: d.textHe.trim(), en: d.textEn.trim() } });
+      }
+    }
     setSaving(true);
     const res = await saveSupplierBaggageAction(slug, rows);
     setSaving(false);
@@ -361,16 +440,21 @@ export function BaggageEditor({
           className="flex flex-col gap-2 rounded-lg border border-dashed border-border p-2">
           <div className="flex items-end gap-2">
             <Field label={t("icon")}>
-              <select
+              <Select
                 value={d.icon}
-                onChange={(e) => update(i, { icon: e.target.value as BaggageIcon })}
-                className={selectClass}>
-                {ICONS.map((ic) => (
-                  <option key={ic} value={ic}>
-                    {t(ICON_KEY[ic])}
-                  </option>
-                ))}
-              </select>
+                onValueChange={(v) => updateStructured(i, { icon: v as BaggageIcon })}
+                items={Object.fromEntries(EDITOR_ICONS.map((ic) => [ic, t(ICON_KEY[ic])]))}>
+                <SelectTrigger className="w-full text-xs">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  {EDITOR_ICONS.map((ic) => (
+                    <SelectItem key={ic} value={ic}>
+                      {t(ICON_KEY[ic])}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </Field>
             <Button
               type="button"
@@ -382,22 +466,81 @@ export function BaggageEditor({
               <Trash2 className="size-3.5" />
             </Button>
           </div>
-          <Field label={t("textHe")}>
-            <Input
-              value={d.textHe}
-              dir="rtl"
-              onChange={(e) => update(i, { textHe: e.target.value })}
-              className="h-8 text-xs"
-            />
-          </Field>
-          <Field label={t("textEn")}>
-            <Input
-              value={d.textEn}
-              dir="ltr"
-              onChange={(e) => update(i, { textEn: e.target.value })}
-              className="h-8 text-xs"
-            />
-          </Field>
+
+          {isCategory(d.icon) ? (
+            <>
+              <Field label={t("status")}>
+                <Select
+                  value={d.status}
+                  onValueChange={(v) => updateStructured(i, { status: v as InclusionStatus })}
+                  items={{
+                    included: t("statusIncluded"),
+                    not_included: t("statusNotIncluded"),
+                  }}>
+                  <SelectTrigger className="w-full text-xs">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="included">{t("statusIncluded")}</SelectItem>
+                    <SelectItem value="not_included">{t("statusNotIncluded")}</SelectItem>
+                  </SelectContent>
+                </Select>
+              </Field>
+              {d.status === "not_included" && (
+                <div className="flex gap-2">
+                  <Field label={t("price")}>
+                    <Input
+                      value={d.price}
+                      dir="ltr"
+                      placeholder="130$"
+                      onChange={(e) => updateStructured(i, { price: e.target.value })}
+                      className="h-8 text-xs"
+                    />
+                  </Field>
+                  <Field label={t("priceKind")}>
+                    <Select
+                      value={d.priceKind}
+                      onValueChange={(v) => updateStructured(i, { priceKind: v as PriceKind })}
+                      items={{ gross: t("priceGross"), net: t("priceNet") }}>
+                      <SelectTrigger className="w-full text-xs">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="gross">{t("priceGross")}</SelectItem>
+                        <SelectItem value="net">{t("priceNet")}</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </Field>
+                </div>
+              )}
+              {!d.structured && !d.dirty && (d.textHe || d.textEn) && (
+                // Legacy hand-written text: kept as-is unless the controls above
+                // are touched, which regenerates it from the structured fields.
+                <p className="text-[0.65rem] leading-snug text-muted-foreground" dir="auto">
+                  {d.textHe || d.textEn}
+                </p>
+              )}
+            </>
+          ) : (
+            <>
+              <Field label={t("textHe")}>
+                <Input
+                  value={d.textHe}
+                  dir="rtl"
+                  onChange={(e) => update(i, { textHe: e.target.value })}
+                  className="h-8 text-xs"
+                />
+              </Field>
+              <Field label={t("textEn")}>
+                <Input
+                  value={d.textEn}
+                  dir="ltr"
+                  onChange={(e) => update(i, { textEn: e.target.value })}
+                  className="h-8 text-xs"
+                />
+              </Field>
+            </>
+          )}
         </div>
       ))}
     </EditorShell>
