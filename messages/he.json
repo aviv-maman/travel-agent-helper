@@ -435,7 +435,6 @@
     "commissionsTitle": "עמלות",
     "editor": {
       "edit": "עריכה",
-      "add": "הוספה",
       "save": "שמור",
       "saving": "שומר…",
       "cancel": "ביטול",
@@ -468,10 +467,18 @@
       "iconPackage": "🏖️ חבילות נופש",
       "iconVillage": "🌴 כפרי נופש",
       "iconTour": "🧳 טיולים מאורגנים",
-      "iconBag": "ℹ️ הערת מידע (כחול)",
       "iconOk": "⚠️ הערה (זהב)",
-      "iconWarn": "⚠️ אזהרה (כתום)"
+      "iconWarn": "⚠️ אזהרה (כתום)",
+      "status": "מזוודה וטרולי",
+      "statusIncluded": "כלול",
+      "statusNotIncluded": "לא כלול",
+      "price": "מחיר",
+      "priceKind": "ברוטו / נטו",
+      "priceGross": "ברוטו",
+      "priceNet": "נטו",
+      "priceRequired": "יש להזין מחיר לשורה שאינה כלולה"
     },
+    "backpackNote": "תיק גב עד 4 ק\"ג — כלול תמיד",
     "flightsOnly": "טיסות בלבד",
     "packages": "חבילות נופש",
     "holidayVillages": "כפרי נופש",

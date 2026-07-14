@@ -32,7 +32,10 @@ export type SaveResult = { ok: true } | { error: "forbidden" | "invalid" | "offl
 
 const KINDS: readonly CommissionKind[] = ["flights", "packages", "organized", "custom"];
 const LEVELS: readonly CommLevel[] = ["high", "mid", "low", "range", "net"];
-const ICONS: readonly BaggageIcon[] = ["bag", "ok", "warn", "flight", "package", "tour", "village"];
+/** Category rows carry structured `inclusion`; note rows are free text. `bag`
+ * is not writable — the backpack line is hardcoded in the card. */
+const CATEGORY_ICONS: readonly BaggageIcon[] = ["flight", "package", "village", "tour"];
+const NOTE_ICONS: readonly BaggageIcon[] = ["ok", "warn"];
 
 /** Trim a Localized value's fields and drop empty locales; null when fully empty. */
 function cleanLocalized(v: Localized | null | undefined, max: number): Localized | null {
@@ -93,10 +96,25 @@ export async function saveSupplierBaggageAction(
 
   const clean: BaggageRow[] = [];
   for (const r of rows) {
-    if (!ICONS.includes(r.icon)) return { error: "invalid" };
+    const category = CATEGORY_ICONS.includes(r.icon);
+    if (!category && !NOTE_ICONS.includes(r.icon)) return { error: "invalid" };
     const text = cleanLocalized(r.text, 300);
     if (!text) return { error: "invalid" };
-    clean.push({ icon: r.icon, text });
+    if (!r.inclusion) {
+      clean.push({ icon: r.icon, text });
+      continue;
+    }
+    if (!category) return { error: "invalid" };
+    if (r.inclusion.status === "included") {
+      clean.push({ icon: r.icon, text, inclusion: { status: "included" } });
+    } else if (r.inclusion.status === "not_included") {
+      const price = (r.inclusion.price ?? "").trim().slice(0, 20);
+      const priceKind = r.inclusion.priceKind;
+      if (!price || (priceKind !== "gross" && priceKind !== "net")) return { error: "invalid" };
+      clean.push({ icon: r.icon, text, inclusion: { status: "not_included", price, priceKind } });
+    } else {
+      return { error: "invalid" };
+    }
   }
 
   try {

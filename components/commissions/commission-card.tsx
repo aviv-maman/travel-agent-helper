@@ -14,7 +14,7 @@ import { emptyContact, type SupplierContact as SupplierContactRecord } from "@/l
 import {
   BaggageEditor,
   CommissionsEditor,
-  SectionEditButtons,
+  SectionEditButton,
 } from "./supplier-inline-edit";
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
@@ -69,15 +69,9 @@ export function CommissionCard({
   editable?: EditableSupplier | null;
 }) {
   const t = useTranslations("commissions");
-  // Which section is being edited inline, and whether it opened via "+".
+  // Which section is being edited inline (new rows are added inside the editor).
   const [editSection, setEditSection] = useState<"commissions" | "baggage" | null>(null);
-  const [withNewRow, setWithNewRow] = useState(false);
   const canEdit = Boolean(canEditContact && editable);
-
-  const startEdit = (section: "commissions" | "baggage", addRow: boolean) => {
-    setWithNewRow(addRow);
-    setEditSection(section);
-  };
 
   // Always render the same three category rows, pulling each supplier's matching
   // baggage details by icon. A category with no data shows an empty details cell.
@@ -178,9 +172,8 @@ export function CommissionCard({
             <Percent className="size-4 shrink-0 text-brand" aria-hidden />
             <span className="text-sm font-semibold text-foreground">{t("commissionsTitle")}</span>
             {canEdit && editSection !== "commissions" && (
-              <SectionEditButtons
-                onEdit={() => startEdit("commissions", false)}
-                onAdd={() => startEdit("commissions", true)}
+              <SectionEditButton
+                onEdit={() => setEditSection("commissions")}
                 disabled={editSection !== null}
               />
             )}
@@ -189,7 +182,6 @@ export function CommissionCard({
             <CommissionsEditor
               slug={supplier.id}
               initial={editable.commissions}
-              startWithNewRow={withNewRow}
               onDone={() => setEditSection(null)}
             />
           ) : (
@@ -246,9 +238,8 @@ export function CommissionCard({
             <Luggage className="size-4 shrink-0 text-brand" aria-hidden />
             <span className="text-sm font-semibold text-foreground">{t("baggage")}</span>
             {canEdit && editSection !== "baggage" && (
-              <SectionEditButtons
-                onEdit={() => startEdit("baggage", false)}
-                onAdd={() => startEdit("baggage", true)}
+              <SectionEditButton
+                onEdit={() => setEditSection("baggage")}
                 disabled={editSection !== null}
               />
             )}
@@ -258,7 +249,6 @@ export function CommissionCard({
             <BaggageEditor
               slug={supplier.id}
               initial={editable.baggage}
-              startWithNewRow={withNewRow}
               onDone={() => setEditSection(null)}
             />
           ) : (
@@ -339,23 +329,19 @@ export function CommissionCard({
             </div>
           ))}
 
-        {editSection !== "baggage" && supplier.baggage
-          .filter((r) => r.icon === "bag")
-          .map((row, i) => (
-            <div
-              key={i}
-              className="mt-2.5 flex items-start gap-2 rounded-lg border border-brand/30 bg-brand/8 px-3 py-2">
-              <Info className="mt-0.5 size-3.5 shrink-0 text-brand" aria-hidden />
-              <div className="flex flex-col gap-0.5">
-                {showBaggageInfoTitle && (
-                  <span className="text-xs font-semibold text-brand">{t("info")}</span>
-                )}
-                <span className="text-xs leading-snug text-brand">
-                  <RichText text={row.text} />
-                </span>
-              </div>
+        {/* The backpack allowance is universal, so it's hardcoded on every
+            flights supplier rather than stored/editable per supplier. */}
+        {supplier.category === "flights" && (
+          <div className="mt-2.5 flex items-start gap-2 rounded-lg border border-brand/30 bg-brand/8 px-3 py-2">
+            <Info className="mt-0.5 size-3.5 shrink-0 text-brand" aria-hidden />
+            <div className="flex flex-col gap-0.5">
+              {showBaggageInfoTitle && (
+                <span className="text-xs font-semibold text-brand">{t("info")}</span>
+              )}
+              <span className="text-xs leading-snug text-brand">{t("backpackNote")}</span>
             </div>
-          ))}
+          </div>
+        )}
       </div>
     </article>
   );

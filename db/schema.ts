@@ -305,8 +305,22 @@ export type BaggageIcon =
   | "tour"
   | "village";
 
-/** A supplier baggage line; text may contain `**bold**` spans. */
-export type BaggageRow = { icon: BaggageIcon; text: Localized };
+/** Structured source for a category baggage row edited in-app. */
+export type BaggageInclusion = {
+  status: "included" | "not_included";
+  /** Only for not_included — free text incl. currency, e.g. "130$". */
+  price?: string;
+  priceKind?: "gross" | "net";
+};
+
+/**
+ * A supplier baggage line; text may contain `**bold**` spans. Category rows
+ * (flight/package/village/tour) edited in-app carry `inclusion`, the
+ * structured source their text is generated from; note rows (ok/warn) are
+ * free text. The backpack line is hardcoded in the card, so `bag` rows are
+ * legacy and no longer rendered.
+ */
+export type BaggageRow = { icon: BaggageIcon; text: Localized; inclusion?: BaggageInclusion };
 
 /** A commission-related note; `showTitle` defaults to true. */
 export type SupplierNote = {

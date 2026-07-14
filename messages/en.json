@@ -435,7 +435,6 @@
     "commissionsTitle": "Commissions",
     "editor": {
       "edit": "Edit",
-      "add": "Add",
       "save": "Save",
       "saving": "Saving…",
       "cancel": "Cancel",
@@ -468,10 +467,18 @@
       "iconPackage": "🏖️ Vacation packages",
       "iconVillage": "🌴 Holiday villages",
       "iconTour": "🧳 Organized tours",
-      "iconBag": "ℹ️ Info note (blue)",
       "iconOk": "⚠️ Note (gold)",
-      "iconWarn": "⚠️ Warning (orange)"
+      "iconWarn": "⚠️ Warning (orange)",
+      "status": "Suitcase & trolley",
+      "statusIncluded": "Included",
+      "statusNotIncluded": "Not included",
+      "price": "Price",
+      "priceKind": "Gross / net",
+      "priceGross": "Gross",
+      "priceNet": "Net",
+      "priceRequired": "Enter a price for a not-included row"
     },
+    "backpackNote": "Backpack up to 4 kg — always included",
     "flightsOnly": "Flights only",
     "packages": "Vacation packages",
     "holidayVillages": "Holiday villages",
