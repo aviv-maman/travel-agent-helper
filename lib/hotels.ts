@@ -1,5 +1,4 @@
 import type {
-  HotelTier,
   HotelTagValue,
   HotelFeatureValue,
   BoardCode,
@@ -50,7 +49,6 @@ export type UIHotel = {
   id: string;
   name: string;
   stars: number | null;
-  tier: HotelTier;
   tags: HotelTagValue[];
   boards: BoardCode[];
   bookingScore: number | null;
@@ -106,7 +104,6 @@ export type ViewHotel = {
   id: string;
   name: string;
   stars: number | null;
-  tier: HotelTier;
   tags: HotelTagValue[];
   boards: BoardCode[];
   bookingScore: number | null;
@@ -196,7 +193,6 @@ function resolveHotel(h: UIHotel, locale: string): ViewHotel {
     id: h.id,
     name: h.name,
     stars: h.stars,
-    tier: h.tier,
     tags: h.tags,
     boards: h.boards,
     bookingScore: h.bookingScore,
@@ -261,9 +257,9 @@ export async function getDestinationsList(
 }
 
 /**
- * One destination, with its hotels filtered (AND over features) and sorted,
- * grouped by tier, and resolved to `locale`. All filtering + translation happens
- * on the server — the client only receives the matching subset in one language.
+ * One destination, with its hotels filtered (AND over features), sorted, and
+ * resolved to `locale`. All filtering + translation happens on the server —
+ * the client only receives the matching subset in one language.
  */
 export async function getDestinationView(
   iata: string,
@@ -377,7 +373,6 @@ async function loadFromDb(): Promise<UIDestination[]> {
       id: String(h.id),
       name: h.name,
       stars: h.stars,
-      tier: h.tier,
       tags: h.tags.map((t) => t.tag),
       boards: (h.boards ?? []) as BoardCode[],
       bookingScore: h.bookingScore,
@@ -417,7 +412,6 @@ async function loadFromSeed(): Promise<UIDestination[]> {
         id: `${d.code}-${i}`,
         name: h.name,
         stars: h.stars,
-        tier: h.tier as HotelTier,
         tags: (h.tags ?? []) as HotelTagValue[],
         boards: (h.boards ?? []) as BoardCode[],
         bookingScore: h.bookingScore,
@@ -458,7 +452,6 @@ type SeedShape = {
   hotels: {
     name: string;
     stars: number | null;
-    tier: string;
     tags: string[];
     boards: string[];
     bookingScore: number | null;
