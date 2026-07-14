@@ -308,9 +308,12 @@ export type BaggageIcon =
 /** Structured source for a category baggage row edited in-app. */
 export type BaggageInclusion = {
   status: "included" | "not_included";
-  /** Only for not_included — free text incl. currency, e.g. "130$". */
-  price?: string;
+  /** Only for not_included — round-trip prices, free text incl. currency (e.g. "130$"). */
+  suitcasePrice?: string;
+  trolleyPrice?: string;
   priceKind?: "gross" | "net";
+  /** @deprecated single-price rows saved before the suitcase/trolley split. */
+  price?: string;
 };
 
 /**

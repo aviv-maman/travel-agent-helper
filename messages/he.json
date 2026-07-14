@@ -472,11 +472,12 @@
       "status": "מזוודה וטרולי",
       "statusIncluded": "כלול",
       "statusNotIncluded": "לא כלול",
-      "price": "מחיר",
+      "priceSuitcase": "מחיר מזוודה",
+      "priceTrolley": "מחיר טרולי",
       "priceKind": "ברוטו / נטו",
       "priceGross": "ברוטו",
       "priceNet": "נטו",
-      "priceRequired": "יש להזין מחיר לשורה שאינה כלולה"
+      "priceRequired": "יש להזין מחיר למזוודה ולטרולי"
     },
     "backpackNote": "תיק גב עד 4 ק\"ג — כלול תמיד",
     "flightsOnly": "טיסות בלבד",

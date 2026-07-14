@@ -472,11 +472,12 @@
       "status": "Suitcase & trolley",
       "statusIncluded": "Included",
       "statusNotIncluded": "Not included",
-      "price": "Price",
+      "priceSuitcase": "Suitcase price",
+      "priceTrolley": "Trolley price",
       "priceKind": "Gross / net",
       "priceGross": "Gross",
       "priceNet": "Net",
-      "priceRequired": "Enter a price for a not-included row"
+      "priceRequired": "Enter both suitcase and trolley prices"
     },
     "backpackNote": "Backpack up to 4 kg — always included",
     "flightsOnly": "Flights only",
