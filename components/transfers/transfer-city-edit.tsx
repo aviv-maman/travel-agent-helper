@@ -105,8 +105,10 @@ export function TransferCityEdit({
     const allPill = pills.find(isAllPill);
     const none: { label: Localized; tooltip?: Localized; state: PillState }[] = [];
     if (pills.length === 1 && allPill) {
+      // "verify" isn't offered for all-suppliers — fall back to "included".
       return {
-        mode: "all" as Mode, allVariant: allPill.variant,
+        mode: "all" as Mode,
+        allVariant: allPill.variant === "warn" ? "yes" : allPill.variant,
         per: {}, rest: "none" as PillState, extras: none,
       };
     }
@@ -229,7 +231,7 @@ export function TransferCityEdit({
 
               {mode === "all" && (
                 <div className="ms-6 mb-1 flex items-center gap-2">
-                  {(["yes", "no", "warn"] as const).map((v) => (
+                  {(["yes", "no"] as const).map((v) => (
                     <button
                       key={v}
                       type="button"
