@@ -654,7 +654,9 @@ export const SUPPLIERS: Supplier[] = [
   netSupplier("instant-travel", "Instant Travel", "INSTANT", "hotels", "https://b2b.hubwayz.com/agent/login", {
     alias: "Hubwayz",
   }),
-  netSupplier("ratehawk", "RateHawk", "RATEHAWK", "hotels", "https://www.ratehawk.com/"),
+  netSupplier("ratehawk", "RateHawk", "RATEHAWK", "hotels", "https://www.ratehawk.com/", {
+    logoExt: "svg",
+  }),
 
   // ── Car-rental tab ─────────────────────────────────────────────────────────
   netSupplier("auto-europe", "Auto Europe", "AUTOEUROPE", "car-rental", "https://www.autoeurope.co.il/", {
