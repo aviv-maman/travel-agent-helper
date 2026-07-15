@@ -17,6 +17,8 @@ export type { TransferPill as Pill } from "@/db/schema";
 
 export type CityRow = {
   id: string;
+  /** DB row id — present only on the DB read path; the editor needs it. */
+  dbId?: number;
   /** City (or equivalent group of cities) + IATA codes — no country prefix. */
   name: Localized;
   /** Cross-locale search blob (he + en + IATA codes), lowercased on resolve. */
@@ -501,10 +503,14 @@ export type ViewPill = {
 };
 export type ViewCityRow = {
   id: string;
+  /** DB row id (null on the no-DB fallback — editing is disabled there). */
+  dbId: number | null;
   name: string;
   /** Lowercased he + en + codes, for client-side filtering across both locales. */
   search: string;
   pills: ViewPill[];
+  /** Both-locale pills, so the editor dialog can reconstruct its state. */
+  rawPills: Pill[];
 };
 export type ViewCountryGroup = {
   id: string;
@@ -527,11 +533,25 @@ async function loadCountries(): Promise<CountryGroup[]> {
     code: c.code,
     cities: c.cities.map((city) => ({
       id: city.slug,
+      dbId: city.id,
       name: city.name,
       search: city.search,
       pills: city.pills,
     })),
   }));
+}
+
+/** Supplier options for the transfer-inclusion editor (DB only; [] otherwise). */
+export async function getTransferSupplierOptions(): Promise<
+  { slug: string; name: Localized; code: string }[]
+> {
+  if (!usingDatabase()) return [];
+  const { db } = await import("@/db");
+  const rows = await db.query.suppliers.findMany({
+    columns: { slug: true, name: true, code: true },
+    orderBy: (t, { asc }) => [asc(t.sortOrder)],
+  });
+  return rows;
 }
 
 /** All transfer countries, resolved to `locale`. */
@@ -544,9 +564,11 @@ export async function getTransfers(locale: string): Promise<ViewCountryGroup[]> 
     code: c.code,
     cities: c.cities.map((city) => ({
       id: city.id,
+      dbId: city.dbId ?? null,
       name: pick(city.name),
       search:
         `${city.search} ${city.name.he ?? ""} ${city.name.en ?? ""} ${c.country.he} ${c.country.en}`.toLowerCase(),
+      rawPills: city.pills,
       pills: city.pills.map((pl) => ({
         variant: pl.variant,
         flag: pl.flag ?? null,

@@ -370,8 +370,17 @@
     "copy": "העתק",
     "copied": "הועתק",
     "noInvites": "אין הזמנות עדיין.",
-    "roles": { "admin": "מנהל", "editor": "עורך", "agent": "סוכן" },
-    "status": { "active": "פעיל", "used": "נוצל", "revoked": "בוטל", "expired": "פג תוקף" }
+    "roles": {
+      "admin": "מנהל",
+      "editor": "עורך",
+      "agent": "סוכן"
+    },
+    "status": {
+      "active": "פעיל",
+      "used": "נוצל",
+      "revoked": "בוטל",
+      "expired": "פג תוקף"
+    }
   },
   "account": {
     "profile": "פרופיל",
@@ -531,7 +540,23 @@
     "searchPlaceholder": "חפש יעד או מדינה... (עברית או אנגלית)",
     "clear": "נקה חיפוש",
     "noResults": "😕 לא נמצאו יעדים",
-    "verifyTooltip": "לבדוק מול הספק"
+    "verifyTooltip": "לבדוק מול הספק",
+    "editor": {
+      "edit": "עריכה",
+      "title": "הסעות — {city}",
+      "modeAll": "כל הספקים",
+      "modeCustom": "ספקים מסוימים",
+      "stateNone": "לא מוצג",
+      "stateYes": "כלול",
+      "stateNo": "לא כלול",
+      "stateWarn": "לבדוק מול הספק",
+      "restSuppliers": "שאר הספקים",
+      "atLeastOne": "יש לבחור סטטוס לפחות לספק אחד",
+      "save": "שמירה",
+      "cancel": "ביטול",
+      "saved": "ההסעות עודכנו",
+      "saveFailed": "השמירה נכשלה"
+    }
   },
   "baggage": {
     "introTitle": "מידע כבודה",

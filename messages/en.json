@@ -370,8 +370,17 @@
     "copy": "Copy",
     "copied": "Copied",
     "noInvites": "No invitations yet.",
-    "roles": { "admin": "admin", "editor": "editor", "agent": "agent" },
-    "status": { "active": "Active", "used": "Used", "revoked": "Revoked", "expired": "Expired" }
+    "roles": {
+      "admin": "admin",
+      "editor": "editor",
+      "agent": "agent"
+    },
+    "status": {
+      "active": "Active",
+      "used": "Used",
+      "revoked": "Revoked",
+      "expired": "Expired"
+    }
   },
   "account": {
     "profile": "Profile",
@@ -531,7 +540,23 @@
     "searchPlaceholder": "Search a destination or country... (Hebrew or English)",
     "clear": "Clear search",
     "noResults": "😕 No destinations found",
-    "verifyTooltip": "Verify with the supplier"
+    "verifyTooltip": "Verify with the supplier",
+    "editor": {
+      "edit": "Edit",
+      "title": "Transfers — {city}",
+      "modeAll": "All suppliers",
+      "modeCustom": "Specific suppliers",
+      "stateNone": "Not shown",
+      "stateYes": "Included",
+      "stateNo": "Not included",
+      "stateWarn": "Verify with supplier",
+      "restSuppliers": "All other suppliers",
+      "atLeastOne": "Choose a status for at least one supplier",
+      "save": "Save",
+      "cancel": "Cancel",
+      "saved": "Transfers updated",
+      "saveFailed": "Save failed"
+    }
   },
   "baggage": {
     "introTitle": "Luggage Information",

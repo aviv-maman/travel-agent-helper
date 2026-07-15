@@ -5,11 +5,13 @@
  * DB is the read source.
  *
  * Idempotent: parents (suppliers, airlines, transfer countries) are upserted
- * on slug; cancellation sets and transfer cities are replaced wholesale on
- * each run. The app-managed data is bootstrap-only and never overwritten:
+ * on slug; cancellation sets are replaced wholesale on each run. The
+ * app-managed data is bootstrap-only and never overwritten:
  *   - contacts — seeded only while the contacts table is empty;
  *   - supplier commission lines — seeded per supplier only while it has none;
- *   - supplier baggage — written only when the supplier row is first created.
+ *   - supplier baggage — written only when the supplier row is first created;
+ *   - transfer cities — seeded per country only while it has none (inclusion
+ *     pills are edited in the app via the transfers-page pencil).
  * Those three are edited in the app (content:edit); the arrays here remain
  * the no-DB fallback and the first-boot seed.
  *
@@ -254,10 +256,13 @@ async function seedTransfers(): Promise<{ countries: number; cities: number }> {
       .returning();
     sortOrder++;
 
-    // Replace this country's cities wholesale (same as hotels per destination).
-    await db
-      .delete(transferCities)
+    // Bootstrap-only per country: inclusion pills are edited in the app
+    // (transfers-page pencil), so an existing city list is never overwritten.
+    const [{ count: existing }] = await db
+      .select({ count: sql<number>`count(*)::int` })
+      .from(transferCities)
       .where(eq(transferCities.countryId, country.id));
+    if (existing > 0) continue;
     await db.insert(transferCities).values(
       c.cities.map((city, i) => ({
         countryId: country.id,
