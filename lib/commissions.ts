@@ -135,28 +135,27 @@ const cc = (
 ): CustomCommission => ({ label: t(labelHe, labelEn), value: t(he, en), level });
 
 /**
- * A skeleton supplier for the hotels / car-rental tabs — name + code only, with
- * a "coming soon" note. Commission and baggage details are filled in later.
+ * A hotels / car-rental B2B supplier (bedbank or car consolidator): sells at
+ * net rates and the agent adds their own markup, so it carries a single global
+ * "net" commission line and no baggage table.
  */
-const placeholder = (
+const netSupplier = (
   id: string,
   name: string,
   code: string,
   category: SupplierCategory,
+  website: string,
+  opts: { alias?: string; logoExt?: string } = {},
 ): Supplier => ({
   id,
   name: t(name, name),
   code,
   category,
+  website,
+  logo: `/suppliers/${id}.${opts.logoExt ?? "png"}`,
+  ...(opts.alias ? { alias: t(opts.alias, opts.alias) } : {}),
+  customCommission1: { label: t("עמלה", "Commission"), value: t("נטו", "Net"), level: "net" },
   baggage: [],
-  notes: [
-    {
-      text: t("התוכן יעודכן בקרוב", "Details will be added soon"),
-      variant: "info",
-      showTitle: false,
-    },
-  ],
-  placeholder: true,
 });
 
 // Shared baggage lines reused across many suppliers.
@@ -649,14 +648,18 @@ export const SUPPLIERS: Supplier[] = [
     ],
   },
 
-  // ── Hotels tab (skeleton — content added later) ────────────────────────────
-  placeholder("goglobal", "GoGlobal", "GOGLOBAL", "hotels"),
-  placeholder("tbo-holidays", "TBO Holidays", "TBO", "hotels"),
-  placeholder("instant-travel", "Instant Travel", "INSTANT", "hotels"),
-  placeholder("ratehawk", "RateHawk", "RATEHAWK", "hotels"),
+  // ── Hotels tab — B2B bedbanks (net rates; the agent adds their markup) ──────
+  netSupplier("goglobal", "GoGlobal", "GOGLOBAL", "hotels", "https://new.goglobal.travel/home"),
+  netSupplier("tbo-holidays", "TBO Holidays", "TBO", "hotels", "https://www.tboholidays.com/"),
+  netSupplier("instant-travel", "Instant Travel", "INSTANT", "hotels", "https://b2b.hubwayz.com/agent/login", {
+    alias: "Hubwayz",
+  }),
+  netSupplier("ratehawk", "RateHawk", "RATEHAWK", "hotels", "https://www.ratehawk.com/"),
 
-  // ── Car-rental tab (skeleton — content added later) ────────────────────────
-  placeholder("auto-europe", "Auto Europe", "AUTOEUROPE", "car-rental"),
+  // ── Car-rental tab ─────────────────────────────────────────────────────────
+  netSupplier("auto-europe", "Auto Europe", "AUTOEUROPE", "car-rental", "https://www.autoeurope.co.il/", {
+    logoExt: "svg",
+  }),
 ];
 
 // ── Locale-resolved view types (what the client receives) ────────────────────

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 41 40">
+  <defs>
+    <style>
+      .cls-1 {
+        filter: url(#drop-shadow-2);
+      }
+
+      .cls-2 {
+        fill: #ef4135;
+      }
+
+      .cls-2, .cls-3 {
+        fill-rule: evenodd;
+      }
+
+      .cls-3, .cls-4 {
+        fill: #fff;
+      }
+
+      .cls-4 {
+        filter: url(#drop-shadow-3);
+      }
+
+      .cls-5 {
+        filter: url(#drop-shadow-1);
+      }
+    </style>
+    <filter id="drop-shadow-1" x="1.5" y="1" width="38.1" height="38.1" filterUnits="userSpaceOnUse">
+      <feOffset dx="2.8" dy="2.8"/>
+      <feGaussianBlur result="blur" stdDeviation="2.8"/>
+      <feFlood flood-color="#231f20" flood-opacity=".4"/>
+      <feComposite in2="blur" operator="in"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <filter id="drop-shadow-2" x=".5" y="0" width="40" height="40" filterUnits="userSpaceOnUse">
+      <feOffset dx="2.8" dy="2.8"/>
+      <feGaussianBlur result="blur-2" stdDeviation="2.8"/>
+      <feFlood flood-color="#231f20" flood-opacity=".4"/>
+      <feComposite in2="blur-2" operator="in"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <filter id="drop-shadow-3" x="7.4" y="6.7" width="28.1" height="28.3" filterUnits="userSpaceOnUse">
+      <feOffset dx="2" dy="2"/>
+      <feGaussianBlur result="blur-3" stdDeviation="0"/>
+      <feFlood flood-color="#000" flood-opacity=".5"/>
+      <feComposite in2="blur-3" operator="in"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+  </defs>
+  <!-- Generator: Adobe Illustrator 28.7.1, SVG Export Plug-In . SVG Version: 1.2.0 Build 142)  -->
+  <g>
+    <g id="Layer_1">
+      <g class="cls-5">
+        <path class="cls-3" d="M20.5,1c10.5,0,19,8.6,19,19s-8.6,19-19,19S1.5,30.5,1.5,20,10,1,20.5,1Z"/>
+      </g>
+      <g class="cls-1">
+        <path class="cls-2" d="M20.5,0c11,0,20,9,20,20s-9,20-20,20S.5,31,.5,20,9.5,0,20.5,0Z"/>
+      </g>
+      <path class="cls-4" d="M29.1,25.2c-.4,1.2-.3,3.2-1.7,3.7-1.2.2-2.7.3-3.6-.4-1.4-1.7-.5-4.2-.7-6.4l.3-.5c3.5,0,7.4-.3,9-3.6,1.6-2.3,1.5-5.4.4-7.8-1.2-2-3.4-3.3-5.9-3.3-2.7,0-4,1.4-5.9,3.1-.9-1.1-1.9-2.7-3.5-3.1-2.3-.6-4.6-.2-6.4,1.4-1.2,1.4-2.4,2.9-2.4,4.9-.1,1.2,1.2.9,2,.9,1.4.4.9-1.2,1.2-2,.4-.9,1.2-1.6,2.1-1.9,1.2-.4,2.6-.1,3.4.9,1.1,1.9,1.1,4.6.5,6.7-2.5.3-5.1.4-7.3,1.5-2.2,1.3-3.5,3.8-3.2,6.3,0,3.1,2.2,5.6,4.9,6.7,2.8,1.4,6-.3,8.2-2,1.5,1.9,3.8,2.8,6.2,2.7,2.6-.1,4.3-2,5.3-4.4.1-1,.8-2.5,0-3.4-1-.2-1.8-.2-3,0ZM23.4,12.5c.7-.9,1.5-1.7,2.7-2,1.5-.2,2.7.4,3.6,1.4.7.7.9,2,.9,2.8-.2,1.2-1,2.3-2.2,2.7-1.5.6-3.4.5-4.9.4-.4-1.6-.1-3.8,0-5.3ZM17.1,28.2c-1.2.6-3,1.1-4.1.2-1.1-.8-2-1.7-2-3.2-.1-1.4.9-2.5,2.1-3.2,1.7-.7,3.3-.6,5.1-.4l.2,1.2c-.2,1.8.7,4.2-1.3,5.3Z"/>
+    </g>
+  </g>
+</svg>

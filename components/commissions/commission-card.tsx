@@ -90,6 +90,9 @@ export function CommissionCard({
   // tying them to the caveat below.
   const hasWarn = supplier.baggage.some((r) => r.icon === "warn");
 
+  // Baggage is a flights concept — hotel and car-rental suppliers hide it.
+  const showBaggage = supplier.category !== "hotels" && supplier.category !== "car-rental";
+
   // Toggle the title on the blue "info" baggage alert (backpack line). Hidden for
   // now; flip to true to bring the "מידע" title back.
   const showBaggageInfoTitle = false;
@@ -142,6 +145,11 @@ export function CommissionCard({
             <h3 className="truncate text-base leading-tight font-bold text-foreground">
               {supplier.name}
             </h3>
+            {supplier.alias && (
+              <span className="shrink-0 rounded-md bg-brand/10 px-1.5 py-0.5 text-[0.7rem] font-semibold text-brand">
+                {supplier.alias}
+              </span>
+            )}
             <span className="shrink-0 text-[0.7rem] font-normal text-muted-foreground">
               {supplier.code}
             </span>
@@ -232,7 +240,7 @@ export function CommissionCard({
           </Alert>
         ))}
 
-        {(tableRows.some((row) => row.details.length > 0) || canEdit) && (
+        {showBaggage && (tableRows.some((row) => row.details.length > 0) || canEdit) && (
         <div className="mt-2.5 overflow-hidden rounded-lg border border-border">
           <div className="flex items-center gap-2 border-b border-border bg-surface-2/60 px-3 py-2">
             <Luggage className="size-4 shrink-0 text-brand" aria-hidden />
@@ -297,7 +305,7 @@ export function CommissionCard({
 
         {/* Baggage-related alerts sit below the baggage table (hidden while the
             baggage editor is open — they render the same rows being edited). */}
-        {editSection !== "baggage" && supplier.baggage
+        {showBaggage && editSection !== "baggage" && supplier.baggage
           .filter((r) => r.icon === "warn")
           .map((row, i) => (
             <div
@@ -313,7 +321,7 @@ export function CommissionCard({
             </div>
           ))}
 
-        {editSection !== "baggage" && supplier.baggage
+        {showBaggage && editSection !== "baggage" && supplier.baggage
           .filter((r) => r.icon === "ok")
           .map((row, i) => (
             <div
