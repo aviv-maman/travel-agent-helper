@@ -362,6 +362,32 @@ function inclusionText(d: BaggageDraft): Localized {
   };
 }
 
+/**
+ * Legacy category rows (seeded from the old HTML) keep their prices only inside
+ * the free text, with no structured `inclusion`. Parse them back — the inverse
+ * of `inclusionText` — so the editor's price fields open pre-filled with the
+ * real values instead of empty placeholders. Falls back to the English line when
+ * the Hebrew one is missing.
+ */
+function parseLegacyPrices(textHe: string, textEn: string): {
+  suitcasePrice: string;
+  trolleyPrice: string;
+  priceKind: PriceKind;
+} {
+  const suit =
+    textHe.match(/מזוודה הלוך ושוב:\s*\*\*(.+?)\s+(ברוטו|נטו)\*\*/) ??
+    textEn.match(/Suitcase round trip:\s*\*\*(.+?)\s+(gross|net)\*\*/i);
+  const trol =
+    textHe.match(/טרולי הלוך ושוב:\s*\*\*(.+?)\s+(ברוטו|נטו)\*\*/) ??
+    textEn.match(/Trolley round trip:\s*\*\*(.+?)\s+(gross|net)\*\*/i);
+  const kind = (suit ?? trol)?.[2]?.toLowerCase();
+  return {
+    suitcasePrice: suit?.[1]?.trim() ?? "",
+    trolleyPrice: trol?.[1]?.trim() ?? "",
+    priceKind: kind === "נטו" || kind === "net" ? "net" : "gross",
+  };
+}
+
 export function BaggageEditor({
   slug,
   initial,
@@ -379,19 +405,24 @@ export function BaggageEditor({
       // The backpack line is hardcoded in the card now — legacy `bag` rows are
       // not editable and get dropped on the next save.
       .filter((r) => r.icon !== "bag")
-      .map((r) => ({
-        icon: r.icon,
-        textHe: r.text.he ?? "",
-        textEn: r.text.en ?? "",
-        // Legacy free-text rows: sniff a sensible default for the controls.
-        status: r.inclusion?.status ?? ((r.text.he ?? "").includes("לא כלול") ? "not_included" : "included"),
-        // `price` covers rows saved before the suitcase/trolley split.
-        suitcasePrice: r.inclusion?.suitcasePrice ?? r.inclusion?.price ?? "",
-        trolleyPrice: r.inclusion?.trolleyPrice ?? "",
-        priceKind: r.inclusion?.priceKind ?? "gross",
-        structured: Boolean(r.inclusion),
-        dirty: false,
-      })),
+      .map((r) => {
+        // Legacy free-text rows carry their prices only in the text — recover
+        // them so the price fields open pre-filled rather than empty.
+        const legacy = r.inclusion ? null : parseLegacyPrices(r.text.he ?? "", r.text.en ?? "");
+        return {
+          icon: r.icon,
+          textHe: r.text.he ?? "",
+          textEn: r.text.en ?? "",
+          // Legacy free-text rows: sniff a sensible default for the controls.
+          status: r.inclusion?.status ?? ((r.text.he ?? "").includes("לא כלול") ? "not_included" : "included"),
+          // `price` covers rows saved before the suitcase/trolley split.
+          suitcasePrice: r.inclusion?.suitcasePrice ?? r.inclusion?.price ?? legacy?.suitcasePrice ?? "",
+          trolleyPrice: r.inclusion?.trolleyPrice ?? legacy?.trolleyPrice ?? "",
+          priceKind: r.inclusion?.priceKind ?? legacy?.priceKind ?? "gross",
+          structured: Boolean(r.inclusion),
+          dirty: false,
+        };
+      }),
   );
 
   const update = (i: number, patch: Partial<BaggageDraft>) =>
