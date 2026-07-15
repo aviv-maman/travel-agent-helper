@@ -112,6 +112,46 @@ def geocode(query, cache, extra=None):
     return out
 
 
+def fetch_area_polygon(query, cache):
+    """גיאוקודינג של שטח (כיכר-רחבה/רובע) עם polygon_geojson — מחזיר
+    {rings: [[(lat,lon),...]], lat, lon} או None. המרחק לשטח נמדד עד
+    הגבול הקרוב (כמו Google Maps), ומלון בתוך השטח = 0 מטר."""
+    key = "area::" + query
+    if key in cache:
+        return cache[key]
+    params = {"q": query, "format": "json", "limit": 1,
+              "polygon_geojson": 1, "accept-language": "en"}
+    time.sleep(NOMINATIM_SLEEP)
+    res = http_json(NOMINATIM_URL, params=params)
+    out = None
+    if res:
+        r = res[0]
+        g = r.get("geojson") or {}
+        rings = []
+        if g.get("type") == "Polygon":
+            rings = [[(p[1], p[0]) for p in ring] for ring in g["coordinates"]]
+        elif g.get("type") == "MultiPolygon":
+            for poly in g["coordinates"]:
+                rings.extend([[(p[1], p[0]) for p in ring] for ring in poly])
+        if rings:
+            out = {"rings": rings, "lat": float(r["lat"]), "lon": float(r["lon"]),
+                   "display": r.get("display_name", "")}
+    cache[key] = out
+    return out
+
+
+def point_in_rings(lat, lon, rings):
+    """בדיקת נקודה-בתוך-פוליגון (ray casting) על טבעת הגבול החיצונית."""
+    inside = False
+    for ring in rings:
+        for (la1, lo1), (la2, lo2) in zip(ring, ring[1:]):
+            if (lo1 > lon) != (lo2 > lon):
+                t = (lon - lo1) / (lo2 - lo1)
+                if lat < la1 + t * (la2 - la1):
+                    inside = not inside
+    return inside
+
+
 def geocode_hotel(hotel, city_en, country_en, cache):
     """כמה ניסיונות חיפוש למלון; מחזיר dict או None."""
     # עקיפה ידנית מהקלט
@@ -325,6 +365,17 @@ def main():
                 entry["end_pt"] = end
                 seg_count = len(segs)
                 print(f"   רחוב {rp['osm_name']}: {seg_count} מקטעים נטענו מ-OSM")
+        elif rp["type"] == "area":
+            # שטח (כיכר-רחבה/רובע): מרחק עד גבול הפוליגון, כמו Google Maps.
+            a = fetch_area_polygon(rp["query"], cache)
+            if not a:
+                print(f"!! שטח ללא פוליגון ב-OSM: {rp.get('query')} — השתמש ב-type point")
+                entry["error"] = "area polygon not found"
+            else:
+                entry["rings"] = a["rings"]
+                entry["pt"] = {"lat": a["lat"], "lon": a["lon"]}
+                n_pts = sum(len(r) for r in a["rings"])
+                print(f"   שטח {rp['query']}: פוליגון עם {n_pts} נקודות גבול")
         else:  # point
             if rp.get("lat") and rp.get("lng"):
                 entry["pt"] = {"lat": float(rp["lat"]), "lon": float(rp["lng"])}
@@ -375,6 +426,23 @@ def main():
                     continue
                 tlat, tlon, aerial = np_
                 label, pct = position_label(tlat, tlon, rp["start_pt"], rp["end_pt"], aerial)
+            elif rp["type"] == "area":
+                if point_in_rings(hlat, hlon, rp["rings"]):
+                    # המלון בתוך השטח — מרחק 0, בלי ניתוב.
+                    distances.append({
+                        "ref_name_he": rp.get("name_he", rp.get("query", "")),
+                        "nearest_point_label": "בתוך השטח",
+                        "position_pct_along_street": None,
+                        "target_lat": round(hlat, 6), "target_lng": round(hlon, 6),
+                        "meters": 0, "walk_min": None, "drive_min": None,
+                        "maps_check_link": maps_link(hlat, hlon, hlat, hlon),
+                    })
+                    continue
+                np_ = nearest_point_on_segments(hlat, hlon, rp["rings"])
+                if np_ is None:
+                    continue
+                tlat, tlon, _aerial = np_
+                label, pct = "עד גבול השטח", None
             else:
                 tlat, tlon = rp["pt"]["lat"], rp["pt"]["lon"]
                 label, pct = None, None
