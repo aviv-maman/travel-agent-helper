@@ -1101,6 +1101,38 @@
             "sortOrder": 1
           }
         ]
+      },
+      {
+        "name": "Hotel London 1889",
+        "stars": 5,
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 8.8,
+        "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=41.650945,41.64139",
+        "bookingUrl": "https://www.booking.com/hotel/ge/divan-suites-batumi.html",
+        "roomsNote": null,
+        "sortOrder": 16,
+        "features": [
+          "casino",
+          "spa"
+        ],
+        "distances": [
+          {
+            "landmarkKey": "chabad",
+            "meters": 220,
+            "walkMinutes": 3,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "europe",
+            "meters": 610,
+            "walkMinutes": 8,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
       }
     ]
   },
@@ -2022,6 +2054,366 @@
             "meters": 12000,
             "walkMinutes": null,
             "rideMinutes": 35
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "Hotel Memories Budapest",
+        "stars": 4,
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 8.4,
+        "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=47.496425,19.060051",
+        "bookingUrl": "https://www.booking.com/hotel/hu/memories.html",
+        "roomsNote": null,
+        "sortOrder": 27,
+        "features": [
+          "spa"
+        ],
+        "distances": [
+          {
+            "landmarkKey": "kiraly",
+            "meters": 400,
+            "walkMinutes": 5,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "vaci",
+            "meters": 830,
+            "walkMinutes": 11,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "Hotel Moments Budapest",
+        "stars": 4,
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 9.5,
+        "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=47.500885,19.056854",
+        "bookingUrl": "https://www.booking.com/hotel/hu/moments-budapest.html",
+        "roomsNote": null,
+        "sortOrder": 28,
+        "features": [],
+        "distances": [
+          {
+            "landmarkKey": "kiraly",
+            "meters": 270,
+            "walkMinutes": 4,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "vaci",
+            "meters": 800,
+            "walkMinutes": 11,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "InterContinental Budapest",
+        "stars": 5,
+        "tags": [],
+        "boards": [
+          "bb",
+          "hb"
+        ],
+        "bookingScore": 8.9,
+        "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=47.497698,19.047503",
+        "bookingUrl": "https://www.booking.com/hotel/hu/ic-budapest.html",
+        "roomsNote": null,
+        "sortOrder": 29,
+        "features": [
+          "pool-in",
+          "spa"
+        ],
+        "distances": [
+          {
+            "landmarkKey": "kiraly",
+            "meters": 820,
+            "walkMinutes": 11,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "vaci",
+            "meters": 430,
+            "walkMinutes": 6,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "Budapest Marriott Hotel",
+        "stars": 5,
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 8.9,
+        "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=47.494299,19.04985",
+        "bookingUrl": "https://www.booking.com/hotel/hu/budapest-marriott.html",
+        "roomsNote": null,
+        "sortOrder": 30,
+        "features": [],
+        "distances": [
+          {
+            "landmarkKey": "kiraly",
+            "meters": 720,
+            "walkMinutes": 10,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "vaci",
+            "meters": 320,
+            "walkMinutes": 4,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "Courtyard by Marriott Budapest City Center",
+        "stars": 4,
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 8.9,
+        "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=47.495973,19.070608",
+        "bookingUrl": "https://www.booking.com/hotel/hu/courtyard-budapest-city-center.html",
+        "roomsNote": null,
+        "sortOrder": 31,
+        "features": [],
+        "distances": [
+          {
+            "landmarkKey": "kiraly",
+            "meters": 970,
+            "walkMinutes": 13,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "vaci",
+            "meters": 2000,
+            "walkMinutes": 27,
+            "rideMinutes": 5
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "T62 Hotel",
+        "stars": 3,
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 9.1,
+        "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=47.509641,19.056753",
+        "bookingUrl": "https://www.booking.com/hotel/hu/t62.html",
+        "roomsNote": null,
+        "sortOrder": 32,
+        "features": [],
+        "distances": [
+          {
+            "landmarkKey": "kiraly",
+            "meters": 1100,
+            "walkMinutes": 15,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "vaci",
+            "meters": 1850,
+            "walkMinutes": 25,
+            "rideMinutes": 5
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "Hilton Garden Inn Budapest City Centre",
+        "stars": 4,
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 9.3,
+        "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=47.502273,19.05663",
+        "bookingUrl": "https://www.booking.com/hotel/hu/hilton-garden-inn-budapest-city-centre.html",
+        "roomsNote": null,
+        "sortOrder": 33,
+        "features": [],
+        "distances": [
+          {
+            "landmarkKey": "kiraly",
+            "meters": 580,
+            "walkMinutes": 8,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "vaci",
+            "meters": 950,
+            "walkMinutes": 13,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "Ibis Budapest Centrum",
+        "stars": 3,
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 8.5,
+        "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=47.48859,19.062282",
+        "bookingUrl": "https://www.booking.com/hotel/hu/ibis-budapest-centrum.html",
+        "roomsNote": null,
+        "sortOrder": 34,
+        "features": [],
+        "distances": [
+          {
+            "landmarkKey": "kiraly",
+            "meters": 1350,
+            "walkMinutes": 18,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "vaci",
+            "meters": 430,
+            "walkMinutes": 6,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "Roombach Hotel Budapest Center",
+        "stars": 3,
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 9,
+        "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=47.497723,19.058061",
+        "bookingUrl": "https://www.booking.com/hotel/hu/roombach-budapest-center.html",
+        "roomsNote": null,
+        "sortOrder": 35,
+        "features": [],
+        "distances": [
+          {
+            "landmarkKey": "kiraly",
+            "meters": 110,
+            "walkMinutes": 2,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "vaci",
+            "meters": 760,
+            "walkMinutes": 10,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "Anantara New York Palace Budapest",
+        "stars": 5,
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 9.2,
+        "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=47.498481,19.070377",
+        "bookingUrl": "https://www.booking.com/hotel/hu/new-york-palace-dedica-collection.html",
+        "roomsNote": null,
+        "sortOrder": 36,
+        "features": [
+          "pool-in",
+          "spa"
+        ],
+        "distances": [
+          {
+            "landmarkKey": "kiraly",
+            "meters": 710,
+            "walkMinutes": 10,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "vaci",
+            "meters": 1700,
+            "walkMinutes": 22,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "Danubius Hotel Astoria",
+        "stars": 4,
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 8.3,
+        "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=47.49413,19.059874",
+        "bookingUrl": "https://www.booking.com/hotel/hu/astoria.html",
+        "roomsNote": null,
+        "sortOrder": 37,
+        "features": [],
+        "distances": [
+          {
+            "landmarkKey": "kiraly",
+            "meters": 600,
+            "walkMinutes": 8,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "vaci",
+            "meters": 530,
+            "walkMinutes": 7,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "Al Habtoor Palace Budapest",
+        "stars": 5,
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 9.3,
+        "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=47.497492,19.053217",
+        "bookingUrl": "https://www.booking.com/hotel/hu/ritz-carlton-budapest.html",
+        "roomsNote": null,
+        "sortOrder": 38,
+        "features": [
+          "pool-in",
+          "spa"
+        ],
+        "distances": [
+          {
+            "landmarkKey": "kiraly",
+            "meters": 200,
+            "walkMinutes": 3,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "vaci",
+            "meters": 310,
+            "walkMinutes": 4,
+            "rideMinutes": null
           }
         ],
         "rooms": []
@@ -3645,6 +4037,131 @@
             "landmarkKey": "syntagma",
             "meters": 1550,
             "walkMinutes": 20,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "Athens Utopia Ermou",
+        "stars": null,
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 8.7,
+        "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=37.976335,23.72946",
+        "bookingUrl": "https://www.booking.com/hotel/gr/athens-utopia-ermou.html",
+        "roomsNote": null,
+        "sortOrder": 35,
+        "features": [],
+        "distances": [
+          {
+            "landmarkKey": "ermou",
+            "meters": 0,
+            "walkMinutes": 0,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "omonia",
+            "meters": 1100,
+            "walkMinutes": 15,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "plaka",
+            "meters": 460,
+            "walkMinutes": 6,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "syntagma",
+            "meters": 510,
+            "walkMinutes": 7,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "The Vault Athens",
+        "stars": 4,
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 8,
+        "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=37.978857,23.729681",
+        "bookingUrl": "https://www.booking.com/hotel/gr/the-vault-athens.html",
+        "roomsNote": null,
+        "sortOrder": 36,
+        "features": [],
+        "distances": [
+          {
+            "landmarkKey": "ermou",
+            "meters": 390,
+            "walkMinutes": 5,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "omonia",
+            "meters": 910,
+            "walkMinutes": 12,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "plaka",
+            "meters": 760,
+            "walkMinutes": 10,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "syntagma",
+            "meters": 660,
+            "walkMinutes": 9,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "The Lekka Hotel & Spa",
+        "stars": 4,
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 8.2,
+        "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=37.977435,23.731247",
+        "bookingUrl": "https://www.booking.com/hotel/gr/the-lekka-amp-spa-athina.html",
+        "roomsNote": null,
+        "sortOrder": 37,
+        "features": [
+          "spa"
+        ],
+        "distances": [
+          {
+            "landmarkKey": "ermou",
+            "meters": 190,
+            "walkMinutes": 3,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "omonia",
+            "meters": 1050,
+            "walkMinutes": 14,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "plaka",
+            "meters": 620,
+            "walkMinutes": 8,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "syntagma",
+            "meters": 450,
+            "walkMinutes": 6,
             "rideMinutes": null
           }
         ],
@@ -5487,6 +6004,92 @@
           }
         ],
         "rooms": []
+      },
+      {
+        "name": "Communal Hotel Sololaki",
+        "stars": 4,
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 9.2,
+        "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=41.68893,44.794189",
+        "bookingUrl": "https://www.booking.com/hotel/ge/thecommunal-tbilisi.html",
+        "roomsNote": null,
+        "sortOrder": 22,
+        "features": [],
+        "distances": [
+          {
+            "landmarkKey": "chabad",
+            "meters": 1300,
+            "walkMinutes": 17,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "freedom",
+            "meters": 1150,
+            "walkMinutes": 15,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "meidan",
+            "meters": 1350,
+            "walkMinutes": 18,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "rustaveli",
+            "meters": 1100,
+            "walkMinutes": 15,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "Sheraton Grand Tbilisi Metechi Palace",
+        "stars": 5,
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 8.7,
+        "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=41.688513,44.823049",
+        "bookingUrl": "https://www.booking.com/hotel/ge/sheraton-metechi-palace-tbilisi.html",
+        "roomsNote": null,
+        "sortOrder": 23,
+        "features": [
+          "pool-in",
+          "pool-out",
+          "spa"
+        ],
+        "distances": [
+          {
+            "landmarkKey": "chabad",
+            "meters": 1850,
+            "walkMinutes": 25,
+            "rideMinutes": 6
+          },
+          {
+            "landmarkKey": "freedom",
+            "meters": 2350,
+            "walkMinutes": 32,
+            "rideMinutes": 9
+          },
+          {
+            "landmarkKey": "meidan",
+            "meters": 1500,
+            "walkMinutes": 20,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "rustaveli",
+            "meters": 2400,
+            "walkMinutes": 32,
+            "rideMinutes": 6
+          }
+        ],
+        "rooms": []
       }
     ]
   },
@@ -6770,6 +7373,38 @@
           }
         ],
         "rooms": []
+      },
+      {
+        "name": "Sheraton Bucharest Hotel",
+        "stars": 5,
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 8.8,
+        "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=44.446586,26.099396",
+        "bookingUrl": "https://www.booking.com/hotel/ro/sheraton-bucharest.html",
+        "roomsNote": null,
+        "sortOrder": 16,
+        "features": [
+          "pool-in",
+          "spa"
+        ],
+        "distances": [
+          {
+            "landmarkKey": "oldtown",
+            "meters": 1700,
+            "walkMinutes": 23,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "victoriei",
+            "meters": 740,
+            "walkMinutes": 10,
+            "rideMinutes": null
+          }
+        ],
+        "rooms": []
       }
     ]
   },
@@ -7486,6 +8121,41 @@
             "meters": 1200,
             "walkMinutes": 14,
             "rideMinutes": null
+          }
+        ],
+        "rooms": []
+      },
+      {
+        "name": "Radisson Blu Sobieski",
+        "stars": 4,
+        "tags": [],
+        "boards": [
+          "bb"
+        ],
+        "bookingScore": 8.8,
+        "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=52.224103,20.988919",
+        "bookingUrl": "https://www.booking.com/hotel/pl/warsaw_sobieski.html",
+        "roomsNote": null,
+        "sortOrder": 16,
+        "features": [],
+        "distances": [
+          {
+            "landmarkKey": "oldtown",
+            "meters": 3650,
+            "walkMinutes": null,
+            "rideMinutes": 8
+          },
+          {
+            "landmarkKey": "centrum",
+            "meters": 1350,
+            "walkMinutes": 18,
+            "rideMinutes": null
+          },
+          {
+            "landmarkKey": "nowy",
+            "meters": 2500,
+            "walkMinutes": 33,
+            "rideMinutes": 7
           }
         ],
         "rooms": []
