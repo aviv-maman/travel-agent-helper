@@ -1,0 +1,1804 @@
+{
+  "code": "krk",
+  "iata": "KRK",
+  "name": {
+    "he": "קרקוב",
+    "en": "Kraków"
+  },
+  "country": {
+    "he": "פולין",
+    "en": "Poland"
+  },
+  "countryCode": "PL",
+  "info": {
+    "about": {
+      "he": "קרקוב שמרה על מרכז ימי-ביניימי שלם: כיכר השוק הגדולה (רינק גלובני) עם בזיליקת מריה ושוק הבדים במרכזה, טירת ואוול מדרום, ורובע קז'ימייז' — הרובע היהודי ההיסטורי — כקילומטר וחצי דרומה. רוב מלונות התיירים בעיר העתיקה ובקז'ימייז', במרחק הליכה מכל האתרים.",
+      "en": "Kraków kept its medieval core intact: the vast Main Market Square (Rynek Główny) with St. Mary's Basilica and the Cloth Hall at its centre, Wawel Castle to the south, and Kazimierz — the historic Jewish quarter — about 1.5 km further on. Most tourist hotels are in the Old Town and Kazimierz, within walking distance of everything."
+    },
+    "attractions": {
+      "he": "🏛 אתרים מרכזיים: כיכר השוק (רינק גלובני) · בזיליקת מריה · שוק הבדים (סוקיניצה) · טירת ואוול · רובע קז'ימייז' · שער פלוריאן",
+      "en": "🏛 Main sights: Main Market Square (Rynek Główny) · St. Mary's Basilica · Cloth Hall (Sukiennice) · Wawel Castle · Kazimierz quarter · Floriańska Gate"
+    },
+    "currencyNote": {
+      "he": "המטבע המקומי: זלוטי פולני (PLN) · הערכת שער: ₪1 ≈ 1.26 זלוטי",
+      "en": "Local currency: Polish złoty (PLN) · Approx. rate: ₪1 ≈ 1.26 złoty"
+    },
+    "airport": {
+      "title": {
+        "he": "✈ שדה התעופה — KRK (John Paul II Balice)",
+        "en": "✈ Airport — KRK (John Paul II Balice)"
+      },
+      "note": {
+        "he": "מרחק: ~11 ק\"מ ממרכז העיר · זמן נסיעה: 20–30 דקות",
+        "en": "Distance: ~11 km from the city center · Travel time: 20–30 minutes"
+      }
+    },
+    "transport": [
+      {
+        "icon": "🚆",
+        "mode": {
+          "he": "רכבת Balice Express",
+          "en": "Balice Express train"
+        },
+        "detail": {
+          "he": "לתחנה המרכזית (Kraków Główny) · ~20 דק' · כל 30 דק'",
+          "en": "To the main station (Kraków Główny) · ~20 min · every 30 min"
+        },
+        "price": "~17 PLN"
+      },
+      {
+        "icon": "🚌",
+        "mode": {
+          "he": "אוטובוס 300 / 209",
+          "en": "Bus 300 / 209"
+        },
+        "detail": {
+          "he": "~45 דק' · האפשרות הזולה ביותר",
+          "en": "~45 min · the cheapest option"
+        },
+        "price": "~6 PLN"
+      },
+      {
+        "icon": "📱",
+        "mode": {
+          "he": "Bolt / Uber",
+          "en": "Bolt / Uber"
+        },
+        "detail": {
+          "he": "~25–30 דק' · תמחור דינמי, מזנק בשעות עומס",
+          "en": "~25–30 min · dynamic pricing, spikes at peak times"
+        },
+        "price": "40–70 PLN"
+      },
+      {
+        "icon": "🚕",
+        "mode": {
+          "he": "מונית שדה רשמית",
+          "en": "Official airport taxi"
+        },
+        "detail": {
+          "he": "תעריף אחיד לעיר העתיקה · ~25–30 דק'",
+          "en": "Flat rate to the Old Town · ~25–30 min"
+        },
+        "price": "~110 PLN"
+      }
+    ],
+    "warnings": []
+  },
+  "sortOrder": 11,
+  "landmarks": [
+    {
+      "key": "rynek",
+      "name": {
+        "he": "כיכר השוק (רינק גלובני)",
+        "en": "Main Market Square (Rynek Główny)"
+      }
+    },
+    {
+      "key": "florianska",
+      "name": {
+        "he": "רחוב פלוריאנסקה",
+        "en": "Floriańska Street"
+      }
+    },
+    {
+      "key": "kazimierz",
+      "name": {
+        "he": "רובע קז'ימייז'",
+        "en": "Kazimierz"
+      }
+    }
+  ],
+  "hotels": [
+    {
+      "name": "Hotel Experior Boutique - Destigo Hotels",
+      "stars": 5,
+      "tags": [],
+      "boards": [
+        "bb"
+      ],
+      "bookingScore": 8.8,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.062377,19.935698",
+      "bookingUrl": "https://www.booking.com/hotel/pl/experior-boutique-destigo-hotels.html",
+      "roomsNote": null,
+      "sortOrder": 0,
+      "features": [
+        "spa"
+      ],
+      "distances": [
+        {
+          "landmarkKey": "rynek",
+          "meters": 40,
+          "walkMinutes": 1,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "florianska",
+          "meters": 280,
+          "walkMinutes": 4,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "kazimierz",
+          "meters": 970,
+          "walkMinutes": 13,
+          "rideMinutes": null
+        }
+      ],
+      "rooms": []
+    },
+    {
+      "name": "The Bonerowski Palace Boutique Hotel",
+      "stars": 5,
+      "tags": [],
+      "boards": [
+        "bb"
+      ],
+      "bookingScore": 9.1,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.062598,19.938277",
+      "bookingUrl": "https://www.booking.com/hotel/pl/palacbonerowski.html",
+      "roomsNote": null,
+      "sortOrder": 1,
+      "features": [],
+      "distances": [
+        {
+          "landmarkKey": "rynek",
+          "meters": 30,
+          "walkMinutes": 0,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "florianska",
+          "meters": 140,
+          "walkMinutes": 2,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "kazimierz",
+          "meters": 890,
+          "walkMinutes": 12,
+          "rideMinutes": null
+        }
+      ],
+      "rooms": []
+    },
+    {
+      "name": "Hotel Stary",
+      "stars": 5,
+      "tags": [],
+      "boards": [
+        "bb"
+      ],
+      "bookingScore": 9.2,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.063012,19.936343",
+      "bookingUrl": "https://www.booking.com/hotel/pl/hotelstarykrakow.html",
+      "roomsNote": null,
+      "sortOrder": 2,
+      "features": [
+        "pool-in",
+        "spa"
+      ],
+      "distances": [
+        {
+          "landmarkKey": "rynek",
+          "meters": 40,
+          "walkMinutes": 1,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "florianska",
+          "meters": 250,
+          "walkMinutes": 3,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "kazimierz",
+          "meters": 1000,
+          "walkMinutes": 13,
+          "rideMinutes": null
+        }
+      ],
+      "rooms": []
+    },
+    {
+      "name": "Hotel Wentzl",
+      "stars": 4,
+      "tags": [],
+      "boards": [
+        "bb"
+      ],
+      "bookingScore": 9.2,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.060748,19.937057",
+      "bookingUrl": "https://www.booking.com/hotel/pl/hotelwentzlkrakow.html",
+      "roomsNote": null,
+      "sortOrder": 3,
+      "features": [],
+      "distances": [
+        {
+          "landmarkKey": "rynek",
+          "meters": 0,
+          "walkMinutes": 0,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "florianska",
+          "meters": 230,
+          "walkMinutes": 3,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "kazimierz",
+          "meters": 880,
+          "walkMinutes": 11,
+          "rideMinutes": null
+        }
+      ],
+      "rooms": []
+    },
+    {
+      "name": "Hotel Saski Krakow, Curio Collection by Hilton",
+      "stars": 5,
+      "tags": [],
+      "boards": [
+        "bb"
+      ],
+      "bookingScore": 9.3,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.0634,19.937424",
+      "bookingUrl": "https://www.booking.com/hotel/pl/hotel-saski-krakow-curio-collection-by-hilton.html",
+      "roomsNote": null,
+      "sortOrder": 4,
+      "features": [
+        "pool-in",
+        "spa",
+        "casino"
+      ],
+      "distances": [
+        {
+          "landmarkKey": "rynek",
+          "meters": 70,
+          "walkMinutes": 1,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "florianska",
+          "meters": 230,
+          "walkMinutes": 3,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "kazimierz",
+          "meters": 1050,
+          "walkMinutes": 14,
+          "rideMinutes": null
+        }
+      ],
+      "rooms": []
+    },
+    {
+      "name": "Grand Hotel Krakow",
+      "stars": 5,
+      "tags": [],
+      "boards": [
+        "bb"
+      ],
+      "bookingScore": 8.5,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.06371,19.937718",
+      "bookingUrl": "https://www.booking.com/hotel/pl/grand.html",
+      "roomsNote": null,
+      "sortOrder": 5,
+      "features": [
+        "casino"
+      ],
+      "distances": [
+        {
+          "landmarkKey": "rynek",
+          "meters": 110,
+          "walkMinutes": 1,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "florianska",
+          "meters": 230,
+          "walkMinutes": 3,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "kazimierz",
+          "meters": 1050,
+          "walkMinutes": 14,
+          "rideMinutes": null
+        }
+      ],
+      "rooms": []
+    },
+    {
+      "name": "Hotel Pod Roza",
+      "stars": 5,
+      "tags": [],
+      "boards": [
+        "bb"
+      ],
+      "bookingScore": 8.9,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.062994,19.939847",
+      "bookingUrl": "https://www.booking.com/hotel/pl/podrozakrakow.html",
+      "roomsNote": null,
+      "sortOrder": 6,
+      "features": [
+        "spa"
+      ],
+      "distances": [
+        {
+          "landmarkKey": "rynek",
+          "meters": 110,
+          "walkMinutes": 1,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "florianska",
+          "meters": 0,
+          "walkMinutes": 0,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "kazimierz",
+          "meters": 870,
+          "walkMinutes": 12,
+          "rideMinutes": null
+        }
+      ],
+      "rooms": []
+    },
+    {
+      "name": "Hotel Jan",
+      "stars": 3,
+      "tags": [],
+      "boards": [
+        "bb"
+      ],
+      "bookingScore": 9.2,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.059649,19.937624",
+      "bookingUrl": "https://www.booking.com/hotel/pl/jan-kraka3w.html",
+      "roomsNote": null,
+      "sortOrder": 7,
+      "features": [],
+      "distances": [
+        {
+          "landmarkKey": "rynek",
+          "meters": 80,
+          "walkMinutes": 1,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "florianska",
+          "meters": 330,
+          "walkMinutes": 4,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "kazimierz",
+          "meters": 830,
+          "walkMinutes": 11,
+          "rideMinutes": null
+        }
+      ],
+      "rooms": []
+    },
+    {
+      "name": "H15 Palace, a Luxury Collection Hotel, Krakow",
+      "stars": 5,
+      "tags": [],
+      "boards": [
+        "bb"
+      ],
+      "bookingScore": 9.4,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.064625,19.939686",
+      "bookingUrl": "https://www.booking.com/hotel/pl/h15-palace.html",
+      "roomsNote": null,
+      "sortOrder": 8,
+      "features": [
+        "pool-in",
+        "spa"
+      ],
+      "distances": [
+        {
+          "landmarkKey": "rynek",
+          "meters": 270,
+          "walkMinutes": 4,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "florianska",
+          "meters": 200,
+          "walkMinutes": 3,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "kazimierz",
+          "meters": 1100,
+          "walkMinutes": 15,
+          "rideMinutes": null
+        }
+      ],
+      "rooms": []
+    },
+    {
+      "name": "Wyndham Grand Krakow Old Town",
+      "stars": 5,
+      "tags": [],
+      "boards": [
+        "bb"
+      ],
+      "bookingScore": 9.2,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.063637,19.940478",
+      "bookingUrl": "https://www.booking.com/hotel/pl/unicus-palace.html",
+      "roomsNote": null,
+      "sortOrder": 9,
+      "features": [
+        "pool-in",
+        "spa"
+      ],
+      "distances": [
+        {
+          "landmarkKey": "rynek",
+          "meters": 190,
+          "walkMinutes": 3,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "florianska",
+          "meters": 0,
+          "walkMinutes": 0,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "kazimierz",
+          "meters": 930,
+          "walkMinutes": 12,
+          "rideMinutes": null
+        }
+      ],
+      "rooms": []
+    },
+    {
+      "name": "Hotel Unicus Krakow Old Town - Destigo Hotels",
+      "stars": 4,
+      "tags": [],
+      "boards": [
+        "bb"
+      ],
+      "bookingScore": 8.7,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.063451,19.941038",
+      "bookingUrl": "https://www.booking.com/hotel/pl/unicus.html",
+      "roomsNote": null,
+      "sortOrder": 10,
+      "features": [],
+      "distances": [
+        {
+          "landmarkKey": "rynek",
+          "meters": 240,
+          "walkMinutes": 3,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "florianska",
+          "meters": 50,
+          "walkMinutes": 1,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "kazimierz",
+          "meters": 890,
+          "walkMinutes": 12,
+          "rideMinutes": null
+        }
+      ],
+      "rooms": []
+    },
+    {
+      "name": "Amber Design Residence",
+      "stars": 4,
+      "tags": [
+        "aparthotel"
+      ],
+      "boards": [
+        "bb"
+      ],
+      "bookingScore": 9.3,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.062661,19.943339",
+      "bookingUrl": "https://www.booking.com/hotel/pl/amber-design-residence.html",
+      "roomsNote": null,
+      "sortOrder": 11,
+      "features": [],
+      "distances": [
+        {
+          "landmarkKey": "rynek",
+          "meters": 420,
+          "walkMinutes": 6,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "florianska",
+          "meters": 240,
+          "walkMinutes": 3,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "kazimierz",
+          "meters": 720,
+          "walkMinutes": 9,
+          "rideMinutes": null
+        }
+      ],
+      "rooms": []
+    },
+    {
+      "name": "Garamond, a Tribute Portfolio Hotel, Krakow Old Town",
+      "stars": 4,
+      "tags": [],
+      "boards": [
+        "bb"
+      ],
+      "bookingScore": 9,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.06257,19.943529",
+      "bookingUrl": "https://www.booking.com/hotel/pl/garamond-a-tribute-portfolio.html",
+      "roomsNote": null,
+      "sortOrder": 12,
+      "features": [],
+      "distances": [
+        {
+          "landmarkKey": "rynek",
+          "meters": 440,
+          "walkMinutes": 6,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "florianska",
+          "meters": 260,
+          "walkMinutes": 3,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "kazimierz",
+          "meters": 700,
+          "walkMinutes": 9,
+          "rideMinutes": null
+        }
+      ],
+      "rooms": []
+    },
+    {
+      "name": "Golden Tulip Krakow City Center",
+      "stars": 4,
+      "tags": [],
+      "boards": [
+        "bb"
+      ],
+      "bookingScore": 8.7,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.066512,19.934172",
+      "bookingUrl": "https://www.booking.com/hotel/pl/tulip-inn-krakow-city-center.html",
+      "roomsNote": null,
+      "sortOrder": 13,
+      "features": [],
+      "distances": [
+        {
+          "landmarkKey": "rynek",
+          "meters": 550,
+          "walkMinutes": 7,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "florianska",
+          "meters": 700,
+          "walkMinutes": 9,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "kazimierz",
+          "meters": 1500,
+          "walkMinutes": 20,
+          "rideMinutes": null
+        }
+      ],
+      "rooms": []
+    },
+    {
+      "name": "Grand Ascot Hotel",
+      "stars": 4,
+      "tags": [],
+      "boards": [
+        "bb"
+      ],
+      "bookingScore": 9.3,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.063882,19.929315",
+      "bookingUrl": "https://www.booking.com/hotel/pl/grand-ascot.html",
+      "roomsNote": null,
+      "sortOrder": 14,
+      "features": [],
+      "distances": [
+        {
+          "landmarkKey": "rynek",
+          "meters": 640,
+          "walkMinutes": 9,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "florianska",
+          "meters": 850,
+          "walkMinutes": 11,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "kazimierz",
+          "meters": 1550,
+          "walkMinutes": 21,
+          "rideMinutes": null
+        }
+      ],
+      "rooms": []
+    },
+    {
+      "name": "Hotel Wawel Queen",
+      "stars": 4,
+      "tags": [],
+      "boards": [
+        "bb"
+      ],
+      "bookingScore": 9.2,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.056633,19.933927",
+      "bookingUrl": "https://www.booking.com/hotel/pl/wawel-queen.html",
+      "roomsNote": null,
+      "sortOrder": 15,
+      "features": [],
+      "distances": [
+        {
+          "landmarkKey": "rynek",
+          "meters": 680,
+          "walkMinutes": 9,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "florianska",
+          "meters": 880,
+          "walkMinutes": 12,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "kazimierz",
+          "meters": 1050,
+          "walkMinutes": 12,
+          "rideMinutes": null
+        }
+      ],
+      "rooms": []
+    },
+    {
+      "name": "Hotel Krupnicza 30",
+      "stars": 4,
+      "tags": [],
+      "boards": [
+        "bb"
+      ],
+      "bookingScore": 8.7,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.063251,19.927909",
+      "bookingUrl": "https://www.booking.com/hotel/pl/krupnicza-30.html",
+      "roomsNote": null,
+      "sortOrder": 16,
+      "features": [],
+      "distances": [
+        {
+          "landmarkKey": "rynek",
+          "meters": 690,
+          "walkMinutes": 9,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "florianska",
+          "meters": 910,
+          "walkMinutes": 12,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "kazimierz",
+          "meters": 1700,
+          "walkMinutes": 22,
+          "rideMinutes": null
+        }
+      ],
+      "rooms": []
+    },
+    {
+      "name": "Hotel Golden Queen",
+      "stars": 4,
+      "tags": [],
+      "boards": [
+        "bb"
+      ],
+      "bookingScore": 9.2,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.057111,19.931224",
+      "bookingUrl": "https://www.booking.com/hotel/pl/golden-queen-apartments.html",
+      "roomsNote": null,
+      "sortOrder": 17,
+      "features": [],
+      "distances": [
+        {
+          "landmarkKey": "rynek",
+          "meters": 640,
+          "walkMinutes": 8,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "florianska",
+          "meters": 920,
+          "walkMinutes": 12,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "kazimierz",
+          "meters": 1050,
+          "walkMinutes": 12,
+          "rideMinutes": null
+        }
+      ],
+      "rooms": []
+    },
+    {
+      "name": "Vienna House by Wyndham Andel s Cracow",
+      "stars": 4,
+      "tags": [],
+      "boards": [
+        "bb"
+      ],
+      "bookingScore": 9.1,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.06535,19.945534",
+      "bookingUrl": "https://www.booking.com/hotel/pl/andelscracow.html",
+      "roomsNote": null,
+      "sortOrder": 18,
+      "features": [],
+      "distances": [
+        {
+          "landmarkKey": "rynek",
+          "meters": 710,
+          "walkMinutes": 9,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "florianska",
+          "meters": 390,
+          "walkMinutes": 5,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "kazimierz",
+          "meters": 1000,
+          "walkMinutes": 13,
+          "rideMinutes": null
+        }
+      ],
+      "rooms": []
+    },
+    {
+      "name": "Hotel Indigo Krakow - Old Town by IHG",
+      "stars": 4,
+      "tags": [],
+      "boards": [
+        "bb"
+      ],
+      "bookingScore": 9.1,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.067674,19.941867",
+      "bookingUrl": "https://www.booking.com/hotel/pl/indigo-krakow-florian-gate.html",
+      "roomsNote": null,
+      "sortOrder": 19,
+      "features": [],
+      "distances": [
+        {
+          "landmarkKey": "rynek",
+          "meters": 790,
+          "walkMinutes": 10,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "florianska",
+          "meters": 390,
+          "walkMinutes": 5,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "kazimierz",
+          "meters": 1400,
+          "walkMinutes": 19,
+          "rideMinutes": null
+        }
+      ],
+      "rooms": []
+    },
+    {
+      "name": "Hotel ascot premium",
+      "stars": 4,
+      "tags": [],
+      "boards": [
+        "bb"
+      ],
+      "bookingScore": 8.9,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.061659,19.947331",
+      "bookingUrl": "https://www.booking.com/hotel/pl/ascotkrakow.html",
+      "roomsNote": null,
+      "sortOrder": 20,
+      "features": [],
+      "distances": [
+        {
+          "landmarkKey": "rynek",
+          "meters": 680,
+          "walkMinutes": 9,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "florianska",
+          "meters": 760,
+          "walkMinutes": 10,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "kazimierz",
+          "meters": 460,
+          "walkMinutes": 6,
+          "rideMinutes": null
+        }
+      ],
+      "rooms": []
+    },
+    {
+      "name": "Mercure krakow stare miasto",
+      "stars": 4,
+      "tags": [],
+      "boards": [
+        "bb"
+      ],
+      "bookingScore": 9.3,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.066754,19.944759",
+      "bookingUrl": "https://www.booking.com/hotel/pl/mercure-krakow-stare-miasto.html",
+      "roomsNote": null,
+      "sortOrder": 21,
+      "features": [],
+      "distances": [
+        {
+          "landmarkKey": "rynek",
+          "meters": 860,
+          "walkMinutes": 11,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "florianska",
+          "meters": 490,
+          "walkMinutes": 7,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "kazimierz",
+          "meters": 1200,
+          "walkMinutes": 16,
+          "rideMinutes": null
+        }
+      ],
+      "rooms": []
+    },
+    {
+      "name": "Leonardo boutique krakow old town",
+      "stars": 3,
+      "tags": [],
+      "boards": [
+        "bb"
+      ],
+      "bookingScore": 8.9,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.055624,19.940399",
+      "bookingUrl": "https://www.booking.com/hotel/pl/leonardo-boutique-hotel-krakow-old-town.html",
+      "roomsNote": null,
+      "sortOrder": 22,
+      "features": [],
+      "distances": [
+        {
+          "landmarkKey": "rynek",
+          "meters": 720,
+          "walkMinutes": 10,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "florianska",
+          "meters": 900,
+          "walkMinutes": 12,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "kazimierz",
+          "meters": 380,
+          "walkMinutes": 5,
+          "rideMinutes": null
+        }
+      ],
+      "rooms": []
+    },
+    {
+      "name": "Polonia hotel krakow",
+      "stars": 3,
+      "tags": [],
+      "boards": [
+        "bb"
+      ],
+      "bookingScore": 8.5,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.064818,19.944827",
+      "bookingUrl": "https://www.booking.com/hotel/pl/poloniakrakow.html",
+      "roomsNote": null,
+      "sortOrder": 23,
+      "features": [],
+      "distances": [
+        {
+          "landmarkKey": "rynek",
+          "meters": 660,
+          "walkMinutes": 9,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "florianska",
+          "meters": 300,
+          "walkMinutes": 4,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "kazimierz",
+          "meters": 980,
+          "walkMinutes": 13,
+          "rideMinutes": null
+        }
+      ],
+      "rooms": []
+    },
+    {
+      "name": "Bachleda Luxury Hotel Krakow MGallery Hotel Collection",
+      "stars": 5,
+      "tags": [],
+      "boards": [
+        "bb"
+      ],
+      "bookingScore": 9.5,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.0566,19.9284",
+      "bookingUrl": "https://www.booking.com/hotel/pl/bachleda-luxury-krakow-mgallery-by-sofitel.html",
+      "roomsNote": null,
+      "sortOrder": 24,
+      "features": [
+        "pool-in",
+        "spa"
+      ],
+      "distances": [
+        {
+          "landmarkKey": "rynek",
+          "meters": 820,
+          "walkMinutes": 11,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "florianska",
+          "meters": 1100,
+          "walkMinutes": 15,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "kazimierz",
+          "meters": 1150,
+          "walkMinutes": 13,
+          "rideMinutes": null
+        }
+      ],
+      "rooms": []
+    },
+    {
+      "name": "Hotel 32 Kraków Old Town",
+      "stars": 4,
+      "tags": [],
+      "boards": [
+        "bb"
+      ],
+      "bookingScore": 9,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.056574,19.929588",
+      "bookingUrl": "https://www.booking.com/hotel/pl/32-krakow-old-town.html",
+      "roomsNote": null,
+      "sortOrder": 25,
+      "features": [],
+      "distances": [
+        {
+          "landmarkKey": "rynek",
+          "meters": 720,
+          "walkMinutes": 10,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "florianska",
+          "meters": 1000,
+          "walkMinutes": 13,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "kazimierz",
+          "meters": 1150,
+          "walkMinutes": 13,
+          "rideMinutes": null
+        }
+      ],
+      "rooms": []
+    },
+    {
+      "name": "Sheraton Grand Krakow",
+      "stars": 5,
+      "tags": [],
+      "boards": [
+        "bb"
+      ],
+      "bookingScore": 9.1,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.055725,19.930873",
+      "bookingUrl": "https://www.booking.com/hotel/pl/sheratonkrakow.html",
+      "roomsNote": null,
+      "sortOrder": 26,
+      "features": [
+        "pool-in",
+        "spa"
+      ],
+      "distances": [
+        {
+          "landmarkKey": "rynek",
+          "meters": 970,
+          "walkMinutes": 13,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "florianska",
+          "meters": 1150,
+          "walkMinutes": 16,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "kazimierz",
+          "meters": 930,
+          "walkMinutes": 10,
+          "rideMinutes": null
+        }
+      ],
+      "rooms": []
+    },
+    {
+      "name": "Leonardo Boutique Hotel Krakow City Center",
+      "stars": 4,
+      "tags": [],
+      "boards": [
+        "bb"
+      ],
+      "bookingScore": 8.6,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.057805,19.926778",
+      "bookingUrl": "https://www.booking.com/hotel/pl/metropolis-design.html",
+      "roomsNote": null,
+      "sortOrder": 27,
+      "features": [],
+      "distances": [
+        {
+          "landmarkKey": "rynek",
+          "meters": 870,
+          "walkMinutes": 11,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "florianska",
+          "meters": 1150,
+          "walkMinutes": 15,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "kazimierz",
+          "meters": 1250,
+          "walkMinutes": 14,
+          "rideMinutes": null
+        }
+      ],
+      "rooms": []
+    },
+    {
+      "name": "The Loft Hotel - Adults Only",
+      "stars": 4,
+      "tags": [
+        "adults-only"
+      ],
+      "boards": [
+        "bb"
+      ],
+      "bookingScore": 9.1,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.057907,19.947214",
+      "bookingUrl": "https://www.booking.com/hotel/pl/the-loft-hotel-adults-only.html",
+      "roomsNote": null,
+      "sortOrder": 28,
+      "features": [],
+      "distances": [
+        {
+          "landmarkKey": "rynek",
+          "meters": 910,
+          "walkMinutes": 12,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "florianska",
+          "meters": 880,
+          "walkMinutes": 11,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "kazimierz",
+          "meters": 0,
+          "walkMinutes": null,
+          "rideMinutes": null
+        }
+      ],
+      "rooms": []
+    },
+    {
+      "name": "Hotel Kossak",
+      "stars": 4,
+      "tags": [],
+      "boards": [
+        "bb"
+      ],
+      "bookingScore": 9.3,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.056061,19.928446",
+      "bookingUrl": "https://www.booking.com/hotel/pl/kossakkrakow.html",
+      "roomsNote": null,
+      "sortOrder": 29,
+      "features": [
+        "spa"
+      ],
+      "distances": [
+        {
+          "landmarkKey": "rynek",
+          "meters": 830,
+          "walkMinutes": 11,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "florianska",
+          "meters": 1100,
+          "walkMinutes": 15,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "kazimierz",
+          "meters": 1050,
+          "walkMinutes": 12,
+          "rideMinutes": null
+        }
+      ],
+      "rooms": []
+    },
+    {
+      "name": "PURO Kraków Stare Miasto",
+      "stars": 4,
+      "tags": [],
+      "boards": [
+        "bb"
+      ],
+      "bookingScore": 9.2,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.068768,19.944989",
+      "bookingUrl": "https://www.booking.com/hotel/pl/puro.html",
+      "roomsNote": null,
+      "sortOrder": 30,
+      "features": [],
+      "distances": [
+        {
+          "landmarkKey": "rynek",
+          "meters": 980,
+          "walkMinutes": 13,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "florianska",
+          "meters": 610,
+          "walkMinutes": 8,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "kazimierz",
+          "meters": 1400,
+          "walkMinutes": 19,
+          "rideMinutes": null
+        }
+      ],
+      "rooms": []
+    },
+    {
+      "name": "Queen Boutique Hotel",
+      "stars": 4,
+      "tags": [],
+      "boards": [
+        "bb"
+      ],
+      "bookingScore": 9.1,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.054352,19.943314",
+      "bookingUrl": "https://www.booking.com/hotel/pl/queen-boutique-krakow.html",
+      "roomsNote": null,
+      "sortOrder": 31,
+      "features": [
+        "spa"
+      ],
+      "distances": [
+        {
+          "landmarkKey": "rynek",
+          "meters": 1100,
+          "walkMinutes": 15,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "florianska",
+          "meters": 1150,
+          "walkMinutes": 15,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "kazimierz",
+          "meters": 60,
+          "walkMinutes": 1,
+          "rideMinutes": null
+        }
+      ],
+      "rooms": []
+    },
+    {
+      "name": "Hotel Lavender",
+      "stars": 3,
+      "tags": [],
+      "boards": [
+        "bb"
+      ],
+      "bookingScore": 8.7,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.07077,19.936758",
+      "bookingUrl": "https://www.booking.com/hotel/pl/dragon-aparthostel-krakow.html",
+      "roomsNote": null,
+      "sortOrder": 32,
+      "features": [],
+      "distances": [
+        {
+          "landmarkKey": "rynek",
+          "meters": 970,
+          "walkMinutes": 13,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "florianska",
+          "meters": 790,
+          "walkMinutes": 11,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "kazimierz",
+          "meters": 1850,
+          "walkMinutes": 24,
+          "rideMinutes": null
+        }
+      ],
+      "rooms": []
+    },
+    {
+      "name": "Stradom house hotel and spa autograph collection",
+      "stars": 5,
+      "tags": [],
+      "boards": [
+        "bb"
+      ],
+      "bookingScore": 9.3,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.052967,19.94065",
+      "bookingUrl": "https://www.booking.com/hotel/pl/stradom-house-autograph-collection.html",
+      "roomsNote": null,
+      "sortOrder": 33,
+      "features": [
+        "pool-in",
+        "spa"
+      ],
+      "distances": [
+        {
+          "landmarkKey": "rynek",
+          "meters": 870,
+          "walkMinutes": 12,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "florianska",
+          "meters": 1150,
+          "walkMinutes": 15,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "kazimierz",
+          "meters": 220,
+          "walkMinutes": 3,
+          "rideMinutes": null
+        }
+      ],
+      "rooms": []
+    },
+    {
+      "name": "Ibis krakow centrum",
+      "stars": 3,
+      "tags": [],
+      "boards": [
+        "bb"
+      ],
+      "bookingScore": 8.5,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.054943,19.925571",
+      "bookingUrl": "https://www.booking.com/hotel/pl/hotelibiskrakowcentrum.html",
+      "roomsNote": null,
+      "sortOrder": 34,
+      "features": [],
+      "distances": [
+        {
+          "landmarkKey": "rynek",
+          "meters": 1150,
+          "walkMinutes": 15,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "florianska",
+          "meters": 1450,
+          "walkMinutes": 19,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "kazimierz",
+          "meters": 1150,
+          "walkMinutes": 13,
+          "rideMinutes": null
+        }
+      ],
+      "rooms": []
+    },
+    {
+      "name": "Metropolitan Boutique Hotel krakow",
+      "stars": 4,
+      "tags": [],
+      "boards": [
+        "bb"
+      ],
+      "bookingScore": 9.2,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.055067,19.947643",
+      "bookingUrl": "https://www.booking.com/hotel/pl/metropolitan-boutique.html",
+      "roomsNote": null,
+      "sortOrder": 35,
+      "features": [],
+      "distances": [
+        {
+          "landmarkKey": "rynek",
+          "meters": 1150,
+          "walkMinutes": 15,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "florianska",
+          "meters": 1150,
+          "walkMinutes": 15,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "kazimierz",
+          "meters": 0,
+          "walkMinutes": null,
+          "rideMinutes": null
+        }
+      ],
+      "rooms": []
+    },
+    {
+      "name": "Novotel krakow centrum",
+      "stars": 4,
+      "tags": [],
+      "boards": [
+        "bb"
+      ],
+      "bookingScore": 8.9,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.054762,19.925982",
+      "bookingUrl": "https://www.booking.com/hotel/pl/krakow-centrum.html",
+      "roomsNote": null,
+      "sortOrder": 36,
+      "features": [
+        "pool-in",
+        "spa"
+      ],
+      "distances": [
+        {
+          "landmarkKey": "rynek",
+          "meters": 1100,
+          "walkMinutes": 15,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "florianska",
+          "meters": 1400,
+          "walkMinutes": 18,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "kazimierz",
+          "meters": 1100,
+          "walkMinutes": 13,
+          "rideMinutes": null
+        }
+      ],
+      "rooms": []
+    },
+    {
+      "name": "ibis Krakow Stare Miasto",
+      "stars": 1,
+      "tags": [],
+      "boards": [
+        "bb"
+      ],
+      "bookingScore": 8,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.07075,19.946163",
+      "bookingUrl": "https://www.booking.com/hotel/pl/ibis-budget-krakow-stare-miasto.html",
+      "roomsNote": null,
+      "sortOrder": 37,
+      "features": [],
+      "distances": [
+        {
+          "landmarkKey": "rynek",
+          "meters": 1200,
+          "walkMinutes": 16,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "florianska",
+          "meters": 850,
+          "walkMinutes": 11,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "kazimierz",
+          "meters": 1600,
+          "walkMinutes": 22,
+          "rideMinutes": null
+        }
+      ],
+      "rooms": []
+    },
+    {
+      "name": "Puro Krakow Kazimierz",
+      "stars": 4,
+      "tags": [],
+      "boards": [
+        "bb"
+      ],
+      "bookingScore": 9.4,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.052016,19.951702",
+      "bookingUrl": "https://www.booking.com/hotel/pl/puro-krakow-kazimierz.html",
+      "roomsNote": null,
+      "sortOrder": 38,
+      "features": [
+        "spa"
+      ],
+      "distances": [
+        {
+          "landmarkKey": "rynek",
+          "meters": 1600,
+          "walkMinutes": 21,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "florianska",
+          "meters": 1600,
+          "walkMinutes": 21,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "kazimierz",
+          "meters": 0,
+          "walkMinutes": null,
+          "rideMinutes": null
+        }
+      ],
+      "rooms": []
+    },
+    {
+      "name": "H11 Aparthotel",
+      "stars": 4,
+      "tags": [
+        "aparthotel"
+      ],
+      "boards": [
+        "bb"
+      ],
+      "bookingScore": 9.5,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.064555,19.928722",
+      "bookingUrl": "https://www.booking.com/hotel/pl/h11-apart.html",
+      "roomsNote": null,
+      "sortOrder": 39,
+      "features": [],
+      "distances": [
+        {
+          "landmarkKey": "rynek",
+          "meters": 720,
+          "walkMinutes": 10,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "florianska",
+          "meters": 920,
+          "walkMinutes": 12,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "kazimierz",
+          "meters": 1600,
+          "walkMinutes": 22,
+          "rideMinutes": null
+        }
+      ],
+      "rooms": []
+    },
+    {
+      "name": "1891 garni hotel",
+      "stars": 4,
+      "tags": [],
+      "boards": [
+        "bb"
+      ],
+      "bookingScore": 9.1,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.053227,19.944159",
+      "bookingUrl": "https://www.booking.com/hotel/pl/1891-garni-hotel.html",
+      "roomsNote": null,
+      "sortOrder": 40,
+      "features": [],
+      "distances": [
+        {
+          "landmarkKey": "rynek",
+          "meters": 1300,
+          "walkMinutes": 17,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "florianska",
+          "meters": 1300,
+          "walkMinutes": 17,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "kazimierz",
+          "meters": 0,
+          "walkMinutes": null,
+          "rideMinutes": null
+        }
+      ],
+      "rooms": []
+    },
+    {
+      "name": "Hotel M29",
+      "stars": 4,
+      "tags": [],
+      "boards": [
+        "bb"
+      ],
+      "bookingScore": 9,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.052897,19.945854",
+      "bookingUrl": "https://www.booking.com/hotel/pl/m29.html",
+      "roomsNote": null,
+      "sortOrder": 41,
+      "features": [],
+      "distances": [
+        {
+          "landmarkKey": "rynek",
+          "meters": 1300,
+          "walkMinutes": 18,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "florianska",
+          "meters": 1350,
+          "walkMinutes": 18,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "kazimierz",
+          "meters": 0,
+          "walkMinutes": null,
+          "rideMinutes": null
+        }
+      ],
+      "rooms": []
+    },
+    {
+      "name": "INX Design Hotel",
+      "stars": 4,
+      "tags": [],
+      "boards": [
+        "bb"
+      ],
+      "bookingScore": 8.7,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.051144,19.950661",
+      "bookingUrl": "https://www.booking.com/hotel/pl/inx-design-krakow.html",
+      "roomsNote": null,
+      "sortOrder": 42,
+      "features": [],
+      "distances": [
+        {
+          "landmarkKey": "rynek",
+          "meters": 1600,
+          "walkMinutes": 21,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "florianska",
+          "meters": 1600,
+          "walkMinutes": 21,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "kazimierz",
+          "meters": 0,
+          "walkMinutes": null,
+          "rideMinutes": null
+        }
+      ],
+      "rooms": []
+    },
+    {
+      "name": "Hotel Rubinstein",
+      "stars": 4,
+      "tags": [],
+      "boards": [
+        "bb"
+      ],
+      "bookingScore": 8.9,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.052647,19.948337",
+      "bookingUrl": "https://www.booking.com/hotel/pl/rubinsteinkrakow.html",
+      "roomsNote": null,
+      "sortOrder": 43,
+      "features": [],
+      "distances": [
+        {
+          "landmarkKey": "rynek",
+          "meters": 1350,
+          "walkMinutes": 18,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "florianska",
+          "meters": 1400,
+          "walkMinutes": 18,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "kazimierz",
+          "meters": 0,
+          "walkMinutes": null,
+          "rideMinutes": null
+        }
+      ],
+      "rooms": []
+    },
+    {
+      "name": "Hotel Ester",
+      "stars": 4,
+      "tags": [],
+      "boards": [
+        "bb"
+      ],
+      "bookingScore": 8.5,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.051977,19.948576",
+      "bookingUrl": "https://www.booking.com/hotel/pl/estercracow.html",
+      "roomsNote": null,
+      "sortOrder": 44,
+      "features": [],
+      "distances": [
+        {
+          "landmarkKey": "rynek",
+          "meters": 1450,
+          "walkMinutes": 19,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "florianska",
+          "meters": 1450,
+          "walkMinutes": 19,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "kazimierz",
+          "meters": 0,
+          "walkMinutes": null,
+          "rideMinutes": null
+        }
+      ],
+      "rooms": []
+    },
+    {
+      "name": "Feniks fragola Apartments",
+      "stars": 4,
+      "tags": [
+        "aparthotel"
+      ],
+      "boards": [
+        "bb"
+      ],
+      "bookingScore": 9.1,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.062536,19.938141",
+      "bookingUrl": "https://www.booking.com/hotel/pl/feniks-aparthotel.html",
+      "roomsNote": null,
+      "sortOrder": 45,
+      "features": [],
+      "distances": [
+        {
+          "landmarkKey": "rynek",
+          "meters": 10,
+          "walkMinutes": 0,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "florianska",
+          "meters": 110,
+          "walkMinutes": 2,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "kazimierz",
+          "meters": 890,
+          "walkMinutes": 12,
+          "rideMinutes": null
+        }
+      ],
+      "rooms": []
+    },
+    {
+      "name": "Amber Boutique Hotels - Amber Design",
+      "stars": 4,
+      "tags": [],
+      "boards": [
+        "bb"
+      ],
+      "bookingScore": 8.8,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=50.065443,19.933669",
+      "bookingUrl": "https://www.booking.com/hotel/pl/amber-design.html",
+      "roomsNote": null,
+      "sortOrder": 46,
+      "features": [],
+      "distances": [
+        {
+          "landmarkKey": "rynek",
+          "meters": 520,
+          "walkMinutes": 7,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "florianska",
+          "meters": 640,
+          "walkMinutes": 9,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "kazimierz",
+          "meters": 1450,
+          "walkMinutes": 20,
+          "rideMinutes": null
+        }
+      ],
+      "rooms": []
+    }
+  ]
+}
