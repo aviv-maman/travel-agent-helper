@@ -56,12 +56,18 @@ export function formatMeters(m: number | null, locale: string): string | null {
   return locale === "he" ? `${km} ק״מ` : `${km}km`;
 }
 
+/** Walks longer than this aren't a realistic option — show the ride time only. */
+const MAX_USEFUL_WALK_MINUTES = 40;
+
 /** Builds the localized "X minutes walking · Y minutes riding" string. */
 export function useTimeLabel() {
   const t = useTranslations("hotels.card");
   return (d: ViewDistance): string => {
     const parts: string[] = [];
-    if (d.walkMinutes != null) parts.push(t("walk", { minutes: d.walkMinutes }));
+    const walkIsUseful =
+      d.walkMinutes != null &&
+      (d.walkMinutes <= MAX_USEFUL_WALK_MINUTES || d.rideMinutes == null);
+    if (walkIsUseful) parts.push(t("walk", { minutes: d.walkMinutes! }));
     if (d.rideMinutes != null) parts.push(t("ride", { minutes: d.rideMinutes }));
     // Always surface a walking time — even for very close (<100m) spots where the
     // data has no explicit minutes — so the yellow column is never empty.
