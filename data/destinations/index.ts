@@ -14,7 +14,11 @@ import type { SeedDestination } from "../../scripts/extract";
  */
 
 import prg from "./prg.json";
+import gyd from "./gyd.json";
+import krk from "./krk.json";
 
 export const EXTRA_DESTINATIONS: SeedDestination[] = [
   prg as SeedDestination,
+  gyd as SeedDestination,
+  krk as SeedDestination,
 ];

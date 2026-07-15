@@ -15,6 +15,7 @@ const CODE_BY_TOKEN: { test: RegExp; code: string }[] = [
   { test: /\bBGN\b/, code: "BGN" }, // Bulgarian lev
   { test: /\bRON\b/, code: "RON" }, // Romanian leu
   { test: /\bPLN\b/, code: "PLN" }, // Polish zloty
+  { test: /\bAZN\b/, code: "AZN" }, // Azerbaijani manat
 ];
 
 /** ILS per 1 unit of currency — fallback when the live API is unreachable. */
@@ -25,6 +26,7 @@ const FALLBACK_RATES: Record<string, number> = {
   BGN: 2.05,
   RON: 0.8,
   PLN: 0.93,
+  AZN: 1.77,
 };
 
 export type IlsRates = Record<string, number>;

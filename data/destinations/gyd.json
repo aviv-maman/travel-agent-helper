@@ -1,0 +1,1016 @@
+{
+  "code": "gyd",
+  "iata": "GYD",
+  "name": {
+    "he": "באקו",
+    "en": "Baku"
+  },
+  "country": {
+    "he": "אזרבייג'ן",
+    "en": "Azerbaijan"
+  },
+  "countryCode": "AZ",
+  "info": {
+    "about": {
+      "he": "באקו יושבת על מפרץ הים הכספי: העיר העתיקה (איצ'רי שהר) מוקפת חומה ומוכרת כאתר מורשת עולמית של אונסק\"ו, ומעליה מתנשאים מגדלי הלהבה. רוב מלונות התיירים ברובעי סבאיל ונסימי — במרחק הליכה מהעיר העתיקה, מכיכר המזרקות ומטיילת הים (הבולוואר).",
+      "en": "Baku sits on a bay of the Caspian: the walled Old City (Icherisheher) is a UNESCO World Heritage site, with the Flame Towers rising above it. Most tourist hotels are in the Sabail and Nasimi districts — walking distance from the Old City, Fountains Square and the seaside boulevard."
+    },
+    "attractions": {
+      "he": "🏛 אתרים מרכזיים: העיר העתיקה (איצ'רי שהר) · מגדל הבתולה · ארמון השירוואנשאהים · מגדלי הלהבה · מרכז היידר אלייב · טיילת הים (בולוואר)",
+      "en": "🏛 Main sights: Old City (Icherisheher) · Maiden Tower · Shirvanshahs' Palace · Flame Towers · Heydar Aliyev Center · Seaside Boulevard"
+    },
+    "currencyNote": {
+      "he": "המטבע המקומי: מאנאט אזרבייג'ני (AZN) · הערכת שער: 1 מאנאט ≈ ₪1.77",
+      "en": "Local currency: Azerbaijani manat (AZN) · Approx. rate: 1 manat ≈ ₪1.77"
+    },
+    "airport": {
+      "title": {
+        "he": "✈ שדה התעופה — GYD (Heydar Aliyev)",
+        "en": "✈ Airport — GYD (Heydar Aliyev)"
+      },
+      "note": {
+        "he": "מרחק: ~25 ק\"מ ממרכז העיר · זמן נסיעה: 30–40 דקות",
+        "en": "Distance: ~25 km from the city center · Travel time: 30–40 minutes"
+      }
+    },
+    "transport": [
+      {
+        "icon": "🚌",
+        "mode": {
+          "he": "אווירו-אקספרס H1",
+          "en": "Aeroexpress H1"
+        },
+        "detail": {
+          "he": "לתחנת 28 May · ~30 דק' · נדרש כרטיס BakıKart (2 מאנאט)",
+          "en": "To 28 May station · ~30 min · requires a BakıKart (2 manat)"
+        },
+        "price": "~1.3 AZN"
+      },
+      {
+        "icon": "📱",
+        "mode": {
+          "he": "Bolt / Uber",
+          "en": "Bolt / Uber"
+        },
+        "detail": {
+          "he": "~30 דק' · איסוף מחוץ לטרמינל",
+          "en": "~30 min · pickup outside the terminal"
+        },
+        "price": "22–30 AZN"
+      },
+      {
+        "icon": "🚕",
+        "mode": {
+          "he": "מונית שדה רשמית",
+          "en": "Official airport taxi"
+        },
+        "detail": {
+          "he": "מהדלפק הרשמי בטרמינל · ~30 דק'",
+          "en": "From the official desk in the terminal · ~30 min"
+        },
+        "price": "35–55 AZN"
+      }
+    ],
+    "warnings": [
+      {
+        "he": "אזרחי ישראל נדרשים לוויזה לאזרבייג'ן — ASAN e-visa דרך evisa.gov.az (~25$, עד 3 ימי עבודה, כניסה יחידה ל-30 יום). הדרכון חייב להיות בתוקף ל-6 חודשים לפחות מעבר לשהות.",
+        "en": "Israeli citizens need a visa for Azerbaijan — the ASAN e-visa via evisa.gov.az (~$25, up to 3 working days, single entry for 30 days). The passport must be valid for at least 6 months beyond the stay."
+      }
+    ]
+  },
+  "sortOrder": 10,
+  "landmarks": [
+    {
+      "key": "boulevard",
+      "name": {
+        "he": "טיילת הים (בולוואר)",
+        "en": "Seaside Boulevard"
+      }
+    },
+    {
+      "key": "fountains",
+      "name": {
+        "he": "כיכר המזרקות",
+        "en": "Fountains Square"
+      }
+    },
+    {
+      "key": "oldcity",
+      "name": {
+        "he": "העיר העתיקה (שער קושה גאלא)",
+        "en": "Old City (Gosha Gala gate)"
+      }
+    },
+    {
+      "key": "nizami",
+      "name": {
+        "he": "רחוב ניזאמי",
+        "en": "Nizami Street"
+      }
+    }
+  ],
+  "hotels": [
+    {
+      "name": "Baku Marriott Hotel Boulevard",
+      "stars": 5,
+      "tags": [],
+      "boards": [
+        "bb"
+      ],
+      "bookingScore": 8.7,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=40.375204,49.883004",
+      "bookingUrl": "https://www.booking.com/hotel/az/baku-marriott-hotel-boulevard.html",
+      "roomsNote": null,
+      "sortOrder": 0,
+      "features": [
+        "pool-in",
+        "spa"
+      ],
+      "distances": [
+        {
+          "landmarkKey": "boulevard",
+          "meters": 2500,
+          "walkMinutes": 34,
+          "rideMinutes": 5
+        },
+        {
+          "landmarkKey": "fountains",
+          "meters": 4350,
+          "walkMinutes": null,
+          "rideMinutes": 7
+        },
+        {
+          "landmarkKey": "oldcity",
+          "meters": 4700,
+          "walkMinutes": null,
+          "rideMinutes": 9
+        },
+        {
+          "landmarkKey": "nizami",
+          "meters": 2250,
+          "walkMinutes": 30,
+          "rideMinutes": 4
+        }
+      ],
+      "rooms": []
+    },
+    {
+      "name": "Courtyard by Marriott Baku",
+      "stars": 4,
+      "tags": [],
+      "boards": [
+        "bb"
+      ],
+      "bookingScore": 9,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=40.376709,49.834893",
+      "bookingUrl": "https://www.booking.com/hotel/az/courtyard-by-marriott-baku.html",
+      "roomsNote": null,
+      "sortOrder": 1,
+      "features": [],
+      "distances": [
+        {
+          "landmarkKey": "boulevard",
+          "meters": 1900,
+          "walkMinutes": 26,
+          "rideMinutes": 6
+        },
+        {
+          "landmarkKey": "fountains",
+          "meters": 1250,
+          "walkMinutes": 16,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "oldcity",
+          "meters": 1400,
+          "walkMinutes": 19,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "nizami",
+          "meters": 1150,
+          "walkMinutes": 15,
+          "rideMinutes": null
+        }
+      ],
+      "rooms": []
+    },
+    {
+      "name": "Radisson Hotel Baku",
+      "stars": 4,
+      "tags": [],
+      "boards": [
+        "bb"
+      ],
+      "bookingScore": 8.8,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=40.371412,49.848785",
+      "bookingUrl": "https://www.booking.com/hotel/az/radisson-hotel-baku.html",
+      "roomsNote": null,
+      "sortOrder": 2,
+      "features": [],
+      "distances": [
+        {
+          "landmarkKey": "boulevard",
+          "meters": 140,
+          "walkMinutes": 2,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "fountains",
+          "meters": 1150,
+          "walkMinutes": 15,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "oldcity",
+          "meters": 1500,
+          "walkMinutes": 20,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "nizami",
+          "meters": 460,
+          "walkMinutes": 6,
+          "rideMinutes": null
+        }
+      ],
+      "rooms": []
+    },
+    {
+      "name": "Hilton Baku",
+      "stars": 5,
+      "tags": [],
+      "boards": [
+        "bb"
+      ],
+      "bookingScore": 9.2,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=40.372247,49.849809",
+      "bookingUrl": "https://www.booking.com/hotel/az/hilton-baku.html",
+      "roomsNote": null,
+      "sortOrder": 3,
+      "features": [
+        "pool-in",
+        "spa"
+      ],
+      "distances": [
+        {
+          "landmarkKey": "boulevard",
+          "meters": 260,
+          "walkMinutes": 3,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "fountains",
+          "meters": 1200,
+          "walkMinutes": 16,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "oldcity",
+          "meters": 1600,
+          "walkMinutes": 21,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "nizami",
+          "meters": 590,
+          "walkMinutes": 8,
+          "rideMinutes": null
+        }
+      ],
+      "rooms": []
+    },
+    {
+      "name": "JW Marriott Absheron Baku",
+      "stars": 5,
+      "tags": [],
+      "boards": [
+        "bb"
+      ],
+      "bookingScore": 9.3,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=40.37454,49.856595",
+      "bookingUrl": "https://www.booking.com/hotel/az/jw-marriott-absheron-baku.html",
+      "roomsNote": null,
+      "sortOrder": 4,
+      "features": [
+        "pool-in",
+        "spa"
+      ],
+      "distances": [
+        {
+          "landmarkKey": "boulevard",
+          "meters": 320,
+          "walkMinutes": 4,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "fountains",
+          "meters": 1850,
+          "walkMinutes": 25,
+          "rideMinutes": 3
+        },
+        {
+          "landmarkKey": "oldcity",
+          "meters": 2350,
+          "walkMinutes": 31,
+          "rideMinutes": 5
+        },
+        {
+          "landmarkKey": "nizami",
+          "meters": 380,
+          "walkMinutes": 5,
+          "rideMinutes": null
+        }
+      ],
+      "rooms": []
+    },
+    {
+      "name": "The Ritz-Carlton, Baku",
+      "stars": 5,
+      "tags": [],
+      "boards": [
+        "bb"
+      ],
+      "bookingScore": 9.3,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=40.388934,49.864616",
+      "bookingUrl": "https://www.booking.com/hotel/az/the-ritz-carlton-baku.html",
+      "roomsNote": null,
+      "sortOrder": 5,
+      "features": [
+        "pool-in",
+        "spa"
+      ],
+      "distances": [
+        {
+          "landmarkKey": "boulevard",
+          "meters": 3350,
+          "walkMinutes": null,
+          "rideMinutes": 4
+        },
+        {
+          "landmarkKey": "fountains",
+          "meters": 4250,
+          "walkMinutes": null,
+          "rideMinutes": 6
+        },
+        {
+          "landmarkKey": "oldcity",
+          "meters": 4750,
+          "walkMinutes": null,
+          "rideMinutes": 8
+        },
+        {
+          "landmarkKey": "nizami",
+          "meters": 2200,
+          "walkMinutes": 29,
+          "rideMinutes": 2
+        }
+      ],
+      "rooms": []
+    },
+    {
+      "name": "Holiday Inn Baku by IHG",
+      "stars": 4,
+      "tags": [],
+      "boards": [
+        "bb"
+      ],
+      "bookingScore": 8.9,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=40.375687,49.858878",
+      "bookingUrl": "https://www.booking.com/hotel/az/holiday-inn-baku.html",
+      "roomsNote": null,
+      "sortOrder": 6,
+      "features": [
+        "pool-in",
+        "spa"
+      ],
+      "distances": [
+        {
+          "landmarkKey": "boulevard",
+          "meters": 440,
+          "walkMinutes": 6,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "fountains",
+          "meters": 2000,
+          "walkMinutes": 27,
+          "rideMinutes": 4
+        },
+        {
+          "landmarkKey": "oldcity",
+          "meters": 2450,
+          "walkMinutes": 33,
+          "rideMinutes": 6
+        },
+        {
+          "landmarkKey": "nizami",
+          "meters": 330,
+          "walkMinutes": 4,
+          "rideMinutes": null
+        }
+      ],
+      "rooms": []
+    },
+    {
+      "name": "Sapphire City Hotel",
+      "stars": 4,
+      "tags": [],
+      "boards": [
+        "bb"
+      ],
+      "bookingScore": 8.6,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=40.372324,49.838394",
+      "bookingUrl": "https://www.booking.com/hotel/az/sapphire-city.html",
+      "roomsNote": null,
+      "sortOrder": 7,
+      "features": [],
+      "distances": [
+        {
+          "landmarkKey": "boulevard",
+          "meters": 1000,
+          "walkMinutes": 13,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "fountains",
+          "meters": 120,
+          "walkMinutes": 2,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "oldcity",
+          "meters": 580,
+          "walkMinutes": 8,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "nizami",
+          "meters": 30,
+          "walkMinutes": 0,
+          "rideMinutes": null
+        }
+      ],
+      "rooms": []
+    },
+    {
+      "name": "Boutique 19 Hotel",
+      "stars": 5,
+      "tags": [],
+      "boards": [
+        "bb"
+      ],
+      "bookingScore": 9.2,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=40.367605,49.837887",
+      "bookingUrl": "https://www.booking.com/hotel/az/bout19ue-baku.html",
+      "roomsNote": null,
+      "sortOrder": 8,
+      "features": [
+        "pool-in"
+      ],
+      "distances": [
+        {
+          "landmarkKey": "boulevard",
+          "meters": 120,
+          "walkMinutes": 2,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "fountains",
+          "meters": 450,
+          "walkMinutes": 6,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "oldcity",
+          "meters": 240,
+          "walkMinutes": 3,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "nizami",
+          "meters": 620,
+          "walkMinutes": 8,
+          "rideMinutes": null
+        }
+      ],
+      "rooms": []
+    },
+    {
+      "name": "Four Seasons Hotel Baku",
+      "stars": 5,
+      "tags": [],
+      "boards": [
+        "bb"
+      ],
+      "bookingScore": 9.6,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=40.363541,49.834886",
+      "bookingUrl": "https://www.booking.com/hotel/az/four-seasons-baku.html",
+      "roomsNote": null,
+      "sortOrder": 9,
+      "features": [
+        "pool-in",
+        "spa"
+      ],
+      "distances": [
+        {
+          "landmarkKey": "boulevard",
+          "meters": 520,
+          "walkMinutes": 7,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "fountains",
+          "meters": 940,
+          "walkMinutes": 13,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "oldcity",
+          "meters": 790,
+          "walkMinutes": 11,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "nizami",
+          "meters": 1200,
+          "walkMinutes": 16,
+          "rideMinutes": null
+        }
+      ],
+      "rooms": []
+    },
+    {
+      "name": "InterContinental Baku by IHG",
+      "stars": 5,
+      "tags": [],
+      "boards": [
+        "bb"
+      ],
+      "bookingScore": 9,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=40.371434,49.845368",
+      "bookingUrl": "https://www.booking.com/hotel/az/intercontinental-hotels-baku.html",
+      "roomsNote": null,
+      "sortOrder": 10,
+      "features": [
+        "pool-in",
+        "spa"
+      ],
+      "distances": [
+        {
+          "landmarkKey": "boulevard",
+          "meters": 260,
+          "walkMinutes": 3,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "fountains",
+          "meters": 780,
+          "walkMinutes": 10,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "oldcity",
+          "meters": 1150,
+          "walkMinutes": 15,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "nizami",
+          "meters": 370,
+          "walkMinutes": 5,
+          "rideMinutes": null
+        }
+      ],
+      "rooms": []
+    },
+    {
+      "name": "Qafqaz Baku City Hotel & Residences",
+      "stars": 4,
+      "tags": [],
+      "boards": [
+        "bb"
+      ],
+      "bookingScore": 9,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=40.396164,49.816883",
+      "bookingUrl": "https://www.booking.com/hotel/az/qafqaz-baku-city-and-residences.html",
+      "roomsNote": null,
+      "sortOrder": 11,
+      "features": [
+        "spa"
+      ],
+      "distances": [
+        {
+          "landmarkKey": "boulevard",
+          "meters": 4600,
+          "walkMinutes": null,
+          "rideMinutes": 10
+        },
+        {
+          "landmarkKey": "fountains",
+          "meters": 3800,
+          "walkMinutes": null,
+          "rideMinutes": 9
+        },
+        {
+          "landmarkKey": "oldcity",
+          "meters": 4000,
+          "walkMinutes": null,
+          "rideMinutes": 9
+        },
+        {
+          "landmarkKey": "nizami",
+          "meters": 3700,
+          "walkMinutes": null,
+          "rideMinutes": 8
+        }
+      ],
+      "rooms": []
+    },
+    {
+      "name": "The Merchant Baku",
+      "stars": 4,
+      "tags": [],
+      "boards": [
+        "bb"
+      ],
+      "bookingScore": 9.5,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=40.367933,49.837825",
+      "bookingUrl": "https://www.booking.com/hotel/az/the-merchant-baku.html",
+      "roomsNote": null,
+      "sortOrder": 12,
+      "features": [],
+      "distances": [
+        {
+          "landmarkKey": "boulevard",
+          "meters": 170,
+          "walkMinutes": 2,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "fountains",
+          "meters": 280,
+          "walkMinutes": 4,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "oldcity",
+          "meters": 360,
+          "walkMinutes": 5,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "nizami",
+          "meters": 470,
+          "walkMinutes": 6,
+          "rideMinutes": null
+        }
+      ],
+      "rooms": []
+    },
+    {
+      "name": "Dinamo Hotel Baku",
+      "stars": 5,
+      "tags": [],
+      "boards": [
+        "bb"
+      ],
+      "bookingScore": 8.9,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=40.372127,49.848339",
+      "bookingUrl": "https://www.booking.com/hotel/az/dinamo-baku-baku.html",
+      "roomsNote": null,
+      "sortOrder": 13,
+      "features": [
+        "pool-in",
+        "spa"
+      ],
+      "distances": [
+        {
+          "landmarkKey": "boulevard",
+          "meters": 200,
+          "walkMinutes": 3,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "fountains",
+          "meters": 1050,
+          "walkMinutes": 14,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "oldcity",
+          "meters": 1450,
+          "walkMinutes": 19,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "nizami",
+          "meters": 370,
+          "walkMinutes": 5,
+          "rideMinutes": null
+        }
+      ],
+      "rooms": []
+    },
+    {
+      "name": "NH Nizami Hotel",
+      "stars": null,
+      "tags": [],
+      "boards": [
+        "bb"
+      ],
+      "bookingScore": null,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=40.368738,49.8389",
+      "bookingUrl": "https://www.booking.com/hotel/az/nh-nizami-baki1.html",
+      "roomsNote": null,
+      "sortOrder": 14,
+      "features": [],
+      "distances": [
+        {
+          "landmarkKey": "boulevard",
+          "meters": 320,
+          "walkMinutes": 4,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "fountains",
+          "meters": 230,
+          "walkMinutes": 3,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "oldcity",
+          "meters": 460,
+          "walkMinutes": 6,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "nizami",
+          "meters": 480,
+          "walkMinutes": 6,
+          "rideMinutes": null
+        }
+      ],
+      "rooms": []
+    },
+    {
+      "name": "Midtown Hotel Baku",
+      "stars": 4,
+      "tags": [],
+      "boards": [
+        "bb"
+      ],
+      "bookingScore": 9.5,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=40.382831,49.838506",
+      "bookingUrl": "https://www.booking.com/hotel/az/midtown.html",
+      "roomsNote": null,
+      "sortOrder": 15,
+      "features": [
+        "spa"
+      ],
+      "distances": [
+        {
+          "landmarkKey": "boulevard",
+          "meters": 1700,
+          "walkMinutes": 23,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "fountains",
+          "meters": 1550,
+          "walkMinutes": 21,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "oldcity",
+          "meters": 2100,
+          "walkMinutes": 28,
+          "rideMinutes": 5
+        },
+        {
+          "landmarkKey": "nizami",
+          "meters": 1150,
+          "walkMinutes": 15,
+          "rideMinutes": null
+        }
+      ],
+      "rooms": []
+    },
+    {
+      "name": "Shah Palace Luxury Museum Hotel",
+      "stars": 4,
+      "tags": [],
+      "boards": [
+        "bb"
+      ],
+      "bookingScore": 8.2,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=40.368032,49.836286",
+      "bookingUrl": "https://www.booking.com/hotel/az/shah-palace.html",
+      "roomsNote": null,
+      "sortOrder": 16,
+      "features": [
+        "spa"
+      ],
+      "distances": [
+        {
+          "landmarkKey": "boulevard",
+          "meters": 270,
+          "walkMinutes": 4,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "fountains",
+          "meters": 250,
+          "walkMinutes": 3,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "oldcity",
+          "meters": 80,
+          "walkMinutes": 1,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "nizami",
+          "meters": 490,
+          "walkMinutes": 7,
+          "rideMinutes": null
+        }
+      ],
+      "rooms": []
+    },
+    {
+      "name": "IVY GARDEN HOTEL BAKU",
+      "stars": 4,
+      "tags": [],
+      "boards": [
+        "bb"
+      ],
+      "bookingScore": 9.2,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=40.387305,49.830731",
+      "bookingUrl": "https://www.booking.com/hotel/az/ivy-garden-baku.html",
+      "roomsNote": null,
+      "sortOrder": 17,
+      "features": [
+        "pool-in",
+        "spa"
+      ],
+      "distances": [
+        {
+          "landmarkKey": "boulevard",
+          "meters": 2850,
+          "walkMinutes": 38,
+          "rideMinutes": 7
+        },
+        {
+          "landmarkKey": "fountains",
+          "meters": 2200,
+          "walkMinutes": 29,
+          "rideMinutes": 5
+        },
+        {
+          "landmarkKey": "oldcity",
+          "meters": 2300,
+          "walkMinutes": 31,
+          "rideMinutes": 6
+        },
+        {
+          "landmarkKey": "nizami",
+          "meters": 2150,
+          "walkMinutes": 28,
+          "rideMinutes": 4
+        }
+      ],
+      "rooms": []
+    },
+    {
+      "name": "Movenpick Winter Park Baku",
+      "stars": 4,
+      "tags": [],
+      "boards": [
+        "bb"
+      ],
+      "bookingScore": 9.3,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=40.375803,49.837634",
+      "bookingUrl": "https://www.booking.com/hotel/az/movenpick-winter-park-baku.html",
+      "roomsNote": null,
+      "sortOrder": 18,
+      "features": [
+        "spa"
+      ],
+      "distances": [
+        {
+          "landmarkKey": "boulevard",
+          "meters": 1450,
+          "walkMinutes": 19,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "fountains",
+          "meters": 550,
+          "walkMinutes": 7,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "oldcity",
+          "meters": 1100,
+          "walkMinutes": 14,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "nizami",
+          "meters": 510,
+          "walkMinutes": 7,
+          "rideMinutes": null
+        }
+      ],
+      "rooms": []
+    },
+    {
+      "name": "Fairmont Baku - Flame Towers",
+      "stars": 5,
+      "tags": [],
+      "boards": [
+        "bb"
+      ],
+      "bookingScore": 8.6,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=40.359462,49.827054",
+      "bookingUrl": "https://www.booking.com/hotel/az/fairmont-baku.html",
+      "roomsNote": null,
+      "sortOrder": 19,
+      "features": [
+        "spa"
+      ],
+      "distances": [
+        {
+          "landmarkKey": "boulevard",
+          "meters": 730,
+          "walkMinutes": 10,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "fountains",
+          "meters": 1850,
+          "walkMinutes": 25,
+          "rideMinutes": 3
+        },
+        {
+          "landmarkKey": "oldcity",
+          "meters": 1800,
+          "walkMinutes": 24,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "nizami",
+          "meters": 1100,
+          "walkMinutes": 14,
+          "rideMinutes": null
+        }
+      ],
+      "rooms": []
+    },
+    {
+      "name": "Sheraton Baku Intourist",
+      "stars": 5,
+      "tags": [],
+      "boards": [
+        "bb"
+      ],
+      "bookingScore": 9.2,
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=40.353957,49.833914",
+      "bookingUrl": "https://www.booking.com/hotel/az/sheraton-baku-intourist.html",
+      "roomsNote": null,
+      "sortOrder": 20,
+      "features": [
+        "spa"
+      ],
+      "distances": [
+        {
+          "landmarkKey": "boulevard",
+          "meters": 1300,
+          "walkMinutes": 17,
+          "rideMinutes": null
+        },
+        {
+          "landmarkKey": "fountains",
+          "meters": 2600,
+          "walkMinutes": 35,
+          "rideMinutes": 3
+        },
+        {
+          "landmarkKey": "oldcity",
+          "meters": 2500,
+          "walkMinutes": 33,
+          "rideMinutes": 3
+        },
+        {
+          "landmarkKey": "nizami",
+          "meters": 2550,
+          "walkMinutes": 34,
+          "rideMinutes": 3
+        }
+      ],
+      "rooms": []
+    }
+  ]
+}
