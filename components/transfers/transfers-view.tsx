@@ -4,6 +4,7 @@ import { useMemo, useState, type ReactNode } from "react";
 import { useTranslations } from "next-intl";
 import { Search, X } from "lucide-react";
 import type { PillVariant, ViewCountryGroup } from "@/lib/transfers";
+import { TransferCityEdit, type SupplierOption } from "./transfer-city-edit";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { CountryFlag } from "@/components/country-flag";
@@ -57,7 +58,15 @@ function renderName(name: string): ReactNode[] {
   return parts;
 }
 
-export function TransfersView({ groups }: { groups: ViewCountryGroup[] }) {
+export function TransfersView({
+  groups,
+  canEdit = false,
+  suppliers = [],
+}: {
+  groups: ViewCountryGroup[];
+  canEdit?: boolean;
+  suppliers?: SupplierOption[];
+}) {
   const t = useTranslations("transfers");
   const [query, setQuery] = useState("");
 
@@ -151,6 +160,9 @@ export function TransfersView({ groups }: { groups: ViewCountryGroup[] }) {
                       <span key={i}>{content}</span>
                     );
                   })}
+                  {canEdit && si === 0 && city.dbId != null && (
+                    <TransferCityEdit city={city} suppliers={suppliers} />
+                  )}
                 </div>
               )),
             )}
