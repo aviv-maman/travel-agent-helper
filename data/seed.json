@@ -120,13 +120,14 @@
         "features": [
           "pool-in",
           "pool-out",
-          "casino"
+          "casino",
+          "spa"
         ],
         "distances": [
           {
             "landmarkKey": "chabad",
-            "meters": 400,
-            "walkMinutes": 5,
+            "meters": 1350,
+            "walkMinutes": 18,
             "rideMinutes": null
           },
           {
@@ -187,13 +188,14 @@
         "sortOrder": 1,
         "features": [
           "pool-in",
-          "casino"
+          "casino",
+          "spa"
         ],
         "distances": [
           {
             "landmarkKey": "chabad",
-            "meters": 950,
-            "walkMinutes": 12,
+            "meters": 1800,
+            "walkMinutes": 24,
             "rideMinutes": null
           },
           {
@@ -255,7 +257,8 @@
         "features": [
           "pool-in",
           "pool-out",
-          "casino"
+          "casino",
+          "spa"
         ],
         "distances": [
           {
@@ -333,7 +336,8 @@
         "features": [
           "pool-in",
           "pool-out",
-          "casino"
+          "casino",
+          "spa"
         ],
         "distances": [
           {
@@ -400,7 +404,8 @@
         "sortOrder": 4,
         "features": [
           "pool-in",
-          "casino"
+          "casino",
+          "spa"
         ],
         "distances": [
           {
@@ -467,7 +472,8 @@
         "sortOrder": 5,
         "features": [
           "pool-in",
-          "casino"
+          "casino",
+          "spa"
         ],
         "distances": [
           {
@@ -520,7 +526,9 @@
         "name": "JRW Welmond",
         "stars": 5,
         "tier": "premium",
-        "tags": [],
+        "tags": [
+          "adults-only"
+        ],
         "boards": [
           "bb"
         ],
@@ -534,7 +542,8 @@
         "sortOrder": 6,
         "features": [
           "pool-in",
-          "casino"
+          "casino",
+          "spa"
         ],
         "distances": [
           {
@@ -591,7 +600,8 @@
         "sortOrder": 7,
         "features": [
           "pool-in",
-          "casino"
+          "casino",
+          "spa"
         ],
         "distances": [
           {
@@ -659,7 +669,8 @@
         "sortOrder": 8,
         "features": [
           "pool-in",
-          "casino"
+          "casino",
+          "spa"
         ],
         "distances": [
           {
@@ -712,7 +723,8 @@
         "roomsNote": null,
         "sortOrder": 9,
         "features": [
-          "pool-in"
+          "pool-in",
+          "spa"
         ],
         "distances": [
           {
@@ -820,7 +832,8 @@
         "sortOrder": 11,
         "features": [
           "pool-out",
-          "casino-near"
+          "casino-near",
+          "spa"
         ],
         "distances": [
           {
@@ -932,7 +945,8 @@
           "pool-in",
           "pool-out",
           "waterpark",
-          "outside-center"
+          "outside-center",
+          "spa"
         ],
         "distances": [
           {
@@ -992,7 +1006,8 @@
           "pool-in",
           "pool-out",
           "waterpark",
-          "outside-center"
+          "outside-center",
+          "spa"
         ],
         "distances": [
           {
@@ -1047,7 +1062,9 @@
         "bookingUrl": "https://www.booking.com/searchresults.html?ss=King+Solomon+Hotel+Batumi",
         "roomsNote": null,
         "sortOrder": 15,
-        "features": [],
+        "features": [
+          "spa"
+        ],
         "distances": [
           {
             "landmarkKey": "chabad",
@@ -1216,7 +1233,9 @@
         "tags": [
           "aparthotel"
         ],
-        "boards": ["bb"],
+        "boards": [
+          "bb"
+        ],
         "bookingScore": 8.8,
         "googleMapsUrl": "https://www.google.com/maps/search/7Seasons+Apartments+Budapest+Budapest",
         "bookingUrl": "https://www.booking.com/searchresults.html?ss=7Seasons+Apartments+Budapest+Budapest",
@@ -1245,7 +1264,8 @@
         "tier": "good",
         "tags": [],
         "boards": [
-          "bb"
+          "bb",
+          "hb"
         ],
         "bookingScore": 9.1,
         "googleMapsUrl": "https://www.google.com/maps/search/Barceló+Budapest+Budapest",
@@ -1314,7 +1334,8 @@
         "sortOrder": 4,
         "features": [
           "casino",
-          "pool-in"
+          "pool-in",
+          "spa"
         ],
         "distances": [
           {
@@ -1337,7 +1358,9 @@
         "stars": 4,
         "tier": "good",
         "tags": [],
-        "boards": ["bb"],
+        "boards": [
+          "bb"
+        ],
         "bookingScore": 9.6,
         "googleMapsUrl": "https://www.google.com/maps/search/Emerald+Downtown+Luxury+Suites+Budapest",
         "bookingUrl": "https://www.booking.com/searchresults.html?ss=Emerald+Downtown+Luxury+Suites+Budapest",
@@ -1407,8 +1430,8 @@
         "distances": [
           {
             "landmarkKey": "kiraly",
-            "meters": 650,
-            "walkMinutes": 9,
+            "meters": 200,
+            "walkMinutes": 3,
             "rideMinutes": null
           },
           {
@@ -1497,8 +1520,8 @@
         "distances": [
           {
             "landmarkKey": "kiraly",
-            "meters": 350,
-            "walkMinutes": 5,
+            "meters": 680,
+            "walkMinutes": 9,
             "rideMinutes": null
           },
           {
@@ -1523,7 +1546,9 @@
         "bookingUrl": "https://www.booking.com/searchresults.html?ss=Hotel+Museum+Budapest+Budapest",
         "roomsNote": null,
         "sortOrder": 11,
-        "features": [],
+        "features": [
+          "spa"
+        ],
         "distances": [
           {
             "landmarkKey": "kiraly",
@@ -1614,7 +1639,8 @@
         "roomsNote": null,
         "sortOrder": 14,
         "features": [
-          "pool-in"
+          "pool-in",
+          "spa"
         ],
         "distances": [
           {
@@ -1698,7 +1724,8 @@
         "tier": "good",
         "tags": [],
         "boards": [
-          "bb"
+          "bb",
+          "hb"
         ],
         "bookingScore": 8.6,
         "googleMapsUrl": "https://www.google.com/maps/search/Mercure+Budapest+City+Center+Budapest",
@@ -1728,7 +1755,8 @@
         "tier": "good",
         "tags": [],
         "boards": [
-          "bb"
+          "bb",
+          "hb"
         ],
         "bookingScore": 8.8,
         "googleMapsUrl": "https://www.google.com/maps/search/Mercure+Budapest+Korona+Budapest",
@@ -1968,7 +1996,9 @@
         "tier": "good",
         "tags": [],
         "boards": [
-          "bb", "hb", "fb"
+          "bb",
+          "hb",
+          "fb"
         ],
         "bookingScore": 8.9,
         "googleMapsUrl": "https://www.google.com/maps/search/Aquaworld+Resort+Budapest",
@@ -1976,7 +2006,9 @@
         "roomsNote": null,
         "sortOrder": 26,
         "features": [
-          "pool-in", "waterpark"
+          "pool-in",
+          "waterpark",
+          "spa"
         ],
         "distances": [
           {
@@ -2208,7 +2240,8 @@
         "roomsNote": null,
         "sortOrder": 2,
         "features": [
-          "pool-out"
+          "pool-out",
+          "spa"
         ],
         "distances": [
           {
@@ -2299,8 +2332,8 @@
         "distances": [
           {
             "landmarkKey": "ermou",
-            "meters": 700,
-            "walkMinutes": null,
+            "meters": 230,
+            "walkMinutes": 3,
             "rideMinutes": null
           },
           {
@@ -2317,8 +2350,8 @@
           },
           {
             "landmarkKey": "syntagma",
-            "meters": 1300,
-            "walkMinutes": 17,
+            "meters": 750,
+            "walkMinutes": 10,
             "rideMinutes": null
           }
         ],
@@ -2341,8 +2374,8 @@
         "distances": [
           {
             "landmarkKey": "ermou",
-            "meters": 600,
-            "walkMinutes": null,
+            "meters": 290,
+            "walkMinutes": 4,
             "rideMinutes": null
           },
           {
@@ -2359,8 +2392,8 @@
           },
           {
             "landmarkKey": "syntagma",
-            "meters": 1200,
-            "walkMinutes": 16,
+            "meters": 570,
+            "walkMinutes": 8,
             "rideMinutes": null
           }
         ],
@@ -2423,7 +2456,8 @@
         "sortOrder": 7,
         "features": [
           "pool-in",
-          "pool-out"
+          "pool-out",
+          "spa"
         ],
         "distances": [
           {
@@ -2512,8 +2546,8 @@
         "distances": [
           {
             "landmarkKey": "ermou",
-            "meters": 700,
-            "walkMinutes": null,
+            "meters": 1050,
+            "walkMinutes": 14,
             "rideMinutes": null
           },
           {
@@ -2720,7 +2754,8 @@
         "sortOrder": 14,
         "features": [
           "pool-in",
-          "pool-out"
+          "pool-out",
+          "spa"
         ],
         "distances": [
           {
@@ -2765,7 +2800,8 @@
         "sortOrder": 15,
         "features": [
           "pool-in",
-          "pool-out"
+          "pool-out",
+          "spa"
         ],
         "distances": [
           {
@@ -3060,7 +3096,9 @@
         "bookingUrl": "https://www.booking.com/searchresults.html?ss=Elia+Ermou+Athens+Greece",
         "roomsNote": null,
         "sortOrder": 22,
-        "features": [],
+        "features": [
+          "spa"
+        ],
         "distances": [
           {
             "landmarkKey": "ermou",
@@ -3229,7 +3267,8 @@
         "roomsNote": null,
         "sortOrder": 26,
         "features": [
-          "pool-in"
+          "pool-in",
+          "spa"
         ],
         "distances": [
           {
@@ -3315,7 +3354,8 @@
         "roomsNote": null,
         "sortOrder": 28,
         "features": [
-          "pool-out"
+          "pool-out",
+          "spa"
         ],
         "distances": [
           {
@@ -3450,8 +3490,8 @@
         "distances": [
           {
             "landmarkKey": "ermou",
-            "meters": 950,
-            "walkMinutes": null,
+            "meters": 1400,
+            "walkMinutes": 18,
             "rideMinutes": null
           },
           {
@@ -3489,7 +3529,8 @@
         "roomsNote": null,
         "sortOrder": 32,
         "features": [
-          "pool-out"
+          "pool-out",
+          "spa"
         ],
         "distances": [
           {
@@ -3532,7 +3573,9 @@
         "bookingUrl": "https://www.booking.com/searchresults.html?ss=Brown+Acropol+Athens+Greece",
         "roomsNote": null,
         "sortOrder": 33,
-        "features": [],
+        "features": [
+          "spa"
+        ],
         "distances": [
           {
             "landmarkKey": "ermou",
@@ -3567,7 +3610,8 @@
         "tier": "good",
         "tags": [],
         "boards": [
-          "bb"
+          "bb",
+          "hb"
         ],
         "bookingScore": 8.4,
         "googleMapsUrl": "https://www.google.com/maps/search/Melia+Athens+Athens+Greece",
@@ -3575,7 +3619,8 @@
         "roomsNote": null,
         "sortOrder": 34,
         "features": [
-          "pool-out"
+          "pool-out",
+          "spa"
         ],
         "distances": [
           {
@@ -3718,7 +3763,8 @@
         "sortOrder": 0,
         "features": [
           "pool-in",
-          "pool-out"
+          "pool-out",
+          "spa"
         ],
         "distances": [
           {
@@ -3901,7 +3947,9 @@
         "bookingUrl": "https://www.booking.com/searchresults.html?ss=No+15+Ermou+Hotel+Thessaloniki+Greece",
         "roomsNote": null,
         "sortOrder": 6,
-        "features": [],
+        "features": [
+          "spa"
+        ],
         "distances": [
           {
             "landmarkKey": "aristotelous",
@@ -4052,7 +4100,8 @@
         "roomsNote": null,
         "sortOrder": 11,
         "features": [
-          "pool-in"
+          "pool-in",
+          "spa"
         ],
         "distances": [
           {
@@ -4084,7 +4133,8 @@
         "roomsNote": null,
         "sortOrder": 12,
         "features": [
-          "pool-in"
+          "pool-in",
+          "spa"
         ],
         "distances": [
           {
@@ -4205,7 +4255,9 @@
         "bookingUrl": "https://www.booking.com/searchresults.html?ss=Vanoro+Hotel+Thessaloniki+Greece",
         "roomsNote": null,
         "sortOrder": 16,
-        "features": [],
+        "features": [
+          "spa"
+        ],
         "distances": [
           {
             "landmarkKey": "aristotelous",
@@ -4235,7 +4287,9 @@
         "bookingUrl": "https://www.booking.com/searchresults.html?ss=Anatolia+Hotel+Thessaloniki+Thessaloniki+Greece",
         "roomsNote": null,
         "sortOrder": 17,
-        "features": [],
+        "features": [
+          "spa"
+        ],
         "distances": [
           {
             "landmarkKey": "aristotelous",
@@ -4258,7 +4312,8 @@
         "tier": "good",
         "tags": [],
         "boards": [
-          "bb"
+          "bb",
+          "hb"
         ],
         "bookingScore": 7.9,
         "googleMapsUrl": "https://www.google.com/maps/search/Holiday+Inn+Thessaloniki+Thessaloniki+Greece",
@@ -4298,7 +4353,8 @@
         "roomsNote": null,
         "sortOrder": 19,
         "features": [
-          "pool-out"
+          "pool-out",
+          "spa"
         ],
         "distances": [
           {
@@ -4331,7 +4387,8 @@
         "sortOrder": 20,
         "features": [
           "pool-in",
-          "pool-out"
+          "pool-out",
+          "spa"
         ],
         "distances": [
           {
@@ -4528,8 +4585,8 @@
         "distances": [
           {
             "landmarkKey": "chabad",
-            "meters": 850,
-            "walkMinutes": 12,
+            "meters": 500,
+            "walkMinutes": 7,
             "rideMinutes": null
           },
           {
@@ -4601,7 +4658,8 @@
         "tier": "good",
         "tags": [],
         "boards": [
-          "bb"
+          "bb",
+          "hb"
         ],
         "bookingScore": 8.8,
         "googleMapsUrl": "https://www.google.com/maps/search/Ibis+Styles+Tbilisi+Center+Tbilisi+Georgia",
@@ -4652,7 +4710,8 @@
         "sortOrder": 4,
         "features": [
           "pool-in",
-          "pool-out"
+          "pool-out",
+          "spa"
         ],
         "distances": [
           {
@@ -4780,7 +4839,8 @@
         "roomsNote": null,
         "sortOrder": 7,
         "features": [
-          "pool-in"
+          "pool-in",
+          "spa"
         ],
         "distances": [
           {
@@ -4867,7 +4927,8 @@
         "sortOrder": 9,
         "features": [
           "pool-in",
-          "casino"
+          "casino",
+          "spa"
         ],
         "distances": [
           {
@@ -5039,7 +5100,8 @@
         "roomsNote": null,
         "sortOrder": 13,
         "features": [
-          "pool-in"
+          "pool-in",
+          "spa"
         ],
         "distances": [
           {
@@ -5050,8 +5112,8 @@
           },
           {
             "landmarkKey": "freedom",
-            "meters": 450,
-            "walkMinutes": 6,
+            "meters": 1050,
+            "walkMinutes": 14,
             "rideMinutes": null
           },
           {
@@ -5124,12 +5186,14 @@
         "bookingUrl": "https://www.booking.com/searchresults.html?ss=Mercure+Tbilisi+Old+Town+Tbilisi+Georgia",
         "roomsNote": null,
         "sortOrder": 15,
-        "features": [],
+        "features": [
+          "spa"
+        ],
         "distances": [
           {
             "landmarkKey": "chabad",
-            "meters": 400,
-            "walkMinutes": 5,
+            "meters": 1000,
+            "walkMinutes": 13,
             "rideMinutes": null
           },
           {
@@ -5168,7 +5232,8 @@
         "sortOrder": 16,
         "features": [
           "pool-in",
-          "casino"
+          "casino",
+          "spa"
         ],
         "distances": [
           {
@@ -5256,7 +5321,8 @@
         "features": [
           "pool-in",
           "pool-out",
-          "casino"
+          "casino",
+          "spa"
         ],
         "distances": [
           {
@@ -5350,27 +5416,27 @@
         "distances": [
           {
             "landmarkKey": "chabad",
-            "meters": 1600,
-            "walkMinutes": 22,
-            "rideMinutes": null
+            "meters": 3150,
+            "walkMinutes": null,
+            "rideMinutes": 4
           },
           {
             "landmarkKey": "freedom",
-            "meters": 2200,
-            "walkMinutes": 30,
-            "rideMinutes": 6
+            "meters": 3650,
+            "walkMinutes": null,
+            "rideMinutes": 8
           },
           {
             "landmarkKey": "meidan",
-            "meters": 1700,
-            "walkMinutes": 23,
-            "rideMinutes": null
+            "meters": 2650,
+            "walkMinutes": 35,
+            "rideMinutes": 4
           },
           {
             "landmarkKey": "rustaveli",
-            "meters": 2000,
-            "walkMinutes": 26,
-            "rideMinutes": null
+            "meters": 3650,
+            "walkMinutes": null,
+            "rideMinutes": 5
           }
         ],
         "rooms": []
@@ -5391,7 +5457,8 @@
         "roomsNote": null,
         "sortOrder": 21,
         "features": [
-          "pool-in"
+          "pool-in",
+          "spa"
         ],
         "distances": [
           {
@@ -5576,7 +5643,9 @@
         "roomsNote": null,
         "sortOrder": 1,
         "features": [
-          "pool-in"
+          "pool-in",
+          "spa",
+          "casino"
         ],
         "distances": [
           {
@@ -5830,7 +5899,9 @@
         "roomsNote": null,
         "sortOrder": 8,
         "features": [
-          "pool-in"
+          "pool-in",
+          "spa",
+          "casino"
         ],
         "distances": [
           {
@@ -5860,14 +5931,18 @@
         "tier": "good",
         "tags": [],
         "boards": [
-          "bb"
+          "bb",
+          "hb"
         ],
         "bookingScore": 9,
         "googleMapsUrl": "https://www.google.com/maps/search/InterContinental+Sofia+Sofia+Bulgaria",
         "bookingUrl": "https://www.booking.com/searchresults.html?ss=InterContinental+Sofia+Sofia+Bulgaria",
         "roomsNote": null,
         "sortOrder": 9,
-        "features": [],
+        "features": [
+          "spa",
+          "casino"
+        ],
         "distances": [
           {
             "landmarkKey": "cathedral",
@@ -5904,7 +5979,8 @@
         "roomsNote": null,
         "sortOrder": 10,
         "features": [
-          "pool-in"
+          "pool-in",
+          "spa"
         ],
         "distances": [
           {
@@ -5942,7 +6018,9 @@
         "roomsNote": null,
         "sortOrder": 11,
         "features": [
-          "pool-in"
+          "pool-in",
+          "spa",
+          "casino"
         ],
         "distances": [
           {
@@ -6016,7 +6094,8 @@
         "roomsNote": null,
         "sortOrder": 13,
         "features": [
-          "pool-in"
+          "pool-in",
+          "spa"
         ],
         "distances": [
           {
@@ -6054,7 +6133,9 @@
         "roomsNote": null,
         "sortOrder": 14,
         "features": [
-          "pool-in"
+          "pool-in",
+          "spa",
+          "casino"
         ],
         "distances": [
           {
@@ -6191,7 +6272,9 @@
         "sortOrder": 0,
         "features": [
           "pool-in",
-          "pool-out"
+          "pool-out",
+          "spa",
+          "casino"
         ],
         "distances": [
           {
@@ -6223,7 +6306,9 @@
         "roomsNote": null,
         "sortOrder": 1,
         "features": [
-          "pool-in"
+          "pool-in",
+          "spa",
+          "casino"
         ],
         "distances": [
           {
@@ -6247,7 +6332,8 @@
         "tier": "premium",
         "tags": [],
         "boards": [
-          "bb"
+          "bb",
+          "hb"
         ],
         "bookingScore": 9.3,
         "googleMapsUrl": "https://www.google.com/maps/search/InterContinental+Ath%C3%A9n%C3%A9e+Palace+Bucharest+%28by+IHG%29+Bucharest+Romania",
@@ -6255,7 +6341,8 @@
         "roomsNote": null,
         "sortOrder": 2,
         "features": [
-          "pool-in"
+          "pool-in",
+          "spa"
         ],
         "distances": [
           {
@@ -6316,7 +6403,9 @@
         "bookingUrl": "https://www.booking.com/searchresults.html?ss=Corinthia+Grand+Hotel+Du+Boulevard+Bucharest+Bucharest+Romania",
         "roomsNote": null,
         "sortOrder": 4,
-        "features": [],
+        "features": [
+          "spa"
+        ],
         "distances": [
           {
             "landmarkKey": "oldtown",
@@ -6347,7 +6436,8 @@
         "roomsNote": null,
         "sortOrder": 5,
         "features": [
-          "pool-in"
+          "pool-in",
+          "spa"
         ],
         "distances": [
           {
@@ -6559,7 +6649,8 @@
         "roomsNote": null,
         "sortOrder": 12,
         "features": [
-          "pool-in"
+          "pool-in",
+          "spa"
         ],
         "distances": [
           {
@@ -6581,7 +6672,9 @@
         "name": "Park Inn by Radisson Bucharest Hotel & Residence",
         "stars": 4,
         "tier": "good",
-        "tags": ["aparthotel"],
+        "tags": [
+          "aparthotel"
+        ],
         "boards": [
           "bb"
         ],
@@ -6592,7 +6685,9 @@
         "sortOrder": 13,
         "features": [
           "pool-in",
-          "pool-out"
+          "pool-out",
+          "spa",
+          "casino"
         ],
         "distances": [
           {
@@ -6614,7 +6709,9 @@
         "name": "The Mansion Boutique Hotel",
         "stars": 4,
         "tier": "good",
-        "tags": [],
+        "tags": [
+          "adults-only"
+        ],
         "boards": [
           "bb"
         ],
@@ -6646,7 +6743,8 @@
         "tier": "good",
         "tags": [],
         "boards": [
-          "bb"
+          "bb",
+          "hb"
         ],
         "bookingScore": 9.2,
         "googleMapsUrl": "https://www.google.com/maps/search/The+Marmorosch+Bucharest%2C+Autograph+Collection+Bucharest+Romania",
@@ -6654,7 +6752,8 @@
         "roomsNote": null,
         "sortOrder": 15,
         "features": [
-          "pool-in"
+          "pool-in",
+          "spa"
         ],
         "distances": [
           {
@@ -6783,7 +6882,8 @@
         "tier": "good",
         "tags": [],
         "boards": [
-          "bb"
+          "bb",
+          "hb"
         ],
         "bookingScore": 9.2,
         "googleMapsUrl": "https://www.google.com/maps/search/Hotel+Bristol,+a+Luxury+Collection+Hotel,+Warsaw+Warsaw",
@@ -6791,7 +6891,8 @@
         "roomsNote": null,
         "sortOrder": 0,
         "features": [
-          "pool-in"
+          "pool-in",
+          "spa"
         ],
         "distances": [
           {
@@ -6829,7 +6930,8 @@
         "roomsNote": null,
         "sortOrder": 1,
         "features": [
-          "pool-in"
+          "pool-in",
+          "spa"
         ],
         "distances": [
           {
@@ -6859,7 +6961,8 @@
         "tier": "good",
         "tags": [],
         "boards": [
-          "bb"
+          "bb",
+          "hb"
         ],
         "bookingScore": 9.1,
         "googleMapsUrl": "https://www.google.com/maps/search/InterContinental+Warszawa+by+IHG+Warsaw",
@@ -6868,7 +6971,8 @@
         "sortOrder": 2,
         "features": [
           "pool-in",
-          "casino-near"
+          "casino-near",
+          "spa"
         ],
         "distances": [
           {
@@ -6934,7 +7038,8 @@
         "tier": "good",
         "tags": [],
         "boards": [
-          "bb"
+          "bb",
+          "hb"
         ],
         "bookingScore": 9,
         "googleMapsUrl": "https://www.google.com/maps/search/Novotel+Warszawa+Centrum+Warsaw",
@@ -6942,7 +7047,8 @@
         "roomsNote": null,
         "sortOrder": 4,
         "features": [
-          "casino-near"
+          "casino-near",
+          "spa"
         ],
         "distances": [
           {
@@ -6979,7 +7085,9 @@
         "bookingUrl": "https://www.booking.com/searchresults.html?ss=Hotel+Polonia+Palace+Warsaw",
         "roomsNote": null,
         "sortOrder": 5,
-        "features": [],
+        "features": [
+          "spa"
+        ],
         "distances": [
           {
             "landmarkKey": "oldtown",
@@ -7008,7 +7116,8 @@
         "tier": "good",
         "tags": [],
         "boards": [
-          "bb"
+          "bb",
+          "hb"
         ],
         "bookingScore": 8.5,
         "googleMapsUrl": "https://www.google.com/maps/search/Leonardo+Royal+Hotel+Warsaw+Warsaw",
@@ -7080,7 +7189,8 @@
         "tier": "good",
         "tags": [],
         "boards": [
-          "bb"
+          "bb",
+          "hb"
         ],
         "bookingScore": 9.2,
         "googleMapsUrl": "https://www.google.com/maps/search/Holiday+Inn+Warsaw+City+Centre+by+IHG+Warsaw",
@@ -7159,7 +7269,9 @@
         "bookingUrl": "https://www.booking.com/searchresults.html?ss=PURO+Warszawa+Centrum+Warsaw",
         "roomsNote": null,
         "sortOrder": 10,
-        "features": [],
+        "features": [
+          "spa"
+        ],
         "distances": [
           {
             "landmarkKey": "oldtown",
@@ -7234,7 +7346,8 @@
         "roomsNote": null,
         "sortOrder": 12,
         "features": [
-          "pool-in"
+          "pool-in",
+          "spa"
         ],
         "distances": [
           {
@@ -7273,7 +7386,8 @@
         "sortOrder": 13,
         "features": [
           "pool-in",
-          "casino"
+          "casino",
+          "spa"
         ],
         "distances": [
           {
@@ -7303,14 +7417,17 @@
         "tier": "good",
         "tags": [],
         "boards": [
-          "bb"
+          "bb",
+          "hb"
         ],
         "bookingScore": 8.9,
         "googleMapsUrl": "https://www.google.com/maps/search/The+Westin+Warsaw+Warsaw",
         "bookingUrl": "https://www.booking.com/searchresults.html?ss=The+Westin+Warsaw+Warsaw",
         "roomsNote": null,
         "sortOrder": 14,
-        "features": [],
+        "features": [
+          "spa"
+        ],
         "distances": [
           {
             "landmarkKey": "oldtown",
@@ -7348,7 +7465,8 @@
         "sortOrder": 15,
         "features": [
           "pool-in",
-          "casino"
+          "casino",
+          "spa"
         ],
         "distances": [
           {

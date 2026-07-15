@@ -40,7 +40,11 @@ if hasattr(sys.stdout, "reconfigure"):
 
 UA = {"User-Agent": "travel-agent-helper/destination-builder (freelance travel agent tool)"}
 NOMINATIM_URL = "https://nominatim.openstreetmap.org/search"
-OVERPASS_URL = "https://overpass-api.de/api/interpreter"
+# מראה ראשית + גיבוי — overpass-api.de עמוס לעיתים (504)
+OVERPASS_URLS = [
+    "https://overpass-api.de/api/interpreter",
+    "https://overpass.kumi.systems/api/interpreter",
+]
 OSRM_FOOT = "https://routing.openstreetmap.de/routed-foot/route/v1/foot/"
 OSRM_CAR = "https://routing.openstreetmap.de/routed-car/route/v1/driving/"
 CACHE_FILE = "geo_cache.json"
@@ -144,7 +148,16 @@ def fetch_street_geometry(osm_name, city_bbox, cache):
 way["highway"]["name"="{osm_name}"]({s},{w},{n},{e});
 out geom;
 """
-    res = http_json(OVERPASS_URL, post_data="data=" + urllib.parse.quote(query))
+    res = None
+    last_err = None
+    for url in OVERPASS_URLS:
+        try:
+            res = http_json(url, post_data="data=" + urllib.parse.quote(query))
+            break
+        except RuntimeError as e:
+            last_err = e
+    if res is None:
+        raise last_err
     segments = []
     for el in res.get("elements", []):
         if el.get("type") == "way" and el.get("geometry"):
