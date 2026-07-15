@@ -3775,8 +3775,8 @@
           },
           {
             "landmarkKey": "ladadika",
-            "meters": 640,
-            "walkMinutes": 9,
+            "meters": 350,
+            "walkMinutes": 5,
             "rideMinutes": null
           }
         ],
@@ -3799,14 +3799,14 @@
         "distances": [
           {
             "landmarkKey": "aristotelous",
-            "meters": 220,
-            "walkMinutes": 3,
+            "meters": 140,
+            "walkMinutes": 2,
             "rideMinutes": null
           },
           {
             "landmarkKey": "ladadika",
-            "meters": 530,
-            "walkMinutes": 7,
+            "meters": 250,
+            "walkMinutes": 3,
             "rideMinutes": null
           }
         ],
@@ -3829,14 +3829,14 @@
         "distances": [
           {
             "landmarkKey": "aristotelous",
-            "meters": 420,
-            "walkMinutes": 6,
+            "meters": 360,
+            "walkMinutes": 5,
             "rideMinutes": null
           },
           {
             "landmarkKey": "ladadika",
-            "meters": 850,
-            "walkMinutes": 11,
+            "meters": 580,
+            "walkMinutes": 8,
             "rideMinutes": null
           }
         ],
@@ -3861,14 +3861,14 @@
         "distances": [
           {
             "landmarkKey": "aristotelous",
-            "meters": 350,
-            "walkMinutes": 5,
+            "meters": 270,
+            "walkMinutes": 4,
             "rideMinutes": null
           },
           {
             "landmarkKey": "ladadika",
-            "meters": 770,
-            "walkMinutes": 10,
+            "meters": 510,
+            "walkMinutes": 7,
             "rideMinutes": null
           }
         ],
@@ -3921,14 +3921,14 @@
         "distances": [
           {
             "landmarkKey": "aristotelous",
-            "meters": 350,
-            "walkMinutes": 5,
+            "meters": 270,
+            "walkMinutes": 4,
             "rideMinutes": null
           },
           {
             "landmarkKey": "ladadika",
-            "meters": 350,
-            "walkMinutes": 5,
+            "meters": 130,
+            "walkMinutes": 2,
             "rideMinutes": null
           }
         ],
@@ -3953,14 +3953,14 @@
         "distances": [
           {
             "landmarkKey": "aristotelous",
-            "meters": 600,
-            "walkMinutes": 8,
+            "meters": 520,
+            "walkMinutes": 7,
             "rideMinutes": null
           },
           {
             "landmarkKey": "ladadika",
-            "meters": 470,
-            "walkMinutes": 6,
+            "meters": 220,
+            "walkMinutes": 3,
             "rideMinutes": null
           }
         ],
@@ -3983,14 +3983,14 @@
         "distances": [
           {
             "landmarkKey": "aristotelous",
-            "meters": 410,
-            "walkMinutes": 6,
+            "meters": 330,
+            "walkMinutes": 4,
             "rideMinutes": null
           },
           {
             "landmarkKey": "ladadika",
-            "meters": 290,
-            "walkMinutes": 4,
+            "meters": 50,
+            "walkMinutes": 1,
             "rideMinutes": null
           }
         ],
@@ -4013,8 +4013,8 @@
         "distances": [
           {
             "landmarkKey": "aristotelous",
-            "meters": 550,
-            "walkMinutes": 7,
+            "meters": 450,
+            "walkMinutes": 6,
             "rideMinutes": null
           },
           {
@@ -4043,14 +4043,14 @@
         "distances": [
           {
             "landmarkKey": "aristotelous",
-            "meters": 900,
-            "walkMinutes": 12,
+            "meters": 830,
+            "walkMinutes": 11,
             "rideMinutes": null
           },
           {
             "landmarkKey": "ladadika",
-            "meters": 700,
-            "walkMinutes": 9,
+            "meters": 420,
+            "walkMinutes": 6,
             "rideMinutes": null
           }
         ],
@@ -4073,14 +4073,14 @@
         "distances": [
           {
             "landmarkKey": "aristotelous",
-            "meters": 590,
-            "walkMinutes": 8,
+            "meters": 510,
+            "walkMinutes": 7,
             "rideMinutes": null
           },
           {
             "landmarkKey": "ladadika",
-            "meters": 100,
-            "walkMinutes": null,
+            "meters": 90,
+            "walkMinutes": 1,
             "rideMinutes": null
           }
         ],
@@ -4106,14 +4106,14 @@
         "distances": [
           {
             "landmarkKey": "aristotelous",
-            "meters": 660,
-            "walkMinutes": 9,
+            "meters": 590,
+            "walkMinutes": 8,
             "rideMinutes": null
           },
           {
             "landmarkKey": "ladadika",
-            "meters": 1050,
-            "walkMinutes": 14,
+            "meters": 800,
+            "walkMinutes": 11,
             "rideMinutes": null
           }
         ],
@@ -4139,14 +4139,14 @@
         "distances": [
           {
             "landmarkKey": "aristotelous",
-            "meters": 760,
-            "walkMinutes": 10,
+            "meters": 810,
+            "walkMinutes": 11,
             "rideMinutes": null
           },
           {
             "landmarkKey": "ladadika",
-            "meters": 190,
-            "walkMinutes": 3,
+            "meters": 40,
+            "walkMinutes": 0,
             "rideMinutes": null
           }
         ],
@@ -4169,14 +4169,14 @@
         "distances": [
           {
             "landmarkKey": "aristotelous",
-            "meters": 1150,
-            "walkMinutes": 15,
+            "meters": 1050,
+            "walkMinutes": 14,
             "rideMinutes": null
           },
           {
             "landmarkKey": "ladadika",
-            "meters": 640,
-            "walkMinutes": 9,
+            "meters": 460,
+            "walkMinutes": 6,
             "rideMinutes": null
           }
         ],
@@ -4199,14 +4199,14 @@
         "distances": [
           {
             "landmarkKey": "aristotelous",
-            "meters": 1150,
-            "walkMinutes": 15,
+            "meters": 1100,
+            "walkMinutes": 14,
             "rideMinutes": null
           },
           {
             "landmarkKey": "ladadika",
-            "meters": 660,
-            "walkMinutes": 9,
+            "meters": 490,
+            "walkMinutes": 6,
             "rideMinutes": null
           }
         ],
@@ -4229,14 +4229,14 @@
         "distances": [
           {
             "landmarkKey": "aristotelous",
-            "meters": 750,
-            "walkMinutes": 10,
+            "meters": 610,
+            "walkMinutes": 8,
             "rideMinutes": null
           },
           {
             "landmarkKey": "ladadika",
-            "meters": 1250,
-            "walkMinutes": 17,
+            "meters": 1000,
+            "walkMinutes": 14,
             "rideMinutes": null
           }
         ],
@@ -4261,14 +4261,14 @@
         "distances": [
           {
             "landmarkKey": "aristotelous",
-            "meters": 1050,
-            "walkMinutes": 14,
+            "meters": 950,
+            "walkMinutes": 13,
             "rideMinutes": null
           },
           {
             "landmarkKey": "ladadika",
-            "meters": 530,
-            "walkMinutes": 7,
+            "meters": 360,
+            "walkMinutes": 5,
             "rideMinutes": null
           }
         ],
@@ -4293,14 +4293,14 @@
         "distances": [
           {
             "landmarkKey": "aristotelous",
-            "meters": 1500,
-            "walkMinutes": 20,
+            "meters": 1450,
+            "walkMinutes": 19,
             "rideMinutes": null
           },
           {
             "landmarkKey": "ladadika",
-            "meters": 1000,
-            "walkMinutes": 14,
+            "meters": 830,
+            "walkMinutes": 11,
             "rideMinutes": null
           }
         ],
@@ -4326,14 +4326,14 @@
         "distances": [
           {
             "landmarkKey": "aristotelous",
-            "meters": 1350,
-            "walkMinutes": 18,
+            "meters": 1250,
+            "walkMinutes": 17,
             "rideMinutes": null
           },
           {
             "landmarkKey": "ladadika",
-            "meters": 850,
-            "walkMinutes": 11,
+            "meters": 680,
+            "walkMinutes": 9,
             "rideMinutes": null
           }
         ],
@@ -4359,14 +4359,14 @@
         "distances": [
           {
             "landmarkKey": "aristotelous",
-            "meters": 1550,
-            "walkMinutes": 21,
+            "meters": 1500,
+            "walkMinutes": 20,
             "rideMinutes": null
           },
           {
             "landmarkKey": "ladadika",
-            "meters": 1050,
-            "walkMinutes": 14,
+            "meters": 890,
+            "walkMinutes": 12,
             "rideMinutes": null
           }
         ],
@@ -4393,14 +4393,14 @@
         "distances": [
           {
             "landmarkKey": "aristotelous",
-            "meters": 2300,
+            "meters": 2250,
             "walkMinutes": 30,
-            "rideMinutes": 5
+            "rideMinutes": 4
           },
           {
             "landmarkKey": "ladadika",
-            "meters": 1800,
-            "walkMinutes": 24,
+            "meters": 1550,
+            "walkMinutes": 21,
             "rideMinutes": null
           }
         ],
@@ -6279,8 +6279,8 @@
         "distances": [
           {
             "landmarkKey": "oldtown",
-            "meters": 1400,
-            "walkMinutes": 19,
+            "meters": 930,
+            "walkMinutes": 13,
             "rideMinutes": null
           },
           {
@@ -6313,9 +6313,9 @@
         "distances": [
           {
             "landmarkKey": "oldtown",
-            "meters": 2550,
-            "walkMinutes": 34,
-            "rideMinutes": 7
+            "meters": 2000,
+            "walkMinutes": 27,
+            "rideMinutes": 6
           },
           {
             "landmarkKey": "victoriei",
@@ -6347,8 +6347,8 @@
         "distances": [
           {
             "landmarkKey": "oldtown",
-            "meters": 1350,
-            "walkMinutes": 18,
+            "meters": 870,
+            "walkMinutes": 12,
             "rideMinutes": null
           },
           {
@@ -6377,9 +6377,9 @@
         "distances": [
           {
             "landmarkKey": "oldtown",
-            "meters": 2800,
-            "walkMinutes": 37,
-            "rideMinutes": 4
+            "meters": 2500,
+            "walkMinutes": 33,
+            "rideMinutes": 5
           },
           {
             "landmarkKey": "victoriei",
@@ -6409,8 +6409,8 @@
         "distances": [
           {
             "landmarkKey": "oldtown",
-            "meters": 590,
-            "walkMinutes": 8,
+            "meters": 120,
+            "walkMinutes": 2,
             "rideMinutes": null
           },
           {
@@ -6442,8 +6442,8 @@
         "distances": [
           {
             "landmarkKey": "oldtown",
-            "meters": 780,
-            "walkMinutes": 10,
+            "meters": 470,
+            "walkMinutes": 6,
             "rideMinutes": null
           },
           {
@@ -6472,8 +6472,8 @@
         "distances": [
           {
             "landmarkKey": "oldtown",
-            "meters": 820,
-            "walkMinutes": 11,
+            "meters": 410,
+            "walkMinutes": 6,
             "rideMinutes": null
           },
           {
@@ -6503,7 +6503,7 @@
           {
             "landmarkKey": "oldtown",
             "meters": 0,
-            "walkMinutes": 0,
+            "walkMinutes": null,
             "rideMinutes": null
           },
           {
@@ -6532,8 +6532,8 @@
         "distances": [
           {
             "landmarkKey": "oldtown",
-            "meters": 630,
-            "walkMinutes": 8,
+            "meters": 160,
+            "walkMinutes": 2,
             "rideMinutes": null
           },
           {
@@ -6562,8 +6562,8 @@
         "distances": [
           {
             "landmarkKey": "oldtown",
-            "meters": 670,
-            "walkMinutes": 9,
+            "meters": 200,
+            "walkMinutes": 3,
             "rideMinutes": null
           },
           {
@@ -6592,8 +6592,8 @@
         "distances": [
           {
             "landmarkKey": "oldtown",
-            "meters": 1400,
-            "walkMinutes": 19,
+            "meters": 1100,
+            "walkMinutes": 14,
             "rideMinutes": null
           },
           {
@@ -6622,8 +6622,8 @@
         "distances": [
           {
             "landmarkKey": "oldtown",
-            "meters": 1600,
-            "walkMinutes": 21,
+            "meters": 1100,
+            "walkMinutes": 15,
             "rideMinutes": null
           },
           {
@@ -6655,8 +6655,8 @@
         "distances": [
           {
             "landmarkKey": "oldtown",
-            "meters": 800,
-            "walkMinutes": 11,
+            "meters": 330,
+            "walkMinutes": 4,
             "rideMinutes": null
           },
           {
@@ -6692,8 +6692,8 @@
         "distances": [
           {
             "landmarkKey": "oldtown",
-            "meters": 1350,
-            "walkMinutes": 18,
+            "meters": 900,
+            "walkMinutes": 12,
             "rideMinutes": null
           },
           {
@@ -6725,7 +6725,7 @@
           {
             "landmarkKey": "oldtown",
             "meters": 0,
-            "walkMinutes": 0,
+            "walkMinutes": null,
             "rideMinutes": null
           },
           {
@@ -6897,8 +6897,8 @@
         "distances": [
           {
             "landmarkKey": "oldtown",
-            "meters": 900,
-            "walkMinutes": 12,
+            "meters": 650,
+            "walkMinutes": 9,
             "rideMinutes": null
           },
           {
@@ -6936,8 +6936,8 @@
         "distances": [
           {
             "landmarkKey": "oldtown",
-            "meters": 620,
-            "walkMinutes": 8,
+            "meters": 470,
+            "walkMinutes": 6,
             "rideMinutes": null
           },
           {
@@ -6977,9 +6977,9 @@
         "distances": [
           {
             "landmarkKey": "oldtown",
-            "meters": 2550,
-            "walkMinutes": 34,
-            "rideMinutes": 8
+            "meters": 2150,
+            "walkMinutes": 28,
+            "rideMinutes": 5
           },
           {
             "landmarkKey": "centrum",
@@ -7013,9 +7013,9 @@
         "distances": [
           {
             "landmarkKey": "oldtown",
-            "meters": 3300,
-            "walkMinutes": null,
-            "rideMinutes": 9
+            "meters": 2900,
+            "walkMinutes": 39,
+            "rideMinutes": 6
           },
           {
             "landmarkKey": "centrum",
@@ -7053,9 +7053,9 @@
         "distances": [
           {
             "landmarkKey": "oldtown",
-            "meters": 2750,
-            "walkMinutes": 36,
-            "rideMinutes": 8
+            "meters": 2350,
+            "walkMinutes": 32,
+            "rideMinutes": 5
           },
           {
             "landmarkKey": "centrum",
@@ -7091,9 +7091,9 @@
         "distances": [
           {
             "landmarkKey": "oldtown",
-            "meters": 2800,
-            "walkMinutes": 37,
-            "rideMinutes": 8
+            "meters": 2400,
+            "walkMinutes": 32,
+            "rideMinutes": 5
           },
           {
             "landmarkKey": "centrum",
@@ -7128,9 +7128,9 @@
         "distances": [
           {
             "landmarkKey": "oldtown",
-            "meters": 2800,
-            "walkMinutes": 37,
-            "rideMinutes": 9
+            "meters": 2350,
+            "walkMinutes": 32,
+            "rideMinutes": 6
           },
           {
             "landmarkKey": "centrum",
@@ -7164,9 +7164,9 @@
         "distances": [
           {
             "landmarkKey": "oldtown",
-            "meters": 2850,
-            "walkMinutes": 38,
-            "rideMinutes": 9
+            "meters": 2450,
+            "walkMinutes": 32,
+            "rideMinutes": 5
           },
           {
             "landmarkKey": "centrum",
@@ -7201,9 +7201,9 @@
         "distances": [
           {
             "landmarkKey": "oldtown",
-            "meters": 3150,
-            "walkMinutes": null,
-            "rideMinutes": 9
+            "meters": 2750,
+            "walkMinutes": 36,
+            "rideMinutes": 5
           },
           {
             "landmarkKey": "centrum",
@@ -7237,9 +7237,9 @@
         "distances": [
           {
             "landmarkKey": "oldtown",
-            "meters": 3100,
-            "walkMinutes": null,
-            "rideMinutes": 10
+            "meters": 2700,
+            "walkMinutes": 36,
+            "rideMinutes": 6
           },
           {
             "landmarkKey": "centrum",
@@ -7275,9 +7275,9 @@
         "distances": [
           {
             "landmarkKey": "oldtown",
-            "meters": 2350,
-            "walkMinutes": 32,
-            "rideMinutes": 9
+            "meters": 2000,
+            "walkMinutes": 27,
+            "rideMinutes": 5
           },
           {
             "landmarkKey": "centrum",
@@ -7313,9 +7313,9 @@
         "distances": [
           {
             "landmarkKey": "oldtown",
-            "meters": 2150,
-            "walkMinutes": 29,
-            "rideMinutes": 8
+            "meters": 1850,
+            "walkMinutes": 25,
+            "rideMinutes": 4
           },
           {
             "landmarkKey": "centrum",
@@ -7352,8 +7352,8 @@
         "distances": [
           {
             "landmarkKey": "oldtown",
-            "meters": 920,
-            "walkMinutes": 12,
+            "meters": 600,
+            "walkMinutes": 8,
             "rideMinutes": null
           },
           {
@@ -7392,8 +7392,8 @@
         "distances": [
           {
             "landmarkKey": "oldtown",
-            "meters": 1300,
-            "walkMinutes": 17,
+            "meters": 930,
+            "walkMinutes": 12,
             "rideMinutes": null
           },
           {
@@ -7431,9 +7431,9 @@
         "distances": [
           {
             "landmarkKey": "oldtown",
-            "meters": 2350,
-            "walkMinutes": 31,
-            "rideMinutes": 8
+            "meters": 2100,
+            "walkMinutes": 28,
+            "rideMinutes": 5
           },
           {
             "landmarkKey": "centrum",
@@ -7471,9 +7471,9 @@
         "distances": [
           {
             "landmarkKey": "oldtown",
-            "meters": 3100,
-            "walkMinutes": null,
-            "rideMinutes": 10
+            "meters": 2650,
+            "walkMinutes": 35,
+            "rideMinutes": 6
           },
           {
             "landmarkKey": "centrum",
