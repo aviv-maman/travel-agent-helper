@@ -77,6 +77,37 @@ export function verifyTotp(secretBase32: string, code: string, window = 1): bool
   return false;
 }
 
+/**
+ * Verify a code with replay protection: check against the secret AND verify
+ * the time-step hasn't been used before (lastUsedStep).
+ * Returns { valid: boolean, currentStep: number } so caller can update DB.
+ */
+export function verifyTotpWithReplayProtection(
+  secretBase32: string,
+  code: string,
+  lastUsedStep: number | null,
+  window = 1,
+): { valid: boolean; currentStep: number } {
+  const clean = code.replace(/\D/g, "");
+  if (clean.length !== 6) return { valid: false, currentStep: 0 };
+  const secret = base32Decode(secretBase32);
+  const currentStep = Math.floor(Date.now() / 1000 / 30);
+  const input = Buffer.from(clean);
+
+  for (let i = -window; i <= window; i++) {
+    const step = currentStep + i;
+    const expected = Buffer.from(hotp(secret, step));
+    if (expected.length === input.length && timingSafeEqual(expected, input)) {
+      // Code is valid. Check replay protection: if this step was already used, reject.
+      if (lastUsedStep !== null && step <= lastUsedStep) {
+        return { valid: false, currentStep };
+      }
+      return { valid: true, currentStep: step };
+    }
+  }
+  return { valid: false, currentStep };
+}
+
 /** The otpauth:// URI an authenticator app imports (holds the secret). */
 export function otpauthURI(opts: { secret: string; label: string; issuer: string }): string {
   const params = new URLSearchParams({

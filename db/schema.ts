@@ -602,10 +602,16 @@ export const users = pgTable(
      * have no password and sign in via a linked provider (see `accounts`).
      */
     passwordHash: text("password_hash"),
-    /** Base32 TOTP secret. Present during setup; 2FA is active once `totpEnabledAt` is set. */
+    /** Encrypted TOTP secret (AES-256-GCM). Format: "v1:<nonce>:<ciphertext>". Present during setup; 2FA is active once `totpEnabledAt` is set. */
     totpSecret: text("totp_secret"),
     /** When 2FA was confirmed/activated; null = not enabled. */
     totpEnabledAt: timestamp("totp_enabled_at", { withTimezone: true }),
+    /** Last accepted TOTP time-step — prevents replay of same code within same 30s window. */
+    totpLastUsedStep: integer("totp_last_used_step"),
+    /** Pending email address awaiting verification (email change). Only becomes active after verified link clicked. */
+    emailPending: varchar("email_pending", { length: 255 }),
+    /** When `emailPending` was verified (null = not yet). */
+    emailPendingVerifiedAt: timestamp("email_pending_verified_at", { withTimezone: true }),
     role: userRole("role").notNull().default("agent"),
     createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
   },
@@ -635,9 +641,14 @@ export const sessions = pgTable(
     userAgent: text("user_agent"),
     /** True between password and 2FA steps — such sessions do NOT authenticate yet. */
     mfaPending: boolean("mfa_pending").notNull().default(false),
+    /** Reauth/"sudo mode" expiry — when non-null, the session is in reauth mode (password/TOTP just verified for sensitive op). Expires after 5 minutes. */
+    reauthExpiresAt: timestamp("reauth_expires_at", { withTimezone: true }),
     expiresAt: timestamp("expires_at", { withTimezone: true }).notNull(),
   },
-  (t) => [index("sessions_user_idx").on(t.userId)],
+  (t) => [
+    index("sessions_user_idx").on(t.userId),
+    index("sessions_reauth_expires_idx").on(t.reauthExpiresAt),
+  ],
 );
 
 /**
