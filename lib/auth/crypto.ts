@@ -3,7 +3,7 @@ import { randomBytes, createCipheriv, createDecipheriv } from "node:crypto";
 
 /**
  * AES-256-GCM encryption for TOTP secrets at rest.
- * Format: "v1:<nonce>:<ciphertext+tag>" (versioned for future algorithm changes).
+ * Format: "v1:<nonce>:<ciphertext+tag>" — matches project-gg-claude's pattern.
  * The encryption key lives in env (TOTP_ENC_KEY), never in the DB.
  */
 
