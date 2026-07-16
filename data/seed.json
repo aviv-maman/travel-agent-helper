@@ -132,8 +132,8 @@
           },
           {
             "landmarkKey": "europe",
-            "meters": 550,
-            "walkMinutes": 7,
+            "meters": 690,
+            "walkMinutes": 9,
             "rideMinutes": null
           }
         ],
@@ -200,7 +200,7 @@
           },
           {
             "landmarkKey": "europe",
-            "meters": 1100,
+            "meters": 1150,
             "walkMinutes": 15,
             "rideMinutes": null
           }
@@ -263,13 +263,13 @@
         "distances": [
           {
             "landmarkKey": "chabad",
-            "meters": 650,
+            "meters": 690,
             "walkMinutes": 9,
             "rideMinutes": null
           },
           {
             "landmarkKey": "europe",
-            "meters": 450,
+            "meters": 480,
             "walkMinutes": 6,
             "rideMinutes": null
           }
@@ -342,14 +342,14 @@
         "distances": [
           {
             "landmarkKey": "chabad",
-            "meters": 850,
+            "meters": 810,
             "walkMinutes": 11,
             "rideMinutes": null
           },
           {
             "landmarkKey": "europe",
-            "meters": 650,
-            "walkMinutes": 9,
+            "meters": 450,
+            "walkMinutes": 6,
             "rideMinutes": null
           }
         ],
@@ -410,15 +410,15 @@
         "distances": [
           {
             "landmarkKey": "chabad",
-            "meters": 2400,
-            "walkMinutes": 31,
-            "rideMinutes": 5
-          },
-          {
-            "landmarkKey": "europe",
             "meters": 2600,
             "walkMinutes": 34,
             "rideMinutes": 6
+          },
+          {
+            "landmarkKey": "europe",
+            "meters": 2250,
+            "walkMinutes": 30,
+            "rideMinutes": 5
           }
         ],
         "rooms": [
@@ -478,15 +478,15 @@
         "distances": [
           {
             "landmarkKey": "chabad",
-            "meters": 2600,
-            "walkMinutes": 33,
-            "rideMinutes": 6
+            "meters": 2550,
+            "walkMinutes": 34,
+            "rideMinutes": 5
           },
           {
             "landmarkKey": "europe",
-            "meters": 2800,
-            "walkMinutes": 36,
-            "rideMinutes": 7
+            "meters": 2300,
+            "walkMinutes": 31,
+            "rideMinutes": 5
           }
         ],
         "rooms": [
@@ -548,14 +548,14 @@
         "distances": [
           {
             "landmarkKey": "chabad",
-            "meters": 1500,
-            "walkMinutes": 20,
+            "meters": 1050,
+            "walkMinutes": 14,
             "rideMinutes": null
           },
           {
             "landmarkKey": "europe",
-            "meters": 1300,
-            "walkMinutes": 17,
+            "meters": 1550,
+            "walkMinutes": 21,
             "rideMinutes": null
           }
         ],
@@ -606,13 +606,13 @@
         "distances": [
           {
             "landmarkKey": "chabad",
-            "meters": 450,
-            "walkMinutes": 6,
+            "meters": 630,
+            "walkMinutes": 8,
             "rideMinutes": null
           },
           {
             "landmarkKey": "europe",
-            "meters": 150,
+            "meters": 120,
             "walkMinutes": 2,
             "rideMinutes": null
           }
@@ -675,15 +675,15 @@
         "distances": [
           {
             "landmarkKey": "chabad",
-            "meters": 5400,
+            "meters": 4950,
             "walkMinutes": null,
-            "rideMinutes": 12
+            "rideMinutes": 8
           },
           {
             "landmarkKey": "europe",
-            "meters": 5600,
+            "meters": 4650,
             "walkMinutes": null,
-            "rideMinutes": 13
+            "rideMinutes": 8
           }
         ],
         "rooms": [
@@ -729,14 +729,14 @@
         "distances": [
           {
             "landmarkKey": "chabad",
-            "meters": 2100,
-            "walkMinutes": 28,
-            "rideMinutes": null
+            "meters": 2450,
+            "walkMinutes": 33,
+            "rideMinutes": 5
           },
           {
             "landmarkKey": "europe",
-            "meters": 2300,
-            "walkMinutes": 31,
+            "meters": 2150,
+            "walkMinutes": 29,
             "rideMinutes": 5
           }
         ],
@@ -783,15 +783,15 @@
         "distances": [
           {
             "landmarkKey": "chabad",
-            "meters": 5700,
+            "meters": 5050,
             "walkMinutes": null,
-            "rideMinutes": 13
+            "rideMinutes": 9
           },
           {
             "landmarkKey": "europe",
-            "meters": 5500,
+            "meters": 4750,
             "walkMinutes": null,
-            "rideMinutes": 12
+            "rideMinutes": 8
           }
         ],
         "rooms": [
@@ -838,15 +838,15 @@
         "distances": [
           {
             "landmarkKey": "chabad",
-            "meters": 4300,
+            "meters": 4800,
             "walkMinutes": null,
-            "rideMinutes": 9
+            "rideMinutes": 8
           },
           {
             "landmarkKey": "europe",
             "meters": 4500,
             "walkMinutes": null,
-            "rideMinutes": 10
+            "rideMinutes": 7
           }
         ],
         "rooms": [
@@ -892,15 +892,15 @@
         "distances": [
           {
             "landmarkKey": "chabad",
-            "meters": 3900,
+            "meters": 3500,
             "walkMinutes": null,
             "rideMinutes": 8
           },
           {
             "landmarkKey": "europe",
-            "meters": 4100,
+            "meters": 3200,
             "walkMinutes": null,
-            "rideMinutes": 9
+            "rideMinutes": 8
           }
         ],
         "rooms": [
@@ -951,15 +951,15 @@
         "distances": [
           {
             "landmarkKey": "chabad",
-            "meters": 42000,
+            "meters": 42900,
             "walkMinutes": null,
-            "rideMinutes": 44
+            "rideMinutes": 53
           },
           {
             "landmarkKey": "europe",
-            "meters": 43000,
+            "meters": 43450,
             "walkMinutes": null,
-            "rideMinutes": 45
+            "rideMinutes": 54
           }
         ],
         "rooms": [
@@ -1012,15 +1012,15 @@
         "distances": [
           {
             "landmarkKey": "chabad",
-            "meters": 14000,
+            "meters": 15350,
             "walkMinutes": null,
-            "rideMinutes": 22
+            "rideMinutes": 18
           },
           {
             "landmarkKey": "europe",
-            "meters": 14000,
+            "meters": 15900,
             "walkMinutes": null,
-            "rideMinutes": 22
+            "rideMinutes": 19
           }
         ],
         "rooms": [
@@ -1068,15 +1068,15 @@
         "distances": [
           {
             "landmarkKey": "chabad",
-            "meters": 3100,
-            "walkMinutes": null,
-            "rideMinutes": 7
+            "meters": 2450,
+            "walkMinutes": 33,
+            "rideMinutes": 5
           },
           {
             "landmarkKey": "europe",
-            "meters": 3300,
-            "walkMinutes": null,
-            "rideMinutes": 8
+            "meters": 2250,
+            "walkMinutes": 30,
+            "rideMinutes": 5
           }
         ],
         "rooms": [
@@ -1245,14 +1245,14 @@
         "distances": [
           {
             "landmarkKey": "kiraly",
-            "meters": 1600,
-            "walkMinutes": 21,
+            "meters": 1200,
+            "walkMinutes": 16,
             "rideMinutes": null
           },
           {
             "landmarkKey": "vaci",
-            "meters": 80,
-            "walkMinutes": 1,
+            "meters": 0,
+            "walkMinutes": 0,
             "rideMinutes": null
           }
         ],
@@ -1277,14 +1277,14 @@
         "distances": [
           {
             "landmarkKey": "kiraly",
-            "meters": 100,
-            "walkMinutes": 1,
+            "meters": 10,
+            "walkMinutes": 0,
             "rideMinutes": null
           },
           {
             "landmarkKey": "vaci",
-            "meters": 600,
-            "walkMinutes": 8,
+            "meters": 550,
+            "walkMinutes": 7,
             "rideMinutes": null
           }
         ],
@@ -1308,14 +1308,14 @@
         "distances": [
           {
             "landmarkKey": "kiraly",
-            "meters": 200,
-            "walkMinutes": 3,
+            "meters": 0,
+            "walkMinutes": 0,
             "rideMinutes": null
           },
           {
             "landmarkKey": "vaci",
-            "meters": 700,
-            "walkMinutes": 9,
+            "meters": 630,
+            "walkMinutes": 8,
             "rideMinutes": null
           }
         ],
@@ -1338,8 +1338,8 @@
         "distances": [
           {
             "landmarkKey": "kiraly",
-            "meters": 1400,
-            "walkMinutes": 18,
+            "meters": 1250,
+            "walkMinutes": 16,
             "rideMinutes": null
           },
           {
@@ -1372,13 +1372,13 @@
         "distances": [
           {
             "landmarkKey": "kiraly",
-            "meters": 650,
-            "walkMinutes": 9,
+            "meters": 570,
+            "walkMinutes": 8,
             "rideMinutes": null
           },
           {
             "landmarkKey": "vaci",
-            "meters": 150,
+            "meters": 180,
             "walkMinutes": 2,
             "rideMinutes": null
           }
@@ -1402,14 +1402,14 @@
         "distances": [
           {
             "landmarkKey": "kiraly",
-            "meters": 550,
-            "walkMinutes": 7,
+            "meters": 360,
+            "walkMinutes": 5,
             "rideMinutes": null
           },
           {
             "landmarkKey": "vaci",
-            "meters": 300,
-            "walkMinutes": 4,
+            "meters": 160,
+            "walkMinutes": 2,
             "rideMinutes": null
           }
         ],
@@ -1468,8 +1468,8 @@
           },
           {
             "landmarkKey": "vaci",
-            "meters": 2100,
-            "walkMinutes": 28,
+            "meters": 1700,
+            "walkMinutes": 23,
             "rideMinutes": null
           }
         ],
@@ -1498,8 +1498,8 @@
           },
           {
             "landmarkKey": "vaci",
-            "meters": 600,
-            "walkMinutes": 8,
+            "meters": 730,
+            "walkMinutes": 10,
             "rideMinutes": null
           }
         ],
@@ -1522,14 +1522,14 @@
         "distances": [
           {
             "landmarkKey": "kiraly",
-            "meters": 800,
-            "walkMinutes": 11,
+            "meters": 670,
+            "walkMinutes": 9,
             "rideMinutes": null
           },
           {
             "landmarkKey": "vaci",
-            "meters": 500,
-            "walkMinutes": 7,
+            "meters": 370,
+            "walkMinutes": 5,
             "rideMinutes": null
           }
         ],
@@ -1558,7 +1558,7 @@
           },
           {
             "landmarkKey": "vaci",
-            "meters": 1100,
+            "meters": 1150,
             "walkMinutes": 15,
             "rideMinutes": null
           }
@@ -1584,14 +1584,14 @@
         "distances": [
           {
             "landmarkKey": "kiraly",
-            "meters": 1100,
-            "walkMinutes": 15,
+            "meters": 920,
+            "walkMinutes": 12,
             "rideMinutes": null
           },
           {
             "landmarkKey": "vaci",
-            "meters": 1000,
-            "walkMinutes": 14,
+            "meters": 1150,
+            "walkMinutes": 15,
             "rideMinutes": null
           }
         ],
@@ -1614,14 +1614,14 @@
         "distances": [
           {
             "landmarkKey": "kiraly",
-            "meters": 1300,
-            "walkMinutes": 17,
+            "meters": 1100,
+            "walkMinutes": 15,
             "rideMinutes": null
           },
           {
             "landmarkKey": "vaci",
-            "meters": 450,
-            "walkMinutes": 6,
+            "meters": 340,
+            "walkMinutes": 5,
             "rideMinutes": null
           }
         ],
@@ -1644,8 +1644,8 @@
         "distances": [
           {
             "landmarkKey": "kiraly",
-            "meters": 750,
-            "walkMinutes": 10,
+            "meters": 600,
+            "walkMinutes": 8,
             "rideMinutes": null
           },
           {
@@ -1677,13 +1677,13 @@
         "distances": [
           {
             "landmarkKey": "kiraly",
-            "meters": 450,
-            "walkMinutes": 6,
+            "meters": 270,
+            "walkMinutes": 4,
             "rideMinutes": null
           },
           {
             "landmarkKey": "vaci",
-            "meters": 250,
+            "meters": 240,
             "walkMinutes": 3,
             "rideMinutes": null
           }
@@ -1707,8 +1707,8 @@
         "distances": [
           {
             "landmarkKey": "kiraly",
-            "meters": 850,
-            "walkMinutes": 11,
+            "meters": 630,
+            "walkMinutes": 8,
             "rideMinutes": null
           },
           {
@@ -1743,8 +1743,8 @@
           },
           {
             "landmarkKey": "vaci",
-            "meters": 550,
-            "walkMinutes": 7,
+            "meters": 640,
+            "walkMinutes": 9,
             "rideMinutes": null
           }
         ],
@@ -1768,8 +1768,8 @@
         "distances": [
           {
             "landmarkKey": "kiraly",
-            "meters": 650,
-            "walkMinutes": 9,
+            "meters": 520,
+            "walkMinutes": 7,
             "rideMinutes": null
           },
           {
@@ -1805,8 +1805,8 @@
           },
           {
             "landmarkKey": "vaci",
-            "meters": 350,
-            "walkMinutes": 5,
+            "meters": 450,
+            "walkMinutes": 6,
             "rideMinutes": null
           }
         ],
@@ -1829,14 +1829,14 @@
         "distances": [
           {
             "landmarkKey": "kiraly",
-            "meters": 250,
-            "walkMinutes": 3,
+            "meters": 380,
+            "walkMinutes": 5,
             "rideMinutes": null
           },
           {
             "landmarkKey": "vaci",
             "meters": 850,
-            "walkMinutes": 12,
+            "walkMinutes": 11,
             "rideMinutes": null
           }
         ],
@@ -1859,14 +1859,14 @@
         "distances": [
           {
             "landmarkKey": "kiraly",
-            "meters": 400,
-            "walkMinutes": 5,
+            "meters": 550,
+            "walkMinutes": 7,
             "rideMinutes": null
           },
           {
             "landmarkKey": "vaci",
-            "meters": 750,
-            "walkMinutes": 10,
+            "meters": 790,
+            "walkMinutes": 11,
             "rideMinutes": null
           }
         ],
@@ -1889,13 +1889,13 @@
         "distances": [
           {
             "landmarkKey": "kiraly",
-            "meters": 750,
-            "walkMinutes": 10,
+            "meters": 700,
+            "walkMinutes": 9,
             "rideMinutes": null
           },
           {
             "landmarkKey": "vaci",
-            "meters": 650,
+            "meters": 680,
             "walkMinutes": 9,
             "rideMinutes": null
           }
@@ -1919,14 +1919,14 @@
         "distances": [
           {
             "landmarkKey": "kiraly",
-            "meters": 1400,
-            "walkMinutes": 18,
+            "meters": 1050,
+            "walkMinutes": 14,
             "rideMinutes": null
           },
           {
             "landmarkKey": "vaci",
-            "meters": 1600,
-            "walkMinutes": 21,
+            "meters": 1450,
+            "walkMinutes": 19,
             "rideMinutes": null
           }
         ],
@@ -1949,14 +1949,14 @@
         "distances": [
           {
             "landmarkKey": "kiraly",
-            "meters": 1300,
-            "walkMinutes": 17,
+            "meters": 1200,
+            "walkMinutes": 16,
             "rideMinutes": null
           },
           {
             "landmarkKey": "vaci",
-            "meters": 400,
-            "walkMinutes": 6,
+            "meters": 360,
+            "walkMinutes": 5,
             "rideMinutes": null
           }
         ],
@@ -1979,14 +1979,14 @@
         "distances": [
           {
             "landmarkKey": "kiraly",
-            "meters": 1700,
-            "walkMinutes": 23,
-            "rideMinutes": null
+            "meters": 2050,
+            "walkMinutes": 27,
+            "rideMinutes": 5
           },
           {
             "landmarkKey": "vaci",
-            "meters": 750,
-            "walkMinutes": 10,
+            "meters": 1050,
+            "walkMinutes": 14,
             "rideMinutes": null
           }
         ],
@@ -2015,8 +2015,8 @@
           },
           {
             "landmarkKey": "vaci",
-            "meters": 1200,
-            "walkMinutes": 15,
+            "meters": 990,
+            "walkMinutes": 13,
             "rideMinutes": null
           }
         ],
@@ -2045,15 +2045,15 @@
         "distances": [
           {
             "landmarkKey": "kiraly",
-            "meters": 10000,
+            "meters": 5650,
             "walkMinutes": null,
-            "rideMinutes": 30
+            "rideMinutes": 10
           },
           {
             "landmarkKey": "vaci",
-            "meters": 12000,
+            "meters": 14850,
             "walkMinutes": null,
-            "rideMinutes": 35
+            "rideMinutes": 24
           }
         ],
         "rooms": []
@@ -2549,8 +2549,8 @@
         "distances": [
           {
             "landmarkKey": "ermou",
-            "meters": 1500,
-            "walkMinutes": null,
+            "meters": 1450,
+            "walkMinutes": 19,
             "rideMinutes": null
           },
           {
@@ -2593,8 +2593,8 @@
         "distances": [
           {
             "landmarkKey": "ermou",
-            "meters": 650,
-            "walkMinutes": null,
+            "meters": 620,
+            "walkMinutes": 8,
             "rideMinutes": null
           },
           {
@@ -2638,8 +2638,8 @@
         "distances": [
           {
             "landmarkKey": "ermou",
-            "meters": 1500,
-            "walkMinutes": null,
+            "meters": 1300,
+            "walkMinutes": 17,
             "rideMinutes": null
           },
           {
@@ -2682,8 +2682,8 @@
         "distances": [
           {
             "landmarkKey": "ermou",
-            "meters": 1600,
-            "walkMinutes": null,
+            "meters": 1300,
+            "walkMinutes": 18,
             "rideMinutes": null
           },
           {
@@ -2854,8 +2854,8 @@
         "distances": [
           {
             "landmarkKey": "ermou",
-            "meters": 450,
-            "walkMinutes": null,
+            "meters": 470,
+            "walkMinutes": 6,
             "rideMinutes": null
           },
           {
@@ -2980,8 +2980,8 @@
         "distances": [
           {
             "landmarkKey": "ermou",
-            "meters": 300,
-            "walkMinutes": null,
+            "meters": 310,
+            "walkMinutes": 4,
             "rideMinutes": null
           },
           {
@@ -3064,8 +3064,8 @@
         "distances": [
           {
             "landmarkKey": "ermou",
-            "meters": 150,
-            "walkMinutes": null,
+            "meters": 90,
+            "walkMinutes": 1,
             "rideMinutes": null
           },
           {
@@ -3152,8 +3152,8 @@
         "distances": [
           {
             "landmarkKey": "ermou",
-            "meters": 450,
-            "walkMinutes": null,
+            "meters": 320,
+            "walkMinutes": 4,
             "rideMinutes": null
           },
           {
@@ -3536,8 +3536,8 @@
         "distances": [
           {
             "landmarkKey": "ermou",
-            "meters": 150,
-            "walkMinutes": null,
+            "meters": 80,
+            "walkMinutes": 1,
             "rideMinutes": null
           },
           {
@@ -3579,7 +3579,7 @@
           {
             "landmarkKey": "ermou",
             "meters": 1100,
-            "walkMinutes": null,
+            "walkMinutes": 15,
             "rideMinutes": null
           },
           {
@@ -3707,8 +3707,8 @@
         "distances": [
           {
             "landmarkKey": "ermou",
-            "meters": 200,
-            "walkMinutes": null,
+            "meters": 270,
+            "walkMinutes": 4,
             "rideMinutes": null
           },
           {
@@ -3752,8 +3752,8 @@
         "distances": [
           {
             "landmarkKey": "ermou",
-            "meters": 1300,
-            "walkMinutes": null,
+            "meters": 980,
+            "walkMinutes": 13,
             "rideMinutes": null
           },
           {
@@ -3796,8 +3796,8 @@
         "distances": [
           {
             "landmarkKey": "ermou",
-            "meters": 150,
-            "walkMinutes": null,
+            "meters": 810,
+            "walkMinutes": 11,
             "rideMinutes": null
           },
           {
@@ -3840,8 +3840,8 @@
         "distances": [
           {
             "landmarkKey": "ermou",
-            "meters": 350,
-            "walkMinutes": null,
+            "meters": 530,
+            "walkMinutes": 7,
             "rideMinutes": null
           },
           {
@@ -3927,8 +3927,8 @@
         "distances": [
           {
             "landmarkKey": "ermou",
-            "meters": 1000,
-            "walkMinutes": null,
+            "meters": 970,
+            "walkMinutes": 13,
             "rideMinutes": null
           },
           {
@@ -3971,8 +3971,8 @@
         "distances": [
           {
             "landmarkKey": "ermou",
-            "meters": 1000,
-            "walkMinutes": null,
+            "meters": 900,
+            "walkMinutes": 12,
             "rideMinutes": null
           },
           {
@@ -4018,7 +4018,7 @@
           {
             "landmarkKey": "ermou",
             "meters": 1200,
-            "walkMinutes": null,
+            "walkMinutes": 16,
             "rideMinutes": null
           },
           {
@@ -5060,8 +5060,8 @@
         "distances": [
           {
             "landmarkKey": "chabad",
-            "meters": 600,
-            "walkMinutes": 8,
+            "meters": 420,
+            "walkMinutes": 6,
             "rideMinutes": null
           },
           {
@@ -5078,8 +5078,8 @@
           },
           {
             "landmarkKey": "rustaveli",
-            "meters": 150,
-            "walkMinutes": 2,
+            "meters": 60,
+            "walkMinutes": 1,
             "rideMinutes": null
           }
         ],
@@ -5108,8 +5108,8 @@
           },
           {
             "landmarkKey": "freedom",
-            "meters": 250,
-            "walkMinutes": 4,
+            "meters": 70,
+            "walkMinutes": 1,
             "rideMinutes": null
           },
           {
@@ -5144,8 +5144,8 @@
         "distances": [
           {
             "landmarkKey": "chabad",
-            "meters": 650,
-            "walkMinutes": 9,
+            "meters": 500,
+            "walkMinutes": 7,
             "rideMinutes": null
           },
           {
@@ -5187,7 +5187,7 @@
         "distances": [
           {
             "landmarkKey": "chabad",
-            "meters": 450,
+            "meters": 430,
             "walkMinutes": 6,
             "rideMinutes": null
           },
@@ -5205,8 +5205,8 @@
           },
           {
             "landmarkKey": "rustaveli",
-            "meters": 500,
-            "walkMinutes": 7,
+            "meters": 230,
+            "walkMinutes": 3,
             "rideMinutes": null
           }
         ],
@@ -5233,8 +5233,8 @@
         "distances": [
           {
             "landmarkKey": "chabad",
-            "meters": 700,
-            "walkMinutes": 9,
+            "meters": 540,
+            "walkMinutes": 7,
             "rideMinutes": null
           },
           {
@@ -5251,8 +5251,8 @@
           },
           {
             "landmarkKey": "rustaveli",
-            "meters": 250,
-            "walkMinutes": 3,
+            "meters": 130,
+            "walkMinutes": 2,
             "rideMinutes": null
           }
         ],
@@ -5275,8 +5275,8 @@
         "distances": [
           {
             "landmarkKey": "chabad",
-            "meters": 400,
-            "walkMinutes": 5,
+            "meters": 550,
+            "walkMinutes": 7,
             "rideMinutes": null
           },
           {
@@ -5293,8 +5293,8 @@
           },
           {
             "landmarkKey": "rustaveli",
-            "meters": 450,
-            "walkMinutes": 6,
+            "meters": 350,
+            "walkMinutes": 5,
             "rideMinutes": null
           }
         ],
@@ -5317,8 +5317,8 @@
         "distances": [
           {
             "landmarkKey": "chabad",
-            "meters": 950,
-            "walkMinutes": 13,
+            "meters": 1100,
+            "walkMinutes": 15,
             "rideMinutes": null
           },
           {
@@ -5335,8 +5335,8 @@
           },
           {
             "landmarkKey": "rustaveli",
-            "meters": 150,
-            "walkMinutes": 2,
+            "meters": 410,
+            "walkMinutes": 5,
             "rideMinutes": null
           }
         ],
@@ -5362,7 +5362,7 @@
         "distances": [
           {
             "landmarkKey": "chabad",
-            "meters": 700,
+            "meters": 660,
             "walkMinutes": 9,
             "rideMinutes": null
           },
@@ -5404,8 +5404,8 @@
         "distances": [
           {
             "landmarkKey": "chabad",
-            "meters": 180,
-            "walkMinutes": 2,
+            "meters": 260,
+            "walkMinutes": 3,
             "rideMinutes": null
           },
           {
@@ -5422,8 +5422,8 @@
           },
           {
             "landmarkKey": "rustaveli",
-            "meters": 900,
-            "walkMinutes": 13,
+            "meters": 790,
+            "walkMinutes": 10,
             "rideMinutes": null
           }
         ],
@@ -5450,8 +5450,8 @@
         "distances": [
           {
             "landmarkKey": "chabad",
-            "meters": 450,
-            "walkMinutes": 6,
+            "meters": 540,
+            "walkMinutes": 7,
             "rideMinutes": null
           },
           {
@@ -5468,8 +5468,8 @@
           },
           {
             "landmarkKey": "rustaveli",
-            "meters": 800,
-            "walkMinutes": 11,
+            "meters": 940,
+            "walkMinutes": 13,
             "rideMinutes": null
           }
         ],
@@ -5494,7 +5494,7 @@
         "distances": [
           {
             "landmarkKey": "chabad",
-            "meters": 1000,
+            "meters": 1050,
             "walkMinutes": 14,
             "rideMinutes": null
           },
@@ -5536,8 +5536,8 @@
         "distances": [
           {
             "landmarkKey": "chabad",
-            "meters": 1200,
-            "walkMinutes": 16,
+            "meters": 1100,
+            "walkMinutes": 15,
             "rideMinutes": null
           },
           {
@@ -5623,8 +5623,8 @@
         "distances": [
           {
             "landmarkKey": "chabad",
-            "meters": 1000,
-            "walkMinutes": 14,
+            "meters": 1150,
+            "walkMinutes": 16,
             "rideMinutes": null
           },
           {
@@ -5641,8 +5641,8 @@
           },
           {
             "landmarkKey": "rustaveli",
-            "meters": 250,
-            "walkMinutes": 3,
+            "meters": 440,
+            "walkMinutes": 6,
             "rideMinutes": null
           }
         ],
@@ -5666,7 +5666,7 @@
           {
             "landmarkKey": "chabad",
             "meters": 1400,
-            "walkMinutes": 19,
+            "walkMinutes": 18,
             "rideMinutes": null
           },
           {
@@ -5683,8 +5683,8 @@
           },
           {
             "landmarkKey": "rustaveli",
-            "meters": 950,
-            "walkMinutes": 13,
+            "meters": 850,
+            "walkMinutes": 11,
             "rideMinutes": null
           }
         ],
@@ -5727,8 +5727,8 @@
           },
           {
             "landmarkKey": "rustaveli",
-            "meters": 1300,
-            "walkMinutes": 18,
+            "meters": 1550,
+            "walkMinutes": 20,
             "rideMinutes": null
           }
         ],
@@ -5755,8 +5755,8 @@
         "distances": [
           {
             "landmarkKey": "chabad",
-            "meters": 1500,
-            "walkMinutes": 20,
+            "meters": 1550,
+            "walkMinutes": 21,
             "rideMinutes": null
           },
           {
@@ -5797,9 +5797,9 @@
         "distances": [
           {
             "landmarkKey": "chabad",
-            "meters": 2100,
-            "walkMinutes": 28,
-            "rideMinutes": null
+            "meters": 1900,
+            "walkMinutes": 26,
+            "rideMinutes": 4
           },
           {
             "landmarkKey": "freedom",
@@ -5815,8 +5815,8 @@
           },
           {
             "landmarkKey": "rustaveli",
-            "meters": 1200,
-            "walkMinutes": 16,
+            "meters": 1700,
+            "walkMinutes": 23,
             "rideMinutes": null
           }
         ],
@@ -5844,8 +5844,8 @@
         "distances": [
           {
             "landmarkKey": "chabad",
-            "meters": 1700,
-            "walkMinutes": 23,
+            "meters": 1750,
+            "walkMinutes": 24,
             "rideMinutes": null
           },
           {
@@ -5889,9 +5889,9 @@
         "distances": [
           {
             "landmarkKey": "chabad",
-            "meters": 4200,
+            "meters": 4400,
             "walkMinutes": null,
-            "rideMinutes": 11
+            "rideMinutes": 7
           },
           {
             "landmarkKey": "freedom",
@@ -5907,9 +5907,9 @@
           },
           {
             "landmarkKey": "rustaveli",
-            "meters": 2700,
-            "walkMinutes": null,
-            "rideMinutes": 7
+            "meters": 2450,
+            "walkMinutes": 33,
+            "rideMinutes": 4
           }
         ],
         "rooms": []
@@ -5980,9 +5980,9 @@
         "distances": [
           {
             "landmarkKey": "chabad",
-            "meters": 2200,
-            "walkMinutes": 28,
-            "rideMinutes": null
+            "meters": 3100,
+            "walkMinutes": null,
+            "rideMinutes": 5
           },
           {
             "landmarkKey": "freedom",
@@ -5998,9 +5998,9 @@
           },
           {
             "landmarkKey": "rustaveli",
-            "meters": 3600,
+            "meters": 3650,
             "walkMinutes": null,
-            "rideMinutes": 10
+            "rideMinutes": 5
           }
         ],
         "rooms": []
@@ -6213,14 +6213,14 @@
         "distances": [
           {
             "landmarkKey": "cathedral",
-            "meters": 1600,
-            "walkMinutes": 20,
-            "rideMinutes": null
+            "meters": 2050,
+            "walkMinutes": 27,
+            "rideMinutes": 7
           },
           {
             "landmarkKey": "synagogue",
             "meters": 1800,
-            "walkMinutes": 22,
+            "walkMinutes": 24,
             "rideMinutes": null
           },
           {
@@ -6253,15 +6253,15 @@
         "distances": [
           {
             "landmarkKey": "cathedral",
-            "meters": 2500,
-            "walkMinutes": 30,
-            "rideMinutes": null
+            "meters": 2450,
+            "walkMinutes": 33,
+            "rideMinutes": 5
           },
           {
             "landmarkKey": "synagogue",
-            "meters": 2800,
-            "walkMinutes": 35,
-            "rideMinutes": null
+            "meters": 2250,
+            "walkMinutes": 30,
+            "rideMinutes": 7
           },
           {
             "landmarkKey": "vitosha",
@@ -6289,19 +6289,19 @@
         "distances": [
           {
             "landmarkKey": "cathedral",
-            "meters": 1400,
-            "walkMinutes": 18,
+            "meters": 1300,
+            "walkMinutes": 17,
             "rideMinutes": null
           },
           {
             "landmarkKey": "synagogue",
-            "meters": 1600,
-            "walkMinutes": 20,
+            "meters": 1200,
+            "walkMinutes": 16,
             "rideMinutes": null
           },
           {
             "landmarkKey": "vitosha",
-            "meters": 150,
+            "meters": 130,
             "walkMinutes": 2,
             "rideMinutes": null
           }
@@ -6325,20 +6325,20 @@
         "distances": [
           {
             "landmarkKey": "cathedral",
-            "meters": 1300,
-            "walkMinutes": 16,
+            "meters": 1550,
+            "walkMinutes": 20,
             "rideMinutes": null
           },
           {
             "landmarkKey": "synagogue",
-            "meters": 1500,
-            "walkMinutes": 19,
+            "meters": 1100,
+            "walkMinutes": 14,
             "rideMinutes": null
           },
           {
             "landmarkKey": "vitosha",
-            "meters": 200,
-            "walkMinutes": 3,
+            "meters": 140,
+            "walkMinutes": 2,
             "rideMinutes": null
           }
         ],
@@ -6361,20 +6361,20 @@
         "distances": [
           {
             "landmarkKey": "cathedral",
-            "meters": 1200,
-            "walkMinutes": 15,
+            "meters": 1600,
+            "walkMinutes": 21,
             "rideMinutes": null
           },
           {
             "landmarkKey": "synagogue",
-            "meters": 1100,
-            "walkMinutes": 14,
+            "meters": 850,
+            "walkMinutes": 11,
             "rideMinutes": null
           },
           {
             "landmarkKey": "vitosha",
-            "meters": 300,
-            "walkMinutes": 4,
+            "meters": 520,
+            "walkMinutes": 7,
             "rideMinutes": null
           }
         ],
@@ -6397,19 +6397,19 @@
         "distances": [
           {
             "landmarkKey": "cathedral",
-            "meters": 800,
-            "walkMinutes": 10,
+            "meters": 900,
+            "walkMinutes": 12,
             "rideMinutes": null
           },
           {
             "landmarkKey": "synagogue",
-            "meters": 1300,
-            "walkMinutes": 16,
+            "meters": 1050,
+            "walkMinutes": 14,
             "rideMinutes": null
           },
           {
             "landmarkKey": "vitosha",
-            "meters": 400,
+            "meters": 390,
             "walkMinutes": 5,
             "rideMinutes": null
           }
@@ -6433,14 +6433,14 @@
         "distances": [
           {
             "landmarkKey": "cathedral",
-            "meters": 1200,
-            "walkMinutes": 15,
+            "meters": 1050,
+            "walkMinutes": 14,
             "rideMinutes": null
           },
           {
             "landmarkKey": "synagogue",
-            "meters": 600,
-            "walkMinutes": 8,
+            "meters": 490,
+            "walkMinutes": 6,
             "rideMinutes": null
           },
           {
@@ -6469,20 +6469,20 @@
         "distances": [
           {
             "landmarkKey": "cathedral",
-            "meters": 1800,
+            "meters": 1650,
             "walkMinutes": 22,
             "rideMinutes": null
           },
           {
             "landmarkKey": "synagogue",
-            "meters": 400,
-            "walkMinutes": 5,
+            "meters": 690,
+            "walkMinutes": 9,
             "rideMinutes": null
           },
           {
             "landmarkKey": "vitosha",
-            "meters": 800,
-            "walkMinutes": 10,
+            "meters": 520,
+            "walkMinutes": 7,
             "rideMinutes": null
           }
         ],
@@ -6509,20 +6509,20 @@
         "distances": [
           {
             "landmarkKey": "cathedral",
-            "meters": 4000,
-            "walkMinutes": 50,
-            "rideMinutes": null
+            "meters": 3500,
+            "walkMinutes": null,
+            "rideMinutes": 7
           },
           {
             "landmarkKey": "synagogue",
-            "meters": 4500,
-            "walkMinutes": 55,
-            "rideMinutes": null
+            "meters": 3600,
+            "walkMinutes": null,
+            "rideMinutes": 9
           },
           {
             "landmarkKey": "vitosha",
-            "meters": 2500,
-            "walkMinutes": 30,
+            "meters": 1250,
+            "walkMinutes": 17,
             "rideMinutes": null
           }
         ],
@@ -6549,20 +6549,20 @@
         "distances": [
           {
             "landmarkKey": "cathedral",
-            "meters": 300,
-            "walkMinutes": 4,
+            "meters": 390,
+            "walkMinutes": 5,
             "rideMinutes": null
           },
           {
             "landmarkKey": "synagogue",
-            "meters": 1800,
-            "walkMinutes": 22,
+            "meters": 1450,
+            "walkMinutes": 19,
             "rideMinutes": null
           },
           {
             "landmarkKey": "vitosha",
             "meters": 1200,
-            "walkMinutes": 15,
+            "walkMinutes": 16,
             "rideMinutes": null
           }
         ],
@@ -6588,19 +6588,19 @@
         "distances": [
           {
             "landmarkKey": "cathedral",
-            "meters": 400,
-            "walkMinutes": 5,
+            "meters": 310,
+            "walkMinutes": 4,
             "rideMinutes": null
           },
           {
             "landmarkKey": "synagogue",
-            "meters": 1700,
-            "walkMinutes": 21,
+            "meters": 1300,
+            "walkMinutes": 17,
             "rideMinutes": null
           },
           {
             "landmarkKey": "vitosha",
-            "meters": 1100,
+            "meters": 1050,
             "walkMinutes": 14,
             "rideMinutes": null
           }
@@ -6628,20 +6628,20 @@
         "distances": [
           {
             "landmarkKey": "cathedral",
-            "meters": 1600,
-            "walkMinutes": 20,
+            "meters": 1750,
+            "walkMinutes": 23,
             "rideMinutes": null
           },
           {
             "landmarkKey": "synagogue",
-            "meters": 500,
-            "walkMinutes": 6,
+            "meters": 730,
+            "walkMinutes": 10,
             "rideMinutes": null
           },
           {
             "landmarkKey": "vitosha",
-            "meters": 900,
-            "walkMinutes": 12,
+            "meters": 740,
+            "walkMinutes": 10,
             "rideMinutes": null
           }
         ],
@@ -6664,20 +6664,20 @@
         "distances": [
           {
             "landmarkKey": "cathedral",
-            "meters": 700,
-            "walkMinutes": 9,
+            "meters": 540,
+            "walkMinutes": 7,
             "rideMinutes": null
           },
           {
             "landmarkKey": "synagogue",
-            "meters": 2200,
-            "walkMinutes": 27,
-            "rideMinutes": null
+            "meters": 1900,
+            "walkMinutes": 25,
+            "rideMinutes": 5
           },
           {
             "landmarkKey": "vitosha",
-            "meters": 1600,
-            "walkMinutes": 20,
+            "meters": 1650,
+            "walkMinutes": 22,
             "rideMinutes": null
           }
         ],
@@ -6703,20 +6703,20 @@
         "distances": [
           {
             "landmarkKey": "cathedral",
-            "meters": 600,
-            "walkMinutes": 8,
+            "meters": 380,
+            "walkMinutes": 5,
             "rideMinutes": null
           },
           {
             "landmarkKey": "synagogue",
-            "meters": 2000,
-            "walkMinutes": 25,
+            "meters": 1600,
+            "walkMinutes": 22,
             "rideMinutes": null
           },
           {
             "landmarkKey": "vitosha",
-            "meters": 1400,
-            "walkMinutes": 18,
+            "meters": 1450,
+            "walkMinutes": 19,
             "rideMinutes": null
           }
         ],
@@ -6743,20 +6743,20 @@
         "distances": [
           {
             "landmarkKey": "cathedral",
-            "meters": 2500,
-            "walkMinutes": 30,
-            "rideMinutes": null
+            "meters": 2000,
+            "walkMinutes": 26,
+            "rideMinutes": 4
           },
           {
             "landmarkKey": "synagogue",
-            "meters": 1200,
+            "meters": 1100,
             "walkMinutes": 15,
             "rideMinutes": null
           },
           {
             "landmarkKey": "vitosha",
-            "meters": 2100,
-            "walkMinutes": 25,
+            "meters": 1400,
+            "walkMinutes": 18,
             "rideMinutes": null
           }
         ],
@@ -6922,9 +6922,9 @@
           },
           {
             "landmarkKey": "victoriei",
-            "meters": 2600,
-            "walkMinutes": 35,
-            "rideMinutes": null
+            "meters": 2000,
+            "walkMinutes": 27,
+            "rideMinutes": 4
           }
         ],
         "rooms": []
@@ -7111,8 +7111,8 @@
           },
           {
             "landmarkKey": "victoriei",
-            "meters": 450,
-            "walkMinutes": 6,
+            "meters": 260,
+            "walkMinutes": 4,
             "rideMinutes": null
           }
         ],
@@ -7201,8 +7201,8 @@
           },
           {
             "landmarkKey": "victoriei",
-            "meters": 0,
-            "walkMinutes": 0,
+            "meters": 320,
+            "walkMinutes": 4,
             "rideMinutes": null
           }
         ],
@@ -7231,7 +7231,7 @@
           },
           {
             "landmarkKey": "victoriei",
-            "meters": 250,
+            "meters": 200,
             "walkMinutes": 3,
             "rideMinutes": null
           }
@@ -7301,8 +7301,8 @@
           },
           {
             "landmarkKey": "victoriei",
-            "meters": 0,
-            "walkMinutes": 0,
+            "meters": 250,
+            "walkMinutes": 3,
             "rideMinutes": null
           }
         ],
@@ -7333,8 +7333,8 @@
           },
           {
             "landmarkKey": "victoriei",
-            "meters": 400,
-            "walkMinutes": 5,
+            "meters": 270,
+            "walkMinutes": 4,
             "rideMinutes": null
           }
         ],
@@ -7367,7 +7367,7 @@
           },
           {
             "landmarkKey": "victoriei",
-            "meters": 50,
+            "meters": 40,
             "walkMinutes": 1,
             "rideMinutes": null
           }
@@ -7544,8 +7544,8 @@
           },
           {
             "landmarkKey": "nowy",
-            "meters": 700,
-            "walkMinutes": 9,
+            "meters": 490,
+            "walkMinutes": 6,
             "rideMinutes": null
           }
         ],
@@ -7583,9 +7583,9 @@
           },
           {
             "landmarkKey": "nowy",
-            "meters": 1800,
-            "walkMinutes": null,
-            "rideMinutes": 15
+            "meters": 2000,
+            "walkMinutes": 27,
+            "rideMinutes": 6
           }
         ],
         "rooms": []
@@ -7624,8 +7624,8 @@
           },
           {
             "landmarkKey": "nowy",
-            "meters": 1300,
-            "walkMinutes": 15,
+            "meters": 1500,
+            "walkMinutes": 20,
             "rideMinutes": null
           }
         ],
@@ -7661,7 +7661,7 @@
           {
             "landmarkKey": "nowy",
             "meters": 1100,
-            "walkMinutes": 14,
+            "walkMinutes": 15,
             "rideMinutes": null
           }
         ],
@@ -7700,8 +7700,8 @@
           },
           {
             "landmarkKey": "nowy",
-            "meters": 850,
-            "walkMinutes": 10,
+            "meters": 680,
+            "walkMinutes": 9,
             "rideMinutes": null
           }
         ],
@@ -7738,7 +7738,7 @@
           },
           {
             "landmarkKey": "nowy",
-            "meters": 1000,
+            "meters": 890,
             "walkMinutes": 12,
             "rideMinutes": null
           }
@@ -7775,9 +7775,9 @@
           },
           {
             "landmarkKey": "nowy",
-            "meters": 1900,
-            "walkMinutes": 16,
-            "rideMinutes": null
+            "meters": 2150,
+            "walkMinutes": 29,
+            "rideMinutes": 6
           }
         ],
         "rooms": []
@@ -7811,8 +7811,8 @@
           },
           {
             "landmarkKey": "nowy",
-            "meters": 1500,
-            "walkMinutes": 18,
+            "meters": 1650,
+            "walkMinutes": 22,
             "rideMinutes": null
           }
         ],
@@ -7848,9 +7848,9 @@
           },
           {
             "landmarkKey": "nowy",
-            "meters": 1500,
-            "walkMinutes": 18,
-            "rideMinutes": null
+            "meters": 2200,
+            "walkMinutes": 29,
+            "rideMinutes": 5
           }
         ],
         "rooms": []
@@ -7884,8 +7884,8 @@
           },
           {
             "landmarkKey": "nowy",
-            "meters": 1800,
-            "walkMinutes": 14,
+            "meters": 1600,
+            "walkMinutes": 21,
             "rideMinutes": null
           }
         ],
@@ -7922,7 +7922,7 @@
           },
           {
             "landmarkKey": "nowy",
-            "meters": 500,
+            "meters": 460,
             "walkMinutes": 6,
             "rideMinutes": null
           }
@@ -7960,8 +7960,8 @@
           },
           {
             "landmarkKey": "nowy",
-            "meters": 1500,
-            "walkMinutes": 18,
+            "meters": 1600,
+            "walkMinutes": 21,
             "rideMinutes": null
           }
         ],
@@ -7999,7 +7999,7 @@
           },
           {
             "landmarkKey": "nowy",
-            "meters": 450,
+            "meters": 480,
             "walkMinutes": 6,
             "rideMinutes": null
           }
@@ -8039,8 +8039,8 @@
           },
           {
             "landmarkKey": "nowy",
-            "meters": 750,
-            "walkMinutes": 10,
+            "meters": 530,
+            "walkMinutes": 7,
             "rideMinutes": null
           }
         ],
@@ -8078,8 +8078,8 @@
           },
           {
             "landmarkKey": "nowy",
-            "meters": 1400,
-            "walkMinutes": 16,
+            "meters": 1700,
+            "walkMinutes": 23,
             "rideMinutes": null
           }
         ],
@@ -8118,8 +8118,8 @@
           },
           {
             "landmarkKey": "nowy",
-            "meters": 1200,
-            "walkMinutes": 14,
+            "meters": 1250,
+            "walkMinutes": 17,
             "rideMinutes": null
           }
         ],
