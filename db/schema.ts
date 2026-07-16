@@ -115,6 +115,22 @@ export const hotels = pgTable(
     bookingUrl: text("booking_url"),
     /** Source attribution for the room data (shown in the detail modal). */
     roomsNote: jsonb("rooms_note").$type<Localized>(),
+    // ── Google Places enrichment ─────────────────────────────────────────────
+    // DB-managed (never in the seed JSON): filled by scripts/enrich-hotels-places.ts,
+    // rating/count refreshed weekly by the backend's /cron/places; scripts/seed.ts
+    // snapshots + re-applies these across its wholesale hotel replace.
+    /** Stable Places id — the weekly refresh keys on this, no re-searching. */
+    googlePlaceId: varchar("google_place_id", { length: 128 }),
+    googleRating: real("google_rating"),
+    googleReviewCount: integer("google_review_count"),
+    /** Places formattedAddress (English) — rendered LTR under the hotel name. */
+    address: text("address"),
+    /** The hotel's official website (Places websiteUri). */
+    websiteUrl: text("website_url"),
+    /** Resolved key-free googleusercontent photo URL (not an API-key URL). */
+    photoUrl: text("photo_url"),
+    /** When the Places fields were last written (enrich script or weekly cron). */
+    placesUpdatedAt: timestamp("places_updated_at", { withTimezone: true }),
     sortOrder: integer("sort_order").notNull().default(0),
   },
   (t) => [index("hotels_destination_idx").on(t.destinationId)],

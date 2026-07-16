@@ -20,6 +20,14 @@ const withNextIntl = createNextIntlPlugin()
 const backend = process.env.BACKEND_URL?.trim().replace(/\/$/, "")
 
 const nextConfig: NextConfig = {
+  images: {
+    // Hotel photos from the Google Places enrichment — key-free
+    // googleusercontent URLs (see scripts/enrich-hotels-places.ts).
+    remotePatterns: [
+      { protocol: "https", hostname: "lh3.googleusercontent.com" },
+      { protocol: "https", hostname: "*.googleusercontent.com" },
+    ],
+  },
   async rewrites() {
     if (!backend) return []
     return [

@@ -183,6 +183,13 @@
       "when": 1784214185150,
       "tag": "0025_slow_tyrannus",
       "breakpoints": true
+    },
+    {
+      "idx": 26,
+      "version": "7",
+      "when": 1784227338967,
+      "tag": "0026_yielding_micromacro",
+      "breakpoints": true
     }
   ]
 }

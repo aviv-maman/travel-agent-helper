@@ -1,8 +1,9 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import Image from "next/image";
 import { useLocale, useTranslations } from "next-intl";
-import { ExternalLinkIcon, Star } from "lucide-react";
+import { ExternalLinkIcon, Globe, Star } from "lucide-react";
 import { GoogleMapsIcon } from "@/components/icons/google-maps-icon";
 import { BookingIcon } from "@/components/icons/booking-icon";
 import type { HotelFeatureValue, HotelTagValue, BoardCode } from "@/db/schema";
@@ -139,6 +140,33 @@ export function HotelCard({
       "group/hotel cursor-pointer gap-0 py-0 ring-foreground/10 transition-all duration-200 ease-out hover:-translate-y-0.5 hover:bg-brand/[0.04] hover:shadow-lg hover:shadow-brand/10 hover:ring-2 hover:ring-brand/50 focus-visible:-translate-y-0.5 focus-visible:bg-brand/[0.04] focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:outline-none",
   };
 
+  // Google photo (a key-free googleusercontent URL from the Places enrichment).
+  // Hidden entirely when absent or the URL has gone stale (load error) — cards
+  // without a photo look exactly as before.
+  const [photoFailed, setPhotoFailed] = useState(false);
+  const photo = (sizes: string, className: string) =>
+    hotel.photoUrl &&
+    !photoFailed && (
+      <div className={`relative shrink-0 overflow-hidden bg-muted ${className}`}>
+        <Image
+          src={hotel.photoUrl}
+          alt={hotel.name}
+          fill
+          sizes={sizes}
+          className="object-cover transition-transform duration-200 ease-out group-hover/hotel:scale-105"
+          onError={() => setPhotoFailed(true)}
+        />
+      </div>
+    );
+
+  // Places formattedAddress is English — force LTR inside the RTL card.
+  const address = hotel.address && (
+    <p dir="ltr" className="truncate text-xs text-muted-foreground" title={hotel.address}>
+      <span aria-hidden>📍 </span>
+      {hotel.address}
+    </p>
+  );
+
   const ratings = (
     <div className="flex shrink-0 items-center gap-1.5">
       {hotel.stars != null && (
@@ -154,6 +182,16 @@ export function HotelCard({
       {score != null && (
         <span className="inline-flex items-center gap-1 rounded-md bg-success/10 px-1.5 py-0.5 text-xs font-bold text-success">
           {t("card.booking")} {score}
+        </span>
+      )}
+      {hotel.googleRating != null && (
+        <span
+          dir="ltr"
+          className="inline-flex items-center gap-1 rounded-md bg-brand/10 px-1.5 py-0.5 text-xs font-bold text-brand">
+          {t("card.google")} ★ {hotel.googleRating}
+          {hotel.googleReviewCount != null && (
+            <span className="font-medium">({hotel.googleReviewCount.toLocaleString(locale)})</span>
+          )}
         </span>
       )}
       {canEditScore && (
@@ -183,7 +221,7 @@ export function HotelCard({
     </div>
   );
 
-  const actions = (hotel.googleMapsUrl || hotel.bookingUrl) && (
+  const actions = (hotel.googleMapsUrl || hotel.bookingUrl || hotel.websiteUrl) && (
     <div className="flex w-full flex-col gap-2 sm:w-fit">
       {hotel.googleMapsUrl && (
         <ButtonGroup className="w-full">
@@ -213,6 +251,22 @@ export function HotelCard({
             <BookingIcon className="size-3.5" />
           </Button>
           <CopyLinkButton url={hotel.bookingUrl} className="size-8 shrink-0" />
+        </ButtonGroup>
+      )}
+      {/* The hotel's own site sits right below the Booking.com link. */}
+      {hotel.websiteUrl && (
+        <ButtonGroup className="w-full">
+          <Button
+            variant="outline"
+            size="sm"
+            nativeButton={false}
+            className="h-8 flex-1"
+            render={<a href={hotel.websiteUrl} target="_blank" rel="noreferrer" />}>
+            <ExternalLinkIcon className="size-3.5" />
+            {t("card.website")}
+            <Globe className="size-3.5 text-brand" />
+          </Button>
+          <CopyLinkButton url={hotel.websiteUrl} className="size-8 shrink-0" />
         </ButtonGroup>
       )}
     </div>
@@ -247,8 +301,8 @@ export function HotelCard({
   );
 
   if (layout === "list") {
-    const listActions = (hotel.googleMapsUrl || hotel.bookingUrl) && (
-      <div className="flex w-full items-center gap-2">
+    const listActions = (hotel.googleMapsUrl || hotel.bookingUrl || hotel.websiteUrl) && (
+      <div className="flex w-full flex-wrap items-center gap-2">
         {hotel.googleMapsUrl && (
           <ButtonGroup className="flex-1 sm:flex-none">
             <Button
@@ -279,12 +333,29 @@ export function HotelCard({
             <CopyLinkButton url={hotel.bookingUrl} className="size-8 shrink-0" />
           </ButtonGroup>
         )}
+        {hotel.websiteUrl && (
+          <ButtonGroup className="flex-1 sm:flex-none">
+            <Button
+              variant="outline"
+              size="sm"
+              nativeButton={false}
+              className="h-8 flex-1 sm:flex-none"
+              render={<a href={hotel.websiteUrl} target="_blank" rel="noreferrer" />}>
+              <ExternalLinkIcon className="size-3.5" />
+              {t("card.website")}
+              <Globe className="size-3.5 text-brand" />
+            </Button>
+            <CopyLinkButton url={hotel.websiteUrl} className="size-8 shrink-0" />
+          </ButtonGroup>
+        )}
       </div>
     );
 
     return (
       <Card {...rootProps}>
         <div className="flex flex-col gap-3 p-4 sm:flex-row sm:items-start sm:gap-5">
+          {/* First flex child = the start side — the RIGHT side in RTL. */}
+          {photo("(min-width: 640px) 11rem, 100vw", "aspect-[16/10] w-full rounded-lg sm:w-44")}
           <div className="flex min-w-0 flex-1 flex-col gap-2.5">
             <div className="flex flex-wrap items-center gap-x-2 gap-y-1.5">
               <h3 className="text-base font-bold text-foreground transition-colors group-hover/hotel:text-brand">
@@ -292,6 +363,7 @@ export function HotelCard({
               </h3>
               {ratings}
             </div>
+            {address}
             {badges}
             {distanceTable && <div className="max-w-md pt-0.5">{distanceTable}</div>}
             {/* Compact, non-stretched action buttons — mobile only. */}
@@ -305,11 +377,13 @@ export function HotelCard({
   }
 
   return (
-    <Card {...rootProps} className={`${rootProps.className} h-full`}>
+    <Card {...rootProps} className={`${rootProps.className} h-full overflow-hidden`}>
+      {photo("(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw", "aspect-[16/10] w-full")}
       <div className="flex flex-1 flex-col gap-3 p-4">
         <h3 className="text-base leading-snug font-bold text-foreground transition-colors group-hover/hotel:text-brand">
           {hotel.name}
         </h3>
+        {address}
         {ratings}
         {badges}
         {distanceTable}

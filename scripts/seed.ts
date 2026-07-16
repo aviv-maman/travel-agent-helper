@@ -2,7 +2,9 @@
  * Seeds Neon from data/seed.json (the legacy-HTML export) plus the add-on
  * destinations in data/destinations/ (built by the add-destination skill).
  * Idempotent: destinations/landmarks are upserted; a destination's hotels are
- * replaced wholesale on each run (cascades clean up features/distances).
+ * replaced wholesale on each run (cascades clean up features/distances) —
+ * except the Google Places enrichment columns, which are snapshotted by hotel
+ * name and re-applied (they're DB-managed, never part of the seed JSON).
  *
  * Run with: `bun run seed` (Bun auto-loads .env.local).
  */
@@ -78,6 +80,30 @@ async function main() {
       landmarkId.set(lm.key, row.id);
     }
 
+    // The Google Places enrichment (rating, address, website, photo…) is
+    // DB-managed — it never lives in the seed JSON. Snapshot it by hotel name
+    // so the wholesale replace below doesn't wipe it; a renamed hotel simply
+    // loses enrichment until the next enrich-hotels-places.ts run.
+    const enriched = new Map(
+      (
+        await db
+          .select({
+            name: hotels.name,
+            googlePlaceId: hotels.googlePlaceId,
+            googleRating: hotels.googleRating,
+            googleReviewCount: hotels.googleReviewCount,
+            address: hotels.address,
+            websiteUrl: hotels.websiteUrl,
+            photoUrl: hotels.photoUrl,
+            placesUpdatedAt: hotels.placesUpdatedAt,
+          })
+          .from(hotels)
+          .where(eq(hotels.destinationId, dest.id))
+      )
+        .filter((h) => h.googlePlaceId !== null)
+        .map(({ name, ...fields }) => [name, fields]),
+    );
+
     // Replace hotels for this destination (cascade removes old features/distances).
     await db.delete(hotels).where(eq(hotels.destinationId, dest.id));
 
@@ -94,6 +120,7 @@ async function main() {
           bookingUrl: h.bookingUrl,
           roomsNote: h.roomsNote,
           sortOrder: h.sortOrder,
+          ...(enriched.get(h.name) ?? {}),
         })
         .returning();
       hotelTotal++;
