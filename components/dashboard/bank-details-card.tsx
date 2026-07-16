@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { Copy, Pencil, Check, X, Landmark } from "lucide-react";
-import { BANK_KEYS, hasBankDetails, type BankDetails } from "@/lib/dashboard/bank";
+import { BANK_KEYS, hasBankDetails, type BankDetails, type BankKey } from "@/lib/dashboard/bank";
 import { saveBankDetailsAction } from "@/app/actions/dashboard";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -38,6 +38,16 @@ export function BankDetailsCard({ bank }: { bank: BankDetails }) {
     );
   }
 
+  /** Copy a single field's value (e.g. just the account number). */
+  function copyField(key: BankKey) {
+    const value = bank[key]?.trim();
+    if (!value) return;
+    navigator.clipboard.writeText(value).then(
+      () => toast.success(t("copied")),
+      () => toast.error(t("copied")),
+    );
+  }
+
   function save() {
     startTransition(async () => {
       const res = await saveBankDetailsAction(draft);
@@ -57,7 +67,7 @@ export function BankDetailsCard({ bank }: { bank: BankDetails }) {
   }
 
   return (
-    <Card size="sm" className="gap-3">
+    <Card size="sm" className="mx-auto w-full max-w-sm gap-3">
       <CardContent className="flex flex-col gap-3">
         <div className="flex items-center justify-between gap-2">
           <h2 className="flex items-center gap-2.5 text-base font-bold tracking-tight text-foreground">
@@ -108,12 +118,23 @@ export function BankDetailsCard({ bank }: { bank: BankDetails }) {
           </div>
         ) : hasDetails ? (
           <>
-            <dl className="grid grid-cols-[auto_1fr] gap-x-3 gap-y-1 text-sm">
+            <dl className="grid grid-cols-[auto_1fr] items-center gap-x-3 gap-y-0.5 text-sm">
               {BANK_KEYS.map((key) =>
                 bank[key]?.trim() ? (
                   <div key={key} className="contents">
                     <dt className="text-muted-foreground">{t(key)}</dt>
-                    <dd className="font-medium text-foreground">{bank[key]}</dd>
+                    <dd>
+                      {/* Each value is click-to-copy, so the account/branch
+                          numbers can be grabbed individually. */}
+                      <button
+                        type="button"
+                        onClick={() => copyField(key)}
+                        aria-label={`${t("copy")}: ${bank[key]}`}
+                        className="group -mx-2 flex w-full items-center justify-between gap-2 rounded-md px-2 py-1 text-start font-medium text-foreground transition-colors hover:bg-muted/60">
+                        <span className="truncate">{bank[key]}</span>
+                        <Copy className="size-3.5 shrink-0 text-muted-foreground opacity-0 transition-opacity group-hover:opacity-100" aria-hidden />
+                      </button>
+                    </dd>
                   </div>
                 ) : null,
               )}
