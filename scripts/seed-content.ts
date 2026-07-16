@@ -24,7 +24,7 @@ import * as schema from "../db/schema";
 import { AIRLINES } from "../lib/airlines";
 import { SUPPLIERS } from "../lib/commissions";
 import {
-  PRODUCT_ORDER,
+  productOrderIndex,
   SUPPLIERS as CANCEL_SUPPLIERS,
 } from "../lib/cancellations";
 import { COUNTRIES } from "../lib/transfers";
@@ -193,10 +193,11 @@ async function seedCancellations(slugToId: Map<string, number>): Promise<number>
   let sortOrder = 0;
   for (const c of CANCEL_SUPPLIERS) {
     const supplierId = slugToId.get(c.id)!;
-    // Store products pre-sorted: the UI renders them as stored (the in-code
-    // sort uses PRODUCT_ORDER reference identity, which JSON round-trips lose).
+    // Store products pre-sorted: the UI renders them as stored. The order
+    // helper (not raw indexOf) also places custom-labeled products correctly —
+    // reference identity would send them to the front (the Israir bug).
     const products = [...c.products]
-      .sort((a, b) => PRODUCT_ORDER.indexOf(a) - PRODUCT_ORDER.indexOf(b))
+      .sort((a, b) => productOrderIndex(a) - productOrderIndex(b))
       .map((p) => ({ kind: p.kind, label: p.label }));
 
     await db

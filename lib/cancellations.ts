@@ -57,6 +57,24 @@ const P_SPORTS: Product = {
 // Canonical render order for product tags — core categories first, then extras.
 export const PRODUCT_ORDER: Product[] = [P_FLIGHT, P_PACKAGE, P_ORGANIZED, P_SPORTS, P_SKI, P_VILLAGE];
 
+/**
+ * Where a product sorts in the canonical order. Reference identity only works
+ * for the shared P_* constants — custom-labeled products (e.g. Israir's
+ * "טיולים מאורגנים (נתור)") and JSON round-trips need the fallbacks: exact
+ * label, then the first product of the same kind, then the end. Without this,
+ * `indexOf` returns -1 and a custom product jumps to the FRONT of the list.
+ */
+export function productOrderIndex(p: Product): number {
+  const byRef = PRODUCT_ORDER.indexOf(p);
+  if (byRef !== -1) return byRef;
+  const byLabel = PRODUCT_ORDER.findIndex(
+    (o) => o.label.he === p.label.he || o.label.en === p.label.en,
+  );
+  if (byLabel !== -1) return byLabel;
+  const byKind = PRODUCT_ORDER.findIndex((o) => o.kind === p.kind);
+  return byKind !== -1 ? byKind : PRODUCT_ORDER.length;
+}
+
 // Table header presets.
 const H_TIME_CANCEL = t("מועד ביטול", "Cancellation timing");
 const H_TIME_CHANGE = t("מועד שינוי", "Change timing");
@@ -1394,13 +1412,10 @@ export type ViewCancelSupplier = {
 /** Cancellation sets from Neon when configured, otherwise the in-code array. */
 async function loadCancelSuppliers(): Promise<CancelSupplier[]> {
   if (!usingDatabase()) {
-    // Pre-sort products to match the stored order (the seed sorts the same way;
-    // PRODUCT_ORDER identity comparison only works against the in-module data).
+    // Pre-sort products to match the stored order (the seed sorts the same way).
     return SUPPLIERS.map((s) => ({
       ...s,
-      products: [...s.products].sort(
-        (a, b) => PRODUCT_ORDER.indexOf(a) - PRODUCT_ORDER.indexOf(b),
-      ),
+      products: [...s.products].sort((a, b) => productOrderIndex(a) - productOrderIndex(b)),
     }));
   }
   const { db } = await import("@/db");

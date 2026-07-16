@@ -625,6 +625,9 @@ export async function getTransferSupplierOptions(): Promise<
   return rows;
 }
 
+/** Display order for a city's pills: included first, then ⚠, then not included. */
+const PILL_VARIANT_ORDER: Record<PillVariant, number> = { yes: 0, warn: 1, no: 2 };
+
 /** All transfer countries, resolved to `locale`. */
 export async function getTransfers(locale: string): Promise<ViewCountryGroup[]> {
   const pick = (v: Localized) => localized(v, locale as Locale);
@@ -640,12 +643,16 @@ export async function getTransfers(locale: string): Promise<ViewCountryGroup[]> 
       search:
         `${city.search} ${city.name.he ?? ""} ${city.name.en ?? ""} ${c.country.he} ${c.country.en}`.toLowerCase(),
       rawPills: city.pills,
-      pills: city.pills.map((pl) => ({
-        variant: pl.variant,
-        flag: pl.flag ?? null,
-        label: pick(pl.label),
-        tooltip: pl.tooltip ? pick(pl.tooltip) : null,
-      })),
+      // Sorted for display only (✓ → ⚠ → ✗; stable within a variant) —
+      // `rawPills` keeps the stored order for the edit dialog.
+      pills: [...city.pills]
+        .sort((a, b) => PILL_VARIANT_ORDER[a.variant] - PILL_VARIANT_ORDER[b.variant])
+        .map((pl) => ({
+          variant: pl.variant,
+          flag: pl.flag ?? null,
+          label: pick(pl.label),
+          tooltip: pl.tooltip ? pick(pl.tooltip) : null,
+        })),
     })),
   }));
 }
