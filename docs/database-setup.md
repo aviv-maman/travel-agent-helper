@@ -2,15 +2,20 @@
 
 The app uses **[Neon](https://neon.tech) (serverless Postgres)** with **[Drizzle ORM](https://orm.drizzle.team)**. What lives there:
 
-- **Hotels** (`/hotels`) — `destinations`, `hotels`, and related tables.
+- **Hotels** (`/hotels`) — `destinations`, `hotels`, and related tables, including the hotels' Google Places enrichment columns (rating, review count, address, website, photo URL — migration 0026).
 - **Content guides** — `suppliers` (+ `supplier_commissions`, `supplier_cancellations`), `airlines`, `transfer_countries`/`transfer_cities`, and the shared `contacts` phonebook, powering `/suppliers`, `/cancellation-fees`, `/airlines`, `/transfers`.
+- **AI assistant data** — `quote_suppliers` (the commission table the AI prices quotes with, edited at Settings → AI Commissions; migration 0025), `saved_quotes`, `user_ai_credentials`.
 - **Auth** — `users`, `sessions`, `invitations`, `login_attempts`.
-- **Per-user features** — the dashboard tables ([docs/dashboard.md](./dashboard.md)), `saved_quotes`, `exchange_rates`.
+- **Per-user features** — the dashboard tables ([docs/dashboard.md](./dashboard.md)), `exchange_rates`.
 
 Every content page still works with **no database at all**: the curated data arrays in `lib/{commissions,cancellations,airlines,transfers,contacts}.ts` are both the seed source and the no-DB fallback (the same split as hotels ↔ `data/seed.json`). **Code is the source of truth for most content** — edit the array, then `bun run seed`. The exceptions are **app-managed** (edited in the UI by editors, bootstrap-only in the seed, never overwritten by re-seeds):
 
 - **contacts** — the shared phonebook dialog;
-- **supplier commission lines & baggage** — the pencil/+ inline editors on the supplier cards.
+- **supplier commission lines & baggage** — the pencil/+ inline editors on the supplier cards;
+- **airline suitcase/trolley/commission figures** — the pencil on the airlines table rows;
+- **transfer inclusion pills** — the pencil on the transfers page;
+- **the AI quote-commissions table** (`quote_suppliers`) — the Settings-page editor (bootstrapped once by `scripts/seed-quote-suppliers.ts`);
+- **hotel Google Places enrichment** — filled by `scripts/enrich-hotels-places.ts` (never part of the seed JSON; `scripts/seed.ts` snapshots and re-applies it by hotel name across its wholesale hotel replace; ratings are auto-refreshed weekly by the backend's `/cron/places`).
 
 Editing those in `lib/*.ts` only affects the no-DB fallback and brand-new databases.
 
@@ -41,7 +46,7 @@ bun install          # once, if you haven't installed deps
 bun run db:migrate   # creates every table from the files in drizzle/
 ```
 
-This runs each SQL file in `drizzle/` in order (`0000_…` → `0005_…`), building the whole schema: hotels data **and** the auth tables. After this, `/hotels` stops erroring (it'll just be empty until step 3).
+This runs each SQL file in `drizzle/` in order (`0000_…` onward — the folder keeps growing as features land), building the whole schema: hotels, content guides, auth, dashboard, and AI tables. After this, `/hotels` stops erroring (it'll just be empty until step 3).
 
 ## 3. Load the data (seed)
 
