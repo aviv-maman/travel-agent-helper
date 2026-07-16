@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { BookmarkCheck, BookmarkPlus, Check, Copy, ImageIcon } from "lucide-react";
-import { extractFencedBlock } from "@/lib/ai/quote-title";
+import { extractFencedBlock, forwardableMessage } from "@/lib/ai/quote-title";
 import { fileUrl } from "@/lib/object-url";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { useSession } from "@/components/auth/session-provider";
@@ -112,7 +112,7 @@ function MessageItem({
   // otherwise the whole reply.
   async function copyMessage() {
     try {
-      await navigator.clipboard.writeText(extractFencedBlock(message.content) ?? message.content);
+      await navigator.clipboard.writeText(forwardableMessage(message.content));
       setCopied(true);
       setTimeout(() => setCopied(false), 1500);
     } catch {

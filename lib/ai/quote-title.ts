@@ -38,6 +38,16 @@ export function extractFencedBlock(content: string): string | null {
   return m ? m[1].trim() : null;
 }
 
+/**
+ * The client-facing message to copy / save / forward: the fenced WhatsApp block
+ * when present, otherwise the whole reply. This is what strips the internal
+ * profit/cost calculations that precede the block — they must never reach the
+ * client or a saved quote.
+ */
+export function forwardableMessage(content: string): string {
+  return extractFencedBlock(content) ?? content;
+}
+
 /** The first line with real content — skips blanks and fence markers. */
 function firstMeaningfulLine(text: string): string | null {
   for (const raw of text.split("\n")) {
