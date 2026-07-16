@@ -26,6 +26,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { useDirection } from "@/components/ui/direction";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { LanguageSwitcher } from "@/components/language-switcher";
 
@@ -216,9 +217,17 @@ export function PageNav() {
                 <span className="max-w-[16ch] truncate">{userLabel}</span>
               </Link>
               <form action={logout.bind(null, locale)}>
-                <Button type="submit" variant="ghost" size="icon-sm" aria-label={tAuth("signOut")}>
-                  <LogOut className="size-4" />
-                </Button>
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger
+                      render={
+                        <Button type="submit" variant="outline" size="icon" aria-label={tAuth("signOut")} />
+                      }>
+                      <LogOut className="size-4" />
+                    </TooltipTrigger>
+                    <TooltipContent side="bottom">{tAuth("signOut")}</TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
               </form>
             </>
           ) : (
