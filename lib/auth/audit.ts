@@ -10,6 +10,8 @@ export type AuditAction =
   | "password.set"
   | "password.reset"
   | "email.verify"
+  | "email.change_requested"
+  | "email.change"
   | "account.delete"
   | "account.unlink"
   | "2fa.enable"

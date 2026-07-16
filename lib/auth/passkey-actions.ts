@@ -12,6 +12,7 @@ import { getCurrentUser } from ".";
 import { createSession } from "./session";
 import { recordAudit } from "./audit";
 import { safeNext } from "./protected-routes";
+import { hasValidReauth } from "./reauth";
 import {
   registrationOptions,
   verifyRegistration,
@@ -38,9 +39,13 @@ export async function passkeyRegistrationOptions() {
 
 export async function passkeyRegistrationVerify(
   response: RegistrationResponseJSON,
-): Promise<{ ok?: boolean; error?: "forbidden" | "failed" }> {
+): Promise<{ ok?: boolean; error?: "forbidden" | "failed" | "reauth_required" }> {
   const user = await getCurrentUser();
   if (!user) return { error: "forbidden" };
+
+  // Require reauth (password or TOTP) for security-sensitive operation
+  if (!(await hasValidReauth())) return { error: "reauth_required" };
+
   const ok = await verifyRegistration(user, response).catch(() => false);
   if (!ok) return { error: "failed" };
   await recordAudit("passkey.add", { actorId: user.id });
@@ -49,12 +54,19 @@ export async function passkeyRegistrationVerify(
 }
 
 /** Remove one of the caller's own passkeys. */
-export async function deletePasskeyAction(credentialId: string): Promise<void> {
+export async function deletePasskeyAction(
+  credentialId: string,
+): Promise<{ error?: string }> {
   const user = await getCurrentUser();
-  if (!user) return;
+  if (!user) return { error: "forbidden" };
+
+  // Require reauth (password or TOTP) for security-sensitive operation
+  if (!(await hasValidReauth())) return { error: "reauth_required" };
+
   await deleteUserPasskey(user.id, credentialId);
   await recordAudit("passkey.remove", { actorId: user.id });
   revalidatePath("/[locale]/account/security", "page");
+  return {};
 }
 
 // ── One-click sign-in (login page; no user context yet) ──────────────────────
