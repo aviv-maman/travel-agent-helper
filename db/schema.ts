@@ -803,8 +803,8 @@ export const quoteSuppliers = pgTable("quote_suppliers", {
 
 export type QuoteSupplier = typeof quoteSuppliers.$inferSelect;
 
-/** Email tokens are single-use, for email verification, password reset, or email change. */
-export const emailTokenKind = pgEnum("email_token_kind", ["verify", "reset", "email_change"]);
+/** Email tokens are single-use, for either email verification or password reset. */
+export const emailTokenKind = pgEnum("email_token_kind", ["verify", "reset"]);
 
 /**
  * Single-use email tokens (verification + password reset). Like sessions, only the

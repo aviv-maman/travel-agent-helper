@@ -38,9 +38,6 @@ import { safeNext } from "./protected-routes";
 import { recordAudit } from "./audit";
 import { generateInviteCode, inviteStatus } from "./invites";
 import { isLocked, recordFailure, clearAttempts, clientIp } from "./rate-limit";
-import { encryptTotpSecret, decryptTotpSecret } from "./crypto";
-import { verifyTotpWithReplayProtection } from "./totp";
-import { hasValidReauth } from "./reauth";
 
 export type AuthState = { error?: string; ok?: boolean; mfa?: boolean };
 
@@ -113,26 +110,7 @@ export async function verifyMfa(
   if (!user || !user.totpSecret) return { error: "expired" };
 
   const code = String(formData.get("code") ?? "").trim();
-  let ok = false;
-  let usedStep = -1;
-
-  // Try TOTP with replay protection
-  try {
-    const decrypted = decryptTotpSecret(user.totpSecret);
-    const { valid, currentStep } = verifyTotpWithReplayProtection(
-      decrypted,
-      code,
-      user.totpLastUsedStep,
-    );
-    if (valid) {
-      ok = true;
-      usedStep = currentStep;
-    }
-  } catch {
-    ok = false;
-  }
-
-  // Fall back to backup codes
+  let ok = verifyTotp(user.totpSecret, code);
   if (!ok) {
     const [backup] = await db
       .select({ id: backupCodes.id })
@@ -150,13 +128,7 @@ export async function verifyMfa(
       ok = true;
     }
   }
-
   if (!ok) return { error: "invalidCode" };
-
-  // Update last used step for replay protection
-  if (usedStep > 0) {
-    await db.update(users).set({ totpLastUsedStep: usedStep }).where(eq(users.id, user.id));
-  }
 
   await completeMfa(user);
   await recordAudit("login", { actorId: user.id });
@@ -279,17 +251,10 @@ export async function setPassword(
  * Self-service account deletion — removes the user (cascading their sessions) and
  * signs them out. Refuses if they're the **last admin** (they'd orphan the app);
  * the UI also disables the button in that case.
- * Requires reauth (password or TOTP) for security.
  */
 export async function deleteMyAccount(locale: string): Promise<void> {
   const user = await getCurrentUser();
   if (!user) redirect(`/${locale}/login`);
-
-  // Require reauth (password or TOTP) for security-sensitive operation
-  if (!(await hasValidReauth())) {
-    redirect(`/${locale}/account/security?reauth=delete`);
-  }
-
   if (user.role === "admin") {
     const [{ n }] = await db.select({ n: count() }).from(users).where(eq(users.role, "admin"));
     if (n <= 1) return;
@@ -496,28 +461,11 @@ export async function cancelTotpSetup(): Promise<void> {
 export async function confirmTotpSetup(_prev: TotpState, formData: FormData): Promise<TotpState> {
   const user = await getCurrentUser();
   if (!user || user.totpEnabledAt || !user.totpSecret) return { error: "state" };
-
-  // Decrypt the temporary unencrypted secret for verification
-  let secret = user.totpSecret;
-  try {
-    // During setup, secret is plain Base32; after confirmation it becomes encrypted
-    verifyTotp(secret, String(formData.get("code") ?? ""));
-  } catch {
+  if (!verifyTotp(user.totpSecret, String(formData.get("code") ?? ""))) {
     return { error: "invalidCode" };
   }
-
-  if (!verifyTotp(secret, String(formData.get("code") ?? ""))) {
-    return { error: "invalidCode" };
-  }
-
-  // Encrypt the secret before activating 2FA
-  const encryptedSecret = encryptTotpSecret(secret);
   const codes = generateBackupCodes();
-  await db.update(users).set({
-    totpSecret: encryptedSecret,
-    totpEnabledAt: new Date(),
-    totpLastUsedStep: null,
-  }).where(eq(users.id, user.id));
+  await db.update(users).set({ totpEnabledAt: new Date() }).where(eq(users.id, user.id));
   await db
     .insert(backupCodes)
     .values(codes.map((c) => ({ userId: user.id, codeHash: hashBackupCode(c) })));
@@ -532,25 +480,11 @@ export async function disableTotp(_prev: TotpState, formData: FormData): Promise
   if (!user || !user.totpEnabledAt || !user.totpSecret) return { error: "state" };
   const code = String(formData.get("code") ?? "");
   const password = String(formData.get("password") ?? "");
-
-  // Decrypt the secret and verify with replay protection
-  let codeOk = false;
-  try {
-    const decrypted = decryptTotpSecret(user.totpSecret);
-    const { valid } = verifyTotpWithReplayProtection(decrypted, code, user.totpLastUsedStep);
-    codeOk = valid;
-  } catch {
-    codeOk = false;
-  }
-
-  const passwordOk = user.passwordHash ? await verifyPassword(password, user.passwordHash) : false;
-  if (!codeOk && !passwordOk) return { error: "invalidCode" };
-
-  await db.update(users).set({
-    totpSecret: null,
-    totpEnabledAt: null,
-    totpLastUsedStep: null,
-  }).where(eq(users.id, user.id));
+  const ok =
+    verifyTotp(user.totpSecret, code) ||
+    (user.passwordHash ? await verifyPassword(password, user.passwordHash) : false);
+  if (!ok) return { error: "invalidCode" };
+  await db.update(users).set({ totpSecret: null, totpEnabledAt: null }).where(eq(users.id, user.id));
   await db.delete(backupCodes).where(eq(backupCodes.userId, user.id));
   await recordAudit("2fa.disable", { actorId: user.id });
   revalidatePath("/[locale]/account/security", "page");

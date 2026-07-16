@@ -6,11 +6,10 @@ import { db } from "@/db";
 import { users, backupCodes } from "@/db/schema";
 import { getCurrentUser } from ".";
 import { hashPassword } from "./password";
-import { verifyTotp, hashBackupCode, verifyTotpWithReplayProtection } from "./totp";
+import { verifyTotp, hashBackupCode } from "./totp";
 import { invalidateUserSessions } from "./session";
 import { recordAudit } from "./audit";
 import { clientIp, isLocked, recordFailure } from "./rate-limit";
-import { decryptTotpSecret } from "./crypto";
 import { createEmailToken, consumeEmailToken, invalidateEmailTokens } from "./email-tokens";
 import { sendTemplateEmail, requestOrigin } from "@/lib/email";
 
@@ -73,26 +72,7 @@ export async function resetPassword(
 
   // Email possession must NOT bypass a second factor.
   if (user.totpEnabledAt && user.totpSecret) {
-    let ok = false;
-    let usedStep = -1;
-
-    // Try TOTP with replay protection
-    try {
-      const decrypted = decryptTotpSecret(user.totpSecret);
-      const { valid, currentStep } = verifyTotpWithReplayProtection(
-        decrypted,
-        code,
-        user.totpLastUsedStep,
-      );
-      if (valid) {
-        ok = true;
-        usedStep = currentStep;
-      }
-    } catch {
-      ok = false;
-    }
-
-    // Fall back to backup codes
+    let ok = verifyTotp(user.totpSecret, code);
     if (!ok && code) {
       const [backup] = await db
         .select({ id: backupCodes.id })
@@ -110,13 +90,7 @@ export async function resetPassword(
         ok = true;
       }
     }
-
     if (!ok) return { error: "invalidCode" };
-
-    // Update last used step for replay protection
-    if (usedStep > 0) {
-      await db.update(users).set({ totpLastUsedStep: usedStep }).where(eq(users.id, user.id));
-    }
   }
 
   await db.update(users).set({ passwordHash: await hashPassword(next) }).where(eq(users.id, user.id));
@@ -146,58 +120,5 @@ export async function confirmEmailVerification(token: string): Promise<boolean> 
   if (!userId) return false;
   await db.update(users).set({ emailVerifiedAt: new Date() }).where(eq(users.id, userId));
   await recordAudit("email.verify", { actorId: userId });
-  return true;
-}
-
-// --- Email change (with verification) -----------------------------------------
-
-/** Request to change the signed-in user's email (sends verification link). */
-export async function requestEmailChange(
-  locale: string,
-  _prev: ResetState,
-  formData: FormData,
-): Promise<ResetState> {
-  const user = await getCurrentUser();
-  if (!user) return { error: "forbidden" };
-
-  const newEmail = String(formData.get("email") ?? "").trim().toLowerCase();
-  if (!newEmail) return { error: "missing" };
-  if (newEmail === user.email) return { error: "same" };
-
-  // Check if email is already taken
-  const [existing] = await db
-    .select({ id: users.id })
-    .from(users)
-    .where(eq(users.email, newEmail))
-    .limit(1);
-  if (existing) return { error: "taken" };
-
-  // Store pending email and send verification link
-  await db.update(users).set({ emailPending: newEmail }).where(eq(users.id, user.id));
-  const token = await createEmailToken(user.id, "email_change");
-  const url = `${await requestOrigin()}/${locale}/verify-email-change?token=${token}`;
-  await sendTemplateEmail(newEmail, "email_change_verification", locale, { url });
-  await recordAudit("email.change_requested", { actorId: user.id, meta: { newEmail } });
-  return { ok: true };
-}
-
-/** Confirm email change token — activate the pending email. */
-export async function confirmEmailChange(token: string): Promise<boolean> {
-  const userId = await consumeEmailToken(token, "email_change");
-  if (!userId) return false;
-
-  const [user] = await db.select().from(users).where(eq(users.id, userId)).limit(1);
-  if (!user || !user.emailPending) return false;
-
-  await db
-    .update(users)
-    .set({
-      email: user.emailPending,
-      emailPending: null,
-      emailPendingVerifiedAt: new Date(),
-    })
-    .where(eq(users.id, userId));
-
-  await recordAudit("email.change", { actorId: userId, meta: { newEmail: user.emailPending } });
   return true;
 }
