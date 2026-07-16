@@ -66,15 +66,44 @@ describe("buildQuoteTitle", () => {
     expect(title).not.toBe("כן");
   });
 
-  test("strips flag emojis from the title (they scramble RTL text on Windows)", () => {
+  test("strips ALL emojis from the title (flags scramble RTL; the rest are noise)", () => {
     const title = buildQuoteTitle("כן", HEBREW_WHATSAPP_QUOTE);
     expect(title).not.toMatch(/[\u{1F1E6}-\u{1F1FF}]/u); // no 🇬🇷 regional indicators
-    expect(title).toContain("🌿"); // other emojis stay
+    expect(title).not.toContain("🌿");
+    expect(title).toStartWith("חבילת נופש לכרתים");
   });
 
-  test("keeps the legacy English extraction for non-fenced quotes", () => {
+  test("appends the hotel name at the end when the block names one", () => {
+    const packageQuote = `\`\`\`
+טיסה + מלון לבודפשט 🏰✨
+
+🏨 המלון שלכם:
+Leonardo City Tower — 4★
+📅 צ'ק-אין: 27/07 | צ'ק-אאוט: 31/07 (4 לילות)
+
+💳 מחיר סופי לחבילה: **620$** לנוסע ל-2 נוסעים
+\`\`\``;
+    const title = buildQuoteTitle("כן", packageQuote);
+    expect(title).toEndWith("Leonardo City Tower");
+    expect(title).toStartWith("טיסה + מלון לבודפשט");
+    expect(title).not.toContain("★");
+    expect(title).not.toContain("🏰");
+  });
+
+  test("does not duplicate a hotel already named in the title line", () => {
+    const quote = `\`\`\`
+הצעה למלון Leonardo City Tower
+
+🏨 המלון שלכם:
+Leonardo City Tower — 4★
+\`\`\``;
+    const title = buildQuoteTitle("כן", quote);
+    expect(title.match(/Leonardo City Tower/g)).toHaveLength(1);
+  });
+
+  test("keeps the legacy English extraction for non-fenced quotes (hotel last)", () => {
     const content = "Hotel: Sheraton — Batumi\nCheck-in 10.7.26, 5 nights\nTotal for 2 adults: $980";
-    expect(buildQuoteTitle("quote for Batumi please", content)).toBe("10.7 - Batumi - Sheraton - 2 people");
+    expect(buildQuoteTitle("quote for Batumi please", content)).toBe("10.7 - Batumi - 2 people - Sheraton");
   });
 
   test("never uses a bare confirmation as the title", () => {
