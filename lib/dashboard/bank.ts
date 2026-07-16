@@ -3,8 +3,8 @@
  * the server DAL (lib/dashboard/settings.ts) and the client card can share them.
  */
 
-/** Bank-detail keys, in display order. */
-export const BANK_KEYS = ["bank", "branch", "account", "beneficiary"] as const;
+/** Bank-detail keys, in display order — beneficiary first (the top box). */
+export const BANK_KEYS = ["beneficiary", "bank", "branch", "account"] as const;
 export type BankKey = (typeof BANK_KEYS)[number];
 export type BankDetails = Record<BankKey, string>;
 
