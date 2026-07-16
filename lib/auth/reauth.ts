@@ -34,6 +34,9 @@ export async function hasValidReauth(): Promise<boolean> {
 /**
  * Mark the current session with valid reauth credentials for 5 minutes.
  * Call this after verifying password/TOTP.
+ *
+ * TODO: Wire this to server actions that verify password/TOTP and call this on success.
+ * Example: reauthWithPassword() and reauthWithTotp() server actions.
  */
 export async function markReauthValid(): Promise<boolean> {
   try {
