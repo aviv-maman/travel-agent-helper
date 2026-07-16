@@ -5,8 +5,8 @@ import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { Pencil, Trash2 } from "lucide-react";
-import type { BaggageIcon, CommissionKind, CommLevel, Localized } from "@/db/schema";
-import type { BaggageRow, EditableCommissionRow } from "@/lib/commissions";
+import type { BaggageIcon, CommissionKind, Localized } from "@/db/schema";
+import type { BaggageRow, CommissionInput, EditableCommissionRow } from "@/lib/commissions";
 import {
   saveSupplierBaggageAction,
   saveSupplierCommissionsAction,
@@ -30,7 +30,6 @@ import {
 
 type T = ReturnType<typeof useTranslations<"commissions.editor">>;
 
-const LEVELS: CommLevel[] = ["high", "mid", "low", "range", "net"];
 const STANDARD_KINDS: Exclude<CommissionKind, "custom">[] = [
   "flights",
   "packages",
@@ -47,7 +46,6 @@ const EDITOR_ICONS: EditorIcon[] = [...CATEGORY_ICONS, ...NOTE_ICONS];
 const isCategory = (icon: BaggageIcon) => (CATEGORY_ICONS as BaggageIcon[]).includes(icon);
 
 const KIND_KEY = { flights: "kindFlights", packages: "kindPackages", organized: "kindOrganized", custom: "kindCustom" } as const;
-const LEVEL_KEY = { high: "levelHigh", mid: "levelMid", low: "levelLow", range: "levelRange", net: "levelNet" } as const;
 const ICON_KEY = {
   flight: "iconFlight",
   package: "iconPackage",
@@ -133,21 +131,16 @@ function EditorShell({
 
 type CommissionDraft = {
   kind: CommissionKind;
-  labelHe: string;
-  labelEn: string;
-  valueHe: string;
-  valueEn: string;
-  level: CommLevel;
+  /** One field per label/value — saved to both locales; the color is derived. */
+  label: string;
+  value: string;
 };
 
 function toCommissionDrafts(rows: EditableCommissionRow[]): CommissionDraft[] {
   return rows.map((r) => ({
     kind: r.kind,
-    labelHe: r.label?.he ?? "",
-    labelEn: r.label?.en ?? "",
-    valueHe: r.value.he ?? "",
-    valueEn: r.value.en ?? "",
-    level: r.level,
+    label: r.label?.he ?? r.label?.en ?? "",
+    value: r.value.he ?? r.value.en ?? "",
   }));
 }
 
@@ -157,7 +150,7 @@ function nextKind(drafts: CommissionDraft[]): CommissionKind {
 }
 
 function newCommissionDraft(drafts: CommissionDraft[]): CommissionDraft {
-  return { kind: nextKind(drafts), labelHe: "", labelEn: "", valueHe: "", valueEn: "", level: "mid" };
+  return { kind: nextKind(drafts), label: "", value: "" };
 }
 
 export function CommissionsEditor({
@@ -186,16 +179,20 @@ export function CommissionsEditor({
   }
 
   async function save() {
-    const rows: EditableCommissionRow[] = drafts
-      .filter((d) => d.valueHe.trim() || d.valueEn.trim())
-      .map((d) => ({
-        kind: d.kind,
-        label:
-          d.kind === "custom" ? { he: d.labelHe.trim(), en: d.labelEn.trim() } : null,
-        value: { he: d.valueHe.trim(), en: d.valueEn.trim() },
-        level: d.level,
-      }));
-    if (rows.some((r) => r.kind === "custom" && !r.label?.he && !r.label?.en)) {
+    // One field feeds both locales (the guide is Hebrew-first; values are mostly
+    // language-neutral numbers). The server derives the chip color from the value.
+    const rows: CommissionInput[] = drafts
+      .filter((d) => d.value.trim())
+      .map((d) => {
+        const value = d.value.trim();
+        const label = d.label.trim();
+        return {
+          kind: d.kind,
+          label: d.kind === "custom" ? { he: label, en: label } : null,
+          value: { he: value, en: value },
+        };
+      });
+    if (rows.some((r) => r.kind === "custom" && !r.label?.he)) {
       toast.error(t("customNeedsLabel"));
       return;
     }
@@ -237,23 +234,6 @@ export function CommissionsEditor({
                 </SelectContent>
               </Select>
             </Field>
-            <Field label={t("level")}>
-              <Select
-                value={d.level}
-                onValueChange={(v) => update(i, { level: v as CommLevel })}
-                items={Object.fromEntries(LEVELS.map((l) => [l, t(LEVEL_KEY[l])]))}>
-                <SelectTrigger className="w-full text-xs">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  {LEVELS.map((l) => (
-                    <SelectItem key={l} value={l}>
-                      {t(LEVEL_KEY[l])}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </Field>
             <Button
               type="button"
               variant="ghost"
@@ -265,45 +245,24 @@ export function CommissionsEditor({
             </Button>
           </div>
           {d.kind === "custom" && (
-            <div className="flex gap-2">
-              <Field label={t("labelHe")}>
-                <Input
-                  value={d.labelHe}
-                  dir="rtl"
-                  onChange={(e) => update(i, { labelHe: e.target.value })}
-                  className="h-8 text-xs"
-                />
-              </Field>
-              <Field label={t("labelEn")}>
-                <Input
-                  value={d.labelEn}
-                  dir="ltr"
-                  onChange={(e) => update(i, { labelEn: e.target.value })}
-                  className="h-8 text-xs"
-                />
-              </Field>
-            </div>
+            <Field label={t("label")}>
+              <Input
+                value={d.label}
+                dir="auto"
+                onChange={(e) => update(i, { label: e.target.value })}
+                className="h-8 text-xs"
+              />
+            </Field>
           )}
-          <div className="flex gap-2">
-            <Field label={t("valueHe")}>
-              <Input
-                value={d.valueHe}
-                dir="rtl"
-                placeholder="7.5%"
-                onChange={(e) => update(i, { valueHe: e.target.value })}
-                className="h-8 text-xs"
-              />
-            </Field>
-            <Field label={t("valueEn")}>
-              <Input
-                value={d.valueEn}
-                dir="ltr"
-                placeholder="7.5%"
-                onChange={(e) => update(i, { valueEn: e.target.value })}
-                className="h-8 text-xs"
-              />
-            </Field>
-          </div>
+          <Field label={t("value")}>
+            <Input
+              value={d.value}
+              dir="auto"
+              placeholder="7.5%"
+              onChange={(e) => update(i, { value: e.target.value })}
+              className="h-8 text-xs"
+            />
+          </Field>
         </div>
       ))}
     </EditorShell>

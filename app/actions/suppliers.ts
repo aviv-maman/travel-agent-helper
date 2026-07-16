@@ -8,11 +8,10 @@ import {
   type BaggageIcon,
   type BaggageRow,
   type CommissionKind,
-  type CommLevel,
   type Localized,
 } from "@/db/schema";
 import { can } from "@/lib/auth";
-import type { EditableCommissionRow } from "@/lib/commissions";
+import { deriveCommissionLevel, type CommissionInput } from "@/lib/commissions";
 
 /**
  * Editor+ inline updates of a supplier's commission lines and baggage rows
@@ -31,7 +30,6 @@ import type { EditableCommissionRow } from "@/lib/commissions";
 export type SaveResult = { ok: true } | { error: "forbidden" | "invalid" | "offline" };
 
 const KINDS: readonly CommissionKind[] = ["flights", "packages", "organized", "custom"];
-const LEVELS: readonly CommLevel[] = ["high", "mid", "low", "range", "net"];
 /** Category rows carry structured `inclusion`; note rows are free text. `bag`
  * is not writable — the backpack line is hardcoded in the card. */
 const CATEGORY_ICONS: readonly BaggageIcon[] = ["flight", "package", "village", "tour"];
@@ -47,7 +45,7 @@ function cleanLocalized(v: Localized | null | undefined, max: number): Localized
 
 export async function saveSupplierCommissionsAction(
   slug: string,
-  rows: EditableCommissionRow[],
+  rows: CommissionInput[],
 ): Promise<SaveResult> {
   if (!(await can("content:edit"))) return { error: "forbidden" };
   if (!Array.isArray(rows) || rows.length > 12) return { error: "invalid" };
@@ -57,18 +55,20 @@ export async function saveSupplierCommissionsAction(
   const seenStandard = new Set<CommissionKind>();
   let customOrder = 0;
   for (const r of rows) {
-    if (!KINDS.includes(r.kind) || !LEVELS.includes(r.level)) return { error: "invalid" };
+    if (!KINDS.includes(r.kind)) return { error: "invalid" };
     const value = cleanLocalized(r.value, 80);
     if (!value) return { error: "invalid" };
+    // The chip color is derived from the value, never taken from the client.
+    const level = deriveCommissionLevel(value.he ?? value.en ?? "");
     if (r.kind === "custom") {
       const label = cleanLocalized(r.label, 120);
       if (!label) return { error: "invalid" };
       if (customOrder >= 3) return { error: "invalid" }; // the card renders up to 3
-      clean.push({ kind: r.kind, label, value, level: r.level, sortOrder: customOrder++ });
+      clean.push({ kind: r.kind, label, value, level, sortOrder: customOrder++ });
     } else {
       if (seenStandard.has(r.kind)) return { error: "invalid" };
       seenStandard.add(r.kind);
-      clean.push({ kind: r.kind, label: null, value, level: r.level, sortOrder: 0 });
+      clean.push({ kind: r.kind, label: null, value, level, sortOrder: 0 });
     }
   }
 

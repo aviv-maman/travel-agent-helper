@@ -26,7 +26,7 @@ import type {
   SupplierNote,
 } from "@/db/schema";
 
-/** One raw commission line, as stored — the shape the inline editor edits. */
+/** One raw commission line, as stored — the shape the inline editor loads. */
 export type EditableCommissionRow = {
   kind: CommissionKind;
   /** Only for kind='custom' — the line's own label. */
@@ -34,6 +34,37 @@ export type EditableCommissionRow = {
   value: Localized;
   level: CommLevel;
 };
+
+/**
+ * What the inline editor sends back to save — no `level`: the chip color is
+ * derived from the value on the server (see {@link deriveCommissionLevel}), so
+ * the editor only asks for the number.
+ */
+export type CommissionInput = {
+  kind: CommissionKind;
+  label: Localized | null;
+  value: Localized;
+};
+
+/**
+ * Pick the commission chip color from the value text, matching the legend so
+ * editors never choose it by hand:
+ *   • "net"/"נטו" (or 0%) → net (red)
+ *   • a span like "7–10%", or a non-numeric phrase like "varies"/"משתנה" → range (gold)
+ *   • single number ≥ 10% → high (green) · 7–9.5% → mid (blue) · below 7% → low (orange)
+ */
+export function deriveCommissionLevel(value: string): CommLevel {
+  const v = value.trim().toLowerCase();
+  if (/net|נטו|ללא\s*עמלה|no\s*commission/.test(v)) return "net";
+  const nums = v.match(/\d+(?:\.\d+)?/g)?.map(Number) ?? [];
+  // Two numbers = a span ("7–10%"); none = a word like "varies" → both gold.
+  if (nums.length !== 1) return "range";
+  const n = nums[0];
+  if (n === 0) return "net";
+  if (n >= 10) return "high";
+  if (n >= 7) return "mid";
+  return "low";
+}
 
 /** A supplier's raw editable content (both locales), keyed by slug. */
 export type EditableSupplier = {
