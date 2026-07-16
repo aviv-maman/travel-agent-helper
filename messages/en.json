@@ -496,8 +496,8 @@
       "carRental": "Car rental"
     },
     "legend": {
-      "high": "High 10%+",
-      "mid": "Medium 7–9.5%",
+      "high": "High 9%+",
+      "mid": "Medium 7–8.5%",
       "low": "Low 5–6%",
       "net": "Net / no commission"
     },

@@ -248,7 +248,7 @@ export type BoardCode = (typeof boardCode.enumValues)[number];
 // lib/{commissions,cancellations,airlines,transfers,contacts}.ts as the seed
 // source and no-DB fallback (same split as hotels ↔ data/seed.json).
 
-/** Commission chip color: high green (10%+), mid blue, low orange, range gold, net red. */
+/** Commission chip color: high green (9%+), mid blue, low orange, range gold, net red. */
 export const commissionLevel = pgEnum("commission_level", [
   "high",
   "mid",

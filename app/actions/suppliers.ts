@@ -11,7 +11,7 @@ import {
   type Localized,
 } from "@/db/schema";
 import { can } from "@/lib/auth";
-import { deriveCommissionLevel, type CommissionInput } from "@/lib/commissions";
+import { deriveCommissionLevel, stripPercent, type CommissionInput } from "@/lib/commissions";
 
 /**
  * Editor+ inline updates of a supplier's commission lines and baggage rows
@@ -56,8 +56,14 @@ export async function saveSupplierCommissionsAction(
   let customOrder = 0;
   for (const r of rows) {
     if (!KINDS.includes(r.kind)) return { error: "invalid" };
-    const value = cleanLocalized(r.value, 80);
-    if (!value) return { error: "invalid" };
+    const cleaned = cleanLocalized(r.value, 80);
+    if (!cleaned) return { error: "invalid" };
+    // Percentages are stored as bare numbers; the "%" is presentation only.
+    const value: Localized = {
+      ...(cleaned.he ? { he: stripPercent(cleaned.he) } : {}),
+      ...(cleaned.en ? { en: stripPercent(cleaned.en) } : {}),
+    };
+    if (!value.he && !value.en) return { error: "invalid" };
     // The chip color is derived from the value, never taken from the client.
     const level = deriveCommissionLevel(value.he ?? value.en ?? "");
     if (r.kind === "custom") {
