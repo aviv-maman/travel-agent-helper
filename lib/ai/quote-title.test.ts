@@ -1,5 +1,15 @@
 import { describe, expect, test } from "bun:test";
-import { buildQuoteTitle, extractFencedBlock } from "./quote-title";
+import { buildQuoteTitle, extractFencedBlock, forwardableMessage } from "./quote-title";
+
+/** A realistic reply: internal profit/cost calculations, then the client block. */
+const QUOTE_WITH_CALCULATIONS = `חישוב פנימי (לא ללקוח):
+עלות ספק: 1,000$ · מחיר מכירה: 1,240$ · רווח: 240$
+
+\`\`\`
+חבילת נופש לכרתים 🇬🇷🌿
+💳 מחיר סופי לחבילה: **1,240$** ל-2 נוסעים
+\`\`\`
+רוצה שאשנה משהו בהצעה?`;
 
 const HEBREW_WHATSAPP_QUOTE = `\`\`\`
 חבילת נופש לכרתים 🇬🇷🌿
@@ -26,6 +36,23 @@ describe("extractFencedBlock", () => {
 
   test("returns null when there is no fenced block", () => {
     expect(extractFencedBlock("plain quote text")).toBeNull();
+  });
+});
+
+describe("forwardableMessage", () => {
+  test("returns only the client block, dropping the internal calculations", () => {
+    const msg = forwardableMessage(QUOTE_WITH_CALCULATIONS);
+    expect(msg).toStartWith("חבילת נופש לכרתים");
+    expect(msg).toContain("מחיר סופי");
+    expect(msg).not.toContain("חישוב פנימי"); // "internal calculation" header
+    expect(msg).not.toContain("עלות ספק"); // supplier cost
+    expect(msg).not.toContain("רווח"); // profit
+    expect(msg).not.toContain("רוצה שאשנה"); // the trailing chatter after the block
+    expect(msg).not.toContain("```");
+  });
+
+  test("falls back to the whole reply when there is no fenced block", () => {
+    expect(forwardableMessage("just a plain reply")).toBe("just a plain reply");
   });
 });
 

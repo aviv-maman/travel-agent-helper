@@ -6,7 +6,7 @@ import { getCurrentUser } from "@/lib/auth";
 import { backendUrl, deleteQuoteImages } from "@/lib/ai/backend";
 import { saveCredentialToBackend, deleteCredentialFromBackend } from "@/lib/ai/credentials";
 import { saveQuote, deleteSavedQuote } from "@/lib/ai/quotes";
-import { buildQuoteTitle } from "@/lib/ai/quote-title";
+import { buildQuoteTitle, forwardableMessage } from "@/lib/ai/quote-title";
 import { AI_ENABLED_COOKIE, AI_MOCK_KEY_COOKIE, DEFAULT_AI_PROVIDER } from "@/lib/ai/constants";
 
 /**
@@ -109,6 +109,10 @@ export async function saveQuoteAction(
   if (!user) return { error: "forbidden" };
   const text = content.trim();
   if (!text) return { error: "empty" };
+  // Persist only the forwardable client message — never the internal profit/cost
+  // calculations that precede the fenced block. The title is still derived from
+  // the full reply (that's where the fence + fallbacks live).
+  const forwardable = forwardableMessage(text);
 
   // Only accept a key from our own quote-image prefix (defence-in-depth — the key
   // is browser-supplied). Keys are unguessable random uuids, but the prefix is the
@@ -117,7 +121,7 @@ export async function saveQuoteAction(
 
   const id = await saveQuote(user.id, {
     title: buildQuoteTitle(prompt, text),
-    content: text,
+    content: forwardable,
     prompt: prompt.trim(),
     imageKey: uploaded?.imageKey ?? (hadImage && backendUrl() === null ? "mock" : null),
     imageMediaType: uploaded?.imageMediaType ?? null,

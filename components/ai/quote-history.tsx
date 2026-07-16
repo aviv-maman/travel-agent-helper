@@ -6,6 +6,7 @@ import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { Check, Copy, Eye, ImageIcon, List, PanelRight, Trash2 } from "lucide-react";
 import { deleteQuoteAction } from "@/app/actions/ai";
+import { forwardableMessage } from "@/lib/ai/quote-title";
 import { emitQuoteDeleted } from "@/lib/ai/quote-events";
 import { QUOTE_HISTORY_VIEW_COOKIE } from "@/lib/ai/constants";
 import type { SavedQuote } from "@/lib/ai/quotes";
@@ -103,7 +104,7 @@ export function QuoteHistory({
   async function copyView() {
     if (!viewTarget) return;
     try {
-      await navigator.clipboard.writeText(viewTarget.content);
+      await navigator.clipboard.writeText(forwardableMessage(viewTarget.content));
       setCopied(true);
       setTimeout(() => setCopied(false), 1500);
     } catch {
@@ -237,7 +238,7 @@ export function QuoteHistory({
           )}
 
           <p className="max-h-[45vh] overflow-y-auto rounded-lg bg-muted/50 p-4 text-sm leading-relaxed whitespace-pre-wrap text-foreground">
-            {viewTarget?.content}
+            {viewTarget ? forwardableMessage(viewTarget.content) : null}
           </p>
           <DialogFooter>
             <Button type="button" variant="outline" onClick={copyView}>
