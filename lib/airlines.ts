@@ -1,5 +1,6 @@
 import type { Localized } from "@/db/schema";
 import type { Locale } from "@/i18n/config";
+import { withPercentTokens } from "@/lib/airline-figures";
 import { localized, usingDatabase } from "@/lib/hotels";
 
 /**
@@ -567,6 +568,11 @@ export type ViewAirline = {
   commissionTier: "zero" | "some";
   /** Numeric commission used for sorting (largest figure in the range). */
   commissionSort: number;
+  /** Bare figures for the inline row editor (units are presentation only). */
+  kgRaw: string;
+  /** Trolley figure without the unit when the note is a plain weight, else the note text. */
+  trolleyRaw: string;
+  commissionRaw: string;
   /** Lowercased he + en + iata, for client-side filtering across both locales. */
   search: string;
 };
@@ -607,8 +613,13 @@ export async function getAirlines(locale: string): Promise<ViewAirline[]> {
   const airlines = await loadAirlines();
   return airlines.map((a) => {
     const note = a.note ? pick(a.note) : null;
-    const commission = a.commission ?? "0%";
+    // Stored bare going forward ("0/5"); "%" per token is display-only.
+    // Idempotent for legacy rows stored with the sign ("0%/5%").
+    const commission = withPercentTokens(a.commission ?? "0");
     const commissionSort = maxNum(commission);
+    // The trolley note is editable as a number when it's a plain weight
+    // ('10 ק"ג' / "10 kg"); other notes ("depends on ticket") edit as text.
+    const trolleyFigure = note?.match(/^([\d./]+)\s*(?:ק["״']?ג|kg)$/i)?.[1] ?? null;
     return {
       id: `air:${a.id}`,
       iata: a.iata ?? null,
@@ -627,6 +638,9 @@ export async function getAirlines(locale: string): Promise<ViewAirline[]> {
       commission,
       commissionTier: commissionSort === 0 ? "zero" : "some",
       commissionSort,
+      kgRaw: a.kg,
+      trolleyRaw: trolleyFigure ?? note ?? "",
+      commissionRaw: commission.replace(/%/g, ""),
       search: `${a.iata ?? ""} ${a.name.he ?? ""} ${a.name.en ?? ""}`.toLowerCase(),
     };
   });

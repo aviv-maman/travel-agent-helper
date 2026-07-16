@@ -228,10 +228,14 @@ async function seedAirlines(): Promise<Map<string, number>> {
       commission: a.commission ?? null,
       sortOrder,
     };
+    // kg / note / noteTone / commission are app-managed after bootstrap (the
+    // inline row editor on the airlines page) — a re-seed updates the airline's
+    // metadata but must not clobber those edits.
+    const { kg: _kg, note: _note, noteTone: _tone, commission: _comm, ...meta } = values;
     const [row] = await db
       .insert(airlines)
       .values(values)
-      .onConflictDoUpdate({ target: airlines.slug, set: values })
+      .onConflictDoUpdate({ target: airlines.slug, set: meta })
       .returning();
     slugToId.set(a.id, row.id);
     sortOrder++;
