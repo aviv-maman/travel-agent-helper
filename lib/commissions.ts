@@ -13,7 +13,7 @@ import { localized, usingDatabase } from "@/lib/hotels";
 
 /**
  * Commission level → drives the percentage color (matches the legend):
- * high = green (10%+), mid = blue (7–9.5%), low = orange (5–6%),
+ * high = green (9%+), mid = blue (7–8.5%), low = orange (5–6%),
  * range = gold (a span like 7–10% or "varies"), net = red ("net price").
  */
 export type { CommLevel, BaggageIcon, BaggageRow, SupplierNote, SupplierCategory } from "@/db/schema";
@@ -51,7 +51,7 @@ export type CommissionInput = {
  * editors never choose it by hand:
  *   • "net"/"נטו" (or 0%) → net (red)
  *   • a span like "7–10%", or a non-numeric phrase like "varies"/"משתנה" → range (gold)
- *   • single number ≥ 10% → high (green) · 7–9.5% → mid (blue) · below 7% → low (orange)
+ *   • single number ≥ 9% → high (green) · 7–8.5% → mid (blue) · below 7% → low (orange)
  */
 export function deriveCommissionLevel(value: string): CommLevel {
   const v = value.trim().toLowerCase();
@@ -61,9 +61,25 @@ export function deriveCommissionLevel(value: string): CommLevel {
   if (nums.length !== 1) return "range";
   const n = nums[0];
   if (n === 0) return "net";
-  if (n >= 10) return "high";
+  if (n >= 9) return "high";
   if (n >= 7) return "mid";
   return "low";
+}
+
+/** Drop a trailing "%" so percentages are stored as bare numbers ("9.5%" → "9.5"). */
+export function stripPercent(value: string): string {
+  return value.replace(/\s*%+\s*$/, "").trim();
+}
+
+/**
+ * How a stored commission value is shown: numbers get a trailing "%"
+ * ("9.5" → "9.5%"), while worded values ("net"/"נטו", "varies"/"משתנה") are
+ * left alone. Idempotent — tolerates legacy rows that still carry the "%".
+ */
+export function withPercentSign(value: string): string {
+  const s = value.trim();
+  if (!/\d/.test(s)) return s;
+  return stripPercent(s) + "%";
 }
 
 /** A supplier's raw editable content (both locales), keyed by slug. */
@@ -761,8 +777,9 @@ async function loadSuppliers(): Promise<Supplier[]> {
 /** All suppliers, resolved to `locale`, in guide order. */
 export async function getCommissions(locale: string): Promise<ViewSupplier[]> {
   const pick = (v: Localized) => localized(v, locale as Locale);
+  // Values are stored as bare numbers; the "%" is added here for display.
   const cv = (v?: CommissionValue): ViewCommissionValue =>
-    v ? { value: pick(v.value), level: v.level } : null;
+    v ? { value: withPercentSign(pick(v.value)), level: v.level } : null;
   const suppliers = await loadSuppliers();
   return suppliers.map((s) => ({
     id: s.id,
@@ -777,7 +794,7 @@ export async function getCommissions(locale: string): Promise<ViewSupplier[]> {
     organizedTours: cv(s.organizedTours),
     customCommissions: [s.customCommission1, s.customCommission2, s.customCommission3]
       .filter((cm): cm is CustomCommission => Boolean(cm))
-      .map((cm) => ({ label: pick(cm.label), value: pick(cm.value), level: cm.level })),
+      .map((cm) => ({ label: pick(cm.label), value: withPercentSign(pick(cm.value)), level: cm.level })),
     baggage: s.baggage.map((b) => ({ icon: b.icon, text: pick(b.text) })),
     notes: (s.notes ?? []).map((n) => ({
       text: pick(n.text),

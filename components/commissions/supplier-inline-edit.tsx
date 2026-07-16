@@ -7,6 +7,7 @@ import { toast } from "sonner";
 import { Pencil, Trash2 } from "lucide-react";
 import type { BaggageIcon, CommissionKind, Localized } from "@/db/schema";
 import type { BaggageRow, CommissionInput, EditableCommissionRow } from "@/lib/commissions";
+import { stripPercent } from "@/lib/commissions";
 import {
   saveSupplierBaggageAction,
   saveSupplierCommissionsAction,
@@ -140,7 +141,8 @@ function toCommissionDrafts(rows: EditableCommissionRow[]): CommissionDraft[] {
   return rows.map((r) => ({
     kind: r.kind,
     label: r.label?.he ?? r.label?.en ?? "",
-    value: r.value.he ?? r.value.en ?? "",
+    // Values are stored bare — show the number without the "%" while editing.
+    value: stripPercent(r.value.he ?? r.value.en ?? ""),
   }));
 }
 
@@ -182,9 +184,10 @@ export function CommissionsEditor({
     // One field feeds both locales (the guide is Hebrew-first; values are mostly
     // language-neutral numbers). The server derives the chip color from the value.
     const rows: CommissionInput[] = drafts
-      .filter((d) => d.value.trim())
+      .filter((d) => stripPercent(d.value))
       .map((d) => {
-        const value = d.value.trim();
+        // Store bare numbers ("9.5"); the "%" is added back only on display.
+        const value = stripPercent(d.value);
         const label = d.label.trim();
         return {
           kind: d.kind,
@@ -258,7 +261,7 @@ export function CommissionsEditor({
             <Input
               value={d.value}
               dir="auto"
-              placeholder="7.5%"
+              placeholder="9.5"
               onChange={(e) => update(i, { value: e.target.value })}
               className="h-8 text-xs"
             />
