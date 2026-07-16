@@ -54,6 +54,12 @@ export type UIHotel = {
   bookingScore: number | null;
   googleMapsUrl: string | null;
   bookingUrl: string | null;
+  /** Google Places enrichment (DB-managed; null in the no-DB seed fallback). */
+  googleRating: number | null;
+  googleReviewCount: number | null;
+  address: string | null;
+  websiteUrl: string | null;
+  photoUrl: string | null;
   roomsNote: Localized | null;
   features: HotelFeatureValue[];
   distances: UIDistance[];
@@ -109,6 +115,11 @@ export type ViewHotel = {
   bookingScore: number | null;
   googleMapsUrl: string | null;
   bookingUrl: string | null;
+  googleRating: number | null;
+  googleReviewCount: number | null;
+  address: string | null;
+  websiteUrl: string | null;
+  photoUrl: string | null;
   roomsNote: string | null;
   features: HotelFeatureValue[];
   distances: ViewDistance[];
@@ -198,6 +209,11 @@ function resolveHotel(h: UIHotel, locale: string): ViewHotel {
     bookingScore: h.bookingScore,
     googleMapsUrl: h.googleMapsUrl,
     bookingUrl: h.bookingUrl,
+    googleRating: h.googleRating,
+    googleReviewCount: h.googleReviewCount,
+    address: h.address,
+    websiteUrl: h.websiteUrl,
+    photoUrl: h.photoUrl,
     roomsNote: localized(h.roomsNote, locale) || null,
     features: h.features,
     distances: h.distances.map((d) => ({
@@ -378,6 +394,11 @@ async function loadFromDb(): Promise<UIDestination[]> {
       bookingScore: h.bookingScore,
       googleMapsUrl: h.googleMapsUrl,
       bookingUrl: h.bookingUrl,
+      googleRating: h.googleRating,
+      googleReviewCount: h.googleReviewCount,
+      address: h.address,
+      websiteUrl: h.websiteUrl,
+      photoUrl: h.photoUrl,
       roomsNote: h.roomsNote,
       features: h.features.map((f) => f.feature),
       distances: h.distances.map((dist) => ({
@@ -420,6 +441,12 @@ async function loadFromSeed(): Promise<UIDestination[]> {
         bookingScore: h.bookingScore,
         googleMapsUrl: h.googleMapsUrl,
         bookingUrl: h.bookingUrl,
+        // Places enrichment is DB-managed — the seed fallback has none.
+        googleRating: null,
+        googleReviewCount: null,
+        address: null,
+        websiteUrl: null,
+        photoUrl: null,
         roomsNote: h.roomsNote ?? null,
         features: h.features as HotelFeatureValue[],
         distances: h.distances.map((dist) => ({

@@ -678,6 +678,8 @@
     "card": {
       "maps": "גוגל מפות",
       "booking": "Booking",
+      "google": "גוגל",
+      "website": "אתר המלון",
       "copyLink": "העתק לינק",
       "copied": "הקישור הועתק",
       "walk": "{minutes} דק' הליכה",
