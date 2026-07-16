@@ -35,7 +35,10 @@ export default async function QuoteCommissionsPage({
     .orderBy(asc(quoteSuppliers.sortOrder), asc(quoteSuppliers.id));
 
   return (
-    <Card>
+    // Breaks out of the account layout's max-w-3xl on desktop — the 10-column
+    // table needs the room (notes were getting clamped). Symmetric negative
+    // margins keep it centered; direction-agnostic, so RTL is fine.
+    <Card className="lg:w-[min(72rem,92vw)] lg:mx-[calc((100%-min(72rem,92vw))/2)]">
       <CardHeader>
         <CardTitle>{t("title")}</CardTitle>
         <CardDescription>{t("description")}</CardDescription>

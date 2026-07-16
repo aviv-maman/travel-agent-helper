@@ -207,10 +207,10 @@ export function QuoteSuppliersTable({ rows }: { rows: QuoteSupplier[] }) {
                   <TableCell dir="ltr">{pctCell(r.netFlightStar)}</TableCell>
                   <TableCell dir="ltr">{pctCell(r.netPackageNoStar)}</TableCell>
                   <TableCell dir="ltr">{pctCell(r.netPackageStar)}</TableCell>
-                  <TableCell className="max-w-64">
-                    <span className="line-clamp-2" title={r.notes}>
-                      {r.notes || "—"}
-                    </span>
+                  {/* Notes wrap in full — clamping hid the destination/season
+                      exceptions, which are exactly what tells twin rows apart. */}
+                  <TableCell className="min-w-56 whitespace-normal">
+                    {r.notes || "—"}
                   </TableCell>
                   <TableCell className="whitespace-nowrap">
                     <Button
