@@ -219,7 +219,13 @@ export function TransferCityEdit({
             <DialogTitle className="text-start">{t("title", { city: city.name })}</DialogTitle>
           </DialogHeader>
 
-          <div className="-mx-4 min-h-0 flex-1 overflow-y-auto border-t border-border px-4 pt-3">
+          {/* Only the (long) per-supplier list needs to scroll. In "all
+              suppliers" mode the body is just the two radios, so keep it
+              content-sized — `flex-1` would otherwise force a stray scrollbar. */}
+          <div
+            className={`-mx-4 border-t border-border px-4 pt-3 ${
+              mode === "custom" ? "min-h-0 flex-1 overflow-y-auto" : ""
+            }`}>
             <RadioGroup
               value={mode}
               onValueChange={(v) => setMode(v as Mode)}
