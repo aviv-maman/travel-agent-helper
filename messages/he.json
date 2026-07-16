@@ -571,7 +571,13 @@
     "page": "עמוד {page} מתוך {total}",
     "prev": "העמוד הקודם",
     "next": "העמוד הבא",
-    "website": "אתר"
+    "website": "אתר",
+    "editRow": "עריכת שורה",
+    "saveRow": "שמירה",
+    "cancelEdit": "ביטול",
+    "rowSaved": "נשמר",
+    "rowSaveFailed": "השמירה נכשלה — נסה שוב",
+    "numbersOnly": "מספרים בלבד (למשל 23 או 15/23)"
   },
   "cancellations": {
     "introTitle": "הערה",

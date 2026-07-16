@@ -9,8 +9,56 @@ import type { WeightTier, ViewAirline } from "@/lib/airlines";
 import type { SupplierContact } from "@/lib/contacts";
 import { CountryFlag } from "@/components/country-flag";
 import { DataTableColumnHeader } from "@/components/ui/data-table";
+import { Input } from "@/components/ui/input";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { AirlineActions } from "./airline-actions";
+
+/**
+ * Inline row-edit wiring, owned by AirlineView. The draft lives in a ref there
+ * (uncontrolled inputs, written via `setDraft` at event time) so typing doesn't
+ * rebuild the whole table; only entering/leaving edit mode re-renders. Null when
+ * the viewer can't edit content.
+ */
+export type RowEdit = {
+  editingId: string | null;
+  saving: boolean;
+  setDraft: (_patch: Partial<{ kg: string; trolley: string; commission: string }>) => void;
+  start: (_a: ViewAirline) => void;
+  cancel: () => void;
+  save: () => void;
+};
+
+/** Small uncontrolled cell input: Enter saves, Escape cancels. */
+function FigureInput({
+  defaultValue,
+  onValue,
+  edit,
+  label,
+}: {
+  defaultValue: string;
+  onValue: (_v: string) => void;
+  edit: RowEdit;
+  label: string;
+}) {
+  return (
+    <Input
+      defaultValue={defaultValue}
+      dir="ltr"
+      aria-label={label}
+      disabled={edit.saving}
+      onChange={(e) => onValue(e.target.value)}
+      onKeyDown={(e) => {
+        if (e.key === "Enter") {
+          e.preventDefault();
+          edit.save();
+        } else if (e.key === "Escape") {
+          edit.cancel();
+        }
+      }}
+      className="h-6 w-16 px-1.5 text-xs font-bold"
+    />
+  );
+}
 
 const AIRLINE_PLACEHOLDER_LOGO = "/airlines/placeholder-logo.svg";
 
@@ -81,7 +129,9 @@ export function airlineColumns(
   t: T,
   contacts: Record<string, SupplierContact>,
   canEditContacts: boolean,
+  edit: RowEdit | null,
 ): ColumnDef<ViewAirline>[] {
+  const editingRow = (a: ViewAirline) => edit !== null && edit.editingId === a.id;
   return [
     {
       id: "logo",
@@ -104,7 +154,14 @@ export function airlineColumns(
       header: ({ column }) => <DataTableColumnHeader column={column} title={t("colSuitcase")} />,
       meta: { label: t("colSuitcase") },
       cell: ({ row }) =>
-        row.original.info ? (
+        editingRow(row.original) ? (
+          <FigureInput
+            defaultValue={row.original.kgRaw}
+            onValue={(v) => edit!.setDraft({ kg: v })}
+            edit={edit!}
+            label={t("colSuitcase")}
+          />
+        ) : row.original.info ? (
           <Tooltip>
             <TooltipTrigger
               className={`inline-flex h-5 cursor-help items-center gap-1 rounded-md px-1.5 align-middle text-xs font-bold ${TIER[row.original.tier]}`}>
@@ -126,6 +183,16 @@ export function airlineColumns(
       header: ({ column }) => <DataTableColumnHeader column={column} title={t("colTrolley")} />,
       meta: { label: t("colTrolley") },
       cell: ({ row }) => {
+        if (editingRow(row.original)) {
+          return (
+            <FigureInput
+              defaultValue={row.original.trolleyRaw}
+              onValue={(v) => edit!.setDraft({ trolley: v })}
+              edit={edit!}
+              label={t("colTrolley")}
+            />
+          );
+        }
         const { note, noteTone } = row.original;
         if (!note) return null;
         return noteTone === "gold" ? (
@@ -149,12 +216,20 @@ export function airlineColumns(
       accessorFn: (a) => a.commissionSort,
       header: ({ column }) => <DataTableColumnHeader column={column} title={t("colCommission")} />,
       meta: { label: t("colCommission") },
-      cell: ({ row }) => (
-        <span
-          className={`inline-flex h-5 items-center rounded-md px-1.5 align-middle text-xs font-bold ${COMMISSION_CHIP[row.original.commissionTier]}`}>
-          {row.original.commission}
-        </span>
-      ),
+      cell: ({ row }) =>
+        editingRow(row.original) ? (
+          <FigureInput
+            defaultValue={row.original.commissionRaw}
+            onValue={(v) => edit!.setDraft({ commission: v })}
+            edit={edit!}
+            label={t("colCommission")}
+          />
+        ) : (
+          <span
+            className={`inline-flex h-5 items-center rounded-md px-1.5 align-middle text-xs font-bold ${COMMISSION_CHIP[row.original.commissionTier]}`}>
+            {row.original.commission}
+          </span>
+        ),
     },
     {
       id: "actions",
@@ -170,6 +245,20 @@ export function airlineColumns(
             website={row.original.website}
             contact={contacts[row.original.id]}
             canEditContact={canEditContacts}
+            rowEditState={
+              edit === null
+                ? null
+                : editingRow(row.original)
+                  ? edit.saving
+                    ? "saving"
+                    : "editing"
+                  : edit.editingId !== null
+                    ? "locked" // another row is being edited
+                    : "idle"
+            }
+            onStartEdit={() => edit?.start(row.original)}
+            onSaveEdit={() => edit?.save()}
+            onCancelEdit={() => edit?.cancel()}
           />
         ),
     },

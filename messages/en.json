@@ -571,7 +571,13 @@
     "page": "Page {page} of {total}",
     "prev": "Previous page",
     "next": "Next page",
-    "website": "Website"
+    "website": "Website",
+    "editRow": "Edit row",
+    "saveRow": "Save",
+    "cancelEdit": "Cancel",
+    "rowSaved": "Saved",
+    "rowSaveFailed": "Saving failed — try again",
+    "numbersOnly": "Numbers only (e.g. 23 or 15/23)"
   },
   "cancellations": {
     "introTitle": "Note",
