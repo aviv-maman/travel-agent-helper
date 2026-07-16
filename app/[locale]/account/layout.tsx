@@ -14,15 +14,21 @@ export default async function AccountLayout({
   const { locale } = await params;
   setRequestLocale(locale);
   await requireUser(locale);
-  const [canInvites, canUsers, canAudit] = [
+  const [canInvites, canUsers, canAudit, canContent] = [
     await can("invites:manage"),
     await can("users:manage"),
     await can("audit:read"),
+    await can("content:edit"),
   ];
 
   return (
     <div className="mx-auto flex w-full max-w-3xl flex-col gap-6 py-2">
-      <AccountNav canInvites={canInvites} canUsers={canUsers} canAudit={canAudit} />
+      <AccountNav
+        canInvites={canInvites}
+        canUsers={canUsers}
+        canAudit={canAudit}
+        canContent={canContent}
+      />
       {children}
     </div>
   );

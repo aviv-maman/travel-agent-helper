@@ -761,6 +761,37 @@ export const savedQuotesRelations = relations(savedQuotes, ({ one }) => ({
   user: one(users, { fields: [savedQuotes.userId], references: [users.id] }),
 }));
 
+/**
+ * The AI quote assistant's supplier reference table — per-supplier net
+ * commissions and baggage terms the backend's flight-quote skill reads
+ * (previously the agent's published Google Sheet; the backend falls back to
+ * that sheet while this table is empty). Edited in-app on the settings page
+ * (`content:edit`); app-managed, never seeded over.
+ *
+ * `nameEn` is NOT unique on purpose: a supplier can have several rows with
+ * different terms per destination (e.g. Arkia everywhere vs. Arkia NYC/BKK),
+ * disambiguated by `notes` — the AI presents all matches to the agent.
+ */
+export const quoteSuppliers = pgTable("quote_suppliers", {
+  id: serial("id").primaryKey(),
+  /** English name the AI matches against ("Kavei", "Arkia"). */
+  nameEn: varchar("name_en", { length: 64 }).notNull(),
+  nameHe: varchar("name_he", { length: 64 }).notNull().default(""),
+  /** Baggage cell in the sheet's own grammar: "כלול" (included), "130$" (USD surcharge), or null (unknown). */
+  baggageSuitcase: varchar("baggage_suitcase", { length: 32 }),
+  baggageTrolley: varchar("baggage_trolley", { length: 32 }),
+  /** Net % the agent subtracts, stored bare ("7.5"); null = unknown for that combo. */
+  netFlightNoStar: varchar("net_flight_no_star", { length: 8 }),
+  netFlightStar: varchar("net_flight_star", { length: 8 }),
+  netPackageNoStar: varchar("net_package_no_star", { length: 8 }),
+  netPackageStar: varchar("net_package_star", { length: 8 }),
+  /** Free-text exceptions (destinations, seasons) — shown to the AI verbatim. */
+  notes: text("notes").notNull().default(""),
+  sortOrder: integer("sort_order").notNull().default(0),
+});
+
+export type QuoteSupplier = typeof quoteSuppliers.$inferSelect;
+
 /** Email tokens are single-use, for either email verification or password reset. */
 export const emailTokenKind = pgEnum("email_token_kind", ["verify", "reset"]);
 
