@@ -19,11 +19,16 @@ function tidy(s: string): string {
 }
 
 /**
- * Drop flag emojis (regional-indicator pairs). Windows has no flag glyphs, so
- * "🇬🇷" renders as the LTR letters "GR" inside an RTL title and scrambles it.
+ * Drop ALL emoji from a title. Flags (regional-indicator pairs) scramble RTL
+ * titles on Windows (no flag glyphs → LTR letters "GR"), and the rest are
+ * unwanted noise in the saved-quotes list — titles are plain text by design.
+ * Covers pictographs, flags, joiners/variation selectors, keycaps, and ★.
  */
-function stripFlags(s: string): string {
-  return s.replace(/[\u{1F1E6}-\u{1F1FF}]/gu, "").replace(/\s+/g, " ").trim();
+function stripEmoji(s: string): string {
+  return s
+    .replace(/[\p{Extended_Pictographic}\u{1F1E6}-\u{1F1FF}\u{FE0F}\u{200D}\u{20E3}\u{2605}\u{2606}]/gu, "")
+    .replace(/\s+/g, " ")
+    .trim();
 }
 
 /** Cap a string at `max` characters without splitting surrogate pairs / emoji. */
@@ -51,8 +56,31 @@ export function forwardableMessage(content: string): string {
 /** The first line with real content — skips blanks and fence markers. */
 function firstMeaningfulLine(text: string): string | null {
   for (const raw of text.split("\n")) {
-    const line = stripFlags(tidy(raw.replace(/^```.*$/, "")));
+    const line = stripEmoji(tidy(raw.replace(/^```.*$/, "")));
     if (line) return line;
+  }
+  return null;
+}
+
+/**
+ * The hotel name from a quote, if one exists. Handles the WhatsApp block's
+ * house format — a `🏨 המלון שלכם:` / `🏨 מלונות אפשריים:` header with the
+ * name on the NEXT line as "[Name] — [4★]" — plus inline "Hotel: X — City" /
+ * "מלון: X" lines. Returns the name only (no stars, no city, no emoji).
+ */
+function extractHotelName(content: string): string | null {
+  const lines = content.split("\n");
+  const headerAt = lines.findIndex((l) => /(?:המלון שלכם|מלונות אפשריים)\s*:\s*$/.test(l.trim()));
+  if (headerAt !== -1) {
+    for (const raw of lines.slice(headerAt + 1)) {
+      const line = stripEmoji(tidy(raw));
+      if (line) return capChars(line.split(/\s+[—–]\s+/)[0].trim(), 40) || null;
+    }
+  }
+  const inline = content.match(/(?:hotels?|מלון)\s*:\s*\**\s*([^\n*]+)/i)?.[1];
+  if (inline) {
+    const name = stripEmoji(tidy(inline)).split(/\s+[—–-]\s+/)[0].trim();
+    return name ? capChars(name, 40) : null;
   }
   return null;
 }
@@ -104,10 +132,12 @@ function extractPax(text: string): string | null {
 }
 
 /**
- * Build the history-list title. A quote with a fenced WhatsApp block titles itself
- * from the block's first line (e.g. "חבילת נופש לכרתים 🇬🇷🌿") plus date/pax; other
- * content keeps the legacy `date - destination - hotel - N people` extraction. The
- * prompt is only a last resort — and never when it's a bare confirmation ("כן").
+ * Build the history-list title — plain text (all emoji stripped), with the
+ * hotel name appended at the end when the quote names one. A quote with a
+ * fenced WhatsApp block titles itself from the block's first line plus
+ * date/pax/hotel; other content keeps the legacy `date - destination - N
+ * people - hotel` extraction. The prompt is only a last resort — and never
+ * when it's a bare confirmation ("כן").
  */
 export function buildQuoteTitle(prompt: string, content: string): string {
   const block = extractFencedBlock(content);
@@ -117,7 +147,11 @@ export function buildQuoteTitle(prompt: string, content: string): string {
     if (titleLine) {
       const date = extractDate(block) ?? extractDate(content) ?? extractDate(prompt);
       const pax = extractPax(block) ?? extractPax(prompt);
-      return [capChars(titleLine, 60), date, pax].filter(Boolean).join(" - ");
+      const hotel = extractHotelName(block);
+      // Appended last; skipped when the title line already names the hotel.
+      const hotelPart =
+        hotel && !titleLine.toLowerCase().includes(hotel.toLowerCase()) ? hotel : null;
+      return [capChars(titleLine, 60), date, pax, hotelPart].filter(Boolean).join(" - ");
     }
   }
 
@@ -125,10 +159,10 @@ export function buildQuoteTitle(prompt: string, content: string): string {
   const { hotel, dest } = extractHotelAndDest(content, prompt);
   const pax = extractPax(content) ?? extractPax(prompt);
 
-  const parts = [date, dest, hotel, pax].filter(Boolean);
+  const parts = [date, dest, pax, hotel && stripEmoji(hotel)].filter(Boolean);
   if (parts.length >= 2) return parts.join(" - ");
 
-  const clean = prompt.replace(/\s+/g, " ").trim();
+  const clean = stripEmoji(prompt.replace(/\s+/g, " ").trim());
   if (clean && clean.length >= 4 && !CONFIRMATIONS.test(clean)) {
     return capChars(clean, 80);
   }
