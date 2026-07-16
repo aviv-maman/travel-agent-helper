@@ -14,7 +14,7 @@ import { backendUrl } from "@/lib/ai/backend";
  */
 export async function sendTemplateEmail(
   to: string,
-  template: "email_verification" | "password_reset" | "email_change_verification" | "security_alert" | "invite",
+  template: "email_verification" | "password_reset" | "security_alert" | "invite",
   locale: string,
   data: Record<string, unknown>,
 ): Promise<boolean> {

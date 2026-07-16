@@ -16,7 +16,6 @@ import { serializePublicUser } from "./public-user";
 
 const SESSION_DURATION_MS = 1000 * 60 * 60 * 24 * 30; // 30 days
 const LAST_SEEN_THROTTLE_MS = 5 * 60 * 1000; // bump "last active" at most this often
-const SESSION_RENEWAL_THRESHOLD = SESSION_DURATION_MS / 2; // renew when past 50% (15 days)
 
 function hashToken(token: string): string {
   return createHash("sha256").update(token).digest("hex");
@@ -102,8 +101,8 @@ export async function completeMfa(user: {
 }
 
 /**
- * Resolve the signed-in user from the session cookie, or null. Renews the session
- * expiry if past the 50% mark so active users stay fresh without manual re-login.
+ * Resolve the signed-in user from the session cookie, or null. Read-only (no
+ * cookie writes), so it is safe to call during render.
  */
 export async function validateSession(): Promise<User | null> {
   const token = (await cookies()).get(SESSION_COOKIE)?.value;
@@ -117,22 +116,9 @@ export async function validateSession(): Promise<User | null> {
     .limit(1);
   if (!found || found.expiresAt.getTime() < Date.now()) return null;
 
-  // Renew session expiry if past 50% of the session duration
-  // (so active users get a fresh 30-day window automatically)
-  const now = Date.now();
-  const createdAtGuess = found.expiresAt.getTime() - SESSION_DURATION_MS;
-  const ageMs = now - createdAtGuess;
-  if (ageMs > SESSION_RENEWAL_THRESHOLD) {
-    const newExpiresAt = new Date(now + SESSION_DURATION_MS);
-    await db
-      .update(sessions)
-      .set({ expiresAt: newExpiresAt })
-      .where(eq(sessions.id, sessionId));
-  }
-
   // Throttled "last active" bump — at most once per LAST_SEEN_THROTTLE_MS so it
   // doesn't add a write to every request.
-  if (now - found.lastSeenAt.getTime() > LAST_SEEN_THROTTLE_MS) {
+  if (Date.now() - found.lastSeenAt.getTime() > LAST_SEEN_THROTTLE_MS) {
     await db.update(sessions).set({ lastSeenAt: new Date() }).where(eq(sessions.id, sessionId));
   }
   return found.user;

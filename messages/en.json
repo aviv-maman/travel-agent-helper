@@ -380,13 +380,7 @@
       "used": "Used",
       "revoked": "Revoked",
       "expired": "Expired"
-    },
-    "reauthTitle": "Verify your identity",
-    "reauthDescription": "This is a sensitive operation. Please verify with your password or 2FA code.",
-    "reauthNoMethod": "No password or 2FA set up. You cannot perform this operation.",
-    "reauthVerify": "Verify",
-    "wrongPassword": "Incorrect password.",
-    "invalidCode": "Invalid code."
+    }
   },
   "account": {
     "profile": "Profile",
@@ -437,8 +431,6 @@
     "auditPasskeyRemove": "Removed a passkey",
     "auditPasswordReset": "Reset password",
     "auditEmailVerify": "Verified email",
-    "auditEmailChangeRequested": "Requested email change",
-    "auditEmailChange": "Changed email",
     "searchUsers": "Search username…",
     "search": "Search",
     "usersCount": "{total} users",

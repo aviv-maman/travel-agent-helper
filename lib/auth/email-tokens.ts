@@ -12,12 +12,11 @@ import { emailTokens } from "@/db/schema";
  * a short expiry.
  */
 
-export type EmailTokenKind = "verify" | "reset" | "email_change";
+export type EmailTokenKind = "verify" | "reset";
 
 const TTL_MS: Record<EmailTokenKind, number> = {
   verify: 24 * 60 * 60 * 1000, // 24h
   reset: 45 * 60 * 1000, // 45min
-  email_change: 24 * 60 * 60 * 1000, // 24h
 };
 
 function hashToken(token: string): string {

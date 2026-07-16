@@ -380,13 +380,7 @@
       "used": "נוצל",
       "revoked": "בוטל",
       "expired": "פג תוקף"
-    },
-    "reauthTitle": "אימות הזהות שלך",
-    "reauthDescription": "זו פעולה רגישה. אנא אימתו עם הסיסמה או קוד 2FA שלכם.",
-    "reauthNoMethod": "אין סיסמה או אימות דו-שלבי מוגדרים. לא ניתן לבצע פעולה זו.",
-    "reauthVerify": "אימות",
-    "wrongPassword": "סיסמה שגויה.",
-    "invalidCode": "קוד שגוי."
+    }
   },
   "account": {
     "profile": "פרופיל",
@@ -437,8 +431,6 @@
     "auditPasskeyRemove": "הסרת מפתח גישה",
     "auditPasswordReset": "איפוס סיסמה",
     "auditEmailVerify": "אימות אימייל",
-    "auditEmailChangeRequested": "בקשה לשינוי אימייל",
-    "auditEmailChange": "שינוי אימייל",
     "searchUsers": "חיפוש שם משתמש…",
     "search": "חפש",
     "usersCount": "{total} משתמשים",
