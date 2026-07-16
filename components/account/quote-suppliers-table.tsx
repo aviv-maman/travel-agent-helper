@@ -197,16 +197,16 @@ export function QuoteSuppliersTable({ rows }: { rows: QuoteSupplier[] }) {
                 <TableRow key={r.id}>{editorCells()}</TableRow>
               ) : (
                 <TableRow key={r.id} className="hover:bg-muted/30">
-                  <TableCell dir="ltr" className="whitespace-nowrap text-foreground">
+                  <TableCell dir="ltr" className="whitespace-nowrap text-center text-foreground">
                     {r.nameEn}
                   </TableCell>
                   <TableCell className="whitespace-nowrap">{r.nameHe || "—"}</TableCell>
-                  <TableCell className="whitespace-nowrap">{r.baggageSuitcase ?? "—"}</TableCell>
-                  <TableCell className="whitespace-nowrap">{r.baggageTrolley ?? "—"}</TableCell>
-                  <TableCell dir="ltr">{pctCell(r.netFlightNoStar)}</TableCell>
-                  <TableCell dir="ltr">{pctCell(r.netFlightStar)}</TableCell>
-                  <TableCell dir="ltr">{pctCell(r.netPackageNoStar)}</TableCell>
-                  <TableCell dir="ltr">{pctCell(r.netPackageStar)}</TableCell>
+                  <TableCell className="whitespace-nowrap text-center">{r.baggageSuitcase ?? "—"}</TableCell>
+                  <TableCell className="whitespace-nowrap text-center">{r.baggageTrolley ?? "—"}</TableCell>
+                  <TableCell dir="ltr" className="text-center">{pctCell(r.netFlightNoStar)}</TableCell>
+                  <TableCell dir="ltr" className="text-center">{pctCell(r.netFlightStar)}</TableCell>
+                  <TableCell dir="ltr" className="text-center">{pctCell(r.netPackageNoStar)}</TableCell>
+                  <TableCell dir="ltr" className="text-center">{pctCell(r.netPackageStar)}</TableCell>
                   {/* Notes wrap in full — clamping hid the destination/season
                       exceptions, which are exactly what tells twin rows apart. */}
                   <TableCell className="min-w-56 whitespace-normal">
