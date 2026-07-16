@@ -14,6 +14,7 @@ import { streamAssistant, AiChatError, type ChatTurn } from "@/lib/ai/stream";
 import { saveQuoteAction } from "@/app/actions/ai";
 import { onQuoteDeleted } from "@/lib/ai/quote-events";
 import { uploadQuoteImage } from "@/lib/ai/quote-image-upload";
+import { loadRates, storeRates } from "@/lib/ai/rates-store";
 
 const MAX_IMAGE_BYTES = 5 * 1024 * 1024; // 5 MB — offers are screenshots, not photos
 
@@ -90,7 +91,21 @@ export function ChatInterface({ signUrl }: { signUrl: string | null }) {
   // keep vision context on follow-ups ("make it 10% more") we must resend the image
   // with every later send, not just the turn that attached it.
   const [sentImage, setSentImage] = useState<File | null>(null);
+  // Rates survive leaving the page: hydrated from localStorage after mount
+  // (SSR renders them unset) and written back on every change. The store
+  // drops entries older than half a day — sale rates are a daily setting.
   const [rates, setRates] = useState<Rate[]>([]);
+  useEffect(() => {
+    // One-time client hydration from a browser-only source (localStorage): the
+    // server must render "no rates" deterministically, so the read happens
+    // after mount. The extra render is bounded (mount only).
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setRates(loadRates());
+  }, []);
+  function handleRatesChange(next: Rate[]) {
+    setRates(next);
+    storeRates(next);
+  }
   const [dragging, setDragging] = useState(false);
   // Child elements fire dragenter/dragleave pairs while moving inside the card;
   // count the depth so the overlay doesn't flicker and only clears on a real leave.
@@ -318,7 +333,7 @@ export function ChatInterface({ signUrl }: { signUrl: string | null }) {
       onPickImage={pickImage}
       onClearImage={clearImage}
       rates={rates}
-      onRatesChange={setRates}
+      onRatesChange={handleRatesChange}
       onSend={handleSend}
     />
   );
