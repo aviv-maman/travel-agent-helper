@@ -17,7 +17,7 @@ bun run create-admin myname 'pw'    # bootstrap the first admin
 bun run dev
 ```
 
-The database powers **`/hotels`**, the **content guides** (suppliers, cancellation fees, airlines, transfers, contacts), **auth**, the **dashboard** (per-user tables), **saved AI quotes**, and **exchange rates**. The content pages fall back to their in-code data arrays when no database is configured (code is the source of truth for most content — edit `lib/*.ts`, then `bun run seed`; contacts and supplier commissions/baggage are edited in-app and survive re-seeds). The database is backed up monthly + on demand — see [docs/database-backup.md](docs/database-backup.md). Full setup, the Drizzle migrate/generate/push workflow, and troubleshooting (including the "Failed query … destinations" error) are in **[docs/database-setup.md](docs/database-setup.md)**.
+The database powers **`/hotels`**, the **content guides** (suppliers, cancellation fees, airlines, transfers, contacts), **auth**, the **dashboard** (per-user tables), **saved AI quotes**, the **AI quote-commissions table** (Settings → עמלות AI — the reference data the assistant prices with), and **exchange rates**. The content pages fall back to their in-code data arrays when no database is configured (code is the source of truth for most content — edit `lib/*.ts`, then `bun run seed`). The **app-managed** data is edited in the UI and survives re-seeds: contacts, supplier commission lines & baggage, airline suitcase/trolley/commission figures, transfer inclusion pills, the quote-commissions table, and the hotels' Google Places enrichment (rating/address/website/photo — filled by `scripts/enrich-hotels-places.ts`, ratings auto-refreshed weekly). The database is backed up monthly + on demand — see [docs/database-backup.md](docs/database-backup.md). Full setup, the Drizzle migrate/generate/push workflow, and troubleshooting (including the "Failed query … destinations" error) are in **[docs/database-setup.md](docs/database-setup.md)**.
 
 ## Useful scripts
 
@@ -27,7 +27,9 @@ The database powers **`/hotels`**, the **content guides** (suppliers, cancellati
 | `bun run db:generate` | Generate a migration after editing `db/schema.ts` |
 | `bun run db:migrate` | Apply pending migrations |
 | `bun run db:studio` | Browse the database |
-| `bun run seed` | Load hotel/destination data |
+| `bun run seed` | Load hotel/destination + content-guide data (app-managed data is preserved) |
+| `bun scripts/enrich-hotels-places.ts [--dest IATA]` | Fill hotels' Google rating/address/website/photo from Google Places (needs `GOOGLE_PLACES_API_KEY`) |
+| `bun scripts/seed-quote-suppliers.ts <csv>` | One-time bootstrap of the AI quote-commissions table (refuses when non-empty) |
 | `bun run create-admin <user> <pass>` | Create/promote an admin |
 | `bun run cleanup` | Prune expired sessions and login-attempt rows |
 

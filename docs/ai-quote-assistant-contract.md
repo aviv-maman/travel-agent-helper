@@ -78,6 +78,15 @@ A Next page (hidden unless a key exists) posts a prompt + optional image(s) to t
 
 A bilingual (he/en) **system prompt** that: states the goal (extract hotel offer → produce a client quote), defines the output quote template (hotel, dates, nights, board, price breakdown, **total**, key conditions, a forwardable closing line), and tells Claude to ask for missing essentials rather than invent them. Keep it in the backend, versioned. General prompts (edits, follow-ups) flow through the same chat unchanged.
 
+### Reference data (supplier commissions + IATA codes)
+
+The pricing tools read two reference datasets (backend `sheets.py`):
+
+- **Supplier commissions/baggage** — **DB-first** from the shared `quote_suppliers` table (Next migration 0025), which the agent edits in the app at **Settings → AI Commissions** (`/account/quote-commissions`, `content:edit`). The agent's legacy published Google-Sheet CSV (`SHEET_SUPPLIERS_CSV_URL`) remains the fallback while the table is empty or the DB is unreachable. Values are stored bare (percent numbers, baggage cells in the sheet grammar `כלול`/`130$`); a supplier may span several rows (per-destination terms) told apart by the notes.
+- **IATA → airline name** — still the published sheet CSV (`SHEET_IATA_CSV_URL`), with `airlines_fallback.py` and then model knowledge (marked "unverified") behind it.
+
+Both are cached in-process for ~10 minutes, so app/sheet edits reach the assistant without a redeploy.
+
 ### Error handling (map Anthropic errors to clean UX)
 
 - `401` from Anthropic → "your API key is invalid" (prompt re-entry; consider auto-clearing the stored key).

@@ -31,11 +31,16 @@ Grouped by the phase they're scheduled in (see Phasing). Status is as of 2026-07
 | 6 | **File upload** (avatars now; docs/images later) | routes + Supabase Storage | [file-upload-contract.md](./file-upload-contract.md) | Avatar built (provider unwired); presigned PUT /files/sign |
 | 7 | **Exchange-rate service** | daily cron → table | [exchange-rate-contract.md](./exchange-rate-contract.md) | Implemented (`POST /cron/fx`; table via Next migration 0013) |
 | 8 | **WhatsApp** (send quotes/alerts) | route/worker | [whatsapp-contract.md](./whatsapp-contract.md) | Built (provider unwired; admin-only) |
-| 9 | **Scheduled cleanup + audit retention** | cron | see below | Implemented (`POST /cron/cleanup` + GH Actions schedule) |
+| 9 | **Scheduled crons** (cleanup, FX, PII sweep, hotel ratings) | cron | see below | Implemented (4 endpoints + GH Actions schedules) |
 
 ### 9. Cron jobs
-- **Cleanup:** delete expired `sessions` + stale `loginAttempts` — logic already in [`scripts/cleanup.ts`](../scripts/cleanup.ts), run daily.
-- **Audit-log retention:** delete audit rows older than the retention window (e.g. 12 months).
+All service-key-authed `POST /cron/*` endpoints, triggered by GitHub Actions workflows in the backend repo (Render's free tier has no scheduler and sleeps — the curl also wakes it):
+- **`/cron/cleanup`** (daily) — expired `sessions`, stale `login_attempts`, `audit_log` retention.
+- **`/cron/fx`** (daily) — ILS-base exchange rates into `exchange_rates` (see [exchange-rate-contract.md](./exchange-rate-contract.md)).
+- **`/cron/quotes`** (Sundays) — PII sweep: saved quotes + their screenshots past retention.
+- **`/cron/places`** (Sundays) — refreshes each enriched hotel's Google rating + review count (needs `GOOGLE_PLACES_API_KEY` on the backend; the one-time enrichment runs from the Next repo's `scripts/enrich-hotels-places.ts`).
+
+The backend also sleeps after ~15 min idle; a cron-job.org pinger keeps it warm during working hours (see the backend repo's `docs/render-keep-alive.md`).
 
 ## Environment variables Next uses to reach the backend
 
@@ -43,7 +48,9 @@ Grouped by the phase they're scheduled in (see Phasing). Status is as of 2026-07
 |---|---|---|
 | `AUTH_BACKEND_URL` | `oauth-buttons.tsx`, `connected-accounts.tsx` | OAuth endpoints; buttons hide until set |
 | `NEWS_FETCH_PROXY` | `lib/news.ts` | Fetch-proxy endpoint; blocked sources go direct until set |
-| `BACKEND_URL` *(planned)* | email send, AI chat, uploads | Base URL for the newer endpoints (server-to-server; browser can use same-origin relative paths) |
+| `BACKEND_URL` | AI chat, email send, uploads, same-origin rewrites | Base URL for the backend (server-to-server; the browser uses the `/api/*` rewrites next.config.ts derives from it) |
+| `SERVICE_KEY` | password-reset / verification email sends | Shared secret for `X-Service-Key` calls; must equal the backend's |
+| `FILE_UPLOAD_URL` + `SUPABASE_PUBLIC_BASE_URL` | avatar + quote-image uploads | Presign endpoint prefix and the public-bucket base for URL validation |
 
 ## Suggested phasing (2026-07)
 
