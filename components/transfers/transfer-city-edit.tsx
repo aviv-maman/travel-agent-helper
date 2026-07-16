@@ -53,7 +53,7 @@ function StatePicker({
   labels,
 }: {
   value: PillState;
-  onChange: (s: PillState) => void;
+  onChange: (_next: PillState) => void;
   labels: Record<PillState, string>;
 }) {
   return (
