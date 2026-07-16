@@ -140,8 +140,8 @@
         },
         {
           "landmarkKey": "kazimierz",
-          "meters": 970,
-          "walkMinutes": 13,
+          "meters": 1600,
+          "walkMinutes": 21,
           "rideMinutes": null
         }
       ],
@@ -175,8 +175,8 @@
         },
         {
           "landmarkKey": "kazimierz",
-          "meters": 890,
-          "walkMinutes": 12,
+          "meters": 1500,
+          "walkMinutes": 20,
           "rideMinutes": null
         }
       ],
@@ -213,8 +213,8 @@
         },
         {
           "landmarkKey": "kazimierz",
-          "meters": 1000,
-          "walkMinutes": 13,
+          "meters": 1600,
+          "walkMinutes": 22,
           "rideMinutes": null
         }
       ],
@@ -248,8 +248,8 @@
         },
         {
           "landmarkKey": "kazimierz",
-          "meters": 880,
-          "walkMinutes": 11,
+          "meters": 1500,
+          "walkMinutes": 20,
           "rideMinutes": null
         }
       ],
@@ -287,8 +287,8 @@
         },
         {
           "landmarkKey": "kazimierz",
-          "meters": 1050,
-          "walkMinutes": 14,
+          "meters": 1650,
+          "walkMinutes": 22,
           "rideMinutes": null
         }
       ],
@@ -324,8 +324,8 @@
         },
         {
           "landmarkKey": "kazimierz",
-          "meters": 1050,
-          "walkMinutes": 14,
+          "meters": 1700,
+          "walkMinutes": 23,
           "rideMinutes": null
         }
       ],
@@ -361,8 +361,8 @@
         },
         {
           "landmarkKey": "kazimierz",
-          "meters": 870,
-          "walkMinutes": 12,
+          "meters": 1550,
+          "walkMinutes": 21,
           "rideMinutes": null
         }
       ],
@@ -396,8 +396,8 @@
         },
         {
           "landmarkKey": "kazimierz",
-          "meters": 830,
-          "walkMinutes": 11,
+          "meters": 1400,
+          "walkMinutes": 18,
           "rideMinutes": null
         }
       ],
@@ -434,8 +434,8 @@
         },
         {
           "landmarkKey": "kazimierz",
-          "meters": 1100,
-          "walkMinutes": 15,
+          "meters": 1750,
+          "walkMinutes": 24,
           "rideMinutes": null
         }
       ],
@@ -472,8 +472,8 @@
         },
         {
           "landmarkKey": "kazimierz",
-          "meters": 930,
-          "walkMinutes": 12,
+          "meters": 1650,
+          "walkMinutes": 22,
           "rideMinutes": null
         }
       ],
@@ -507,8 +507,8 @@
         },
         {
           "landmarkKey": "kazimierz",
-          "meters": 890,
-          "walkMinutes": 12,
+          "meters": 1600,
+          "walkMinutes": 21,
           "rideMinutes": null
         }
       ],
@@ -544,8 +544,8 @@
         },
         {
           "landmarkKey": "kazimierz",
-          "meters": 720,
-          "walkMinutes": 9,
+          "meters": 1450,
+          "walkMinutes": 19,
           "rideMinutes": null
         }
       ],
@@ -579,8 +579,8 @@
         },
         {
           "landmarkKey": "kazimierz",
-          "meters": 700,
-          "walkMinutes": 9,
+          "meters": 1450,
+          "walkMinutes": 19,
           "rideMinutes": null
         }
       ],
@@ -614,9 +614,9 @@
         },
         {
           "landmarkKey": "kazimierz",
-          "meters": 1500,
-          "walkMinutes": 20,
-          "rideMinutes": null
+          "meters": 2100,
+          "walkMinutes": 28,
+          "rideMinutes": 10
         }
       ],
       "rooms": []
@@ -649,9 +649,9 @@
         },
         {
           "landmarkKey": "kazimierz",
-          "meters": 1550,
-          "walkMinutes": 21,
-          "rideMinutes": null
+          "meters": 2150,
+          "walkMinutes": 29,
+          "rideMinutes": 9
         }
       ],
       "rooms": []
@@ -684,8 +684,8 @@
         },
         {
           "landmarkKey": "kazimierz",
-          "meters": 1050,
-          "walkMinutes": 12,
+          "meters": 1500,
+          "walkMinutes": 20,
           "rideMinutes": null
         }
       ],
@@ -719,9 +719,9 @@
         },
         {
           "landmarkKey": "kazimierz",
-          "meters": 1700,
-          "walkMinutes": 22,
-          "rideMinutes": null
+          "meters": 2200,
+          "walkMinutes": 29,
+          "rideMinutes": 8
         }
       ],
       "rooms": []
@@ -754,8 +754,8 @@
         },
         {
           "landmarkKey": "kazimierz",
-          "meters": 1050,
-          "walkMinutes": 12,
+          "meters": 1750,
+          "walkMinutes": 23,
           "rideMinutes": null
         }
       ],
@@ -789,8 +789,8 @@
         },
         {
           "landmarkKey": "kazimierz",
-          "meters": 1000,
-          "walkMinutes": 13,
+          "meters": 1750,
+          "walkMinutes": 23,
           "rideMinutes": null
         }
       ],
@@ -824,9 +824,9 @@
         },
         {
           "landmarkKey": "kazimierz",
-          "meters": 1400,
-          "walkMinutes": 19,
-          "rideMinutes": null
+          "meters": 2150,
+          "walkMinutes": 28,
+          "rideMinutes": 5
         }
       ],
       "rooms": []
@@ -859,8 +859,8 @@
         },
         {
           "landmarkKey": "kazimierz",
-          "meters": 460,
-          "walkMinutes": 6,
+          "meters": 1250,
+          "walkMinutes": 17,
           "rideMinutes": null
         }
       ],
@@ -894,9 +894,9 @@
         },
         {
           "landmarkKey": "kazimierz",
-          "meters": 1200,
-          "walkMinutes": 16,
-          "rideMinutes": null
+          "meters": 1900,
+          "walkMinutes": 25,
+          "rideMinutes": 8
         }
       ],
       "rooms": []
@@ -929,8 +929,8 @@
         },
         {
           "landmarkKey": "kazimierz",
-          "meters": 380,
-          "walkMinutes": 5,
+          "meters": 790,
+          "walkMinutes": 11,
           "rideMinutes": null
         }
       ],
@@ -964,8 +964,8 @@
         },
         {
           "landmarkKey": "kazimierz",
-          "meters": 980,
-          "walkMinutes": 13,
+          "meters": 1700,
+          "walkMinutes": 23,
           "rideMinutes": null
         }
       ],
@@ -1002,9 +1002,9 @@
         },
         {
           "landmarkKey": "kazimierz",
-          "meters": 1150,
-          "walkMinutes": 13,
-          "rideMinutes": null
+          "meters": 1900,
+          "walkMinutes": 25,
+          "rideMinutes": 6
         }
       ],
       "rooms": []
@@ -1037,8 +1037,8 @@
         },
         {
           "landmarkKey": "kazimierz",
-          "meters": 1150,
-          "walkMinutes": 13,
+          "meters": 1800,
+          "walkMinutes": 24,
           "rideMinutes": null
         }
       ],
@@ -1075,8 +1075,8 @@
         },
         {
           "landmarkKey": "kazimierz",
-          "meters": 930,
-          "walkMinutes": 10,
+          "meters": 1650,
+          "walkMinutes": 22,
           "rideMinutes": null
         }
       ],
@@ -1110,9 +1110,9 @@
         },
         {
           "landmarkKey": "kazimierz",
-          "meters": 1250,
-          "walkMinutes": 14,
-          "rideMinutes": null
+          "meters": 2150,
+          "walkMinutes": 29,
+          "rideMinutes": 7
         }
       ],
       "rooms": []
@@ -1147,8 +1147,8 @@
         },
         {
           "landmarkKey": "kazimierz",
-          "meters": 0,
-          "walkMinutes": null,
+          "meters": 760,
+          "walkMinutes": 10,
           "rideMinutes": null
         }
       ],
@@ -1184,9 +1184,9 @@
         },
         {
           "landmarkKey": "kazimierz",
-          "meters": 1050,
-          "walkMinutes": 12,
-          "rideMinutes": null
+          "meters": 1850,
+          "walkMinutes": 25,
+          "rideMinutes": 6
         }
       ],
       "rooms": []
@@ -1219,9 +1219,9 @@
         },
         {
           "landmarkKey": "kazimierz",
-          "meters": 1400,
-          "walkMinutes": 19,
-          "rideMinutes": null
+          "meters": 2150,
+          "walkMinutes": 28,
+          "rideMinutes": 7
         }
       ],
       "rooms": []
@@ -1256,8 +1256,8 @@
         },
         {
           "landmarkKey": "kazimierz",
-          "meters": 60,
-          "walkMinutes": 1,
+          "meters": 500,
+          "walkMinutes": 7,
           "rideMinutes": null
         }
       ],
@@ -1291,9 +1291,9 @@
         },
         {
           "landmarkKey": "kazimierz",
-          "meters": 1850,
-          "walkMinutes": 24,
-          "rideMinutes": null
+          "meters": 2550,
+          "walkMinutes": 34,
+          "rideMinutes": 7
         }
       ],
       "rooms": []
@@ -1329,8 +1329,8 @@
         },
         {
           "landmarkKey": "kazimierz",
-          "meters": 220,
-          "walkMinutes": 3,
+          "meters": 800,
+          "walkMinutes": 11,
           "rideMinutes": null
         }
       ],
@@ -1364,9 +1364,9 @@
         },
         {
           "landmarkKey": "kazimierz",
-          "meters": 1150,
-          "walkMinutes": 13,
-          "rideMinutes": null
+          "meters": 2100,
+          "walkMinutes": 28,
+          "rideMinutes": 7
         }
       ],
       "rooms": []
@@ -1399,8 +1399,8 @@
         },
         {
           "landmarkKey": "kazimierz",
-          "meters": 0,
-          "walkMinutes": null,
+          "meters": 390,
+          "walkMinutes": 5,
           "rideMinutes": null
         }
       ],
@@ -1437,9 +1437,9 @@
         },
         {
           "landmarkKey": "kazimierz",
-          "meters": 1100,
-          "walkMinutes": 13,
-          "rideMinutes": null
+          "meters": 2100,
+          "walkMinutes": 28,
+          "rideMinutes": 6
         }
       ],
       "rooms": []
@@ -1472,9 +1472,9 @@
         },
         {
           "landmarkKey": "kazimierz",
-          "meters": 1600,
-          "walkMinutes": 22,
-          "rideMinutes": null
+          "meters": 2400,
+          "walkMinutes": 32,
+          "rideMinutes": 7
         }
       ],
       "rooms": []
@@ -1509,8 +1509,8 @@
         },
         {
           "landmarkKey": "kazimierz",
-          "meters": 0,
-          "walkMinutes": null,
+          "meters": 450,
+          "walkMinutes": 6,
           "rideMinutes": null
         }
       ],
@@ -1546,9 +1546,9 @@
         },
         {
           "landmarkKey": "kazimierz",
-          "meters": 1600,
-          "walkMinutes": 22,
-          "rideMinutes": null
+          "meters": 2200,
+          "walkMinutes": 30,
+          "rideMinutes": 9
         }
       ],
       "rooms": []
@@ -1581,8 +1581,8 @@
         },
         {
           "landmarkKey": "kazimierz",
-          "meters": 0,
-          "walkMinutes": null,
+          "meters": 430,
+          "walkMinutes": 6,
           "rideMinutes": null
         }
       ],
@@ -1616,8 +1616,8 @@
         },
         {
           "landmarkKey": "kazimierz",
-          "meters": 0,
-          "walkMinutes": null,
+          "meters": 250,
+          "walkMinutes": 3,
           "rideMinutes": null
         }
       ],
@@ -1651,8 +1651,8 @@
         },
         {
           "landmarkKey": "kazimierz",
-          "meters": 0,
-          "walkMinutes": null,
+          "meters": 400,
+          "walkMinutes": 5,
           "rideMinutes": null
         }
       ],
@@ -1686,8 +1686,8 @@
         },
         {
           "landmarkKey": "kazimierz",
-          "meters": 0,
-          "walkMinutes": null,
+          "meters": 100,
+          "walkMinutes": 1,
           "rideMinutes": null
         }
       ],
@@ -1721,8 +1721,8 @@
         },
         {
           "landmarkKey": "kazimierz",
-          "meters": 0,
-          "walkMinutes": null,
+          "meters": 80,
+          "walkMinutes": 1,
           "rideMinutes": null
         }
       ],
@@ -1758,8 +1758,8 @@
         },
         {
           "landmarkKey": "kazimierz",
-          "meters": 890,
-          "walkMinutes": 12,
+          "meters": 1500,
+          "walkMinutes": 20,
           "rideMinutes": null
         }
       ],
@@ -1793,9 +1793,9 @@
         },
         {
           "landmarkKey": "kazimierz",
-          "meters": 1450,
-          "walkMinutes": 20,
-          "rideMinutes": null
+          "meters": 2100,
+          "walkMinutes": 28,
+          "rideMinutes": 10
         }
       ],
       "rooms": []
