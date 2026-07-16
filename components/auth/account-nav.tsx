@@ -14,10 +14,13 @@ export function AccountNav({
   canInvites,
   canUsers,
   canAudit,
+  canContent,
 }: {
   canInvites: boolean;
   canUsers: boolean;
   canAudit: boolean;
+  /** content:edit — shows the AI quote-commissions table editor. */
+  canContent: boolean;
 }) {
   const t = useTranslations("account");
   // Segments *below* the /account layout this nav lives in — e.g. ["profile"] or
@@ -30,6 +33,7 @@ export function AccountNav({
     { href: "/account/profile", label: t("profile") },
     { href: "/account/security", label: t("security") },
     { href: "/account/ai", label: t("ai") },
+    ...(canContent ? [{ href: "/account/quote-commissions", label: t("quoteCommissions") }] : []),
     ...(canInvites ? [{ href: "/account/admin/invites", label: t("invites") }] : []),
     ...(canUsers ? [{ href: "/account/admin/users", label: t("users") }] : []),
     ...(canAudit ? [{ href: "/account/admin/audit", label: t("audit") }] : []),
