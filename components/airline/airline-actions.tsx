@@ -90,7 +90,7 @@ export function AirlineActions({
                         onClick={onCancelEdit}
                       />
                     }>
-                    <X className="size-4" />
+                    <X className="size-4 text-destructive" />
                   </TooltipTrigger>
                   <TooltipContent>{t("cancelEdit")}</TooltipContent>
                 </Tooltip>
