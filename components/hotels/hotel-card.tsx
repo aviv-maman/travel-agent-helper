@@ -159,11 +159,12 @@ export function HotelCard({
       </div>
     );
 
-  // Places formattedAddress is English — force LTR inside the RTL card.
+  // The line follows the page direction (right-aligned in Hebrew); only the
+  // English address text itself is forced LTR so it reads correctly.
   const address = hotel.address && (
-    <p dir="ltr" className="truncate text-xs text-muted-foreground" title={hotel.address}>
+    <p className="truncate text-xs text-muted-foreground" title={hotel.address}>
       <span aria-hidden>📍 </span>
-      {hotel.address}
+      <span dir="ltr">{hotel.address}</span>
     </p>
   );
 
@@ -190,7 +191,9 @@ export function HotelCard({
           className="inline-flex items-center gap-1 rounded-md bg-brand/10 px-1.5 py-0.5 text-xs font-bold text-brand">
           {t("card.google")} ★ {hotel.googleRating}
           {hotel.googleReviewCount != null && (
-            <span className="font-medium">({hotel.googleReviewCount.toLocaleString(locale)})</span>
+            <span className="font-medium">
+              ({t("card.reviews", { count: hotel.googleReviewCount.toLocaleString(locale) })})
+            </span>
           )}
         </span>
       )}
@@ -369,8 +372,11 @@ export function HotelCard({
             {/* Compact, non-stretched action buttons — mobile only. */}
             {listActions && <div className="sm:hidden">{listActions}</div>}
           </div>
-          {/* Desktop: original action column. */}
-          {actions && <div className="hidden shrink-0 sm:flex sm:justify-end">{actions}</div>}
+          {/* Desktop: the action column stretches to the row's full height and
+              centers its buttons — top-hugging links looked off. */}
+          {actions && (
+            <div className="hidden shrink-0 sm:flex sm:items-center sm:self-stretch">{actions}</div>
+          )}
         </div>
       </Card>
     );
