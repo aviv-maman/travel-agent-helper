@@ -40,27 +40,46 @@ export function AvatarUpload({
     if (file.size > MAX_BYTES) return toast.error(t("avatarTooBig"));
     setBusy(true);
     try {
-      // 1. Presign.
+      // 1. Presign. Map the backend's typed failures to a specific message so a
+      // misconfigured deployment says WHICH thing is wrong, not just "try again".
       const signRes = await fetch(`${signUrl}/sign`, {
         method: "POST",
         headers: { "content-type": "application/json" },
         body: JSON.stringify({ purpose: "avatar", contentType: file.type, size: file.size }),
       });
-      if (!signRes.ok) throw new Error("sign failed");
+      if (!signRes.ok) {
+        // 503 = storage env not configured; 401/403 = session/permission.
+        if (signRes.status === 503) return toast.error(t("avatarNotConfigured"));
+        if (signRes.status === 401 || signRes.status === 403)
+          return toast.error(t("avatarForbidden"));
+        return toast.error(t("avatarError"));
+      }
       const { uploadUrl, contentType, key, publicUrl } = await signRes.json();
 
       // 2. Upload straight to Supabase Storage (raw PUT; Content-Type must match
-      // the type signed into the URL, else the signature check rejects it).
-      const up = await fetch(uploadUrl, {
-        method: "PUT",
-        headers: { "Content-Type": contentType },
-        body: file,
-      });
-      if (!up.ok) throw new Error("upload failed");
+      // the type signed into the URL, else the signature check rejects it). A
+      // thrown fetch here is typically a CORS/network wall between the browser
+      // and the storage bucket.
+      let up: Response;
+      try {
+        up = await fetch(uploadUrl, {
+          method: "PUT",
+          headers: { "Content-Type": contentType },
+          body: file,
+        });
+      } catch {
+        // A thrown fetch here is a CORS/network wall to the storage bucket.
+        return toast.error(t("avatarUploadFailed"));
+      }
+      if (!up.ok) return toast.error(t("avatarUploadFailed"));
 
       // 3. Persist (server re-validates the URL against the storage base + prefix).
+      // "invalid" means the object uploaded but the persisted URL didn't match the
+      // configured public base — usually a SUPABASE_PUBLIC_BASE_URL mismatch.
       const result = await setAvatar(key, publicUrl);
-      if (result.error) throw new Error(result.error);
+      if (result.error) {
+        return toast.error(result.error === "invalid" ? t("avatarSaveFailed") : t("avatarForbidden"));
+      }
       toast.success(t("avatarUpdated"));
       router.refresh();
     } catch {
