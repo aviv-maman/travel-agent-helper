@@ -43,6 +43,12 @@
       "skillPath": "skills/frontend-design/SKILL.md",
       "computedHash": "93f53fd1c0352d3d7ec17b8f73d7351bf76f4821e55d123c9d2abc2c53ba48e4"
     },
+    "milestone-doc-sync": {
+      "source": "aviv-maman/agent-skills",
+      "sourceType": "github",
+      "skillPath": "skills/milestone-doc-sync/SKILL.md",
+      "computedHash": "001b4f03f35b669c0964cb002454114ae4d2658a920a1cfe2fdeff1a287b263f"
+    },
     "neon": {
       "source": "neondatabase/agent-skills",
       "sourceType": "github",
