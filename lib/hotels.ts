@@ -55,6 +55,7 @@ export type UIHotel = {
   googleMapsUrl: string | null;
   bookingUrl: string | null;
   /** Google Places enrichment (DB-managed; null in the no-DB seed fallback). */
+  googlePlaceId: string | null;
   googleRating: number | null;
   googleReviewCount: number | null;
   address: string | null;
@@ -207,7 +208,12 @@ function resolveHotel(h: UIHotel, locale: string): ViewHotel {
     tags: h.tags,
     boards: h.boards,
     bookingScore: h.bookingScore,
-    googleMapsUrl: h.googleMapsUrl,
+    // A Places-enriched hotel links to its actual Google place card. The stored
+    // URL (a name search, or raw geocoded coords on skill-built destinations)
+    // only lands NEAR the hotel — it remains the un-enriched fallback.
+    googleMapsUrl: h.googlePlaceId
+      ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(h.name)}&query_place_id=${h.googlePlaceId}`
+      : h.googleMapsUrl,
     bookingUrl: h.bookingUrl,
     googleRating: h.googleRating,
     googleReviewCount: h.googleReviewCount,
@@ -394,6 +400,7 @@ async function loadFromDb(): Promise<UIDestination[]> {
       bookingScore: h.bookingScore,
       googleMapsUrl: h.googleMapsUrl,
       bookingUrl: h.bookingUrl,
+      googlePlaceId: h.googlePlaceId,
       googleRating: h.googleRating,
       googleReviewCount: h.googleReviewCount,
       address: h.address,
@@ -442,6 +449,7 @@ async function loadFromSeed(): Promise<UIDestination[]> {
         googleMapsUrl: h.googleMapsUrl,
         bookingUrl: h.bookingUrl,
         // Places enrichment is DB-managed — the seed fallback has none.
+        googlePlaceId: null,
         googleRating: null,
         googleReviewCount: null,
         address: null,
