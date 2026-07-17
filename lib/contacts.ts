@@ -156,6 +156,38 @@ export const DEFAULT_CONTACTS: Record<string, SupplierContact> = {
     general: [c("agent-support", "שירות", "03-9436017")],
     agents: [c("agent", "אסף", "", "assaf@ayalagroup.co.il")],
   },
+
+  // ── Hotels tab — B2B bedbanks ──────────────────────────────────────────────
+  goglobal: {
+    name: "GoGlobal",
+    general: [c("agent-support", "שירות", "03-6126191", "fit@goglobal.travel")],
+  },
+  "tbo-holidays": {
+    name: "TBO Holidays",
+    general: [c("agent-support", "שירות", "03-7201918", "office.il@tbo.com")],
+  },
+  "instant-travel": {
+    name: "Instant Travel",
+    // No phone line — support is via the system chat.
+    general: [c("agent-support", "שירות", "", "customer.service@innstanttravel.com")],
+  },
+  ratehawk: {
+    name: "RateHawk",
+    general: [c("agent-support", "שירות", "", "support@ratehawk.com")],
+    sales: [
+      c("sales-rep", "אינה ז'יבוטובסקי גדסי", "050-3020570", "inna.zhivotovskygadasi@ratehawk.com"),
+    ],
+  },
+
+  // ── Car-rental tab ─────────────────────────────────────────────────────────
+  "auto-europe": {
+    name: "Auto Europe",
+    general: [c("agent-support", "שירות", "03-5244244", "office@autoeurope.co.il")],
+    agents: [
+      c("agent", "לאוניד", "", "leonid@autoeurope.co.il"),
+      c("agent", "דותן", "", "dotan@autoeurope.co.il"),
+    ],
+  },
 };
 
 /** All contacts of a record, flattened in general → sales → agents order. */
