@@ -175,7 +175,7 @@ export const DEFAULT_CONTACTS: Record<string, SupplierContact> = {
     name: "RateHawk",
     general: [c("agent-support", "שירות", "", "support@ratehawk.com")],
     sales: [
-      c("sales-rep", "Inna Zhivotovsky Gadasi", "050-3020570", "inna.zhivotovskygadasi@ratehawk.com"),
+      c("sales-rep", "אינה ז'יבוטובסקי גדסי", "050-3020570", "inna.zhivotovskygadasi@ratehawk.com"),
     ],
   },
 
@@ -184,8 +184,8 @@ export const DEFAULT_CONTACTS: Record<string, SupplierContact> = {
     name: "Auto Europe",
     general: [c("agent-support", "שירות", "03-5244244", "office@autoeurope.co.il")],
     agents: [
-      c("agent", "Leonid", "", "leonid@autoeurope.co.il"),
-      c("agent", "Dotan", "", "dotan@autoeurope.co.il"),
+      c("agent", "לאוניד", "", "leonid@autoeurope.co.il"),
+      c("agent", "דותן", "", "dotan@autoeurope.co.il"),
     ],
   },
 };
