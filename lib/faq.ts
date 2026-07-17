@@ -74,6 +74,7 @@ export const DEFAULT_FAQS: { question: string; answers: FaqAnswer[] }[] = [
     question: "הזמנה עם 2 כרטיסי טיסה נפרדים — הודעה ללקוח",
     answers: [
       {
+        label: "טיסה בלבד",
         body:
           "הנסיעה מורכבת משני כרטיסי טיסה נפרדים.\n" +
           "המשמעות היא שאין קשר משפטי או תפעולי בין הטיסות, ובמקרה של שינוי או ביטול של אחת מהן – הטיסה השנייה לא תושפע מכך.\n" +
@@ -85,6 +86,7 @@ export const DEFAULT_FAQS: { question: string; answers: FaqAnswer[] }[] = [
     question: "הסבר על חבילה לא באישור מיידי",
     answers: [
       {
+        label: "חבילת נופש",
         body:
           "החבילה לא באישור מיידי.\n" +
           "זמן אישור: תהליך האישור מול המלון לוקח בין 24 ל-72 שעות.\n" +
