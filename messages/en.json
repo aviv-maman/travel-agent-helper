@@ -650,7 +650,16 @@
     "lawTitle": "Consumer Protection Law",
     "law": "Up to 14 calendar days from booking, <u>provided</u> there are at least 7 business days before departure — a cancellation fee of <strong>₪100 per traveler or 5% of the transaction price — whichever is lower</strong>.",
     "copy": "Copy",
-    "copied": "Copied"
+    "copied": "Copied",
+    "calcTitle": "Consumer Protection Law calculator",
+    "calcBooking": "Booking date",
+    "calcDeparture": "Departure date",
+    "calcResult": "Complies with the law until:",
+    "calcEmpty": "Pick a departure date to calculate.",
+    "calcInvalid": "The departure date must be after the booking date.",
+    "calcBy14": "Set by the 14 calendar days from the booking date.",
+    "calcBy7": "Set by the requirement that more than 7 business days remain before departure (Saturdays and holidays don't count; holiday eves do).",
+    "calcSameDay": "More than 7 business days no longer remain before departure — cancellation under the law is possible on the booking date only."
   },
   "hotels": {
     "selectDestination": "Select a hotel destination",
