@@ -9,17 +9,23 @@ import { FeeTable, type FeeTableRow } from "./fee-table";
 
 /**
  * The client script is stored as plain text (it's copied verbatim to the
- * customer): an opening Consumer Protection Law clause, then one `timeframe — fee`
- * tier per paragraph. We parse the tiers into table rows for display (coloring
- * each by the supplied severity level) while the copy button still sends the
- * original full text.
+ * customer): an opening paragraph — the Consumer Protection Law clause on a
+ * cancellation script, a lead line on a change script — then one
+ * `timeframe — fee` tier per paragraph. We parse the tiers into table rows for
+ * display (coloring each by the supplied severity level) while the copy button
+ * still sends the original full text, untouched.
+ *
+ * The opening paragraph is always dropped here: it's prose, not a tier. On
+ * cancellation scripts the caller re-adds the law as a proper first row (see
+ * LAW_ROW below) so the table states it too — the page-level alert alone was
+ * easy to miss.
  */
 function parseTiers(text: string, levels: FeeLevel[]): FeeTableRow[] {
   return text
     .split(/\n\n+/)
     .map((line) => line.trim())
     .filter(Boolean)
-    .slice(1) // drop the opening law clause (shown once at the top of the page)
+    .slice(1)
     .map((line, i) => {
       const dash = line.indexOf(" — ");
       const row =
@@ -44,9 +50,14 @@ export function CopyScript({
 }) {
   const t = useTranslations("cancellations");
   const [copied, setCopied] = useState(false);
-  const rows = parseTiers(text, levels);
-  const timeHeader = variant === "change" ? t("copyTimeHeaderChange") : t("copyTimeHeader");
-  const feeHeader = variant === "change" ? t("copyFeeHeaderChange") : t("copyFeeHeader");
+  const isChange = variant === "change";
+  // Cancellation scripts open with the Consumer Protection Law clause — surface
+  // it as the first (cheapest) row. Change scripts have no such clause, so they
+  // get the tiers only.
+  const lawRow: FeeTableRow = { timeframe: t("lawTitle"), fee: t("lawFee"), level: "low" };
+  const rows = isChange ? parseTiers(text, levels) : [lawRow, ...parseTiers(text, levels)];
+  const timeHeader = isChange ? t("copyTimeHeaderChange") : t("copyTimeHeader");
+  const feeHeader = isChange ? t("copyFeeHeaderChange") : t("copyFeeHeader");
 
   async function handleCopy() {
     try {
