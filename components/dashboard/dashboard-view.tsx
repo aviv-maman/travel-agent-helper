@@ -1,10 +1,11 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { ChevronDown, LayoutGrid, Landmark } from "lucide-react";
+import { ChevronDown, LayoutGrid, Landmark, Newspaper } from "lucide-react";
 import type { DashTask } from "./types";
 import type { BankDetails } from "@/lib/dashboard/bank";
 import type { GreetingKey } from "@/lib/dashboard/dates";
+import type { NewsArticle } from "@/lib/news";
 import { isSameJerusalemDay } from "@/lib/dashboard/dates";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import {
@@ -18,17 +19,23 @@ import { BankDetailsCard } from "./bank-details-card";
 import { TaskBoard } from "./task-board";
 import { TaskCard } from "./task-card";
 import { Playground } from "./playground";
+import { NewsList } from "@/components/news/news-list";
+import { RefreshNewsButton } from "@/components/news/refresh-news-button";
 
 /**
  * Client orchestrator. A time-of-day greeting leads; a Workspace tab holds the
  * scratchpad (above the tasks), quick-add, the four task sections, completed
- * items and quick links; a Bank tab holds the transfer-details card.
+ * items and quick links; a Bank tab holds the transfer-details card; a News
+ * tab holds the tourism feed (moved off the main nav, 2026-07).
  */
 export function DashboardView({
   tasks,
   doneTasks,
   scratchpad,
   bank,
+  articles,
+  newsSources,
+  canRefreshNews,
   agentName,
   greeting,
 }: {
@@ -36,6 +43,9 @@ export function DashboardView({
   doneTasks: DashTask[];
   scratchpad: string;
   bank: BankDetails;
+  articles: NewsArticle[];
+  newsSources: { id: string; name: string }[];
+  canRefreshNews: boolean;
   agentName: string;
   greeting: GreetingKey;
 }) {
@@ -58,6 +68,10 @@ export function DashboardView({
           <TabsTrigger value="bank">
             <Landmark className="size-4" aria-hidden />
             {t("tabs.bank")}
+          </TabsTrigger>
+          <TabsTrigger value="news">
+            <Newspaper className="size-4" aria-hidden />
+            {t("tabs.news")}
           </TabsTrigger>
         </TabsList>
 
@@ -83,6 +97,15 @@ export function DashboardView({
 
         <TabsContent value="bank" className="pt-3">
           <BankDetailsCard bank={bank} />
+        </TabsContent>
+
+        <TabsContent value="news" className="flex flex-col gap-4 pt-3">
+          {canRefreshNews && (
+            <div className="flex justify-end">
+              <RefreshNewsButton />
+            </div>
+          )}
+          <NewsList articles={articles} sources={newsSources} />
         </TabsContent>
       </Tabs>
     </div>
