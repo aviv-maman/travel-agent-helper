@@ -7,6 +7,7 @@ import type { ViewCancelSupplier } from "@/lib/cancellations";
 import { Input } from "@/components/ui/input";
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 import { CancelCard } from "./cancel-card";
+import { LawCalculator } from "./law-calculator";
 
 export function CancellationsView({ suppliers }: { suppliers: ViewCancelSupplier[] }) {
   const t = useTranslations("cancellations");
@@ -64,6 +65,9 @@ export function CancellationsView({ suppliers }: { suppliers: ViewCancelSupplier
           </p>
         </AlertDescription>
       </Alert>
+
+      {/* Sits under the law text it implements: the dates that clause turns on. */}
+      <LawCalculator />
 
       {filtered.length === 0 ? (
         <p className="rounded-xl border border-dashed border-border bg-surface/50 px-5 py-8 text-center text-sm text-muted-foreground">
