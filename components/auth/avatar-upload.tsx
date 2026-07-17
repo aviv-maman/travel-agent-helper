@@ -48,10 +48,14 @@ export function AvatarUpload({
         body: JSON.stringify({ purpose: "avatar", contentType: file.type, size: file.size }),
       });
       if (!signRes.ok) {
-        // 503 = storage env not configured; 401/403 = session/permission.
+        // 503 = the backend answered "storage not configured"; 401/403 =
+        // session/permission; any other 5xx (incl. a 500 from the Next→backend
+        // proxy when the service is down/asleep) = the upload server didn't
+        // answer cleanly.
         if (signRes.status === 503) return toast.error(t("avatarNotConfigured"));
         if (signRes.status === 401 || signRes.status === 403)
           return toast.error(t("avatarForbidden"));
+        if (signRes.status >= 500) return toast.error(t("avatarServerDown"));
         return toast.error(t("avatarError"));
       }
       const { uploadUrl, contentType, key, publicUrl } = await signRes.json();
