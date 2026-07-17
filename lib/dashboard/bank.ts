@@ -3,8 +3,13 @@
  * the server DAL (lib/dashboard/settings.ts) and the client card can share them.
  */
 
-/** Bank-detail keys, in display order — beneficiary first (the top box). */
-export const BANK_KEYS = ["beneficiary", "bank", "branch", "account"] as const;
+/**
+ * Bank-detail keys, in display order — beneficiary first (the top box), and
+ * `iban` last: it addresses the same account as bank/branch/account above, but
+ * is only used for incoming USD transfers, so it reads as a footnote to them
+ * rather than a peer.
+ */
+export const BANK_KEYS = ["beneficiary", "bank", "branch", "account", "iban"] as const;
 export type BankKey = (typeof BANK_KEYS)[number];
 export type BankDetails = Record<BankKey, string>;
 
@@ -13,6 +18,7 @@ export const EMPTY_BANK: BankDetails = {
   branch: "",
   account: "",
   beneficiary: "",
+  iban: "",
 };
 
 /** Whether any bank field carries a value (drives the empty state). */

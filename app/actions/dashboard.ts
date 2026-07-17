@@ -15,7 +15,7 @@ import {
   type TaskPatch,
 } from "@/lib/dashboard/tasks";
 import { upsertScratchpad } from "@/lib/dashboard/scratchpad";
-import { setBankDetails, type BankDetails } from "@/lib/dashboard/settings";
+import { setBankDetails, BANK_KEYS, type BankDetails } from "@/lib/dashboard/settings";
 
 /**
  * Server actions for the login-gated dashboard. Every action re-resolves the
@@ -161,12 +161,12 @@ export async function saveBankDetailsAction(details: BankDetails): Promise<Actio
   const user = await getCurrentUser();
   if (!user) return { error: "forbidden" };
   try {
-    await setBankDetails(user.id, {
-      bank: (details.bank ?? "").trim(),
-      branch: (details.branch ?? "").trim(),
-      account: (details.account ?? "").trim(),
-      beneficiary: (details.beneficiary ?? "").trim(),
-    });
+    // Trim every known field, derived from BANK_KEYS so a newly added key
+    // (e.g. iban) is covered without editing this list.
+    const trimmed = Object.fromEntries(
+      BANK_KEYS.map((key) => [key, (details[key] ?? "").trim()]),
+    ) as BankDetails;
+    await setBankDetails(user.id, trimmed);
     return { ok: true };
   } catch {
     return { error: "offline" };
