@@ -115,7 +115,11 @@ function syncAuthCookies(
   didDbCheck: boolean,
 ): NextResponse {
   if (state === "none") {
-    if (req.cookies.get(SESSION_COOKIE) || req.cookies.get(USER_COOKIE) || req.cookies.get(SESSION_VERIFIED_COOKIE)) {
+    if (
+      req.cookies.get(SESSION_COOKIE) ||
+      req.cookies.get(USER_COOKIE) ||
+      req.cookies.get(SESSION_VERIFIED_COOKIE)
+    ) {
       res.cookies.delete(SESSION_COOKIE);
       res.cookies.delete(USER_COOKIE);
       res.cookies.delete(SESSION_VERIFIED_COOKIE);

@@ -42,7 +42,9 @@ export async function UsersTable({
                     className="hover:text-brand hover:underline">
                     {user.username}
                   </Link>
-                  {isSelf && <span className="ms-1 text-xs text-muted-foreground">({t("you")})</span>}
+                  {isSelf && (
+                    <span className="ms-1 text-xs text-muted-foreground">({t("you")})</span>
+                  )}
                 </td>
                 <td className="px-3 py-2">
                   {isSelf ? (

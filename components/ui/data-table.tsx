@@ -223,7 +223,9 @@ export function DataTable<TData, TValue>({
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => (
-                  <TableHead key={header.id} className={header.column.columnDef.meta?.headerClassName}>
+                  <TableHead
+                    key={header.id}
+                    className={header.column.columnDef.meta?.headerClassName}>
                     {header.isPlaceholder
                       ? null
                       : flexRender(header.column.columnDef.header, header.getContext())}
@@ -262,7 +264,7 @@ export function DataTable<TData, TValue>({
           <span className="text-xs text-muted-foreground">{labels.total(filteredCount)}</span>
         )}
 
-        <div className="flex items-center gap-3 ms-auto">
+        <div className="ms-auto flex items-center gap-3">
           <div className="flex items-center gap-1.5">
             <span className="text-xs text-muted-foreground">{labels.perPage}</span>
             <Select

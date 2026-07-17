@@ -3,7 +3,14 @@ import { redirect } from "next/navigation";
 import { getCurrentUser } from "@/lib/auth";
 import { ForgotPasswordForm } from "@/components/auth/forgot-password-form";
 import { Link } from "@/i18n/navigation";
-import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card";
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardContent,
+  CardFooter,
+} from "@/components/ui/card";
 
 export default async function ForgotPasswordPage({
   params,

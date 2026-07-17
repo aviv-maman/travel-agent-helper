@@ -10,12 +10,7 @@ import { useSession } from "@/components/auth/session-provider";
 import { UserAvatar } from "@/components/auth/user-avatar";
 import { Button } from "@/components/ui/button";
 import { Bubble, BubbleContent } from "@/components/ui/bubble";
-import {
-  Message,
-  MessageAvatar,
-  MessageContent,
-  MessageFooter,
-} from "@/components/ui/message";
+import { Message, MessageAvatar, MessageContent, MessageFooter } from "@/components/ui/message";
 import {
   MessageScroller,
   MessageScrollerButton,
@@ -105,8 +100,7 @@ function MessageItem({
   const imageUrl = message.file ? fileUrl(message.file) : null;
   // Copy/Save only apply to a reply carrying the fenced WhatsApp block (the
   // forwardable quote). Clarifying questions and other chatter get no actions.
-  const canSave =
-    !isUser && !message.pending && extractFencedBlock(message.content) !== null;
+  const canSave = !isUser && !message.pending && extractFencedBlock(message.content) !== null;
 
   // Copy the forwardable message: the fenced WhatsApp block when there is one,
   // otherwise the whole reply.

@@ -25,13 +25,7 @@ export function LoginForm({ locale, next }: { locale: string; next?: string }) {
       {next && <input type="hidden" name="next" value={next} />}
       <div className="flex flex-col gap-1.5">
         <Label htmlFor="username">{t("username")}</Label>
-        <Input
-          id="username"
-          name="username"
-          autoComplete="username"
-          autoFocus
-          required
-        />
+        <Input id="username" name="username" autoComplete="username" autoFocus required />
       </div>
       <div className="flex flex-col gap-1.5">
         <div className="flex items-center justify-between">

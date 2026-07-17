@@ -13,7 +13,14 @@ import {
 } from "@/app/actions/quote-suppliers";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -116,7 +123,10 @@ export function QuoteSuppliersTable({ rows }: { rows: QuoteSupplier[] }) {
   const pctCell = (v: string | null) => (v ? `${v}%` : "—");
 
   /** A compact cell input; Enter saves, Escape cancels. */
-  function cellInput(key: keyof QuoteSupplierInput, opts?: { dir?: "ltr" | "rtl"; wide?: boolean }) {
+  function cellInput(
+    key: keyof QuoteSupplierInput,
+    opts?: { dir?: "ltr" | "rtl"; wide?: boolean },
+  ) {
     return (
       <Input
         value={draft[key]}
@@ -197,21 +207,31 @@ export function QuoteSuppliersTable({ rows }: { rows: QuoteSupplier[] }) {
                 <TableRow key={r.id}>{editorCells()}</TableRow>
               ) : (
                 <TableRow key={r.id} className="hover:bg-muted/30">
-                  <TableCell dir="ltr" className="whitespace-nowrap text-center text-foreground">
+                  <TableCell dir="ltr" className="text-center whitespace-nowrap text-foreground">
                     {r.nameEn}
                   </TableCell>
                   <TableCell className="whitespace-nowrap">{r.nameHe || "—"}</TableCell>
-                  <TableCell className="whitespace-nowrap text-center">{r.baggageSuitcase ?? "—"}</TableCell>
-                  <TableCell className="whitespace-nowrap text-center">{r.baggageTrolley ?? "—"}</TableCell>
-                  <TableCell dir="ltr" className="text-center">{pctCell(r.netFlightNoStar)}</TableCell>
-                  <TableCell dir="ltr" className="text-center">{pctCell(r.netFlightStar)}</TableCell>
-                  <TableCell dir="ltr" className="text-center">{pctCell(r.netPackageNoStar)}</TableCell>
-                  <TableCell dir="ltr" className="text-center">{pctCell(r.netPackageStar)}</TableCell>
+                  <TableCell className="text-center whitespace-nowrap">
+                    {r.baggageSuitcase ?? "—"}
+                  </TableCell>
+                  <TableCell className="text-center whitespace-nowrap">
+                    {r.baggageTrolley ?? "—"}
+                  </TableCell>
+                  <TableCell dir="ltr" className="text-center">
+                    {pctCell(r.netFlightNoStar)}
+                  </TableCell>
+                  <TableCell dir="ltr" className="text-center">
+                    {pctCell(r.netFlightStar)}
+                  </TableCell>
+                  <TableCell dir="ltr" className="text-center">
+                    {pctCell(r.netPackageNoStar)}
+                  </TableCell>
+                  <TableCell dir="ltr" className="text-center">
+                    {pctCell(r.netPackageStar)}
+                  </TableCell>
                   {/* Notes wrap in full — clamping hid the destination/season
                       exceptions, which are exactly what tells twin rows apart. */}
-                  <TableCell className="min-w-56 whitespace-normal">
-                    {r.notes || "—"}
-                  </TableCell>
+                  <TableCell className="min-w-56 whitespace-normal">{r.notes || "—"}</TableCell>
                   <TableCell className="whitespace-nowrap">
                     <Button
                       type="button"

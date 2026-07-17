@@ -47,7 +47,7 @@ export async function TwoFactor({ user, locale }: { user: User; locale: string }
             <CopyButton value={user.totpSecret} />
           </div>
         </div>
-        <a href={uri} className="break-all text-xs text-brand hover:underline">
+        <a href={uri} className="text-xs break-all text-brand hover:underline">
           {uri}
         </a>
         <TotpConfirm />

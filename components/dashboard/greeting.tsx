@@ -18,7 +18,7 @@ export function Greeting({ name, greeting }: { name: string; greeting: GreetingK
     <div className="relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-br from-brand/10 via-surface to-purple/10 px-5 py-6">
       <div
         aria-hidden
-        className="pointer-events-none absolute -top-16 -end-10 size-40 rounded-full bg-brand/20 blur-3xl"
+        className="pointer-events-none absolute -end-10 -top-16 size-40 rounded-full bg-brand/20 blur-3xl"
       />
       <div className="relative flex flex-col gap-1">
         <span className="flex items-center gap-1.5 text-xs font-medium tracking-wide text-muted-foreground uppercase">

@@ -119,9 +119,7 @@ const EN: string[] = [
 
 type Loc = { he?: string };
 function collectHebrew(): string[] {
-  const seed = JSON.parse(
-    readFileSync(join(process.cwd(), "data", "seed.json"), "utf8"),
-  );
+  const seed = JSON.parse(readFileSync(join(process.cwd(), "data", "seed.json"), "utf8"));
   const seen = new Set<string>();
   const order: string[] = [];
   const add = (v: Loc | null | undefined) => {

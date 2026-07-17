@@ -2,7 +2,10 @@ import { cn } from "@/lib/utils";
 
 /** Initials from the first and last name-parts (splits on space . _ -). */
 export function initialsOf(name: string): string {
-  const parts = name.trim().split(/[\s._-]+/).filter(Boolean);
+  const parts = name
+    .trim()
+    .split(/[\s._-]+/)
+    .filter(Boolean);
   if (parts.length === 0) return "?";
   const first = parts[0][0];
   const last = parts.length > 1 ? parts[parts.length - 1][0] : "";

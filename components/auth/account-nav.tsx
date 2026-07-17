@@ -40,7 +40,10 @@ export function AccountNav({
   ];
 
   const isActive = (href: string): boolean => {
-    const tabSegments = href.replace(/^\/account\/?/, "").split("/").filter(Boolean);
+    const tabSegments = href
+      .replace(/^\/account\/?/, "")
+      .split("/")
+      .filter(Boolean);
     return tabSegments.every((seg, i) => segments[i] === seg);
   };
 

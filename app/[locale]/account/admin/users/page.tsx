@@ -40,12 +40,7 @@ export default async function AccountUsersPage({
         <CardContent className="flex flex-col gap-2">
           {/* GET form → ?q=…; omitting page resets to the first page. */}
           <form className="flex gap-2">
-            <Input
-              name="q"
-              defaultValue={q}
-              placeholder={tA("searchUsers")}
-              className="max-w-xs"
-            />
+            <Input name="q" defaultValue={q} placeholder={tA("searchUsers")} className="max-w-xs" />
             <Button type="submit" variant="outline">
               {tA("search")}
             </Button>

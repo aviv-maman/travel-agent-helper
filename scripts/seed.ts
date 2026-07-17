@@ -19,15 +19,7 @@ import { EXTRA_DESTINATIONS } from "../data/destinations";
 
 const SEED_FILE = join(process.cwd(), "data", "seed.json");
 
-const {
-  destinations,
-  landmarks,
-  hotels,
-  hotelFeatures,
-  hotelTags,
-  hotelDistances,
-  rooms,
-} = schema;
+const { destinations, landmarks, hotels, hotelFeatures, hotelTags, hotelDistances, rooms } = schema;
 
 if (!process.env.DATABASE_URL) {
   throw new Error("DATABASE_URL is not set. Add it to .env.local");
@@ -132,9 +124,7 @@ async function main() {
       }
 
       if (h.tags.length) {
-        await db
-          .insert(hotelTags)
-          .values(h.tags.map((tag) => ({ hotelId: hotel.id, tag })));
+        await db.insert(hotelTags).values(h.tags.map((tag) => ({ hotelId: hotel.id, tag })));
       }
 
       const dists = h.distances

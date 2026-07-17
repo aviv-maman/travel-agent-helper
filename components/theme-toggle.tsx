@@ -30,7 +30,12 @@ export function ThemeToggle() {
             render={
               <TooltipTrigger
                 render={
-                  <Button variant="outline" size="icon" className="relative" aria-label={t("theme")} />
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    className="relative"
+                    aria-label={t("theme")}
+                  />
                 }
               />
             }>

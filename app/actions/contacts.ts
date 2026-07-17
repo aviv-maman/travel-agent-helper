@@ -4,11 +4,7 @@ import { eq } from "drizzle-orm";
 import { db } from "@/db";
 import { airlines, contacts, suppliers } from "@/db/schema";
 import { can } from "@/lib/auth";
-import {
-  CONTACT_TYPES,
-  sectionForType,
-  type ContactGroup,
-} from "@/lib/contacts";
+import { CONTACT_TYPES, sectionForType, type ContactGroup } from "@/lib/contacts";
 
 export type SaveContactsResult = { ok: true } | { error: "forbidden" | "invalid" | "offline" };
 

@@ -55,7 +55,8 @@ export function FaqView({ items, canEdit }: { items: Faq[]; canEdit: boolean }) 
   const tokens = query.trim().toLowerCase().split(/\s+/).filter(Boolean);
   const visible = tokens.length
     ? items.filter((f) => {
-        const blob = `${f.question} ${f.answers.map((a) => `${a.label ?? ""} ${a.body}`).join(" ")}`.toLowerCase();
+        const blob =
+          `${f.question} ${f.answers.map((a) => `${a.label ?? ""} ${a.body}`).join(" ")}`.toLowerCase();
         return tokens.every((tok) => blob.includes(tok));
       })
     : items;
@@ -125,7 +126,9 @@ export function FaqView({ items, canEdit }: { items: Faq[]; canEdit: boolean }) 
           />
         </div>
         {draft.answers.map((a, i) => (
-          <div key={i} className="flex flex-col gap-1.5 rounded-lg border border-dashed border-border p-2.5">
+          <div
+            key={i}
+            className="flex flex-col gap-1.5 rounded-lg border border-dashed border-border p-2.5">
             <div className="flex items-end gap-2">
               <div className="grid flex-1 gap-1">
                 <Label className="text-xs text-muted-foreground">{t("variantLabel")}</Label>
@@ -173,7 +176,12 @@ export function FaqView({ items, canEdit }: { items: Faq[]; canEdit: boolean }) 
           ➕ {t("addAnswer")}
         </button>
         <div className="flex justify-end gap-2">
-          <Button type="button" variant="outline" size="sm" disabled={saving} onClick={() => setEditingId(null)}>
+          <Button
+            type="button"
+            variant="outline"
+            size="sm"
+            disabled={saving}
+            onClick={() => setEditingId(null)}>
             <X className="size-4 text-destructive" /> {t("cancel")}
           </Button>
           <Button type="button" size="sm" disabled={saving} onClick={save}>

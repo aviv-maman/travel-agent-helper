@@ -102,8 +102,11 @@ Leonardo City Tower — 4★
   });
 
   test("keeps the legacy English extraction for non-fenced quotes (hotel last)", () => {
-    const content = "Hotel: Sheraton — Batumi\nCheck-in 10.7.26, 5 nights\nTotal for 2 adults: $980";
-    expect(buildQuoteTitle("quote for Batumi please", content)).toBe("10.7 - Batumi - 2 people - Sheraton");
+    const content =
+      "Hotel: Sheraton — Batumi\nCheck-in 10.7.26, 5 nights\nTotal for 2 adults: $980";
+    expect(buildQuoteTitle("quote for Batumi please", content)).toBe(
+      "10.7 - Batumi - 2 people - Sheraton",
+    );
   });
 
   test("never uses a bare confirmation as the title", () => {

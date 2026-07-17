@@ -60,9 +60,7 @@ export function PageNav() {
   // public pages dynamic).
   const pages = useMemo(() => {
     const base = user ? [{ segment: "dashboard", emoji: "📊" } as const, ...PAGES] : PAGES;
-    return user && aiEnabled
-      ? [...base, { segment: "assistant", emoji: "🤖" } as const]
-      : base;
+    return user && aiEnabled ? [...base, { segment: "assistant", emoji: "🤖" } as const] : base;
   }, [user, aiEnabled]);
 
   // `segment` is the route segment directly under the [locale] layout: a content
@@ -221,7 +219,12 @@ export function PageNav() {
                   <Tooltip>
                     <TooltipTrigger
                       render={
-                        <Button type="submit" variant="outline" size="icon" aria-label={tAuth("signOut")} />
+                        <Button
+                          type="submit"
+                          variant="outline"
+                          size="icon"
+                          aria-label={tAuth("signOut")}
+                        />
                       }>
                       <LogOut className="size-4" />
                     </TooltipTrigger>

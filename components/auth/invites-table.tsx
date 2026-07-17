@@ -13,13 +13,7 @@ const STATUS_CLASS: Record<InviteStatus, string> = {
   expired: "border-gold/25 bg-gold/10 text-gold",
 };
 
-export async function InvitesTable({
-  invites,
-  locale,
-}: {
-  invites: Invitation[];
-  locale: string;
-}) {
+export async function InvitesTable({ invites, locale }: { invites: Invitation[]; locale: string }) {
   const t = await getTranslations({ locale, namespace: "auth" });
   const fmt = new Intl.DateTimeFormat(locale, { dateStyle: "medium" });
 
@@ -61,9 +55,7 @@ export async function InvitesTable({
                 <td className="px-3 py-2 text-muted-foreground">
                   {invite.expiresAt ? fmt.format(invite.expiresAt) : t("noExpiry")}
                 </td>
-                <td className="px-3 py-2 text-muted-foreground">
-                  {fmt.format(invite.createdAt)}
-                </td>
+                <td className="px-3 py-2 text-muted-foreground">{fmt.format(invite.createdAt)}</td>
                 <td className="px-3 py-2 text-end">
                   {status === "active" && (
                     <ActionForm

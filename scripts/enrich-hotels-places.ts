@@ -124,9 +124,7 @@ for (const d of dests) {
 
     const matchedName = place.displayName?.text ?? "";
     const weak = !looksAlike(h.name, matchedName);
-    const photoUrl = place.photos?.[0]?.name
-      ? await resolvePhotoUrl(place.photos[0].name)
-      : null;
+    const photoUrl = place.photos?.[0]?.name ? await resolvePhotoUrl(place.photos[0].name) : null;
 
     await db
       .update(hotels)

@@ -4,18 +4,9 @@ import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { Luggage, TriangleAlert, Info, Percent, Globe } from "lucide-react";
 import { useState } from "react";
-import type {
-  CommLevel,
-  BaggageIcon,
-  EditableSupplier,
-  ViewSupplier,
-} from "@/lib/commissions";
+import type { CommLevel, BaggageIcon, EditableSupplier, ViewSupplier } from "@/lib/commissions";
 import { emptyContact, type SupplierContact as SupplierContactRecord } from "@/lib/contacts";
-import {
-  BaggageEditor,
-  CommissionsEditor,
-  SectionEditButton,
-} from "./supplier-inline-edit";
+import { BaggageEditor, CommissionsEditor, SectionEditButton } from "./supplier-inline-edit";
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
 import { RichText } from "./rich-text";
@@ -175,49 +166,51 @@ export function CommissionCard({
 
       <div className="flex flex-col p-3">
         {(commissionRows.length > 0 || canEdit) && (
-        <div className="overflow-hidden rounded-lg border border-border">
-          <div className="flex items-center gap-2 border-b border-border bg-surface-2/60 px-3 py-2">
-            <Percent className="size-4 shrink-0 text-brand" aria-hidden />
-            <span className="text-sm font-semibold text-foreground">{t("commissionsTitle")}</span>
-            {canEdit && editSection !== "commissions" && (
-              <SectionEditButton
-                onEdit={() => setEditSection("commissions")}
-                disabled={editSection !== null}
+          <div className="overflow-hidden rounded-lg border border-border">
+            <div className="flex items-center gap-2 border-b border-border bg-surface-2/60 px-3 py-2">
+              <Percent className="size-4 shrink-0 text-brand" aria-hidden />
+              <span className="text-sm font-semibold text-foreground">{t("commissionsTitle")}</span>
+              {canEdit && editSection !== "commissions" && (
+                <SectionEditButton
+                  onEdit={() => setEditSection("commissions")}
+                  disabled={editSection !== null}
+                />
+              )}
+            </div>
+            {editSection === "commissions" && editable ? (
+              <CommissionsEditor
+                slug={supplier.id}
+                initial={editable.commissions}
+                onDone={() => setEditSection(null)}
               />
+            ) : (
+              <Table>
+                <TableBody>
+                  {commissionRows.map((row, i) => (
+                    <TableRow key={i} className="hover:bg-muted/30">
+                      <TableCell className="px-3 py-2 align-top text-sm font-medium whitespace-normal text-foreground">
+                        <span className="flex items-center gap-1.5">
+                          {row.glyph && (
+                            <span className="shrink-0 text-base" aria-hidden>
+                              {row.glyph}
+                            </span>
+                          )}
+                          {row.label}
+                        </span>
+                      </TableCell>
+                      <TableCell className="w-px px-3 py-2 text-end align-top whitespace-nowrap">
+                        {row.value && (
+                          <span className={`text-sm font-bold ${LEVEL[row.level]}`}>
+                            {row.value}
+                          </span>
+                        )}
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
             )}
           </div>
-          {editSection === "commissions" && editable ? (
-            <CommissionsEditor
-              slug={supplier.id}
-              initial={editable.commissions}
-              onDone={() => setEditSection(null)}
-            />
-          ) : (
-          <Table>
-            <TableBody>
-              {commissionRows.map((row, i) => (
-                <TableRow key={i} className="hover:bg-muted/30">
-                  <TableCell className="px-3 py-2 align-top text-sm font-medium whitespace-normal text-foreground">
-                    <span className="flex items-center gap-1.5">
-                      {row.glyph && (
-                        <span className="shrink-0 text-base" aria-hidden>
-                          {row.glyph}
-                        </span>
-                      )}
-                      {row.label}
-                    </span>
-                  </TableCell>
-                  <TableCell className="w-px px-3 py-2 text-end align-top whitespace-nowrap">
-                    {row.value && (
-                      <span className={`text-sm font-bold ${LEVEL[row.level]}`}>{row.value}</span>
-                    )}
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-          )}
-        </div>
         )}
 
         {/* Commission-related notes sit between the commission and baggage tables. */}
@@ -241,101 +234,105 @@ export function CommissionCard({
         ))}
 
         {showBaggage && (tableRows.some((row) => row.details.length > 0) || canEdit) && (
-        <div className="mt-2.5 overflow-hidden rounded-lg border border-border">
-          <div className="flex items-center gap-2 border-b border-border bg-surface-2/60 px-3 py-2">
-            <Luggage className="size-4 shrink-0 text-brand" aria-hidden />
-            <span className="text-sm font-semibold text-foreground">{t("baggage")}</span>
-            {canEdit && editSection !== "baggage" && (
-              <SectionEditButton
-                onEdit={() => setEditSection("baggage")}
-                disabled={editSection !== null}
+          <div className="mt-2.5 overflow-hidden rounded-lg border border-border">
+            <div className="flex items-center gap-2 border-b border-border bg-surface-2/60 px-3 py-2">
+              <Luggage className="size-4 shrink-0 text-brand" aria-hidden />
+              <span className="text-sm font-semibold text-foreground">{t("baggage")}</span>
+              {canEdit && editSection !== "baggage" && (
+                <SectionEditButton
+                  onEdit={() => setEditSection("baggage")}
+                  disabled={editSection !== null}
+                />
+              )}
+            </div>
+
+            {editSection === "baggage" && editable ? (
+              <BaggageEditor
+                slug={supplier.id}
+                initial={editable.baggage}
+                onDone={() => setEditSection(null)}
               />
+            ) : (
+              <Table>
+                <TableBody>
+                  {tableRows
+                    .filter((row) => row.details.length > 0)
+                    .map((row, i) => {
+                      const icon = BAG_ICON[row.icon];
+                      return (
+                        <TableRow key={i} className="hover:bg-muted/30">
+                          <TableCell className="w-px px-2 py-2 align-top text-xs font-medium whitespace-nowrap text-foreground sm:px-3 sm:text-sm">
+                            <span className="flex items-center gap-1.5">
+                              {icon.glyph && (
+                                <span
+                                  className={`shrink-0 text-sm sm:text-base ${icon.className}`}
+                                  aria-hidden>
+                                  {icon.glyph}
+                                </span>
+                              )}
+                              {row.label}
+                            </span>
+                          </TableCell>
+                          <TableCell className="px-2 py-2 align-top text-xs leading-snug whitespace-normal text-muted-foreground sm:px-3 sm:text-sm">
+                            {row.details.length > 0 && (
+                              <div className="flex flex-col gap-1">
+                                {row.details.map((d, j) => (
+                                  <span key={j} className="block">
+                                    <RichText text={d} colorPrices />
+                                    {hasWarn && j === row.details.length - 1 && (
+                                      <span className="font-bold text-warning"> *</span>
+                                    )}
+                                  </span>
+                                ))}
+                              </div>
+                            )}
+                          </TableCell>
+                        </TableRow>
+                      );
+                    })}
+                </TableBody>
+              </Table>
             )}
           </div>
-
-          {editSection === "baggage" && editable ? (
-            <BaggageEditor
-              slug={supplier.id}
-              initial={editable.baggage}
-              onDone={() => setEditSection(null)}
-            />
-          ) : (
-          <Table>
-            <TableBody>
-              {tableRows
-                .filter((row) => row.details.length > 0)
-                .map((row, i) => {
-                  const icon = BAG_ICON[row.icon];
-                  return (
-                    <TableRow key={i} className="hover:bg-muted/30">
-                      <TableCell className="w-px px-2 py-2 align-top text-xs font-medium whitespace-nowrap text-foreground sm:px-3 sm:text-sm">
-                        <span className="flex items-center gap-1.5">
-                          {icon.glyph && (
-                            <span
-                              className={`shrink-0 text-sm sm:text-base ${icon.className}`}
-                              aria-hidden>
-                              {icon.glyph}
-                            </span>
-                          )}
-                          {row.label}
-                        </span>
-                      </TableCell>
-                      <TableCell className="px-2 py-2 align-top text-xs leading-snug whitespace-normal text-muted-foreground sm:px-3 sm:text-sm">
-                        {row.details.length > 0 && (
-                          <div className="flex flex-col gap-1">
-                            {row.details.map((d, j) => (
-                              <span key={j} className="block">
-                                <RichText text={d} colorPrices />
-                                {hasWarn && j === row.details.length - 1 && (
-                                  <span className="font-bold text-warning"> *</span>
-                                )}
-                              </span>
-                            ))}
-                          </div>
-                        )}
-                      </TableCell>
-                    </TableRow>
-                  );
-                })}
-            </TableBody>
-          </Table>
-          )}
-        </div>
         )}
 
         {/* Baggage-related alerts sit below the baggage table (hidden while the
             baggage editor is open — they render the same rows being edited). */}
-        {showBaggage && editSection !== "baggage" && supplier.baggage
-          .filter((r) => r.icon === "warn")
-          .map((row, i) => (
-            <div
-              key={i}
-              className="mt-2.5 flex items-start gap-2 rounded-lg border border-warning/30 bg-warning/8 px-3 py-2">
-              <TriangleAlert className="mt-0.5 size-3.5 shrink-0 text-warning" aria-hidden />
-              <div className="flex flex-col gap-0.5">
-                <span className="text-xs font-semibold text-warning">{t("warningTitle")}</span>
-                <span className="text-xs leading-snug text-warning">
-                  <RichText text={row.text} />
-                </span>
+        {showBaggage &&
+          editSection !== "baggage" &&
+          supplier.baggage
+            .filter((r) => r.icon === "warn")
+            .map((row, i) => (
+              <div
+                key={i}
+                className="mt-2.5 flex items-start gap-2 rounded-lg border border-warning/30 bg-warning/8 px-3 py-2">
+                <TriangleAlert className="mt-0.5 size-3.5 shrink-0 text-warning" aria-hidden />
+                <div className="flex flex-col gap-0.5">
+                  <span className="text-xs font-semibold text-warning">{t("warningTitle")}</span>
+                  <span className="text-xs leading-snug text-warning">
+                    <RichText text={row.text} />
+                  </span>
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
 
-        {showBaggage && editSection !== "baggage" && supplier.baggage
-          .filter((r) => r.icon === "ok")
-          .map((row, i) => (
-            <div
-              key={i}
-              className="mt-2.5 flex items-start gap-2 rounded-lg border border-gold/35 bg-gold/10 px-3 py-2">
-              <TriangleAlert className="mt-0.5 size-3.5 shrink-0 text-gold" aria-hidden />
-              <div className="flex flex-col gap-0.5">
-                <span className="text-xs font-semibold text-gold">{t("warningTitle")}</span>
-                <span className="text-xs leading-snug text-gold">
-                  <RichText text={row.text} />
-                </span>
+        {showBaggage &&
+          editSection !== "baggage" &&
+          supplier.baggage
+            .filter((r) => r.icon === "ok")
+            .map((row, i) => (
+              <div
+                key={i}
+                className="mt-2.5 flex items-start gap-2 rounded-lg border border-gold/35 bg-gold/10 px-3 py-2">
+                <TriangleAlert className="mt-0.5 size-3.5 shrink-0 text-gold" aria-hidden />
+                <div className="flex flex-col gap-0.5">
+                  <span className="text-xs font-semibold text-gold">{t("warningTitle")}</span>
+                  <span className="text-xs leading-snug text-gold">
+                    <RichText text={row.text} />
+                  </span>
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
 
         {/* The backpack allowance is universal, so it's hardcoded on every
             flights supplier rather than stored/editable per supplier. */}

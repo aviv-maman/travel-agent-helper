@@ -62,13 +62,11 @@ export function HotelDetailModal({
                 <tbody>
                   {hotel.distances.map((d) => (
                     <tr key={d.landmarkKey}>
-                      <td className="py-0.5 text-start text-foreground">
-                        {d.name}
-                      </td>
-                      <td className="py-0.5 text-end font-bold text-gold whitespace-nowrap">
+                      <td className="py-0.5 text-start text-foreground">{d.name}</td>
+                      <td className="py-0.5 text-end font-bold whitespace-nowrap text-gold">
                         {timeLabel(d)}
                       </td>
-                      <td className="py-0.5 text-end ps-2 text-[0.68rem]">
+                      <td className="py-0.5 ps-2 text-end text-[0.68rem]">
                         {formatMeters(d.meters, locale)}
                       </td>
                     </tr>
@@ -78,40 +76,30 @@ export function HotelDetailModal({
             )}
 
             <section className="flex flex-col gap-2 border-t border-border pt-3">
-              <h3 className="text-sm font-extrabold text-foreground">
-                🛏 {t("modal.rooms")}
-              </h3>
+              <h3 className="text-sm font-extrabold text-foreground">🛏 {t("modal.rooms")}</h3>
               {hotel.rooms.length === 0 ? (
-                <p className="text-sm text-muted-foreground">
-                  {t("modal.noRooms")}
-                </p>
+                <p className="text-sm text-muted-foreground">{t("modal.noRooms")}</p>
               ) : (
                 <ul className="flex flex-col gap-2">
                   {hotel.rooms.map((r, i) => (
                     <li
                       key={i}
-                      className="flex items-start gap-2 rounded-lg border border-border bg-surface-2 p-2.5"
-                    >
+                      className="flex items-start gap-2 rounded-lg border border-border bg-surface-2 p-2.5">
                       <span className="text-lg" aria-hidden>
                         {r.icon ?? "🛏"}
                       </span>
                       <div className="flex-1">
-                        <div className="text-sm font-bold text-foreground">
-                          {r.name}
-                        </div>
+                        <div className="text-sm font-bold text-foreground">{r.name}</div>
                         <div
                           className={
                             r.sizeSqm == null
                               ? "text-xs text-muted-foreground/60 italic"
                               : "text-xs text-muted-foreground"
-                          }
-                        >
+                          }>
                           {t("modal.size")}: <strong>{sizeText(r.sizeSqm)}</strong>
                         </div>
                         {r.occupancy && (
-                          <div className="text-xs text-muted-foreground">
-                            👥 {r.occupancy}
-                          </div>
+                          <div className="text-xs text-muted-foreground">👥 {r.occupancy}</div>
                         )}
                       </div>
                     </li>
@@ -120,13 +108,9 @@ export function HotelDetailModal({
               )}
 
               {hotel.roomsNote && (
-                <p className="text-xs text-muted-foreground">
-                  📌 {hotel.roomsNote}
-                </p>
+                <p className="text-xs text-muted-foreground">📌 {hotel.roomsNote}</p>
               )}
-              <p className="text-xs text-muted-foreground/70">
-                {t("modal.updateManually")}
-              </p>
+              <p className="text-xs text-muted-foreground/70">{t("modal.updateManually")}</p>
             </section>
           </>
         )}

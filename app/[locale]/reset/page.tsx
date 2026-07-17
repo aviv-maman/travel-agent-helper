@@ -1,7 +1,14 @@
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import { ResetPasswordForm } from "@/components/auth/reset-password-form";
 import { Link } from "@/i18n/navigation";
-import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card";
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardContent,
+  CardFooter,
+} from "@/components/ui/card";
 
 export default async function ResetPasswordPage({
   params,

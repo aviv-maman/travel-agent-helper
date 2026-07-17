@@ -32,7 +32,9 @@ export default async function UserDetailPage({
   return (
     <div className="flex flex-col gap-6">
       {/* Breadcrumb — fed by the route: Users › {username}. */}
-      <nav className="flex items-center gap-1.5 text-sm text-muted-foreground" aria-label="Breadcrumb">
+      <nav
+        className="flex items-center gap-1.5 text-sm text-muted-foreground"
+        aria-label="Breadcrumb">
         <Link href="/account/admin/users" className="hover:text-foreground">
           {tA("users")}
         </Link>

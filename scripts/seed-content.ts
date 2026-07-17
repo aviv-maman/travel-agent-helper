@@ -25,10 +25,7 @@ import { drizzle } from "drizzle-orm/neon-http";
 import * as schema from "../db/schema";
 import { AIRLINES } from "../lib/airlines";
 import { SUPPLIERS } from "../lib/commissions";
-import {
-  productOrderIndex,
-  SUPPLIERS as CANCEL_SUPPLIERS,
-} from "../lib/cancellations";
+import { productOrderIndex, SUPPLIERS as CANCEL_SUPPLIERS } from "../lib/cancellations";
 import { COUNTRIES } from "../lib/transfers";
 import { DEFAULT_CONTACTS, sectionForType } from "../lib/contacts";
 import { DEFAULT_FAQS } from "../lib/faq";
@@ -55,9 +52,7 @@ async function seedSuppliers(): Promise<Map<string, number>> {
 
   // Commissions is the primary supplier list; cancellation-only slugs (none
   // today, but supported) are appended after it in guide order.
-  const extraCancelOnly = CANCEL_SUPPLIERS.filter(
-    (c) => !SUPPLIERS.some((s) => s.id === c.id),
-  );
+  const extraCancelOnly = CANCEL_SUPPLIERS.filter((c) => !SUPPLIERS.some((s) => s.id === c.id));
 
   let sortOrder = 0;
   for (const s of SUPPLIERS) {
@@ -204,9 +199,7 @@ async function seedCancellations(slugToId: Map<string, number>): Promise<number>
       .sort((a, b) => productOrderIndex(a) - productOrderIndex(b))
       .map((p) => ({ kind: p.kind, label: p.label }));
 
-    await db
-      .delete(supplierCancellations)
-      .where(eq(supplierCancellations.supplierId, supplierId));
+    await db.delete(supplierCancellations).where(eq(supplierCancellations.supplierId, supplierId));
     await db
       .insert(supplierCancellations)
       .values({ supplierId, products, blocks: c.blocks, sortOrder });
@@ -300,9 +293,7 @@ async function seedContacts(
   supplierSlugToId: Map<string, number>,
   airlineSlugToId: Map<string, number>,
 ): Promise<number> {
-  const [{ count }] = await db
-    .select({ count: sql<number>`count(*)::int` })
-    .from(contacts);
+  const [{ count }] = await db.select({ count: sql<number>`count(*)::int` }).from(contacts);
   if (count > 0) {
     console.log(`  contacts: table already has ${count} rows — skipped (app-managed)`);
     return 0;
@@ -354,7 +345,9 @@ async function seedFaqs(): Promise<number> {
   }
   await db
     .insert(faqs)
-    .values(DEFAULT_FAQS.map((f, i) => ({ question: f.question, answers: f.answers, sortOrder: i })));
+    .values(
+      DEFAULT_FAQS.map((f, i) => ({ question: f.question, answers: f.answers, sortOrder: i })),
+    );
   return DEFAULT_FAQS.length;
 }
 

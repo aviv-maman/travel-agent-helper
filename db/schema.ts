@@ -94,9 +94,7 @@ export const landmarks = pgTable(
     key: varchar("key", { length: 40 }).notNull(),
     name: jsonb("name").$type<Localized>().notNull(),
   },
-  (t) => [
-    uniqueIndex("landmarks_dest_key").on(t.destinationId, t.key),
-  ],
+  (t) => [uniqueIndex("landmarks_dest_key").on(t.destinationId, t.key)],
 );
 
 export const hotels = pgTable(
@@ -284,20 +282,10 @@ export const faqs = pgTable("faqs", {
 export type Faq = typeof faqs.$inferSelect;
 
 /** Commission chip color: high green (9%+), mid blue, low orange, range gold, net red. */
-export const commissionLevel = pgEnum("commission_level", [
-  "high",
-  "mid",
-  "low",
-  "range",
-  "net",
-]);
+export const commissionLevel = pgEnum("commission_level", ["high", "mid", "low", "range", "net"]);
 
 /** Which suppliers-page tab a supplier belongs to. */
-export const supplierCategory = pgEnum("supplier_category", [
-  "flights",
-  "hotels",
-  "car-rental",
-]);
+export const supplierCategory = pgEnum("supplier_category", ["flights", "hotels", "car-rental"]);
 
 /** The three default commission rows, plus labeled extra lines. */
 export const commissionKind = pgEnum("commission_kind", [
@@ -311,11 +299,7 @@ export const commissionKind = pgEnum("commission_kind", [
 export const noteTone = pgEnum("note_tone", ["muted", "gold"]);
 
 /** Contact grouping section on the contact dialog (derived from type). */
-export const contactSection = pgEnum("contact_section", [
-  "general",
-  "sales",
-  "agents",
-]);
+export const contactSection = pgEnum("contact_section", ["general", "sales", "agents"]);
 
 /** Contact role, shown as a translated subtitle. */
 export const contactType = pgEnum("contact_type", [
@@ -327,14 +311,7 @@ export const contactType = pgEnum("contact_type", [
 ]);
 
 /** Which glyph leads a supplier baggage row (and its color). */
-export type BaggageIcon =
-  | "bag"
-  | "ok"
-  | "warn"
-  | "flight"
-  | "package"
-  | "tour"
-  | "village";
+export type BaggageIcon = "bag" | "ok" | "warn" | "flight" | "package" | "tour" | "village";
 
 /** Structured source for a category baggage row edited in-app. */
 export type BaggageInclusion = {
@@ -435,9 +412,7 @@ export const supplierCommissions = pgTable(
     level: commissionLevel("level").notNull(),
     sortOrder: integer("sort_order").notNull().default(0),
   },
-  (t) => [
-    uniqueIndex("supplier_commissions_unique").on(t.supplierId, t.kind, t.sortOrder),
-  ],
+  (t) => [uniqueIndex("supplier_commissions_unique").on(t.supplierId, t.kind, t.sortOrder)],
 );
 
 export const supplierCancellations = pgTable(
@@ -549,25 +524,19 @@ export const suppliersRelations = relations(suppliers, ({ one, many }) => ({
   contacts: many(contacts),
 }));
 
-export const supplierCommissionsRelations = relations(
-  supplierCommissions,
-  ({ one }) => ({
-    supplier: one(suppliers, {
-      fields: [supplierCommissions.supplierId],
-      references: [suppliers.id],
-    }),
+export const supplierCommissionsRelations = relations(supplierCommissions, ({ one }) => ({
+  supplier: one(suppliers, {
+    fields: [supplierCommissions.supplierId],
+    references: [suppliers.id],
   }),
-);
+}));
 
-export const supplierCancellationsRelations = relations(
-  supplierCancellations,
-  ({ one }) => ({
-    supplier: one(suppliers, {
-      fields: [supplierCancellations.supplierId],
-      references: [suppliers.id],
-    }),
+export const supplierCancellationsRelations = relations(supplierCancellations, ({ one }) => ({
+  supplier: one(suppliers, {
+    fields: [supplierCancellations.supplierId],
+    references: [suppliers.id],
   }),
-);
+}));
 
 export const airlinesRelations = relations(airlines, ({ many }) => ({
   contacts: many(contacts),
@@ -584,12 +553,9 @@ export const contactsRelations = relations(contacts, ({ one }) => ({
   }),
 }));
 
-export const transferCountriesRelations = relations(
-  transferCountries,
-  ({ many }) => ({
-    cities: many(transferCities),
-  }),
-);
+export const transferCountriesRelations = relations(transferCountries, ({ many }) => ({
+  cities: many(transferCities),
+}));
 
 export const transferCitiesRelations = relations(transferCities, ({ one }) => ({
   country: one(transferCountries, {
@@ -986,11 +952,7 @@ export const dashboardTaskType = pgEnum("dashboard_task_type", [
 ]);
 
 /** Lifecycle of a dashboard item. `done` auto-moves to `archived` after 7 days. */
-export const dashboardTaskStatus = pgEnum("dashboard_task_status", [
-  "open",
-  "done",
-  "archived",
-]);
+export const dashboardTaskStatus = pgEnum("dashboard_task_status", ["open", "done", "archived"]);
 
 export const dashboardTasks = pgTable(
   "dashboard_tasks",

@@ -22,8 +22,7 @@ export function CopyLinkButton({ url, className }: { url: string; className?: st
         } catch {
           toast.error(t("copyLink"));
         }
-      }}
-    >
+      }}>
       <Copy />
     </Button>
   );

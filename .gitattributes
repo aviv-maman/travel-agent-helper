@@ -1,0 +1,4 @@
+# Keep text files LF in the working tree on every platform — the Prettier
+# config enforces endOfLine: "lf", so a CRLF checkout (core.autocrlf=true on
+# Windows) would make `prettier --check` fail on every file.
+* text=auto eol=lf

@@ -13,11 +13,7 @@
 import { usingDatabase } from "@/lib/hotels";
 
 export type ContactType =
-  | "agent-support"
-  | "operation"
-  | "operation-manager"
-  | "sales-rep"
-  | "agent";
+  "agent-support" | "operation" | "operation-manager" | "sales-rep" | "agent";
 
 /** Every selectable contact type, in menu order. */
 export const CONTACT_TYPES: ContactType[] = [

@@ -8,12 +8,7 @@ import { TransferCityEdit, type SupplierOption } from "./transfer-city-edit";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { CountryFlag } from "@/components/country-flag";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 const PILL: Record<PillVariant, { symbol: string; className: string }> = {
   yes: {
@@ -88,87 +83,90 @@ export function TransfersView({
   return (
     <TooltipProvider>
       <div className="flex flex-col gap-5">
-      <p className="rounded-xl border border-border bg-surface px-4 py-3 text-sm leading-relaxed text-muted-foreground">
-        {t.rich("intro", {
-          strong: (chunks) => <strong className="font-bold text-foreground">{chunks}</strong>,
-        })}
-      </p>
-
-      <div className="relative">
-        <Search
-          className="pointer-events-none absolute start-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground"
-          aria-hidden
-        />
-        <Input
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          placeholder={t("searchPlaceholder")}
-          className="h-11 ps-9 pe-9 text-sm"
-        />
-        {query && (
-          <button
-            type="button"
-            onClick={() => setQuery("")}
-            aria-label={t("clear")}
-            className="absolute end-2 top-1/2 flex size-6 -translate-y-1/2 items-center justify-center rounded-md text-muted-foreground transition-colors hover:text-destructive">
-            <X className="size-4" />
-          </button>
-        )}
-      </div>
-
-      {!hasResults && (
-        <p className="rounded-xl border border-dashed border-border bg-surface/50 px-5 py-8 text-center text-sm text-muted-foreground">
-          {t("noResults")}
+        <p className="rounded-xl border border-border bg-surface px-4 py-3 text-sm leading-relaxed text-muted-foreground">
+          {t.rich("intro", {
+            strong: (chunks) => <strong className="font-bold text-foreground">{chunks}</strong>,
+          })}
         </p>
-      )}
 
-      {filtered.map((grp) => (
-        <section key={grp.id}>
-          <h2 className="mb-2.5 flex items-center gap-2 border-b border-border pb-1.5 text-sm font-bold text-foreground">
-            {grp.code ? (
-              <CountryFlag code={grp.code} className="h-4 w-6" />
-            ) : (
-              <span aria-hidden>🌍</span>
-            )}
-            {grp.country}
-          </h2>
-          <div className="overflow-hidden rounded-xl border border-border bg-surface">
-            {grp.cities.flatMap((city) =>
-              city.name.split("·").map((segment, si) => (
-                <div
-                  key={`${city.id}-${si}`}
-                  className="flex flex-wrap items-center gap-x-2 gap-y-1.5 border-t border-border px-3 py-2 first:border-t-0">
-                  <span className="me-1 text-sm font-bold text-foreground">
-                    {renderName(segment.trim())}
-                  </span>
-                  {city.pills.map((pill, i) => {
-                    const content = (
-                      <span
-                        className={`inline-flex items-center gap-1 rounded-full border px-2.5 py-0.5 text-xs font-semibold ${PILL[pill.variant].className}`}>
-                        {pill.flag && <span aria-hidden>{pill.flag}</span>}
-                        <span aria-hidden>{PILL[pill.variant].symbol}</span>
-                        {pill.label}
-                      </span>
-                    );
-                    const tip = pill.tooltip ?? (pill.variant === "warn" ? t("verifyTooltip") : null);
-                    return tip ? (
-                      <Tooltip key={i}>
-                        <TooltipTrigger render={<button type="button" />}>{content}</TooltipTrigger>
-                        <TooltipContent>{tip}</TooltipContent>
-                      </Tooltip>
-                    ) : (
-                      <span key={i}>{content}</span>
-                    );
-                  })}
-                  {canEdit && si === 0 && city.dbId != null && (
-                    <TransferCityEdit city={city} suppliers={suppliers} />
-                  )}
-                </div>
-              )),
-            )}
-          </div>
-        </section>
-      ))}
+        <div className="relative">
+          <Search
+            className="pointer-events-none absolute start-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground"
+            aria-hidden
+          />
+          <Input
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder={t("searchPlaceholder")}
+            className="h-11 ps-9 pe-9 text-sm"
+          />
+          {query && (
+            <button
+              type="button"
+              onClick={() => setQuery("")}
+              aria-label={t("clear")}
+              className="absolute end-2 top-1/2 flex size-6 -translate-y-1/2 items-center justify-center rounded-md text-muted-foreground transition-colors hover:text-destructive">
+              <X className="size-4" />
+            </button>
+          )}
+        </div>
+
+        {!hasResults && (
+          <p className="rounded-xl border border-dashed border-border bg-surface/50 px-5 py-8 text-center text-sm text-muted-foreground">
+            {t("noResults")}
+          </p>
+        )}
+
+        {filtered.map((grp) => (
+          <section key={grp.id}>
+            <h2 className="mb-2.5 flex items-center gap-2 border-b border-border pb-1.5 text-sm font-bold text-foreground">
+              {grp.code ? (
+                <CountryFlag code={grp.code} className="h-4 w-6" />
+              ) : (
+                <span aria-hidden>🌍</span>
+              )}
+              {grp.country}
+            </h2>
+            <div className="overflow-hidden rounded-xl border border-border bg-surface">
+              {grp.cities.flatMap((city) =>
+                city.name.split("·").map((segment, si) => (
+                  <div
+                    key={`${city.id}-${si}`}
+                    className="flex flex-wrap items-center gap-x-2 gap-y-1.5 border-t border-border px-3 py-2 first:border-t-0">
+                    <span className="me-1 text-sm font-bold text-foreground">
+                      {renderName(segment.trim())}
+                    </span>
+                    {city.pills.map((pill, i) => {
+                      const content = (
+                        <span
+                          className={`inline-flex items-center gap-1 rounded-full border px-2.5 py-0.5 text-xs font-semibold ${PILL[pill.variant].className}`}>
+                          {pill.flag && <span aria-hidden>{pill.flag}</span>}
+                          <span aria-hidden>{PILL[pill.variant].symbol}</span>
+                          {pill.label}
+                        </span>
+                      );
+                      const tip =
+                        pill.tooltip ?? (pill.variant === "warn" ? t("verifyTooltip") : null);
+                      return tip ? (
+                        <Tooltip key={i}>
+                          <TooltipTrigger render={<button type="button" />}>
+                            {content}
+                          </TooltipTrigger>
+                          <TooltipContent>{tip}</TooltipContent>
+                        </Tooltip>
+                      ) : (
+                        <span key={i}>{content}</span>
+                      );
+                    })}
+                    {canEdit && si === 0 && city.dbId != null && (
+                      <TransferCityEdit city={city} suppliers={suppliers} />
+                    )}
+                  </div>
+                )),
+              )}
+            </div>
+          </section>
+        ))}
       </div>
     </TooltipProvider>
   );

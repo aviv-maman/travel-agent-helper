@@ -187,11 +187,7 @@ function extractRoomsObject(html: string): Record<string, RawRoomData> {
 }
 
 /** Smallest element text within `$scope` that contains `marker` (≈ the leaf). */
-function pickLeaf(
-  $: cheerio.CheerioAPI,
-  $scope: Sel,
-  marker: string,
-): string | null {
+function pickLeaf($: cheerio.CheerioAPI, $scope: Sel, marker: string): string | null {
   let best: string | null = null;
   $scope.find("div,p").each((_, el) => {
     const t = $(el).text().replace(/\s+/g, " ").trim();
@@ -202,11 +198,7 @@ function pickLeaf(
   return best;
 }
 
-function parseInfo(
-  $: cheerio.CheerioAPI,
-  $section: Sel,
-  code: string,
-): DestinationInfo {
+function parseInfo($: cheerio.CheerioAPI, $section: Sel, code: string): DestinationInfo {
   const info: DestinationInfo = {};
 
   // Gold warning banners (a destination may have several). Pick the innermost
@@ -271,8 +263,7 @@ function parseInfo(
 }
 
 export function extractSeed(htmlPath?: string): SeedDestination[] {
-  const file =
-    htmlPath ?? join(process.cwd(), "source", "commissions-new.html");
+  const file = htmlPath ?? join(process.cwd(), "source", "commissions-new.html");
   const html = readFileSync(file, "utf8");
   const $ = cheerio.load(html);
   const ROOMS = extractRoomsObject(html);
@@ -297,13 +288,8 @@ export function extractSeed(htmlPath?: string): SeedDestination[] {
       const $card = $(cardEl);
 
       // Source section (4-way) → tags only (tiers were removed).
-      const tierClass = $card
-        .closest(".hotel-tier")
-        .find(".tier-icon")
-        .first()
-        .attr("class");
-      const sourceTier =
-        SOURCE_TIERS.find((k) => tierClass?.includes(`tier-icon-${k}`)) ?? "good";
+      const tierClass = $card.closest(".hotel-tier").find(".tier-icon").first().attr("class");
+      const sourceTier = SOURCE_TIERS.find((k) => tierClass?.includes(`tier-icon-${k}`)) ?? "good";
       const tags = new Set<HotelTagValue>();
       const sourceTag = TAG_FROM_SOURCE[sourceTier];
       if (sourceTag) tags.add(sourceTag);

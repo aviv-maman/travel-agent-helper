@@ -14,10 +14,7 @@ import { smartNormalize, smartScore } from "./search";
  * if the locale has no translation yet, returns "" so the UI shows that locale
  * only (and callers can hide empty fields).
  */
-export function localized(
-  value: Localized | null | undefined,
-  locale: string,
-): string {
+export function localized(value: Localized | null | undefined, locale: string): string {
   return value?.[locale as Locale] ?? "";
 }
 
@@ -80,12 +77,7 @@ export type UIDestination = {
 };
 
 export type SortMode =
-  | "default"
-  | "stars-desc"
-  | "stars-asc"
-  | "booking-desc"
-  | "booking-asc"
-  | `dist:${string}`;
+  "default" | "stars-desc" | "stars-asc" | "booking-desc" | "booking-asc" | `dist:${string}`;
 
 const DEFAULT_PER_PAGE = 24;
 
@@ -253,8 +245,7 @@ function sortHotels(hotels: UIHotel[], mode: SortMode): UIHotel[] {
       if (mode.startsWith("dist:")) {
         const key = mode.slice(5);
         const m = (h: UIHotel) =>
-          h.distances.find((d) => d.landmarkKey === key)?.meters ??
-          Number.POSITIVE_INFINITY;
+          h.distances.find((d) => d.landmarkKey === key)?.meters ?? Number.POSITIVE_INFINITY;
         return list.sort((a, b) => m(a) - m(b));
       }
       // "default" → alphabetical (A→Z) by hotel name.
@@ -263,18 +254,14 @@ function sortHotels(hotels: UIHotel[], mode: SortMode): UIHotel[] {
 }
 
 /** Destinations for the picker, resolved to `locale` (with a cross-locale search blob). */
-export async function getDestinationsList(
-  locale: string,
-): Promise<DestinationSummary[]> {
+export async function getDestinationsList(locale: string): Promise<DestinationSummary[]> {
   const all = await getHotelData();
   return all.map((d) => ({
     iata: d.iata,
     name: localized(d.name, locale),
     country: localized(d.country, locale),
     countryCode: d.countryCode,
-    search: [...Object.values(d.name), ...Object.values(d.country), d.iata].join(
-      " ",
-    ),
+    search: [...Object.values(d.name), ...Object.values(d.country), d.iata].join(" "),
   }));
 }
 

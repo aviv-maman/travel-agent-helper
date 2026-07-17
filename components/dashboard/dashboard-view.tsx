@@ -8,11 +8,7 @@ import type { GreetingKey } from "@/lib/dashboard/dates";
 import type { NewsArticle } from "@/lib/news";
 import { isSameJerusalemDay } from "@/lib/dashboard/dates";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { Badge } from "@/components/ui/badge";
 import { Greeting } from "./greeting";
 import { BankDetailsCard } from "./bank-details-card";

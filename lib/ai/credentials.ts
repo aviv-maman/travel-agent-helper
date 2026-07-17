@@ -14,8 +14,7 @@ import { AI_MOCK_KEY_COOKIE, DEFAULT_AI_PROVIDER, type AiProvider } from "./cons
 export type AiCredential = { provider: AiProvider; last4: string };
 
 export type SaveKeyResult =
-  | { ok: true; last4: string }
-  | { ok: false; error: "invalidKey" | "rateLimited" | "backend" };
+  { ok: true; last4: string } | { ok: false; error: "invalidKey" | "rateLimited" | "backend" };
 
 /** The caller's stored credential metadata for the default provider, or null. */
 export async function getAiCredential(): Promise<AiCredential | null> {

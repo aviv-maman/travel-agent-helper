@@ -82,7 +82,7 @@ function SortableTaskCard({ task }: { task: DashTask }) {
             {...listeners}
             aria-label={t("drag")}
             // touch-none so dragging the handle doesn't scroll the page on mobile.
-            className="mt-0.5 -ms-1.5 flex size-6 shrink-0 cursor-grab touch-none items-center justify-center rounded-md text-muted-foreground/50 transition-colors hover:text-foreground active:cursor-grabbing">
+            className="-ms-1.5 mt-0.5 flex size-6 shrink-0 cursor-grab touch-none items-center justify-center rounded-md text-muted-foreground/50 transition-colors hover:text-foreground active:cursor-grabbing">
             <GripVertical className="size-4" />
           </button>
         }

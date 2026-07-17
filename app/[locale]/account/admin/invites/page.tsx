@@ -3,13 +3,7 @@ import { requirePermission } from "@/lib/auth";
 import { listInvites } from "@/lib/auth/invites";
 import { CreateInviteForm } from "@/components/auth/create-invite-form";
 import { InvitesTable } from "@/components/auth/invites-table";
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-  CardContent,
-} from "@/components/ui/card";
+import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 
 export default async function AccountInvitesPage({
   params,

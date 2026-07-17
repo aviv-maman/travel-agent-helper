@@ -26,8 +26,7 @@ export function useHotelParams() {
   const router = useRouter();
   const pathname = usePathname();
 
-  const list = (key: string) =>
-    (sp.get(key) ?? "").split(",").filter(Boolean);
+  const list = (key: string) => (sp.get(key) ?? "").split(",").filter(Boolean);
 
   const dest = sp.get("dest");
   const tags = list("tags") as HotelTagValue[];
@@ -55,8 +54,7 @@ export function useHotelParams() {
     if ("features" in next) setList("features", next.features);
     if ("q" in next) setVal("q", next.q);
     if ("sort" in next) setVal("sort", next.sort, "default");
-    if ("perPage" in next)
-      setVal("perPage", next.perPage ? String(next.perPage) : null);
+    if ("perPage" in next) setVal("perPage", next.perPage ? String(next.perPage) : null);
 
     // Page is explicit; any other change resets to page 1.
     if ("page" in next) setVal("page", next.page && next.page > 1 ? String(next.page) : null);

@@ -19,10 +19,7 @@ export async function getBankDetails(userId: number): Promise<BankDetails> {
     .select({ key: dashboardSettings.key, value: dashboardSettings.value })
     .from(dashboardSettings)
     .where(
-      and(
-        eq(dashboardSettings.userId, userId),
-        inArray(dashboardSettings.key, [...BANK_KEYS]),
-      ),
+      and(eq(dashboardSettings.userId, userId), inArray(dashboardSettings.key, [...BANK_KEYS])),
     );
   const out: BankDetails = { ...EMPTY_BANK };
   for (const r of rows) {

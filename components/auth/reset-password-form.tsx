@@ -37,7 +37,13 @@ export function ResetPasswordForm({ locale, token }: { locale: string; token: st
       <input type="hidden" name="token" value={token} />
       <div className="flex flex-col gap-1.5">
         <Label htmlFor="newPassword">{t("newPassword")}</Label>
-        <Input id="newPassword" name="newPassword" type="password" autoComplete="new-password" required />
+        <Input
+          id="newPassword"
+          name="newPassword"
+          type="password"
+          autoComplete="new-password"
+          required
+        />
       </div>
       <div className="flex flex-col gap-1.5">
         <Label htmlFor="confirmPassword">{t("confirmPassword")}</Label>

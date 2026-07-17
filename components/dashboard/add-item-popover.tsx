@@ -119,11 +119,7 @@ export function AddItemPopover({ type }: { type: TaskTypeValue }) {
           <Input value={orderNumber} onChange={(e) => setOrderNumber(e.target.value)} />
         </AddField>
 
-        <Button
-          size="sm"
-          className="mt-0.5"
-          onClick={submit}
-          disabled={pending || !title.trim()}>
+        <Button size="sm" className="mt-0.5" onClick={submit} disabled={pending || !title.trim()}>
           <Plus className="size-3.5" />
           {t("quickAdd.add")}
         </Button>

@@ -12,7 +12,5 @@ export default async function AirlinePage({ params }: { params: Promise<{ locale
     getContactsMap(),
     can("content:edit"),
   ]);
-  return (
-    <AirlineView airlines={airlines} contacts={contacts} canEditContacts={canEditContacts} />
-  );
+  return <AirlineView airlines={airlines} contacts={contacts} canEditContacts={canEditContacts} />;
 }

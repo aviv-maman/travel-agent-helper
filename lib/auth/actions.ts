@@ -16,12 +16,7 @@ import {
   type AuthProviderName,
 } from "@/db/schema";
 import { hashPassword, verifyPassword } from "./password";
-import {
-  generateSecret,
-  verifyTotp,
-  generateBackupCodes,
-  hashBackupCode,
-} from "./totp";
+import { generateSecret, verifyTotp, generateBackupCodes, hashBackupCode } from "./totp";
 import {
   createSession,
   invalidateSession,
@@ -161,7 +156,10 @@ export async function changePassword(
     return { error: "wrongPassword" };
   }
 
-  await db.update(users).set({ passwordHash: await hashPassword(next) }).where(eq(users.id, user.id));
+  await db
+    .update(users)
+    .set({ passwordHash: await hashPassword(next) })
+    .where(eq(users.id, user.id));
   await invalidateOtherSessions(user.id); // other devices must re-login with the new password
   await recordAudit("password.change", { actorId: user.id });
   return { ok: true };
@@ -183,9 +181,7 @@ export async function revokeSession(sessionId: string): Promise<void> {
   const user = await getCurrentUser();
   if (!user) return;
   if (sessionId === (await currentSessionId())) return;
-  await db
-    .delete(sessions)
-    .where(and(eq(sessions.id, sessionId), eq(sessions.userId, user.id)));
+  await db.delete(sessions).where(and(eq(sessions.id, sessionId), eq(sessions.userId, user.id)));
   revalidatePath("/[locale]/account/security", "page");
 }
 
@@ -205,7 +201,9 @@ export async function updateProfile(
 ): Promise<AuthState> {
   const user = await getCurrentUser();
   if (!user) redirect(`/${locale}/login`);
-  const displayName = String(formData.get("displayName") ?? "").trim().slice(0, 80);
+  const displayName = String(formData.get("displayName") ?? "")
+    .trim()
+    .slice(0, 80);
   await db
     .update(users)
     .set({ displayName: displayName || null })
@@ -241,7 +239,10 @@ export async function setPassword(
   if (next.length < 8) return { error: "passwordShort" };
   if (next !== confirm) return { error: "passwordMismatch" };
 
-  await db.update(users).set({ passwordHash: await hashPassword(next) }).where(eq(users.id, user.id));
+  await db
+    .update(users)
+    .set({ passwordHash: await hashPassword(next) })
+    .where(eq(users.id, user.id));
   await recordAudit("password.set", { actorId: user.id });
   revalidatePath("/[locale]/account/security", "page");
   return { ok: true };
@@ -284,11 +285,7 @@ export async function register(
   if (!USERNAME_RE.test(username)) return { error: "usernameChars" };
   if (password.length < 8) return { error: "passwordShort" };
 
-  const [invite] = await db
-    .select()
-    .from(invitations)
-    .where(eq(invitations.code, code))
-    .limit(1);
+  const [invite] = await db.select().from(invitations).where(eq(invitations.code, code)).limit(1);
   if (!invite || inviteStatus(invite) !== "active") return { error: "codeInvalid" };
 
   const [taken] = await db
@@ -338,10 +335,7 @@ export async function register(
 export type InviteState = { ok?: boolean; error?: string };
 
 /** Admin-only: mint a single-use invite carrying `role`, optionally expiring. */
-export async function createInvite(
-  _prev: InviteState,
-  formData: FormData,
-): Promise<InviteState> {
+export async function createInvite(_prev: InviteState, formData: FormData): Promise<InviteState> {
   if (!(await can("invites:manage"))) return { error: "forbidden" };
 
   const role = String(formData.get("role") ?? "");
@@ -349,9 +343,8 @@ export async function createInvite(
     return { error: "badRole" };
   }
   const days = Number(formData.get("expiresInDays"));
-  const expiresAt = Number.isFinite(days) && days > 0
-    ? new Date(Date.now() + days * 86_400_000)
-    : null;
+  const expiresAt =
+    Number.isFinite(days) && days > 0 ? new Date(Date.now() + days * 86_400_000) : null;
 
   const admin = await getCurrentUser();
   await db.insert(invitations).values({
@@ -373,7 +366,11 @@ export async function revokeInvite(id: number): Promise<void> {
     .update(invitations)
     .set({ revokedAt: new Date() })
     .where(and(eq(invitations.id, id), isNull(invitations.usedAt), isNull(invitations.revokedAt)));
-  await recordAudit("invite.revoke", { actorId: me?.id ?? null, targetType: "invite", targetId: id });
+  await recordAudit("invite.revoke", {
+    actorId: me?.id ?? null,
+    targetType: "invite",
+    targetId: id,
+  });
   revalidatePath("/[locale]/account/admin/invites", "page");
 }
 
@@ -388,8 +385,16 @@ export async function setUserRole(userId: number, formData: FormData): Promise<v
   if (!me || me.id === userId) return;
   const role = String(formData.get("role") ?? "");
   if (!(["admin", "editor", "agent"] as const).includes(role as UserRole)) return;
-  await db.update(users).set({ role: role as UserRole }).where(eq(users.id, userId));
-  await recordAudit("user.role", { actorId: me.id, targetType: "user", targetId: userId, meta: { role } });
+  await db
+    .update(users)
+    .set({ role: role as UserRole })
+    .where(eq(users.id, userId));
+  await recordAudit("user.role", {
+    actorId: me.id,
+    targetType: "user",
+    targetId: userId,
+    meta: { role },
+  });
   revalidatePath("/[locale]/account/admin/users", "page");
 }
 
@@ -413,7 +418,11 @@ export async function forceLogoutUser(userId: number): Promise<void> {
   const me = await getCurrentUser();
   if (!(await can("users:manage"))) return;
   await deleteAllUserSessions(userId);
-  await recordAudit("user.force_logout", { actorId: me?.id ?? null, targetType: "user", targetId: userId });
+  await recordAudit("user.force_logout", {
+    actorId: me?.id ?? null,
+    targetType: "user",
+    targetId: userId,
+  });
   revalidatePath("/[locale]/account/admin/users", "page");
 }
 
@@ -484,7 +493,10 @@ export async function disableTotp(_prev: TotpState, formData: FormData): Promise
     verifyTotp(user.totpSecret, code) ||
     (user.passwordHash ? await verifyPassword(password, user.passwordHash) : false);
   if (!ok) return { error: "invalidCode" };
-  await db.update(users).set({ totpSecret: null, totpEnabledAt: null }).where(eq(users.id, user.id));
+  await db
+    .update(users)
+    .set({ totpSecret: null, totpEnabledAt: null })
+    .where(eq(users.id, user.id));
   await db.delete(backupCodes).where(eq(backupCodes.userId, user.id));
   await recordAudit("2fa.disable", { actorId: user.id });
   revalidatePath("/[locale]/account/security", "page");

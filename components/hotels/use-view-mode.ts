@@ -18,9 +18,7 @@ function subscribe(callback: () => void) {
 
 function getSnapshot(): ViewMode {
   if (typeof document === "undefined") return memoryMode;
-  const match = document.cookie.match(
-    new RegExp(`(?:^|;\\s*)${HOTELS_VIEW_MODE_COOKIE}=([^;]*)`),
-  );
+  const match = document.cookie.match(new RegExp(`(?:^|;\\s*)${HOTELS_VIEW_MODE_COOKIE}=([^;]*)`));
   const value = match?.[1];
   if (value === "grid" || value === "list") return value;
   return memoryMode;

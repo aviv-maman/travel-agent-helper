@@ -29,7 +29,8 @@ import { setBankDetails, type BankDetails } from "@/lib/dashboard/settings";
  */
 
 export type ActionResult = { ok: true } | { error: "forbidden" | "invalid" | "offline" };
-export type CreateResult = { ok: true; id: string } | { error: "forbidden" | "invalid" | "offline" };
+export type CreateResult =
+  { ok: true; id: string } | { error: "forbidden" | "invalid" | "offline" };
 
 const TASK_TYPES: readonly DashboardTaskType[] = [
   "task",
@@ -129,7 +130,11 @@ export async function reorderTasksAction(updates: ReorderUpdate[]): Promise<Acti
     return { error: "invalid" };
   }
   for (const u of updates) {
-    if (typeof u.id !== "string" || !Number.isInteger(u.sortOrder) || !TASK_TYPES.includes(u.type)) {
+    if (
+      typeof u.id !== "string" ||
+      !Number.isInteger(u.sortOrder) ||
+      !TASK_TYPES.includes(u.type)
+    ) {
       return { error: "invalid" };
     }
   }

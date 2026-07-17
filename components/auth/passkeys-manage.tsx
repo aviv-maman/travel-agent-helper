@@ -77,9 +77,13 @@ export function PasskeysManage({ passkeys }: { passkeys: PasskeyRow[] }) {
               <div className="flex items-center gap-3">
                 <KeyRound className="size-4 text-muted-foreground" />
                 <div className="flex flex-col leading-tight">
-                  <span className="text-sm font-medium">{pk.deviceName ?? t("passkeyGeneric")}</span>
+                  <span className="text-sm font-medium">
+                    {pk.deviceName ?? t("passkeyGeneric")}
+                  </span>
                   <span className="text-xs text-muted-foreground">
-                    {t("passkeyCreated", { date: format.dateTime(pk.createdAt, { dateStyle: "medium" }) })}
+                    {t("passkeyCreated", {
+                      date: format.dateTime(pk.createdAt, { dateStyle: "medium" }),
+                    })}
                     {" · "}
                     {pk.lastUsedAt
                       ? t("passkeyLastUsed", {
