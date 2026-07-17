@@ -1,10 +1,11 @@
 import { setRequestLocale } from "next-intl/server";
-import { requireUser } from "@/lib/auth";
+import { can, requireUser } from "@/lib/auth";
 import type { DashboardTask } from "@/db/schema";
 import { archiveStaleCompleted, listDoneTasks, listOpenTasks } from "@/lib/dashboard/tasks";
 import { getScratchpad } from "@/lib/dashboard/scratchpad";
 import { getBankDetails } from "@/lib/dashboard/settings";
 import { greetingKey } from "@/lib/dashboard/dates";
+import { getNews, getNewsSources } from "@/lib/news";
 import type { DashTask } from "@/components/dashboard/types";
 import { DashboardView } from "@/components/dashboard/dashboard-view";
 
@@ -37,11 +38,15 @@ export default async function DashboardPage({
 
   // Housekeeping before reading, so the "done" list excludes just-archived items.
   await archiveStaleCompleted(user.id);
-  const [openTasks, doneTasks, scratchpad, bank] = await Promise.all([
+  // News rides along for the dashboard's News tab — the expensive source
+  // fetches are cached (30 min) in lib/news.ts, so this is cheap per request.
+  const [openTasks, doneTasks, scratchpad, bank, articles, canRefreshNews] = await Promise.all([
     listOpenTasks(user.id),
     listDoneTasks(user.id),
     getScratchpad(user.id),
     getBankDetails(user.id),
+    getNews(locale),
+    can("news:revalidate"),
   ]);
 
   return (
@@ -50,6 +55,9 @@ export default async function DashboardPage({
       doneTasks={doneTasks.map(toClient)}
       scratchpad={scratchpad}
       bank={bank}
+      articles={articles}
+      newsSources={getNewsSources(locale)}
+      canRefreshNews={canRefreshNews}
       agentName={user.displayName?.trim() || user.username}
       greeting={greetingKey()}
     />

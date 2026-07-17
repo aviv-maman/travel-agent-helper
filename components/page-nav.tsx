@@ -37,7 +37,6 @@ const PAGES = [
   { segment: "cancellation-fees", emoji: "❌" },
   { segment: "hotels", emoji: "🏨" },
   { segment: "faq", emoji: "❓" },
-  { segment: "news", emoji: "📰" },
 ] as const;
 
 export function PageNav() {

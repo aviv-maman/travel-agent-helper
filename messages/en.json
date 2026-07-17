@@ -36,7 +36,8 @@
     },
     "tabs": {
       "main": "Workspace",
-      "bank": "Bank details"
+      "bank": "Bank details",
+      "news": "News"
     },
     "bank": {
       "title": "Bank account details",
