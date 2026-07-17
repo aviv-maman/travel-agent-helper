@@ -188,9 +188,7 @@ export async function listPasskeys(userId: number) {
 
 /** Delete one of the OWNER's passkeys (ownership enforced in the query). */
 export async function deleteUserPasskey(userId: number, credentialId: string): Promise<void> {
-  await db
-    .delete(passkeys)
-    .where(and(eq(passkeys.id, credentialId), eq(passkeys.userId, userId)));
+  await db.delete(passkeys).where(and(eq(passkeys.id, credentialId), eq(passkeys.userId, userId)));
 }
 
 function parseTransports(json: string | null): AuthenticatorTransport[] | undefined {

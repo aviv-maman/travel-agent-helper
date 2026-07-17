@@ -4,11 +4,7 @@ import { getContactsMap } from "@/lib/contacts";
 import { can } from "@/lib/auth";
 import { CommissionsView } from "@/components/commissions/commissions-view";
 
-export default async function CommissionsPage({
-  params,
-}: {
-  params: Promise<{ locale: string }>;
-}) {
+export default async function CommissionsPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
   setRequestLocale(locale);
   const [commissions, contacts, canEdit] = await Promise.all([

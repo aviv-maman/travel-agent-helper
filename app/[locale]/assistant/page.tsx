@@ -9,11 +9,7 @@ import { ChatInterface } from "@/components/ai/chat-interface";
 import { QuoteHistory } from "@/components/ai/quote-history";
 import { AiEnabledSync } from "@/components/ai/ai-enabled-sync";
 
-export default async function AssistantPage({
-  params,
-}: {
-  params: Promise<{ locale: string }>;
-}) {
+export default async function AssistantPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
   setRequestLocale(locale);
   const user = await requireUser(locale);

@@ -1,12 +1,6 @@
 "use client";
 
-import {
-  createContext,
-  useContext,
-  useMemo,
-  useSyncExternalStore,
-  type ReactNode,
-} from "react";
+import { createContext, useContext, useMemo, useSyncExternalStore, type ReactNode } from "react";
 import { usePathname } from "next/navigation";
 import { readUserCookie, parsePublicUser, type PublicUser } from "@/lib/auth/public-user";
 
@@ -25,11 +19,7 @@ const noopSubscribe = () => () => undefined;
  */
 export function SessionProvider({ children }: { children: ReactNode }) {
   usePathname();
-  const raw = useSyncExternalStore(
-    noopSubscribe,
-    readUserCookie,
-    () => "",
-  );
+  const raw = useSyncExternalStore(noopSubscribe, readUserCookie, () => "");
   const user = useMemo(() => parsePublicUser(raw), [raw]);
   return <SessionContext.Provider value={user}>{children}</SessionContext.Provider>;
 }

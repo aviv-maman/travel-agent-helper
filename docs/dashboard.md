@@ -1,15 +1,16 @@
 # Dashboard — the login-gated personal homepage
 
-`/{locale}/dashboard` is each agent's personal work homepage and the **default post-login landing page** (`safeNext()` in [`lib/auth/protected-routes.ts`](../lib/auth/protected-routes.ts) falls back to it). It is auth-gated via `PROTECTED_PREFIXES` (middleware first pass) + `requireUser` in the page (the real boundary). All data is **per-user** — unlike the shared content pages (suppliers, hotels, …), nothing here is visible to other users.
+`/{locale}/dashboard` is each agent's personal work homepage and the **default post-login landing page** (`safeNext()` in [`lib/auth/protected-routes.ts`](../lib/auth/protected-routes.ts) falls back to it). It is auth-gated via `PROTECTED_PREFIXES` (middleware first pass) + `requireUser` in the page (the real boundary). All data is **per-user** — unlike the shared content pages (suppliers, hotels, …), nothing here is visible to other users. (The News tab is the one exception: it shows the shared tourism feed.)
 
 **Frontend-only feature.** Data lives in Neon via Drizzle (Next owns the schema, as always); the Python backend never touches these tables. Shipped 2026-07 (PRs #153–#155, migrations `drizzle/0017`–`0019`).
 
 ## What's on it
 
-A time-of-day greeting (Jerusalem clock, `lib/dashboard/dates.ts`) leads; two tabs below ([`components/dashboard/dashboard-view.tsx`](../components/dashboard/dashboard-view.tsx)):
+A time-of-day greeting (Jerusalem clock, `lib/dashboard/dates.ts`) leads; three tabs below ([`components/dashboard/dashboard-view.tsx`](../components/dashboard/dashboard-view.tsx)):
 
-- **Workspace tab** — the scratchpad (above the tasks), a quick-add control, the four task sections, today's completed items, and quick links.
+- **Workspace tab** — the scratchpad (above the tasks), a quick-add control, the four task sections, and today's completed items.
 - **Bank tab** — the agent's bank-transfer details card with one-tap copy for WhatsApp.
+- **News tab** — the tourism news feed, moved off the main nav and into the dashboard (2026-07, PR #204; `/news` now just redirects here). The page fetches `getNews(locale)` alongside the per-user data — cheap per request because the source fetches are cached ~30 min in `lib/news.ts` — and renders `components/news/news-list` plus a refresh button gated by the `news:revalidate` permission.
 
 ### Task board
 
@@ -35,7 +36,7 @@ Stored in `dashboard_settings`, a per-user **key/value** table (`(user_id, key)`
 | Page (server) | [`app/[locale]/dashboard/page.tsx`](../app/%5Blocale%5D/dashboard/page.tsx) — `requireUser`, housekeeping, parallel fetch, maps rows to the client `DashTask` shape |
 | Server actions | [`app/actions/dashboard.ts`](../app/actions/dashboard.ts) — every action re-resolves the session, then writes through the DAL |
 | DAL (server-only) | `lib/dashboard/tasks.ts`, `scratchpad.ts`, `settings.ts` — all queries scoped by `userId` |
-| Client components | `components/dashboard/` — `dashboard-view` (orchestrator), `task-board`, `task-section`, `task-card`, `task-edit-dialog`, `add-item-popover`, `playground`, `bank-details-card`, `greeting`, `phone-actions` |
+| Client components | `components/dashboard/` — `dashboard-view` (orchestrator), `task-board`, `task-section`, `task-card`, `task-edit-dialog`, `add-item-popover`, `playground`, `bank-details-card`, `greeting`, `phone-actions`; the News tab reuses `components/news/` (`news-list`, `refresh-news-button`) |
 | Schema | [`db/schema.ts`](../db/schema.ts) — `dashboardTasks`, `dashboardScratchpad`, `dashboardSettings` (+ the two enums) |
 | i18n | `messages/*.json` under the `dashboard` namespace |
 

@@ -60,9 +60,7 @@ export function LanguageSwitcher() {
           <DropdownMenuTrigger
             render={
               <TooltipTrigger
-                render={
-                  <Button variant="outline" size="icon" aria-label={t("language")} />
-                }
+                render={<Button variant="outline" size="icon" aria-label={t("language")} />}
               />
             }>
             <CountryFlag code={localeCountry[locale]} />
@@ -76,12 +74,8 @@ export function LanguageSwitcher() {
                   // Read the query imperatively (not via useSearchParams) so the
                   // switcher doesn't force a CSR bailout / Suspense boundary on
                   // every page during static prerendering.
-                  const query = Object.fromEntries(
-                    new URLSearchParams(window.location.search),
-                  );
-                  startTransition(() =>
-                    router.replace({ pathname, query }, { locale: l }),
-                  );
+                  const query = Object.fromEntries(new URLSearchParams(window.location.search));
+                  startTransition(() => router.replace({ pathname, query }, { locale: l }));
                 }}
                 className="gap-2">
                 <CountryFlag code={localeCountry[l]} />

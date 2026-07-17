@@ -1,8 +1,4 @@
-import type {
-  CancelBlock as Block,
-  CancelProduct as Product,
-  Localized,
-} from "@/db/schema";
+import type { CancelBlock as Block, CancelProduct as Product, Localized } from "@/db/schema";
 import type { Locale } from "@/i18n/config";
 import { localized, usingDatabase } from "@/lib/hotels";
 
@@ -55,7 +51,14 @@ const P_SPORTS: Product = {
 };
 
 // Canonical render order for product tags — core categories first, then extras.
-export const PRODUCT_ORDER: Product[] = [P_FLIGHT, P_PACKAGE, P_ORGANIZED, P_SPORTS, P_SKI, P_VILLAGE];
+export const PRODUCT_ORDER: Product[] = [
+  P_FLIGHT,
+  P_PACKAGE,
+  P_ORGANIZED,
+  P_SPORTS,
+  P_SKI,
+  P_VILLAGE,
+];
 
 /**
  * Where a product sorts in the canonical order. Reference identity only works

@@ -26,7 +26,10 @@ function tidy(s: string): string {
  */
 function stripEmoji(s: string): string {
   return s
-    .replace(/[\p{Extended_Pictographic}\u{1F1E6}-\u{1F1FF}\u{FE0F}\u{200D}\u{20E3}\u{2605}\u{2606}]/gu, "")
+    .replace(
+      /[\p{Extended_Pictographic}\u{1F1E6}-\u{1F1FF}\u{FE0F}\u{200D}\u{20E3}\u{2605}\u{2606}]/gu,
+      "",
+    )
     .replace(/\s+/g, " ")
     .trim();
 }
@@ -79,7 +82,9 @@ function extractHotelName(content: string): string | null {
   }
   const inline = content.match(/(?:hotels?|מלון)\s*:\s*\**\s*([^\n*]+)/i)?.[1];
   if (inline) {
-    const name = stripEmoji(tidy(inline)).split(/\s+[—–-]\s+/)[0].trim();
+    const name = stripEmoji(tidy(inline))
+      .split(/\s+[—–-]\s+/)[0]
+      .trim();
     return name ? capChars(name, 40) : null;
   }
   return null;
@@ -89,13 +94,18 @@ function extractHotelName(content: string): string | null {
 function extractDate(text: string): string | null {
   const numeric = text.match(/\b(\d{1,2})[./-](\d{1,2})(?:[./-]\d{2,4})?\b/);
   if (numeric) return `${Number(numeric[1])}.${Number(numeric[2])}`;
-  const named = text.match(/\b(\d{1,2})\s+(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)[a-z]*/i);
+  const named = text.match(
+    /\b(\d{1,2})\s+(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)[a-z]*/i,
+  );
   if (named) return `${Number(named[1])}.${MONTHS.indexOf(named[2].toLowerCase()) + 1}`;
   return null;
 }
 
 /** Hotel name + destination, preferring the quote's "Hotel: <name> — <city>" line. */
-function extractHotelAndDest(content: string, prompt: string): { hotel: string | null; dest: string | null } {
+function extractHotelAndDest(
+  content: string,
+  prompt: string,
+): { hotel: string | null; dest: string | null } {
   let hotel: string | null = null;
   let dest: string | null = null;
 

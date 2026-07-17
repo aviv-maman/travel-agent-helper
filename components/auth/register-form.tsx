@@ -61,18 +61,10 @@ export function RegisterForm({
       </div>
       <div className="flex flex-col gap-1.5">
         <Label htmlFor="password">{t("password")}</Label>
-        <Input
-          id="password"
-          name="password"
-          type="password"
-          autoComplete="new-password"
-          required
-        />
+        <Input id="password" name="password" type="password" autoComplete="new-password" required />
         <p className="text-xs text-muted-foreground">{t("passwordHint")}</p>
       </div>
-      {state.error && (
-        <p className="text-sm text-destructive">{errorMessage(t, state.error)}</p>
-      )}
+      {state.error && <p className="text-sm text-destructive">{errorMessage(t, state.error)}</p>}
       <Button type="submit" disabled={pending}>
         {pending ? t("registering") : t("registerCta")}
       </Button>

@@ -5,12 +5,7 @@ import { useTranslations } from "next-intl";
 import { Check, Globe, Pencil, Phone, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { SupplierContact } from "@/components/commissions/supplier-contact";
 import { emptyContact, type SupplierContact as SupplierContactRecord } from "@/lib/contacts";
 

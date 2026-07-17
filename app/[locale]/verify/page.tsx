@@ -44,7 +44,9 @@ export default async function VerifyEmailPage({
           ) : (
             <form action={confirm} className="flex flex-col gap-3">
               <p className="text-sm text-muted-foreground">{t("verifyPrompt")}</p>
-              <button type="submit" className={buttonVariants({ variant: "default" }) + " self-start"}>
+              <button
+                type="submit"
+                className={buttonVariants({ variant: "default" }) + " self-start"}>
                 {t("verifyConfirm")}
               </button>
             </form>

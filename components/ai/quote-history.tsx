@@ -13,13 +13,7 @@ import type { SavedQuote } from "@/lib/ai/quotes";
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
 import { useDirection } from "@/components/ui/direction";
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import {
   Dialog,
   DialogContent,
@@ -185,7 +179,7 @@ export function QuoteHistory({
         quoteList
       ) : (
         <Sheet>
-          <SheetTrigger render={<Button variant="outline" className="self-start gap-2" />}>
+          <SheetTrigger render={<Button variant="outline" className="gap-2 self-start" />}>
             <PanelRight className="size-4" />
             {t("openSavedQuotes")}
             {quotes.length > 0 ? ` (${quotes.length})` : ""}

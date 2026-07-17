@@ -38,7 +38,12 @@ export function PasskeyLoginButton({ locale, next }: { locale: string; next?: st
   }
 
   return (
-    <Button type="button" variant="outline" className="w-full" onClick={handleClick} disabled={busy}>
+    <Button
+      type="button"
+      variant="outline"
+      className="w-full"
+      onClick={handleClick}
+      disabled={busy}>
       <KeyRound className="size-4" />
       {t("passkeyLogin")}
     </Button>

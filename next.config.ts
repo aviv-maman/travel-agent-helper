@@ -1,7 +1,7 @@
-import type { NextConfig } from "next"
-import createNextIntlPlugin from "next-intl/plugin"
+import type { NextConfig } from "next";
+import createNextIntlPlugin from "next-intl/plugin";
 
-const withNextIntl = createNextIntlPlugin()
+const withNextIntl = createNextIntlPlugin();
 
 /**
  * Same-origin reverse proxy to the Python backend (docs/backend-overview.md
@@ -17,7 +17,7 @@ const withNextIntl = createNextIntlPlugin()
  * it's unset (local dev without the backend) no rewrite is added and the AI
  * chat falls back to its mock mode.
  */
-const backend = process.env.BACKEND_URL?.trim().replace(/\/$/, "")
+const backend = process.env.BACKEND_URL?.trim().replace(/\/$/, "");
 
 const nextConfig: NextConfig = {
   images: {
@@ -29,13 +29,13 @@ const nextConfig: NextConfig = {
     ],
   },
   async rewrites() {
-    if (!backend) return []
+    if (!backend) return [];
     return [
       { source: "/api/ai/:path*", destination: `${backend}/ai/:path*` },
       { source: "/api/auth/:path*", destination: `${backend}/auth/:path*` },
       { source: "/api/files/:path*", destination: `${backend}/files/:path*` },
-    ]
+    ];
   },
-}
+};
 
-export default withNextIntl(nextConfig)
+export default withNextIntl(nextConfig);

@@ -47,9 +47,10 @@ The backend also sleeps after ~15 min idle; a cron-job.org pinger keeps it warm 
 | Var | Used by | Purpose |
 |---|---|---|
 | `AUTH_BACKEND_URL` | `oauth-buttons.tsx`, `connected-accounts.tsx` | OAuth endpoints; buttons hide until set |
+| `AUTH_PROVIDERS` | `lib/auth/accounts.ts` | Comma list of enabled OAuth providers (default `google`); a button needs both this and `AUTH_BACKEND_URL` |
 | `NEWS_FETCH_PROXY` | `lib/news.ts` | Fetch-proxy endpoint; blocked sources go direct until set |
 | `BACKEND_URL` | AI chat, email send, uploads, same-origin rewrites | Base URL for the backend (server-to-server; the browser uses the `/api/*` rewrites next.config.ts derives from it) |
-| `SERVICE_KEY` | password-reset / verification email sends | Shared secret for `X-Service-Key` calls; must equal the backend's |
+| `SERVICE_KEY` | password-reset / verification email sends, quote-image deletion (`lib/ai/backend.ts` → `/files/delete-quote-images`) | Shared secret for `X-Service-Key` calls; must equal the backend's |
 | `FILE_UPLOAD_URL` + `SUPABASE_PUBLIC_BASE_URL` | avatar + quote-image uploads | Presign endpoint prefix and the public-bucket base for URL validation |
 
 ## Suggested phasing (2026-07)

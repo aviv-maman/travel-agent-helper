@@ -43,9 +43,10 @@ export async function listUsers(opts: { search?: string; page?: number } = {}) {
       username: users.username,
       role: users.role,
       createdAt: users.createdAt,
-      sessionCount: sql<number>`count(${sessions.id}) filter (where ${sessions.expiresAt} > now())`.mapWith(
-        Number,
-      ),
+      sessionCount:
+        sql<number>`count(${sessions.id}) filter (where ${sessions.expiresAt} > now())`.mapWith(
+          Number,
+        ),
       lastActive: sql<Date | null>`max(${sessions.lastSeenAt})`.mapWith(sessions.lastSeenAt),
     })
     .from(users)

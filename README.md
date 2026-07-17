@@ -1,6 +1,6 @@
 # Travel Agent Helper
 
-An internal tool for travel agents: supplier commissions, cancellation fees, transfers, baggage, hotels, airlines, a tourism news feed, an **AI quote assistant** (screenshot → priced client quote, `/assistant`), and a **personal dashboard** (`/dashboard`, the post-login landing page — see [docs/dashboard.md](docs/dashboard.md)) — with invite-only accounts and roles.
+An internal tool for travel agents: supplier commissions, cancellation fees, transfers, baggage, hotels, airlines, an **AI quote assistant** (screenshot → priced client quote, `/assistant`), and a **personal dashboard** (`/dashboard`, the post-login landing page with workspace, bank-details, and tourism-news tabs — see [docs/dashboard.md](docs/dashboard.md); `/news` now just redirects there) — with invite-only accounts and roles.
 
 Built with Next.js 16 (App Router), next-intl (Hebrew/English), Tailwind + shadcn/ui, Drizzle ORM, and Neon Postgres.
 

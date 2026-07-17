@@ -2,7 +2,15 @@
 
 import { useEffect, useRef, useState, type ClipboardEvent, type KeyboardEvent } from "react";
 import { useTranslations } from "next-intl";
-import { ArrowRightLeft, ArrowUp, ChevronDown, ImageIcon, Loader2, Paperclip, X } from "lucide-react";
+import {
+  ArrowRightLeft,
+  ArrowUp,
+  ChevronDown,
+  ImageIcon,
+  Loader2,
+  Paperclip,
+  X,
+} from "lucide-react";
 import { cn } from "@/lib/utils";
 import { fileUrl } from "@/lib/object-url";
 import { Button } from "@/components/ui/button";

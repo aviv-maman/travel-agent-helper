@@ -132,7 +132,10 @@ export function BankDetailsCard({ bank }: { bank: BankDetails }) {
                         aria-label={`${t("copy")}: ${bank[key]}`}
                         className="group -mx-2 flex w-full items-center justify-between gap-2 rounded-md px-2 py-1 text-start font-medium text-foreground transition-colors hover:bg-muted/60">
                         <span className="truncate">{bank[key]}</span>
-                        <Copy className="size-3.5 shrink-0 text-muted-foreground opacity-0 transition-opacity group-hover:opacity-100" aria-hidden />
+                        <Copy
+                          className="size-3.5 shrink-0 text-muted-foreground opacity-0 transition-opacity group-hover:opacity-100"
+                          aria-hidden
+                        />
                       </button>
                     </dd>
                   </div>

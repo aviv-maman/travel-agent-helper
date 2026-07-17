@@ -365,10 +365,7 @@ function scrapeC14(body: string, src: NewsSource): NewsArticle[] {
       excerpt: toExcerpt(excerpt),
       // c14's resize proxy serves the src at 3840px wide — far too heavy for a
       // card (and large enough that iOS Safari can drop it). Ask for 1080px.
-      image: normalizeImage(
-        img.attr("src")?.replace(/\/images\/\d+\//, "/images/1080/"),
-        src.base,
-      ),
+      image: normalizeImage(img.attr("src")?.replace(/\/images\/\d+\//, "/images/1080/"), src.base),
       publishedAt: (path && dates.get(path)) || null,
       sourceId: src.id,
       sourceName: src.name,

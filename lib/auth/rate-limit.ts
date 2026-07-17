@@ -39,11 +39,7 @@ export async function isLocked(key: string): Promise<boolean> {
 /** Record a failed attempt, opening or extending the window and locking if tripped. */
 export async function recordFailure(key: string): Promise<void> {
   const now = new Date();
-  const [row] = await db
-    .select()
-    .from(loginAttempts)
-    .where(eq(loginAttempts.key, key))
-    .limit(1);
+  const [row] = await db.select().from(loginAttempts).where(eq(loginAttempts.key, key)).limit(1);
 
   if (!row) {
     await db.insert(loginAttempts).values({ key, count: 1, windowStartsAt: now });

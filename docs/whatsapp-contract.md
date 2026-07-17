@@ -8,11 +8,13 @@ A WhatsApp Business API provider — **Meta WhatsApp Cloud API** (free tier for 
 
 ## Endpoint
 
-`POST {BACKEND_URL}/whatsapp/send` — authenticated (validate the `session` cookie; gate on a permission, e.g. `content:edit`, so only editors/admins send).
+`POST {BACKEND_URL}/whatsapp/send` — authenticated (validate the `session` cookie; **admin-only** — the backend rejects any non-`admin` role, editors included; 2026-07 decision).
 - Body: `{ to: "<E.164 phone>", body?: string, template?: { name, params[] } }`.
 - Backend: call the provider; return `{ id }` or a non-2xx on failure. Rate-limit per sender.
 
 ## Flow with the AI feature
+
+> **Status:** the Next side of this flow is **not built yet** — nothing in the app calls `/whatsapp/send`. Today's WhatsApp touchpoints (dashboard phone actions, quote sharing) are plain client-side `wa.me` deep-links that open the agent's own WhatsApp. The section below is the intended design for when the server-side send lands.
 
 The natural pairing: user generates a quote in the chat → clicks "Send to client on WhatsApp" → Next server action (permission-checked) calls `/whatsapp/send` with the quote text (or a template + the quote as a parameter). Keep the quote text server-side; don't trust a client-supplied body beyond what the user just generated.
 

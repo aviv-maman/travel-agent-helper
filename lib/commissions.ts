@@ -16,7 +16,13 @@ import { localized, usingDatabase } from "@/lib/hotels";
  * high = green (9%+), mid = blue (7–8.5%), low = orange (5–6%),
  * range = gold (a span like 7–10% or "varies"), net = red ("net price").
  */
-export type { CommLevel, BaggageIcon, BaggageRow, SupplierNote, SupplierCategory } from "@/db/schema";
+export type {
+  CommLevel,
+  BaggageIcon,
+  BaggageRow,
+  SupplierNote,
+  SupplierCategory,
+} from "@/db/schema";
 import type {
   BaggageIcon,
   BaggageRow,
@@ -698,17 +704,31 @@ export const SUPPLIERS: Supplier[] = [
   // ── Hotels tab — B2B bedbanks (net rates; the agent adds their markup) ──────
   netSupplier("goglobal", "GoGlobal", "GOGLOBAL", "hotels", "https://new.goglobal.travel/home"),
   netSupplier("tbo-holidays", "TBO Holidays", "TBO", "hotels", "https://www.tboholidays.com/"),
-  netSupplier("instant-travel", "Instant Travel", "INSTANT", "hotels", "https://b2b.hubwayz.com/agent/login", {
-    alias: "Hubwayz",
-  }),
+  netSupplier(
+    "instant-travel",
+    "Instant Travel",
+    "INSTANT",
+    "hotels",
+    "https://b2b.hubwayz.com/agent/login",
+    {
+      alias: "Hubwayz",
+    },
+  ),
   netSupplier("ratehawk", "RateHawk", "RATEHAWK", "hotels", "https://www.ratehawk.com/", {
     logoExt: "svg",
   }),
 
   // ── Car-rental tab ─────────────────────────────────────────────────────────
-  netSupplier("auto-europe", "Auto Europe", "AUTOEUROPE", "car-rental", "https://www.autoeurope.co.il/", {
-    logoExt: "svg",
-  }),
+  netSupplier(
+    "auto-europe",
+    "Auto Europe",
+    "AUTOEUROPE",
+    "car-rental",
+    "https://www.autoeurope.co.il/",
+    {
+      logoExt: "svg",
+    },
+  ),
 ];
 
 // ── Locale-resolved view types (what the client receives) ────────────────────
@@ -794,7 +814,11 @@ export async function getCommissions(locale: string): Promise<ViewSupplier[]> {
     organizedTours: cv(s.organizedTours),
     customCommissions: [s.customCommission1, s.customCommission2, s.customCommission3]
       .filter((cm): cm is CustomCommission => Boolean(cm))
-      .map((cm) => ({ label: pick(cm.label), value: withPercentSign(pick(cm.value)), level: cm.level })),
+      .map((cm) => ({
+        label: pick(cm.label),
+        value: withPercentSign(pick(cm.value)),
+        level: cm.level,
+      })),
     baggage: s.baggage.map((b) => ({ icon: b.icon, text: pick(b.text) })),
     notes: (s.notes ?? []).map((n) => ({
       text: pick(n.text),

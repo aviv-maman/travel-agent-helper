@@ -87,9 +87,7 @@ if (!src) {
 
 const existing = await db.select({ id: schema.quoteSuppliers.id }).from(schema.quoteSuppliers);
 if (existing.length > 0) {
-  console.log(
-    `quote_suppliers already has ${existing.length} rows — app-managed, not reseeding.`,
-  );
+  console.log(`quote_suppliers already has ${existing.length} rows — app-managed, not reseeding.`);
   process.exit(0);
 }
 
@@ -102,7 +100,8 @@ const idx = Object.fromEntries(
   Object.entries(COLS).map(([key, title]) => [key, header.indexOf(title)]),
 ) as Record<keyof typeof COLS, number>;
 for (const [key, i] of Object.entries(idx)) {
-  if (i === -1) throw new Error(`column not found in CSV header: ${COLS[key as keyof typeof COLS]} (${key})`);
+  if (i === -1)
+    throw new Error(`column not found in CSV header: ${COLS[key as keyof typeof COLS]} (${key})`);
 }
 
 let sortOrder = 0;

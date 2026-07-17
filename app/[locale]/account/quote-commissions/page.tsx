@@ -4,13 +4,7 @@ import { db } from "@/db";
 import { quoteSuppliers } from "@/db/schema";
 import { requirePermission } from "@/lib/auth";
 import { QuoteSuppliersTable } from "@/components/account/quote-suppliers-table";
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-  CardContent,
-} from "@/components/ui/card";
+import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 
 /**
  * Settings editor for the AI quote assistant's supplier-commission table —
@@ -38,7 +32,7 @@ export default async function QuoteCommissionsPage({
     // Breaks out of the account layout's max-w-3xl on desktop — the 10-column
     // table needs the room (notes were getting clamped). Symmetric negative
     // margins keep it centered; direction-agnostic, so RTL is fine.
-    <Card className="lg:w-[min(72rem,92vw)] lg:mx-[calc((100%-min(72rem,92vw))/2)]">
+    <Card className="lg:mx-[calc((100%-min(72rem,92vw))/2)] lg:w-[min(72rem,92vw)]">
       <CardHeader>
         <CardTitle>{t("title")}</CardTitle>
         <CardDescription>{t("description")}</CardDescription>

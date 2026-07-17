@@ -33,9 +33,7 @@ export function TaskCard({ task, handle }: { task: DashTask; handle?: React.Reac
 
   function toggle(checked: boolean) {
     startTransition(async () => {
-      const res = checked
-        ? await completeTaskAction(task.id)
-        : await reopenTaskAction(task.id);
+      const res = checked ? await completeTaskAction(task.id) : await reopenTaskAction(task.id);
       if ("error" in res) {
         toast.error(t("offline"));
         return;

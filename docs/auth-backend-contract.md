@@ -6,7 +6,7 @@ OAuth sign-in is handled by a **separate Python backend**, not by this Next app 
 
 - **Shared database.** The backend connects to the **same Neon DB** (`DATABASE_URL`). The Drizzle schema in [`db/schema.ts`](../db/schema.ts) is the source of truth; **Next owns migrations** (`bun run db:migrate`). The backend only reads/writes the existing tables (`users`, `accounts`, `sessions`, `invitations`).
 - **Same origin.** Deploy behind one origin (reverse proxy): `/api/*` (or `/auth/*`) → Python, everything else → Next. This is what lets the backend set the session **cookie** that Next reads. Cross-origin would break cookie sharing.
-- Next points at the backend via `AUTH_BACKEND_URL` (e.g. `https://app.example.com/api`). Until it's set, the "Continue with…" buttons don't render.
+- Next points at the backend via `AUTH_BACKEND_URL` (e.g. `https://app.example.com/api`). Until it's set, the "Continue with…" buttons don't render. Which buttons render is additionally gated by `AUTH_PROVIDERS` (comma list, default `google` — `lib/auth/accounts.ts`); a provider button shows only when **both** the URL is set and the provider is enabled.
 
 ## Endpoints the Next UI links to
 

@@ -1,5 +1,8 @@
 dist/
 node_modules/
+# Vendored agent skills — keep byte-identical to upstream.
+.agents/
+.claude/skills/
 .next/
 .turbo/
 coverage/

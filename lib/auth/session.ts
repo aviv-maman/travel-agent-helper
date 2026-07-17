@@ -86,7 +86,10 @@ export async function completeMfa(user: {
   const token = store.get(SESSION_COOKIE)?.value;
   if (!token) return;
   const expiresAt = new Date(Date.now() + SESSION_DURATION_MS);
-  await db.update(sessions).set({ mfaPending: false }).where(eq(sessions.id, hashToken(token)));
+  await db
+    .update(sessions)
+    .set({ mfaPending: false })
+    .where(eq(sessions.id, hashToken(token)));
   store.set(
     USER_COOKIE,
     serializePublicUser({ username: user.username, displayName: user.displayName ?? undefined }),

@@ -67,7 +67,7 @@ function StatePicker({
           aria-label={labels[s]}
           aria-pressed={value === s}
           onClick={() => onChange(s)}
-          className={`px-2.5 py-1 text-xs font-semibold text-muted-foreground transition-colors first:border-s-0 border-s border-border hover:text-foreground ${STATE_STYLE[s]}`}>
+          className={`border-s border-border px-2.5 py-1 text-xs font-semibold text-muted-foreground transition-colors first:border-s-0 hover:text-foreground ${STATE_STYLE[s]}`}>
           {STATE_SYMBOL[s]}
         </button>
       ))}
@@ -109,7 +109,9 @@ export function TransferCityEdit({
       return {
         mode: "all" as Mode,
         allVariant: allPill.variant === "warn" ? "yes" : allPill.variant,
-        per: {}, rest: "none" as PillState, extras: none,
+        per: {},
+        rest: "none" as PillState,
+        extras: none,
       };
     }
     const per: Record<string, PillState> = {};

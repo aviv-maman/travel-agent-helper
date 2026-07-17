@@ -104,7 +104,9 @@ export function hashBackupCode(code: string): string {
 export function generateBackupCodes(count = 10): string[] {
   const codes: string[] = [];
   for (let i = 0; i < count; i++) {
-    const raw = base32Encode(new Uint8Array(randomBytes(7))).slice(0, 10).toLowerCase();
+    const raw = base32Encode(new Uint8Array(randomBytes(7)))
+      .slice(0, 10)
+      .toLowerCase();
     codes.push(`${raw.slice(0, 5)}-${raw.slice(5, 10)}`);
   }
   return codes;

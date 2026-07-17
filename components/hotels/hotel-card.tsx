@@ -67,8 +67,7 @@ export function useTimeLabel() {
   return (d: ViewDistance): string => {
     const parts: string[] = [];
     const walkIsUseful =
-      d.walkMinutes != null &&
-      (d.walkMinutes <= MAX_USEFUL_WALK_MINUTES || d.rideMinutes == null);
+      d.walkMinutes != null && (d.walkMinutes <= MAX_USEFUL_WALK_MINUTES || d.rideMinutes == null);
     if (walkIsUseful) parts.push(t("walk", { minutes: d.walkMinutes! }));
     if (d.rideMinutes != null) parts.push(t("ride", { minutes: d.rideMinutes }));
     // Always surface a walking time — even for very close (<100m) spots where the

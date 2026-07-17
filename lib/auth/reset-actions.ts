@@ -28,7 +28,9 @@ export async function requestPasswordReset(
   _prev: ResetState,
   formData: FormData,
 ): Promise<ResetState> {
-  const email = String(formData.get("email") ?? "").trim().toLowerCase();
+  const email = String(formData.get("email") ?? "")
+    .trim()
+    .toLowerCase();
   if (!email) return { error: "missing" };
 
   // NEVER reveal whether the address exists — always the same neutral response.
@@ -86,14 +88,20 @@ export async function resetPassword(
         )
         .limit(1);
       if (backup) {
-        await db.update(backupCodes).set({ usedAt: new Date() }).where(eq(backupCodes.id, backup.id));
+        await db
+          .update(backupCodes)
+          .set({ usedAt: new Date() })
+          .where(eq(backupCodes.id, backup.id));
         ok = true;
       }
     }
     if (!ok) return { error: "invalidCode" };
   }
 
-  await db.update(users).set({ passwordHash: await hashPassword(next) }).where(eq(users.id, user.id));
+  await db
+    .update(users)
+    .set({ passwordHash: await hashPassword(next) })
+    .where(eq(users.id, user.id));
   await invalidateUserSessions(user.id); // sign out everywhere
   await invalidateEmailTokens(user.id, "reset"); // burn any other outstanding links
   await recordAudit("password.reset", { actorId: user.id });

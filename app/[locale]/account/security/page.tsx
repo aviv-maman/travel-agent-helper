@@ -12,13 +12,7 @@ import { LogoutEverywhereButton } from "@/components/auth/logout-everywhere-butt
 import { ConnectedAccounts } from "@/components/auth/connected-accounts";
 import { TwoFactor } from "@/components/auth/two-factor";
 import { AuditList } from "@/components/auth/audit-list";
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-  CardContent,
-} from "@/components/ui/card";
+import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 
 export default async function SecurityPage({
   params,
@@ -67,9 +61,7 @@ export default async function SecurityPage({
           <CardDescription>{t("emailHint")}</CardDescription>
         </CardHeader>
         <CardContent>
-          {verified === "1" && (
-            <p className="mb-2 text-sm text-success">{t("verifyDone")}</p>
-          )}
+          {verified === "1" && <p className="mb-2 text-sm text-success">{t("verifyDone")}</p>}
           <EmailVerification
             locale={locale}
             email={user.email}

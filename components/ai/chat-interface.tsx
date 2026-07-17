@@ -125,9 +125,7 @@ export function ChatInterface({ signUrl }: { signUrl: string | null }) {
       if (imageKey && imageKey !== "mock") {
         setMessages((prev) =>
           prev.map((m) =>
-            m.imageKey === imageKey
-              ? { ...m, imageKey: undefined, imageMediaType: undefined }
-              : m,
+            m.imageKey === imageKey ? { ...m, imageKey: undefined, imageMediaType: undefined } : m,
           ),
         );
       }
@@ -232,7 +230,9 @@ export function ChatInterface({ signUrl }: { signUrl: string | null }) {
 
     // Multi-turn context = the conversation so far + this new user turn.
     const turns: ChatTurn[] = [
-      ...messages.filter((m) => m.content.trim()).map((m) => ({ role: m.role, content: m.content })),
+      ...messages
+        .filter((m) => m.content.trim())
+        .map((m) => ({ role: m.role, content: m.content })),
       { role: "user", content: outgoing },
     ];
 
