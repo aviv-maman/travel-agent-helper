@@ -109,7 +109,7 @@ cd data/destinations/work/<code>
 1. לכתוב `data/destinations/<code>.json` (SeedDestination מלא: code, iata,
    name, country, countryCode, info, sortOrder — הבא בתור אחרי הקיימים,
    landmarks, hotels עם distances/features/stars/bookingScore/urls;
-   rooms רק אם המשתמש סיפק).
+   `rooms: []` תמיד — רשימות חדרים הן DB-managed וממולאות בסקריפט, ראו סעיף 4ב).
 2. להוסיף import + שורה ב-`data/destinations/index.ts`.
 3. `bun run typecheck && bun run seed`.
 4. **העשרת Google Places** (אחרי ה-seed — הנתונים נכתבים ישירות ל-DB):
@@ -119,6 +119,11 @@ cd data/destinations/work/<code>
    דורש `GOOGLE_PLACES_API_KEY` ב-.env.local. ⚠️ ההעשרה היא DB-managed:
    לעולם לא נכתבת ל-JSON של היעד, ו-seed חוזר משמר אותה לפי שם המלון
    (שינוי שם מלון מנתק את ההעשרה עד ריצה חוזרת של הסקריפט).
+   4ב. **רשימות חדרים** (אופציונלי, בתשלום ~$0.01 למלון — לאשר מול המשתמש):
+   `bun scripts/enrich-hotels-rooms.ts --dest <IATA> --yes` — מושך מ-Booking
+   דרך Apify את חדרי כל מלון (שם, גודל במ"ר, תפוסה) ישירות ל-DB (אותו כלל
+   שימור לפי שם מלון). דורש `APIFY_TOKEN` ב-.env.local; בלי `--yes` זו ריצה
+   יבשה עם אומדן עלות. לעבור על דוח ההתאמות בסוף.
 5. לפתוח `/he/hotels?dest=<IATA>` — לוודא: כל המלונות, RTL, באדג'ים,
    מיון מרחקים במטרים, סקשן "על העיר", ותצוגת ההעשרה (תמונה מימין,
    דירוג גוגל, כתובת מתחת לשם, קישור אתר המלון מתחת ל-Booking).

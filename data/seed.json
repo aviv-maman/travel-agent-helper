@@ -137,38 +137,7 @@
             "rideMinutes": null
           }
         ],
-        "rooms": [
-          {
-            "name": "Deluxe Room",
-            "icon": "🛏",
-            "sizeSqm": 32,
-            "occupancy": {
-              "he": "זוגי — נוף לעיר או לים",
-              "en": "Double — city or sea view"
-            },
-            "sortOrder": 0
-          },
-          {
-            "name": "Club Deluxe Room",
-            "icon": "🛏",
-            "sizeSqm": 32,
-            "occupancy": {
-              "he": "זוגי — קומות גבוהות, כולל Club Lounge",
-              "en": "Double — high floors, includes Club Lounge"
-            },
-            "sortOrder": 1
-          },
-          {
-            "name": "Deluxe Triple Room",
-            "icon": "👨‍👩‍👧",
-            "sizeSqm": null,
-            "occupancy": {
-              "he": "שלישיה",
-              "en": "Triple"
-            },
-            "sortOrder": 2
-          }
-        ]
+        "rooms": []
       },
       {
         "name": "Hilton Batumi",
@@ -205,38 +174,7 @@
             "rideMinutes": null
           }
         ],
-        "rooms": [
-          {
-            "name": "King Guest Room",
-            "icon": "🛏",
-            "sizeSqm": 33,
-            "occupancy": {
-              "he": "זוגי — מיטת קינג",
-              "en": "Double — king bed"
-            },
-            "sortOrder": 0
-          },
-          {
-            "name": "Twin Guest Room",
-            "icon": "🛏",
-            "sizeSqm": 33,
-            "occupancy": {
-              "he": "זוגי — שתי מיטות נפרדות",
-              "en": "Double — two separate beds"
-            },
-            "sortOrder": 1
-          },
-          {
-            "name": "Family Room",
-            "icon": "👨‍👩‍👧",
-            "sizeSqm": null,
-            "occupancy": {
-              "he": "שלישיה — 3 מיטות",
-              "en": "Triple — 3 beds"
-            },
-            "sortOrder": 2
-          }
-        ]
+        "rooms": []
       },
       {
         "name": "Radisson Blu Batumi",
@@ -274,48 +212,7 @@
             "rideMinutes": null
           }
         ],
-        "rooms": [
-          {
-            "name": "Standard Room",
-            "icon": "🛏",
-            "sizeSqm": 30,
-            "occupancy": {
-              "he": "זוגי",
-              "en": "Double"
-            },
-            "sortOrder": 0
-          },
-          {
-            "name": "Standard Room City View",
-            "icon": "🛏",
-            "sizeSqm": 28,
-            "occupancy": {
-              "he": "זוגי — נוף לעיר",
-              "en": "Double — city view"
-            },
-            "sortOrder": 1
-          },
-          {
-            "name": "Superior Room",
-            "icon": "🛏",
-            "sizeSqm": 35,
-            "occupancy": {
-              "he": "זוגי / שלישיה + ילד",
-              "en": "Double / triple + child"
-            },
-            "sortOrder": 2
-          },
-          {
-            "name": "Premium Room",
-            "icon": "🛏",
-            "sizeSqm": null,
-            "occupancy": {
-              "he": "זוגי — מרווח יותר מ-Superior",
-              "en": "Double — more spacious than Superior"
-            },
-            "sortOrder": 3
-          }
-        ]
+        "rooms": []
       },
       {
         "name": "Le Méridien Batumi",
@@ -353,38 +250,7 @@
             "rideMinutes": null
           }
         ],
-        "rooms": [
-          {
-            "name": "Classic Room King",
-            "icon": "🛏",
-            "sizeSqm": 36,
-            "occupancy": {
-              "he": "זוגי — City View",
-              "en": "Double — City View"
-            },
-            "sortOrder": 0
-          },
-          {
-            "name": "Deluxe Room King",
-            "icon": "🛏",
-            "sizeSqm": 36,
-            "occupancy": {
-              "he": "זוגי — City/Sea View + מרפסת",
-              "en": "Double — City/Sea View + balcony"
-            },
-            "sortOrder": 1
-          },
-          {
-            "name": "Superior Room",
-            "icon": "🛏",
-            "sizeSqm": 40,
-            "occupancy": {
-              "he": "זוגי / שלישיה — Sea View + מרפסת",
-              "en": "Double / triple — Sea View + balcony"
-            },
-            "sortOrder": 2
-          }
-        ]
+        "rooms": []
       },
       {
         "name": "Courtyard by Marriott Batumi",
@@ -421,38 +287,7 @@
             "rideMinutes": 5
           }
         ],
-        "rooms": [
-          {
-            "name": "King Room",
-            "icon": "🛏",
-            "sizeSqm": null,
-            "occupancy": {
-              "he": "זוגי — מיטת קינג",
-              "en": "Double — king bed"
-            },
-            "sortOrder": 0
-          },
-          {
-            "name": "Twin Room",
-            "icon": "🛏",
-            "sizeSqm": null,
-            "occupancy": {
-              "he": "זוגי — שתי מיטות נפרדות",
-              "en": "Double — two separate beds"
-            },
-            "sortOrder": 1
-          },
-          {
-            "name": "Family Suite",
-            "icon": "👨‍👩‍👧",
-            "sizeSqm": null,
-            "occupancy": {
-              "he": "שלישיה/משפחה — נוף לים + מרפסת",
-              "en": "Triple/family — sea view + balcony"
-            },
-            "sortOrder": 2
-          }
-        ]
+        "rooms": []
       },
       {
         "name": "Ramada Plaza by Wyndham Batumi",
@@ -489,38 +324,7 @@
             "rideMinutes": 5
           }
         ],
-        "rooms": [
-          {
-            "name": "Superior Double Room",
-            "icon": "🛏",
-            "sizeSqm": null,
-            "occupancy": {
-              "he": "זוגי — City View",
-              "en": "Double — City View"
-            },
-            "sortOrder": 0
-          },
-          {
-            "name": "Superior Twin Room",
-            "icon": "🛏",
-            "sizeSqm": null,
-            "occupancy": {
-              "he": "זוגי — שתי מיטות, City View",
-              "en": "Double — two beds, City View"
-            },
-            "sortOrder": 1
-          },
-          {
-            "name": "Deluxe Triple Room",
-            "icon": "👨‍👩‍👧",
-            "sizeSqm": null,
-            "occupancy": {
-              "he": "שלישיה",
-              "en": "Triple"
-            },
-            "sortOrder": 2
-          }
-        ]
+        "rooms": []
       },
       {
         "name": "JRW Welmond",
@@ -559,28 +363,7 @@
             "rideMinutes": null
           }
         ],
-        "rooms": [
-          {
-            "name": "Twin/Double Room",
-            "icon": "🛏",
-            "sizeSqm": null,
-            "occupancy": {
-              "he": "זוגי — כולל אח בחדר",
-              "en": "Double — includes a fireplace in the room"
-            },
-            "sortOrder": 0
-          },
-          {
-            "name": "Triple Room",
-            "icon": "👨‍👩‍👧",
-            "sizeSqm": null,
-            "occupancy": {
-              "he": "שלישיה",
-              "en": "Triple"
-            },
-            "sortOrder": 1
-          }
-        ]
+        "rooms": []
       },
       {
         "name": "Wyndham Batumi",
@@ -617,38 +400,7 @@
             "rideMinutes": null
           }
         ],
-        "rooms": [
-          {
-            "name": "Guest Room King",
-            "icon": "🛏",
-            "sizeSqm": 28,
-            "occupancy": {
-              "he": "זוגי — מיטת קינג",
-              "en": "Double — king bed"
-            },
-            "sortOrder": 0
-          },
-          {
-            "name": "Deluxe Room King",
-            "icon": "🛏",
-            "sizeSqm": 36,
-            "occupancy": {
-              "he": "זוגי — מרווח יותר",
-              "en": "Double — more spacious"
-            },
-            "sortOrder": 1
-          },
-          {
-            "name": "Deluxe Triple Room",
-            "icon": "👨‍👩‍👧",
-            "sizeSqm": 36,
-            "occupancy": {
-              "he": "שלישיה",
-              "en": "Triple"
-            },
-            "sortOrder": 2
-          }
-        ]
+        "rooms": []
       },
       {
         "name": "Euphoria",
@@ -686,28 +438,7 @@
             "rideMinutes": 8
           }
         ],
-        "rooms": [
-          {
-            "name": "Standard Double Room",
-            "icon": "🛏",
-            "sizeSqm": null,
-            "occupancy": {
-              "he": "זוגי",
-              "en": "Double"
-            },
-            "sortOrder": 0
-          },
-          {
-            "name": "Triple Room",
-            "icon": "👨‍👩‍👧",
-            "sizeSqm": null,
-            "occupancy": {
-              "he": "שלישיה",
-              "en": "Triple"
-            },
-            "sortOrder": 1
-          }
-        ]
+        "rooms": []
       },
       {
         "name": "Best Western Premier",
@@ -740,28 +471,7 @@
             "rideMinutes": 5
           }
         ],
-        "rooms": [
-          {
-            "name": "Standard Double",
-            "icon": "🛏",
-            "sizeSqm": null,
-            "occupancy": {
-              "he": "זוגי",
-              "en": "Double"
-            },
-            "sortOrder": 0
-          },
-          {
-            "name": "Triple Room",
-            "icon": "👨‍👩‍👧",
-            "sizeSqm": null,
-            "occupancy": {
-              "he": "שלישיה",
-              "en": "Triple"
-            },
-            "sortOrder": 1
-          }
-        ]
+        "rooms": []
       },
       {
         "name": "Grand Bellagio",
@@ -794,28 +504,7 @@
             "rideMinutes": 8
           }
         ],
-        "rooms": [
-          {
-            "name": "Standard Double",
-            "icon": "🛏",
-            "sizeSqm": null,
-            "occupancy": {
-              "he": "זוגי",
-              "en": "Double"
-            },
-            "sortOrder": 0
-          },
-          {
-            "name": "Triple Room",
-            "icon": "👨‍👩‍👧",
-            "sizeSqm": null,
-            "occupancy": {
-              "he": "שלישיה",
-              "en": "Triple"
-            },
-            "sortOrder": 1
-          }
-        ]
+        "rooms": []
       },
       {
         "name": "The Grandeur",
@@ -849,28 +538,7 @@
             "rideMinutes": 7
           }
         ],
-        "rooms": [
-          {
-            "name": "Standard Double",
-            "icon": "🛏",
-            "sizeSqm": null,
-            "occupancy": {
-              "he": "זוגי",
-              "en": "Double"
-            },
-            "sortOrder": 0
-          },
-          {
-            "name": "Triple Room",
-            "icon": "👨‍👩‍👧",
-            "sizeSqm": null,
-            "occupancy": {
-              "he": "שלישיה",
-              "en": "Triple"
-            },
-            "sortOrder": 1
-          }
-        ]
+        "rooms": []
       },
       {
         "name": "Grand Gloria",
@@ -903,28 +571,7 @@
             "rideMinutes": 8
           }
         ],
-        "rooms": [
-          {
-            "name": "Standard Double",
-            "icon": "🛏",
-            "sizeSqm": null,
-            "occupancy": {
-              "he": "זוגי",
-              "en": "Double"
-            },
-            "sortOrder": 0
-          },
-          {
-            "name": "Triple Room",
-            "icon": "👨‍👩‍👧",
-            "sizeSqm": null,
-            "occupancy": {
-              "he": "שלישיה",
-              "en": "Triple"
-            },
-            "sortOrder": 1
-          }
-        ]
+        "rooms": []
       },
       {
         "name": "Paragraph Resort & Spa Shekvetili",
@@ -962,28 +609,7 @@
             "rideMinutes": 54
           }
         ],
-        "rooms": [
-          {
-            "name": "Standard Double",
-            "icon": "🛏",
-            "sizeSqm": null,
-            "occupancy": {
-              "he": "זוגי",
-              "en": "Double"
-            },
-            "sortOrder": 0
-          },
-          {
-            "name": "Triple Room",
-            "icon": "👨‍👩‍👧",
-            "sizeSqm": null,
-            "occupancy": {
-              "he": "שלישיה",
-              "en": "Triple"
-            },
-            "sortOrder": 1
-          }
-        ]
+        "rooms": []
       },
       {
         "name": "Dreamland Oasis",
@@ -1023,28 +649,7 @@
             "rideMinutes": 19
           }
         ],
-        "rooms": [
-          {
-            "name": "Standard Double",
-            "icon": "🛏",
-            "sizeSqm": null,
-            "occupancy": {
-              "he": "זוגי",
-              "en": "Double"
-            },
-            "sortOrder": 0
-          },
-          {
-            "name": "Triple Room",
-            "icon": "👨‍👩‍👧",
-            "sizeSqm": null,
-            "occupancy": {
-              "he": "שלישיה",
-              "en": "Triple"
-            },
-            "sortOrder": 1
-          }
-        ]
+        "rooms": []
       },
       {
         "name": "King Solomon",
@@ -1079,28 +684,7 @@
             "rideMinutes": 5
           }
         ],
-        "rooms": [
-          {
-            "name": "Standard Double",
-            "icon": "🛏",
-            "sizeSqm": null,
-            "occupancy": {
-              "he": "זוגי",
-              "en": "Double"
-            },
-            "sortOrder": 0
-          },
-          {
-            "name": "Triple Room",
-            "icon": "👨‍👩‍👧",
-            "sizeSqm": null,
-            "occupancy": {
-              "he": "שלישיה",
-              "en": "Triple"
-            },
-            "sortOrder": 1
-          }
-        ]
+        "rooms": []
       },
       {
         "name": "Hotel London 1889",
