@@ -45,6 +45,7 @@
       "branch": "Branch",
       "account": "Account number",
       "beneficiary": "Beneficiary",
+      "iban": "IBAN (USD transfers)",
       "copy": "Copy details",
       "copied": "Copied ✓",
       "copyHeading": "Account details for transfer:",
