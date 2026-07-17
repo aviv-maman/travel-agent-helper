@@ -11,8 +11,10 @@
  *   - supplier commission lines — seeded per supplier only while it has none;
  *   - supplier baggage — written only when the supplier row is first created;
  *   - transfer cities — seeded per country only while it has none (inclusion
- *     pills are edited in the app via the transfers-page pencil).
- * Those three are edited in the app (content:edit); the arrays here remain
+ *     pills are edited in the app via the transfers-page pencil);
+ *   - faqs — seeded only while the faqs table is empty (answers are edited
+ *     in-page on /faq).
+ * All of these are edited in the app (content:edit); the arrays here remain
  * the no-DB fallback and the first-boot seed.
  *
  * Run with: `bun run seed` (Bun auto-loads .env.local).
@@ -29,6 +31,7 @@ import {
 } from "../lib/cancellations";
 import { COUNTRIES } from "../lib/transfers";
 import { DEFAULT_CONTACTS, sectionForType } from "../lib/contacts";
+import { DEFAULT_FAQS } from "../lib/faq";
 
 const {
   suppliers,
@@ -38,6 +41,7 @@ const {
   contacts,
   transferCountries,
   transferCities,
+  faqs,
 } = schema;
 
 if (!process.env.DATABASE_URL) {
@@ -338,6 +342,22 @@ async function seedContacts(
   return inserted;
 }
 
+/**
+ * Bootstrap-only: FAQ answers are editor-managed in-page once in the DB, so an
+ * existing (possibly edited) table is never touched by re-runs.
+ */
+async function seedFaqs(): Promise<number> {
+  const [{ count }] = await db.select({ count: sql<number>`count(*)::int` }).from(faqs);
+  if (count > 0) {
+    console.log(`  faqs: table already has ${count} rows — skipped (app-managed)`);
+    return 0;
+  }
+  await db
+    .insert(faqs)
+    .values(DEFAULT_FAQS.map((f, i) => ({ question: f.question, answers: f.answers, sortOrder: i })));
+  return DEFAULT_FAQS.length;
+}
+
 async function main() {
   const supplierIds = await seedSuppliers();
   const commissionLines = await seedCommissionLines(supplierIds);
@@ -345,12 +365,13 @@ async function main() {
   const airlineIds = await seedAirlines();
   const transfers = await seedTransfers();
   const contactRows = await seedContacts(supplierIds, airlineIds);
+  const faqRows = await seedFaqs();
 
   console.log(
     `Seeded ${supplierIds.size} suppliers (${commissionLines} commission lines, ` +
       `${cancellations} cancellation sets), ${airlineIds.size} airlines, ` +
       `${transfers.countries} transfer countries / ${transfers.cities} cities, ` +
-      `${contactRows} contact rows.`,
+      `${contactRows} contact rows, ${faqRows} FAQ rows.`,
   );
   process.exit(0);
 }
