@@ -181,11 +181,6 @@ export function HotelCard({
           {hotel.stars}
         </span>
       )}
-      {score != null && (
-        <span className="inline-flex items-center gap-1 rounded-md bg-success/10 px-1.5 py-0.5 text-xs font-bold text-success">
-          {t("card.booking")} {score}
-        </span>
-      )}
       {hotel.googleRating != null && (
         // Explicit flex pieces (not one bidi string) so the order is stable in
         // both directions: in Hebrew the rating sits on the right, then the G
@@ -200,6 +195,13 @@ export function HotelCard({
               ({t("card.reviews", { count: hotel.googleReviewCount.toLocaleString(locale) })})
             </span>
           )}
+        </span>
+      )}
+      {/* Booking chip + its edit pencil stay adjacent (the pencil is last, so
+          on RTL it's the leftmost item — right next to the Booking score). */}
+      {score != null && (
+        <span className="inline-flex items-center gap-1 rounded-md bg-success/10 px-1.5 py-0.5 text-xs font-bold text-success">
+          {t("card.booking")} {score}
         </span>
       )}
       {canEditScore && (
