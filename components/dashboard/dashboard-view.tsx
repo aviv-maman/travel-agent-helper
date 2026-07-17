@@ -20,9 +20,9 @@ import { RefreshNewsButton } from "@/components/news/refresh-news-button";
 
 /**
  * Client orchestrator. A time-of-day greeting leads; a Workspace tab holds the
- * scratchpad (above the tasks), quick-add, the four task sections, completed
- * items and quick links; a Bank tab holds the transfer-details card; a News
- * tab holds the tourism feed (moved off the main nav, 2026-07).
+ * scratchpad (above the tasks), quick-add, the four task sections and
+ * completed items; a Bank tab holds the transfer-details card; a News tab
+ * holds the tourism feed (moved off the main nav, 2026-07).
  */
 export function DashboardView({
   tasks,

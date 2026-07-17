@@ -16,7 +16,7 @@ A backend **cron** that refreshes foreign-exchange rates into the DB so the app 
 
 ## Read path (Next)
 
-A server helper `getRate(base, quote)` reads the row; UI shows `fetchedAt` so users know freshness. No env var / backend URL needed at request time — the backend only writes.
+A server helper `getIlsRates()` (`lib/money.ts`) reads all `base = ILS` rows in one query and inverts them to ₪-per-unit; consumers convert via `toIls()` (e.g. hotel transport pricing in `lib/hotels.ts`). `fetchedAt` is stored but not currently surfaced in the UI. No env var / backend URL needed at request time — the backend only writes.
 
 ## Notes
 - Keep the currency list in one place (config) shared with the content that needs conversion.

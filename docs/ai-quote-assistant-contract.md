@@ -8,9 +8,13 @@ It's two deliverables: **(A)** an AI-credentials store, **(B)** the quote chat. 
 
 Any signed-in user may add a key and use the chat (agents included — this is their tool). The feature is simply **hidden until the user has a stored key**.
 
+### No-backend dev fallback (Next-side)
+
+When `BACKEND_URL` is unset the frontend fully mocks the feature so it can be developed/demoed standalone: saving a key sets the `AI_MOCK_KEY_COOKIE` to fake the "configured" state (`app/actions/ai.ts`, `lib/ai/credentials.ts`), `NEXT_PUBLIC_AI_MOCK="1"` streams a canned quote (`lib/ai/stream.ts`), and saved quotes carry a `"mock"` sentinel `imageKey` resolved to a bundled sample image.
+
 ## Provider-agnostic, Anthropic first
 
-Model the store around a `provider` enum (`anthropic`, room for `openai`, …). Implement **Anthropic** first. Default model: **`claude-opus-4-8`** (strong vision + structured outputs). Since it's the **user's** key, **all token cost is on them** — no billing burden on us, and their key carries their own rate limits.
+Model the store around a `provider` enum (`anthropic`, room for `openai`, …). Implement **Anthropic** first. Default model: **`claude-sonnet-5`**, overridable without a code change via the backend `ANTHROPIC_MODEL` env (`quote.py`). Since it's the **user's** key, **all token cost is on them** — no billing burden on us, and their key carries their own rate limits.
 
 ---
 
@@ -54,25 +58,17 @@ A Next page (hidden unless a key exists) posts a prompt + optional image(s) to t
 - **Streaming** (avoids HTTP timeouts, live UX):
   ```python
   with client.messages.stream(
-      model="claude-opus-4-8",
+      model=MODEL,                   # ANTHROPIC_MODEL env, default "claude-sonnet-5"
       max_tokens=16000,
       system=QUOTE_SKILL_SYSTEM,     # the "skill" — extraction rules + quote format
+      tools=flight_tools.TOOLS,      # pricing/reference tools (commissions, IATA, FX)
+      thinking={"type": "disabled"},
       messages=messages,
   ) as stream:
       for text in stream.text_stream:
           yield text                  # forward over SSE to the browser
   ```
-- **Reliable extraction → use structured outputs**, then render the quote from the fields (far more robust than parsing free text). Do a first structured pass, then format:
-  ```python
-  extraction = client.messages.parse(
-      model="claude-opus-4-8", max_tokens=4000,
-      output_config={"format": {"type": "json_schema", "schema": HOTEL_QUOTE_SCHEMA}},
-      messages=[{"role": "user", "content": [image_block, {"type": "text", "text": prompt}]}],
-  )
-  # extraction.parsed_output → {hotel, city, checkIn, checkOut, nights, board, pricePerNight, total, currency, conditions[]}
-  ```
-  `HOTEL_QUOTE_SCHEMA` note: structured outputs disallow numeric/string constraints (`minimum`, `maxLength`, …) and require `additionalProperties: false` on every object — keep the schema plain.
-- **Model default `claude-opus-4-8`.** Adaptive thinking (`thinking: {"type": "adaptive"}`) is optional for harder reasoning; not required for extraction.
+- **Pricing runs as an agentic tool-use loop**, not a separate extraction pass: the stream call passes the pricing/reference tools and Claude calls them mid-conversation (surfaced to the browser as `tool` SSE events alongside `delta`/`error`/`done`). The quote is rendered from the model's final text. *(The original design here prescribed a two-pass `messages.parse` structured-outputs extraction; the implementation superseded it — there is no `HOTEL_QUOTE_SCHEMA`.)*
 
 ### The "skill" (server-side)
 
