@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useLocale, useTranslations } from "next-intl";
 import { ExternalLinkIcon, Globe, Star } from "lucide-react";
 import { GoogleMapsIcon } from "@/components/icons/google-maps-icon";
+import { GoogleIcon } from "@/components/icons/google-icon";
 import { BookingIcon } from "@/components/icons/booking-icon";
 import type { HotelFeatureValue, HotelTagValue, BoardCode } from "@/db/schema";
 import type { ViewHotel, ViewDistance } from "@/lib/hotels";
@@ -180,21 +181,27 @@ export function HotelCard({
           {hotel.stars}
         </span>
       )}
-      {score != null && (
-        <span className="inline-flex items-center gap-1 rounded-md bg-success/10 px-1.5 py-0.5 text-xs font-bold text-success">
-          {t("card.booking")} {score}
-        </span>
-      )}
       {hotel.googleRating != null && (
+        // Explicit flex pieces (not one bidi string) so the order is stable in
+        // both directions: in Hebrew the rating sits on the right, then the G
+        // mark, and the review count lands on the LEFT of the chip.
         <span
-          dir="ltr"
+          aria-label={`Google ${hotel.googleRating}`}
           className="inline-flex items-center gap-1 rounded-md bg-brand/10 px-1.5 py-0.5 text-xs font-bold text-brand">
-          {t("card.google")} ★ {hotel.googleRating}
+          <span dir="ltr">★ {hotel.googleRating}</span>
+          <GoogleIcon className="size-3 shrink-0" />
           {hotel.googleReviewCount != null && (
             <span className="font-medium">
               ({t("card.reviews", { count: hotel.googleReviewCount.toLocaleString(locale) })})
             </span>
           )}
+        </span>
+      )}
+      {/* Booking chip + its edit pencil stay adjacent (the pencil is last, so
+          on RTL it's the leftmost item — right next to the Booking score). */}
+      {score != null && (
+        <span className="inline-flex items-center gap-1 rounded-md bg-success/10 px-1.5 py-0.5 text-xs font-bold text-success">
+          {t("card.booking")} {score}
         </span>
       )}
       {canEditScore && (
