@@ -36,6 +36,7 @@ const PAGES = [
   { segment: "airlines", emoji: "✈️" },
   { segment: "cancellation-fees", emoji: "❌" },
   { segment: "hotels", emoji: "🏨" },
+  { segment: "faq", emoji: "❓" },
   { segment: "news", emoji: "📰" },
 ] as const;
 

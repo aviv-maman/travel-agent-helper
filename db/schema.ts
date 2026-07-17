@@ -264,6 +264,25 @@ export type BoardCode = (typeof boardCode.enumValues)[number];
 // lib/{commissions,cancellations,airlines,transfers,contacts}.ts as the seed
 // source and no-DB fallback (same split as hotels ↔ data/seed.json).
 
+/** One copy-ready client answer; `label` names the product variant it fits. */
+export type FaqAnswer = { label?: string; body: string };
+
+/**
+ * Frequently-asked questions with copy-to-client answers (the /faq page). A
+ * question may carry several answer variants (e.g. per product type), each
+ * with its own label chip and copy button. Plain Hebrew text — these are
+ * client-facing WhatsApp messages, not localized UI copy. App-managed after
+ * bootstrap (edited in-page, content:edit); the seed never overwrites them.
+ */
+export const faqs = pgTable("faqs", {
+  id: serial("id").primaryKey(),
+  question: text("question").notNull(),
+  answers: jsonb("answers").$type<FaqAnswer[]>().notNull().default([]),
+  sortOrder: integer("sort_order").notNull().default(0),
+});
+
+export type Faq = typeof faqs.$inferSelect;
+
 /** Commission chip color: high green (9%+), mid blue, low orange, range gold, net red. */
 export const commissionLevel = pgEnum("commission_level", [
   "high",
