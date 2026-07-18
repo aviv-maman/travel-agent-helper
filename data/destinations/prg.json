@@ -42,10 +42,10 @@
           "en": "Airport Express (AE)"
         },
         "detail": {
-          "he": "לתחנת הרכבת המרכזית · ~35 דק' · 200 קרונות",
-          "en": "To the main train station · ~35 min · 200 CZK"
+          "he": "לתחנת הרכבת המרכזית · ~35 דק'",
+          "en": "To the main train station · ~35 min"
         },
-        "price": "~8€"
+        "price": "~200 Kč"
       },
       {
         "icon": "🚌",
@@ -54,10 +54,10 @@
           "en": "Trolleybus 59 + Metro A"
         },
         "detail": {
-          "he": "לתחנת Veleslavín ומשם מטרו · ~45 דק' · כרטיס 90 דק' (40 קרונות)",
-          "en": "To Veleslavín, then the metro · ~45 min · one 90-min ticket (40 CZK)"
+          "he": "לתחנת Veleslavín ומשם מטרו · ~45 דק' · כרטיס 90 דק'",
+          "en": "To Veleslavín, then the metro · ~45 min · one 90-min ticket"
         },
-        "price": "~1.6€"
+        "price": "~40 Kč"
       },
       {
         "icon": "📱",
@@ -66,10 +66,10 @@
           "en": "Bolt / Uber"
         },
         "detail": {
-          "he": "~30 דק' · איסוף מחוץ לטרמינל · 450–700 קרונות",
-          "en": "~30 min · pickup outside the terminal · 450–700 CZK"
+          "he": "~30 דק' · איסוף מחוץ לטרמינל",
+          "en": "~30 min · pickup outside the terminal"
         },
-        "price": "18–28€"
+        "price": "450–700 Kč"
       }
     ],
     "warnings": [
