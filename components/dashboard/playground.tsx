@@ -86,18 +86,11 @@ export function Playground({ initialContent }: { initialContent: string }) {
             </span>
             {t("title")}
           </h2>
-          {/* Which side writing starts from. Force LTR layout so the arrows sit
-              in a fixed order — left button (←) starts from the right, right
-              button (→) starts from the left — regardless of the page direction. */}
+          {/* Which side writing starts from. Force LTR layout so the buttons sit
+              in a fixed order regardless of the page direction: left button
+              starts writing from the left (LTR), right button from the right
+              (RTL). */}
           <div dir="ltr" className="flex items-center rounded-lg border border-border">
-            <Button
-              variant={dir === "rtl" ? "secondary" : "ghost"}
-              size="icon-sm"
-              aria-pressed={dir === "rtl"}
-              aria-label={t("dirRtl")}
-              onClick={() => pickDir("rtl")}>
-              <PilcrowLeft className="size-4" />
-            </Button>
             <Button
               variant={dir === "ltr" ? "secondary" : "ghost"}
               size="icon-sm"
@@ -105,6 +98,14 @@ export function Playground({ initialContent }: { initialContent: string }) {
               aria-label={t("dirLtr")}
               onClick={() => pickDir("ltr")}>
               <PilcrowRight className="size-4" />
+            </Button>
+            <Button
+              variant={dir === "rtl" ? "secondary" : "ghost"}
+              size="icon-sm"
+              aria-pressed={dir === "rtl"}
+              aria-label={t("dirRtl")}
+              onClick={() => pickDir("rtl")}>
+              <PilcrowLeft className="size-4" />
             </Button>
           </div>
         </div>
