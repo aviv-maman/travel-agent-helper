@@ -1,5 +1,8 @@
 import type { SVGProps } from "react";
 
+/** The Booking.com "B." logomark in brand colors — white B on the brand-blue
+ * rounded square. Deliberately NOT currentColor, so the mark stays branded on
+ * any chip/button background (same idea as the multicolor Google "G"). */
 export function BookingIcon(props: SVGProps<SVGSVGElement>) {
   return (
     <svg
@@ -7,16 +10,18 @@ export function BookingIcon(props: SVGProps<SVGSVGElement>) {
       width={24}
       height={24}
       viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth={2}
-      strokeLinecap="round"
-      strokeLinejoin="round"
+      aria-hidden
       {...props}>
-      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-      <path d="M4 18v-9.5a4.5 4.5 0 0 1 4.5 -4.5h7a4.5 4.5 0 0 1 4.5 4.5v7a4.5 4.5 0 0 1 -4.5 4.5h-9.5a2 2 0 0 1 -2 -2" />
-      <path d="M8 12h3.5a2 2 0 1 1 0 4h-3.5v-7a1 1 0 0 1 1 -1h1.5a2 2 0 1 1 0 4h-1.5" />
-      <path d="M16 16l.01 0" />
+      <rect x="1" y="1" width="22" height="22" rx="5.5" fill="#003B95" />
+      <path
+        d="M8 12h3.5a2 2 0 1 1 0 4h-3.5v-7a1 1 0 0 1 1 -1h1.5a2 2 0 1 1 0 4h-1.5"
+        fill="none"
+        stroke="#fff"
+        strokeWidth={2}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path d="M16.5 16l.01 0" stroke="#fff" strokeWidth={2.6} strokeLinecap="round" />
     </svg>
   );
 }

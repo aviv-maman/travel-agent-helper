@@ -7,6 +7,7 @@ import { ExternalLinkIcon, Globe, Star } from "lucide-react";
 import { GoogleMapsIcon } from "@/components/icons/google-maps-icon";
 import { GoogleIcon } from "@/components/icons/google-icon";
 import { BookingIcon } from "@/components/icons/booking-icon";
+import { BookingScore } from "./booking-score";
 import type { HotelFeatureValue, HotelTagValue, BoardCode } from "@/db/schema";
 import type { ViewHotel, ViewDistance } from "@/lib/hotels";
 import { Badge } from "@/components/ui/badge";
@@ -196,13 +197,10 @@ export function HotelCard({
           )}
         </span>
       )}
-      {/* Booking chip + its edit pencil stay adjacent (the pencil is last, so
-          on RTL it's the leftmost item — right next to the Booking score). */}
-      {score != null && (
-        <span className="inline-flex items-center gap-1 rounded-md bg-success/10 px-1.5 py-0.5 text-xs font-bold text-success">
-          {t("card.booking")} {score}
-        </span>
-      )}
+      {/* Booking score + its edit pencil stay adjacent (the pencil is last, so
+          on RTL it's the leftmost item — right next to the Booking score).
+          Pilot hotels get the large vertical badge; the rest the inline chip. */}
+      {score != null && <BookingScore score={score} />}
       {canEditScore && (
         <EditBookingScore hotelId={Number(hotel.id)} value={score} onSaved={setScore} />
       )}
@@ -231,7 +229,8 @@ export function HotelCard({
   );
 
   const actions = (hotel.googleMapsUrl || hotel.bookingUrl || hotel.websiteUrl) && (
-    <div className="flex w-full flex-col gap-2 sm:w-fit">
+    // Full-width link rows on the grid card (admin request 2026-07-18).
+    <div className="flex w-full flex-col gap-2">
       {hotel.googleMapsUrl && (
         <ButtonGroup className="w-full">
           <Button
@@ -273,7 +272,7 @@ export function HotelCard({
             render={<a href={hotel.websiteUrl} target="_blank" rel="noreferrer" />}>
             <ExternalLinkIcon className="size-3.5" />
             {t("card.website")}
-            <Globe className="size-3.5 text-brand" />
+            <Globe className="size-3.5" />
           </Button>
           <CopyLinkButton url={hotel.websiteUrl} className="size-8 shrink-0" />
         </ButtonGroup>
@@ -352,7 +351,7 @@ export function HotelCard({
               render={<a href={hotel.websiteUrl} target="_blank" rel="noreferrer" />}>
               <ExternalLinkIcon className="size-3.5" />
               {t("card.website")}
-              <Globe className="size-3.5 text-brand" />
+              <Globe className="size-3.5" />
             </Button>
             <CopyLinkButton url={hotel.websiteUrl} className="size-8 shrink-0" />
           </ButtonGroup>

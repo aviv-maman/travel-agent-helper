@@ -10,6 +10,7 @@ import {
   DialogDescription,
 } from "@/components/ui/dialog";
 import { Badge } from "@/components/ui/badge";
+import { BookingScore } from "./booking-score";
 
 /** The room facilities worth surfacing (admin's list, 2026-07-18): minibar,
  * air conditioning, balcony/terrace, bath/shower. The DB stores Booking's full
@@ -52,11 +53,7 @@ export function HotelDetailModal({
                     {t(`board.${b}`)}
                   </Badge>
                 ))}
-                {hotel.bookingScore != null && (
-                  <span className="font-bold text-success">
-                    {t("card.booking")} {hotel.bookingScore}
-                  </span>
-                )}
+                {hotel.bookingScore != null && <BookingScore score={hotel.bookingScore} />}
               </DialogDescription>
             </DialogHeader>
 
