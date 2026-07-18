@@ -201,10 +201,10 @@ export function HotelCard({
           Booking's own badge look: solid brand-blue box, white score. */}
       {score != null && (
         <span
-          aria-label={`Booking.com ${score}`}
+          aria-label={`Booking.com ${score.toFixed(1)}`}
           className="inline-flex items-center gap-1 rounded-md bg-[#003b95] px-1.5 py-0.5 text-xs font-bold text-white">
-          <BookingIcon className="size-4 shrink-0" />
-          <span dir="ltr">{score}</span>
+          <BookingIcon className="size-5 shrink-0" />
+          <span dir="ltr">{score.toFixed(1)}</span>
         </span>
       )}
       {canEditScore && (
