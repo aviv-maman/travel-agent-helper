@@ -81,7 +81,14 @@ export type UIDestination = {
 };
 
 export type SortMode =
-  "default" | "stars-desc" | "stars-asc" | "booking-desc" | "booking-asc" | `dist:${string}`;
+  | "default"
+  | "stars-desc"
+  | "stars-asc"
+  | "booking-desc"
+  | "booking-asc"
+  | "google-desc"
+  | "google-asc"
+  | `dist:${string}`;
 
 const DEFAULT_PER_PAGE = 96;
 
@@ -269,6 +276,10 @@ function sortHotels(hotels: UIHotel[], mode: SortMode): UIHotel[] {
       return list.sort((a, b) => (b.bookingScore ?? 0) - (a.bookingScore ?? 0));
     case "booking-asc":
       return list.sort((a, b) => (a.bookingScore ?? 0) - (b.bookingScore ?? 0));
+    case "google-desc":
+      return list.sort((a, b) => (b.googleRating ?? 0) - (a.googleRating ?? 0));
+    case "google-asc":
+      return list.sort((a, b) => (a.googleRating ?? 0) - (b.googleRating ?? 0));
     default:
       if (mode.startsWith("dist:")) {
         const key = mode.slice(5);

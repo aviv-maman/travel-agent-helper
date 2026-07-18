@@ -687,8 +687,10 @@
       "default": "Default",
       "starsDesc": "Stars 5→1",
       "starsAsc": "Stars 1→5",
-      "bookingDesc": "Rating high→low",
-      "bookingAsc": "Rating low→high",
+      "bookingDesc": "Booking rating high→low",
+      "bookingAsc": "Booking rating low→high",
+      "googleDesc": "Google rating high→low",
+      "googleAsc": "Google rating low→high",
       "distanceFrom": "Distance from {name}"
     },
     "filter": {
