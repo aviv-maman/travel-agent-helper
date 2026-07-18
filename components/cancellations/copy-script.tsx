@@ -5,6 +5,7 @@ import { useTranslations } from "next-intl";
 import { Check, Copy } from "lucide-react";
 import { toast } from "sonner";
 import type { FeeLevel } from "@/lib/cancellations";
+import { toClientDashes } from "@/lib/utils";
 import { FeeTable, type FeeTableRow } from "./fee-table";
 
 /**
@@ -61,7 +62,7 @@ export function CopyScript({
 
   async function handleCopy() {
     try {
-      await navigator.clipboard.writeText(text);
+      await navigator.clipboard.writeText(toClientDashes(text));
       setCopied(true);
       toast.success(t("copied"));
       setTimeout(() => setCopied(false), 1800);

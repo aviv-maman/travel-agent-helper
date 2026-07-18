@@ -1,14 +1,31 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
-import { Calculator, Copy, Trash2 } from "lucide-react";
+import { Calculator, Copy, PilcrowLeft, PilcrowRight, Trash2 } from "lucide-react";
 import { evalLine, formatNumber } from "@/lib/dashboard/calc";
 import { saveScratchpadAction } from "@/app/actions/dashboard";
 import { Button } from "@/components/ui/button";
 
 type SaveStatus = "idle" | "saving" | "saved" | "offline";
+
+// The scratchpad's writing direction, persisted in localStorage. Modeled as an
+// external store so the server snapshot is "ltr" and the saved value lands after
+// hydration — no effect-setState, no hydration mismatch on the textarea `dir`.
+const DIR_KEY = "scratchpad-dir";
+const DIR_EVENT = "scratchpad-dir-change";
+function subscribeDir(cb: () => void) {
+  window.addEventListener(DIR_EVENT, cb);
+  return () => window.removeEventListener(DIR_EVENT, cb);
+}
+function readDir(): "ltr" | "rtl" {
+  return localStorage.getItem(DIR_KEY) === "rtl" ? "rtl" : "ltr";
+}
+function pickDir(next: "ltr" | "rtl") {
+  localStorage.setItem(DIR_KEY, next);
+  window.dispatchEvent(new Event(DIR_EVENT));
+}
 
 /**
  * Soulver-style scratchpad: a plain multi-line editor whose math lines show a
@@ -19,6 +36,8 @@ export function Playground({ initialContent }: { initialContent: string }) {
   const t = useTranslations("dashboard.playground");
   const [value, setValue] = useState(initialContent);
   const [status, setStatus] = useState<SaveStatus>("idle");
+  // Which side the writing starts from — an editor preference, remembered locally.
+  const dir = useSyncExternalStore(subscribeDir, readDir, () => "ltr" as const);
   const firstRender = useRef(true);
 
   // Debounced auto-save (~1s after the last keystroke).
@@ -58,14 +77,37 @@ export function Playground({ initialContent }: { initialContent: string }) {
   return (
     <section className="flex flex-col gap-2.5">
       <div className="flex flex-wrap items-center justify-between gap-2">
-        <h2 className="flex items-center gap-2.5 text-base font-bold tracking-tight text-foreground">
-          <span
-            className="flex size-7 shrink-0 items-center justify-center rounded-lg bg-brand/10 ring-1 ring-brand/15"
-            aria-hidden>
-            <Calculator className="size-4 text-brand" />
-          </span>
-          {t("title")}
-        </h2>
+        <div className="flex items-center gap-2.5">
+          <h2 className="flex items-center gap-2.5 text-base font-bold tracking-tight text-foreground">
+            <span
+              className="flex size-7 shrink-0 items-center justify-center rounded-lg bg-brand/10 ring-1 ring-brand/15"
+              aria-hidden>
+              <Calculator className="size-4 text-brand" />
+            </span>
+            {t("title")}
+          </h2>
+          {/* Which side writing starts from. Force LTR layout so the arrows sit
+              in a fixed order — left button (←) starts from the right, right
+              button (→) starts from the left — regardless of the page direction. */}
+          <div dir="ltr" className="flex items-center rounded-lg border border-border">
+            <Button
+              variant={dir === "rtl" ? "secondary" : "ghost"}
+              size="icon-sm"
+              aria-pressed={dir === "rtl"}
+              aria-label={t("dirRtl")}
+              onClick={() => pickDir("rtl")}>
+              <PilcrowLeft className="size-4" />
+            </Button>
+            <Button
+              variant={dir === "ltr" ? "secondary" : "ghost"}
+              size="icon-sm"
+              aria-pressed={dir === "ltr"}
+              aria-label={t("dirLtr")}
+              onClick={() => pickDir("ltr")}>
+              <PilcrowRight className="size-4" />
+            </Button>
+          </div>
+        </div>
         <div className="flex items-center gap-2">
           <span
             className={`text-xs ${status === "offline" ? "text-destructive" : "text-muted-foreground"}`}
@@ -87,6 +129,7 @@ export function Playground({ initialContent }: { initialContent: string }) {
         <textarea
           value={value}
           onChange={(e) => setValue(e.target.value)}
+          dir={dir}
           wrap="off"
           rows={rows}
           spellCheck={false}

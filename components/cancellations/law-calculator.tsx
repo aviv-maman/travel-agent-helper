@@ -16,7 +16,6 @@ function subscribeToNothing() {
 const REASON_KEY = {
   fourteenDays: "calcBy14",
   businessDays: "calcBy7",
-  bookingDate: "calcSameDay",
 } as const;
 
 /**
@@ -41,8 +40,14 @@ export function LawCalculator() {
   const booking = edited ?? today;
 
   const result = departure ? cancellationDeadline(departure, booking) : null;
-  const answer = result ? `${t("calcResult")} ${formatDeadline(result.deadline)}` : "";
-  const isSameDayOnly = result?.limitedBy === "bookingDate";
+  // "none" = the >7-business-days rule is already unmet on the booking day, so
+  // the booking is not cancelable under the law at all (not "booking day only").
+  const notEligible = result?.limitedBy === "none";
+  const answer = !result
+    ? ""
+    : notEligible
+      ? t("calcNotEligible")
+      : `${t("calcResult")} ${formatDeadline(result.deadline!)}`;
 
   async function handleCopy() {
     try {
@@ -92,14 +97,31 @@ export function LawCalculator() {
           <TriangleAlert className="size-3.5 shrink-0" aria-hidden />
           {t("calcInvalid")}
         </p>
+      ) : notEligible ? (
+        <div className="flex flex-wrap items-center justify-between gap-2 border-t border-brand/20 pt-2.5">
+          <p className="mb-0! flex items-center gap-1.5 text-sm font-bold text-destructive">
+            <TriangleAlert className="size-4 shrink-0" aria-hidden />
+            {t("calcNotEligible")}
+          </p>
+          <button
+            type="button"
+            onClick={handleCopy}
+            className={`inline-flex items-center gap-1.5 rounded-md border px-2.5 py-1 text-xs font-semibold transition-colors ${
+              copied
+                ? "border-success/40 bg-success/15 text-success"
+                : "border-border bg-surface-2 text-muted-foreground hover:border-brand/40 hover:text-brand"
+            }`}>
+            {copied ? <Check className="size-3.5" /> : <Copy className="size-3.5" />}
+            {copied ? t("copied") : t("copy")}
+          </button>
+        </div>
       ) : (
         <div className="flex flex-col gap-1.5 border-t border-brand/20 pt-2.5">
           <div className="flex flex-wrap items-center justify-between gap-2">
-            <p
-              className={`mb-0! text-sm font-bold ${isSameDayOnly ? "text-warning" : "text-success"}`}>
+            <p className="mb-0! text-sm font-bold text-success">
               {t("calcResult")}{" "}
               <span dir="ltr" className="tabular-nums">
-                {formatDeadline(result.deadline)}
+                {formatDeadline(result.deadline!)}
               </span>
             </p>
             <button
@@ -114,9 +136,8 @@ export function LawCalculator() {
               {copied ? t("copied") : t("copy")}
             </button>
           </div>
-          <p
-            className={`mb-0! text-xs ${isSameDayOnly ? "font-semibold text-warning" : "text-muted-foreground"}`}>
-            {t(REASON_KEY[result.limitedBy])}
+          <p className="mb-0! text-xs text-muted-foreground">
+            {t(REASON_KEY[result.limitedBy as keyof typeof REASON_KEY])}
           </p>
         </div>
       )}

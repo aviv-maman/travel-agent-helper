@@ -3,6 +3,7 @@
  * No `server-only` / db imports on purpose: shared by the server action, the chat
  * copy button (client), one-off scripts, and unit tests.
  */
+import { toClientDashes } from "@/lib/utils";
 
 const MONTHS = ["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"];
 
@@ -53,7 +54,7 @@ export function extractFencedBlock(content: string): string | null {
  * client or a saved quote.
  */
 export function forwardableMessage(content: string): string {
-  return extractFencedBlock(content) ?? content;
+  return toClientDashes(extractFencedBlock(content) ?? content);
 }
 
 /** The first line with real content — skips blanks and fence markers. */

@@ -181,6 +181,14 @@
   body {
     @apply bg-background text-foreground;
   }
+  /* Native <select> option popups are OS/browser-rendered; without explicit
+     colors they render white-on-white (invisible) in dark mode. Theme every
+     option app-wide with the popover palette so the list is always readable. */
+  option,
+  optgroup {
+    background-color: var(--color-popover);
+    color: var(--color-popover-foreground);
+  }
   html {
     @apply font-sans;
     /* Base UI portals popups (menus, etc.) onto <body> with absolute

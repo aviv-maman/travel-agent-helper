@@ -107,9 +107,14 @@ function ChannelLine({ type, value }: { type: "email" | "phone"; value: string }
         render={<a href={href} />}>
         <Icon className="size-4" />
       </Button>
-      <span className="min-w-0 flex-1 text-sm font-bold break-all text-brand" dir="ltr">
+      {/* The value itself is the link too, so clicking the email/number opens
+          the mail app / dialer — not only the icon. */}
+      <a
+        href={href}
+        dir="ltr"
+        className="min-w-0 flex-1 text-sm font-bold break-all text-brand hover:underline">
         {value}
-      </span>
+      </a>
       <CopyButton value={value} />
     </div>
   );
