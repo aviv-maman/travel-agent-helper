@@ -13,15 +13,21 @@
  *   bun scripts/enrich-hotels-rooms.ts --dest BUS --limit 2 --yes   # cheap probe
  *   bun scripts/enrich-hotels-rooms.ts --all --yes     # re-enrich everything
  *
- * Two fetch paths, matching what our DB stores per hotel:
- *   - direct property URLs (…/hotel/xx/slug.html) → ONE batched actor run;
- *   - search-results URLs → one search-mode run per hotel with maxItems:1
- *     (Booking's bot-wall blocks resolving these with a plain fetch).
+ * The actor only accepts property-page startUrls (its `search` input is
+ * destination-only, and searchresults startUrls die in its destination
+ * resolver — both probed live). Hotels stored with search-results links must
+ * therefore be pre-resolved to property URLs: a Playwright page drives
+ * Booking's own autocomplete + searchresults fetches (in-page, past the
+ * bot-wall) and emits a mapping file, passed here as
+ * `--resolved <path.jsonl>` ([{id, url, label, score}] lines; score < 0.5 or
+ * a null url stays unresolved and is reported, not sent). Everything then
+ * goes through ONE batched actor run.
  * The run ends with a match report; review ⚠ rows before trusting the data.
  *
- * Caveat: Booking renders the room table for a concrete stay, so a room type
- * with no availability on the probe dates may be missing — rerunning later
- * with different dates can fill gaps (existing rows are replaced per hotel).
+ * Room source (probed live): roomOfferings.roomDetail.property.roomsDetails —
+ * the FULL room catalog with roomSizeM2 + occupancy.maxPersons, independent of
+ * availability. Fallback: the `rooms` availability table (sizes hide in
+ * "NNN feet²" facility strings; only rooms bookable for the stay dates appear).
  */
 import { eq, sql } from "drizzle-orm";
 import { neon } from "@neondatabase/serverless";
@@ -44,12 +50,30 @@ const MAX_ROOMS_PER_HOTEL = 12;
 const args = process.argv.slice(2);
 const force = args.includes("--all");
 const confirmed = args.includes("--yes");
-const destIata = args[args.indexOf("--dest") + 1]?.toUpperCase();
+const destIata = args.includes("--dest") ? args[args.indexOf("--dest") + 1]?.toUpperCase() : undefined;
 if (args.includes("--dest") && !/^[A-Z]{3}$/.test(destIata ?? "")) {
   throw new Error("--dest expects a 3-letter IATA code, e.g. --dest BUS");
 }
 const limit = args.includes("--limit") ? Number(args[args.indexOf("--limit") + 1]) : Infinity;
 if (Number.isNaN(limit) || limit < 1) throw new Error("--limit expects a positive number");
+const resolvedPath = args.includes("--resolved") ? args[args.indexOf("--resolved") + 1] : null;
+// Repair mode: hotels that end this run unresolved/skipped get their room rows
+// DELETED (used to purge rows a previous bad match wrote; a no-op when empty).
+const clearUnmatched = args.includes("--clear-unmatched");
+
+/** hotelId → resolved property URL (score ≥ 0.5 only), from the resolver. */
+async function loadResolved(): Promise<Map<number, { url: string; label: string | null }>> {
+  const map = new Map<number, { url: string; label: string | null }>();
+  if (!resolvedPath) return map;
+  const text = await Bun.file(resolvedPath).text();
+  for (const line of text.split("\n")) {
+    if (!line.trim()) continue;
+    for (const r of JSON.parse(line) as { id: number; url: string | null; label: string | null; score: number }[]) {
+      if (r.url && r.score >= 0.5) map.set(r.id, { url: r.url, label: r.label });
+    }
+  }
+  return map;
+}
 
 // ── Target hotels ────────────────────────────────────────────────────────────
 
@@ -59,10 +83,12 @@ type Target = {
   dest: string;
   city: string;
   country: string;
-  propertyUrl: string | null; // null → search mode
+  propertyUrl: string | null; // null → search-URL mode
+  searchUrl: string | null; // the stored searchresults.html?ss=… link
 };
 
 async function collectTargets(): Promise<Target[]> {
+  const resolved = await loadResolved();
   const dests = await db.select().from(destinations);
   const out: Target[] = [];
   for (const d of dests) {
@@ -72,20 +98,28 @@ async function collectTargets(): Promise<Target[]> {
         id: hotels.id,
         name: hotels.name,
         bookingUrl: hotels.bookingUrl,
-        roomCount: sql<number>`(select count(*)::int from rooms r where r.hotel_id = ${hotels.id})`,
+        // NOTE: the column must be qualified by hand — `${hotels.id}` renders as
+        // bare "id" inside the subquery, which binds to rooms' own id column
+        // (r.hotel_id = r.id ≈ always 0) and silently disables the filter.
+        roomCount: sql<number>`(select count(*)::int from rooms r where r.hotel_id = "hotels"."id")`,
       })
       .from(hotels)
       .where(eq(hotels.destinationId, d.id));
     for (const h of rows) {
       if (!force && h.roomCount > 0) continue;
       const isProperty = h.bookingUrl?.includes("/hotel/") ?? false;
+      // The resolver map wins over a stored direct URL: entries are verified
+      // connector URLs, and a stored URL can point at the wrong property
+      // (caught live: Leonardo Boutique M Square stored the flagship Leonardo).
+      const viaResolver = resolved.get(h.id);
       out.push({
         id: h.id,
         name: h.name,
         dest: d.iata,
         city: d.name.en ?? d.name.he ?? "",
         country: d.country.en ?? d.country.he ?? "",
-        propertyUrl: isProperty ? h.bookingUrl!.split("?")[0] : null,
+        propertyUrl: viaResolver?.url ?? (isProperty ? h.bookingUrl!.split("?")[0] : null),
+        searchUrl: !isProperty && !viaResolver ? (h.bookingUrl ?? null) : null,
       });
     }
   }
@@ -170,7 +204,7 @@ function num(v: unknown): number | null {
   return null;
 }
 
-/** "32 m²" / "344 ft²" hidden in any string field of the room object. */
+/** "32 m²" / "258 feet²" hidden in any string field of the room object. */
 function sizeFromStrings(room: RawRoom): number | null {
   const texts: string[] = [];
   const walk = (v: unknown) => {
@@ -182,33 +216,51 @@ function sizeFromStrings(room: RawRoom): number | null {
   for (const t of texts) {
     const sqm = t.match(/(\d+(?:[.,]\d+)?)\s*(?:m²|m2|sqm|square met)/i);
     if (sqm) return Math.round(Number.parseFloat(sqm[1].replace(",", ".")));
-    const sqft = t.match(/(\d+(?:[.,]\d+)?)\s*(?:ft²|ft2|sq\.?\s*ft)/i);
+    const sqft = t.match(/(\d+(?:[.,]\d+)?)\s*(?:ft²|ft2|feet²|feet2|sq\.?\s*(?:ft|feet))/i);
     if (sqft) return Math.round(Number.parseFloat(sqft[1].replace(",", ".")) * 0.092903);
   }
   return null;
 }
 
 function extractRooms(item: RawRoom): ExtractedRoom[] {
-  const lists = [item.roomOfferings, item.rooms, item.roomTypes].filter(Array.isArray);
-  const raw = (lists[0] ?? []) as RawRoom[];
   const seen = new Set<string>();
   const out: ExtractedRoom[] = [];
-  for (const r of raw) {
-    const name = str(r.name) ?? str(r.roomType) ?? str(r.title) ?? str(r.type);
-    if (!name) continue;
+  const push = (name: string | null, sizeSqm: number | null, persons: number | null) => {
+    if (!name || out.length >= MAX_ROOMS_PER_HOTEL) return;
     const key = name.toLowerCase().replace(/\s+/g, " ");
-    if (seen.has(key)) continue;
+    if (seen.has(key)) return;
     seen.add(key);
-    const sizeSqm =
-      num(r.size) ?? num(r.roomSize) ?? num(r.sizeSqm) ?? num(r.area) ?? sizeFromStrings(r);
-    const persons =
-      num(r.persons) ?? num(r.maxPersons) ?? num(r.occupancy) ?? num(r.maxOccupancy) ?? num(r.guests);
     out.push({
       name,
       sizeSqm: sizeSqm !== null ? Math.round(sizeSqm) : null,
       persons: persons !== null ? Math.round(persons) : null,
     });
-    if (out.length >= MAX_ROOMS_PER_HOTEL) break;
+  };
+
+  // Preferred: the full room catalog (independent of stay-date availability),
+  // with sizes already in m² — probed live on a real property page.
+  const offerings = item.roomOfferings as RawRoom | undefined;
+  const property = (offerings?.roomDetail as RawRoom | undefined)?.property as RawRoom | undefined;
+  const catalog = property?.roomsDetails;
+  if (Array.isArray(catalog)) {
+    for (const r of catalog as RawRoom[]) {
+      const translations = r.translations as RawRoom | undefined;
+      const occupancy = r.occupancy as RawRoom | undefined;
+      push(str(translations?.name), num(r.roomSizeM2), num(occupancy?.maxPersons));
+    }
+  }
+  if (out.length) return out;
+
+  // Fallback: the availability table (only rooms bookable for the stay dates;
+  // sizes hide in facility strings like "258 feet²").
+  const raw = (Array.isArray(item.rooms) ? item.rooms : []) as RawRoom[];
+  for (const r of raw) {
+    const name = str(r.name) ?? str(r.roomType) ?? str(r.title) ?? str(r.type);
+    const sizeSqm =
+      num(r.size) ?? num(r.roomSize) ?? num(r.sizeSqm) ?? num(r.area) ?? sizeFromStrings(r);
+    const persons =
+      num(r.persons) ?? num(r.maxPersons) ?? num(r.maxOccupancy) ?? num(r.guests);
+    push(name, sizeSqm, persons);
   }
   return out;
 }
@@ -231,11 +283,14 @@ function occupancyOf(persons: number | null, name: string): { occ: Localized | n
   return { occ, icon };
 }
 
-/** Same loose similarity check the Places enrichment uses to flag mismatches. */
+/** Same loose similarity check the Places enrichment uses to flag mismatches.
+ * Accent-folded ("Melia" must match "Meliá") — learned from the full run. */
 function looksAlike(ours: string, theirs: string): boolean {
   const norm = (s: string) =>
     s
       .toLowerCase()
+      .normalize("NFD")
+      .replace(/[̀-ͯ]/g, "")
       .replace(/hotel|the|by|and|&|,|-|'|’/g, " ")
       .split(/\s+/)
       .filter((w) => w.length > 2);
@@ -278,11 +333,30 @@ type Report = { dest: string; ours: string; matched: string; roomCount: number; 
 
 async function main() {
   const targets = await collectTargets();
+  // Two hotels sharing one resolved URL can't both be right: keep the one whose
+  // name tokens actually appear in the slug, unresolve the rest (BUS pilot:
+  // Ramada Plaza and Wyndham Batumi both landed on the Wyndham property).
+  const bySlugGroup = new Map<string, Target[]>();
+  for (const t of targets) {
+    const s = slugOf(t.propertyUrl);
+    if (!s) continue;
+    bySlugGroup.set(s, [...(bySlugGroup.get(s) ?? []), t]);
+  }
+  for (const [slug, group] of bySlugGroup) {
+    if (group.length < 2) continue;
+    const slugText = slug.split("/").pop()!.replace(/-/g, " ");
+    const scored = group
+      .map((t) => ({ t, ok: looksAlike(t.name, slugText) }))
+      .sort((a, b) => Number(b.ok) - Number(a.ok));
+    for (const { t } of scored.slice(1)) t.propertyUrl = null; // keep best only
+    console.log(`  shared URL ${slug}: kept "${scored[0].t.name}", unresolved ${group.length - 1} other(s)`);
+  }
   const direct = targets.filter((t) => t.propertyUrl);
-  const search = targets.filter((t) => !t.propertyUrl);
+  const unresolved = targets.filter((t) => !t.propertyUrl);
   console.log(
-    `Targets: ${targets.length} hotels (${direct.length} direct URLs → 1 batch run, ` +
-      `${search.length} search-mode runs). Estimated cost ≈ $${(targets.length * COST_PER_HOTEL_USD).toFixed(2)}.`,
+    `Targets: ${targets.length} hotels — ${direct.length} with property URLs → 1 batch run` +
+      `${unresolved.length ? `, ${unresolved.length} UNRESOLVED (need the Playwright resolver + --resolved)` : ""}. ` +
+      `Estimated cost ≈ $${(direct.length * COST_PER_HOTEL_USD).toFixed(2)}.`,
   );
   if (!targets.length) return;
   if (!confirmed) {
@@ -316,61 +390,35 @@ async function main() {
         report.push({ dest: t.dest, ours: t.name, matched: "(no item)", roomCount: 0, flag: "⚠ NO DATA" });
         continue;
       }
+      const matchedName = str(item.name) ?? "?";
+      // Final guard over the resolver too: if the scraped property's name
+      // doesn't look like ours, NOTHING is written — wrong rooms shown with
+      // confidence are worse than an empty list (learned from the BUS pilot,
+      // where city-token scoring mapped 9 hotels onto one property).
+      if (!looksAlike(t.name, matchedName)) {
+        if (clearUnmatched) await writeRooms(t, []);
+        report.push({ dest: t.dest, ours: t.name, matched: matchedName, roomCount: 0, flag: "⚠ SKIPPED (mismatch)" });
+        console.log(`  ⚠ ${t.name} ≠ ${matchedName}: skipped${clearUnmatched ? ", rows cleared" : ", nothing written"}`);
+        continue;
+      }
       const extracted = extractRooms(item);
       await writeRooms(t, extracted);
       report.push({
         dest: t.dest,
         ours: t.name,
-        matched: str(item.name) ?? "?",
+        matched: matchedName,
         roomCount: extracted.length,
         flag: extracted.length ? "ok" : "⚠ 0 ROOMS",
       });
-      console.log(`  ${extracted.length ? "✓" : "⚠"} ${t.name}: ${extracted.length} rooms`);
+      console.log(`  ${extracted.length ? "✓" : "—"} ${t.name}: ${extracted.length} rooms`);
     }
   }
 
-  // 2) One search-mode run per hotel without a property URL (maxItems: 1).
-  //    Small concurrency to finish ~170 runs in reasonable time.
-  if (search.length) {
-    console.log(`\nStarting ${search.length} search-mode runs (concurrency 5)…`);
-    let cursor = 0;
-    const worker = async () => {
-      for (;;) {
-        const i = cursor++;
-        if (i >= search.length) return;
-        const t = search[i];
-        try {
-          const runId = await startRun({
-            search: `${t.name} ${t.city}`,
-            maxItems: 1,
-            ...stay,
-          });
-          const items = (await awaitRunItems(runId, 20)) as RawRoom[];
-          const item = items[0];
-          const matchedName = item ? (str(item.name) ?? "?") : "(no result)";
-          if (!item) {
-            report.push({ dest: t.dest, ours: t.name, matched: matchedName, roomCount: 0, flag: "⚠ NO MATCH" });
-            console.log(`  — ${t.name}: no result`);
-            continue;
-          }
-          const weak = !looksAlike(t.name, matchedName);
-          const extracted = extractRooms(item);
-          await writeRooms(t, extracted);
-          report.push({
-            dest: t.dest,
-            ours: t.name,
-            matched: matchedName,
-            roomCount: extracted.length,
-            flag: weak ? "⚠ CHECK" : extracted.length ? "ok" : "⚠ 0 ROOMS",
-          });
-          console.log(`  ${weak ? "⚠" : "✓"} ${t.name} → ${matchedName}: ${extracted.length} rooms`);
-        } catch (err) {
-          report.push({ dest: t.dest, ours: t.name, matched: String(err).slice(0, 80), roomCount: 0, flag: "✗ ERROR" });
-          console.error(`  ✗ ${t.name}: ${err}`);
-        }
-      }
-    };
-    await Promise.all(Array.from({ length: 5 }, worker));
+  // 2) Hotels the resolver couldn't map to a property URL are reported, never
+  //    guessed — a wrong property would silently show another hotel's rooms.
+  for (const t of unresolved) {
+    if (clearUnmatched) await writeRooms(t, []);
+    report.push({ dest: t.dest, ours: t.name, matched: "(unresolved URL)", roomCount: 0, flag: "⚠ UNRESOLVED" });
   }
 
   console.log(`\n──────── match report ────────`);
