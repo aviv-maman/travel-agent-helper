@@ -50,10 +50,12 @@ export function RoomPhotos({ photos, name }: { photos: string[]; name: string })
       </button>
 
       <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent className="max-w-lg">
+        <DialogContent className="max-w-md">
           <DialogTitle className="text-sm">{name}</DialogTitle>
-          <Carousel className="w-full" opts={{ loop: true, direction: "ltr" }}>
-            <CarouselContent dir="ltr">
+          {/* Force LTR so the arrows sit physically left/right and the chevrons
+              don't rtl-flip — a photo carousel reads left→right in any locale. */}
+          <Carousel dir="ltr" className="w-full" opts={{ loop: true }}>
+            <CarouselContent>
               {photos.map((src, i) => (
                 <CarouselItem key={i}>
                   {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -67,8 +69,8 @@ export function RoomPhotos({ photos, name }: { photos: string[]; name: string })
             </CarouselContent>
             {photos.length > 1 && (
               <>
-                <CarouselPrevious className="start-2" />
-                <CarouselNext className="end-2" />
+                <CarouselPrevious className="left-2 size-8 bg-background/80" />
+                <CarouselNext className="right-2 size-8 bg-background/80" />
               </>
             )}
           </Carousel>

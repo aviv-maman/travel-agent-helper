@@ -36,7 +36,7 @@ export function HotelDetailModal({
 
   return (
     <Dialog open={hotel !== null} onOpenChange={(open) => !open && onClose()}>
-      <DialogContent className="max-h-[85vh] overflow-y-auto sm:max-w-md">
+      <DialogContent className="max-h-[85vh] overflow-y-auto sm:max-w-xl">
         {hotel && (
           <>
             <DialogHeader>
