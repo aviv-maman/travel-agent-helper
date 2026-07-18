@@ -68,9 +68,11 @@ export function RoomPhotos({ photos, name }: { photos: string[]; name: string })
               ))}
             </CarouselContent>
             {photos.length > 1 && (
+              // Solid dark circles + white chevrons so they stay visible over
+              // any photo (outline arrows got lost on bright/busy shots).
               <>
-                <CarouselPrevious className="left-2 size-8 bg-background/80" />
-                <CarouselNext className="right-2 size-8 bg-background/80" />
+                <CarouselPrevious className="left-2 size-9 border-0 !bg-black/65 !text-white shadow-lg ring-1 ring-white/30 hover:!bg-black/85 [&_svg]:!size-5" />
+                <CarouselNext className="right-2 size-9 border-0 !bg-black/65 !text-white shadow-lg ring-1 ring-white/30 hover:!bg-black/85 [&_svg]:!size-5" />
               </>
             )}
           </Carousel>
