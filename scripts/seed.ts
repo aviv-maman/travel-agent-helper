@@ -110,6 +110,7 @@ async function main() {
         occupancy: rooms.occupancy,
         facilities: rooms.facilities,
         photoUrl: rooms.photoUrl,
+        photos: rooms.photos,
         sortOrder: rooms.sortOrder,
       })
       .from(rooms)
@@ -175,6 +176,7 @@ async function main() {
             occupancy: r.occupancy,
             facilities: r.facilities ?? null,
             photoUrl: r.photoUrl ?? null,
+            photos: r.photos ?? null,
             sortOrder: r.sortOrder,
           })),
         );

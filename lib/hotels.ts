@@ -42,7 +42,8 @@ export type UIRoom = {
   occupancy: Localized | null;
   /** Booking's compact per-room highlight chips (English), e.g. "Minibar". */
   facilities: string[];
-  photoUrl: string | null;
+  /** Room photos (cf.bstatic.com); photos[0] is the cover shown on the card. */
+  photos: string[];
 };
 
 export type UIHotel = {
@@ -102,7 +103,7 @@ export type ViewRoom = {
   sizeSqm: number | null;
   occupancy: string | null;
   facilities: string[];
-  photoUrl: string | null;
+  photos: string[];
 };
 export type ViewHotel = {
   id: string;
@@ -235,7 +236,7 @@ function resolveHotel(h: UIHotel, locale: string): ViewHotel {
         sizeSqm: r.sizeSqm,
         occupancy: localized(r.occupancy, locale) || null,
         facilities: r.facilities,
-        photoUrl: r.photoUrl,
+        photos: r.photos,
       })),
   };
 }
@@ -418,7 +419,7 @@ async function loadFromDb(): Promise<UIDestination[]> {
         sizeSqm: r.sizeSqm,
         occupancy: r.occupancy,
         facilities: r.facilities ?? [],
-        photoUrl: r.photoUrl,
+        photos: r.photos ?? (r.photoUrl ? [r.photoUrl] : []),
       })),
     })),
   }));
@@ -472,7 +473,7 @@ async function loadFromSeed(): Promise<UIDestination[]> {
           sizeSqm: r.sizeSqm,
           occupancy: r.occupancy,
           facilities: r.facilities ?? [],
-          photoUrl: r.photoUrl ?? null,
+          photos: r.photos ?? (r.photoUrl ? [r.photoUrl] : []),
         })),
       })),
     };
@@ -511,6 +512,7 @@ type SeedShape = {
       occupancy: Localized | null;
       facilities?: string[] | null;
       photoUrl?: string | null;
+      photos?: string[] | null;
     }[];
   }[];
 };

@@ -210,8 +210,11 @@ type ExtractedRoom = {
   sizeSqm: number | null;
   persons: number | null;
   facilities: string[] | null;
-  photoUrl: string | null;
+  /** All room photos (cf.bstatic.com URLs); photos[0] is the cover. */
+  photos: string[] | null;
 };
+
+const MAX_PHOTOS_PER_ROOM = 10;
 
 function str(v: unknown): string | null {
   return typeof v === "string" && v.trim() ? v.trim() : null;
@@ -251,7 +254,7 @@ function extractRooms(item: RawRoom, withPhotos: boolean): ExtractedRoom[] {
     sizeSqm: number | null,
     persons: number | null,
     facilities: string[] | null = null,
-    photoUrl: string | null = null,
+    photos: string[] | null = null,
   ) => {
     if (!name || out.length >= MAX_ROOMS_PER_HOTEL) return;
     const key = name.toLowerCase().replace(/\s+/g, " ");
@@ -262,7 +265,7 @@ function extractRooms(item: RawRoom, withPhotos: boolean): ExtractedRoom[] {
       sizeSqm: sizeSqm !== null ? Math.round(sizeSqm) : null,
       persons: persons !== null ? Math.round(persons) : null,
       facilities: facilities?.length ? facilities : null,
-      photoUrl,
+      photos: photos?.length ? photos : null,
     });
   };
 
@@ -288,14 +291,20 @@ function extractRooms(item: RawRoom, withPhotos: boolean): ExtractedRoom[] {
     for (const r of catalog as RawRoom[]) {
       const translations = r.translations as RawRoom | undefined;
       const occupancy = r.occupancy as RawRoom | undefined;
-      const photos = Array.isArray(r.roomPhotos) ? (r.roomPhotos as RawRoom[]) : [];
-      const photoUri = withPhotos ? str(photos[0]?.photoUri) : null;
+      const rawPhotos = Array.isArray(r.roomPhotos) ? (r.roomPhotos as RawRoom[]) : [];
+      const photos = withPhotos
+        ? rawPhotos
+            .map((p) => str(p.photoUri))
+            .filter((u): u is string => u !== null)
+            .slice(0, MAX_PHOTOS_PER_ROOM)
+            .map((u) => `https://cf.bstatic.com${u}`)
+        : [];
       push(
         str(translations?.name),
         num(r.roomSizeM2),
         num(occupancy?.maxPersons),
         highlightsByRoom.get(num(r.id) ?? -1) ?? null,
-        photoUri ? `https://cf.bstatic.com${photoUri}` : null,
+        photos,
       );
     }
   }
@@ -374,7 +383,8 @@ async function writeRooms(target: Target, extracted: ExtractedRoom[]): Promise<v
         sizeSqm: r.sizeSqm,
         occupancy: occ,
         facilities: r.facilities,
-        photoUrl: r.photoUrl,
+        photos: r.photos,
+        photoUrl: r.photos?.[0] ?? null, // legacy cover column === photos[0]
         sortOrder: i,
       };
     }),
