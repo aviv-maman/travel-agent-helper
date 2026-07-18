@@ -6,7 +6,7 @@ import type {
   Localized,
 } from "@/db/schema";
 import type { Locale } from "@/i18n/config";
-import { getIlsRates, toIls, type IlsRates } from "./money";
+import { buildCurrencyLine, getIlsRatesWithMeta, toIls, type IlsRates } from "./money";
 import { smartNormalize, smartScore } from "./search";
 
 /**
@@ -137,7 +137,11 @@ export type ViewInfo = {
   warnings: string[];
   about?: string;
   attractions?: string;
+  /** Raw editorial note — shown only when the live line below can't be built. */
   currencyNote?: string;
+  /** Live currency line: descriptive label + a rate computed from today's FX,
+   *  plus when those rates were last refreshed (null = hard-coded fallback). */
+  currency?: { label: string; rate: string; updatedAt: string | null };
   airport?: { title?: string; note?: string };
   transport?: ViewTransport[];
   landmarks?: string;
@@ -173,6 +177,7 @@ function resolveInfo(
   info: DestinationInfo | null,
   locale: string,
   rates: IlsRates,
+  ratesFetchedAt: Date | null,
 ): ViewInfo | null {
   if (!info) return null;
   const pick = (v: Localized | null | undefined) => localized(v, locale) || undefined;
@@ -185,11 +190,23 @@ function resolveInfo(
       priceIls: r.price ? toIls(r.price, rates) : undefined,
     }))
     .filter((r) => r.mode || r.detail);
+  // Turn the editorial currency note into a live rate line when it names an ISO
+  // code; otherwise fall back to showing the note verbatim.
+  const currencyNote = pick(info.currencyNote);
+  const live = currencyNote ? buildCurrencyLine(currencyNote, rates) : null;
+  const updatedAt = ratesFetchedAt
+    ? new Intl.DateTimeFormat(locale === "he" ? "he-IL" : "en-GB", {
+        timeZone: "Asia/Jerusalem",
+        dateStyle: "short",
+        timeStyle: "short",
+      }).format(ratesFetchedAt)
+    : null;
   return {
     warnings: (info.warnings ?? []).map((w) => localized(w, locale)).filter(Boolean),
     about: pick(info.about),
     attractions: pick(info.attractions),
-    currencyNote: pick(info.currencyNote),
+    currencyNote: live ? undefined : currencyNote,
+    currency: live ? { ...live, updatedAt } : undefined,
     airport: info.airport
       ? { title: pick(info.airport.title), note: pick(info.airport.note) }
       : undefined,
@@ -305,7 +322,7 @@ export async function getDestinationView(
   const all = await getHotelData();
   const d = all.find((x) => x.iata === iata);
   if (!d) return null;
-  const rates = await getIlsRates();
+  const { rates, fetchedAt: ratesFetchedAt } = await getIlsRatesWithMeta();
 
   // amenities AND; tags / boards each OR within themselves.
   const baseFiltered = d.hotels.filter(
@@ -337,7 +354,7 @@ export async function getDestinationView(
     name: localized(d.name, locale),
     country: localized(d.country, locale),
     countryCode: d.countryCode,
-    info: resolveInfo(d.info, locale, rates),
+    info: resolveInfo(d.info, locale, rates, ratesFetchedAt),
     landmarks: d.landmarks.map((l) => ({
       key: l.key,
       name: localized(l.name, locale),

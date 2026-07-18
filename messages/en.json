@@ -759,6 +759,7 @@
       "title": "About the city — info & transport",
       "about": "About",
       "currency": "Local currency",
+      "ratesUpdated": "Updated: {when}",
       "airport": "Airport",
       "gettingAround": "Getting around",
       "landmarks": "Points of interest"
