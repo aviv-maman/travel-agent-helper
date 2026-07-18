@@ -8,6 +8,7 @@ import {
   parseSize,
   type RoomAmenity,
 } from "@/lib/room-filter";
+import { DirectionProvider } from "@/components/ui/direction";
 import { Slider } from "@/components/ui/slider";
 import { Toggle } from "@/components/ui/toggle";
 import { useHotelParams } from "./use-hotel-params";
@@ -86,39 +87,43 @@ export function RoomFilters() {
             {rangeLabel}
           </span>
         </div>
-        {/* Compact slider at the inline-start (right in RTL). Forced LTR so the
-            left handle is the min and the right handle the max. */}
-        <div dir="ltr" className="w-2/5 min-w-32 self-start">
-          <SizeSlider key={sliderKey} min={displayMin} max={displayMax} onCommit={commitSize} />
-        </div>
-        <div className="flex items-center gap-2" dir="ltr">
-          <input
-            key={`min-${roomMinSize ?? ""}`}
-            type="number"
-            inputMode="numeric"
-            min={0}
-            defaultValue={roomMinSize ?? ""}
-            placeholder={t("min")}
-            aria-label={t("min")}
-            onBlur={(e) => update({ roomMinSize: parseSize(e.currentTarget.value) })}
-            onKeyDown={(e) => e.key === "Enter" && e.currentTarget.blur()}
-            className="h-8 w-24 rounded-md border border-input bg-surface px-2 text-sm outline-none focus:border-ring focus:ring-2 focus:ring-ring/40"
-          />
-          <span className="text-muted-foreground">–</span>
-          <input
-            key={`max-${roomMaxSize ?? ""}`}
-            type="number"
-            inputMode="numeric"
-            min={0}
-            defaultValue={roomMaxSize ?? ""}
-            placeholder={t("max")}
-            aria-label={t("max")}
-            onBlur={(e) => update({ roomMaxSize: parseSize(e.currentTarget.value) })}
-            onKeyDown={(e) => e.key === "Enter" && e.currentTarget.blur()}
-            className="h-8 w-24 rounded-md border border-input bg-surface px-2 text-sm outline-none focus:border-ring focus:ring-2 focus:ring-ring/40"
-          />
-          <span className="text-xs text-muted-foreground">{t("unit")}</span>
-        </div>
+        {/* Compact slider + min/max boxes, grouped at the inline-start (right
+            in RTL). DirectionProvider forces Base UI's slider logic to LTR —
+            the DOM dir alone only flips the visuals, so dragging was inverted —
+            making the left handle the min and the right handle the max. */}
+        <DirectionProvider direction="ltr">
+          <div dir="ltr" className="flex w-2/5 min-w-56 flex-col gap-2 self-start">
+            <SizeSlider key={sliderKey} min={displayMin} max={displayMax} onCommit={commitSize} />
+            <div className="flex items-center gap-2">
+              <input
+                key={`min-${roomMinSize ?? ""}`}
+                type="number"
+                inputMode="numeric"
+                min={0}
+                defaultValue={roomMinSize ?? ""}
+                placeholder={t("min")}
+                aria-label={t("min")}
+                onBlur={(e) => update({ roomMinSize: parseSize(e.currentTarget.value) })}
+                onKeyDown={(e) => e.key === "Enter" && e.currentTarget.blur()}
+                className="h-8 w-24 rounded-md border border-input bg-surface px-2 text-sm outline-none focus:border-ring focus:ring-2 focus:ring-ring/40"
+              />
+              <span className="text-muted-foreground">–</span>
+              <input
+                key={`max-${roomMaxSize ?? ""}`}
+                type="number"
+                inputMode="numeric"
+                min={0}
+                defaultValue={roomMaxSize ?? ""}
+                placeholder={t("max")}
+                aria-label={t("max")}
+                onBlur={(e) => update({ roomMaxSize: parseSize(e.currentTarget.value) })}
+                onKeyDown={(e) => e.key === "Enter" && e.currentTarget.blur()}
+                className="h-8 w-24 rounded-md border border-input bg-surface px-2 text-sm outline-none focus:border-ring focus:ring-2 focus:ring-ring/40"
+              />
+              <span className="text-xs text-muted-foreground">{t("unit")}</span>
+            </div>
+          </div>
+        </DirectionProvider>
       </div>
 
       {/* Amenities the room must have */}
