@@ -711,8 +711,6 @@
     "roomFilter": {
       "label": "מסנני חדרים",
       "size": "גודל חדר",
-      "sizeRange": "{min}–{max} מ״ר",
-      "unit": "מ״ר",
       "min": "מינ׳",
       "max": "מקס׳",
       "balcony": "מרפסת",

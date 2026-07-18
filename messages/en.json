@@ -711,8 +711,6 @@
     "roomFilter": {
       "label": "Room filters",
       "size": "Room size",
-      "sizeRange": "{min}–{max} m²",
-      "unit": "m²",
       "min": "Min",
       "max": "Max",
       "balcony": "Balcony",

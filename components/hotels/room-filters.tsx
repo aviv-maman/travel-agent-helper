@@ -76,10 +76,6 @@ export function RoomFilters() {
   const clearAll = () =>
     update({ roomMinSize: null, roomMaxSize: null, roomAmenities: [] });
 
-  // Value shown in the top-right of the size row, e.g. "30–100+ m²".
-  const maxLabel = roomMaxSize == null ? `${ROOM_SIZE_MAX}+` : String(roomMaxSize);
-  const rangeLabel = t("sizeRange", { min: roomMinSize ?? 0, max: maxLabel });
-
   return (
     <div className="flex flex-col gap-3 rounded-lg border border-border bg-brand/5 px-3 py-3">
       <div className="flex flex-wrap items-center justify-between gap-2">
@@ -97,18 +93,13 @@ export function RoomFilters() {
 
       {/* Room size: slider + optional manual min/max boxes */}
       <div className="flex flex-col gap-2">
-        <div className="flex items-center justify-between">
-          <span className="text-xs font-bold text-muted-foreground">{t("size")}</span>
-          <span className="text-xs font-semibold text-foreground tabular-nums" dir="ltr">
-            {rangeLabel}
-          </span>
-        </div>
+        <span className="text-xs font-bold text-muted-foreground">{t("size")}</span>
         {/* Compact slider + min/max boxes, grouped at the inline-start (right
             in RTL). DirectionProvider forces Base UI's slider logic to LTR —
             the DOM dir alone only flips the visuals, so dragging was inverted —
             making the left handle the min and the right handle the max. */}
         <DirectionProvider direction="ltr">
-          <div dir="ltr" className="flex w-2/5 min-w-56 flex-col gap-2 self-start">
+          <div dir="ltr" className="flex w-64 flex-col gap-2 self-start">
             <SizeSlider key={sliderKey} min={displayMin} max={displayMax} onCommit={commitSize} />
             {/* Min under the slider's left end, max under its right end. */}
             <div className="flex items-start justify-between gap-4">
