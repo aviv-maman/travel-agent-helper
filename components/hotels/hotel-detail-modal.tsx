@@ -10,7 +10,7 @@ import {
   DialogDescription,
 } from "@/components/ui/dialog";
 import { Badge } from "@/components/ui/badge";
-import { BookingIcon } from "@/components/icons/booking-icon";
+import { BookingScore } from "./booking-score";
 
 /** The room facilities worth surfacing (admin's list, 2026-07-18): minibar,
  * air conditioning, balcony/terrace, bath/shower. The DB stores Booking's full
@@ -53,14 +53,7 @@ export function HotelDetailModal({
                     {t(`board.${b}`)}
                   </Badge>
                 ))}
-                {hotel.bookingScore != null && (
-                  <span
-                    aria-label={`Booking.com ${hotel.bookingScore.toFixed(1)}`}
-                    className="inline-flex items-center gap-1 rounded-md bg-[#003b95] px-1.5 py-0.5 text-xs font-bold text-white">
-                    <BookingIcon className="size-5 shrink-0" />
-                    <span dir="ltr">{hotel.bookingScore.toFixed(1)}</span>
-                  </span>
-                )}
+                {hotel.bookingScore != null && <BookingScore score={hotel.bookingScore} />}
               </DialogDescription>
             </DialogHeader>
 

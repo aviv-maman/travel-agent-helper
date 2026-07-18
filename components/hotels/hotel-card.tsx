@@ -7,6 +7,7 @@ import { ExternalLinkIcon, Globe, Star } from "lucide-react";
 import { GoogleMapsIcon } from "@/components/icons/google-maps-icon";
 import { GoogleIcon } from "@/components/icons/google-icon";
 import { BookingIcon } from "@/components/icons/booking-icon";
+import { BookingScore } from "./booking-score";
 import type { HotelFeatureValue, HotelTagValue, BoardCode } from "@/db/schema";
 import type { ViewHotel, ViewDistance } from "@/lib/hotels";
 import { Badge } from "@/components/ui/badge";
@@ -196,17 +197,10 @@ export function HotelCard({
           )}
         </span>
       )}
-      {/* Booking chip + its edit pencil stay adjacent (the pencil is last, so
+      {/* Booking score + its edit pencil stay adjacent (the pencil is last, so
           on RTL it's the leftmost item — right next to the Booking score).
-          Booking's own badge look: solid brand-blue box, white score. */}
-      {score != null && (
-        <span
-          aria-label={`Booking.com ${score.toFixed(1)}`}
-          className="inline-flex items-center gap-1 rounded-md bg-[#003b95] px-1.5 py-0.5 text-xs font-bold text-white">
-          <BookingIcon className="size-5 shrink-0" />
-          <span dir="ltr">{score.toFixed(1)}</span>
-        </span>
-      )}
+          Pilot hotels get the large vertical badge; the rest the inline chip. */}
+      {score != null && <BookingScore score={score} />}
       {canEditScore && (
         <EditBookingScore hotelId={Number(hotel.id)} value={score} onSaved={setScore} />
       )}
