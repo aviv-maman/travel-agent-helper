@@ -1,6 +1,8 @@
 # Exchange-rate service contract
 
-A backend **cron** that refreshes foreign-exchange rates into the DB so the app can show live conversions (commissions, prices) instead of the hard-coded note (`1 Lari ≈ ₪1.09`). Read path is pure DB — Next needs no request-time backend call.
+A **daily cron** refreshes foreign-exchange rates into the DB so the app shows live conversions (the city currency line, transport prices) instead of a hard-coded note. Read path is pure DB — no request-time third-party call.
+
+**Owner: the Next app (Vercel Cron).** `GET /api/cron/fx` (see `vercel.json`, daily 05:00 UTC) fetches ILS-base rates from open.er-api.com for `FX_CURRENCIES` (`lib/money.ts`) and upserts them with a fresh `fetched_at`. Protected by `CRON_SECRET`. The city panel surfaces `fetched_at` as a "last updated" line. The backend also ships a `/cron/fx` (open.er-api.com too) from before this moved into Next; either can write the shared table (idempotent upsert) — the Vercel job is the current source of truth and covers the full currency list (incl. HUF, CZK).
 
 ## Schema (added in the Next repo — Next owns migrations)
 

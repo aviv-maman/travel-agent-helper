@@ -33,6 +33,8 @@ const BASE_SORTS: { value: SortMode; key: keyof HotelMessages["sort"]; emoji: st
   { value: "stars-asc", key: "starsAsc", emoji: "🌟" },
   { value: "booking-desc", key: "bookingDesc", emoji: "📉" },
   { value: "booking-asc", key: "bookingAsc", emoji: "📈" },
+  { value: "google-desc", key: "googleDesc", emoji: "📉" },
+  { value: "google-asc", key: "googleAsc", emoji: "📈" },
 ];
 
 const chipClass =

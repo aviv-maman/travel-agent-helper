@@ -70,10 +70,22 @@ export function CityInfoAccordion({ info }: { info: ViewInfo }) {
               );
             })()}
 
-          {info.currencyNote && (
+          {(info.currency || info.currencyNote) && (
             <div className="border-t border-border pt-2">
               <div className="mb-1 text-xs font-bold text-foreground">💱 {t("currency")}</div>
-              <div className="text-muted-foreground">{info.currencyNote}</div>
+              {info.currency ? (
+                <div className="text-muted-foreground">
+                  <div>{info.currency.label}</div>
+                  <div className="font-semibold text-foreground">{info.currency.rate}</div>
+                  {info.currency.updatedAt && (
+                    <div className="mt-0.5 text-xs text-muted-foreground/80">
+                      {t("ratesUpdated", { when: info.currency.updatedAt })}
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <div className="text-muted-foreground">{info.currencyNote}</div>
+              )}
             </div>
           )}
 
