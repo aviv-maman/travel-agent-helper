@@ -86,7 +86,11 @@ export function RoomFilters() {
             {rangeLabel}
           </span>
         </div>
-        <SizeSlider key={sliderKey} min={displayMin} max={displayMax} onCommit={commitSize} />
+        {/* Compact slider at the inline-start (right in RTL). Forced LTR so the
+            left handle is the min and the right handle the max. */}
+        <div dir="ltr" className="w-2/5 min-w-32 self-start">
+          <SizeSlider key={sliderKey} min={displayMin} max={displayMax} onCommit={commitSize} />
+        </div>
         <div className="flex items-center gap-2" dir="ltr">
           <input
             key={`min-${roomMinSize ?? ""}`}
