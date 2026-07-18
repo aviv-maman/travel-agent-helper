@@ -197,10 +197,14 @@ export function HotelCard({
         </span>
       )}
       {/* Booking chip + its edit pencil stay adjacent (the pencil is last, so
-          on RTL it's the leftmost item — right next to the Booking score). */}
+          on RTL it's the leftmost item — right next to the Booking score).
+          Logo instead of the word, mirroring the Google chip. */}
       {score != null && (
-        <span className="inline-flex items-center gap-1 rounded-md bg-success/10 px-1.5 py-0.5 text-xs font-bold text-success">
-          {t("card.booking")} {score}
+        <span
+          aria-label={`Booking.com ${score}`}
+          className="inline-flex items-center gap-1 rounded-md bg-success/10 px-1.5 py-0.5 text-xs font-bold text-success">
+          <span dir="ltr">{score}</span>
+          <BookingIcon className="size-3.5 shrink-0" />
         </span>
       )}
       {canEditScore && (
