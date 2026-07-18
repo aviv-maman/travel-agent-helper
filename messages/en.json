@@ -708,6 +708,17 @@
       "outsideCenter": "Outside the center",
       "clear": "Clear filters"
     },
+    "roomFilter": {
+      "label": "Room filters",
+      "size": "Room size",
+      "unit": "Sqm",
+      "min": "Min",
+      "max": "Max",
+      "balcony": "Balcony",
+      "ac": "Air conditioning",
+      "minibar": "Minibar",
+      "clear": "Clear room filters"
+    },
     "view": {
       "list": "List view",
       "grid": "Grid view"
@@ -752,6 +763,7 @@
       "rooms": "Room types",
       "size": "Size",
       "sizeUnknown": "Unknown — to be completed",
+      "filteredRooms": "{shown} of {total} match your filter",
       "noRooms": "No room information yet",
       "updateManually": "✏️ To update room details — enter them manually in the system",
       "viewPhotos": "View room photos ({count})",

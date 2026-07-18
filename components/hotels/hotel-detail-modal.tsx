@@ -2,6 +2,7 @@
 
 import { useLocale, useTranslations } from "next-intl";
 import type { ViewHotel } from "@/lib/hotels";
+import { isRoomFilterActive, roomMatches, type RoomFilter } from "@/lib/room-filter";
 import {
   Dialog,
   DialogContent,
@@ -10,6 +11,7 @@ import {
   DialogDescription,
 } from "@/components/ui/dialog";
 import { RoomPhotos } from "./room-photos";
+import { useHotelParams } from "./use-hotel-params";
 
 /** The room facilities worth surfacing (admin's list, 2026-07-18): minibar,
  * air conditioning, balcony/terrace, bath/shower. The DB stores Booking's full
@@ -26,6 +28,18 @@ export function HotelDetailModal({
   const locale = useLocale();
   const t = useTranslations("hotels");
   const isHe = locale === "he";
+  const { roomMinSize, roomMaxSize, roomAmenities } = useHotelParams();
+
+  const roomFilter: RoomFilter = {
+    minSize: roomMinSize,
+    maxSize: roomMaxSize,
+    amenities: roomAmenities,
+  };
+  const filterActive = isRoomFilterActive(roomFilter);
+  // When a room filter is on, show only the matching rooms (the hotel is only
+  // listed because at least one matches).
+  const allRooms = hotel?.rooms ?? [];
+  const rooms = filterActive ? allRooms.filter((r) => roomMatches(r, roomFilter)) : allRooms;
 
   function sizeText(sqm: number | null): string {
     if (sqm == null) return t("modal.sizeUnknown");
@@ -58,12 +72,19 @@ export function HotelDetailModal({
             {/* Distances intentionally omitted — the modal is the ROOMS view
                 (admin request 2026-07-18); the card already shows distances. */}
             <section className="flex flex-col gap-2 border-t border-border pt-3">
-              <h3 className="text-sm font-extrabold text-foreground">🛏 {t("modal.rooms")}</h3>
-              {hotel.rooms.length === 0 ? (
+              <h3 className="flex flex-wrap items-center gap-2 text-sm font-extrabold text-foreground">
+                🛏 {t("modal.rooms")}
+                {filterActive && rooms.length > 0 && (
+                  <span className="rounded-full bg-brand/10 px-2 py-0.5 text-xs font-semibold text-brand">
+                    {t("modal.filteredRooms", { shown: rooms.length, total: allRooms.length })}
+                  </span>
+                )}
+              </h3>
+              {rooms.length === 0 ? (
                 <p className="text-sm text-muted-foreground">{t("modal.noRooms")}</p>
               ) : (
                 <ul className="flex flex-col gap-2">
-                  {hotel.rooms.map((r, i) => (
+                  {rooms.map((r, i) => (
                     <li
                       key={i}
                       className="flex items-start gap-2 rounded-lg border border-border bg-surface-2 p-2.5">

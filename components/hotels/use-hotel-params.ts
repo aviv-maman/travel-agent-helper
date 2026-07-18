@@ -4,12 +4,16 @@ import { useSearchParams } from "next/navigation";
 import { useRouter, usePathname } from "@/i18n/navigation";
 import type { HotelFeatureValue, HotelTagValue, BoardCode } from "@/db/schema";
 import type { SortMode } from "@/lib/hotels";
+import { parseRoomAmenities, parseSize, type RoomAmenity } from "@/lib/room-filter";
 
 type Update = {
   dest?: string | null;
   tags?: HotelTagValue[];
   boards?: BoardCode[];
   features?: HotelFeatureValue[];
+  roomMinSize?: number | null;
+  roomMaxSize?: number | null;
+  roomAmenities?: RoomAmenity[];
   q?: string | null;
   sort?: SortMode;
   page?: number;
@@ -36,6 +40,9 @@ export function useHotelParams() {
   const sort = (sp.get("sort") ?? "default") as SortMode;
   const page = Math.max(1, Number(sp.get("page") ?? "1") || 1);
   const perPage = Math.max(1, Number(sp.get("perPage") ?? "0") || 0);
+  const roomMinSize = parseSize(sp.get("rmin"));
+  const roomMaxSize = parseSize(sp.get("rmax"));
+  const roomAmenities = parseRoomAmenities(sp.get("ramen"));
 
   function update(next: Update) {
     const p = new URLSearchParams(sp.toString());
@@ -52,6 +59,9 @@ export function useHotelParams() {
     if ("tags" in next) setList("tags", next.tags);
     if ("boards" in next) setList("boards", next.boards);
     if ("features" in next) setList("features", next.features);
+    if ("roomMinSize" in next) setVal("rmin", next.roomMinSize ? String(next.roomMinSize) : null);
+    if ("roomMaxSize" in next) setVal("rmax", next.roomMaxSize ? String(next.roomMaxSize) : null);
+    if ("roomAmenities" in next) setList("ramen", next.roomAmenities);
     if ("q" in next) setVal("q", next.q);
     if ("sort" in next) setVal("sort", next.sort, "default");
     if ("perPage" in next) setVal("perPage", next.perPage ? String(next.perPage) : null);
@@ -69,6 +79,9 @@ export function useHotelParams() {
     tags,
     boards,
     features,
+    roomMinSize,
+    roomMaxSize,
+    roomAmenities,
     q,
     sort,
     page,

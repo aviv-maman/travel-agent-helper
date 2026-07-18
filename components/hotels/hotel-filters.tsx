@@ -6,6 +6,7 @@ import type { ViewLandmark, SortMode } from "@/lib/hotels";
 import { Button } from "@/components/ui/button";
 import { Toggle } from "@/components/ui/toggle";
 import { useHotelParams } from "./use-hotel-params";
+import { RoomFilters } from "./room-filters";
 
 const TAGS: { value: HotelTagValue; emoji: string }[] = [
   { value: "kosher", emoji: "✡️" },
@@ -47,7 +48,10 @@ export function HotelFilters({ landmarks }: { landmarks: ViewLandmark[] }) {
   const toggle = <T,>(list: T[], v: T) =>
     list.includes(v) ? list.filter((x) => x !== v) : [...list, v];
 
+  // Only the general filters — the room filters have their own clear button.
   const hasFilters = tags.length > 0 || boards.length > 0 || features.length > 0;
+
+  const clearAll = () => update({ tags: [], boards: [], features: [] });
 
   return (
     <div className="flex flex-col gap-3">
@@ -87,7 +91,7 @@ export function HotelFilters({ landmarks }: { landmarks: ViewLandmark[] }) {
           <span className="text-sm font-bold">{t("filter.filtersLabel")}</span>
           <Button
             variant="destructive"
-            onClick={() => update({ tags: [], boards: [], features: [] })}
+            onClick={clearAll}
             aria-hidden={!hasFilters}
             tabIndex={hasFilters ? undefined : -1}
             className={hasFilters ? undefined : "invisible"}>
@@ -140,6 +144,9 @@ export function HotelFilters({ landmarks }: { landmarks: ViewLandmark[] }) {
           ))}
         </div>
       </div>
+
+      {/* Room filters */}
+      <RoomFilters />
     </div>
   );
 }
