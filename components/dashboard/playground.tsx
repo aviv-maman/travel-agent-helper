@@ -115,11 +115,13 @@ export function Playground({ initialContent }: { initialContent: string }) {
             aria-live="polite">
             {statusText}
           </span>
-          <Button variant="outline" size="sm" onClick={copyAll}>
-            <Copy className="size-3.5" /> {t("copy")}
+          {/* Icon-only on mobile (labels would crowd out the direction toggle);
+              the text returns at sm+. */}
+          <Button variant="outline" size="sm" onClick={copyAll} aria-label={t("copy")}>
+            <Copy className="size-3.5" /> <span className="hidden sm:inline">{t("copy")}</span>
           </Button>
-          <Button variant="outline" size="sm" onClick={() => setValue("")}>
-            <Trash2 className="size-3.5" /> {t("clear")}
+          <Button variant="outline" size="sm" onClick={() => setValue("")} aria-label={t("clear")}>
+            <Trash2 className="size-3.5" /> <span className="hidden sm:inline">{t("clear")}</span>
           </Button>
         </div>
       </div>

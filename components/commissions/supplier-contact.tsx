@@ -25,6 +25,17 @@ import {
   DialogDescription,
   DialogFooter,
 } from "@/components/ui/dialog";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
@@ -396,12 +407,29 @@ function ContactEditRow({
           />
           {t("active")}
         </label>
-        <button
-          type="button"
-          onClick={onRemove}
-          className="text-xs font-bold text-muted-foreground hover:text-destructive">
-          🗑 {t("remove")}
-        </button>
+        <AlertDialog>
+          <AlertDialogTrigger
+            render={
+              <button
+                type="button"
+                className="text-xs font-bold text-muted-foreground hover:text-destructive"
+              />
+            }>
+            🗑 {t("remove")}
+          </AlertDialogTrigger>
+          <AlertDialogContent size="sm">
+            <AlertDialogHeader>
+              <AlertDialogTitle>{t("removeConfirmTitle")}</AlertDialogTitle>
+              <AlertDialogDescription>{t("removeConfirmBody")}</AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel>{t("cancel")}</AlertDialogCancel>
+              <AlertDialogAction variant="destructive" onClick={onRemove}>
+                {t("remove")}
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
       </div>
       <Field label={t("type")}>
         <select

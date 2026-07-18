@@ -585,6 +585,8 @@
       "save": "Save",
       "cancel": "Cancel",
       "remove": "Remove",
+      "removeConfirmTitle": "Delete this contact?",
+      "removeConfirmBody": "The contact details will be removed from the list. The change is saved only after you click \"Save\".",
       "copy": "Copy",
       "copied": "Copied",
       "saveError": "Saving failed — please try again",
