@@ -708,6 +708,17 @@
       "outsideCenter": "מחוץ למרכז",
       "clear": "נקה סינונים"
     },
+    "roomFilter": {
+      "label": "מסנני חדרים",
+      "size": "גודל חדר",
+      "sizeRange": "{min}–{max} מ״ר",
+      "unit": "מ״ר",
+      "min": "מינ׳",
+      "max": "מקס׳",
+      "balcony": "מרפסת",
+      "ac": "מיזוג",
+      "minibar": "מיני-בר"
+    },
     "view": {
       "list": "תצוגת רשימה",
       "grid": "תצוגת רשת"
@@ -752,6 +763,7 @@
       "rooms": "סוגי חדרים",
       "size": "גודל",
       "sizeUnknown": "לא ידוע — יש להשלים",
+      "filteredRooms": "{shown} מתוך {total} תואמים לסינון",
       "noRooms": "אין מידע על סוגי חדרים כרגע",
       "updateManually": "✏️ לעדכון פרטי חדר — יש להזין ידנית במערכת",
       "viewPhotos": "צפייה בתמונות החדר ({count})",

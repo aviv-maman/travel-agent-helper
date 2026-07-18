@@ -7,6 +7,7 @@ import type {
 } from "@/db/schema";
 import type { Locale } from "@/i18n/config";
 import { buildCurrencyLine, getIlsRatesWithMeta, toIls, type IlsRates } from "./money";
+import { emptyRoomFilter, hotelHasMatchingRoom, type RoomFilter } from "./room-filter";
 import { smartNormalize, smartScore } from "./search";
 
 /**
@@ -315,6 +316,8 @@ export async function getDestinationView(
     tags?: HotelTagValue[];
     boards?: BoardCode[];
     features?: HotelFeatureValue[];
+    /** Room-level filter — hides hotels with no room matching it. */
+    roomFilter?: RoomFilter;
     /** Free-text hotel-name query (smart, Hebrew-aware). */
     q?: string;
     sort?: SortMode;
@@ -326,6 +329,7 @@ export async function getDestinationView(
   const tags = opts.tags ?? [];
   const boards = opts.boards ?? [];
   const features = opts.features ?? [];
+  const roomFilter = opts.roomFilter ?? emptyRoomFilter();
   const query = (opts.q ?? "").trim();
   const sort = opts.sort ?? "default";
   const perPage = opts.perPage && opts.perPage > 0 ? opts.perPage : DEFAULT_PER_PAGE;
@@ -335,12 +339,14 @@ export async function getDestinationView(
   if (!d) return null;
   const { rates, fetchedAt: ratesFetchedAt } = await getIlsRatesWithMeta();
 
-  // amenities AND; tags / boards each OR within themselves.
+  // amenities AND; tags / boards each OR within themselves; room filter keeps
+  // only hotels with at least one room matching it.
   const baseFiltered = d.hotels.filter(
     (h) =>
       features.every((f) => h.features.includes(f)) &&
       (tags.length === 0 || tags.some((t) => h.tags.includes(t))) &&
-      (boards.length === 0 || boards.some((b) => h.boards.includes(b))),
+      (boards.length === 0 || boards.some((b) => h.boards.includes(b))) &&
+      hotelHasMatchingRoom(h.rooms, roomFilter),
   );
 
   // Autocomplete suggestions reflect the current filter context (not the name

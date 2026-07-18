@@ -6,6 +6,7 @@ import type { ViewLandmark, SortMode } from "@/lib/hotels";
 import { Button } from "@/components/ui/button";
 import { Toggle } from "@/components/ui/toggle";
 import { useHotelParams } from "./use-hotel-params";
+import { RoomFilters } from "./room-filters";
 
 const TAGS: { value: HotelTagValue; emoji: string }[] = [
   { value: "kosher", emoji: "✡️" },
@@ -42,12 +43,29 @@ const chipClass =
 
 export function HotelFilters({ landmarks }: { landmarks: ViewLandmark[] }) {
   const t = useTranslations("hotels");
-  const { tags, boards, features, sort, update } = useHotelParams();
+  const { tags, boards, features, roomMinSize, roomMaxSize, roomAmenities, sort, update } =
+    useHotelParams();
 
   const toggle = <T,>(list: T[], v: T) =>
     list.includes(v) ? list.filter((x) => x !== v) : [...list, v];
 
-  const hasFilters = tags.length > 0 || boards.length > 0 || features.length > 0;
+  const hasFilters =
+    tags.length > 0 ||
+    boards.length > 0 ||
+    features.length > 0 ||
+    roomMinSize != null ||
+    roomMaxSize != null ||
+    roomAmenities.length > 0;
+
+  const clearAll = () =>
+    update({
+      tags: [],
+      boards: [],
+      features: [],
+      roomMinSize: null,
+      roomMaxSize: null,
+      roomAmenities: [],
+    });
 
   return (
     <div className="flex flex-col gap-3">
@@ -87,7 +105,7 @@ export function HotelFilters({ landmarks }: { landmarks: ViewLandmark[] }) {
           <span className="text-sm font-bold">{t("filter.filtersLabel")}</span>
           <Button
             variant="destructive"
-            onClick={() => update({ tags: [], boards: [], features: [] })}
+            onClick={clearAll}
             aria-hidden={!hasFilters}
             tabIndex={hasFilters ? undefined : -1}
             className={hasFilters ? undefined : "invisible"}>
@@ -140,6 +158,9 @@ export function HotelFilters({ landmarks }: { landmarks: ViewLandmark[] }) {
           ))}
         </div>
       </div>
+
+      {/* Room filters */}
+      <RoomFilters />
     </div>
   );
 }

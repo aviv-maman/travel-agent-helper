@@ -5,6 +5,7 @@ import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 import type { HotelFeatureValue, HotelTagValue, BoardCode } from "@/db/schema";
 import { can } from "@/lib/auth";
 import { getDestinationsList, getDestinationView, type SortMode } from "@/lib/hotels";
+import { parseRoomAmenities, parseSize } from "@/lib/room-filter";
 import { DestinationCombobox } from "@/components/hotels/destination-combobox";
 import { HotelFilters } from "@/components/hotels/hotel-filters";
 import { HotelSearch } from "@/components/hotels/hotel-search";
@@ -39,6 +40,11 @@ export default async function HotelsPage({
   const sort = (asString(sp.sort) ?? "default") as SortMode;
   const page = Math.max(1, Number(asString(sp.page) ?? "1") || 1);
   const perPage = Math.max(0, Number(asString(sp.perPage) ?? "0") || 0);
+  const roomFilter = {
+    minSize: parseSize(asString(sp.rmin)),
+    maxSize: parseSize(asString(sp.rmax)),
+    amenities: parseRoomAmenities(asString(sp.ramen)),
+  };
 
   const [destinations, canEdit] = await Promise.all([
     getDestinationsList(locale),
@@ -50,6 +56,7 @@ export default async function HotelsPage({
         tags,
         boards,
         features,
+        roomFilter,
         q,
         sort,
         page,
