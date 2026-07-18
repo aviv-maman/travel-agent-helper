@@ -743,6 +743,7 @@
       "sizeUnknown": "Unknown — to be completed",
       "noRooms": "No room information yet",
       "updateManually": "✏️ To update room details — enter them manually in the system",
+      "viewPhotos": "View room photos ({count})",
       "close": "Close"
     },
     "city": {

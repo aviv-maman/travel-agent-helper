@@ -176,9 +176,11 @@ export const hotelDistances = pgTable(
 );
 
 /** Room types per hotel — filled by scripts/enrich-hotels-rooms.ts (Booking
- * catalog data), the gaps manually. Facilities/photo also come from Booking:
+ * catalog data), the gaps manually. Facilities/photos also come from Booking:
  * facilities are its compact per-room highlight chips (English, e.g.
- * "Minibar", "City view"); photoUrl is a cf.bstatic.com image (pilot). */
+ * "Minibar", "City view"); `photos` are cf.bstatic.com image URLs (the modal
+ * shows photos[0] as the cover and opens the rest in a carousel). `photoUrl`
+ * is the legacy single-cover column, kept === photos[0] for back-compat. */
 export const rooms = pgTable(
   "rooms",
   {
@@ -192,6 +194,7 @@ export const rooms = pgTable(
     occupancy: jsonb("occupancy").$type<Localized>(),
     facilities: jsonb("facilities").$type<string[]>(),
     photoUrl: text("photo_url"),
+    photos: jsonb("photos").$type<string[]>(),
     sortOrder: integer("sort_order").notNull().default(0),
   },
   (t) => [index("rooms_hotel_idx").on(t.hotelId)],

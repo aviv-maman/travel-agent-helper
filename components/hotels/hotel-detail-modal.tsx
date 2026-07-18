@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/dialog";
 import { Badge } from "@/components/ui/badge";
 import { BookingScore } from "./booking-score";
+import { RoomPhotos } from "./room-photos";
 
 /** The room facilities worth surfacing (admin's list, 2026-07-18): minibar,
  * air conditioning, balcony/terrace, bath/shower. The DB stores Booking's full
@@ -99,20 +100,7 @@ export function HotelDetailModal({
                           </div>
                         )}
                       </div>
-                      {r.photoUrl && (
-                        // A small storage asset on Booking's CDN — plain <img>
-                        // (no next/image loader config), hidden if it breaks.
-                        // eslint-disable-next-line @next/next/no-img-element
-                        <img
-                          src={r.photoUrl}
-                          alt={r.name}
-                          loading="lazy"
-                          className="h-16 w-24 shrink-0 rounded-md object-cover"
-                          onError={(e) => {
-                            (e.target as HTMLImageElement).style.display = "none";
-                          }}
-                        />
-                      )}
+                      <RoomPhotos photos={r.photos} name={r.name} />
                     </li>
                   ))}
                 </ul>
