@@ -711,6 +711,7 @@
     "roomFilter": {
       "label": "Room filters",
       "size": "Room size",
+      "unit": "Sqm",
       "min": "Min",
       "max": "Max",
       "balcony": "Balcony",

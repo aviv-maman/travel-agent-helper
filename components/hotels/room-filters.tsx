@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import {
   ROOM_SIZE_MAX,
   ROOM_SIZE_STEP,
@@ -50,8 +50,57 @@ function SizeSlider({
   );
 }
 
+/** A manual size input with its unit. The unit sits so the number reads on its
+ *  right — before the box in Hebrew ("מ״ר 50"), after it in English ("50 Sqm").
+ *  Remounted via `key` so it tracks the URL value. */
+function SizeBox({
+  id,
+  label,
+  value,
+  placeholder,
+  unit,
+  isHe,
+  alignEnd,
+  onCommit,
+}: {
+  id: string;
+  label: string;
+  value: number | null;
+  placeholder: string;
+  unit: string;
+  isHe: boolean;
+  alignEnd?: boolean;
+  onCommit: (_v: number | null) => void;
+}) {
+  const unitEl = <span className="text-xs text-muted-foreground">{unit}</span>;
+  return (
+    <div className={`flex flex-col gap-0.5 ${alignEnd ? "items-end" : ""}`}>
+      <label className="text-xs text-muted-foreground" htmlFor={id}>
+        {label}
+      </label>
+      <div className="flex items-center gap-1.5">
+        {isHe && unitEl}
+        <input
+          id={id}
+          key={`${id}-${value ?? ""}`}
+          type="number"
+          inputMode="numeric"
+          min={0}
+          defaultValue={value ?? ""}
+          placeholder={placeholder}
+          onBlur={(e) => onCommit(parseSize(e.currentTarget.value))}
+          onKeyDown={(e) => e.key === "Enter" && e.currentTarget.blur()}
+          className="h-8 w-20 rounded-md border border-input bg-surface px-2 text-sm outline-none focus:border-ring focus:ring-2 focus:ring-ring/40"
+        />
+        {!isHe && unitEl}
+      </div>
+    </div>
+  );
+}
+
 export function RoomFilters() {
   const t = useTranslations("hotels.roomFilter");
+  const isHe = useLocale() === "he";
   const { roomMinSize, roomMaxSize, roomAmenities, update } = useHotelParams();
 
   const displayMin = roomMinSize ?? 0;
@@ -103,38 +152,25 @@ export function RoomFilters() {
             <SizeSlider key={sliderKey} min={displayMin} max={displayMax} onCommit={commitSize} />
             {/* Min under the slider's left end, max under its right end. */}
             <div className="flex items-start justify-between gap-4">
-              <div className="flex flex-col gap-0.5">
-                <label className="text-xs text-muted-foreground" htmlFor="room-size-min">
-                  {t("min")}
-                </label>
-                <input
-                  id="room-size-min"
-                  key={`min-${roomMinSize ?? ""}`}
-                  type="number"
-                  inputMode="numeric"
-                  min={0}
-                  defaultValue={roomMinSize ?? ""}
-                  onBlur={(e) => update({ roomMinSize: parseSize(e.currentTarget.value) })}
-                  onKeyDown={(e) => e.key === "Enter" && e.currentTarget.blur()}
-                  className="h-8 w-24 rounded-md border border-input bg-surface px-2 text-sm outline-none focus:border-ring focus:ring-2 focus:ring-ring/40"
-                />
-              </div>
-              <div className="flex flex-col items-end gap-0.5">
-                <label className="text-xs text-muted-foreground" htmlFor="room-size-max">
-                  {t("max")}
-                </label>
-                <input
-                  id="room-size-max"
-                  key={`max-${roomMaxSize ?? ""}`}
-                  type="number"
-                  inputMode="numeric"
-                  min={0}
-                  defaultValue={roomMaxSize ?? ""}
-                  onBlur={(e) => update({ roomMaxSize: parseSize(e.currentTarget.value) })}
-                  onKeyDown={(e) => e.key === "Enter" && e.currentTarget.blur()}
-                  className="h-8 w-24 rounded-md border border-input bg-surface px-2 text-sm outline-none focus:border-ring focus:ring-2 focus:ring-ring/40"
-                />
-              </div>
+              <SizeBox
+                id="room-size-min"
+                label={t("min")}
+                value={roomMinSize}
+                placeholder="5"
+                unit={t("unit")}
+                isHe={isHe}
+                onCommit={(v) => update({ roomMinSize: v })}
+              />
+              <SizeBox
+                id="room-size-max"
+                label={t("max")}
+                value={roomMaxSize}
+                placeholder="300"
+                unit={t("unit")}
+                isHe={isHe}
+                alignEnd
+                onCommit={(v) => update({ roomMaxSize: v })}
+              />
             </div>
           </div>
         </DirectionProvider>
