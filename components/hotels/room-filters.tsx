@@ -8,6 +8,7 @@ import {
   parseSize,
   type RoomAmenity,
 } from "@/lib/room-filter";
+import { Button } from "@/components/ui/button";
 import { DirectionProvider } from "@/components/ui/direction";
 import { Slider } from "@/components/ui/slider";
 import { Toggle } from "@/components/ui/toggle";
@@ -71,13 +72,28 @@ export function RoomFilters() {
         : [...roomAmenities, v],
     });
 
+  const hasFilters = roomMinSize != null || roomMaxSize != null || roomAmenities.length > 0;
+  const clearAll = () =>
+    update({ roomMinSize: null, roomMaxSize: null, roomAmenities: [] });
+
   // Value shown in the top-right of the size row, e.g. "30–100+ m²".
   const maxLabel = roomMaxSize == null ? `${ROOM_SIZE_MAX}+` : String(roomMaxSize);
   const rangeLabel = t("sizeRange", { min: roomMinSize ?? 0, max: maxLabel });
 
   return (
     <div className="flex flex-col gap-3 rounded-lg border border-border bg-brand/5 px-3 py-3">
-      <span className="text-sm font-bold">🛏 {t("label")}</span>
+      <div className="flex flex-wrap items-center justify-between gap-2">
+        <span className="text-sm font-bold">🛏 {t("label")}</span>
+        {/* Same slot/behavior as the general filters' clear button. */}
+        <Button
+          variant="destructive"
+          onClick={clearAll}
+          aria-hidden={!hasFilters}
+          tabIndex={hasFilters ? undefined : -1}
+          className={hasFilters ? undefined : "invisible"}>
+          ✕ {t("clear")}
+        </Button>
+      </div>
 
       {/* Room size: slider + optional manual min/max boxes */}
       <div className="flex flex-col gap-2">
@@ -94,40 +110,47 @@ export function RoomFilters() {
         <DirectionProvider direction="ltr">
           <div dir="ltr" className="flex w-2/5 min-w-56 flex-col gap-2 self-start">
             <SizeSlider key={sliderKey} min={displayMin} max={displayMax} onCommit={commitSize} />
-            <div className="flex items-center gap-2">
-              <input
-                key={`min-${roomMinSize ?? ""}`}
-                type="number"
-                inputMode="numeric"
-                min={0}
-                defaultValue={roomMinSize ?? ""}
-                placeholder={t("min")}
-                aria-label={t("min")}
-                onBlur={(e) => update({ roomMinSize: parseSize(e.currentTarget.value) })}
-                onKeyDown={(e) => e.key === "Enter" && e.currentTarget.blur()}
-                className="h-8 w-24 rounded-md border border-input bg-surface px-2 text-sm outline-none focus:border-ring focus:ring-2 focus:ring-ring/40"
-              />
-              <span className="text-muted-foreground">–</span>
-              <input
-                key={`max-${roomMaxSize ?? ""}`}
-                type="number"
-                inputMode="numeric"
-                min={0}
-                defaultValue={roomMaxSize ?? ""}
-                placeholder={t("max")}
-                aria-label={t("max")}
-                onBlur={(e) => update({ roomMaxSize: parseSize(e.currentTarget.value) })}
-                onKeyDown={(e) => e.key === "Enter" && e.currentTarget.blur()}
-                className="h-8 w-24 rounded-md border border-input bg-surface px-2 text-sm outline-none focus:border-ring focus:ring-2 focus:ring-ring/40"
-              />
-              <span className="text-xs text-muted-foreground">{t("unit")}</span>
+            {/* Min under the slider's left end, max under its right end. */}
+            <div className="flex items-start justify-between gap-4">
+              <div className="flex flex-col gap-0.5">
+                <label className="text-xs text-muted-foreground" htmlFor="room-size-min">
+                  {t("min")}
+                </label>
+                <input
+                  id="room-size-min"
+                  key={`min-${roomMinSize ?? ""}`}
+                  type="number"
+                  inputMode="numeric"
+                  min={0}
+                  defaultValue={roomMinSize ?? ""}
+                  onBlur={(e) => update({ roomMinSize: parseSize(e.currentTarget.value) })}
+                  onKeyDown={(e) => e.key === "Enter" && e.currentTarget.blur()}
+                  className="h-8 w-24 rounded-md border border-input bg-surface px-2 text-sm outline-none focus:border-ring focus:ring-2 focus:ring-ring/40"
+                />
+              </div>
+              <div className="flex flex-col items-end gap-0.5">
+                <label className="text-xs text-muted-foreground" htmlFor="room-size-max">
+                  {t("max")}
+                </label>
+                <input
+                  id="room-size-max"
+                  key={`max-${roomMaxSize ?? ""}`}
+                  type="number"
+                  inputMode="numeric"
+                  min={0}
+                  defaultValue={roomMaxSize ?? ""}
+                  onBlur={(e) => update({ roomMaxSize: parseSize(e.currentTarget.value) })}
+                  onKeyDown={(e) => e.key === "Enter" && e.currentTarget.blur()}
+                  className="h-8 w-24 rounded-md border border-input bg-surface px-2 text-sm outline-none focus:border-ring focus:ring-2 focus:ring-ring/40"
+                />
+              </div>
             </div>
           </div>
         </DirectionProvider>
       </div>
 
       {/* Amenities the room must have */}
-      <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
+      <div className="mt-2 flex flex-wrap items-center gap-1.5 sm:gap-2">
         {AMENITIES.map((a) => (
           <Toggle
             key={a.value}

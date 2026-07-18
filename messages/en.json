@@ -717,7 +717,8 @@
       "max": "Max",
       "balcony": "Balcony",
       "ac": "Air conditioning",
-      "minibar": "Minibar"
+      "minibar": "Minibar",
+      "clear": "Clear room filters"
     },
     "view": {
       "list": "List view",
