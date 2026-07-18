@@ -204,7 +204,7 @@ export function HotelCard({
           aria-label={`Booking.com ${score}`}
           className="inline-flex items-center gap-1 rounded-md bg-success/10 px-1.5 py-0.5 text-xs font-bold text-success">
           <span dir="ltr">{score}</span>
-          <BookingIcon className="size-3.5 shrink-0" />
+          <BookingIcon className="size-4.5 shrink-0" />
         </span>
       )}
       {canEditScore && (
@@ -235,7 +235,8 @@ export function HotelCard({
   );
 
   const actions = (hotel.googleMapsUrl || hotel.bookingUrl || hotel.websiteUrl) && (
-    <div className="flex w-full flex-col gap-2 sm:w-fit">
+    // Full-width link rows on the grid card (admin request 2026-07-18).
+    <div className="flex w-full flex-col gap-2">
       {hotel.googleMapsUrl && (
         <ButtonGroup className="w-full">
           <Button
@@ -277,7 +278,7 @@ export function HotelCard({
             render={<a href={hotel.websiteUrl} target="_blank" rel="noreferrer" />}>
             <ExternalLinkIcon className="size-3.5" />
             {t("card.website")}
-            <Globe className="size-3.5 text-brand" />
+            <Globe className="size-3.5" />
           </Button>
           <CopyLinkButton url={hotel.websiteUrl} className="size-8 shrink-0" />
         </ButtonGroup>
@@ -356,7 +357,7 @@ export function HotelCard({
               render={<a href={hotel.websiteUrl} target="_blank" rel="noreferrer" />}>
               <ExternalLinkIcon className="size-3.5" />
               {t("card.website")}
-              <Globe className="size-3.5 text-brand" />
+              <Globe className="size-3.5" />
             </Button>
             <CopyLinkButton url={hotel.websiteUrl} className="size-8 shrink-0" />
           </ButtonGroup>
