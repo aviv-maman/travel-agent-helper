@@ -9,8 +9,6 @@ import {
   DialogTitle,
   DialogDescription,
 } from "@/components/ui/dialog";
-import { Badge } from "@/components/ui/badge";
-import { BookingScore } from "./booking-score";
 import { RoomPhotos } from "./room-photos";
 
 /** The room facilities worth surfacing (admin's list, 2026-07-18): minibar,
@@ -44,17 +42,13 @@ export function HotelDetailModal({
                 <span aria-hidden>🏨</span> {hotel.name}
               </DialogTitle>
               <DialogDescription className="flex flex-wrap items-center gap-2 pt-1">
+                {/* Rooms view: only the stars by the name — no board basis or
+                    Booking rating (admin request 2026-07-18). */}
                 {hotel.stars != null && (
                   <span className="text-gold" aria-hidden>
                     {"★".repeat(hotel.stars)}
                   </span>
                 )}
-                {hotel.boards.map((b) => (
-                  <Badge key={b} variant="secondary" className="text-xs">
-                    {t(`board.${b}`)}
-                  </Badge>
-                ))}
-                {hotel.bookingScore != null && <BookingScore score={hotel.bookingScore} />}
               </DialogDescription>
             </DialogHeader>
 
