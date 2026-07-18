@@ -3,8 +3,9 @@
  * destinations in data/destinations/ (built by the add-destination skill).
  * Idempotent: destinations/landmarks are upserted; a destination's hotels are
  * replaced wholesale on each run (cascades clean up features/distances) —
- * except the Google Places enrichment columns, which are snapshotted by hotel
- * name and re-applied (they're DB-managed, never part of the seed JSON).
+ * except the DB-managed enrichments, which are snapshotted by hotel name and
+ * re-applied: the Google Places columns and the `rooms` rows (filled by
+ * scripts/enrich-hotels-{places,rooms}.ts, never part of the seed JSON).
  *
  * Run with: `bun run seed` (Bun auto-loads .env.local).
  */
@@ -96,6 +97,31 @@ async function main() {
         .map(({ name, ...fields }) => [name, fields]),
     );
 
+    // Room lists are DB-managed too (scripts/enrich-hotels-rooms.ts) — snapshot
+    // them by hotel name so the wholesale replace below doesn't wipe them. A
+    // snapshot takes precedence over seed-file rooms (the seed arrays are the
+    // pre-enrichment legacy and are kept empty).
+    const roomRows = await db
+      .select({
+        hotelName: hotels.name,
+        name: rooms.name,
+        icon: rooms.icon,
+        sizeSqm: rooms.sizeSqm,
+        occupancy: rooms.occupancy,
+        facilities: rooms.facilities,
+        photoUrl: rooms.photoUrl,
+        sortOrder: rooms.sortOrder,
+      })
+      .from(rooms)
+      .innerJoin(hotels, eq(rooms.hotelId, hotels.id))
+      .where(eq(hotels.destinationId, dest.id));
+    const savedRooms = new Map<string, Omit<(typeof roomRows)[number], "hotelName">[]>();
+    for (const { hotelName, ...r } of roomRows) {
+      const list = savedRooms.get(hotelName) ?? [];
+      list.push(r);
+      savedRooms.set(hotelName, list);
+    }
+
     // Replace hotels for this destination (cascade removes old features/distances).
     await db.delete(hotels).where(eq(hotels.destinationId, dest.id));
 
@@ -138,14 +164,17 @@ async function main() {
         }));
       if (dists.length) await db.insert(hotelDistances).values(dists);
 
-      if (h.rooms.length) {
+      const hotelRooms = savedRooms.get(h.name) ?? h.rooms;
+      if (hotelRooms.length) {
         await db.insert(rooms).values(
-          h.rooms.map((r) => ({
+          hotelRooms.map((r) => ({
             hotelId: hotel.id,
             name: r.name,
             icon: r.icon,
             sizeSqm: r.sizeSqm,
             occupancy: r.occupancy,
+            facilities: r.facilities ?? null,
+            photoUrl: r.photoUrl ?? null,
             sortOrder: r.sortOrder,
           })),
         );

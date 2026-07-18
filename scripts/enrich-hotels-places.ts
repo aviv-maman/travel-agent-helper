@@ -29,7 +29,7 @@ const { hotels, destinations } = schema;
 
 const args = process.argv.slice(2);
 const force = args.includes("--all");
-const destIata = args[args.indexOf("--dest") + 1]?.toUpperCase();
+const destIata = args.includes("--dest") ? args[args.indexOf("--dest") + 1]?.toUpperCase() : undefined;
 if (args.includes("--dest") && !/^[A-Z]{3}$/.test(destIata ?? "")) {
   throw new Error("--dest expects a 3-letter IATA code, e.g. --dest BUS");
 }
