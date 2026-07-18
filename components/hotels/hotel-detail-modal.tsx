@@ -38,17 +38,20 @@ export function HotelDetailModal({
         {hotel && (
           <>
             <DialogHeader>
+              {/* Rooms view: stars inline with the name (no board basis or
+                  Booking rating), sitting to its left in RTL. */}
               <DialogTitle className="flex items-center gap-2 text-lg">
-                <span aria-hidden>🏨</span> {hotel.name}
-              </DialogTitle>
-              <DialogDescription className="flex flex-wrap items-center gap-2 pt-1">
-                {/* Rooms view: only the stars by the name — no board basis or
-                    Booking rating (admin request 2026-07-18). */}
+                <span aria-hidden>🏨</span>
+                <span>{hotel.name}</span>
                 {hotel.stars != null && (
-                  <span className="text-gold" aria-hidden>
+                  <span className="text-xl text-gold" aria-hidden>
                     {"★".repeat(hotel.stars)}
                   </span>
                 )}
+              </DialogTitle>
+              <DialogDescription className="sr-only">
+                {hotel.name}
+                {hotel.stars != null ? ` — ${hotel.stars}★` : ""}
               </DialogDescription>
             </DialogHeader>
 
