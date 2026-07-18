@@ -29,6 +29,10 @@ export type SeedRoom = {
   icon: string | null;
   sizeSqm: number | null;
   occupancy: Localized | null;
+  /** Booking highlight chips / room photo — DB-managed enrichment; seed files
+   * never carry them (optional so the insert path can pass them through). */
+  facilities?: string[] | null;
+  photoUrl?: string | null;
   sortOrder: number;
 };
 

@@ -197,6 +197,13 @@
       "when": 1784276714309,
       "tag": "0027_polite_bedlam",
       "breakpoints": true
+    },
+    {
+      "idx": 28,
+      "version": "7",
+      "when": 1784336715268,
+      "tag": "0028_rich_scorpion",
+      "breakpoints": true
     }
   ]
 }

@@ -175,7 +175,10 @@ export const hotelDistances = pgTable(
   (t) => [uniqueIndex("hotel_distances_unique").on(t.hotelId, t.landmarkId)],
 );
 
-/** Room types per hotel — sizes are partly populated, the rest filled manually. */
+/** Room types per hotel — filled by scripts/enrich-hotels-rooms.ts (Booking
+ * catalog data), the gaps manually. Facilities/photo also come from Booking:
+ * facilities are its compact per-room highlight chips (English, e.g.
+ * "Minibar", "City view"); photoUrl is a cf.bstatic.com image (pilot). */
 export const rooms = pgTable(
   "rooms",
   {
@@ -187,6 +190,8 @@ export const rooms = pgTable(
     icon: varchar("icon", { length: 16 }),
     sizeSqm: integer("size_sqm"),
     occupancy: jsonb("occupancy").$type<Localized>(),
+    facilities: jsonb("facilities").$type<string[]>(),
+    photoUrl: text("photo_url"),
     sortOrder: integer("sort_order").notNull().default(0),
   },
   (t) => [index("rooms_hotel_idx").on(t.hotelId)],

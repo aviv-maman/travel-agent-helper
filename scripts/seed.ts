@@ -108,6 +108,8 @@ async function main() {
         icon: rooms.icon,
         sizeSqm: rooms.sizeSqm,
         occupancy: rooms.occupancy,
+        facilities: rooms.facilities,
+        photoUrl: rooms.photoUrl,
         sortOrder: rooms.sortOrder,
       })
       .from(rooms)
@@ -171,6 +173,8 @@ async function main() {
             icon: r.icon,
             sizeSqm: r.sizeSqm,
             occupancy: r.occupancy,
+            facilities: r.facilities ?? null,
+            photoUrl: r.photoUrl ?? null,
             sortOrder: r.sortOrder,
           })),
         );

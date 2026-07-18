@@ -40,6 +40,9 @@ export type UIRoom = {
   icon: string | null;
   sizeSqm: number | null;
   occupancy: Localized | null;
+  /** Booking's compact per-room highlight chips (English), e.g. "Minibar". */
+  facilities: string[];
+  photoUrl: string | null;
 };
 
 export type UIHotel = {
@@ -98,6 +101,8 @@ export type ViewRoom = {
   icon: string | null;
   sizeSqm: number | null;
   occupancy: string | null;
+  facilities: string[];
+  photoUrl: string | null;
 };
 export type ViewHotel = {
   id: string;
@@ -221,12 +226,17 @@ function resolveHotel(h: UIHotel, locale: string): ViewHotel {
       walkMinutes: d.walkMinutes,
       rideMinutes: d.rideMinutes,
     })),
-    rooms: h.rooms.map((r) => ({
-      name: r.name,
-      icon: r.icon,
-      sizeSqm: r.sizeSqm,
-      occupancy: localized(r.occupancy, locale) || null,
-    })),
+    // Smallest room first, unknown sizes last (admin request 2026-07-18).
+    rooms: [...h.rooms]
+      .sort((a, b) => (a.sizeSqm ?? Infinity) - (b.sizeSqm ?? Infinity))
+      .map((r) => ({
+        name: r.name,
+        icon: r.icon,
+        sizeSqm: r.sizeSqm,
+        occupancy: localized(r.occupancy, locale) || null,
+        facilities: r.facilities,
+        photoUrl: r.photoUrl,
+      })),
   };
 }
 
@@ -407,6 +417,8 @@ async function loadFromDb(): Promise<UIDestination[]> {
         icon: r.icon,
         sizeSqm: r.sizeSqm,
         occupancy: r.occupancy,
+        facilities: r.facilities ?? [],
+        photoUrl: r.photoUrl,
       })),
     })),
   }));
@@ -459,6 +471,8 @@ async function loadFromSeed(): Promise<UIDestination[]> {
           icon: r.icon,
           sizeSqm: r.sizeSqm,
           occupancy: r.occupancy,
+          facilities: r.facilities ?? [],
+          photoUrl: r.photoUrl ?? null,
         })),
       })),
     };
@@ -495,6 +509,8 @@ type SeedShape = {
       icon: string | null;
       sizeSqm: number | null;
       occupancy: Localized | null;
+      facilities?: string[] | null;
+      photoUrl?: string | null;
     }[];
   }[];
 };

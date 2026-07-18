@@ -60,6 +60,21 @@ const resolvedPath = args.includes("--resolved") ? args[args.indexOf("--resolved
 // Repair mode: hotels that end this run unresolved/skipped get their room rows
 // DELETED (used to purge rows a previous bad match wrote; a no-op when empty).
 const clearUnmatched = args.includes("--clear-unmatched");
+// Reprocess a stored Apify dataset instead of starting a paid run — datasets
+// from previous runs persist for days and re-reading them is free.
+const fromDataset = args.includes("--from-dataset")
+  ? args[args.indexOf("--from-dataset") + 1]
+  : null;
+// Room-photo pilot gate: comma-separated slug/name substrings whose hotels get
+// photoUrl stored ("all" = everyone). Facilities are extracted for everyone.
+const photoHotels = args.includes("--photo-hotels")
+  ? (args[args.indexOf("--photo-hotels") + 1] ?? "").toLowerCase().split(",").filter(Boolean)
+  : [];
+function wantsPhotos(t: Target): boolean {
+  if (photoHotels.includes("all")) return true;
+  const hay = `${t.name} ${slugOf(t.propertyUrl) ?? ""}`.toLowerCase();
+  return photoHotels.some((p) => hay.includes(p));
+}
 
 /** hotelId → resolved property URL (score ≥ 0.5 only), from the resolver. */
 async function loadResolved(): Promise<Map<number, { url: string; label: string | null }>> {
@@ -190,7 +205,13 @@ async function awaitRunItems(runId: string, timeoutMin: number): Promise<unknown
 // ── Room extraction (tolerant: actor output fields vary by version) ──────────
 
 type RawRoom = Record<string, unknown>;
-type ExtractedRoom = { name: string; sizeSqm: number | null; persons: number | null };
+type ExtractedRoom = {
+  name: string;
+  sizeSqm: number | null;
+  persons: number | null;
+  facilities: string[] | null;
+  photoUrl: string | null;
+};
 
 function str(v: unknown): string | null {
   return typeof v === "string" && v.trim() ? v.trim() : null;
@@ -222,10 +243,16 @@ function sizeFromStrings(room: RawRoom): number | null {
   return null;
 }
 
-function extractRooms(item: RawRoom): ExtractedRoom[] {
+function extractRooms(item: RawRoom, withPhotos: boolean): ExtractedRoom[] {
   const seen = new Set<string>();
   const out: ExtractedRoom[] = [];
-  const push = (name: string | null, sizeSqm: number | null, persons: number | null) => {
+  const push = (
+    name: string | null,
+    sizeSqm: number | null,
+    persons: number | null,
+    facilities: string[] | null = null,
+    photoUrl: string | null = null,
+  ) => {
     if (!name || out.length >= MAX_ROOMS_PER_HOTEL) return;
     const key = name.toLowerCase().replace(/\s+/g, " ");
     if (seen.has(key)) return;
@@ -234,19 +261,42 @@ function extractRooms(item: RawRoom): ExtractedRoom[] {
       name,
       sizeSqm: sizeSqm !== null ? Math.round(sizeSqm) : null,
       persons: persons !== null ? Math.round(persons) : null,
+      facilities: facilities?.length ? facilities : null,
+      photoUrl,
     });
   };
 
   // Preferred: the full room catalog (independent of stay-date availability),
-  // with sizes already in m² — probed live on a real property page.
+  // with sizes already in m² — probed live on a real property page. Its sibling
+  // highlightsForAllRooms carries Booking's compact per-room facility chips
+  // ("Minibar", "City view", …), joined by room id; roomPhotos are CDN paths.
   const offerings = item.roomOfferings as RawRoom | undefined;
-  const property = (offerings?.roomDetail as RawRoom | undefined)?.property as RawRoom | undefined;
+  const roomDetail = offerings?.roomDetail as RawRoom | undefined;
+  const property = roomDetail?.property as RawRoom | undefined;
   const catalog = property?.roomsDetails;
+  const highlightsByRoom = new Map<number, string[]>();
+  for (const h of (Array.isArray(roomDetail?.highlightsForAllRooms)
+    ? roomDetail!.highlightsForAllRooms
+    : []) as RawRoom[]) {
+    const id = num(h.roomId);
+    const names = (Array.isArray(h.roomHighlights) ? (h.roomHighlights as RawRoom[]) : [])
+      .map((x) => str(x.name))
+      .filter((n): n is string => n !== null);
+    if (id !== null && names.length) highlightsByRoom.set(id, names.slice(0, 8));
+  }
   if (Array.isArray(catalog)) {
     for (const r of catalog as RawRoom[]) {
       const translations = r.translations as RawRoom | undefined;
       const occupancy = r.occupancy as RawRoom | undefined;
-      push(str(translations?.name), num(r.roomSizeM2), num(occupancy?.maxPersons));
+      const photos = Array.isArray(r.roomPhotos) ? (r.roomPhotos as RawRoom[]) : [];
+      const photoUri = withPhotos ? str(photos[0]?.photoUri) : null;
+      push(
+        str(translations?.name),
+        num(r.roomSizeM2),
+        num(occupancy?.maxPersons),
+        highlightsByRoom.get(num(r.id) ?? -1) ?? null,
+        photoUri ? `https://cf.bstatic.com${photoUri}` : null,
+      );
     }
   }
   if (out.length) return out;
@@ -312,8 +362,10 @@ async function writeRooms(target: Target, extracted: ExtractedRoom[]): Promise<v
   // Replace-all semantics: this run is the authoritative source per hotel.
   await db.delete(rooms).where(eq(rooms.hotelId, target.id));
   if (!extracted.length) return;
+  // sortOrder = smallest room first (admin request); unknown sizes go last.
+  const bySize = [...extracted].sort((a, b) => (a.sizeSqm ?? Infinity) - (b.sizeSqm ?? Infinity));
   await db.insert(rooms).values(
-    extracted.map((r, i) => {
+    bySize.map((r, i) => {
       const { occ, icon } = occupancyOf(r.persons, r.name);
       return {
         hotelId: target.id,
@@ -321,6 +373,8 @@ async function writeRooms(target: Target, extracted: ExtractedRoom[]): Promise<v
         icon,
         sizeSqm: r.sizeSqm,
         occupancy: occ,
+        facilities: r.facilities,
+        photoUrl: r.photoUrl,
         sortOrder: i,
       };
     }),
@@ -356,10 +410,12 @@ async function main() {
   console.log(
     `Targets: ${targets.length} hotels — ${direct.length} with property URLs → 1 batch run` +
       `${unresolved.length ? `, ${unresolved.length} UNRESOLVED (need the Playwright resolver + --resolved)` : ""}. ` +
-      `Estimated cost ≈ $${(direct.length * COST_PER_HOTEL_USD).toFixed(2)}.`,
+      (fromDataset
+        ? `Reprocessing stored dataset ${fromDataset} — no charges.`
+        : `Estimated cost ≈ $${(direct.length * COST_PER_HOTEL_USD).toFixed(2)}.`),
   );
   if (!targets.length) return;
-  if (!confirmed) {
+  if (!confirmed && !fromDataset) {
     console.log("\nDry run (no charges made). Re-run with --yes to start the Apify runs.");
     return;
   }
@@ -367,17 +423,26 @@ async function main() {
   const report: Report[] = [];
   const stay = stayInput();
 
-  // 1) One batched run for every hotel with a direct property URL.
+  // 1) One batched run for every hotel with a direct property URL — or, with
+  //    --from-dataset, the already-scraped items of a previous run (free).
   if (direct.length) {
-    console.log(`\nStarting batch run for ${direct.length} property URLs…`);
-    const runId = await startRun({
-      startUrls: direct.map((t) => ({ url: t.propertyUrl })),
-      maxItems: direct.length,
-      ...stay,
-    });
-    console.log(`  run ${runId} — polling`);
-    const items = (await awaitRunItems(runId, 45)) as RawRoom[];
-    console.log(`  run done: ${items.length} items`);
+    let items: RawRoom[];
+    if (fromDataset) {
+      const res = await fetch(`${API}/datasets/${fromDataset}/items?token=${TOKEN}&clean=true`);
+      if (!res.ok) throw new Error(`dataset ${fromDataset}: ${res.status}`);
+      items = (await res.json()) as RawRoom[];
+      console.log(`\nLoaded ${items.length} stored items from dataset ${fromDataset}`);
+    } else {
+      console.log(`\nStarting batch run for ${direct.length} property URLs…`);
+      const runId = await startRun({
+        startUrls: direct.map((t) => ({ url: t.propertyUrl })),
+        maxItems: direct.length,
+        ...stay,
+      });
+      console.log(`  run ${runId} — polling`);
+      items = (await awaitRunItems(runId, 45)) as RawRoom[];
+      console.log(`  run done: ${items.length} items`);
+    }
 
     const bySlug = new Map<string, RawRoom>();
     for (const item of items) {
@@ -401,7 +466,7 @@ async function main() {
         console.log(`  ⚠ ${t.name} ≠ ${matchedName}: skipped${clearUnmatched ? ", rows cleared" : ", nothing written"}`);
         continue;
       }
-      const extracted = extractRooms(item);
+      const extracted = extractRooms(item, wantsPhotos(t));
       await writeRooms(t, extracted);
       report.push({
         dest: t.dest,
