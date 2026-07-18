@@ -198,13 +198,13 @@ export function HotelCard({
       )}
       {/* Booking chip + its edit pencil stay adjacent (the pencil is last, so
           on RTL it's the leftmost item — right next to the Booking score).
-          Logo instead of the word, mirroring the Google chip. */}
+          Booking's own badge look: solid brand-blue box, white score. */}
       {score != null && (
         <span
           aria-label={`Booking.com ${score}`}
-          className="inline-flex items-center gap-1 rounded-md bg-success/10 px-1.5 py-0.5 text-xs font-bold text-success">
+          className="inline-flex items-center gap-1 rounded-md bg-[#003b95] px-1.5 py-0.5 text-xs font-bold text-white">
+          <BookingIcon className="size-4 shrink-0" />
           <span dir="ltr">{score}</span>
-          <BookingIcon className="size-4.5 shrink-0" />
         </span>
       )}
       {canEditScore && (

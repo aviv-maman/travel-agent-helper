@@ -56,9 +56,9 @@ export function HotelDetailModal({
                 {hotel.bookingScore != null && (
                   <span
                     aria-label={`Booking.com ${hotel.bookingScore}`}
-                    className="inline-flex items-center gap-1 font-bold text-success">
+                    className="inline-flex items-center gap-1 rounded-md bg-[#003b95] px-1.5 py-0.5 text-xs font-bold text-white">
+                    <BookingIcon className="size-4 shrink-0" />
                     <span dir="ltr">{hotel.bookingScore}</span>
-                    <BookingIcon className="size-4.5 shrink-0" />
                   </span>
                 )}
               </DialogDescription>
