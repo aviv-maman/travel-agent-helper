@@ -12,13 +12,13 @@ import { todayInJerusalem } from "./dashboard/dates";
 
 test("example 1: the 14-day window binds when departure is far off", () => {
   const r = cancellationDeadline("2026-09-01", "2026-07-17")!;
-  expect(formatDeadline(r.deadline)).toBe("31/07/2026");
+  expect(formatDeadline(r.deadline!)).toBe("31/07/2026");
   expect(r.limitedBy).toBe("fourteenDays");
 });
 
 test("example 2: the 7-business-day rule binds when departure is close", () => {
   const r = cancellationDeadline("2026-07-27", "2026-07-17")!;
-  expect(formatDeadline(r.deadline)).toBe("17/07/2026");
+  expect(formatDeadline(r.deadline!)).toBe("17/07/2026");
   expect(r.limitedBy).toBe("businessDays");
   // The booking day itself still leaves 8 business days; the next day leaves 7,
   // which is what makes 17/07 the last eligible date rather than 18/07.
@@ -118,26 +118,34 @@ test("holidays before departure pull the deadline earlier", () => {
   // business day back lands further from departure than a plain weekday count.
   const r = cancellationDeadline("2026-10-05", "2026-09-20")!;
   expect(r.limitedBy).toBe("businessDays");
-  expect(businessDaysUntil(r.deadline, "2026-10-05")).toBe(8);
+  expect(businessDaysUntil(r.deadline!, "2026-10-05")).toBe(8);
   // One day later must drop to exactly 7 — the boundary the law turns off at.
-  const next = new Date(`${r.deadline}T12:00:00Z`);
+  const next = new Date(`${r.deadline!}T12:00:00Z`);
   next.setUTCDate(next.getUTCDate() + 1);
   expect(businessDaysUntil(next.toISOString().slice(0, 10), "2026-10-05")).toBe(7);
 });
 
-test("a departure too close to book leaves only the booking date", () => {
+test("a departure too close to book is NOT cancelable under the law", () => {
+  // 5 calendar days out: even on the booking day fewer than 8 business days
+  // remain, so the >7 rule is never met — no eligible day, not "booking day".
   const r = cancellationDeadline("2026-07-22", "2026-07-17")!;
-  expect(formatDeadline(r.deadline)).toBe("17/07/2026");
-  expect(r.limitedBy).toBe("bookingDate");
-  // The law genuinely does not protect this booking — fewer than 8 business
-  // days remain even on day one.
+  expect(r.limitedBy).toBe("none");
+  expect(r.deadline).toBeNull();
   expect(businessDaysUntil("2026-07-17", "2026-07-22")).toBeLessThan(8);
+});
+
+test("7 calendar days out (the reported case) is not cancelable", () => {
+  // Booking 18/07, departure 25/07 — the case the admin flagged: it must not
+  // say "cancel today", it must say not cancelable.
+  const r = cancellationDeadline("2026-07-25", "2026-07-18")!;
+  expect(r.limitedBy).toBe("none");
+  expect(r.deadline).toBeNull();
 });
 
 test("leap day is an ordinary business day and spans correctly", () => {
   expect(isBusinessDay("2028-02-29")).toBe(true); // Tuesday
   const r = cancellationDeadline("2028-06-01", "2028-02-20")!;
-  expect(formatDeadline(r.deadline)).toBe("05/03/2028"); // 20/02 + 14 crosses 29/02
+  expect(formatDeadline(r.deadline!)).toBe("05/03/2028"); // 20/02 + 14 crosses 29/02
 });
 
 test("departure on or before the booking date has no window", () => {

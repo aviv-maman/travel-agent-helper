@@ -62,21 +62,24 @@ export function formatMeters(m: number | null, locale: string): string | null {
 /** Walks longer than this aren't a realistic option — show the ride time only. */
 const MAX_USEFUL_WALK_MINUTES = 40;
 
-/** Builds the localized "X minutes walking · Y minutes riding" string. */
-export function useTimeLabel() {
+/**
+ * The localized walk / ride pieces for a distance, kept separate so each can be
+ * colored on its own — walking in gold, driving in blue. Always surfaces a
+ * walking time (even for very close spots with no explicit minutes) so the gold
+ * value is never empty; drops the walk only when it's an unrealistically long
+ * hike that a ride time already covers.
+ */
+export function useTimeParts() {
   const t = useTranslations("hotels.card");
-  return (d: ViewDistance): string => {
-    const parts: string[] = [];
+  return (d: ViewDistance): { walk: string | null; ride: string | null } => {
     const walkIsUseful =
       d.walkMinutes != null && (d.walkMinutes <= MAX_USEFUL_WALK_MINUTES || d.rideMinutes == null);
-    if (walkIsUseful) parts.push(t("walk", { minutes: d.walkMinutes! }));
-    if (d.rideMinutes != null) parts.push(t("ride", { minutes: d.rideMinutes }));
-    // Always surface a walking time — even for very close (<100m) spots where the
-    // data has no explicit minutes — so the yellow column is never empty.
-    if (parts.length === 0 && d.meters != null) {
-      parts.push(t("walk", { minutes: Math.max(1, Math.round(d.meters / 80)) }));
+    let walk = walkIsUseful ? t("walk", { minutes: d.walkMinutes! }) : null;
+    const ride = d.rideMinutes != null ? t("ride", { minutes: d.rideMinutes }) : null;
+    if (!walk && !ride && d.meters != null) {
+      walk = t("walk", { minutes: Math.max(1, Math.round(d.meters / 80)) });
     }
-    return parts.join(" · ");
+    return { walk, ride };
   };
 }
 
@@ -93,7 +96,7 @@ export function HotelCard({
 }) {
   const locale = useLocale();
   const t = useTranslations("hotels");
-  const timeLabel = useTimeLabel();
+  const timeParts = useTimeParts();
   const { sort } = useHotelParams();
 
   // Editors can adjust the Booking score inline; the badge reads from local
@@ -298,7 +301,16 @@ export function HotelCard({
               aria-hidden
               className="min-w-3 flex-1 translate-y-[-0.2em] border-b border-dotted border-muted-foreground/30"
             />
-            <span className="font-bold whitespace-nowrap text-gold">{timeLabel(d)}</span>
+            {(() => {
+              const { walk, ride } = timeParts(d);
+              return (
+                <span className="font-bold whitespace-nowrap">
+                  {walk && <span className="text-gold">{walk}</span>}
+                  {walk && ride && <span className="text-muted-foreground"> · </span>}
+                  {ride && <span className="text-sky-500">{ride}</span>}
+                </span>
+              );
+            })()}
             <span className="w-7 text-[0.68rem] whitespace-nowrap tabular-nums">
               {formatMeters(d.meters, locale)}
             </span>

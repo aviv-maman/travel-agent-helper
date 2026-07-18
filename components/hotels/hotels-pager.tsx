@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/select";
 import { useHotelParams } from "./use-hotel-params";
 
-const PER_PAGE_OPTIONS = [12, 24, 48];
+const PER_PAGE_OPTIONS = [24, 48, 96];
 
 export function HotelsPager({
   total,

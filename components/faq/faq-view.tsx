@@ -6,6 +6,7 @@ import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { Check, Copy, Pencil, Plus, Search, Trash2, X } from "lucide-react";
 import type { Faq } from "@/lib/faq";
+import { toClientDashes } from "@/lib/utils";
 import { deleteFaqAction, saveFaqAction, type FaqInput } from "@/app/actions/faq";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -62,7 +63,7 @@ export function FaqView({ items, canEdit }: { items: Faq[]; canEdit: boolean }) 
     : items;
 
   function copyAnswer(key: string, body: string) {
-    navigator.clipboard.writeText(body).then(
+    navigator.clipboard.writeText(toClientDashes(body)).then(
       () => {
         setCopiedKey(key);
         setTimeout(() => setCopiedKey((k) => (k === key ? null : k)), 1500);

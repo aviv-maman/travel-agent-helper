@@ -110,17 +110,18 @@ function nthBusinessDayBefore(departure: string, n: number): string {
   return toIso(d);
 }
 
-/** Which of the two legal limits fixed the deadline. */
-export type DeadlineLimit = "fourteenDays" | "businessDays" | "bookingDate";
+/** Which limit fixed the deadline. "none" = not cancelable under the law at
+ * all (even the booking day already leaves ≤7 business days before departure). */
+export type DeadlineLimit = "fourteenDays" | "businessDays" | "none";
 
 export type DeadlineResult = {
-  /** The answer: last day the customer may cancel under the law, "yyyy-mm-dd". */
-  deadline: string;
+  /** Last day the customer may cancel under the law, "yyyy-mm-dd" — null when
+   * `limitedBy === "none"` (there is no eligible day). */
+  deadline: string | null;
   /** The 14-calendar-day limit (booking + 14). */
   fourteenDayLimit: string;
   /** The last day still leaving more than 7 business days before departure. */
   businessDayLimit: string;
-  /** Which limit bound. "bookingDate" = neither is satisfiable past booking. */
   limitedBy: DeadlineLimit;
 };
 
@@ -139,10 +140,13 @@ export function cancellationDeadline(departure: string, bookingDate?: string): D
   const businessDayLimit = nthBusinessDayBefore(departure, 8);
 
   const deadline = fourteenDayLimit < businessDayLimit ? fourteenDayLimit : businessDayLimit;
-  // A departure this close leaves no protected window at all; per spec we still
-  // surface the booking date, and the caller flags it as the degenerate case.
+  // If the last day with >7 business days is already before booking, then even
+  // on the booking day fewer than 8 business days remain — the law's condition
+  // is never met, so the booking is NOT cancelable under it (not "booking day
+  // only"). fourteenDayLimit is always ≥ booking, so this means businessDayLimit
+  // bound and fell short.
   if (deadline < booking) {
-    return { deadline: booking, fourteenDayLimit, businessDayLimit, limitedBy: "bookingDate" };
+    return { deadline: null, fourteenDayLimit, businessDayLimit, limitedBy: "none" };
   }
   return {
     deadline,

@@ -50,32 +50,36 @@ export function RoomPhotos({ photos, name }: { photos: string[]; name: string })
       </button>
 
       <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent className="max-w-md">
+        {/* Click anywhere outside the photo (the backdrop, the padding, the
+            title) to close; only clicks on the photo/arrows are held back. */}
+        <DialogContent className="max-w-md" onClick={() => setOpen(false)}>
           <DialogTitle className="text-sm">{name}</DialogTitle>
           {/* Force LTR so the arrows sit physically left/right and the chevrons
               don't rtl-flip — a photo carousel reads left→right in any locale. */}
-          <Carousel dir="ltr" className="w-full" opts={{ loop: true }}>
-            <CarouselContent>
-              {photos.map((src, i) => (
-                <CarouselItem key={i}>
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={src}
-                    alt={`${name} — ${i + 1}`}
-                    className="h-64 w-full rounded-lg object-cover sm:h-80"
-                  />
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-            {photos.length > 1 && (
-              // Solid dark circles + white chevrons so they stay visible over
-              // any photo (outline arrows got lost on bright/busy shots).
-              <>
-                <CarouselPrevious className="left-2 size-9 border-0 !bg-black/65 !text-white shadow-lg ring-1 ring-white/30 hover:!bg-black/85 [&_svg]:!size-5" />
-                <CarouselNext className="right-2 size-9 border-0 !bg-black/65 !text-white shadow-lg ring-1 ring-white/30 hover:!bg-black/85 [&_svg]:!size-5" />
-              </>
-            )}
-          </Carousel>
+          <div onClick={(e) => e.stopPropagation()}>
+            <Carousel dir="ltr" className="w-full" opts={{ loop: true }}>
+              <CarouselContent>
+                {photos.map((src, i) => (
+                  <CarouselItem key={i}>
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={src}
+                      alt={`${name} — ${i + 1}`}
+                      className="h-64 w-full rounded-lg object-cover sm:h-80"
+                    />
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              {photos.length > 1 && (
+                // Solid dark circles + white chevrons so they stay visible over
+                // any photo (outline arrows got lost on bright/busy shots).
+                <>
+                  <CarouselPrevious className="left-2 size-9 border-0 !bg-black/65 !text-white shadow-lg ring-1 ring-white/30 hover:!bg-black/85 [&_svg]:!size-5" />
+                  <CarouselNext className="right-2 size-9 border-0 !bg-black/65 !text-white shadow-lg ring-1 ring-white/30 hover:!bg-black/85 [&_svg]:!size-5" />
+                </>
+              )}
+            </Carousel>
+          </div>
         </DialogContent>
       </Dialog>
     </>

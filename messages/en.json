@@ -113,7 +113,9 @@
       "offline": "No connection",
       "clear": "Clear all",
       "copy": "Copy all",
-      "copied": "Copied ✓"
+      "copied": "Copied ✓",
+      "dirLtr": "Write left-to-right",
+      "dirRtl": "Write right-to-left"
     },
     "offline": "No connection — the change wasn't saved",
     "toasts": {
@@ -583,6 +585,8 @@
       "save": "Save",
       "cancel": "Cancel",
       "remove": "Remove",
+      "removeConfirmTitle": "Delete this contact?",
+      "removeConfirmBody": "The contact details will be removed from the list. The change is saved only after you click \"Save\".",
       "copy": "Copy",
       "copied": "Copied",
       "saveError": "Saving failed — please try again",
@@ -666,7 +670,7 @@
     "calcInvalid": "The departure date must be after the booking date.",
     "calcBy14": "Set by the 14 calendar days from the booking date.",
     "calcBy7": "Set by the requirement that more than 7 business days remain before departure (Saturdays and holidays don't count; holiday eves do).",
-    "calcSameDay": "More than 7 business days no longer remain before departure — cancellation under the law is possible on the booking date only."
+    "calcNotEligible": "Not cancelable under the law - more than 7 business days no longer remain before departure."
   },
   "hotels": {
     "selectDestination": "Select a hotel destination",

@@ -83,7 +83,7 @@ export type UIDestination = {
 export type SortMode =
   "default" | "stars-desc" | "stars-asc" | "booking-desc" | "booking-asc" | `dist:${string}`;
 
-const DEFAULT_PER_PAGE = 24;
+const DEFAULT_PER_PAGE = 96;
 
 /*
  * Locale-resolved view types. The server resolves every Localized value to the
