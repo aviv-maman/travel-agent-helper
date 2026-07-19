@@ -4,7 +4,7 @@ import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
-import { Pencil, Trash2, Hash } from "lucide-react";
+import { Trash2, Hash } from "lucide-react";
 import type { DashTask } from "./types";
 import { daysSince } from "@/lib/dashboard/dates";
 import { completeTaskAction, reopenTaskAction, deleteTaskAction } from "@/app/actions/dashboard";
@@ -85,7 +85,21 @@ export function TaskCard({ task, handle }: { task: DashTask; handle?: React.Reac
         aria-label={done ? t("task.reopen") : t("task.complete")}
       />
 
-      <div className="min-w-0 flex-1">
+      {/* The whole text region is the edit trigger (the pencil was removed):
+          click or Enter/Space opens edit, and it lights up on hover so the row
+          reads as clickable. Interactive children (phone) stop propagation. */}
+      <div
+        role="button"
+        tabIndex={0}
+        aria-label={t("task.edit")}
+        onClick={() => setEditing(true)}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            setEditing(true);
+          }
+        }}
+        className="-mx-1.5 -my-1 min-w-0 flex-1 cursor-pointer rounded-lg px-1.5 py-1 outline-none transition-colors hover:bg-accent/60 focus-visible:ring-2 focus-visible:ring-ring/50">
         <p
           className={`text-sm font-medium break-words ${
             done ? "text-muted-foreground line-through" : "text-foreground"
@@ -106,7 +120,11 @@ export function TaskCard({ task, handle }: { task: DashTask; handle?: React.Reac
               </span>
             )}
             {waiting && <span className={`font-medium ${waiting.color}`}>{waiting.label}</span>}
-            {task.clientPhone && <PhoneActions phone={task.clientPhone} />}
+            {task.clientPhone && (
+              <span onClick={(e) => e.stopPropagation()} onKeyDown={(e) => e.stopPropagation()}>
+                <PhoneActions phone={task.clientPhone} />
+              </span>
+            )}
           </div>
         )}
 
@@ -116,13 +134,6 @@ export function TaskCard({ task, handle }: { task: DashTask; handle?: React.Reac
       </div>
 
       <div className="flex shrink-0 items-center gap-0.5">
-        <Button
-          variant="ghost"
-          size="icon-sm"
-          aria-label={t("task.edit")}
-          onClick={() => setEditing(true)}>
-          <Pencil className="size-4" />
-        </Button>
         <AlertDialog open={confirmOpen} onOpenChange={setConfirmOpen}>
           <AlertDialogTrigger
             render={<Button variant="ghost" size="icon-sm" aria-label={t("task.delete")} />}>
