@@ -1,12 +1,12 @@
 "use client";
 
 import { useState, useSyncExternalStore } from "react";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { Check, Copy, Scale, TriangleAlert } from "lucide-react";
 import { toast } from "sonner";
 import { cancellationDeadline, formatDeadline } from "@/lib/consumer-law";
 import { todayInJerusalem } from "@/lib/dashboard/dates";
-import { Input } from "@/components/ui/input";
+import { DatePicker } from "@/components/ui/date-picker";
 
 /** Today's date has no change events worth tracking within a single session. */
 function subscribeToNothing() {
@@ -26,6 +26,7 @@ const REASON_KEY = {
  */
 export function LawCalculator() {
   const t = useTranslations("cancellations");
+  const locale = useLocale();
   const [edited, setEdited] = useState<string | null>(null);
   const [departure, setDeparture] = useState("");
   const [copied, setCopied] = useState(false);
@@ -70,22 +71,25 @@ export function LawCalculator() {
       <div className="flex flex-wrap items-end gap-3">
         <label className="flex min-w-36 flex-1 flex-col gap-1">
           <span className="text-xs font-medium text-muted-foreground">{t("calcBooking")}</span>
-          <Input
-            type="date"
+          <DatePicker
             value={booking}
             max={departure || undefined}
-            onChange={(e) => setEdited(e.target.value)}
-            className="h-9 bg-surface"
+            locale={locale}
+            ariaLabel={t("calcBooking")}
+            onChange={setEdited}
+            className="w-full"
           />
         </label>
         <label className="flex min-w-36 flex-1 flex-col gap-1">
           <span className="text-xs font-medium text-muted-foreground">{t("calcDeparture")}</span>
-          <Input
-            type="date"
+          <DatePicker
             value={departure}
             min={booking || undefined}
-            onChange={(e) => setDeparture(e.target.value)}
-            className="h-9 bg-surface"
+            locale={locale}
+            placeholder={t("calcDeparturePlaceholder")}
+            ariaLabel={t("calcDeparture")}
+            onChange={setDeparture}
+            className="w-full"
           />
         </label>
       </div>

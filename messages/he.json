@@ -665,6 +665,7 @@
     "calcTitle": "מחשבון עמידה בחוק הגנת הצרכן",
     "calcBooking": "תאריך הזמנה",
     "calcDeparture": "תאריך יציאה",
+    "calcDeparturePlaceholder": "בחר תאריך",
     "calcResult": "עומד בחוק עד:",
     "calcEmpty": "בחרו תאריך יציאה כדי לחשב.",
     "calcInvalid": "תאריך היציאה חייב להיות אחרי תאריך ההזמנה.",
