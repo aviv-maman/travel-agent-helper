@@ -15,6 +15,11 @@
     "system": "System",
     "account": "Account"
   },
+  "pwa": {
+    "install": "Install app",
+    "iosTitle": "Add to Home Screen",
+    "iosBody": "In Safari, tap the Share button in the toolbar, then choose \"Add to Home Screen\"."
+  },
   "tabs": {
     "dashboard": "Dashboard",
     "suppliers": "Suppliers",

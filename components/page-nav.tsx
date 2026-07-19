@@ -29,6 +29,7 @@ import { useDirection } from "@/components/ui/direction";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { LanguageSwitcher } from "@/components/language-switcher";
+import { InstallAppButton } from "@/components/install-app-button";
 
 const PAGES = [
   { segment: "suppliers", emoji: "💰" },
@@ -161,6 +162,8 @@ export function PageNav({ avatarUrl }: { avatarUrl?: string | null }) {
                 <span className="text-sm text-muted-foreground">{tNav("language")}</span>
                 <LanguageSwitcher />
               </div>
+              {/* Only renders when the app is installable (Chromium) or on iOS. */}
+              <InstallAppButton full />
             </div>
           </SheetContent>
         </Sheet>
@@ -206,6 +209,8 @@ export function PageNav({ avatarUrl }: { avatarUrl?: string | null }) {
 
         {/* Desktop controls cluster */}
         <div className="ms-auto hidden shrink-0 items-center gap-2 sm:flex">
+          {/* Only renders when the app is installable (Chromium desktop). */}
+          <InstallAppButton />
           {user ? (
             <>
               <Link
