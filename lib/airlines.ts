@@ -33,6 +33,10 @@ export type Airline = {
   highlight?: boolean;
   /** Base-fare commission chip, e.g. "0%", "7%", "0%/5%". Defaults to "0%". */
   commission?: string;
+  /** Uploaded logo URL (bucket); when absent the static file is used. */
+  logoUrl?: string;
+  /** True for airlines added in-app (deletable; seed rows are not). */
+  custom?: boolean;
 };
 
 const t = (he: string, en: string): Localized => ({ he, en });
@@ -559,8 +563,10 @@ export type ViewAirline = {
   info: string | null;
   /** Airline website. */
   website: string;
-  /** Logo path under /public; falls back to the placeholder if the file is missing. */
+  /** Logo URL: the uploaded bucket URL, else the static `/airlines/{id}.png`. */
   logo: string;
+  /** True for app-added airlines (full edit + delete allowed). */
+  custom: boolean;
   highlight: boolean;
   /** Base-fare commission chip text, e.g. "0%", "7%", "0%/5%". */
   commission: string;
@@ -602,6 +608,8 @@ async function loadAirlines(): Promise<Airline[]> {
     website: r.website,
     highlight: r.highlight || undefined,
     commission: r.commission ?? undefined,
+    logoUrl: r.logoUrl ?? undefined,
+    custom: r.custom || undefined,
   }));
 }
 
@@ -633,7 +641,8 @@ export async function getAirlines(locale: string): Promise<ViewAirline[]> {
       trolleySort: note ? maxNum(note) : 0,
       info: a.info ? pick(a.info) : null,
       website: a.website,
-      logo: `/airlines/${a.id}.png`,
+      logo: a.logoUrl ?? `/airlines/${a.id}.png`,
+      custom: Boolean(a.custom),
       highlight: Boolean(a.highlight),
       commission,
       commissionTier: commissionSort === 0 ? "zero" : "some",
