@@ -1,0 +1,1 @@
+ALTER TABLE "airlines" ADD COLUMN "commission_info" jsonb;

@@ -46,6 +46,7 @@ const EMPTY: AirlineInput = {
   info: "",
   website: "",
   commission: "",
+  commissionInfo: "",
   logoUrl: null,
 };
 
@@ -291,6 +292,15 @@ export function AirlineFormDialog({
                 />
               </Field>
             </div>
+
+            {/* Commission note — free text tied to the commission (the ⓘ tooltip). */}
+            <Field label={t("commissionNote")}>
+              <Input
+                value={form.commissionInfo}
+                onChange={(e) => set({ commissionInfo: e.target.value })}
+                placeholder={t("commissionNotePlaceholder")}
+              />
+            </Field>
           </div>
         )}
 

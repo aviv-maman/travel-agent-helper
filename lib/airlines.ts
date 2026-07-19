@@ -33,6 +33,8 @@ export type Airline = {
   highlight?: boolean;
   /** Base-fare commission chip, e.g. "0%", "7%", "0%/5%". Defaults to "0%". */
   commission?: string;
+  /** Free-text note shown as an ⓘ tooltip on the commission chip. */
+  commissionInfo?: Localized;
   /** Uploaded logo URL (bucket); when absent the static file is used. */
   logoUrl?: string;
   /** True for airlines added in-app (deletable; seed rows are not). */
@@ -583,6 +585,8 @@ export type ViewAirline = {
   commissionTier: "zero" | "some";
   /** Numeric commission used for sorting (largest figure in the range). */
   commissionSort: number;
+  /** Note shown as an ⓘ tooltip on the commission chip, or null. */
+  commissionInfo: string | null;
   /** Bare figures for the inline row editor (units are presentation only). */
   kgRaw: string;
   /** Trolley figure without the unit when the note is a plain weight, else the note text. */
@@ -617,6 +621,7 @@ async function loadAirlines(): Promise<Airline[]> {
     website: r.website,
     highlight: r.highlight || undefined,
     commission: r.commission ?? undefined,
+    commissionInfo: r.commissionInfo ?? undefined,
     logoUrl: r.logoUrl ?? undefined,
     custom: r.custom || undefined,
   }));
@@ -656,6 +661,7 @@ export async function getAirlines(locale: string): Promise<ViewAirline[]> {
       commission,
       commissionTier: commissionSort === 0 ? "zero" : "some",
       commissionSort,
+      commissionInfo: a.commissionInfo ? pick(a.commissionInfo) : null,
       kgRaw: a.kg,
       trolleyRaw: trolleyFigure ?? note ?? "",
       commissionRaw: commission.replace(/%/g, ""),

@@ -69,6 +69,35 @@ export async function saveAirlineRowAction(
   }
 }
 
+/**
+ * Editor+ update of an airline's two ⓘ notes (the notes popover on the airlines
+ * table): the suitcase note (`info`) and the commission note (`commissionInfo`).
+ * Both are single-value free text — stored as `{ he, en }` (same string, like
+ * the add form) or null when blank. App-managed, so they survive re-seeds.
+ */
+export async function saveAirlineNotesAction(
+  slug: string,
+  notes: { info: string; commissionInfo: string },
+): Promise<SaveAirlineResult> {
+  if (!(await can("content:edit"))) return { error: "forbidden" };
+  const info = notes.info.trim().slice(0, 512);
+  const commissionInfo = notes.commissionInfo.trim().slice(0, 512);
+  try {
+    const updated = await db
+      .update(airlines)
+      .set({
+        info: info ? { he: info, en: info } : null,
+        commissionInfo: commissionInfo ? { he: commissionInfo, en: commissionInfo } : null,
+      })
+      .where(eq(airlines.slug, slug.slice(0, 48)))
+      .returning({ id: airlines.id });
+    if (updated.length === 0) return { error: "invalid" };
+    return { ok: true };
+  } catch {
+    return { error: "offline" };
+  }
+}
+
 // ── Full add / edit / delete (editors) ──────────────────────────────────────
 
 /** The airline form's fields (raw, before figure/localized normalization). One
@@ -84,6 +113,8 @@ export type AirlineInput = {
   trolley: string;
   /** Free-text suitcase note (shows as the ⓘ next to the suitcase). Optional. */
   info: string;
+  /** Free-text commission note (shows as the ⓘ next to the commission). Optional. */
+  commissionInfo: string;
   website: string;
   commission: string;
   /** Uploaded logo URL (bucket) or null to keep the static/placeholder logo. */
@@ -121,6 +152,7 @@ type AirlineRow = {
   info: Localized | null;
   website: string;
   commission: string | null;
+  commissionInfo: Localized | null;
   logoUrl: string | null;
 };
 
@@ -131,6 +163,7 @@ function toRow(input: AirlineInput): AirlineRow | null {
   const iata = trim(input.iata, 16);
   const flag = codeToFlag(input.flagCode);
   const info = trim(input.info, 512);
+  const commissionInfo = trim(input.commissionInfo, 512);
   if (!name || !iata || !flag) return null;
   const kg = bareFigure(input.kg).slice(0, 16);
   const trolley = bareFigure(input.trolley).slice(0, 16);
@@ -147,6 +180,8 @@ function toRow(input: AirlineInput): AirlineRow | null {
     info: info ? { he: info, en: info } : null,
     website: input.website.trim().slice(0, 2048), // optional (column is "" when blank)
     commission,
+    // Optional commission note — surfaces as the ⓘ next to the commission.
+    commissionInfo: commissionInfo ? { he: commissionInfo, en: commissionInfo } : null,
     logoUrl: input.logoUrl?.trim().slice(0, 2048) || null,
   };
 }
@@ -216,6 +251,7 @@ export async function airlineDraftAction(slug: string): Promise<AirlineDraft | n
     info: a.info?.he ?? a.info?.en ?? "",
     website: a.website,
     commission: (a.commission ?? "").replace(/%/g, ""),
+    commissionInfo: a.commissionInfo?.he ?? a.commissionInfo?.en ?? "",
     logoUrl: a.logoUrl ?? null,
   };
 }

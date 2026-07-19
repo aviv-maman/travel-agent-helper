@@ -224,12 +224,22 @@ async function seedAirlines(): Promise<Map<string, number>> {
       website: a.website,
       highlight: Boolean(a.highlight),
       commission: a.commission ?? null,
+      commissionInfo: a.commissionInfo ?? null,
       sortOrder,
     };
-    // kg / note / noteTone / commission are app-managed after bootstrap (the
-    // inline row editor on the airlines page) — a re-seed updates the airline's
-    // metadata but must not clobber those edits.
-    const { kg: _kg, note: _note, noteTone: _tone, commission: _comm, ...meta } = values;
+    // kg / note / noteTone / commission and both ⓘ notes (info, commissionInfo)
+    // are app-managed after bootstrap (the inline row editor + notes popover on
+    // the airlines page) — a re-seed updates the airline's metadata but must not
+    // clobber those edits.
+    const {
+      kg: _kg,
+      note: _note,
+      noteTone: _tone,
+      commission: _comm,
+      info: _info,
+      commissionInfo: _cInfo,
+      ...meta
+    } = values;
     const [row] = await db
       .insert(airlines)
       .values(values)
