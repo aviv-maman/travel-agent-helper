@@ -4764,7 +4764,7 @@
         ],
         "bookingScore": 8.8,
         "googleMapsUrl": "https://www.google.com/maps/search/Ibis+Styles+Tbilisi+Center+Tbilisi+Georgia",
-        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Ibis+Styles+Tbilisi+Center+Tbilisi+Georgia",
+        "bookingUrl": "https://www.booking.com/hotel/ge/ibis-styles-tbilisi-center.html",
         "roomsNote": null,
         "sortOrder": 3,
         "features": [],
@@ -4972,7 +4972,7 @@
         "rooms": []
       },
       {
-        "name": "Ibis Styles Tbilisi Center",
+        "name": "Ibis Styles Old Tbilisi",
         "stars": 3,
         "tier": "good",
         "tags": [],
@@ -4981,7 +4981,7 @@
         ],
         "bookingScore": 8.9,
         "googleMapsUrl": "https://www.google.com/maps/search/Ibis+Styles+Old+Tbilisi+Tbilisi+Georgia",
-        "bookingUrl": "https://www.booking.com/hotel/ge/ibis-styles-tbilisi-center.html",
+        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Ibis+Styles+Old+Tbilisi+Tbilisi+Georgia",
         "roomsNote": null,
         "sortOrder": 8,
         "features": [],
