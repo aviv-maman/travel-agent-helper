@@ -128,8 +128,15 @@ export function AirlineFormDialog({
 
   async function submit() {
     if (saving) return;
-    // Required: name, IATA, baggage, trolley, commission.
-    if (!form.name.trim() || !form.iata.trim() || !form.kg.trim() || !form.trolley.trim() || !form.commission.trim()) {
+    // Required: name, IATA, country code, baggage, trolley, commission.
+    if (
+      !form.name.trim() ||
+      !form.iata.trim() ||
+      !form.flagCode.trim() ||
+      !form.kg.trim() ||
+      !form.trolley.trim() ||
+      !form.commission.trim()
+    ) {
       return toast.error(t("fillRequired"));
     }
     setSaving(true);
@@ -227,7 +234,7 @@ export function AirlineFormDialog({
                   placeholder="LY"
                 />
               </Field>
-              <Field label={t("countryCode")}>
+              <Field label={t("countryCode")} required>
                 <Input
                   dir="ltr"
                   value={form.flagCode}

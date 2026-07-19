@@ -123,11 +123,12 @@ type AirlineRow = {
 };
 
 /** Validate + shape the form input into a row patch. `null` = invalid.
- *  Required: name, iata, kg, trolley, commission. Optional: flag code, website. */
+ *  Required: name, iata, flag code, kg, trolley, commission. Optional: website. */
 function toRow(input: AirlineInput): AirlineRow | null {
   const name = trim(input.name);
   const iata = trim(input.iata, 16);
-  if (!name || !iata) return null;
+  const flag = codeToFlag(input.flagCode);
+  if (!name || !iata || !flag) return null;
   const kg = bareFigure(input.kg).slice(0, 16);
   const trolley = bareFigure(input.trolley).slice(0, 16);
   const commission = bareFigure(input.commission).slice(0, 16);
@@ -135,7 +136,7 @@ function toRow(input: AirlineInput): AirlineRow | null {
   return {
     name: { he: name, en: name },
     iata,
-    flag: codeToFlag(input.flagCode),
+    flag,
     kg,
     // Trolley stored like the inline editor: a plain kg figure with the unit.
     note: { he: `${trolley} ק"ג`, en: `${trolley} kg` },
