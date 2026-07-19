@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Heebo } from "next/font/google";
 import { notFound } from "next/navigation";
 import { NextIntlClientProvider, hasLocale } from "next-intl";
@@ -8,6 +8,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
 import { PageNav } from "@/components/page-nav";
 import { SessionProvider } from "@/components/auth/session-provider";
+import { PwaRegister } from "@/components/pwa-register";
 import { validateSession } from "@/lib/auth/session";
 import { routing, localeDirection, type Locale } from "@/i18n/routing";
 import "../globals.css";
@@ -22,6 +23,14 @@ export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
 }
 
+/** Status-bar colour, per light/dark. Next auto-adds the manifest + icon links. */
+export const viewport: Viewport = {
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
+    { media: "(prefers-color-scheme: dark)", color: "#0a0a0a" },
+  ],
+};
+
 export async function generateMetadata({
   params,
 }: {
@@ -32,6 +41,9 @@ export async function generateMetadata({
   return {
     title: `${t("title")} — ${t("subtitle")}`,
     description: t("subtitle"),
+    applicationName: t("title"),
+    // Installable web-app metadata (iOS home-screen + full-screen launch).
+    appleWebApp: { capable: true, statusBarStyle: "black", title: "סוכני נסיעות" },
   };
 }
 
@@ -73,6 +85,7 @@ export default async function LocaleLayout({
                   {children}
                 </main>
                 <Toaster />
+                <PwaRegister />
               </SessionProvider>
             </DirectionProvider>
           </ThemeProvider>
