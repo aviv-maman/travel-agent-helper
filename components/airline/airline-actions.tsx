@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { SupplierContact } from "@/components/commissions/supplier-contact";
+import { AirlineNotesPopover } from "./airline-notes-popover";
 import { emptyContact, type SupplierContact as SupplierContactRecord } from "@/lib/contacts";
 
 /** Where this row stands in the table's single-row inline edit. */
@@ -21,8 +22,11 @@ export type RowEditState = "idle" | "editing" | "saving" | "locked";
  */
 export function AirlineActions({
   id,
+  slug,
   name,
   website,
+  suitcaseNote,
+  commissionNote,
   contact,
   canEditContact,
   rowEditState,
@@ -32,8 +36,13 @@ export function AirlineActions({
   onEditAirline,
 }: {
   id: string;
+  /** Bare slug (no "air:" prefix) — for the notes popover's save action. */
+  slug: string;
   name: string;
   website: string;
+  /** Current suitcase / commission ⓘ notes (resolved to the locale) for the popover. */
+  suitcaseNote: string;
+  commissionNote: string;
   contact?: SupplierContactRecord;
   canEditContact?: boolean;
   /** Null hides the pencil (viewer can't edit content). */
@@ -111,6 +120,14 @@ export function AirlineActions({
                 <TooltipContent>{t("editRow")}</TooltipContent>
               </Tooltip>
             ))}
+          {rowEditState != null && !editing && (
+            <AirlineNotesPopover
+              slug={slug}
+              suitcaseNote={suitcaseNote}
+              commissionNote={commissionNote}
+              disabled={rowEditState === "locked"}
+            />
+          )}
           {onEditAirline && !editing && (
             <Tooltip>
               <TooltipTrigger
@@ -145,21 +162,23 @@ export function AirlineActions({
             <TooltipContent>{tc("button")}</TooltipContent>
           </Tooltip>
 
-          <Tooltip>
-            <TooltipTrigger
-              render={
-                <Button
-                  variant="outline"
-                  size="icon-sm"
-                  nativeButton={false}
-                  aria-label={t("website")}
-                  render={<a href={website} target="_blank" rel="noopener noreferrer" />}
-                />
-              }>
-              <Globe className="size-4" />
-            </TooltipTrigger>
-            <TooltipContent>{t("website")}</TooltipContent>
-          </Tooltip>
+          {website && (
+            <Tooltip>
+              <TooltipTrigger
+                render={
+                  <Button
+                    variant="outline"
+                    size="icon-sm"
+                    nativeButton={false}
+                    aria-label={t("website")}
+                    render={<a href={website} target="_blank" rel="noopener noreferrer" />}
+                  />
+                }>
+                <Globe className="size-4" />
+              </TooltipTrigger>
+              <TooltipContent>{t("website")}</TooltipContent>
+            </Tooltip>
+          )}
         </div>
       </TooltipProvider>
 

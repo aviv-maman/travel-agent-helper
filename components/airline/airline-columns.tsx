@@ -243,6 +243,15 @@ export function airlineColumns(
             edit={edit!}
             label={t("colCommission")}
           />
+        ) : row.original.commissionInfo ? (
+          <Tooltip>
+            <TooltipTrigger
+              className={`inline-flex h-5 cursor-help items-center gap-1 rounded-md px-1.5 align-middle text-xs font-bold ${COMMISSION_CHIP[row.original.commissionTier]}`}>
+              {row.original.commission}
+              <Info className="size-3.5 shrink-0" aria-hidden />
+            </TooltipTrigger>
+            <TooltipContent>{row.original.commissionInfo}</TooltipContent>
+          </Tooltip>
         ) : (
           <span
             className={`inline-flex h-5 items-center rounded-md px-1.5 align-middle text-xs font-bold ${COMMISSION_CHIP[row.original.commissionTier]}`}>
@@ -260,8 +269,11 @@ export function airlineColumns(
         row.original.highlight ? null : (
           <AirlineActions
             id={row.original.id}
+            slug={row.original.id.replace(/^air:/, "")}
             name={row.original.name}
             website={row.original.website}
+            suitcaseNote={row.original.info ?? ""}
+            commissionNote={row.original.commissionInfo ?? ""}
             contact={contacts[row.original.id]}
             canEditContact={canEditContacts}
             rowEditState={

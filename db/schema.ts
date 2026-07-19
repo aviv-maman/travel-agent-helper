@@ -462,6 +462,8 @@ export const airlines = pgTable(
     highlight: boolean("highlight").notNull().default(false),
     /** Base-fare commission chip, e.g. "0%", "7%", "0%/5%". Null renders as "0%". */
     commission: varchar("commission", { length: 16 }),
+    /** Free-text note shown as an ⓘ tooltip on the commission chip (e.g. what "0%/5%" means). */
+    commissionInfo: jsonb("commission_info").$type<Localized>(),
     /** Uploaded logo URL (Supabase public bucket, `airline/` prefix). Null → the
      *  bundled static file `public/airlines/{slug}.png` is used instead. */
     logoUrl: text("logo_url"),

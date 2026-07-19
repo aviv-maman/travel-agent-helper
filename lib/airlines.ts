@@ -33,6 +33,8 @@ export type Airline = {
   highlight?: boolean;
   /** Base-fare commission chip, e.g. "0%", "7%", "0%/5%". Defaults to "0%". */
   commission?: string;
+  /** Free-text note shown as an ⓘ tooltip on the commission chip. */
+  commissionInfo?: Localized;
   /** Uploaded logo URL (bucket); when absent the static file is used. */
   logoUrl?: string;
   /** True for airlines added in-app (deletable; seed rows are not). */
@@ -537,11 +539,20 @@ export const AIRLINES: Airline[] = [
  * ("ge"), so we can render a real SVG flag via <CountryFlag>. Windows / Edge
  * don't ship flag glyphs, so the emoji alone would show as "GE" text there.
  */
-function flagToCode(flag?: string): string | null {
+export function flagToCode(flag?: string): string | null {
   if (!flag) return null;
   const cps = [...flag].map((ch) => ch.codePointAt(0) ?? 0);
   if (cps.length !== 2 || cps.some((cp) => cp < 0x1f1e6 || cp > 0x1f1ff)) return null;
   return cps.map((cp) => String.fromCharCode(cp - 0x1f1e6 + 97)).join("");
+}
+
+/** Inverse of {@link flagToCode}: a 2-letter country code → its flag emoji, or
+ *  null when it isn't two ASCII letters. Used when adding an airline (the form
+ *  takes a code like "IL"; the column stores the emoji the reader expects). */
+export function codeToFlag(code: string): string | null {
+  const c = code.trim().toUpperCase();
+  if (!/^[A-Z]{2}$/.test(c)) return null;
+  return String.fromCodePoint(...[...c].map((ch) => 0x1f1e6 + ch.charCodeAt(0) - 65));
 }
 
 // ── Locale-resolved view types ───────────────────────────────────────────────
@@ -574,6 +585,8 @@ export type ViewAirline = {
   commissionTier: "zero" | "some";
   /** Numeric commission used for sorting (largest figure in the range). */
   commissionSort: number;
+  /** Note shown as an ⓘ tooltip on the commission chip, or null. */
+  commissionInfo: string | null;
   /** Bare figures for the inline row editor (units are presentation only). */
   kgRaw: string;
   /** Trolley figure without the unit when the note is a plain weight, else the note text. */
@@ -608,6 +621,7 @@ async function loadAirlines(): Promise<Airline[]> {
     website: r.website,
     highlight: r.highlight || undefined,
     commission: r.commission ?? undefined,
+    commissionInfo: r.commissionInfo ?? undefined,
     logoUrl: r.logoUrl ?? undefined,
     custom: r.custom || undefined,
   }));
@@ -647,6 +661,7 @@ export async function getAirlines(locale: string): Promise<ViewAirline[]> {
       commission,
       commissionTier: commissionSort === 0 ? "zero" : "some",
       commissionSort,
+      commissionInfo: a.commissionInfo ? pick(a.commissionInfo) : null,
       kgRaw: a.kg,
       trolleyRaw: trolleyFigure ?? note ?? "",
       commissionRaw: commission.replace(/%/g, ""),

@@ -6,6 +6,7 @@ import { airlines } from "@/db/schema";
 import type { Localized } from "@/db/schema";
 import { can } from "@/lib/auth";
 import { FIGURE_RE, bareFigure } from "@/lib/airline-figures";
+import { codeToFlag, flagToCode } from "@/lib/airlines";
 
 /**
  * Editor+ inline update of one airline row (the pencil on the airlines table):
@@ -68,19 +69,52 @@ export async function saveAirlineRowAction(
   }
 }
 
+/**
+ * Editor+ update of an airline's two ⓘ notes (the notes popover on the airlines
+ * table): the suitcase note (`info`) and the commission note (`commissionInfo`).
+ * Both are single-value free text — stored as `{ he, en }` (same string, like
+ * the add form) or null when blank. App-managed, so they survive re-seeds.
+ */
+export async function saveAirlineNotesAction(
+  slug: string,
+  notes: { info: string; commissionInfo: string },
+): Promise<SaveAirlineResult> {
+  if (!(await can("content:edit"))) return { error: "forbidden" };
+  const info = notes.info.trim().slice(0, 512);
+  const commissionInfo = notes.commissionInfo.trim().slice(0, 512);
+  try {
+    const updated = await db
+      .update(airlines)
+      .set({
+        info: info ? { he: info, en: info } : null,
+        commissionInfo: commissionInfo ? { he: commissionInfo, en: commissionInfo } : null,
+      })
+      .where(eq(airlines.slug, slug.slice(0, 48)))
+      .returning({ id: airlines.id });
+    if (updated.length === 0) return { error: "invalid" };
+    return { ok: true };
+  } catch {
+    return { error: "offline" };
+  }
+}
+
 // ── Full add / edit / delete (editors) ──────────────────────────────────────
 
-/** The airline form's fields (raw, before figure/localized normalization). */
+/** The airline form's fields (raw, before figure/localized normalization). One
+ *  name for both locales; flag is a 2-letter country code; trolley is a bare kg
+ *  figure (the "kg" unit is added on display, like the suitcase). */
 export type AirlineInput = {
-  nameHe: string;
-  nameEn: string;
+  name: string;
   iata: string;
-  flag: string;
+  /** 2-letter ISO country code, e.g. "IL" (stored as a flag emoji). */
+  flagCode: string;
   kg: string;
-  trolleyHe: string;
-  trolleyEn: string;
-  infoHe: string;
-  infoEn: string;
+  /** Bare trolley figure, e.g. "8" — the unit is added for display. */
+  trolley: string;
+  /** Free-text suitcase note (shows as the ⓘ next to the suitcase). Optional. */
+  info: string;
+  /** Free-text commission note (shows as the ⓘ next to the commission). Optional. */
+  commissionInfo: string;
   website: string;
   commission: string;
   /** Uploaded logo URL (bucket) or null to keep the static/placeholder logo. */
@@ -90,8 +124,6 @@ export type AirlineInput = {
 export type AirlineDraft = AirlineInput & { slug: string; custom: boolean };
 
 const trim = (s: string, n = 160) => s.trim().slice(0, n);
-const loc = (he: string, en: string): Localized | null =>
-  he.trim() || en.trim() ? { he: trim(he), en: trim(en) } : null;
 
 /** slug from the English name, deduped against existing rows. */
 async function uniqueSlug(nameEn: string): Promise<string> {
@@ -120,29 +152,36 @@ type AirlineRow = {
   info: Localized | null;
   website: string;
   commission: string | null;
+  commissionInfo: Localized | null;
   logoUrl: string | null;
 };
 
-/** Validate + shape the form input into a row patch. `null` = invalid. */
+/** Validate + shape the form input into a row patch. `null` = invalid.
+ *  Required: name, iata, flag code, kg, trolley, commission. Optional: website. */
 function toRow(input: AirlineInput): AirlineRow | null {
-  const nameHe = trim(input.nameHe);
-  const nameEn = trim(input.nameEn);
-  if (!nameHe && !nameEn) return null;
+  const name = trim(input.name);
+  const iata = trim(input.iata, 16);
+  const flag = codeToFlag(input.flagCode);
+  const info = trim(input.info, 512);
+  const commissionInfo = trim(input.commissionInfo, 512);
+  if (!name || !iata || !flag) return null;
   const kg = bareFigure(input.kg).slice(0, 16);
-  if (!FIGURE_RE.test(kg)) return null;
+  const trolley = bareFigure(input.trolley).slice(0, 16);
   const commission = bareFigure(input.commission).slice(0, 16);
-  if (commission && !FIGURE_RE.test(commission)) return null;
-  const website = input.website.trim().slice(0, 2048);
-  if (!website) return null;
+  if (!FIGURE_RE.test(kg) || !FIGURE_RE.test(trolley) || !FIGURE_RE.test(commission)) return null;
   return {
-    name: { he: nameHe || nameEn, en: nameEn || nameHe },
-    iata: trim(input.iata, 16) || null,
-    flag: trim(input.flag, 8) || null,
+    name: { he: name, en: name },
+    iata,
+    flag,
     kg,
-    note: loc(input.trolleyHe, input.trolleyEn),
-    info: loc(input.infoHe, input.infoEn),
-    website,
-    commission: commission || null,
+    // Trolley stored like the inline editor: a plain kg figure with the unit.
+    note: { he: `${trolley} ק"ג`, en: `${trolley} kg` },
+    // Optional suitcase note — surfaces as the ⓘ next to the suitcase.
+    info: info ? { he: info, en: info } : null,
+    website: input.website.trim().slice(0, 2048), // optional (column is "" when blank)
+    commission,
+    // Optional commission note — surfaces as the ⓘ next to the commission.
+    commissionInfo: commissionInfo ? { he: commissionInfo, en: commissionInfo } : null,
     logoUrl: input.logoUrl?.trim().slice(0, 2048) || null,
   };
 }
@@ -204,17 +243,15 @@ export async function airlineDraftAction(slug: string): Promise<AirlineDraft | n
   return {
     slug: a.slug,
     custom: a.custom,
-    nameHe: a.name.he ?? "",
-    nameEn: a.name.en ?? "",
+    name: a.name.he ?? a.name.en ?? "",
     iata: a.iata ?? "",
-    flag: a.flag ?? "",
+    flagCode: (flagToCode(a.flag ?? undefined) ?? "").toUpperCase(),
     kg: a.kg,
-    trolleyHe: a.note?.he ?? "",
-    trolleyEn: a.note?.en ?? "",
-    infoHe: a.info?.he ?? "",
-    infoEn: a.info?.en ?? "",
+    trolley: bareFigure(a.note?.he ?? a.note?.en ?? ""),
+    info: a.info?.he ?? a.info?.en ?? "",
     website: a.website,
     commission: (a.commission ?? "").replace(/%/g, ""),
+    commissionInfo: a.commissionInfo?.he ?? a.commissionInfo?.en ?? "",
     logoUrl: a.logoUrl ?? null,
   };
 }
