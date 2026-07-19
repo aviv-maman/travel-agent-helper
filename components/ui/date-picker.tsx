@@ -103,6 +103,10 @@ export function DatePicker({
           locale={dpLocale}
           dir={isHe ? "rtl" : "ltr"}
           autoFocus
+          // Wider, landscape layout: columns stretch to fill a fixed width while
+          // each day row stays short (the cells fill width, height = cell-size).
+          className="[--cell-size:--spacing(8)]"
+          classNames={{ root: "w-[22rem]" }}
         />
       </PopoverContent>
     </Popover>
