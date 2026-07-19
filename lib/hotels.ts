@@ -164,6 +164,10 @@ export type DestinationView = {
   info: ViewInfo | null;
   landmarks: ViewLandmark[];
   hotels: ViewHotel[];
+  /** Smallest / largest sized room across the WHOLE destination (m²), for the
+   *  room-size slider's bounds. null when no hotel has a sized room. */
+  roomSizeMin: number | null;
+  roomSizeMax: number | null;
   /** All hotel names in this destination (post filters, pre name-query) for autocomplete. */
   hotelNames: string[];
   total: number;
@@ -339,6 +343,14 @@ export async function getDestinationView(
   if (!d) return null;
   const { rates, fetchedAt: ratesFetchedAt } = await getIlsRatesWithMeta();
 
+  // Slider bounds come from the whole destination's room sizes (all hotels, not
+  // just the current page / filter subset), so the range stays stable.
+  const allSizes = d.hotels
+    .flatMap((h) => h.rooms.map((r) => r.sizeSqm))
+    .filter((s): s is number => s != null && s > 0);
+  const roomSizeMin = allSizes.length ? Math.min(...allSizes) : null;
+  const roomSizeMax = allSizes.length ? Math.max(...allSizes) : null;
+
   // amenities AND; tags / boards each OR within themselves; room filter keeps
   // only hotels with at least one room matching it.
   const baseFiltered = d.hotels.filter(
@@ -377,6 +389,8 @@ export async function getDestinationView(
       name: localized(l.name, locale),
     })),
     hotels: pageHotels.map((h) => resolveHotel(h, locale)),
+    roomSizeMin,
+    roomSizeMax,
     hotelNames,
     total,
     page,

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
-import { ROOM_SIZE_MAX, ROOM_SIZE_STEP, parseSize, type RoomAmenity } from "@/lib/room-filter";
+import { parseSize, roomSizeBounds, type RoomAmenity } from "@/lib/room-filter";
 import { Button } from "@/components/ui/button";
 import { DirectionProvider } from "@/components/ui/direction";
 import { Slider } from "@/components/ui/slider";
@@ -68,14 +68,21 @@ function SizeBox({
 }
 
 /**
- * The size control: a range slider wired to the two boxes through one shared
- * text state, so dragging a thumb updates the box numbers live (and typing in a
- * box moves the thumb). Commits to the URL on release / blur. Remounted (via
- * `key`) when the URL values change externally, e.g. after "clear".
+ * The size control: a range slider over the destination's real room-size span
+ * (`floor`..`ceil`) plus two manual boxes. The slider's numeric `[lo, hi]` is
+ * its own state — the single source of truth for the thumbs — so dragging never
+ * round-trips through the text boxes (which used to make the first drag stick at
+ * one step). The boxes stay free-editable and are re-synced to the range on
+ * commit. At the extremes a bound is treated as "no limit" (null). Commits to
+ * the URL on release / blur; remounted (via `key`) when the URL values change
+ * externally, e.g. after "clear".
  */
 function SizeControl({
   minSize,
   maxSize,
+  floor,
+  ceil,
+  step,
   unit,
   isHe,
   labelMin,
@@ -84,23 +91,27 @@ function SizeControl({
 }: {
   minSize: number | null;
   maxSize: number | null;
+  floor: number;
+  ceil: number;
+  step: number;
   unit: string;
   isHe: boolean;
   labelMin: string;
   labelMax: string;
   onCommit: (_min: number | null, _max: number | null) => void;
 }) {
+  const clamp = (n: number) => Math.min(Math.max(n, floor), ceil);
+  const [range, setRange] = useState<[number, number]>([
+    minSize != null ? clamp(minSize) : floor,
+    maxSize != null ? clamp(maxSize) : ceil,
+  ]);
+  // Box strings, so partial typing ("1" before "15") isn't clobbered mid-entry.
   const [minText, setMinText] = useState(minSize != null ? String(minSize) : "");
   const [maxText, setMaxText] = useState(maxSize != null ? String(maxSize) : "");
 
-  // Slider position derived from the box text (clamped to the track); the boxes
-  // may still hold values beyond the ceiling — the thumb just pins at the top.
-  const lo = Math.min(Math.max(parseSize(minText) ?? 0, 0), ROOM_SIZE_MAX);
-  const hiTyped = parseSize(maxText);
-  const hi = hiTyped != null ? Math.min(hiTyped, ROOM_SIZE_MAX) : ROOM_SIZE_MAX;
-  const sliderValue = [Math.min(lo, hi), Math.max(lo, hi)];
-
-  const commit = () => onCommit(parseSize(minText), parseSize(maxText));
+  // Blank the box at its bound so the placeholder ("no lower/upper limit") shows.
+  const boxText = (v: number, bound: number) => (v === bound ? "" : String(v));
+  const commit = (a: number, b: number) => onCommit(a > floor ? a : null, b < ceil ? b : null);
 
   return (
     <DirectionProvider direction="ltr">
@@ -108,19 +119,19 @@ function SizeControl({
           min, right = max (the app is RTL, which otherwise inverts dragging). */}
       <div dir="ltr" className="flex w-64 flex-col gap-2 self-start">
         <Slider
-          min={0}
-          max={ROOM_SIZE_MAX}
-          step={ROOM_SIZE_STEP}
-          value={sliderValue}
+          min={floor}
+          max={ceil}
+          step={step}
+          value={range}
           onValueChange={(v) => {
             const [a, b] = Array.isArray(v) ? v : [v, v];
-            // Live-update the boxes; blank at the bounds so the placeholder shows.
-            setMinText(a > 0 ? String(a) : "");
-            setMaxText(b < ROOM_SIZE_MAX ? String(b) : "");
+            setRange([a, b]);
+            setMinText(boxText(a, floor));
+            setMaxText(boxText(b, ceil));
           }}
           onValueCommitted={(v) => {
             const [a, b] = Array.isArray(v) ? v : [v, v];
-            onCommit(a > 0 ? a : null, b < ROOM_SIZE_MAX ? b : null);
+            commit(a, b);
           }}
         />
         {/* Min under the slider's left end, max under its right end. */}
@@ -129,22 +140,39 @@ function SizeControl({
             id="room-size-min"
             label={labelMin}
             value={minText}
-            placeholder="5"
+            placeholder={String(floor)}
             unit={unit}
             isHe={isHe}
-            onChange={setMinText}
-            onCommit={commit}
+            onChange={(v) => {
+              setMinText(v);
+              // Move the thumb live for a valid number; empty → back to the floor.
+              const n = parseSize(v);
+              setRange(([, hi]) => [n != null ? Math.min(clamp(n), hi) : floor, hi]);
+            }}
+            onCommit={() => {
+              const [a, b] = range;
+              setMinText(boxText(a, floor));
+              commit(a, b);
+            }}
           />
           <SizeBox
             id="room-size-max"
             label={labelMax}
             value={maxText}
-            placeholder="300"
+            placeholder={String(ceil)}
             unit={unit}
             isHe={isHe}
             alignEnd
-            onChange={setMaxText}
-            onCommit={commit}
+            onChange={(v) => {
+              setMaxText(v);
+              const n = parseSize(v);
+              setRange(([lo]) => [lo, n != null ? Math.max(clamp(n), lo) : ceil]);
+            }}
+            onCommit={() => {
+              const [a, b] = range;
+              setMaxText(boxText(b, ceil));
+              commit(a, b);
+            }}
           />
         </div>
       </div>
@@ -152,10 +180,18 @@ function SizeControl({
   );
 }
 
-export function RoomFilters() {
+export function RoomFilters({
+  roomSizeMin,
+  roomSizeMax,
+}: {
+  /** Smallest / largest sized room in this destination (m²); drives the slider. */
+  roomSizeMin: number | null;
+  roomSizeMax: number | null;
+}) {
   const t = useTranslations("hotels.roomFilter");
   const isHe = useLocale() === "he";
   const { roomMinSize, roomMaxSize, roomAmenities, update } = useHotelParams();
+  const { floor, ceil, step } = roomSizeBounds(roomSizeMin, roomSizeMax);
 
   const toggleAmenity = (v: RoomAmenity) =>
     update({
@@ -186,9 +222,12 @@ export function RoomFilters() {
       <div className="flex flex-col gap-2">
         <span className="text-xs font-bold text-muted-foreground">{t("size")}</span>
         <SizeControl
-          key={`${roomMinSize ?? ""}:${roomMaxSize ?? ""}`}
+          key={`${roomMinSize ?? ""}:${roomMaxSize ?? ""}:${floor}:${ceil}`}
           minSize={roomMinSize}
           maxSize={roomMaxSize}
+          floor={floor}
+          ceil={ceil}
+          step={step}
           unit={t("unit")}
           isHe={isHe}
           labelMin={t("min")}
