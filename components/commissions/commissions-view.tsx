@@ -21,13 +21,14 @@ const LEGEND: { dot: string; key: "high" | "mid" | "low" | "net" }[] = [
 
 const CATEGORIES: {
   value: SupplierCategory;
-  key: "main" | "hotels" | "carRental" | "insurance";
+  key: "main" | "hotels" | "carRental" | "insurance" | "transfers";
   emoji: string;
 }[] = [
   { value: "flights", key: "main", emoji: "✈️" },
   { value: "hotels", key: "hotels", emoji: "🏨" },
   { value: "car-rental", key: "carRental", emoji: "🚗" },
   { value: "insurance", key: "insurance", emoji: "🛡️" },
+  { value: "transfers", key: "transfers", emoji: "🚐" },
 ];
 
 export function CommissionsView({

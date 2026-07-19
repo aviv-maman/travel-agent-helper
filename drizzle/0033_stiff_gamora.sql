@@ -1,0 +1,1 @@
+ALTER TYPE "public"."supplier_category" ADD VALUE 'transfers';

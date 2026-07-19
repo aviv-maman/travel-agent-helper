@@ -232,6 +232,13 @@
       "when": 1784478192300,
       "tag": "0032_great_monster_badoon",
       "breakpoints": true
+    },
+    {
+      "idx": 33,
+      "version": "7",
+      "when": 1784482318019,
+      "tag": "0033_stiff_gamora",
+      "breakpoints": true
     }
   ]
 }
