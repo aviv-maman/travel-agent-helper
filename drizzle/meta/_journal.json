@@ -225,6 +225,13 @@
       "when": 1784475819948,
       "tag": "0031_fantastic_starjammers",
       "breakpoints": true
+    },
+    {
+      "idx": 32,
+      "version": "7",
+      "when": 1784478192300,
+      "tag": "0032_great_monster_badoon",
+      "breakpoints": true
     }
   ]
 }

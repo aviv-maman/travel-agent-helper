@@ -4,7 +4,8 @@ import { eq } from "drizzle-orm";
 import { db } from "@/db";
 import { airlines, contacts, suppliers } from "@/db/schema";
 import { can } from "@/lib/auth";
-import { CONTACT_TYPES, sectionForType, type ContactGroup } from "@/lib/contacts";
+import { sectionForType, type ContactGroup } from "@/lib/contacts";
+import { cleanContactGroups } from "@/lib/supplier-validation";
 
 export type SaveContactsResult = { ok: true } | { error: "forbidden" | "invalid" | "offline" };
 
@@ -25,16 +26,8 @@ export async function saveContactsAction(
   if (!(await can("content:edit"))) return { error: "forbidden" };
 
   // Validate before touching the DB; mirror the dialog's own filtering.
-  const clean: ContactGroup[] = [];
-  for (const g of groups) {
-    if (!CONTACT_TYPES.includes(g.type)) return { error: "invalid" };
-    const label = (g.label ?? "").trim().slice(0, 120);
-    const phone = (g.phone ?? "").trim().slice(0, 32);
-    const email = (g.email ?? "").trim().slice(0, 160);
-    if (!label || (!phone && !email)) continue;
-    clean.push({ active: Boolean(g.active), label, type: g.type, phone, email });
-  }
-  if (clean.length > 100) return { error: "invalid" };
+  const clean = cleanContactGroups(groups);
+  if (clean === null) return { error: "invalid" };
 
   try {
     const owner = id.startsWith("air:")
