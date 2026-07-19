@@ -537,11 +537,20 @@ export const AIRLINES: Airline[] = [
  * ("ge"), so we can render a real SVG flag via <CountryFlag>. Windows / Edge
  * don't ship flag glyphs, so the emoji alone would show as "GE" text there.
  */
-function flagToCode(flag?: string): string | null {
+export function flagToCode(flag?: string): string | null {
   if (!flag) return null;
   const cps = [...flag].map((ch) => ch.codePointAt(0) ?? 0);
   if (cps.length !== 2 || cps.some((cp) => cp < 0x1f1e6 || cp > 0x1f1ff)) return null;
   return cps.map((cp) => String.fromCharCode(cp - 0x1f1e6 + 97)).join("");
+}
+
+/** Inverse of {@link flagToCode}: a 2-letter country code → its flag emoji, or
+ *  null when it isn't two ASCII letters. Used when adding an airline (the form
+ *  takes a code like "IL"; the column stores the emoji the reader expects). */
+export function codeToFlag(code: string): string | null {
+  const c = code.trim().toUpperCase();
+  if (!/^[A-Z]{2}$/.test(c)) return null;
+  return String.fromCodePoint(...[...c].map((ch) => 0x1f1e6 + ch.charCodeAt(0) - 65));
 }
 
 // ── Locale-resolved view types ───────────────────────────────────────────────

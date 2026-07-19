@@ -37,15 +37,11 @@ import {
 } from "@/components/ui/alert-dialog";
 
 const EMPTY: AirlineInput = {
-  nameHe: "",
-  nameEn: "",
+  name: "",
   iata: "",
-  flag: "",
+  flagCode: "",
   kg: "",
-  trolleyHe: "",
-  trolleyEn: "",
-  infoHe: "",
-  infoEn: "",
+  trolley: "",
   website: "",
   commission: "",
   logoUrl: null,
@@ -132,9 +128,10 @@ export function AirlineFormDialog({
 
   async function submit() {
     if (saving) return;
-    if (!form.nameHe.trim() && !form.nameEn.trim()) return toast.error(t("nameRequired"));
-    if (!form.kg.trim()) return toast.error(t("kgRequired"));
-    if (!form.website.trim()) return toast.error(t("websiteRequired"));
+    // Required: name, IATA, baggage, trolley, commission.
+    if (!form.name.trim() || !form.iata.trim() || !form.kg.trim() || !form.trolley.trim() || !form.commission.trim()) {
+      return toast.error(t("fillRequired"));
+    }
     setSaving(true);
     const res = isEdit ? await updateAirlineAction(slug, form) : await createAirlineAction(form);
     setSaving(false);
@@ -175,7 +172,7 @@ export function AirlineFormDialog({
           </div>
         ) : (
           <div className="-mx-4 flex min-h-0 flex-1 flex-col gap-3 overflow-y-auto border-t border-border px-4 pt-3">
-            {/* Logo */}
+            {/* Logo (optional) */}
             <div className="flex items-center gap-3">
               <span className="flex size-12 shrink-0 items-center justify-center overflow-hidden rounded-md border border-border bg-surface-2">
                 {form.logoUrl ? (
@@ -217,27 +214,32 @@ export function AirlineFormDialog({
               </div>
             </div>
 
-            {/* One name — stored for both locales (airline names read the same
-                in he/en). Same for the trolley/note fields below. */}
-            <Field label={t("name")}>
-              <Input
-                value={form.nameHe}
-                onChange={(e) => set({ nameHe: e.target.value, nameEn: e.target.value })}
-              />
+            <Field label={t("name")} required>
+              <Input value={form.name} onChange={(e) => set({ name: e.target.value })} />
             </Field>
 
-            <div className="grid grid-cols-3 gap-2">
-              <Field label={t("iata")}>
-                <Input dir="ltr" value={form.iata} onChange={(e) => set({ iata: e.target.value })} />
-              </Field>
-              <Field label={t("flag")}>
+            <div className="grid grid-cols-2 gap-2">
+              <Field label={t("iata")} required>
                 <Input
-                  value={form.flag}
-                  onChange={(e) => set({ flag: e.target.value })}
-                  placeholder="🇮🇱"
+                  dir="ltr"
+                  value={form.iata}
+                  onChange={(e) => set({ iata: e.target.value })}
+                  placeholder="LY"
                 />
               </Field>
-              <Field label={t("kg")}>
+              <Field label={t("countryCode")}>
+                <Input
+                  dir="ltr"
+                  value={form.flagCode}
+                  onChange={(e) => set({ flagCode: e.target.value })}
+                  placeholder="IL"
+                  maxLength={2}
+                />
+              </Field>
+            </div>
+
+            <div className="grid grid-cols-2 gap-2">
+              <Field label={t("kg")} required>
                 <Input
                   dir="ltr"
                   value={form.kg}
@@ -245,22 +247,15 @@ export function AirlineFormDialog({
                   placeholder="23"
                 />
               </Field>
+              <Field label={t("trolley")} required>
+                <Input
+                  dir="ltr"
+                  value={form.trolley}
+                  onChange={(e) => set({ trolley: e.target.value })}
+                  placeholder="8"
+                />
+              </Field>
             </div>
-
-            <Field label={t("trolley")}>
-              <Input
-                value={form.trolleyHe}
-                onChange={(e) => set({ trolleyHe: e.target.value, trolleyEn: e.target.value })}
-                placeholder='8 ק"ג'
-              />
-            </Field>
-
-            <Field label={t("info")}>
-              <Input
-                value={form.infoHe}
-                onChange={(e) => set({ infoHe: e.target.value, infoEn: e.target.value })}
-              />
-            </Field>
 
             <div className="grid grid-cols-[1fr_auto] gap-2">
               <Field label={t("website")}>
@@ -271,7 +266,7 @@ export function AirlineFormDialog({
                   placeholder="https://…"
                 />
               </Field>
-              <Field label={t("commission")}>
+              <Field label={t("commission")} required>
                 <Input
                   dir="ltr"
                   value={form.commission}
@@ -288,9 +283,7 @@ export function AirlineFormDialog({
           {isEdit && custom ? (
             <AlertDialog>
               <AlertDialogTrigger
-                render={
-                  <Button type="button" variant="ghost" className="text-destructive" />
-                }>
+                render={<Button type="button" variant="ghost" className="text-destructive" />}>
                 <Trash2 className="size-4" /> {t("delete")}
               </AlertDialogTrigger>
               <AlertDialogContent size="sm">
@@ -323,10 +316,21 @@ export function AirlineFormDialog({
   );
 }
 
-function Field({ label, children }: { label: string; children: React.ReactNode }) {
+function Field({
+  label,
+  required,
+  children,
+}: {
+  label: string;
+  required?: boolean;
+  children: React.ReactNode;
+}) {
   return (
     <div className="grid gap-1">
-      <Label className="text-xs text-muted-foreground">{label}</Label>
+      <Label className="text-xs text-muted-foreground">
+        {label}
+        {required && <span className="text-destructive"> *</span>}
+      </Label>
       {children}
     </div>
   );

@@ -145,21 +145,23 @@ export function AirlineActions({
             <TooltipContent>{tc("button")}</TooltipContent>
           </Tooltip>
 
-          <Tooltip>
-            <TooltipTrigger
-              render={
-                <Button
-                  variant="outline"
-                  size="icon-sm"
-                  nativeButton={false}
-                  aria-label={t("website")}
-                  render={<a href={website} target="_blank" rel="noopener noreferrer" />}
-                />
-              }>
-              <Globe className="size-4" />
-            </TooltipTrigger>
-            <TooltipContent>{t("website")}</TooltipContent>
-          </Tooltip>
+          {website && (
+            <Tooltip>
+              <TooltipTrigger
+                render={
+                  <Button
+                    variant="outline"
+                    size="icon-sm"
+                    nativeButton={false}
+                    aria-label={t("website")}
+                    render={<a href={website} target="_blank" rel="noopener noreferrer" />}
+                  />
+                }>
+                <Globe className="size-4" />
+              </TooltipTrigger>
+              <TooltipContent>{t("website")}</TooltipContent>
+            </Tooltip>
+          )}
         </div>
       </TooltipProvider>
 
