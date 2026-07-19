@@ -56,6 +56,13 @@ const LOGO_MAX = 2 * 1024 * 1024;
 
 type StepId = "details" | "commissions" | "baggage" | "contacts";
 
+/** Flights use the standard kinds; other categories use labeled "special" lines. */
+function firstCommissionDraft(category: SupplierCategory): CommissionDraft {
+  return category === "flights"
+    ? newCommissionDraft([])
+    : { kind: "custom", label: "", value: "" };
+}
+
 /**
  * Multi-step "Add supplier" wizard. Collects header (category/name/code/website/
  * logo), commissions, baggage (flights only), and optional contacts, then creates
@@ -89,11 +96,19 @@ export function SupplierCreateWizard({
   const [website, setWebsite] = useState("");
   const [logoUrl, setLogoUrl] = useState<string | null>(null);
   // Steps 2–4 — drafts (reuse the inline editors' shapes).
-  const [commissions, setCommissions] = useState<CommissionDraft[]>(() => [newCommissionDraft([])]);
+  const [commissions, setCommissions] = useState<CommissionDraft[]>(() => [
+    firstCommissionDraft(defaultCategory),
+  ]);
   const [baggage, setBaggage] = useState<BaggageDraft[]>([]);
   const [contactsDraft, setContactsDraft] = useState<ContactGroup[]>([]);
 
   const isFlights = category === "flights";
+
+  /** Category drives the commission model — reset the lines to a fresh default. */
+  function changeCategory(next: SupplierCategory) {
+    setCategory(next);
+    setCommissions([firstCommissionDraft(next)]);
+  }
   // Baggage step only for the main (flights) category.
   const order: StepId[] = isFlights
     ? ["details", "commissions", "baggage", "contacts"]
@@ -248,7 +263,7 @@ export function SupplierCreateWizard({
                 <Label className="text-xs text-muted-foreground">{t("category")}</Label>
                 <Select
                   value={category}
-                  onValueChange={(v) => setCategory(v as SupplierCategory)}
+                  onValueChange={(v) => changeCategory(v as SupplierCategory)}
                   items={Object.fromEntries(
                     CATEGORY_OPTS.map((o) => [o.value, `${o.emoji} ${tCat(o.key)}`]),
                   )}>
@@ -333,7 +348,11 @@ export function SupplierCreateWizard({
 
           {stepId === "commissions" && (
             <div className="flex flex-col gap-2">
-              <CommissionRows drafts={commissions} setDrafts={setCommissions} />
+              <CommissionRows
+                drafts={commissions}
+                setDrafts={setCommissions}
+                customOnly={!isFlights}
+              />
             </div>
           )}
 

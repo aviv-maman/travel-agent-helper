@@ -182,25 +182,48 @@ export function commissionDraftsToInputs(
   return { rows };
 }
 
-/** The controlled list of commission draft rows + an "add" button. */
+/**
+ * The controlled list of commission draft rows + an "add" button. When
+ * `customOnly` is set (non-flights suppliers), every line is a labeled "special"
+ * commission — the kind dropdown is dropped and only the label + value show.
+ */
 export function CommissionRows({
   drafts,
   setDrafts,
+  customOnly = false,
 }: {
   drafts: CommissionDraft[];
   setDrafts: React.Dispatch<React.SetStateAction<CommissionDraft[]>>;
+  /** Non-flights suppliers: only labeled "special" (custom) lines. */
+  customOnly?: boolean;
 }) {
   const t = useTranslations("commissions.editor");
   const update = (i: number, patch: Partial<CommissionDraft>) =>
     setDrafts((d) => d.map((row, idx) => (idx === i ? { ...row, ...patch } : row)));
   const remove = (i: number) => setDrafts((d) => d.filter((_, idx) => idx !== i));
-  const add = () => setDrafts((d) => [...d, newCommissionDraft(d)]);
+  const add = () =>
+    setDrafts((d) => [
+      ...d,
+      customOnly ? { kind: "custom", label: "", value: "" } : newCommissionDraft(d),
+    ]);
 
   /** Kinds this row may use: its own, unused standard ones, and custom. */
   function kindOptions(i: number): CommissionKind[] {
     const others = drafts.filter((_, idx) => idx !== i);
     return [...STANDARD_KINDS.filter((k) => !others.some((o) => o.kind === k)), "custom"];
   }
+
+  const removeBtn = (i: number) => (
+    <Button
+      type="button"
+      variant="ghost"
+      size="icon-sm"
+      aria-label={t("remove")}
+      onClick={() => remove(i)}
+      className="shrink-0 text-muted-foreground hover:text-destructive">
+      <Trash2 className="size-3.5" />
+    </Button>
+  );
 
   return (
     <>
@@ -209,36 +232,40 @@ export function CommissionRows({
           key={i}
           className="flex flex-col gap-2 rounded-lg border border-dashed border-border p-2">
           <div className="flex items-end gap-2">
-            <Field label={t("kind")}>
-              {/* `items` gives the closed trigger the translated label (Base UI
-                  otherwise renders the raw value). */}
-              <Select
-                value={d.kind}
-                onValueChange={(v) => update(i, { kind: v as CommissionKind })}
-                items={Object.fromEntries(kindOptions(i).map((k) => [k, t(KIND_KEY[k])]))}>
-                <SelectTrigger className="w-full text-xs">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  {kindOptions(i).map((k) => (
-                    <SelectItem key={k} value={k}>
-                      {t(KIND_KEY[k])}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </Field>
-            <Button
-              type="button"
-              variant="ghost"
-              size="icon-sm"
-              aria-label={t("remove")}
-              onClick={() => remove(i)}
-              className="shrink-0 text-muted-foreground hover:text-destructive">
-              <Trash2 className="size-3.5" />
-            </Button>
+            {customOnly ? (
+              // Special-only: the label is the line's identity (kind is fixed).
+              <Field label={t("label")}>
+                <Input
+                  value={d.label}
+                  dir="auto"
+                  onChange={(e) => update(i, { label: e.target.value })}
+                  className="h-8 text-xs"
+                />
+              </Field>
+            ) : (
+              <Field label={t("kind")}>
+                {/* `items` gives the closed trigger the translated label (Base UI
+                    otherwise renders the raw value). */}
+                <Select
+                  value={d.kind}
+                  onValueChange={(v) => update(i, { kind: v as CommissionKind })}
+                  items={Object.fromEntries(kindOptions(i).map((k) => [k, t(KIND_KEY[k])]))}>
+                  <SelectTrigger className="w-full text-xs">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {kindOptions(i).map((k) => (
+                      <SelectItem key={k} value={k}>
+                        {t(KIND_KEY[k])}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </Field>
+            )}
+            {removeBtn(i)}
           </div>
-          {d.kind === "custom" && (
+          {!customOnly && d.kind === "custom" && (
             <Field label={t("label")}>
               <Input
                 value={d.label}
