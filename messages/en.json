@@ -665,6 +665,7 @@
     "calcTitle": "Consumer Protection Law calculator",
     "calcBooking": "Booking date",
     "calcDeparture": "Departure date",
+    "calcDeparturePlaceholder": "Pick a date",
     "calcResult": "Complies with the law until:",
     "calcEmpty": "Pick a departure date to calculate.",
     "calcInvalid": "The departure date must be after the booking date.",
