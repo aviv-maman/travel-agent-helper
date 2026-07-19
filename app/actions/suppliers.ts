@@ -78,7 +78,13 @@ export async function saveSupplierBaggageAction(
 
 // ── Edit / create a supplier's header (editors) ──────────────────────────────
 
-const CATEGORIES: readonly SupplierCategory[] = ["flights", "hotels", "car-rental", "insurance"];
+const CATEGORIES: readonly SupplierCategory[] = [
+  "flights",
+  "hotels",
+  "car-rental",
+  "insurance",
+  "transfers",
+];
 
 export type SupplierDetailsInput = {
   category: SupplierCategory;

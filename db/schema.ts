@@ -298,6 +298,7 @@ export const supplierCategory = pgEnum("supplier_category", [
   "hotels",
   "car-rental",
   "insurance",
+  "transfers",
 ]);
 
 /** The three default commission rows, plus labeled extra lines. */

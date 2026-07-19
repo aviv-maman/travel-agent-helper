@@ -558,7 +558,8 @@
       "main": "ראשי",
       "hotels": "מלונות",
       "carRental": "השכרת רכב",
-      "insurance": "ביטוח"
+      "insurance": "ביטוח",
+      "transfers": "הסעות"
     },
     "create": {
       "addSupplier": "הוספת ספק",

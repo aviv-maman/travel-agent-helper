@@ -21,13 +21,14 @@ const LEGEND: { dot: string; key: "high" | "mid" | "low" | "net" }[] = [
 
 const CATEGORIES: {
   value: SupplierCategory;
-  key: "main" | "hotels" | "carRental" | "insurance";
+  key: "main" | "hotels" | "carRental" | "insurance" | "transfers";
   emoji: string;
 }[] = [
   { value: "flights", key: "main", emoji: "✈️" },
   { value: "hotels", key: "hotels", emoji: "🏨" },
   { value: "car-rental", key: "carRental", emoji: "🚗" },
   { value: "insurance", key: "insurance", emoji: "🛡️" },
+  { value: "transfers", key: "transfers", emoji: "🚐" },
 ];
 
 export function CommissionsView({
@@ -70,33 +71,25 @@ export function CommissionsView({
         </div>
       )}
 
-      <div className="flex items-center gap-2">
-        <div className="relative flex-1">
-          <Search
-            className="pointer-events-none absolute start-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground"
-            aria-hidden
-          />
-          <Input
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            placeholder={t("searchPlaceholder")}
-            className="h-11 ps-9 pe-9 text-sm"
-          />
-          {query && (
-            <button
-              type="button"
-              onClick={() => setQuery("")}
-              aria-label={t("clear")}
-              className="absolute end-2 top-1/2 flex size-6 -translate-y-1/2 items-center justify-center rounded-md text-muted-foreground transition-colors hover:text-destructive">
-              <X className="size-4" />
-            </button>
-          )}
-        </div>
-        {canCreate && (
-          <Button type="button" size="lg" className="h-11 shrink-0" onClick={() => setCreating(true)}>
-            <Plus className="size-4" />
-            <span className="hidden sm:inline">{t("create.addSupplier")}</span>
-          </Button>
+      <div className="relative">
+        <Search
+          className="pointer-events-none absolute start-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground"
+          aria-hidden
+        />
+        <Input
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          placeholder={t("searchPlaceholder")}
+          className="h-11 ps-9 pe-9 text-sm"
+        />
+        {query && (
+          <button
+            type="button"
+            onClick={() => setQuery("")}
+            aria-label={t("clear")}
+            className="absolute end-2 top-1/2 flex size-6 -translate-y-1/2 items-center justify-center rounded-md text-muted-foreground transition-colors hover:text-destructive">
+            <X className="size-4" />
+          </button>
         )}
       </div>
 
@@ -109,20 +102,33 @@ export function CommissionsView({
       )}
 
       <Tabs value={tab} onValueChange={(v) => setTab(v as SupplierCategory)}>
-        <TabsList className="rounded-xl">
-          {CATEGORIES.map(({ value, key, emoji }) => {
-            const count = suppliers.filter((s) => s.category === value).length;
-            return (
-              <TabsTrigger key={value} value={value}>
-                <span aria-hidden>{emoji}</span>
-                {t(`categories.${key}`)}
-                <Badge variant="secondary" className="ms-0.5">
+        {/* Tabs on one side, the add-supplier button aligned on the other. */}
+        <div className="flex flex-wrap items-center justify-between gap-2">
+          <TabsList className="rounded-xl">
+            {CATEGORIES.map(({ value, key, emoji }) => {
+              const count = suppliers.filter((s) => s.category === value).length;
+              return (
+                <TabsTrigger key={value} value={value}>
+                  <span aria-hidden>{emoji}</span>
+                  {t(`categories.${key}`)}
+                  <Badge variant="secondary" className="ms-0.5">
                   {count}
                 </Badge>
               </TabsTrigger>
             );
           })}
-        </TabsList>
+          </TabsList>
+          {canCreate && (
+            <Button
+              type="button"
+              size="lg"
+              className="h-11 shrink-0"
+              onClick={() => setCreating(true)}>
+              <Plus className="size-4" />
+              <span className="hidden sm:inline">{t("create.addSupplier")}</span>
+            </Button>
+          )}
+        </div>
 
         {CATEGORIES.map(({ value }) => {
           const list = suppliers.filter((s) => s.category === value && match(s));

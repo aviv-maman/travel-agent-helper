@@ -558,7 +558,8 @@
       "main": "Main",
       "hotels": "Hotels",
       "carRental": "Car rental",
-      "insurance": "Insurance"
+      "insurance": "Insurance",
+      "transfers": "Transfers"
     },
     "create": {
       "addSupplier": "Add supplier",
