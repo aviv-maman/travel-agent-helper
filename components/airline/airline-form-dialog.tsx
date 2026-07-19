@@ -42,6 +42,7 @@ const EMPTY: AirlineInput = {
   flagCode: "",
   kg: "",
   trolley: "",
+  info: "",
   website: "",
   commission: "",
   logoUrl: null,
@@ -263,6 +264,15 @@ export function AirlineFormDialog({
                 />
               </Field>
             </div>
+
+            {/* Suitcase note — free text tied to the suitcase (the ⓘ tooltip). */}
+            <Field label={t("suitcaseNote")}>
+              <Input
+                value={form.info}
+                onChange={(e) => set({ info: e.target.value })}
+                placeholder={t("suitcaseNotePlaceholder")}
+              />
+            </Field>
 
             <div className="grid grid-cols-[1fr_auto] gap-2">
               <Field label={t("website")}>

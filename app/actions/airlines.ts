@@ -82,6 +82,8 @@ export type AirlineInput = {
   kg: string;
   /** Bare trolley figure, e.g. "8" — the unit is added for display. */
   trolley: string;
+  /** Free-text suitcase note (shows as the ⓘ next to the suitcase). Optional. */
+  info: string;
   website: string;
   commission: string;
   /** Uploaded logo URL (bucket) or null to keep the static/placeholder logo. */
@@ -128,6 +130,7 @@ function toRow(input: AirlineInput): AirlineRow | null {
   const name = trim(input.name);
   const iata = trim(input.iata, 16);
   const flag = codeToFlag(input.flagCode);
+  const info = trim(input.info, 512);
   if (!name || !iata || !flag) return null;
   const kg = bareFigure(input.kg).slice(0, 16);
   const trolley = bareFigure(input.trolley).slice(0, 16);
@@ -140,7 +143,8 @@ function toRow(input: AirlineInput): AirlineRow | null {
     kg,
     // Trolley stored like the inline editor: a plain kg figure with the unit.
     note: { he: `${trolley} ק"ג`, en: `${trolley} kg` },
-    info: null,
+    // Optional suitcase note — surfaces as the ⓘ next to the suitcase.
+    info: info ? { he: info, en: info } : null,
     website: input.website.trim().slice(0, 2048), // optional (column is "" when blank)
     commission,
     logoUrl: input.logoUrl?.trim().slice(0, 2048) || null,
@@ -209,6 +213,7 @@ export async function airlineDraftAction(slug: string): Promise<AirlineDraft | n
     flagCode: (flagToCode(a.flag ?? undefined) ?? "").toUpperCase(),
     kg: a.kg,
     trolley: bareFigure(a.note?.he ?? a.note?.en ?? ""),
+    info: a.info?.he ?? a.info?.en ?? "",
     website: a.website,
     commission: (a.commission ?? "").replace(/%/g, ""),
     logoUrl: a.logoUrl ?? null,

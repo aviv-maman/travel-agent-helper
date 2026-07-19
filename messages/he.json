@@ -654,6 +654,8 @@
       "countryCode": "קוד מדינה (לדגל)",
       "kg": "מזוודה (ק\"ג)",
       "trolley": "טרולי (ק\"ג)",
+      "suitcaseNote": "הערת מזוודה",
+      "suitcaseNotePlaceholder": "הערה שתוצג ליד המזוודה",
       "fillRequired": "יש למלא את שדות החובה (*)",
       "website": "אתר",
       "commission": "עמלה %",

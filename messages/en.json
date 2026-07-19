@@ -654,6 +654,8 @@
       "countryCode": "Country code (flag)",
       "kg": "Suitcase (kg)",
       "trolley": "Trolley (kg)",
+      "suitcaseNote": "Suitcase note",
+      "suitcaseNotePlaceholder": "Shown next to the suitcase",
       "fillRequired": "Fill the required fields (*)",
       "website": "Website",
       "commission": "Commission %",
