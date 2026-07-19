@@ -2,12 +2,15 @@
 
 import Image from "next/image";
 import { useTranslations } from "next-intl";
-import { Luggage, TriangleAlert, Info, Percent, Globe } from "lucide-react";
+import { Luggage, TriangleAlert, Info, Percent, Globe, Settings2 } from "lucide-react";
 import { useState } from "react";
 import type { CommLevel, BaggageIcon, EditableSupplier, ViewSupplier } from "@/lib/commissions";
 import { emptyContact, type SupplierContact as SupplierContactRecord } from "@/lib/contacts";
 import { BaggageEditor, CommissionsEditor, SectionEditButton } from "./supplier-inline-edit";
+import { SupplierDetailsDialog } from "./supplier-details-dialog";
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
+import { Button } from "@/components/ui/button";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
 import { RichText } from "./rich-text";
 import { SupplierContact } from "./supplier-contact";
@@ -52,16 +55,20 @@ export function CommissionCard({
   contact,
   canEditContact,
   editable,
+  signUrl,
 }: {
   supplier: ViewSupplier;
   contact?: SupplierContactRecord;
   canEditContact?: boolean;
   /** Raw both-locale rows for the inline editors; null hides the edit buttons. */
   editable?: EditableSupplier | null;
+  /** Presign endpoint base for the details dialog's logo upload. */
+  signUrl?: string | null;
 }) {
   const t = useTranslations("commissions");
   // Which section is being edited inline (new rows are added inside the editor).
   const [editSection, setEditSection] = useState<"commissions" | "baggage" | null>(null);
+  const [detailsOpen, setDetailsOpen] = useState(false);
   const canEdit = Boolean(canEditContact && editable);
 
   // Always render the same three category rows, pulling each supplier's matching
@@ -155,6 +162,26 @@ export function CommissionCard({
             </a>
           )}
         </div>
+        {canEdit && (
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger
+                render={
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="icon"
+                    aria-label={t("create.editDetails")}
+                    className="text-muted-foreground"
+                    onClick={() => setDetailsOpen(true)}
+                  />
+                }>
+                <Settings2 className="size-4" />
+              </TooltipTrigger>
+              <TooltipContent>{t("create.editDetails")}</TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+        )}
         <SupplierContact
           supplierId={supplier.id}
           supplierName={supplier.name}
@@ -163,6 +190,22 @@ export function CommissionCard({
           size="icon"
         />
       </header>
+
+      {canEdit && (
+        <SupplierDetailsDialog
+          slug={supplier.id}
+          initial={{
+            category: supplier.category,
+            name: supplier.name,
+            code: supplier.code,
+            website: supplier.website ?? "",
+            logoUrl: supplier.logo ?? null,
+          }}
+          signUrl={signUrl ?? null}
+          open={detailsOpen}
+          onOpenChange={setDetailsOpen}
+        />
+      )}
 
       <div className="flex flex-col p-3">
         {(commissionRows.length > 0 || canEdit) && (
@@ -182,6 +225,7 @@ export function CommissionCard({
                 slug={supplier.id}
                 initial={editable.commissions}
                 onDone={() => setEditSection(null)}
+                customOnly={supplier.category !== "flights"}
               />
             ) : (
               <Table>

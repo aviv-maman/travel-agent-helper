@@ -563,6 +563,12 @@
     "create": {
       "addSupplier": "הוספת ספק",
       "title": "ספק חדש",
+      "editTitle": "עריכת ספק",
+      "editDetails": "עריכת פרטים",
+      "save": "שמור",
+      "saving": "שומר…",
+      "saved": "נשמר",
+      "saveFailed": "השמירה נכשלה",
       "stepDetails": "פרטים",
       "stepCommissions": "עמלות",
       "stepBaggage": "כבודה",

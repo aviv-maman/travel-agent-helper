@@ -141,6 +141,7 @@ export function CommissionsView({
                       contact={contacts[s.id]}
                       canEditContact={canEditContacts}
                       editable={editableSuppliers?.[s.id] ?? null}
+                      signUrl={signUrl}
                     />
                   ))}
                 </div>
