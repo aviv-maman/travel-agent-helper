@@ -351,7 +351,7 @@ function ContactView({ contact, t }: { contact: SupplierContactRecord; t: T }) {
 }
 
 /** Editable form: a flat list of contacts (the name comes from the supplier row). */
-function ContactEdit({
+export function ContactEdit({
   contacts,
   updateContact,
   addContact,

@@ -20,6 +20,7 @@ export default async function CommissionsPage({ params }: { params: Promise<{ lo
       contacts={contacts}
       canEditContacts={canEdit}
       editableSuppliers={editableSuppliers}
+      signUrl={process.env.FILE_UPLOAD_URL ?? null}
     />
   );
 }

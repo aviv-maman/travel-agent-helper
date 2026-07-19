@@ -557,7 +557,37 @@
     "categories": {
       "main": "ראשי",
       "hotels": "מלונות",
-      "carRental": "השכרת רכב"
+      "carRental": "השכרת רכב",
+      "insurance": "ביטוח"
+    },
+    "create": {
+      "addSupplier": "הוספת ספק",
+      "title": "ספק חדש",
+      "stepDetails": "פרטים",
+      "stepCommissions": "עמלות",
+      "stepBaggage": "כבודה",
+      "stepContacts": "אנשי קשר",
+      "category": "סוג ספק",
+      "name": "שם",
+      "code": "קוד",
+      "website": "אתר",
+      "logo": "העלה לוגו",
+      "logoUploading": "מעלה…",
+      "logoRemove": "הסר",
+      "logoUploaded": "הלוגו הועלה",
+      "logoError": "העלאת הלוגו נכשלה",
+      "logoBadType": "יש להשתמש בתמונת PNG, JPG או WebP",
+      "logoTooBig": "התמונה חייבת להיות עד 2MB",
+      "back": "הקודם",
+      "next": "הבא",
+      "create": "צור ספק",
+      "creating": "יוצר…",
+      "created": "הספק נוצר",
+      "createFailed": "יצירת הספק נכשלה",
+      "fillRequired": "יש למלא שם, קוד ואתר",
+      "needCommission": "יש להוסיף לפחות עמלה אחת",
+      "needBaggage": "יש להוסיף לפחות שורת כבודה אחת",
+      "contactsOptional": "אנשי הקשר אופציונליים — אפשר לדלג על שלב זה."
     },
     "legend": {
       "high": "גבוה 9%+",

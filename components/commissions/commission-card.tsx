@@ -81,8 +81,8 @@ export function CommissionCard({
   // tying them to the caveat below.
   const hasWarn = supplier.baggage.some((r) => r.icon === "warn");
 
-  // Baggage is a flights concept — hotel and car-rental suppliers hide it.
-  const showBaggage = supplier.category !== "hotels" && supplier.category !== "car-rental";
+  // Baggage is a flights concept — only the main (flights) tab shows it.
+  const showBaggage = supplier.category === "flights";
 
   // Toggle the title on the blue "info" baggage alert (backpack line). Hidden for
   // now; flip to true to bring the "מידע" title back.

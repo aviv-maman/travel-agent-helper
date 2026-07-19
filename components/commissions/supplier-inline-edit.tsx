@@ -24,6 +24,10 @@ import {
  * swaps the section body for editable rows (new rows are added from inside
  * the editor). Editing needs the database (the no-DB fallback is read-only)
  * and `content:edit` — the server actions re-check.
+ *
+ * The row-list bodies (`CommissionRows`, `BaggageRows`) and the draft→payload
+ * converters are exported controlled components so the same UI powers both the
+ * inline card editors here and the create-supplier wizard.
  */
 
 type T = ReturnType<typeof useTranslations<"commissions.editor">>;
@@ -88,54 +92,52 @@ function Field({ label, children }: { label: string; children: React.ReactNode }
   );
 }
 
-function EditorShell({
+/** Dashed "add row" button used at the bottom of a row list. */
+function AddRowButton({ label, onClick }: { label: string; onClick: () => void }) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className="rounded-lg border border-dashed border-border px-3 py-1.5 text-xs font-bold text-muted-foreground transition-colors hover:border-brand hover:text-brand">
+      ➕ {label}
+    </button>
+  );
+}
+
+/** Save/Cancel footer for an inline section editor. */
+function EditorFooter({
   onSave,
   onCancel,
   saving,
-  addLabel,
-  onAdd,
   t,
-  children,
 }: {
   onSave: () => void;
   onCancel: () => void;
   saving: boolean;
-  addLabel: string;
-  onAdd: () => void;
   t: T;
-  children: React.ReactNode;
 }) {
   return (
-    <div className="flex flex-col gap-2 p-2.5">
-      {children}
-      <button
-        type="button"
-        onClick={onAdd}
-        className="rounded-lg border border-dashed border-border px-3 py-1.5 text-xs font-bold text-muted-foreground transition-colors hover:border-brand hover:text-brand">
-        ➕ {addLabel}
-      </button>
-      <div className="flex justify-end gap-2">
-        <Button type="button" variant="outline" size="sm" onClick={onCancel} disabled={saving}>
-          {t("cancel")}
-        </Button>
-        <Button type="button" size="sm" onClick={onSave} disabled={saving}>
-          {saving ? t("saving") : t("save")}
-        </Button>
-      </div>
+    <div className="flex justify-end gap-2">
+      <Button type="button" variant="outline" size="sm" onClick={onCancel} disabled={saving}>
+        {t("cancel")}
+      </Button>
+      <Button type="button" size="sm" onClick={onSave} disabled={saving}>
+        {saving ? t("saving") : t("save")}
+      </Button>
     </div>
   );
 }
 
 // ── Commissions ───────────────────────────────────────────────────────────────
 
-type CommissionDraft = {
+export type CommissionDraft = {
   kind: CommissionKind;
   /** One field per label/value — saved to both locales; the color is derived. */
   label: string;
   value: string;
 };
 
-function toCommissionDrafts(rows: EditableCommissionRow[]): CommissionDraft[] {
+export function toCommissionDrafts(rows: EditableCommissionRow[]): CommissionDraft[] {
   return rows.map((r) => ({
     kind: r.kind,
     label: r.label?.he ?? r.label?.en ?? "",
@@ -149,24 +151,46 @@ function nextKind(drafts: CommissionDraft[]): CommissionKind {
   return STANDARD_KINDS.find((k) => !drafts.some((d) => d.kind === k)) ?? "custom";
 }
 
-function newCommissionDraft(drafts: CommissionDraft[]): CommissionDraft {
+export function newCommissionDraft(drafts: CommissionDraft[]): CommissionDraft {
   return { kind: nextKind(drafts), label: "", value: "" };
 }
 
-export function CommissionsEditor({
-  slug,
-  initial,
-  onDone,
+/**
+ * Shape commission drafts into the server payload. One field feeds both locales
+ * (the guide is Hebrew-first; values are mostly language-neutral numbers). Empty
+ * values are dropped; custom lines must carry a label. Returns `{ rows }` or an
+ * `{ error }` translation key.
+ */
+export function commissionDraftsToInputs(
+  drafts: CommissionDraft[],
+): { rows: CommissionInput[] } | { error: "customNeedsLabel" } {
+  const rows: CommissionInput[] = drafts
+    .filter((d) => stripPercent(d.value))
+    .map((d) => {
+      // Store bare numbers ("9.5"); the "%" is added back only on display.
+      const value = stripPercent(d.value);
+      const label = d.label.trim();
+      return {
+        kind: d.kind,
+        label: d.kind === "custom" ? { he: label, en: label } : null,
+        value: { he: value, en: value },
+      };
+    });
+  if (rows.some((r) => r.kind === "custom" && !r.label?.he)) {
+    return { error: "customNeedsLabel" };
+  }
+  return { rows };
+}
+
+/** The controlled list of commission draft rows + an "add" button. */
+export function CommissionRows({
+  drafts,
+  setDrafts,
 }: {
-  slug: string;
-  initial: EditableCommissionRow[];
-  onDone: () => void;
+  drafts: CommissionDraft[];
+  setDrafts: React.Dispatch<React.SetStateAction<CommissionDraft[]>>;
 }) {
   const t = useTranslations("commissions.editor");
-  const router = useRouter();
-  const [saving, setSaving] = useState(false);
-  const [drafts, setDrafts] = useState<CommissionDraft[]>(() => toCommissionDrafts(initial));
-
   const update = (i: number, patch: Partial<CommissionDraft>) =>
     setDrafts((d) => d.map((row, idx) => (idx === i ? { ...row, ...patch } : row)));
   const remove = (i: number) => setDrafts((d) => d.filter((_, idx) => idx !== i));
@@ -178,45 +202,8 @@ export function CommissionsEditor({
     return [...STANDARD_KINDS.filter((k) => !others.some((o) => o.kind === k)), "custom"];
   }
 
-  async function save() {
-    // One field feeds both locales (the guide is Hebrew-first; values are mostly
-    // language-neutral numbers). The server derives the chip color from the value.
-    const rows: CommissionInput[] = drafts
-      .filter((d) => stripPercent(d.value))
-      .map((d) => {
-        // Store bare numbers ("9.5"); the "%" is added back only on display.
-        const value = stripPercent(d.value);
-        const label = d.label.trim();
-        return {
-          kind: d.kind,
-          label: d.kind === "custom" ? { he: label, en: label } : null,
-          value: { he: value, en: value },
-        };
-      });
-    if (rows.some((r) => r.kind === "custom" && !r.label?.he)) {
-      toast.error(t("customNeedsLabel"));
-      return;
-    }
-    setSaving(true);
-    const res = await saveSupplierCommissionsAction(slug, rows);
-    setSaving(false);
-    if ("error" in res) {
-      toast.error(t("saveFailed"));
-      return;
-    }
-    toast.success(t("commissionsSaved"));
-    onDone();
-    router.refresh();
-  }
-
   return (
-    <EditorShell
-      onSave={save}
-      onCancel={onDone}
-      saving={saving}
-      addLabel={t("addCommission")}
-      onAdd={add}
-      t={t}>
+    <>
       {drafts.map((d, i) => (
         <div
           key={i}
@@ -272,7 +259,48 @@ export function CommissionsEditor({
           </Field>
         </div>
       ))}
-    </EditorShell>
+      <AddRowButton label={t("addCommission")} onClick={add} />
+    </>
+  );
+}
+
+export function CommissionsEditor({
+  slug,
+  initial,
+  onDone,
+}: {
+  slug: string;
+  initial: EditableCommissionRow[];
+  onDone: () => void;
+}) {
+  const t = useTranslations("commissions.editor");
+  const router = useRouter();
+  const [saving, setSaving] = useState(false);
+  const [drafts, setDrafts] = useState<CommissionDraft[]>(() => toCommissionDrafts(initial));
+
+  async function save() {
+    const res = commissionDraftsToInputs(drafts);
+    if ("error" in res) {
+      toast.error(t(res.error));
+      return;
+    }
+    setSaving(true);
+    const result = await saveSupplierCommissionsAction(slug, res.rows);
+    setSaving(false);
+    if ("error" in result) {
+      toast.error(t("saveFailed"));
+      return;
+    }
+    toast.success(t("commissionsSaved"));
+    onDone();
+    router.refresh();
+  }
+
+  return (
+    <div className="flex flex-col gap-2 p-2.5">
+      <CommissionRows drafts={drafts} setDrafts={setDrafts} />
+      <EditorFooter onSave={save} onCancel={onDone} saving={saving} t={t} />
+    </div>
   );
 }
 
@@ -281,7 +309,7 @@ export function CommissionsEditor({
 type InclusionStatus = "included" | "not_included";
 type PriceKind = "gross" | "net";
 
-type BaggageDraft = {
+export type BaggageDraft = {
   icon: BaggageIcon;
   /** Free text — note rows (ok/warn), and the legacy passthrough for category rows. */
   textHe: string;
@@ -357,19 +385,9 @@ function parseLegacyPrices(
   };
 }
 
-export function BaggageEditor({
-  slug,
-  initial,
-  onDone,
-}: {
-  slug: string;
-  initial: BaggageRow[];
-  onDone: () => void;
-}) {
-  const t = useTranslations("commissions.editor");
-  const router = useRouter();
-  const [saving, setSaving] = useState(false);
-  const [drafts, setDrafts] = useState<BaggageDraft[]>(() =>
+/** Build baggage drafts from stored rows (skips the hardcoded backpack line). */
+export function toBaggageDrafts(initial: BaggageRow[]): BaggageDraft[] {
+  return (
     initial
       // The backpack line is hardcoded in the card now — legacy `bag` rows are
       // not editable and get dropped on the next save.
@@ -394,82 +412,83 @@ export function BaggageEditor({
           structured: Boolean(r.inclusion),
           dirty: false,
         };
-      }),
+      })
   );
+}
 
+export function newBaggageDraft(): BaggageDraft {
+  return {
+    icon: "flight",
+    textHe: "",
+    textEn: "",
+    status: "included",
+    suitcasePrice: "",
+    trolleyPrice: "",
+    priceKind: "gross",
+    structured: true,
+    dirty: true,
+  };
+}
+
+/**
+ * Shape baggage drafts into the server payload. Category rows regenerate their
+ * text from the structured fields (untouched legacy rows keep their hand-written
+ * text); note rows carry free text. Returns `{ rows }` or an `{ error }` key.
+ */
+export function baggageDraftsToRows(
+  drafts: BaggageDraft[],
+): { rows: BaggageRow[] } | { error: "priceRequired" } {
+  const rows: BaggageRow[] = [];
+  for (const d of drafts) {
+    if (isCategory(d.icon)) {
+      if (d.structured || d.dirty) {
+        if (d.status === "not_included" && (!d.suitcasePrice.trim() || !d.trolleyPrice.trim())) {
+          return { error: "priceRequired" };
+        }
+        rows.push({
+          icon: d.icon,
+          text: inclusionText(d),
+          inclusion: {
+            status: d.status,
+            ...(d.status === "not_included"
+              ? {
+                  suitcasePrice: d.suitcasePrice.trim(),
+                  trolleyPrice: d.trolleyPrice.trim(),
+                  priceKind: d.priceKind,
+                }
+              : {}),
+          },
+        });
+      } else if (d.textHe.trim() || d.textEn.trim()) {
+        // Untouched legacy row — keep its hand-written text verbatim.
+        rows.push({ icon: d.icon, text: { he: d.textHe.trim(), en: d.textEn.trim() } });
+      }
+    } else if (d.textHe.trim() || d.textEn.trim()) {
+      rows.push({ icon: d.icon, text: { he: d.textHe.trim(), en: d.textEn.trim() } });
+    }
+  }
+  return { rows };
+}
+
+/** The controlled list of baggage draft rows + an "add" button. */
+export function BaggageRows({
+  drafts,
+  setDrafts,
+}: {
+  drafts: BaggageDraft[];
+  setDrafts: React.Dispatch<React.SetStateAction<BaggageDraft[]>>;
+}) {
+  const t = useTranslations("commissions.editor");
   const update = (i: number, patch: Partial<BaggageDraft>) =>
     setDrafts((d) => d.map((row, idx) => (idx === i ? { ...row, ...patch } : row)));
   /** Structured-field change: also marks the row for text regeneration. */
   const updateStructured = (i: number, patch: Partial<BaggageDraft>) =>
     update(i, { ...patch, dirty: true });
   const remove = (i: number) => setDrafts((d) => d.filter((_, idx) => idx !== i));
-  const add = () =>
-    setDrafts((d) => [
-      ...d,
-      {
-        icon: "flight" as const,
-        textHe: "",
-        textEn: "",
-        status: "included" as const,
-        suitcasePrice: "",
-        trolleyPrice: "",
-        priceKind: "gross" as const,
-        structured: true,
-        dirty: true,
-      },
-    ]);
-
-  async function save() {
-    const rows: BaggageRow[] = [];
-    for (const d of drafts) {
-      if (isCategory(d.icon)) {
-        if (d.structured || d.dirty) {
-          if (d.status === "not_included" && (!d.suitcasePrice.trim() || !d.trolleyPrice.trim())) {
-            toast.error(t("priceRequired"));
-            return;
-          }
-          rows.push({
-            icon: d.icon,
-            text: inclusionText(d),
-            inclusion: {
-              status: d.status,
-              ...(d.status === "not_included"
-                ? {
-                    suitcasePrice: d.suitcasePrice.trim(),
-                    trolleyPrice: d.trolleyPrice.trim(),
-                    priceKind: d.priceKind,
-                  }
-                : {}),
-            },
-          });
-        } else if (d.textHe.trim() || d.textEn.trim()) {
-          // Untouched legacy row — keep its hand-written text verbatim.
-          rows.push({ icon: d.icon, text: { he: d.textHe.trim(), en: d.textEn.trim() } });
-        }
-      } else if (d.textHe.trim() || d.textEn.trim()) {
-        rows.push({ icon: d.icon, text: { he: d.textHe.trim(), en: d.textEn.trim() } });
-      }
-    }
-    setSaving(true);
-    const res = await saveSupplierBaggageAction(slug, rows);
-    setSaving(false);
-    if ("error" in res) {
-      toast.error(t("saveFailed"));
-      return;
-    }
-    toast.success(t("baggageSaved"));
-    onDone();
-    router.refresh();
-  }
+  const add = () => setDrafts((d) => [...d, newBaggageDraft()]);
 
   return (
-    <EditorShell
-      onSave={save}
-      onCancel={onDone}
-      saving={saving}
-      addLabel={t("addBaggage")}
-      onAdd={add}
-      t={t}>
+    <>
       {drafts.map((d, i) => (
         <div
           key={i}
@@ -588,6 +607,47 @@ export function BaggageEditor({
           )}
         </div>
       ))}
-    </EditorShell>
+      <AddRowButton label={t("addBaggage")} onClick={add} />
+    </>
+  );
+}
+
+export function BaggageEditor({
+  slug,
+  initial,
+  onDone,
+}: {
+  slug: string;
+  initial: BaggageRow[];
+  onDone: () => void;
+}) {
+  const t = useTranslations("commissions.editor");
+  const router = useRouter();
+  const [saving, setSaving] = useState(false);
+  const [drafts, setDrafts] = useState<BaggageDraft[]>(() => toBaggageDrafts(initial));
+
+  async function save() {
+    const res = baggageDraftsToRows(drafts);
+    if ("error" in res) {
+      toast.error(t(res.error));
+      return;
+    }
+    setSaving(true);
+    const result = await saveSupplierBaggageAction(slug, res.rows);
+    setSaving(false);
+    if ("error" in result) {
+      toast.error(t("saveFailed"));
+      return;
+    }
+    toast.success(t("baggageSaved"));
+    onDone();
+    router.refresh();
+  }
+
+  return (
+    <div className="flex flex-col gap-2 p-2.5">
+      <BaggageRows drafts={drafts} setDrafts={setDrafts} />
+      <EditorFooter onSave={save} onCancel={onDone} saving={saving} t={t} />
+    </div>
   );
 }

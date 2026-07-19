@@ -557,7 +557,37 @@
     "categories": {
       "main": "Main",
       "hotels": "Hotels",
-      "carRental": "Car rental"
+      "carRental": "Car rental",
+      "insurance": "Insurance"
+    },
+    "create": {
+      "addSupplier": "Add supplier",
+      "title": "New supplier",
+      "stepDetails": "Details",
+      "stepCommissions": "Commissions",
+      "stepBaggage": "Baggage",
+      "stepContacts": "Contacts",
+      "category": "Supplier type",
+      "name": "Name",
+      "code": "Code",
+      "website": "Website",
+      "logo": "Upload logo",
+      "logoUploading": "Uploading…",
+      "logoRemove": "Remove",
+      "logoUploaded": "Logo uploaded",
+      "logoError": "Logo upload failed",
+      "logoBadType": "Use a PNG, JPG or WebP image",
+      "logoTooBig": "Image must be under 2MB",
+      "back": "Back",
+      "next": "Next",
+      "create": "Create supplier",
+      "creating": "Creating…",
+      "created": "Supplier created",
+      "createFailed": "Could not create the supplier",
+      "fillRequired": "Fill name, code and website",
+      "needCommission": "Add at least one commission",
+      "needBaggage": "Add at least one baggage row",
+      "contactsOptional": "Contacts are optional — you can skip this step."
     },
     "legend": {
       "high": "High 9%+",

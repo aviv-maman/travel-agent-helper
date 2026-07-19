@@ -293,7 +293,12 @@ export type Faq = typeof faqs.$inferSelect;
 export const commissionLevel = pgEnum("commission_level", ["high", "mid", "low", "range", "net"]);
 
 /** Which suppliers-page tab a supplier belongs to. */
-export const supplierCategory = pgEnum("supplier_category", ["flights", "hotels", "car-rental"]);
+export const supplierCategory = pgEnum("supplier_category", [
+  "flights",
+  "hotels",
+  "car-rental",
+  "insurance",
+]);
 
 /** The three default commission rows, plus labeled extra lines. */
 export const commissionKind = pgEnum("commission_kind", [
