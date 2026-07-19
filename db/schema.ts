@@ -462,6 +462,12 @@ export const airlines = pgTable(
     highlight: boolean("highlight").notNull().default(false),
     /** Base-fare commission chip, e.g. "0%", "7%", "0%/5%". Null renders as "0%". */
     commission: varchar("commission", { length: 16 }),
+    /** Uploaded logo URL (Supabase public bucket, `airline/` prefix). Null → the
+     *  bundled static file `public/airlines/{slug}.png` is used instead. */
+    logoUrl: text("logo_url"),
+    /** True for airlines added in-app (not in the seed list). Only these can be
+     *  deleted; seed rows are managed by `bun run seed`. */
+    custom: boolean("custom").notNull().default(false),
     sortOrder: integer("sort_order").notNull().default(0),
   },
   (t) => [uniqueIndex("airlines_slug_key").on(t.slug)],

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useTranslations } from "next-intl";
-import { Check, Globe, Pencil, Phone, X } from "lucide-react";
+import { Check, Globe, Pencil, Phone, SlidersHorizontal, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
@@ -29,6 +29,7 @@ export function AirlineActions({
   onStartEdit,
   onSaveEdit,
   onCancelEdit,
+  onEditAirline,
 }: {
   id: string;
   name: string;
@@ -40,6 +41,8 @@ export function AirlineActions({
   onStartEdit?: () => void;
   onSaveEdit?: () => void;
   onCancelEdit?: () => void;
+  /** Opens the full add/edit dialog (all fields + logo). Editors only. */
+  onEditAirline?: () => void;
 }) {
   const t = useTranslations("baggage");
   const tc = useTranslations("commissions.contact");
@@ -108,6 +111,24 @@ export function AirlineActions({
                 <TooltipContent>{t("editRow")}</TooltipContent>
               </Tooltip>
             ))}
+          {onEditAirline && !editing && (
+            <Tooltip>
+              <TooltipTrigger
+                render={
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="icon-sm"
+                    aria-label={t("editAirline")}
+                    disabled={rowEditState === "locked"}
+                    onClick={onEditAirline}
+                  />
+                }>
+                <SlidersHorizontal className="size-4" />
+              </TooltipTrigger>
+              <TooltipContent>{t("editAirline")}</TooltipContent>
+            </Tooltip>
+          )}
           <Tooltip>
             <TooltipTrigger
               render={

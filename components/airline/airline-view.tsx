@@ -4,16 +4,18 @@ import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import type { FilterFn } from "@tanstack/react-table";
-import { Info } from "lucide-react";
+import { Info, Plus } from "lucide-react";
 import { toast } from "sonner";
 import { saveAirlineRowAction } from "@/app/actions/airlines";
 import { FIGURE_RE, bareFigure } from "@/lib/airline-figures";
 import type { ViewAirline } from "@/lib/airlines";
 import type { SupplierContact } from "@/lib/contacts";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Button } from "@/components/ui/button";
 import { DataTable } from "@/components/ui/data-table";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { airlineColumns, type RowEdit } from "./airline-columns";
+import { AirlineFormDialog } from "./airline-form-dialog";
 
 // Match the search box against the precomputed he + en + iata string.
 const filterAirline: FilterFn<ViewAirline> = (row, _columnId, value) =>
@@ -23,14 +25,19 @@ export function AirlineView({
   airlines,
   contacts,
   canEditContacts,
+  signUrl,
 }: {
   airlines: ViewAirline[];
   /** Shared contact records keyed by `air:{slug}` (server-fetched). */
   contacts: Record<string, SupplierContact>;
   canEditContacts: boolean;
+  /** Upload endpoint (FILE_UPLOAD_URL) for logo uploads; null when unconfigured. */
+  signUrl: string | null;
 }) {
   const t = useTranslations("baggage");
   const router = useRouter();
+  // The add/edit form: null = closed, "" = add mode, "air:slug" → the row's slug.
+  const [formSlug, setFormSlug] = useState<string | null>(null);
 
   // Inline row edit (suitcase / trolley / commission). One row at a time; the
   // draft is a stable scratch object written only from input events (the inputs
@@ -88,7 +95,14 @@ export function AirlineView({
   // `edit` is rebuilt every render; the cells only change when edit mode or
   // saving flips, so those are the deps instead.
   const columns = useMemo(
-    () => airlineColumns(t, contacts, canEditContacts, edit),
+    () =>
+      airlineColumns(
+        t,
+        contacts,
+        canEditContacts,
+        edit,
+        canEditContacts ? (slug) => setFormSlug(slug) : undefined,
+      ),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [t, contacts, canEditContacts, editing, saving],
   );
@@ -115,6 +129,22 @@ export function AirlineView({
             <p className="leading-relaxed">{t("commissionNote")}</p>
           </AlertDescription>
         </Alert>
+
+        {canEditContacts && (
+          <div className="flex justify-end">
+            <Button size="sm" onClick={() => setFormSlug("")}>
+              <Plus className="size-4" /> {t("addAirline")}
+            </Button>
+          </div>
+        )}
+
+        {formSlug !== null && (
+          <AirlineFormDialog
+            slug={formSlug === "" ? null : formSlug}
+            signUrl={signUrl}
+            onClose={() => setFormSlug(null)}
+          />
+        )}
 
         <DataTable
           columns={columns}

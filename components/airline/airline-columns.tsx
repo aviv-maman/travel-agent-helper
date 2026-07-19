@@ -62,19 +62,36 @@ function FigureInput({
 
 const AIRLINE_PLACEHOLDER_LOGO = "/airlines/placeholder-logo.svg";
 
-/** Airline logo with a placeholder fallback if the file is missing (load error). */
+/** Airline logo with a placeholder fallback if the file is missing (load error).
+ *  Uploaded logos live on the external storage domain — rendered with a plain
+ *  <img> (no next/image loader config, like the avatar), while the bundled
+ *  static logos keep next/image optimization. */
 function AirlineLogo({ src }: { src: string }) {
   const [failed, setFailed] = useState(false);
+  const shown = failed ? AIRLINE_PLACEHOLDER_LOGO : src;
+  const external = /^https?:\/\//.test(shown);
   return (
     <span className="flex size-8 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-surface-2 ring-1 ring-border/50">
-      <Image
-        src={failed ? AIRLINE_PLACEHOLDER_LOGO : src}
-        alt=""
-        width={32}
-        height={32}
-        className="size-full object-contain"
-        onError={() => setFailed(true)}
-      />
+      {external ? (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          src={shown}
+          alt=""
+          width={32}
+          height={32}
+          className="size-full object-contain"
+          onError={() => setFailed(true)}
+        />
+      ) : (
+        <Image
+          src={shown}
+          alt=""
+          width={32}
+          height={32}
+          className="size-full object-contain"
+          onError={() => setFailed(true)}
+        />
+      )}
     </span>
   );
 }
@@ -130,6 +147,8 @@ export function airlineColumns(
   contacts: Record<string, SupplierContact>,
   canEditContacts: boolean,
   edit: RowEdit | null,
+  /** Opens the full add/edit dialog for a row (editors); receives the bare slug. */
+  onEditAirline?: (_slug: string) => void,
 ): ColumnDef<ViewAirline>[] {
   const editingRow = (a: ViewAirline) => edit !== null && edit.editingId === a.id;
   return [
@@ -259,6 +278,13 @@ export function airlineColumns(
             onStartEdit={() => edit?.start(row.original)}
             onSaveEdit={() => edit?.save()}
             onCancelEdit={() => edit?.cancel()}
+            onEditAirline={
+              // Only app-added airlines get the full edit/delete dialog; seed rows
+              // keep just the inline kg/trolley/commission edit.
+              onEditAirline && row.original.custom
+                ? () => onEditAirline(row.original.id.replace(/^air:/, ""))
+                : undefined
+            }
           />
         ),
     },
