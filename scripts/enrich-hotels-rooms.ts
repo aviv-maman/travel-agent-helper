@@ -343,14 +343,18 @@ function occupancyOf(persons: number | null, name: string): { occ: Localized | n
 }
 
 /** Same loose similarity check the Places enrichment uses to flag mismatches.
- * Accent-folded ("Melia" must match "Meliá") — learned from the full run. */
+ * Accent-folded ("Melia" must match "Meliá") — learned from the full run.
+ * Stop-words are dropped as WHOLE words only: the old raw-substring replace
+ * mangled names ("Grand" lost its "and" → "gr" → dropped), which made
+ * "Grand Hotel Krakow" unable to match Booking's plain "Grand Hotel". */
 function looksAlike(ours: string, theirs: string): boolean {
   const norm = (s: string) =>
     s
       .toLowerCase()
       .normalize("NFD")
       .replace(/[̀-ͯ]/g, "")
-      .replace(/hotel|the|by|and|&|,|-|'|’/g, " ")
+      .replace(/[&,'’-]/g, " ")
+      .replace(/\b(?:hotel|the|by|and)\b/g, " ")
       .split(/\s+/)
       .filter((w) => w.length > 2);
   const a = norm(ours);
