@@ -48,7 +48,7 @@ async function runMigrations() {
     return true;
   } catch (error) {
     console.error('❌ Migration failed');
-    console.error((error as Error).message);
+    console.error((error as any).message);
 
     console.log('\n💡 Troubleshooting:');
     console.log('   • Ensure ./src/db/migrations directory exists');
@@ -58,7 +58,7 @@ async function runMigrations() {
     console.log('   • Review guides/troubleshooting.md for common migration errors');
     console.log('   • See references/migrations.md for detailed migration guide');
 
-    const errorMessage = (error as Error).message.toLowerCase();
+    const errorMessage = (error as any).message.toLowerCase();
 
     if (errorMessage.includes('connect') || errorMessage.includes('connection')) {
       console.log('\n⚠️  Connection issue detected:');
@@ -120,7 +120,7 @@ async function runMigrationsWebSocket() {
     await pool.end();
     return true;
   } catch (error) {
-    console.error('❌ Migration failed:', (error as Error).message);
+    console.error('❌ Migration failed:', (error as any).message);
     await pool.end();
     return false;
   }
