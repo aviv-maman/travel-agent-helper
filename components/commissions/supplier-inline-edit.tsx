@@ -182,19 +182,30 @@ export function commissionDraftsToInputs(
   return { rows };
 }
 
-/** The controlled list of commission draft rows + an "add" button. */
+/**
+ * The controlled list of commission draft rows + an "add" button. When
+ * `customOnly` is set (non-flights suppliers), every line is a labeled "special"
+ * commission — the kind dropdown is dropped and only the label + value show.
+ */
 export function CommissionRows({
   drafts,
   setDrafts,
+  customOnly = false,
 }: {
   drafts: CommissionDraft[];
   setDrafts: React.Dispatch<React.SetStateAction<CommissionDraft[]>>;
+  /** Non-flights suppliers: only labeled "special" (custom) lines. */
+  customOnly?: boolean;
 }) {
   const t = useTranslations("commissions.editor");
   const update = (i: number, patch: Partial<CommissionDraft>) =>
     setDrafts((d) => d.map((row, idx) => (idx === i ? { ...row, ...patch } : row)));
   const remove = (i: number) => setDrafts((d) => d.filter((_, idx) => idx !== i));
-  const add = () => setDrafts((d) => [...d, newCommissionDraft(d)]);
+  const add = () =>
+    setDrafts((d) => [
+      ...d,
+      customOnly ? { kind: "custom", label: "", value: "" } : newCommissionDraft(d),
+    ]);
 
   /** Kinds this row may use: its own, unused standard ones, and custom. */
   function kindOptions(i: number): CommissionKind[] {
@@ -202,43 +213,26 @@ export function CommissionRows({
     return [...STANDARD_KINDS.filter((k) => !others.some((o) => o.kind === k)), "custom"];
   }
 
+  const removeBtn = (i: number) => (
+    <Button
+      type="button"
+      variant="ghost"
+      size="icon-sm"
+      aria-label={t("remove")}
+      onClick={() => remove(i)}
+      className="shrink-0 text-muted-foreground hover:text-destructive">
+      <Trash2 className="size-3.5" />
+    </Button>
+  );
+
   return (
     <>
-      {drafts.map((d, i) => (
-        <div
-          key={i}
-          className="flex flex-col gap-2 rounded-lg border border-dashed border-border p-2">
-          <div className="flex items-end gap-2">
-            <Field label={t("kind")}>
-              {/* `items` gives the closed trigger the translated label (Base UI
-                  otherwise renders the raw value). */}
-              <Select
-                value={d.kind}
-                onValueChange={(v) => update(i, { kind: v as CommissionKind })}
-                items={Object.fromEntries(kindOptions(i).map((k) => [k, t(KIND_KEY[k])]))}>
-                <SelectTrigger className="w-full text-xs">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  {kindOptions(i).map((k) => (
-                    <SelectItem key={k} value={k}>
-                      {t(KIND_KEY[k])}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </Field>
-            <Button
-              type="button"
-              variant="ghost"
-              size="icon-sm"
-              aria-label={t("remove")}
-              onClick={() => remove(i)}
-              className="shrink-0 text-muted-foreground hover:text-destructive">
-              <Trash2 className="size-3.5" />
-            </Button>
-          </div>
-          {d.kind === "custom" && (
+      {drafts.map((d, i) =>
+        customOnly ? (
+          // Special-only: label (wide) + value (narrow) share one row.
+          <div
+            key={i}
+            className="flex items-end gap-2 rounded-lg border border-dashed border-border p-2">
             <Field label={t("label")}>
               <Input
                 value={d.label}
@@ -247,18 +241,66 @@ export function CommissionRows({
                 className="h-8 text-xs"
               />
             </Field>
-          )}
-          <Field label={t("value")}>
-            <Input
-              value={d.value}
-              dir="auto"
-              placeholder="9.5"
-              onChange={(e) => update(i, { value: e.target.value })}
-              className="h-8 text-xs"
-            />
-          </Field>
-        </div>
-      ))}
+            <label className="flex w-20 shrink-0 flex-col gap-1">
+              <span className="text-[0.65rem] font-bold text-muted-foreground">{t("value")}</span>
+              <Input
+                value={d.value}
+                dir="auto"
+                placeholder="9.5"
+                onChange={(e) => update(i, { value: e.target.value })}
+                className="h-8 text-xs"
+              />
+            </label>
+            {removeBtn(i)}
+          </div>
+        ) : (
+          <div
+            key={i}
+            className="flex flex-col gap-2 rounded-lg border border-dashed border-border p-2">
+            <div className="flex items-end gap-2">
+              <Field label={t("kind")}>
+                {/* `items` gives the closed trigger the translated label (Base UI
+                    otherwise renders the raw value). */}
+                <Select
+                  value={d.kind}
+                  onValueChange={(v) => update(i, { kind: v as CommissionKind })}
+                  items={Object.fromEntries(kindOptions(i).map((k) => [k, t(KIND_KEY[k])]))}>
+                  <SelectTrigger className="w-full text-xs">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {kindOptions(i).map((k) => (
+                      <SelectItem key={k} value={k}>
+                        {t(KIND_KEY[k])}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </Field>
+              {removeBtn(i)}
+            </div>
+            {d.kind === "custom" && (
+              <Field label={t("label")}>
+                <Input
+                  value={d.label}
+                  dir="auto"
+                  onChange={(e) => update(i, { label: e.target.value })}
+                  className="h-8 text-xs"
+                />
+              </Field>
+            )}
+            <Field label={t("value")}>
+              <Input
+                value={d.value}
+                dir="auto"
+                placeholder="9.5"
+                onChange={(e) => update(i, { value: e.target.value })}
+                className="h-8 text-xs"
+              />
+            </Field>
+          </div>
+        ),
+      )}
       <AddRowButton label={t("addCommission")} onClick={add} />
     </>
   );
@@ -268,15 +310,23 @@ export function CommissionsEditor({
   slug,
   initial,
   onDone,
+  customOnly = false,
 }: {
   slug: string;
   initial: EditableCommissionRow[];
   onDone: () => void;
+  /** Non-flights suppliers: only labeled "special" (custom) lines. */
+  customOnly?: boolean;
 }) {
   const t = useTranslations("commissions.editor");
   const router = useRouter();
   const [saving, setSaving] = useState(false);
-  const [drafts, setDrafts] = useState<CommissionDraft[]>(() => toCommissionDrafts(initial));
+  const [drafts, setDrafts] = useState<CommissionDraft[]>(() => {
+    const d = toCommissionDrafts(initial);
+    // A non-flights supplier's lines are all "special" — coerce any legacy
+    // standard-kind row so the editor (and save) treats it as custom.
+    return customOnly ? d.map((x) => ({ ...x, kind: "custom" as const })) : d;
+  });
 
   async function save() {
     const res = commissionDraftsToInputs(drafts);
@@ -298,7 +348,7 @@ export function CommissionsEditor({
 
   return (
     <div className="flex flex-col gap-2 p-2.5">
-      <CommissionRows drafts={drafts} setDrafts={setDrafts} />
+      <CommissionRows drafts={drafts} setDrafts={setDrafts} customOnly={customOnly} />
       <EditorFooter onSave={save} onCancel={onDone} saving={saving} t={t} />
     </div>
   );

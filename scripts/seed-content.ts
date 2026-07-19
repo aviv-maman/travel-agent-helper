@@ -74,16 +74,11 @@ async function seedSuppliers(): Promise<Map<string, number>> {
       })
       .onConflictDoUpdate({
         target: suppliers.slug,
-        // `baggage` is deliberately NOT in the update set: it's edited in-app
-        // (the card's inline editor), so a re-seed must not clobber it — it's
-        // only written when the supplier row is first created.
+        // The header fields (name/code/category/alias/website/logo) and `baggage`
+        // are edited in-app (the details dialog + inline editors), so a re-seed
+        // must NOT clobber them — they're only written when the row is first
+        // created. Only bootstrap-only fields (notes, placeholder, order) update.
         set: {
-          name: s.name,
-          code: s.code,
-          category: s.category ?? "flights",
-          alias: s.alias ?? null,
-          website: s.website ?? null,
-          logo: s.logo ?? cancel?.logo ?? null,
           notes: s.notes ?? [],
           placeholder: Boolean(s.placeholder),
           sortOrder,

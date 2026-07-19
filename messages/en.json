@@ -563,6 +563,12 @@
     "create": {
       "addSupplier": "Add supplier",
       "title": "New supplier",
+      "editTitle": "Edit supplier",
+      "editDetails": "Edit details",
+      "save": "Save",
+      "saving": "Saving…",
+      "saved": "Saved",
+      "saveFailed": "Could not save",
       "stepDetails": "Details",
       "stepCommissions": "Commissions",
       "stepBaggage": "Baggage",

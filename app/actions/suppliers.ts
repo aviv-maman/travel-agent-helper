@@ -76,9 +76,48 @@ export async function saveSupplierBaggageAction(
   }
 }
 
-// ── Create a new supplier (editors) ──────────────────────────────────────────
+// ── Edit / create a supplier's header (editors) ──────────────────────────────
 
 const CATEGORIES: readonly SupplierCategory[] = ["flights", "hotels", "car-rental", "insurance"];
+
+export type SupplierDetailsInput = {
+  category: SupplierCategory;
+  name: string;
+  code: string;
+  website: string;
+  /** Uploaded logo URL (bucket) or null for the placeholder. */
+  logoUrl: string | null;
+};
+
+/** Update a supplier's header fields (name/code/website/category/logo). */
+export async function updateSupplierDetailsAction(
+  slug: string,
+  input: SupplierDetailsInput,
+): Promise<SaveResult> {
+  if (!(await can("content:edit"))) return { error: "forbidden" };
+  const name = input.name.trim().slice(0, 120);
+  const code = input.code.trim().slice(0, 24);
+  const website = input.website.trim().slice(0, 2048);
+  if (!name || !code || !website) return { error: "invalid" };
+  if (!CATEGORIES.includes(input.category)) return { error: "invalid" };
+  try {
+    const updated = await db
+      .update(suppliers)
+      .set({
+        name: { he: name, en: name },
+        code,
+        category: input.category,
+        website,
+        logo: input.logoUrl?.trim().slice(0, 2048) || null,
+      })
+      .where(eq(suppliers.slug, slug.slice(0, 48)))
+      .returning({ id: suppliers.id });
+    if (updated.length === 0) return { error: "invalid" };
+    return { ok: true };
+  } catch {
+    return { error: "offline" };
+  }
+}
 
 export type CreateSupplierInput = {
   category: SupplierCategory;
