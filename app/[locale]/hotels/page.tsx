@@ -86,7 +86,11 @@ export default async function HotelsPage({
       )}
       {view && (
         <>
-          <HotelFilters landmarks={view.landmarks} />
+          <HotelFilters
+            landmarks={view.landmarks}
+            roomSizeMin={view.roomSizeMin}
+            roomSizeMax={view.roomSizeMax}
+          />
           <HotelSearch key={view.iata} hotelNames={view.hotelNames} />
           <HotelsResults hotels={view.hotels} canEdit={canEdit} initialView={hotelsView} />
           <HotelsPager

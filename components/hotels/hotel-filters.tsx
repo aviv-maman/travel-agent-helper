@@ -41,7 +41,15 @@ const BASE_SORTS: { value: SortMode; key: keyof HotelMessages["sort"]; emoji: st
 const chipClass =
   "rounded-full border border-border aria-pressed:border-brand aria-pressed:bg-brand aria-pressed:text-brand-foreground";
 
-export function HotelFilters({ landmarks }: { landmarks: ViewLandmark[] }) {
+export function HotelFilters({
+  landmarks,
+  roomSizeMin,
+  roomSizeMax,
+}: {
+  landmarks: ViewLandmark[];
+  roomSizeMin: number | null;
+  roomSizeMax: number | null;
+}) {
   const t = useTranslations("hotels");
   const { tags, boards, features, sort, update } = useHotelParams();
 
@@ -146,7 +154,7 @@ export function HotelFilters({ landmarks }: { landmarks: ViewLandmark[] }) {
       </div>
 
       {/* Room filters */}
-      <RoomFilters />
+      <RoomFilters roomSizeMin={roomSizeMin} roomSizeMax={roomSizeMax} />
     </div>
   );
 }
