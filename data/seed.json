@@ -483,7 +483,7 @@
         ],
         "bookingScore": 6.8,
         "googleMapsUrl": "https://www.google.com/maps/search/Grand+Bellagio+Hotel+Batumi+Georgia",
-        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Grand+Bellagio+Batumi",
+        "bookingUrl": "https://www.booking.com/hotel/ge/legend-batumi.html",
         "roomsNote": null,
         "sortOrder": 10,
         "features": [
@@ -574,7 +574,7 @@
         "rooms": []
       },
       {
-        "name": "Paragraph Resort & Spa Shekvetili",
+        "name": "Paragraph Resort & Spa Shekvetili, Autograph Collection",
         "stars": 5,
         "tier": "premium",
         "tags": [
@@ -585,7 +585,7 @@
         ],
         "bookingScore": 9.5,
         "googleMapsUrl": "https://www.google.com/maps/search/Paragraph+Resort+Spa+Shekvetili+Georgia",
-        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Paragraph+Resort+Shekvetili",
+        "bookingUrl": "https://www.booking.com/hotel/ge/paragraph-resort-spa-shekvetili-autograph-collection.html",
         "roomsNote": null,
         "sortOrder": 13,
         "features": [
@@ -664,7 +664,7 @@
         ],
         "bookingScore": 8,
         "googleMapsUrl": "https://www.google.com/maps/search/King+Solomon+Hotel+Batumi+Georgia",
-        "bookingUrl": "https://www.booking.com/searchresults.html?ss=King+Solomon+Hotel+Batumi",
+        "bookingUrl": "https://www.booking.com/hotel/ge/king-solomon-batumi.html",
         "roomsNote": null,
         "sortOrder": 15,
         "features": [
@@ -1000,7 +1000,7 @@
         "rooms": []
       },
       {
-        "name": "Estilo Hotel (Mellow Mood)",
+        "name": "Estilo Hotel by Mellow Mood Hotels",
         "stars": 4,
         "tier": "good",
         "tags": [],
@@ -1009,7 +1009,7 @@
         ],
         "bookingScore": 8.8,
         "googleMapsUrl": "https://www.google.com/maps/search/Estilo+Hotel+(Mellow+Mood)+Budapest",
-        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Estilo+Hotel+(Mellow+Mood)+Budapest",
+        "bookingUrl": "https://www.booking.com/hotel/hu/estilo-fashion.html",
         "roomsNote": null,
         "sortOrder": 6,
         "features": [],
@@ -2248,7 +2248,7 @@
         "rooms": []
       },
       {
-        "name": "Wyndham Residence Athens",
+        "name": "Zeus Essence Wyndham Athens Residence",
         "stars": 4,
         "tier": "good",
         "tags": [],
@@ -2257,7 +2257,7 @@
         ],
         "bookingScore": 8.4,
         "googleMapsUrl": "https://www.google.com/maps/search/Wyndham+Residence+Athens+Athens+Greece",
-        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Wyndham+Residence+Athens+Athens+Greece",
+        "bookingUrl": "https://www.booking.com/hotel/gr/wyndham-grand-athens-residence.html",
         "roomsNote": null,
         "sortOrder": 3,
         "features": [
@@ -2557,7 +2557,7 @@
         ],
         "bookingScore": 8.8,
         "googleMapsUrl": "https://www.google.com/maps/search/Amalia+Athens+Athens+Greece",
-        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Amalia+Athens+Athens+Greece",
+        "bookingUrl": "https://www.booking.com/hotel/gr/amalia.html",
         "roomsNote": null,
         "sortOrder": 10,
         "features": [],
@@ -2599,7 +2599,7 @@
         ],
         "bookingScore": 8.9,
         "googleMapsUrl": "https://www.google.com/maps/search/360+Degrees+Hotel+Athens+Greece",
-        "bookingUrl": "https://www.booking.com/searchresults.html?ss=360+Degrees+Hotel+Athens+Greece",
+        "bookingUrl": "https://www.booking.com/hotel/gr/360-degrees-rooms-and-apartments.html",
         "roomsNote": null,
         "sortOrder": 11,
         "features": [],
@@ -3113,7 +3113,7 @@
         ],
         "bookingScore": 8.9,
         "googleMapsUrl": "https://www.google.com/maps/search/Plaka+Hotel+Athens+Greece",
-        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Plaka+Hotel+Athens+Greece",
+        "bookingUrl": "https://www.booking.com/hotel/gr/plakahotel.html",
         "roomsNote": null,
         "sortOrder": 23,
         "features": [],
@@ -3188,7 +3188,7 @@
         "rooms": []
       },
       {
-        "name": "Play Theatrou Hotel",
+        "name": "Play Theatrou Athens, a member of Brown Hotels",
         "stars": 4,
         "tier": "good",
         "tags": [],
@@ -3197,7 +3197,7 @@
         ],
         "bookingScore": 8.9,
         "googleMapsUrl": "https://www.google.com/maps/search/Play+Theatrou+Hotel+Athens+Greece",
-        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Play+Theatrou+Hotel+Athens+Greece",
+        "bookingUrl": "https://www.booking.com/hotel/gr/soul-athens.html",
         "roomsNote": null,
         "sortOrder": 25,
         "features": [],
@@ -4015,7 +4015,7 @@
         ],
         "bookingScore": 8.2,
         "googleMapsUrl": "https://www.google.com/maps/search/Le+Palace+Hotel+Thessaloniki+Thessaloniki+Greece",
-        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Le+Palace+Hotel+Thessaloniki+Thessaloniki+Greece",
+        "bookingUrl": "https://www.booking.com/hotel/gr/lepalacethessaloniki.html",
         "roomsNote": null,
         "sortOrder": 5,
         "features": [],
@@ -4230,7 +4230,7 @@
         ],
         "bookingScore": 9.3,
         "googleMapsUrl": "https://www.google.com/maps/search/Mediterranean+Palace+Hotel+Thessaloniki+Greece",
-        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Mediterranean+Palace+Hotel+Thessaloniki+Greece",
+        "bookingUrl": "https://www.booking.com/hotel/gr/mediterraneanpalace_thessaloniki.html",
         "roomsNote": null,
         "sortOrder": 12,
         "features": [
@@ -4635,7 +4635,7 @@
         ],
         "bookingScore": 8.3,
         "googleMapsUrl": "https://www.google.com/maps/search/Courtyard+by+Marriott+Tbilisi+Tbilisi+Georgia",
-        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Courtyard+by+Marriott+Tbilisi+Tbilisi+Georgia",
+        "bookingUrl": "https://www.booking.com/hotel/ge/coutyard-tbilisi.html",
         "roomsNote": null,
         "sortOrder": 0,
         "features": [
@@ -4764,7 +4764,7 @@
         ],
         "bookingScore": 8.8,
         "googleMapsUrl": "https://www.google.com/maps/search/Ibis+Styles+Tbilisi+Center+Tbilisi+Georgia",
-        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Ibis+Styles+Tbilisi+Center+Tbilisi+Georgia",
+        "bookingUrl": "https://www.booking.com/hotel/ge/ibis-styles-tbilisi-center.html",
         "roomsNote": null,
         "sortOrder": 3,
         "features": [],
@@ -5069,7 +5069,7 @@
         ],
         "bookingScore": 9.2,
         "googleMapsUrl": "https://www.google.com/maps/search/Shota+@+Rustaveli+Boutique+Tbilisi+Georgia",
-        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Shota+@+Rustaveli+Boutique+Tbilisi+Georgia",
+        "bookingUrl": "https://www.booking.com/hotel/ge/shota-rustaveli-boutique.html",
         "roomsNote": null,
         "sortOrder": 10,
         "features": [
@@ -5155,7 +5155,7 @@
         ],
         "bookingScore": 8.8,
         "googleMapsUrl": "https://www.google.com/maps/search/Museum+Hotel+Orbeliani+Tbilisi+Georgia",
-        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Museum+Hotel+Orbeliani+Tbilisi+Georgia",
+        "bookingUrl": "https://www.booking.com/hotel/ge/museum.html",
         "roomsNote": null,
         "sortOrder": 12,
         "features": [],
@@ -5543,7 +5543,7 @@
         "rooms": []
       },
       {
-        "name": "Cron Palace Kosher Hotel",
+        "name": "Cron Palace Kosher Tbilisi Hotel",
         "stars": 4,
         "tier": "good",
         "tags": [
@@ -5554,7 +5554,7 @@
         ],
         "bookingScore": 8.3,
         "googleMapsUrl": "https://www.google.com/maps/search/Cron+Palace+Kosher+Hotel+Tbilisi+Georgia",
-        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Cron+Palace+Kosher+Hotel+Tbilisi+Georgia",
+        "bookingUrl": "https://www.booking.com/hotel/ge/cron-palace-tbilisi.html",
         "roomsNote": null,
         "sortOrder": 21,
         "features": [
@@ -6277,7 +6277,7 @@
         ],
         "bookingScore": 9,
         "googleMapsUrl": "https://www.google.com/maps/search/Hyatt+Regency+Sofia+Sofia+Bulgaria",
-        "bookingUrl": "https://www.booking.com/searchresults.html?ss=Hyatt+Regency+Sofia+Sofia+Bulgaria",
+        "bookingUrl": "https://www.booking.com/hotel/bg/hyatt-regency-sofia.html",
         "roomsNote": null,
         "sortOrder": 13,
         "features": [
