@@ -39,7 +39,7 @@ const PAGES = [
   { segment: "faq", emoji: "❓" },
 ] as const;
 
-export function PageNav() {
+export function PageNav({ avatarUrl }: { avatarUrl?: string | null }) {
   const t = useTranslations("tabs");
   const tNav = useTranslations("nav");
   const tApp = useTranslations("app");
@@ -131,7 +131,7 @@ export function PageNav() {
                   />
                 }>
                 {user ? (
-                  <UserAvatar name={userLabel} className="size-6 text-[0.6rem]" />
+                  <UserAvatar name={userLabel} src={avatarUrl} className="size-6 text-[0.6rem]" />
                 ) : (
                   <CircleUser className="size-4" />
                 )}
@@ -211,7 +211,7 @@ export function PageNav() {
               <Link
                 href={accountHref}
                 className="flex items-center gap-1.5 rounded-md px-2 py-1 text-sm font-medium text-foreground transition-colors hover:text-brand">
-                <UserAvatar name={userLabel} className="size-6 text-[0.6rem]" />
+                <UserAvatar name={userLabel} src={avatarUrl} className="size-6 text-[0.6rem]" />
                 <span className="max-w-[16ch] truncate">{userLabel}</span>
               </Link>
               <form action={logout.bind(null, locale)}>
