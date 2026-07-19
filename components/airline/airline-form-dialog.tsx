@@ -217,11 +217,13 @@ export function AirlineFormDialog({
               </div>
             </div>
 
-            <Field label={`${t("name")} (עברית)`}>
-              <Input dir="rtl" value={form.nameHe} onChange={(e) => set({ nameHe: e.target.value })} />
-            </Field>
-            <Field label={`${t("name")} (English)`}>
-              <Input dir="ltr" value={form.nameEn} onChange={(e) => set({ nameEn: e.target.value })} />
+            {/* One name — stored for both locales (airline names read the same
+                in he/en). Same for the trolley/note fields below. */}
+            <Field label={t("name")}>
+              <Input
+                value={form.nameHe}
+                onChange={(e) => set({ nameHe: e.target.value, nameEn: e.target.value })}
+              />
             </Field>
 
             <div className="grid grid-cols-3 gap-2">
@@ -245,33 +247,20 @@ export function AirlineFormDialog({
               </Field>
             </div>
 
-            <div className="grid grid-cols-2 gap-2">
-              <Field label={`${t("trolley")} (עברית)`}>
-                <Input
-                  dir="rtl"
-                  value={form.trolleyHe}
-                  onChange={(e) => set({ trolleyHe: e.target.value })}
-                  placeholder='8 ק"ג'
-                />
-              </Field>
-              <Field label={`${t("trolley")} (English)`}>
-                <Input
-                  dir="ltr"
-                  value={form.trolleyEn}
-                  onChange={(e) => set({ trolleyEn: e.target.value })}
-                  placeholder="8 kg"
-                />
-              </Field>
-            </div>
+            <Field label={t("trolley")}>
+              <Input
+                value={form.trolleyHe}
+                onChange={(e) => set({ trolleyHe: e.target.value, trolleyEn: e.target.value })}
+                placeholder='8 ק"ג'
+              />
+            </Field>
 
-            <div className="grid grid-cols-2 gap-2">
-              <Field label={`${t("info")} (עברית)`}>
-                <Input dir="rtl" value={form.infoHe} onChange={(e) => set({ infoHe: e.target.value })} />
-              </Field>
-              <Field label={`${t("info")} (English)`}>
-                <Input dir="ltr" value={form.infoEn} onChange={(e) => set({ infoEn: e.target.value })} />
-              </Field>
-            </div>
+            <Field label={t("info")}>
+              <Input
+                value={form.infoHe}
+                onChange={(e) => set({ infoHe: e.target.value, infoEn: e.target.value })}
+              />
+            </Field>
 
             <div className="grid grid-cols-[1fr_auto] gap-2">
               <Field label={t("website")}>

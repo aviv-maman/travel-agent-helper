@@ -279,7 +279,11 @@ export function airlineColumns(
             onSaveEdit={() => edit?.save()}
             onCancelEdit={() => edit?.cancel()}
             onEditAirline={
-              onEditAirline ? () => onEditAirline(row.original.id.replace(/^air:/, "")) : undefined
+              // Only app-added airlines get the full edit/delete dialog; seed rows
+              // keep just the inline kg/trolley/commission edit.
+              onEditAirline && row.original.custom
+                ? () => onEditAirline(row.original.id.replace(/^air:/, ""))
+                : undefined
             }
           />
         ),
