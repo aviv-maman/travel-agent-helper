@@ -1,47 +1,76 @@
 /**
- * Generate the PWA app icons from an inline SVG (brand-blue square + a white
- * flight glyph) with sharp. Run once; the PNGs are committed. Reproducible:
+ * Generate the PWA app icons from the brand logo (public/brand/logo.png) with
+ * sharp. The source is a 1024×1024 render of the "M" mark on a rounded white
+ * card (with shadow); this extracts just the artwork and re-composites it,
+ * centred, on a clean full-bleed white square so the OS applies its own icon
+ * mask (no double-rounded corners / clipping). Run once; the PNGs are committed:
  *   bun scripts/gen-pwa-icons.ts
  *
- * Outputs:
- *   public/icons/icon-192.png, icon-512.png       (purpose "any", rounded)
- *   public/icons/icon-maskable-512.png            (purpose "maskable", full-bleed + safe zone)
- *   app/icon.png                                  (favicon, rounded)
- *   app/apple-icon.png (180)                      (apple-touch, full-bleed square)
+ * Outputs: public/icons/icon-{192,512}.png, icon-maskable-512.png,
+ *          app/icon.png (favicon), app/apple-icon.png (180 apple-touch).
  */
 
-import { mkdirSync } from "node:fs";
+import { mkdirSync, writeFileSync } from "node:fs";
 import sharp from "sharp";
 
-const BRAND = "#2563eb"; // matches --brand oklch(0.546 0.215 262.881)
-const FLIGHT =
-  "M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z";
+const SRC = "public/brand/logo.png";
+// Region of the source that bounds the M mark (inside the card, past the
+// rounded corners + shadow). Tuned to this 1024×1024 logo.
+const CROP = { left: 230, top: 170, width: 565, height: 520 };
 
-/** One icon SVG. `bleed` = full square background (maskable/apple); else rounded. `glyph` = glyph box fraction. */
-function svg(size: number, { bleed = false, glyph = 0.56 } = {}): Buffer {
-  const r = bleed ? 0 : Math.round(size * 0.22);
-  const g = size * glyph;
-  const off = (size - g) / 2;
-  const scale = g / 24; // the flight path uses a 24×24 viewBox
-  return Buffer.from(
-    `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 ${size} ${size}">
-      <rect width="${size}" height="${size}" rx="${r}" ry="${r}" fill="${BRAND}"/>
-      <g transform="translate(${off} ${off}) scale(${scale}) rotate(45 12 12)">
-        <path d="${FLIGHT}" fill="#ffffff"/>
-      </g>
-    </svg>`,
-  );
+/** The tight artwork (M mark) on white, trimmed to its bounding box. */
+async function artwork(): Promise<Buffer> {
+  const region = await sharp(SRC)
+    .flatten({ background: "#ffffff" })
+    .extract(CROP)
+    .png()
+    .toBuffer();
+  return sharp(region).trim({ background: "#ffffff", threshold: 30 }).png().toBuffer();
 }
 
-async function png(buf: Buffer, size: number, out: string) {
-  await sharp(buf).resize(size, size).png().toFile(out);
+/** Center the artwork on a white square of `size`; `inner` = art box fraction. */
+async function compose(art: Buffer, size: number, inner: number): Promise<Buffer> {
+  const box = Math.round(size * inner);
+  const fitted = await sharp(art)
+    .resize(box, box, { fit: "contain", background: "#ffffff" })
+    .png()
+    .toBuffer();
+  return sharp({ create: { width: size, height: size, channels: 3, background: "#ffffff" } })
+    .composite([{ input: fitted, gravity: "center" }])
+    .png()
+    .toBuffer();
+}
+
+async function icon(art: Buffer, size: number, inner: number, out: string) {
+  writeFileSync(out, await compose(art, size, inner));
   console.log("→", out);
 }
 
+/** Wrap a 256×256 PNG in a single-image ICO container (PNG-in-ICO, Vista+). */
+function pngToIco(png: Buffer): Buffer {
+  const header = Buffer.alloc(6);
+  header.writeUInt16LE(0, 0); // reserved
+  header.writeUInt16LE(1, 2); // type: icon
+  header.writeUInt16LE(1, 4); // one image
+  const entry = Buffer.alloc(16);
+  entry.writeUInt8(0, 0); // width 256 → 0
+  entry.writeUInt8(0, 1); // height 256 → 0
+  entry.writeUInt16LE(1, 4); // planes
+  entry.writeUInt16LE(32, 6); // bpp
+  entry.writeUInt32LE(png.length, 8);
+  entry.writeUInt32LE(22, 12); // offset (6 + 16)
+  return Buffer.concat([header, entry, png]);
+}
+
 mkdirSync("public/icons", { recursive: true });
-await png(svg(512), 512, "public/icons/icon-512.png");
-await png(svg(192), 192, "public/icons/icon-192.png");
-await png(svg(512, { bleed: true, glyph: 0.44 }), 512, "public/icons/icon-maskable-512.png");
-await png(svg(512), 512, "app/icon.png");
-await png(svg(180, { bleed: true, glyph: 0.56 }), 180, "app/apple-icon.png");
+const art = await artwork();
+await icon(art, 512, 0.76, "public/icons/icon-512.png");
+await icon(art, 192, 0.76, "public/icons/icon-192.png");
+// Maskable: extra padding so Android's circle/squircle crop never clips the M.
+await icon(art, 512, 0.62, "public/icons/icon-maskable-512.png");
+await icon(art, 512, 0.76, "app/icon.png");
+await icon(art, 180, 0.78, "app/apple-icon.png");
+// Browser-tab favicon (256 PNG-in-ICO) so the tab matches the new logo.
+writeFileSync("app/favicon.ico", pngToIco(await compose(art, 256, 0.82)));
+console.log("→ app/favicon.ico");
 console.log("done");
