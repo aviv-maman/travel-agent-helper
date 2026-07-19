@@ -15,6 +15,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { CountryCombobox } from "@/components/airline/country-combobox";
 import { Spinner } from "@/components/ui/spinner";
 import {
   Dialog,
@@ -236,12 +237,9 @@ export function AirlineFormDialog({
                 />
               </Field>
               <Field label={t("countryCode")} required>
-                <Input
-                  dir="ltr"
+                <CountryCombobox
                   value={form.flagCode}
-                  onChange={(e) => set({ flagCode: e.target.value })}
-                  placeholder="IL"
-                  maxLength={2}
+                  onChange={(code) => set({ flagCode: code })}
                 />
               </Field>
             </div>
