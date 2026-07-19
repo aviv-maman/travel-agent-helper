@@ -14,18 +14,14 @@ import { mkdirSync, writeFileSync } from "node:fs";
 import sharp from "sharp";
 
 const SRC = "public/brand/logo.png";
-// Region of the source that bounds the M mark (inside the card, past the
-// rounded corners + shadow). Tuned to this 1024×1024 logo.
-const CROP = { left: 230, top: 170, width: 565, height: 520 };
+// Region of the source that bounds the full mark — the "M" plus the faint globe
+// beneath it — inside the card, past the rounded corners + shadow. Tuned to this
+// 1024×1024 logo. (No auto-trim: the pale globe would be trimmed as near-white.)
+const CROP = { left: 232, top: 180, width: 566, height: 625 };
 
-/** The tight artwork (M mark) on white, trimmed to its bounding box. */
+/** The mark (M + globe) flattened on white, cropped to its bounding box. */
 async function artwork(): Promise<Buffer> {
-  const region = await sharp(SRC)
-    .flatten({ background: "#ffffff" })
-    .extract(CROP)
-    .png()
-    .toBuffer();
-  return sharp(region).trim({ background: "#ffffff", threshold: 30 }).png().toBuffer();
+  return sharp(SRC).flatten({ background: "#ffffff" }).extract(CROP).png().toBuffer();
 }
 
 /** Center the artwork on a white square of `size`; `inner` = art box fraction. */
@@ -64,13 +60,13 @@ function pngToIco(png: Buffer): Buffer {
 
 mkdirSync("public/icons", { recursive: true });
 const art = await artwork();
-await icon(art, 512, 0.76, "public/icons/icon-512.png");
-await icon(art, 192, 0.76, "public/icons/icon-192.png");
-// Maskable: extra padding so Android's circle/squircle crop never clips the M.
-await icon(art, 512, 0.62, "public/icons/icon-maskable-512.png");
-await icon(art, 512, 0.76, "app/icon.png");
-await icon(art, 180, 0.78, "app/apple-icon.png");
+await icon(art, 512, 0.82, "public/icons/icon-512.png");
+await icon(art, 192, 0.82, "public/icons/icon-192.png");
+// Maskable: extra padding so Android's circle/squircle crop never clips the mark.
+await icon(art, 512, 0.68, "public/icons/icon-maskable-512.png");
+await icon(art, 512, 0.82, "app/icon.png");
+await icon(art, 180, 0.84, "app/apple-icon.png");
 // Browser-tab favicon (256 PNG-in-ICO) so the tab matches the new logo.
-writeFileSync("app/favicon.ico", pngToIco(await compose(art, 256, 0.82)));
+writeFileSync("app/favicon.ico", pngToIco(await compose(art, 256, 0.86)));
 console.log("→ app/favicon.ico");
 console.log("done");
