@@ -8,6 +8,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
 import { PageNav } from "@/components/page-nav";
 import { SessionProvider } from "@/components/auth/session-provider";
+import { validateSession } from "@/lib/auth/session";
 import { routing, localeDirection, type Locale } from "@/i18n/routing";
 import "../globals.css";
 
@@ -48,6 +49,9 @@ export default async function LocaleLayout({
   setRequestLocale(locale);
   const dir = localeDirection[locale as Locale];
   const t = await getTranslations({ locale, namespace: "app" });
+  // The avatar the user uploaded (nav shows initials until then). Read server-side
+  // since the client session mirror cookie carries only name, not the image URL.
+  const currentUser = await validateSession();
 
   return (
     <html
@@ -60,7 +64,7 @@ export default async function LocaleLayout({
           <ThemeProvider defaultTheme="dark">
             <DirectionProvider direction={dir}>
               <SessionProvider>
-                <PageNav />
+                <PageNav avatarUrl={currentUser?.avatarUrl ?? null} />
                 <main className="mx-auto w-full max-w-5xl p-4">
                   <header className="mb-8">
                     <h1 className="text-2xl font-extrabold text-foreground">{t("title")}</h1>
