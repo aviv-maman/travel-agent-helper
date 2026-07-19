@@ -11,6 +11,7 @@ import { emitQuoteDeleted } from "@/lib/ai/quote-events";
 import { QUOTE_HISTORY_VIEW_COOKIE } from "@/lib/ai/constants";
 import type { SavedQuote } from "@/lib/ai/quotes";
 import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
 import { Spinner } from "@/components/ui/spinner";
 import { useDirection } from "@/components/ui/direction";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
@@ -41,6 +42,39 @@ type ViewMode = "list" | "drawer";
  */
 function quoteImageSrc(imageKey: string): string {
   return imageKey === "mock" ? "/mock/quote-sample.jpg" : `/api/ai/quote-image/${imageKey}`;
+}
+
+/**
+ * The saved quote's image inside the view dialog, with a skeleton placeholder
+ * while it loads. Its own `loaded` state resets per image because the caller
+ * keys it by `src`. Click to enlarge.
+ */
+function QuoteImage({ src, alt, label, onZoom }: {
+  src: string;
+  alt: string;
+  label: string;
+  onZoom: () => void;
+}) {
+  const [loaded, setLoaded] = useState(false);
+  return (
+    <button
+      type="button"
+      onClick={onZoom}
+      aria-label={label}
+      className="block cursor-zoom-in overflow-hidden rounded-lg border border-border">
+      {!loaded && <Skeleton className="h-48 w-full rounded-none" />}
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src={src}
+        alt={alt}
+        onLoad={() => setLoaded(true)}
+        onError={() => setLoaded(true)}
+        className={`w-full object-contain transition-transform hover:scale-[1.01] ${
+          loaded ? "max-h-72" : "hidden"
+        }`}
+      />
+    </button>
+  );
 }
 
 /**
@@ -212,18 +246,13 @@ export function QuoteHistory({
           {/* Original image — shown when stored (storage upload pending), placeholder otherwise.
               Click to enlarge to full/original size. */}
           {viewTarget?.imageKey ? (
-            <button
-              type="button"
-              onClick={() => setZoomed(true)}
-              aria-label={t("enlargeImage")}
-              className="block cursor-zoom-in overflow-hidden rounded-lg border border-border">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={quoteImageSrc(viewTarget.imageKey)}
-                alt={viewTarget.title}
-                className="max-h-72 w-full object-contain transition-transform hover:scale-[1.01]"
-              />
-            </button>
+            <QuoteImage
+              key={viewTarget.imageKey}
+              src={quoteImageSrc(viewTarget.imageKey)}
+              alt={viewTarget.title}
+              label={t("enlargeImage")}
+              onZoom={() => setZoomed(true)}
+            />
           ) : (
             <div className="flex h-36 flex-col items-center justify-center gap-2 rounded-lg border border-dashed border-border bg-muted/30 text-muted-foreground">
               <ImageIcon className="size-7" />
