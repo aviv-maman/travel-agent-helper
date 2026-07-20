@@ -18,7 +18,9 @@
   "pwa": {
     "install": "Install app",
     "iosTitle": "Add to Home Screen",
-    "iosBody": "In Safari, tap the Share button in the toolbar, then choose \"Add to Home Screen\"."
+    "iosBody": "In Safari, tap the Share button in the toolbar, then choose \"Add to Home Screen\".",
+    "androidTitle": "Add to Home Screen",
+    "androidBody": "Open your browser's menu (⋮), then tap \"Install app\" or \"Add to Home screen\"."
   },
   "tabs": {
     "dashboard": "Dashboard",
