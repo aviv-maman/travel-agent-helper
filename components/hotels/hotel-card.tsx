@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react";
 import Image from "next/image";
 import { useLocale, useTranslations } from "next-intl";
-import { ExternalLinkIcon, Globe, Star } from "lucide-react";
+import { ExternalLinkIcon, Globe, Pencil, Star } from "lucide-react";
 import { GoogleMapsIcon } from "@/components/icons/google-maps-icon";
 import { GoogleIcon } from "@/components/icons/google-icon";
 import { BookingIcon } from "@/components/icons/booking-icon";
@@ -16,7 +16,7 @@ import { ButtonGroup } from "@/components/ui/button-group";
 import { Card } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { CopyLinkButton } from "./copy-link-button";
-import { EditBookingScore } from "./edit-booking-score";
+import { HotelEditDialog } from "./hotel-edit-dialog";
 import type { ViewMode } from "./view-mode";
 import { useHotelParams } from "./use-hotel-params";
 
@@ -99,11 +99,10 @@ export function HotelCard({
   const timeParts = useTimeParts();
   const { sort } = useHotelParams();
 
-  // Editors can adjust the Booking score inline; the badge reads from local
-  // state so an edit reflects immediately (revalidation syncs other sessions).
-  // Only DB-backed hotels have a numeric id — the seed fallback can't persist.
-  const [score, setScore] = useState(hotel.bookingScore);
-  const canEditScore = canEdit && /^\d+$/.test(hotel.id);
+  // Editors get a pencil to edit the hotel's curated fields. Only DB-backed
+  // hotels have a numeric id — the seed fallback can't persist.
+  const [editing, setEditing] = useState(false);
+  const canEditHotel = canEdit && /^\d+$/.test(hotel.id);
 
   // When sorting by distance to a landmark, surface that landmark's row first
   // and mark it as selected.
@@ -200,13 +199,18 @@ export function HotelCard({
           )}
         </span>
       )}
-      {/* Booking score + its edit pencil stay adjacent (the pencil is last, so
-          on RTL it's the leftmost item — right next to the Booking score).
-          Pilot hotels get the large vertical badge; the rest the inline chip. */}
-      {score != null && <BookingScore score={score} />}
-      {canEditScore && (
-        <EditBookingScore hotelId={Number(hotel.id)} value={score} onSaved={setScore} />
+      {/* Pilot hotels get the large vertical badge; the rest the inline chip. */}
+      {hotel.bookingScore != null && <BookingScore score={hotel.bookingScore} />}
+      {canEditHotel && (
+        <button
+          type="button"
+          onClick={() => setEditing(true)}
+          aria-label={t("edit.edit")}
+          className="flex size-6 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-muted hover:text-brand">
+          <Pencil className="size-3.5" />
+        </button>
       )}
+      {editing && <HotelEditDialog hotel={hotel} onClose={() => setEditing(false)} />}
     </div>
   );
 

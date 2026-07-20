@@ -906,6 +906,25 @@
       "hb": "Half board",
       "fb": "Full board"
     },
+    "edit": {
+      "edit": "Edit hotel",
+      "title": "Edit hotel",
+      "name": "Hotel name",
+      "stars": "Star rating",
+      "bookingScore": "Booking rating",
+      "boards": "Board basis",
+      "amenities": "Amenities",
+      "bookingUrl": "Booking.com link",
+      "website": "Hotel website",
+      "nameRequired": "Name is required",
+      "badScore": "Rating must be between 0 and 10",
+      "save": "Save",
+      "saving": "Saving…",
+      "cancel": "Cancel",
+      "saved": "Saved",
+      "saveFailed": "Save failed",
+      "forbidden": "Not allowed"
+    },
     "modal": {
       "rooms": "Room types",
       "size": "Size",
