@@ -793,6 +793,29 @@
       "saved": "Saved",
       "saveFailed": "Save failed",
       "forbidden": "Not allowed"
+    },
+    "create": {
+      "addSupplier": "Add supplier",
+      "title": "New cancellation supplier",
+      "name": "Name",
+      "code": "Code",
+      "products": "Products",
+      "needProduct": "Pick at least one product",
+      "fillRequired": "Name and code are required",
+      "logo": "Upload logo",
+      "logoUploading": "Uploading…",
+      "logoRemove": "Remove",
+      "logoUploaded": "Logo uploaded",
+      "logoError": "Logo upload failed",
+      "logoBadType": "Use a PNG, JPG or WebP image",
+      "logoTooBig": "Image must be under 2 MB",
+      "next": "Next",
+      "back": "Back",
+      "create": "Create supplier",
+      "creating": "Creating…",
+      "created": "Supplier created",
+      "failed": "Create failed",
+      "exists": "A supplier with this code already exists"
     }
   },
   "hotels": {

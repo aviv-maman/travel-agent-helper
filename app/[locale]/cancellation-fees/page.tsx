@@ -15,7 +15,14 @@ export default async function CancellationsPage({
     can("content:edit"),
   ]);
   // Raw bilingual blocks + markup only for editors (drives the edit modal).
-  // Raw bilingual blocks + markup only for editors (drives the edit modal).
+  // Raw bilingual blocks + markup only for editors (drives the edit + create UI).
   const editable = canEdit ? await getEditableCancellations() : null;
-  return <CancellationsView suppliers={cancellations} canEdit={canEdit} editable={editable} />;
+  return (
+    <CancellationsView
+      suppliers={cancellations}
+      canEdit={canEdit}
+      editable={editable}
+      signUrl={process.env.FILE_UPLOAD_URL ?? null}
+    />
+  );
 }
