@@ -44,7 +44,7 @@ export async function generateMetadata({
     description: t("subtitle"),
     applicationName: t("title"),
     // Installable web-app metadata (iOS home-screen + full-screen launch).
-    appleWebApp: { capable: true, statusBarStyle: "black", title: "סוכני נסיעות" },
+    appleWebApp: { capable: true, statusBarStyle: "black", title: "TravelMatrix" },
   };
 }
 

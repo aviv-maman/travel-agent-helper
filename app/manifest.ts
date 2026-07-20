@@ -7,8 +7,8 @@ import type { MetadataRoute } from "next";
  */
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "כלי עזר לסוכני נסיעות",
-    short_name: "סוכני נסיעות",
+    name: "TravelMatrix",
+    short_name: "TravelMatrix",
     description: "חיפוש ספקים, דמי ביטול, הסעות, כבודה ומלונות",
     start_url: "/",
     scope: "/",
