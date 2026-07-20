@@ -246,6 +246,13 @@
       "when": 1784547421291,
       "tag": "0034_wide_typhoid_mary",
       "breakpoints": true
+    },
+    {
+      "idx": 35,
+      "version": "7",
+      "when": 1784556557707,
+      "tag": "0035_chubby_titanium_man",
+      "breakpoints": true
     }
   ]
 }
