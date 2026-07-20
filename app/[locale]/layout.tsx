@@ -89,7 +89,7 @@ export default async function LocaleLayout({
                         width={1236}
                         height={288}
                         priority
-                        className="h-11 w-auto rounded-lg sm:h-12"
+                        className="h-14 w-auto rounded-lg sm:h-16"
                       />
                     </h1>
                     <p className="mt-2.5 text-sm text-muted-foreground">{t("subtitle")}</p>
