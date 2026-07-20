@@ -117,12 +117,15 @@ export function HotelCard({
   }, [hotel.distances, activeKey]);
 
   // Open the modal on card click, but ignore interactions with inner controls —
-  // links, buttons, form fields, and the (portaled) Booking-score edit popover,
-  // whose events still bubble through the React tree to this handler.
+  // links, buttons, form fields, and the (portaled) edit dialog/popover — whose
+  // events still bubble through the React tree to this handler. Match on Element
+  // (not HTMLElement) so a click on an SVG icon inside a button still counts.
   function handleActivate(e: React.MouseEvent | React.KeyboardEvent) {
     if (
-      e.target instanceof HTMLElement &&
-      e.target.closest("a, button, input, textarea, select, label, [data-slot='popover-content']")
+      e.target instanceof Element &&
+      e.target.closest(
+        "a, button, input, textarea, select, label, [data-slot='popover-content'], [data-slot='dialog-content']",
+      )
     ) {
       return;
     }
