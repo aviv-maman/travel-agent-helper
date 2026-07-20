@@ -85,7 +85,7 @@ export function CancelCard({
               e.stopPropagation();
               setEditing(true);
             }}
-            className="absolute top-3.5 end-10 z-10 flex size-7 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-muted hover:text-brand">
+            className="absolute top-6 end-9 z-10 flex size-7 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-muted hover:text-brand">
             <Pencil className="size-3.5" />
           </button>
         )}

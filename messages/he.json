@@ -765,7 +765,12 @@
     "edit": {
       "edit": "עריכה",
       "title": "עריכה — {name}",
-      "markupLabel": "תוספת לקוח (נטו ← מחיר ללקוח)",
+      "markupLabel": "דמי ביטול נטו ספק ← דמי ביטול ללקוח",
+      "addCategory": "הוספת קטגוריה",
+      "addSubCategory": "הוספת תת-קטגוריה",
+      "categoryName": "שם קטגוריה",
+      "subCategoryName": "שם תת-קטגוריה",
+      "optional": "רשות",
       "markupPoints": "תוספת ל-%",
       "markupDollars": "תוספת ל-$",
       "markupEuros": "תוספת ל-€",

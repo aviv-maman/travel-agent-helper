@@ -31,6 +31,50 @@ export type EditSection = {
   rows: EditRow[];
 };
 
+/** A section without its main-category heading (that lives on the parent). */
+export type EditSub = Omit<EditSection, "heading">;
+/** Main category (heading) + its one-or-more sub-sections (tables). */
+export type EditCategory = { heading: Localized | null; subs: EditSub[] };
+
+const sameHeading = (a: Localized | null, b: Localized | null) =>
+  a === null || b === null ? a === b : (a.he ?? "") === (b.he ?? "") && (a.en ?? "") === (b.en ?? "");
+
+/** Group flat sections into categories (consecutive same-heading sections). */
+export function sectionsToCategories(sections: EditSection[]): EditCategory[] {
+  const cats: EditCategory[] = [];
+  for (const { heading, ...sub } of sections) {
+    const last = cats[cats.length - 1];
+    if (last && sameHeading(last.heading, heading)) last.subs.push(sub);
+    else cats.push({ heading, subs: [sub] });
+  }
+  return cats;
+}
+
+/** Flatten categories back to sections (each sub carries the parent heading). */
+export function categoriesToSections(cats: EditCategory[]): EditSection[] {
+  return cats.flatMap((c) => c.subs.map((sub) => ({ heading: c.heading, ...sub })));
+}
+
+/** Standard blocks for a brand-new sub-section (one empty percentage row). */
+export const DEFAULT_CAPTION: Localized = {
+  he: "דמי ביטול לנוסע (נטו ספק)",
+  en: "Cancellation fee / traveler (net)",
+};
+export const newRow = (): EditRow => ({
+  timeframe: { he: "", en: "" },
+  fee: { kind: "percent", value: 0 },
+  level: "net",
+});
+export const newSub = (subheading: EditSub["subheading"] = null): EditSub => ({
+  subheading,
+  caption: DEFAULT_CAPTION,
+  headers: null,
+  copyVariant: null,
+  copyTitle: null,
+  when: "departure",
+  rows: [newRow()],
+});
+
 const he = (v: Localized) => v.he ?? "";
 const en = (v: Localized) => v.en ?? "";
 const num = (n: number) => n.toLocaleString("en-US");
@@ -151,17 +195,22 @@ export function blocksToSections(blocks: CancelBlock[]): EditSection[] {
   return sections;
 }
 
-/** Serialize sections back to blocks, regenerating each copy from the markup. */
+const nonEmpty = (v: Localized | null | undefined) =>
+  v ? Boolean((v.he ?? "").trim() || (v.en ?? "").trim()) : false;
+
+/** Serialize sections back to blocks, regenerating each copy from the markup.
+ *  Empty (unnamed) headings / subheadings are dropped, not emitted as blocks. */
 export function sectionsToBlocks(sections: EditSection[], markup: CancelMarkup): CancelBlock[] {
   const blocks: CancelBlock[] = [];
   let lastHeadingKey: string | null = null;
   for (const s of sections) {
-    const headingKey = s.heading ? JSON.stringify(s.heading) : null;
+    const heading = nonEmpty(s.heading) ? s.heading : null;
+    const headingKey = heading ? JSON.stringify(heading) : null;
     if (headingKey !== lastHeadingKey) {
-      if (s.heading) blocks.push({ kind: "heading", text: s.heading });
+      if (heading) blocks.push({ kind: "heading", text: heading });
       lastHeadingKey = headingKey;
     }
-    if (s.subheading) {
+    if (s.subheading && nonEmpty(s.subheading.text)) {
       blocks.push({ kind: "subheading", text: s.subheading.text, tone: s.subheading.tone });
     }
     blocks.push({

@@ -765,7 +765,12 @@
     "edit": {
       "edit": "Edit",
       "title": "Edit — {name}",
-      "markupLabel": "Client-copy markup (net → client)",
+      "markupLabel": "Supplier net fee → client fee",
+      "addCategory": "Add category",
+      "addSubCategory": "Add sub-category",
+      "categoryName": "Category name",
+      "subCategoryName": "Sub-category name",
+      "optional": "optional",
       "markupPoints": "Add to %",
       "markupDollars": "Add to $",
       "markupEuros": "Add to €",
