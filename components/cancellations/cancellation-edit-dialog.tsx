@@ -278,6 +278,7 @@ export function CancellationEditDialog({
             {sub.rows.map((row, ri) => {
               const mode = feeMode(row.fee);
               const client = feeText(markupFee(row.fee, rule), locale);
+              const sym = mode === "percent" ? "%" : mode === "usd" ? "$" : mode === "eur" ? "€" : "";
               return (
                 <div key={ri} className="flex flex-col gap-2 rounded-lg border border-border p-2.5">
                   <div className="flex items-start gap-2">
@@ -317,7 +318,7 @@ export function CancellationEditDialog({
                       {row.fee.kind === "text" ? (
                         <Input
                           dir="rtl"
-                          className="h-8 text-sm"
+                          className="mt-1.5 h-8 text-sm"
                           value={row.fee.label.he ?? ""}
                           onChange={(e) =>
                             setRow(ri, {
@@ -326,23 +327,31 @@ export function CancellationEditDialog({
                           }
                         />
                       ) : (
-                        <Input
-                          type="number"
-                          inputMode="numeric"
-                          min={0}
-                          className="h-8 text-sm"
-                          value={
-                            row.fee.kind === "percent" || row.fee.kind === "amount"
-                              ? String(row.fee.value)
-                              : ""
-                          }
-                          onChange={(e) => {
-                            const value = Math.max(0, Math.round(Number(e.target.value) || 0));
-                            if (row.fee.kind === "percent") setRow(ri, { fee: { ...row.fee, value } });
-                            else if (row.fee.kind === "amount")
-                              setRow(ri, { fee: { ...row.fee, value } });
-                          }}
-                        />
+                        <div className="relative mt-1.5" dir="ltr">
+                          {/* The chosen sign sits next to the amount, updated live. */}
+                          <span className="pointer-events-none absolute inset-y-0 right-2 flex items-center text-sm font-semibold text-muted-foreground">
+                            {sym}
+                          </span>
+                          <Input
+                            type="number"
+                            inputMode="numeric"
+                            min={0}
+                            dir="ltr"
+                            className="h-8 pr-7 text-end text-sm"
+                            value={
+                              row.fee.kind === "percent" || row.fee.kind === "amount"
+                                ? String(row.fee.value)
+                                : ""
+                            }
+                            onChange={(e) => {
+                              const value = Math.max(0, Math.round(Number(e.target.value) || 0));
+                              if (row.fee.kind === "percent")
+                                setRow(ri, { fee: { ...row.fee, value } });
+                              else if (row.fee.kind === "amount")
+                                setRow(ri, { fee: { ...row.fee, value } });
+                            }}
+                          />
+                        </div>
                       )}
                     </div>
 
