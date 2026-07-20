@@ -1,8 +1,10 @@
 "use client";
 
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 import Image from "next/image";
-import type { ProductKind, ViewBlock, ViewCancelSupplier } from "@/lib/cancellations";
+import { useTranslations } from "next-intl";
+import { Pencil } from "lucide-react";
+import type { ProductKind, ViewBlock, ViewCancelSupplier, EditableCancel } from "@/lib/cancellations";
 import {
   Accordion,
   AccordionContent,
@@ -11,6 +13,7 @@ import {
 } from "@/components/ui/accordion";
 import { FeeTable } from "./fee-table";
 import { CopyScript } from "./copy-script";
+import { CancellationEditDialog } from "./cancellation-edit-dialog";
 
 /** Fallback logo shown until a supplier's own logo file is added. */
 const PLACEHOLDER_LOGO = "/suppliers/placeholder-logo.svg";
@@ -58,16 +61,44 @@ function Block({ block }: { block: ViewBlock }) {
 export function CancelCard({
   supplier,
   defaultOpen,
+  canEdit,
+  editable,
 }: {
   supplier: ViewCancelSupplier;
   defaultOpen?: boolean;
+  canEdit?: boolean;
+  editable?: EditableCancel | null;
 }) {
+  const tEdit = useTranslations("cancellations");
+  const [editing, setEditing] = useState(false);
+  const showEdit = Boolean(canEdit && editable);
   return (
     <Accordion
       defaultValue={defaultOpen ? ["cancel"] : undefined}
       className="overflow-hidden rounded-xl border border-border bg-surface">
-      <AccordionItem value="cancel" className="border-none px-4">
-        <AccordionTrigger className="items-center gap-2.5 py-3 hover:no-underline">
+      <AccordionItem value="cancel" className="relative border-none px-4">
+        {showEdit && (
+          <button
+            type="button"
+            aria-label={tEdit("edit.edit")}
+            onClick={(e) => {
+              e.stopPropagation();
+              setEditing(true);
+            }}
+            className="absolute top-3.5 end-10 z-10 flex size-7 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-muted hover:text-brand">
+            <Pencil className="size-3.5" />
+          </button>
+        )}
+        {editing && editable && (
+          <CancellationEditDialog
+            slug={supplier.id}
+            name={supplier.name}
+            blocks={editable.blocks}
+            markup={editable.markup}
+            onClose={() => setEditing(false)}
+          />
+        )}
+        <AccordionTrigger className="items-center gap-2.5 py-3 pe-14 hover:no-underline">
           <span
             className="flex size-9 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-surface-2"
             aria-hidden>

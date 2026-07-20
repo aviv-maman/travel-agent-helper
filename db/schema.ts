@@ -360,7 +360,25 @@ export type CancelProduct = { kind: ProductKind; label: Localized };
 
 /** Fee-row severity → row color on the cancellations page. */
 export type FeeLevel = "low" | "net" | "gross" | "full";
-export type FeeRow = { timeframe: Localized; fee: Localized; level: FeeLevel };
+
+/**
+ * Structured net fee, so the client copy can be derived by applying the
+ * supplier's markup. Optional on a row: legacy/curated rows carry only the
+ * rendered `fee` string and are parsed on demand; edited rows persist `net`.
+ */
+export type Fee =
+  | { kind: "percent"; value: number }
+  | { kind: "amount"; currency: "usd" | "eur"; value: number; suffix?: Localized }
+  | { kind: "text"; label: Localized };
+
+export type FeeRow = { timeframe: Localized; fee: Localized; level: FeeLevel; net?: Fee };
+
+/**
+ * Per-supplier markup that turns a net fee into the client-copy amount:
+ * percentages gain `points` percentage points, dollar/euro amounts gain a flat
+ * `dollars`/`euros`. 100% ("no refund") and free-text rows are never marked up.
+ */
+export type CancelMarkup = { points: number; dollars: number; euros: number };
 
 /** One rendered block of a cancellation card, in display order. */
 export type CancelBlock =
@@ -439,6 +457,10 @@ export const supplierCancellations = pgTable(
     /** Pre-sorted in display order (the UI renders as stored). */
     products: jsonb("products").$type<CancelProduct[]>().notNull().default([]),
     blocks: jsonb("blocks").$type<CancelBlock[]>().notNull().default([]),
+    /** Per-supplier client-copy markup rule (null until first edited in-app). */
+    markup: jsonb("markup").$type<CancelMarkup>(),
+    /** Set when edited in-app → the seed then preserves it (never re-seeds). */
+    editedAt: timestamp("edited_at"),
     /** Cancellations-page order — independent of the suppliers-page order. */
     sortOrder: integer("sort_order").notNull().default(0),
   },
