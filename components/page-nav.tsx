@@ -123,6 +123,9 @@ export function PageNav({ avatarUrl }: { avatarUrl?: string | null }) {
             </nav>
             <Separator />
             <div className="flex flex-col gap-3 p-4">
+              {/* High in the footer so it never sits on the phone's bottom edge;
+                  only renders when installable (Chromium) or on iOS/Android. */}
+              <InstallAppButton full />
               <SheetClose
                 nativeButton={false}
                 render={
@@ -162,8 +165,6 @@ export function PageNav({ avatarUrl }: { avatarUrl?: string | null }) {
                 <span className="text-sm text-muted-foreground">{tNav("language")}</span>
                 <LanguageSwitcher />
               </div>
-              {/* Only renders when the app is installable (Chromium) or on iOS. */}
-              <InstallAppButton full />
             </div>
           </SheetContent>
         </Sheet>
