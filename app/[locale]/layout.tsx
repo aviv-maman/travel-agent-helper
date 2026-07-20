@@ -86,8 +86,8 @@ export default async function LocaleLayout({
                       <Image
                         src="/brand/wordmark.png"
                         alt="TravelMatrix"
-                        width={904}
-                        height={280}
+                        width={1236}
+                        height={288}
                         priority
                         className="h-11 w-auto rounded-lg sm:h-12"
                       />
