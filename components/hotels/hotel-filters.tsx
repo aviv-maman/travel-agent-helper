@@ -38,7 +38,8 @@ const BASE_SORTS: { value: SortMode; key: keyof HotelMessages["sort"]; emoji: st
   { value: "google-asc", key: "googleAsc", emoji: "📈" },
 ];
 
-const STAR_OPTIONS = [5, 4, 3, 2] as const;
+// Ascending, so in the RTL layout 5★ sits on the left and 2★ on the right.
+const STAR_OPTIONS = [2, 3, 4, 5] as const;
 
 const chipClass =
   "rounded-full border border-border aria-pressed:border-brand aria-pressed:bg-brand aria-pressed:text-brand-foreground";
