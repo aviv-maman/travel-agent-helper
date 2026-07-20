@@ -7,6 +7,7 @@ import { can } from "@/lib/auth";
 import { getDestinationsList, getDestinationView, type SortMode } from "@/lib/hotels";
 import { parseRoomAmenities, parseSize } from "@/lib/room-filter";
 import { DestinationCombobox } from "@/components/hotels/destination-combobox";
+import { AddHotelButton } from "@/components/hotels/add-hotel-button";
 import { HotelFilters } from "@/components/hotels/hotel-filters";
 import { HotelSearch } from "@/components/hotels/hotel-search";
 import { HotelsResults } from "@/components/hotels/hotels-results";
@@ -90,6 +91,11 @@ export default async function HotelsPage({
       )}
       {view && (
         <>
+          {canEdit && (
+            <div className="flex justify-end">
+              <AddHotelButton destIata={view.iata} destName={view.name} />
+            </div>
+          )}
           <HotelFilters
             landmarks={view.landmarks}
             roomSizeMin={view.roomSizeMin}

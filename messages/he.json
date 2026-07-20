@@ -943,6 +943,32 @@
       "airport": "שדה התעופה",
       "gettingAround": "תחבורה",
       "landmarks": "נקודות ציון"
+    },
+    "add": {
+      "button": "הוספת מלון",
+      "title": "הוספת מלון ל{city}",
+      "linkLabel": "קישור Booking.com",
+      "linkHint": "הדביקו קישור לעמוד המלון ב-Booking.com.",
+      "start": "הוסף מלון",
+      "stepApify": "נתוני Booking, חדרים ותמונות",
+      "stepPlaces": "דירוג Google ותמונה",
+      "stepDistances": "מרחקים לנקודות הציון",
+      "enriching": "מעשיר…",
+      "reviewTitle": "בדיקה לפני שמירה",
+      "stars": "כוכבים",
+      "amenities": "מתקנים",
+      "boardLabel": "בסיס אירוח",
+      "summary": "{rooms} חדרים · {distances} מרחקים",
+      "save": "שמור מלון",
+      "saving": "שומר…",
+      "created": "המלון נוסף",
+      "createFailed": "לא ניתן לשמור את המלון",
+      "cancel": "ביטול",
+      "back": "הקודם",
+      "errInvalid": "הדביקו קישור תקין למלון ב-Booking.com (…/hotel/…).",
+      "errNotConfigured": "שירות ההעשרה עדין לא מוגדר (APIFY_TOKEN).",
+      "errOffline": "שרת ההעשרה אינו זמין.",
+      "errFailed": "ההעשרה נכשלה — בדקו את הקישור ונסו שוב."
     }
   }
 }

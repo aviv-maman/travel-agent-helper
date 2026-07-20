@@ -943,6 +943,32 @@
       "airport": "Airport",
       "gettingAround": "Getting around",
       "landmarks": "Points of interest"
+    },
+    "add": {
+      "button": "Add hotel",
+      "title": "Add a hotel to {city}",
+      "linkLabel": "Booking.com link",
+      "linkHint": "Paste the hotel’s Booking.com property page URL.",
+      "start": "Add hotel",
+      "stepApify": "Booking data, rooms & photos",
+      "stepPlaces": "Google rating & photo",
+      "stepDistances": "Distances to landmarks",
+      "enriching": "Enriching…",
+      "reviewTitle": "Review before saving",
+      "stars": "Stars",
+      "amenities": "Amenities",
+      "boardLabel": "Board",
+      "summary": "{rooms} rooms · {distances} distances",
+      "save": "Save hotel",
+      "saving": "Saving…",
+      "created": "Hotel added",
+      "createFailed": "Could not save the hotel",
+      "cancel": "Cancel",
+      "back": "Back",
+      "errInvalid": "Paste a valid Booking.com property link (…/hotel/…).",
+      "errNotConfigured": "The enrichment service isn’t set up yet (APIFY_TOKEN).",
+      "errOffline": "The enrichment backend is unavailable.",
+      "errFailed": "Enrichment failed — check the link and try again."
     }
   }
 }
