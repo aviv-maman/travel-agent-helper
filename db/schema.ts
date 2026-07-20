@@ -68,6 +68,31 @@ export type DestinationInfo = {
   landmarks?: Localized;
 };
 
+/**
+ * Resolved geometry for a destination's landmarks — the reference-point defs +
+ * cached coordinates the add-hotel enrichment needs to compute distances for a
+ * new hotel (mirrors the add-destination skill's input.json + geo_cache.json).
+ * Keyed by the matching `landmarks.key`. Written once by
+ * scripts/backfill-landmark-geo.ts (and future imports); consumed by the backend
+ * hotel-enrich service. `[lat, lon]` pairs throughout.
+ */
+export type LandmarkGeoPoint = {
+  key: string;
+  /** How the distance is measured (nearest point on street/area, or the point). */
+  type: "street" | "area" | "point";
+  /** Street: which end reads as the "start" (display only). */
+  start?: "north" | "south" | "east" | "west";
+  /** point: the coordinate. */
+  point?: [number, number];
+  /** street: OSM ways, each a polyline of [lat, lon] points. */
+  segments?: [number, number][][];
+  /** area: boundary rings + a representative centre. */
+  rings?: [number, number][][];
+  center?: [number, number];
+};
+
+export type LandmarkGeo = { points: LandmarkGeoPoint[] };
+
 export const destinations = pgTable(
   "destinations",
   {
@@ -78,6 +103,8 @@ export const destinations = pgTable(
     /** ISO 3166-1 alpha-2 country code; the flag emoji is derived from it. */
     countryCode: varchar("country_code", { length: 2 }).notNull(),
     info: jsonb("info").$type<DestinationInfo>(),
+    /** Landmark geometry for the in-app add-hotel distance calc (see LandmarkGeo). */
+    landmarkGeo: jsonb("landmark_geo").$type<LandmarkGeo>(),
     sortOrder: integer("sort_order").notNull().default(0),
   },
   (t) => [uniqueIndex("destinations_iata_key").on(t.iata)],
