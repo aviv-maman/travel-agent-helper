@@ -19,7 +19,7 @@
  *
  * Run with: `bun run seed` (Bun auto-loads .env.local).
  */
-import { eq, sql } from "drizzle-orm";
+import { eq, isNotNull, sql } from "drizzle-orm";
 import { neon } from "@neondatabase/serverless";
 import { drizzle } from "drizzle-orm/neon-http";
 import * as schema from "../db/schema";
@@ -184,9 +184,26 @@ async function seedCommissionLines(slugToId: Map<string, number>): Promise<numbe
 }
 
 async function seedCancellations(slugToId: Map<string, number>): Promise<number> {
+  // Cards edited in-app (editedAt set) are app-managed — never re-seed them.
+  const edited = new Set(
+    (
+      await db
+        .select({ supplierId: supplierCancellations.supplierId })
+        .from(supplierCancellations)
+        .where(isNotNull(supplierCancellations.editedAt))
+    ).map((r) => r.supplierId),
+  );
+
   let sortOrder = 0;
+  let seeded = 0;
+  let skipped = 0;
   for (const c of CANCEL_SUPPLIERS) {
     const supplierId = slugToId.get(c.id)!;
+    if (edited.has(supplierId)) {
+      skipped++;
+      sortOrder++;
+      continue;
+    }
     // Store products pre-sorted: the UI renders them as stored. The order
     // helper (not raw indexOf) also places custom-labeled products correctly —
     // reference identity would send them to the front (the Israir bug).
@@ -199,8 +216,12 @@ async function seedCancellations(slugToId: Map<string, number>): Promise<number>
       .insert(supplierCancellations)
       .values({ supplierId, products, blocks: c.blocks, sortOrder });
     sortOrder++;
+    seeded++;
   }
-  return CANCEL_SUPPLIERS.length;
+  if (skipped > 0) {
+    console.log(`  cancellations: ${skipped} suppliers edited in-app — skipped (app-managed)`);
+  }
+  return seeded;
 }
 
 async function seedAirlines(): Promise<Map<string, number>> {

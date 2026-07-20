@@ -9,6 +9,13 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { CommissionCard } from "./commission-card";
 import { SupplierCreateWizard } from "./supplier-create-wizard";
 
@@ -102,9 +109,39 @@ export function CommissionsView({
       )}
 
       <Tabs value={tab} onValueChange={(v) => setTab(v as SupplierCategory)}>
-        {/* Tabs on one side, the add-supplier button aligned on the other. */}
-        <div className="flex flex-wrap items-center justify-between gap-2">
-          <TabsList className="rounded-xl">
+        {/* Category chooser + the add-supplier button on the same row. The five
+            tabs don't fit a phone, so mobile gets a dropdown instead. */}
+        <div className="flex items-center gap-2">
+          {/* Mobile: category dropdown. */}
+          <Select
+            value={tab}
+            onValueChange={(v) => setTab(v as SupplierCategory)}
+            items={Object.fromEntries(
+              CATEGORIES.map(({ value, key, emoji }) => [
+                value,
+                `${emoji} ${t(`categories.${key}`)} (${suppliers.filter((s) => s.category === value).length})`,
+              ]),
+            )}>
+            <SelectTrigger className="h-11 flex-1 sm:hidden">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              {CATEGORIES.map(({ value, key, emoji }) => {
+                const count = suppliers.filter((s) => s.category === value).length;
+                return (
+                  <SelectItem key={value} value={value}>
+                    <span aria-hidden>{emoji}</span> {t(`categories.${key}`)}
+                    <Badge variant="secondary" className="ms-1.5">
+                      {count}
+                    </Badge>
+                  </SelectItem>
+                );
+              })}
+            </SelectContent>
+          </Select>
+
+          {/* Desktop: the tab bar. */}
+          <TabsList className="hidden rounded-xl sm:flex">
             {CATEGORIES.map(({ value, key, emoji }) => {
               const count = suppliers.filter((s) => s.category === value).length;
               return (
@@ -112,17 +149,18 @@ export function CommissionsView({
                   <span aria-hidden>{emoji}</span>
                   {t(`categories.${key}`)}
                   <Badge variant="secondary" className="ms-0.5">
-                  {count}
-                </Badge>
-              </TabsTrigger>
-            );
-          })}
+                    {count}
+                  </Badge>
+                </TabsTrigger>
+              );
+            })}
           </TabsList>
+
           {canCreate && (
             <Button
               type="button"
               size="lg"
-              className="h-11 shrink-0"
+              className="ms-auto h-11 shrink-0"
               onClick={() => setCreating(true)}>
               <Plus className="size-4" />
               <span className="hidden sm:inline">{t("create.addSupplier")}</span>

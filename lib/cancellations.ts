@@ -1,4 +1,9 @@
-import type { CancelBlock as Block, CancelProduct as Product, Localized } from "@/db/schema";
+import type {
+  CancelBlock as Block,
+  CancelMarkup,
+  CancelProduct as Product,
+  Localized,
+} from "@/db/schema";
 import type { Locale } from "@/i18n/config";
 import { localized, usingDatabase } from "@/lib/hotels";
 
@@ -1434,6 +1439,20 @@ async function loadCancelSuppliers(): Promise<CancelSupplier[]> {
     products: r.products,
     blocks: r.blocks,
   }));
+}
+
+/** Raw bilingual blocks + markup keyed by supplier slug, for the edit modal
+ *  (editors only). Read from the DB; the seed fallback carries no markup. */
+export type EditableCancel = { markup: CancelMarkup | null; blocks: Block[] };
+export async function getEditableCancellations(): Promise<Record<string, EditableCancel>> {
+  if (!usingDatabase()) {
+    return Object.fromEntries(SUPPLIERS.map((s) => [s.id, { markup: null, blocks: s.blocks }]));
+  }
+  const { db } = await import("@/db");
+  const rows = await db.query.supplierCancellations.findMany({ with: { supplier: true } });
+  return Object.fromEntries(
+    rows.map((r) => [r.supplier.slug, { markup: r.markup ?? null, blocks: r.blocks }]),
+  );
 }
 
 /** All cancellation suppliers, resolved to `locale`, in guide order. */

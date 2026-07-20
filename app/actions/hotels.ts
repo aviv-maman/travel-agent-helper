@@ -9,6 +9,8 @@ import {
   hotelDistances,
   hotelFeatures,
   rooms,
+  boardCode,
+  hotelFeature,
   type BoardCode,
   type HotelFeatureValue,
   type Localized,
@@ -16,50 +18,105 @@ import {
 import { can } from "@/lib/auth";
 import { backendFetch, backendUrl } from "@/lib/ai/backend";
 
-export type UpdateScoreResult = { ok: true; score: number | null } | { error: string };
-
 /**
- * Editor+ inline update of a hotel's Booking.com score. The UI only shows the
- * control to permitted users, but this re-check is the real security boundary.
+ * Editor+ update of a hotel's curated fields (name, stars, Booking score, board
+ * basis, amenities, Booking + website links). Address / Google rating /
+ * distances are intentionally NOT editable — they're auto-managed. The UI only
+ * shows the control to permitted users; this re-check is the security boundary.
  *
- * Writes to the DB only — a later `bun run seed` resets scores to
- * `data/seed.json`, so lasting changes should also be folded back into the seed.
+ * Writes to the DB only — a later `bun run seed` resets these to the seed, so
+ * lasting changes should also be folded back into the seed.
  */
-export async function updateHotelBookingScore(
-  id: number,
-  score: number | null,
-): Promise<UpdateScoreResult> {
-  if (!(await can("content:edit"))) return { error: "forbidden" };
-  if (!Number.isInteger(id)) return { error: "badId" };
 
-  let value: number | null = null;
-  if (score != null) {
-    if (typeof score !== "number" || !Number.isFinite(score) || score < 0 || score > 10) {
-      return { error: "badScore" };
+export type HotelPatch = {
+  name: string;
+  stars: number | null;
+  bookingScore: number | null;
+  boards: BoardCode[];
+  features: HotelFeatureValue[];
+  bookingUrl: string | null;
+  websiteUrl: string | null;
+};
+export type UpdateHotelResult = { ok: true } | { error: "forbidden" | "invalid" | "offline" };
+
+const BOARDS: readonly string[] = boardCode.enumValues;
+const FEATURES: readonly string[] = hotelFeature.enumValues;
+
+/** Trim a URL field to null when empty; only keep http(s) links. */
+function cleanUrl(v: string | null | undefined): string | null {
+  const s = (v ?? "").trim().slice(0, 2048);
+  if (!s) return null;
+  return /^https?:\/\//i.test(s) ? s : null;
+}
+
+export async function updateHotelAction(
+  id: number,
+  patch: HotelPatch,
+): Promise<UpdateHotelResult> {
+  if (!(await can("content:edit"))) return { error: "forbidden" };
+  if (!Number.isInteger(id)) return { error: "invalid" };
+
+  const name = (patch?.name ?? "").trim().slice(0, 200);
+  if (!name) return { error: "invalid" };
+
+  let stars: number | null = null;
+  if (patch.stars != null) {
+    if (!Number.isInteger(patch.stars) || patch.stars < 1 || patch.stars > 5) {
+      return { error: "invalid" };
     }
-    value = Math.round(score * 10) / 10;
+    stars = patch.stars;
   }
 
-  await db.update(hotels).set({ bookingScore: value }).where(eq(hotels.id, id));
-  revalidatePath("/[locale]/hotels", "page");
-  return { ok: true, score: value };
+  let bookingScore: number | null = null;
+  if (patch.bookingScore != null) {
+    if (!Number.isFinite(patch.bookingScore) || patch.bookingScore < 0 || patch.bookingScore > 10) {
+      return { error: "invalid" };
+    }
+    bookingScore = Math.round(patch.bookingScore * 10) / 10;
+  }
+
+  const boards = (Array.isArray(patch.boards) ? patch.boards : []).filter((b) =>
+    BOARDS.includes(b),
+  ) as BoardCode[];
+  const features = [
+    ...new Set(
+      (Array.isArray(patch.features) ? patch.features : []).filter((f) => FEATURES.includes(f)),
+    ),
+  ] as HotelFeatureValue[];
+
+  try {
+    const rows = await db
+      .update(hotels)
+      .set({
+        name,
+        stars,
+        bookingScore,
+        boards,
+        bookingUrl: cleanUrl(patch.bookingUrl),
+        websiteUrl: cleanUrl(patch.websiteUrl),
+      })
+      .where(eq(hotels.id, id))
+      .returning({ id: hotels.id });
+    if (rows.length === 0) return { error: "invalid" };
+
+    // Replace the amenity rows (join table).
+    await db.delete(hotelFeatures).where(eq(hotelFeatures.hotelId, id));
+    if (features.length) {
+      await db.insert(hotelFeatures).values(features.map((feature) => ({ hotelId: id, feature })));
+    }
+
+    revalidatePath("/[locale]/hotels", "page");
+    return { ok: true };
+  } catch {
+    return { error: "offline" };
+  }
 }
 
 // ── In-app "add a hotel to an existing destination" (editors) ────────────────
 // The Python backend does the enrichment (Apify + Google Places + OSRM
 // distances) and returns a draft; Next writes the hotel here only after the
 // agent's review. See components/hotels/add-hotel-dialog.tsx.
-
-const FEATURES: readonly HotelFeatureValue[] = [
-  "pool-in",
-  "pool-out",
-  "casino",
-  "casino-near",
-  "waterpark",
-  "spa",
-  "outside-center",
-];
-const BOARDS: readonly BoardCode[] = ["bb", "hb", "fb"];
+// (BOARDS / FEATURES are declared once above, from the enums.)
 
 export type EnrichRoom = {
   name: string;

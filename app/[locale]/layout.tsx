@@ -1,4 +1,5 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
+import Image from "next/image";
 import { Heebo } from "next/font/google";
 import { notFound } from "next/navigation";
 import { NextIntlClientProvider, hasLocale } from "next-intl";
@@ -8,6 +9,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
 import { PageNav } from "@/components/page-nav";
 import { SessionProvider } from "@/components/auth/session-provider";
+import { PwaRegister } from "@/components/pwa-register";
 import { validateSession } from "@/lib/auth/session";
 import { routing, localeDirection, type Locale } from "@/i18n/routing";
 import "../globals.css";
@@ -22,6 +24,14 @@ export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
 }
 
+/** Status-bar colour, per light/dark. Next auto-adds the manifest + icon links. */
+export const viewport: Viewport = {
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
+    { media: "(prefers-color-scheme: dark)", color: "#0a0a0a" },
+  ],
+};
+
 export async function generateMetadata({
   params,
 }: {
@@ -32,6 +42,9 @@ export async function generateMetadata({
   return {
     title: `${t("title")} — ${t("subtitle")}`,
     description: t("subtitle"),
+    applicationName: t("title"),
+    // Installable web-app metadata (iOS home-screen + full-screen launch).
+    appleWebApp: { capable: true, statusBarStyle: "black", title: "TravelMatrix" },
   };
 }
 
@@ -67,12 +80,24 @@ export default async function LocaleLayout({
                 <PageNav avatarUrl={currentUser?.avatarUrl ?? null} />
                 <main className="mx-auto w-full max-w-5xl p-4">
                   <header className="mb-8">
-                    <h1 className="text-2xl font-extrabold text-foreground">{t("title")}</h1>
-                    <p className="text-sm text-muted-foreground">{t("subtitle")}</p>
+                    {/* The wordmark replaces the text title; it carries a dark
+                        badge background so it reads on both light and dark. */}
+                    <h1>
+                      <Image
+                        src="/brand/wordmark.png"
+                        alt="TravelMatrix"
+                        width={1236}
+                        height={288}
+                        priority
+                        className="h-14 w-auto rounded-lg sm:h-16"
+                      />
+                    </h1>
+                    <p className="mt-2.5 text-sm text-muted-foreground">{t("subtitle")}</p>
                   </header>
                   {children}
                 </main>
                 <Toaster />
+                <PwaRegister />
               </SessionProvider>
             </DirectionProvider>
           </ThemeProvider>

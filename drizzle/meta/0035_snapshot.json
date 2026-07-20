@@ -1,6 +1,6 @@
 {
-  "id": "766a6c07-1a2d-4c34-bbc6-8e3fc441530e",
-  "prevId": "690d1b98-1da8-4370-9d52-4266751294d6",
+  "id": "f150f241-b95c-4d8a-9558-3837ed37bf33",
+  "prevId": "766a6c07-1a2d-4c34-bbc6-8e3fc441530e",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -835,6 +835,12 @@
         },
         "info": {
           "name": "info",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "landmark_geo": {
+          "name": "landmark_geo",
           "type": "jsonb",
           "primaryKey": false,
           "notNull": false
