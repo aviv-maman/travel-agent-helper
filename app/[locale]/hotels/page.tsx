@@ -36,6 +36,9 @@ export default async function HotelsPage({
   const tags = csv("tags") as HotelTagValue[];
   const boards = csv("boards") as BoardCode[];
   const features = csv("features") as HotelFeatureValue[];
+  const stars = csv("stars")
+    .map(Number)
+    .filter((n) => Number.isInteger(n));
   const q = asString(sp.q) ?? "";
   const sort = (asString(sp.sort) ?? "default") as SortMode;
   const page = Math.max(1, Number(asString(sp.page) ?? "1") || 1);
@@ -56,6 +59,7 @@ export default async function HotelsPage({
         tags,
         boards,
         features,
+        stars,
         roomFilter,
         q,
         sort,
@@ -90,6 +94,7 @@ export default async function HotelsPage({
             landmarks={view.landmarks}
             roomSizeMin={view.roomSizeMin}
             roomSizeMax={view.roomSizeMax}
+            starValues={view.starValues}
           />
           <HotelSearch key={view.iata} hotelNames={view.hotelNames} />
           <HotelsResults hotels={view.hotels} canEdit={canEdit} initialView={hotelsView} />

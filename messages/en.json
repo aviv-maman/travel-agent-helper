@@ -842,6 +842,7 @@
     "filter": {
       "filtersLabel": "Filters",
       "label": "Amenities:",
+      "starsLabel": "Stars:",
       "tagsLabel": "Tags:",
       "boardLabel": "Board Basis:",
       "poolIn": "Indoor pool",
