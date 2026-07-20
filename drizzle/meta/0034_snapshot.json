@@ -1,5 +1,5 @@
 {
-  "id": "a39e8f6d-3361-4289-90b4-a413d8709bf7",
+  "id": "766a6c07-1a2d-4c34-bbc6-8e3fc441530e",
   "prevId": "690d1b98-1da8-4370-9d52-4266751294d6",
   "version": "7",
   "dialect": "postgresql",
@@ -835,12 +835,6 @@
         },
         "info": {
           "name": "info",
-          "type": "jsonb",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "landmark_geo": {
-          "name": "landmark_geo",
           "type": "jsonb",
           "primaryKey": false,
           "notNull": false
@@ -2145,6 +2139,18 @@
           "primaryKey": false,
           "notNull": true,
           "default": "'[]'::jsonb"
+        },
+        "markup": {
+          "name": "markup",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "edited_at": {
+          "name": "edited_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
         },
         "sort_order": {
           "name": "sort_order",

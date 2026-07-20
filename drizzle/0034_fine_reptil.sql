@@ -1,1 +1,0 @@
-ALTER TABLE "destinations" ADD COLUMN "landmark_geo" jsonb;

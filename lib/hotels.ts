@@ -164,6 +164,12 @@ export type DestinationView = {
   info: ViewInfo | null;
   landmarks: ViewLandmark[];
   hotels: ViewHotel[];
+  /** Smallest / largest sized room across the WHOLE destination (m²), for the
+   *  room-size slider's bounds. null when no hotel has a sized room. */
+  roomSizeMin: number | null;
+  roomSizeMax: number | null;
+  /** Distinct star ratings present in this destination (desc), for the star filter. */
+  starValues: number[];
   /** All hotel names in this destination (post filters, pre name-query) for autocomplete. */
   hotelNames: string[];
   total: number;
@@ -316,6 +322,8 @@ export async function getDestinationView(
     tags?: HotelTagValue[];
     boards?: BoardCode[];
     features?: HotelFeatureValue[];
+    /** Keep only hotels whose star rating is one of these (empty = all). */
+    stars?: number[];
     /** Room-level filter — hides hotels with no room matching it. */
     roomFilter?: RoomFilter;
     /** Free-text hotel-name query (smart, Hebrew-aware). */
@@ -329,6 +337,7 @@ export async function getDestinationView(
   const tags = opts.tags ?? [];
   const boards = opts.boards ?? [];
   const features = opts.features ?? [];
+  const stars = opts.stars ?? [];
   const roomFilter = opts.roomFilter ?? emptyRoomFilter();
   const query = (opts.q ?? "").trim();
   const sort = opts.sort ?? "default";
@@ -339,13 +348,26 @@ export async function getDestinationView(
   if (!d) return null;
   const { rates, fetchedAt: ratesFetchedAt } = await getIlsRatesWithMeta();
 
-  // amenities AND; tags / boards each OR within themselves; room filter keeps
-  // only hotels with at least one room matching it.
+  // Slider bounds come from the whole destination's room sizes (all hotels, not
+  // just the current page / filter subset), so the range stays stable.
+  const allSizes = d.hotels
+    .flatMap((h) => h.rooms.map((r) => r.sizeSqm))
+    .filter((s): s is number => s != null && s > 0);
+  const roomSizeMin = allSizes.length ? Math.min(...allSizes) : null;
+  const roomSizeMax = allSizes.length ? Math.max(...allSizes) : null;
+  // Star ratings present across the whole destination (desc) for the star filter.
+  const starValues = [
+    ...new Set(d.hotels.map((h) => h.stars).filter((s): s is number => s != null)),
+  ].sort((a, b) => b - a);
+
+  // amenities AND; tags / boards / stars each OR within themselves; room filter
+  // keeps only hotels with at least one room matching it.
   const baseFiltered = d.hotels.filter(
     (h) =>
       features.every((f) => h.features.includes(f)) &&
       (tags.length === 0 || tags.some((t) => h.tags.includes(t))) &&
       (boards.length === 0 || boards.some((b) => h.boards.includes(b))) &&
+      (stars.length === 0 || (h.stars != null && stars.includes(h.stars))) &&
       hotelHasMatchingRoom(h.rooms, roomFilter),
   );
 
@@ -377,6 +399,9 @@ export async function getDestinationView(
       name: localized(l.name, locale),
     })),
     hotels: pageHotels.map((h) => resolveHotel(h, locale)),
+    roomSizeMin,
+    roomSizeMax,
+    starValues,
     hotelNames,
     total,
     page,

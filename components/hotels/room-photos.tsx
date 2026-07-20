@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useTranslations } from "next-intl";
-import { Images } from "lucide-react";
+import { Images, X } from "lucide-react";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import {
   Carousel,
@@ -50,13 +50,26 @@ export function RoomPhotos({ photos, name }: { photos: string[]; name: string })
       </button>
 
       <Dialog open={open} onOpenChange={setOpen}>
-        {/* Click anywhere outside the photo (the backdrop, the padding, the
-            title) to close; only clicks on the photo/arrows are held back. */}
-        <DialogContent className="max-w-md" onClick={() => setOpen(false)}>
-          <DialogTitle className="text-sm">{name}</DialogTitle>
+        {/* Full-screen dark lightbox. The content spans the viewport and closes
+            on click, so clicking anywhere outside the photo/arrows dismisses it
+            (base-ui's backdrop dismiss doesn't fire when nested in the room
+            modal). Its own X (custom, white) stays visible over the dark. */}
+        <DialogContent
+          showCloseButton={false}
+          className="flex h-[100dvh] max-h-[100dvh] w-screen max-w-none flex-col items-center justify-center gap-3 rounded-none border-0 bg-black/85 p-4 shadow-none ring-0 sm:max-w-none"
+          onClick={() => setOpen(false)}>
+          <button
+            type="button"
+            onClick={() => setOpen(false)}
+            aria-label={t("modal.close")}
+            className="absolute end-3 top-3 z-10 flex size-9 items-center justify-center rounded-full bg-black/60 text-white ring-1 ring-white/30 transition-colors hover:bg-black/85">
+            <X className="size-5" />
+          </button>
+          <DialogTitle className="text-sm text-white">{name}</DialogTitle>
           {/* Force LTR so the arrows sit physically left/right and the chevrons
-              don't rtl-flip — a photo carousel reads left→right in any locale. */}
-          <div onClick={(e) => e.stopPropagation()}>
+              don't rtl-flip — a photo carousel reads left→right in any locale.
+              Bounded box (stopPropagation) so only photo/arrow clicks are held. */}
+          <div className="w-full max-w-5xl" onClick={(e) => e.stopPropagation()}>
             <Carousel dir="ltr" className="w-full" opts={{ loop: true }}>
               <CarouselContent>
                 {photos.map((src, i) => (
@@ -65,7 +78,7 @@ export function RoomPhotos({ photos, name }: { photos: string[]; name: string })
                     <img
                       src={src}
                       alt={`${name} — ${i + 1}`}
-                      className="h-64 w-full rounded-lg object-cover sm:h-80"
+                      className="max-h-[82vh] w-full rounded-lg object-contain"
                     />
                   </CarouselItem>
                 ))}

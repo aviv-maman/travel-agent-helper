@@ -29,6 +29,7 @@ import { useDirection } from "@/components/ui/direction";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { LanguageSwitcher } from "@/components/language-switcher";
+import { InstallAppButton } from "@/components/install-app-button";
 
 const PAGES = [
   { segment: "suppliers", emoji: "💰" },
@@ -122,6 +123,9 @@ export function PageNav({ avatarUrl }: { avatarUrl?: string | null }) {
             </nav>
             <Separator />
             <div className="flex flex-col gap-3 p-4">
+              {/* High in the footer so it never sits on the phone's bottom edge;
+                  only renders when installable (Chromium) or on iOS/Android. */}
+              <InstallAppButton full />
               <SheetClose
                 nativeButton={false}
                 render={
@@ -241,6 +245,8 @@ export function PageNav({ avatarUrl }: { avatarUrl?: string | null }) {
               <CircleUser className="size-5" />
             </Link>
           )}
+          {/* Grouped with the utility controls; only renders when installable. */}
+          <InstallAppButton />
           <ThemeToggle />
           <LanguageSwitcher />
         </div>

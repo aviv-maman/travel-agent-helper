@@ -17,11 +17,33 @@ const FACILITY_LABEL: Record<RoomAmenity, string> = {
   minibar: "Minibar",
 };
 
-/** Slider bounds for room size (m²). At the ceiling the max is treated as "no
- *  upper limit" so a "≥ N m²" filter still includes the rare large suites. */
-export const ROOM_SIZE_MIN = 0;
-export const ROOM_SIZE_MAX = 100;
+/** Room-size slider step (m²) and the generic fallback bounds used when a
+ *  destination has no sized rooms to derive real ones from. At the ceiling the
+ *  max is treated as "no upper limit" so a "≥ N m²" filter still includes the
+ *  largest suites. */
 export const ROOM_SIZE_STEP = 5;
+export const ROOM_SIZE_FALLBACK_FLOOR = 10;
+export const ROOM_SIZE_FALLBACK_CEIL = 100;
+
+/**
+ * Slider bounds (m²) for a destination, derived from its actual room sizes:
+ * the ceiling is the largest room, the floor is 10 m² (or the smallest room
+ * when it is smaller). Both are snapped to the step so the thumbs land on clean
+ * values. `min`/`max` are the destination's smallest/largest sized room (null
+ * when it has none) → a generic 10–100 range is used as a fallback.
+ */
+export function roomSizeBounds(
+  min: number | null,
+  max: number | null,
+): { floor: number; ceil: number; step: number } {
+  const step = ROOM_SIZE_STEP;
+  if (min == null || max == null) {
+    return { floor: ROOM_SIZE_FALLBACK_FLOOR, ceil: ROOM_SIZE_FALLBACK_CEIL, step };
+  }
+  const floor = Math.max(step, step * Math.floor(Math.min(ROOM_SIZE_FALLBACK_FLOOR, min) / step));
+  const ceil = Math.max(floor + step, step * Math.ceil(max / step));
+  return { floor, ceil, step };
+}
 
 export type RoomFilter = {
   /** m², null = no lower bound. */

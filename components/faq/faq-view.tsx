@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
-import { Check, Copy, Pencil, Plus, Search, Trash2, X } from "lucide-react";
+import { Check, ChevronDown, Copy, Pencil, Plus, Search, Trash2, X } from "lucide-react";
 import type { Faq } from "@/lib/faq";
 import { toClientDashes } from "@/lib/utils";
 import { deleteFaqAction, saveFaqAction, type FaqInput } from "@/app/actions/faq";
@@ -52,6 +52,15 @@ export function FaqView({ items, canEdit }: { items: Faq[]; canEdit: boolean }) 
   const [draft, setDraft] = useState<Draft>(EMPTY);
   const [saving, setSaving] = useState(false);
   const [deleteTarget, setDeleteTarget] = useState<Faq | null>(null);
+  // Which questions are expanded (accordion) — all collapsed by default.
+  const [openIds, setOpenIds] = useState<Set<number>>(new Set());
+  const toggle = (id: number) =>
+    setOpenIds((s) => {
+      const next = new Set(s);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
 
   const tokens = query.trim().toLowerCase().split(/\s+/).filter(Boolean);
   const visible = tokens.length
@@ -214,7 +223,11 @@ export function FaqView({ items, canEdit }: { items: Faq[]; canEdit: boolean }) 
         </p>
       )}
 
-      {visible.map((f) => (
+      {visible.map((f) => {
+        // Expanded when the user opened it, or while a search is active (so
+        // matches show their answers instead of staying collapsed).
+        const open = tokens.length > 0 || openIds.has(f.id);
+        return (
         <Card key={f.id} size="sm" className="gap-0">
           <CardContent className="flex flex-col gap-3">
             {editingId === f.id ? (
@@ -222,10 +235,17 @@ export function FaqView({ items, canEdit }: { items: Faq[]; canEdit: boolean }) 
             ) : (
               <>
                 <div className="flex items-start justify-between gap-2">
-                  <h2 className="text-base font-bold text-foreground">
-                    <span aria-hidden>❓ </span>
-                    {f.question}
-                  </h2>
+                  <button
+                    type="button"
+                    onClick={() => toggle(f.id)}
+                    aria-expanded={open}
+                    className="flex flex-1 items-start gap-2 text-start">
+                    <ChevronDown
+                      className={`mt-0.5 size-4 shrink-0 text-muted-foreground transition-transform ${open ? "rotate-180" : ""}`}
+                      aria-hidden
+                    />
+                    <h2 className="text-base font-bold text-foreground">{f.question}</h2>
+                  </button>
                   {canEdit && (
                     <div className="flex shrink-0 items-center">
                       <Button
@@ -254,7 +274,8 @@ export function FaqView({ items, canEdit }: { items: Faq[]; canEdit: boolean }) 
                     </div>
                   )}
                 </div>
-                {f.answers.map((a, i) => {
+                {open &&
+                  f.answers.map((a, i) => {
                   const key = `${f.id}:${i}`;
                   return (
                     <div key={i} className="rounded-lg border border-border bg-muted/30 p-3">
@@ -290,7 +311,8 @@ export function FaqView({ items, canEdit }: { items: Faq[]; canEdit: boolean }) 
             )}
           </CardContent>
         </Card>
-      ))}
+        );
+      })}
 
       {canEdit && editingId === "new" && (
         <Card size="sm" className="gap-0">
