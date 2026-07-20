@@ -42,6 +42,10 @@ type FeeMode = "percent" | "usd" | "eur";
 const feeMode = (f: Fee): FeeMode | "text" =>
   f.kind === "percent" ? "percent" : f.kind === "text" ? "text" : f.currency;
 
+// Hide the native number-input spinner arrows.
+const NO_SPINNER =
+  "[appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none";
+
 const LEVELS: FeeLevel[] = ["low", "net", "gross", "full"];
 const LEVEL_DOT: Record<FeeLevel, string> = {
   low: "bg-success",
@@ -337,7 +341,7 @@ export function CancellationEditDialog({
                             inputMode="numeric"
                             min={0}
                             dir="ltr"
-                            className="h-8 pr-7 text-end text-sm"
+                            className={`h-8 pr-7 text-end text-sm ${NO_SPINNER}`}
                             value={
                               row.fee.kind === "percent" || row.fee.kind === "amount"
                                 ? String(row.fee.value)
@@ -438,7 +442,7 @@ function RuleInput({
           min={0}
           value={String(value)}
           onChange={(e) => onChange(Math.max(0, Math.round(Number(e.target.value) || 0)))}
-          className="h-8 w-20 text-sm"
+          className={`h-8 w-20 text-sm ${NO_SPINNER}`}
         />
       </div>
     </div>
