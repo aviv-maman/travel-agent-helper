@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import Image from "next/image";
 import { Heebo } from "next/font/google";
 import { notFound } from "next/navigation";
 import { NextIntlClientProvider, hasLocale } from "next-intl";
@@ -79,8 +80,19 @@ export default async function LocaleLayout({
                 <PageNav avatarUrl={currentUser?.avatarUrl ?? null} />
                 <main className="mx-auto w-full max-w-5xl p-4">
                   <header className="mb-8">
-                    <h1 className="text-2xl font-extrabold text-foreground">{t("title")}</h1>
-                    <p className="text-sm text-muted-foreground">{t("subtitle")}</p>
+                    {/* The wordmark replaces the text title; it carries a dark
+                        badge background so it reads on both light and dark. */}
+                    <h1>
+                      <Image
+                        src="/brand/wordmark.png"
+                        alt="TravelMatrix"
+                        width={904}
+                        height={280}
+                        priority
+                        className="h-11 w-auto rounded-lg sm:h-12"
+                      />
+                    </h1>
+                    <p className="mt-2.5 text-sm text-muted-foreground">{t("subtitle")}</p>
                   </header>
                   {children}
                 </main>
