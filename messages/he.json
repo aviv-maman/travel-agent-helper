@@ -842,6 +842,7 @@
     "filter": {
       "filtersLabel": "סינונים",
       "label": "מתקנים:",
+      "starsLabel": "כוכבים:",
       "tagsLabel": "תגיות:",
       "boardLabel": "בסיס אירוח:",
       "poolIn": "בריכה מקורה",

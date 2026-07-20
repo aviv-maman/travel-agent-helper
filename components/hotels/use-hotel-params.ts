@@ -11,6 +11,7 @@ type Update = {
   tags?: HotelTagValue[];
   boards?: BoardCode[];
   features?: HotelFeatureValue[];
+  stars?: number[];
   roomMinSize?: number | null;
   roomMaxSize?: number | null;
   roomAmenities?: RoomAmenity[];
@@ -36,6 +37,9 @@ export function useHotelParams() {
   const tags = list("tags") as HotelTagValue[];
   const boards = list("boards") as BoardCode[];
   const features = list("features") as HotelFeatureValue[];
+  const stars = list("stars")
+    .map(Number)
+    .filter((n) => Number.isInteger(n));
   const q = sp.get("q") ?? "";
   const sort = (sp.get("sort") ?? "default") as SortMode;
   const page = Math.max(1, Number(sp.get("page") ?? "1") || 1);
@@ -59,6 +63,7 @@ export function useHotelParams() {
     if ("tags" in next) setList("tags", next.tags);
     if ("boards" in next) setList("boards", next.boards);
     if ("features" in next) setList("features", next.features);
+    if ("stars" in next) setList("stars", next.stars?.map(String));
     if ("roomMinSize" in next) setVal("rmin", next.roomMinSize ? String(next.roomMinSize) : null);
     if ("roomMaxSize" in next) setVal("rmax", next.roomMaxSize ? String(next.roomMaxSize) : null);
     if ("roomAmenities" in next) setList("ramen", next.roomAmenities);
@@ -79,6 +84,7 @@ export function useHotelParams() {
     tags,
     boards,
     features,
+    stars,
     roomMinSize,
     roomMaxSize,
     roomAmenities,

@@ -38,6 +38,8 @@ const BASE_SORTS: { value: SortMode; key: keyof HotelMessages["sort"]; emoji: st
   { value: "google-asc", key: "googleAsc", emoji: "📈" },
 ];
 
+const STAR_OPTIONS = [5, 4, 3, 2] as const;
+
 const chipClass =
   "rounded-full border border-border aria-pressed:border-brand aria-pressed:bg-brand aria-pressed:text-brand-foreground";
 
@@ -45,21 +47,25 @@ export function HotelFilters({
   landmarks,
   roomSizeMin,
   roomSizeMax,
+  starValues,
 }: {
   landmarks: ViewLandmark[];
   roomSizeMin: number | null;
   roomSizeMax: number | null;
+  /** Star ratings present in this destination — others render disabled. */
+  starValues: number[];
 }) {
   const t = useTranslations("hotels");
-  const { tags, boards, features, sort, update } = useHotelParams();
+  const { tags, boards, features, stars, sort, update } = useHotelParams();
 
   const toggle = <T,>(list: T[], v: T) =>
     list.includes(v) ? list.filter((x) => x !== v) : [...list, v];
 
   // Only the general filters — the room filters have their own clear button.
-  const hasFilters = tags.length > 0 || boards.length > 0 || features.length > 0;
+  const hasFilters =
+    tags.length > 0 || boards.length > 0 || features.length > 0 || stars.length > 0;
 
-  const clearAll = () => update({ tags: [], boards: [], features: [] });
+  const clearAll = () => update({ tags: [], boards: [], features: [], stars: [] });
 
   return (
     <div className="flex flex-col gap-3">
@@ -105,6 +111,25 @@ export function HotelFilters({
             className={hasFilters ? undefined : "invisible"}>
             ✕ {t("filter.clear")}
           </Button>
+        </div>
+
+        {/* Star rating (multi-select) */}
+        <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
+          <span className="text-xs font-bold text-muted-foreground">{t("filter.starsLabel")}</span>
+          {STAR_OPTIONS.map((n) => {
+            const available = starValues.includes(n);
+            return (
+              <Toggle
+                key={n}
+                pressed={stars.includes(n)}
+                disabled={!available}
+                onPressedChange={() => update({ stars: toggle(stars, n) })}
+                size="sm"
+                className={`${chipClass} tabular-nums disabled:opacity-40`}>
+                {n} <span className="text-gold">★</span>
+              </Toggle>
+            );
+          })}
         </div>
 
         {/* Tags */}
