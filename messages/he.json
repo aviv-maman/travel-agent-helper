@@ -793,6 +793,29 @@
       "saved": "נשמר",
       "saveFailed": "השמירה נכשלה",
       "forbidden": "אין הרשאה"
+    },
+    "create": {
+      "addSupplier": "הוספת ספק",
+      "title": "ספק דמי ביטול חדש",
+      "name": "שם",
+      "code": "קוד",
+      "products": "מוצרים",
+      "needProduct": "בחרו לפחות מוצר אחד",
+      "fillRequired": "שם וקוד הם שדות חובה",
+      "logo": "העלאת לוגו",
+      "logoUploading": "מעלה…",
+      "logoRemove": "הסרה",
+      "logoUploaded": "הלוגו הועלה",
+      "logoError": "העלאת הלוגו נכשלה",
+      "logoBadType": "השתמשו בתמונת PNG, JPG או WebP",
+      "logoTooBig": "התמונה חייבת להיות עד 2MB",
+      "next": "הבא",
+      "back": "חזרה",
+      "create": "יצירת ספק",
+      "creating": "יוצר…",
+      "created": "הספק נוצר",
+      "failed": "היצירה נכשלה",
+      "exists": "כבר קיים ספק עם קוד זה"
     }
   },
   "hotels": {
