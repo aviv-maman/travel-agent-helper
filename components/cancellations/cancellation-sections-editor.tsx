@@ -241,7 +241,8 @@ export function CancellationSectionsEditor({
           const sym = mode === "percent" ? "%" : mode === "usd" ? "$" : mode === "eur" ? "€" : "";
           return (
             <div key={ri} className="flex flex-col gap-2 rounded-lg border border-border p-2.5">
-              <div className="flex items-start gap-2">
+              {/* Mobile: timeframe on its own wide line, fee + level below. */}
+              <div className="flex flex-col gap-2 sm:flex-row sm:items-start">
                 {/* Timeframe (Hebrew only) */}
                 <div className="flex flex-1 flex-col gap-1">
                   <Label className="text-[0.7rem] text-muted-foreground">{t("edit.timeframe")}</Label>
@@ -255,6 +256,8 @@ export function CancellationSectionsEditor({
                   />
                 </div>
 
+                {/* Fee + level share a line under the wide timeframe on mobile. */}
+                <div className="flex items-start gap-2">
                 {/* Fee (left in RTL) */}
                 <div className="flex w-[11rem] flex-col gap-1">
                   <Label className="text-[0.7rem] text-muted-foreground">{t("edit.fee")}</Label>
@@ -339,6 +342,7 @@ export function CancellationSectionsEditor({
                     className="text-muted-foreground hover:text-destructive">
                     <Trash2 className="size-3.5" />
                   </Button>
+                </div>
                 </div>
               </div>
               {/* Live client-copy preview */}
