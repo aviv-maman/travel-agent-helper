@@ -906,6 +906,25 @@
       "hb": "חצי פנסיון",
       "fb": "פנסיון מלא"
     },
+    "edit": {
+      "edit": "עריכת מלון",
+      "title": "עריכת מלון",
+      "name": "שם המלון",
+      "stars": "דירוג כוכבים",
+      "bookingScore": "דירוג Booking",
+      "boards": "בסיס אירוח",
+      "amenities": "מתקנים",
+      "bookingUrl": "קישור Booking.com",
+      "website": "אתר המלון",
+      "nameRequired": "שם הוא שדה חובה",
+      "badScore": "הדירוג חייב להיות בין 0 ל-10",
+      "save": "שמירה",
+      "saving": "שומר…",
+      "cancel": "ביטול",
+      "saved": "נשמר",
+      "saveFailed": "השמירה נכשלה",
+      "forbidden": "אין הרשאה"
+    },
     "modal": {
       "rooms": "סוגי חדרים",
       "size": "גודל",
