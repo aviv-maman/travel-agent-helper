@@ -209,8 +209,6 @@ export function PageNav({ avatarUrl }: { avatarUrl?: string | null }) {
 
         {/* Desktop controls cluster */}
         <div className="ms-auto hidden shrink-0 items-center gap-2 sm:flex">
-          {/* Only renders when the app is installable (Chromium desktop). */}
-          <InstallAppButton />
           {user ? (
             <>
               <Link
@@ -246,6 +244,8 @@ export function PageNav({ avatarUrl }: { avatarUrl?: string | null }) {
               <CircleUser className="size-5" />
             </Link>
           )}
+          {/* Grouped with the utility controls; only renders when installable. */}
+          <InstallAppButton />
           <ThemeToggle />
           <LanguageSwitcher />
         </div>
