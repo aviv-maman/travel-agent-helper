@@ -3,13 +3,22 @@
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { InfoIcon, TriangleAlertIcon, Search, X } from "lucide-react";
-import type { ViewCancelSupplier } from "@/lib/cancellations";
+import type { EditableCancel, ViewCancelSupplier } from "@/lib/cancellations";
 import { Input } from "@/components/ui/input";
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 import { CancelCard } from "./cancel-card";
 import { LawCalculator } from "./law-calculator";
 
-export function CancellationsView({ suppliers }: { suppliers: ViewCancelSupplier[] }) {
+export function CancellationsView({
+  suppliers,
+  canEdit,
+  editable,
+}: {
+  suppliers: ViewCancelSupplier[];
+  canEdit?: boolean;
+  /** Raw bilingual blocks + markup keyed by supplier slug (editors only). */
+  editable?: Record<string, EditableCancel> | null;
+}) {
   const t = useTranslations("cancellations");
   const [query, setQuery] = useState("");
 
@@ -76,7 +85,12 @@ export function CancellationsView({ suppliers }: { suppliers: ViewCancelSupplier
       ) : (
         <div className="flex flex-col gap-3">
           {filtered.map((s) => (
-            <CancelCard key={s.id} supplier={s} />
+            <CancelCard
+              key={s.id}
+              supplier={s}
+              canEdit={canEdit}
+              editable={editable?.[s.id] ?? null}
+            />
           ))}
         </div>
       )}
